@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:spiffworkflow="https://github.com/sartography/SpiffWorkflow" xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_96f6665" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.0.0-dev">
+  <bpmn:process id="repeating_form" name="repeating form" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>Flow_0lk9b96</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:userTask id="add_approvers" name="add approvers">
+      <bpmn:incoming>Flow_0lk9b96</bpmn:incoming>
+      <bpmn:outgoing>Flow_0agjrlz</bpmn:outgoing>
+      <bpmn:rendering>
+        <bpmn:extensionElements>
+          <spiffworkflow:properties>
+            <spiffworkflow:property name="formKey" value="add_approvers_form.json" />
+          </spiffworkflow:properties>
+        </bpmn:extensionElements>
+      </bpmn:rendering>
+    </bpmn:userTask>
+    <bpmn:sequenceFlow id="Flow_0lk9b96" sourceRef="StartEvent_1" targetRef="add_approvers" />
+    <bpmn:endEvent id="Event_1dncb99">
+      <bpmn:incoming>Flow_0agjrlz</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_0agjrlz" sourceRef="add_approvers" targetRef="Event_1dncb99" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="repeating_form">
+      <bpmndi:BPMNEdge id="Flow_0lk9b96_di" bpmnElement="Flow_0lk9b96">
+        <di:waypoint x="215" y="177" />
+        <di:waypoint x="330" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0agjrlz_di" bpmnElement="Flow_0agjrlz">
+        <di:waypoint x="430" y="177" />
+        <di:waypoint x="532" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="179" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1dncb99_di" bpmnElement="Event_1dncb99">
+        <dc:Bounds x="532" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1ekp389_di" bpmnElement="add_approvers">
+        <dc:Bounds x="330" y="137" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
