@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:spiffworkflow="https://github.com/sartography/SpiffWorkflow" id="Definitions_1v1rp1q" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.7.3">
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:spiffworkflow="http://spiffworkflow.org/bpmn/schema/1.0/core" id="Definitions_1v1rp1q" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.7.3">
   <bpmn:process id="test_form" name="Test Form" isExecutable="true">
     <bpmn:startEvent id="StartEvent_1">
       <bpmn:outgoing>SequenceFlow_0lvudp8</bpmn:outgoing>
@@ -11,13 +11,11 @@
     <bpmn:userTask id="get_user_generated_number" name="get_user_generated_number" camunda:formKey="ConfirmEmail">
       <bpmn:incoming>Flow_0kk2hzj</bpmn:incoming>
       <bpmn:outgoing>Flow_1cck1pb</bpmn:outgoing>
-      <bpmn:rendering>
-        <bpmn:extensionElements>
-          <spiffworkflow:properties>
-            <spiffworkflow:property name="formKey" value="give_me_a_number_form.json" />
-          </spiffworkflow:properties>
-        </bpmn:extensionElements>
-      </bpmn:rendering>
+      <bpmn:extensionElements>
+        <spiffworkflow:properties>
+          <spiffworkflow:property name="formJsonSchemaFilename" value="give_me_a_number_form.json" />
+        </spiffworkflow:properties>
+      </bpmn:extensionElements>
     </bpmn:userTask>
     <bpmn:scriptTask id="multiply" name="multiply" scriptFormat="python">
       <bpmn:incoming>Flow_1cck1pb</bpmn:incoming>
