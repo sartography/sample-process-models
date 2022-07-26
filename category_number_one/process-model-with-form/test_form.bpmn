@@ -11,7 +11,8 @@
     <bpmn:userTask id="form1" name="get_user_generated_number" camunda:formKey="ConfirmEmail">
       <bpmn:extensionElements>
         <spiffworkflow:properties>
-          <spiffworkflow:property name="formJsonSchemaFilename" value="give_me_a_number_form.json" />
+          <spiffworkflow:property name="formJsonSchemaFilename" value="form1.json" />
+          <spiffworkflow:property name="formUiSchemaFilename" value="form1_ui.json" />
         </spiffworkflow:properties>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_0kk2hzj</bpmn:incoming>
@@ -20,7 +21,7 @@
     <bpmn:scriptTask id="multiply1" name="multiply" scriptFormat="python">
       <bpmn:incoming>Flow_1cck1pb</bpmn:incoming>
       <bpmn:outgoing>Flow_16gxvwr</bpmn:outgoing>
-      <bpmn:script>product_one = system_generated_number * user_generated_number</bpmn:script>
+      <bpmn:script>product_one = system_generated_number * user_generated_number_1</bpmn:script>
     </bpmn:scriptTask>
     <bpmn:sequenceFlow id="Flow_0kk2hzj" sourceRef="set_system_generated_number" targetRef="form1" />
     <bpmn:sequenceFlow id="Flow_16gxvwr" sourceRef="multiply1" targetRef="form2" />
@@ -33,7 +34,8 @@
     <bpmn:userTask id="form2" name="get_user_generated_number">
       <bpmn:extensionElements>
         <spiffworkflow:properties>
-          <spiffworkflow:property name="formJsonSchemaFilename" value="give_me_another_number_form.json" />
+          <spiffworkflow:property name="formJsonSchemaFilename" value="form2.json" />
+          <spiffworkflow:property name="formUiSchemaFilename" value="form2_ui.json" />
         </spiffworkflow:properties>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_16gxvwr</bpmn:incoming>
@@ -43,12 +45,13 @@
     <bpmn:scriptTask id="multiply2" name="multiply" scriptFormat="python">
       <bpmn:incoming>Flow_0k1q81g</bpmn:incoming>
       <bpmn:outgoing>Flow_1dhe346</bpmn:outgoing>
-      <bpmn:script>product_two = product_one * second_user_generated_number</bpmn:script>
+      <bpmn:script>product_two = product_one * user_generated_number_2</bpmn:script>
     </bpmn:scriptTask>
     <bpmn:userTask id="form3" name="get_user_generated_number">
       <bpmn:extensionElements>
         <spiffworkflow:properties>
           <spiffworkflow:property name="formJsonSchemaFilename" value="form3.json" />
+          <spiffworkflow:property name="formUiSchemaFilename" value="form3_ui.json" />
         </spiffworkflow:properties>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_1dhe346</bpmn:incoming>
@@ -65,6 +68,7 @@
       <bpmn:extensionElements>
         <spiffworkflow:properties>
           <spiffworkflow:property name="formJsonSchemaFilename" value="form4.json" />
+          <spiffworkflow:property name="formUiSchemaFilename" value="form4_ui.json" />
         </spiffworkflow:properties>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_0lq17rq</bpmn:incoming>
@@ -81,6 +85,22 @@
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="test_form">
+      <bpmndi:BPMNEdge id="Flow_0lxveac_di" bpmnElement="Flow_0lxveac">
+        <di:waypoint x="730" y="210" />
+        <di:waypoint x="730" y="184" />
+        <di:waypoint x="810" y="184" />
+        <di:waypoint x="810" y="157" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_17my2ps_di" bpmnElement="Flow_17my2ps">
+        <di:waypoint x="860" y="117" />
+        <di:waypoint x="892" y="117" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0lq17rq_di" bpmnElement="Flow_0lq17rq">
+        <di:waypoint x="650" y="157" />
+        <di:waypoint x="650" y="180" />
+        <di:waypoint x="700" y="180" />
+        <di:waypoint x="700" y="210" />
+      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0h8gnje_di" bpmnElement="Flow_0h8gnje">
         <di:waypoint x="620" y="210" />
         <di:waypoint x="620" y="184" />
@@ -120,24 +140,11 @@
         <di:waypoint x="147" y="110" />
         <di:waypoint x="190" y="110" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0lq17rq_di" bpmnElement="Flow_0lq17rq">
-        <di:waypoint x="650" y="157" />
-        <di:waypoint x="650" y="180" />
-        <di:waypoint x="700" y="180" />
-        <di:waypoint x="700" y="210" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_17my2ps_di" bpmnElement="Flow_17my2ps">
-        <di:waypoint x="860" y="117" />
-        <di:waypoint x="892" y="117" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0lxveac_di" bpmnElement="Flow_0lxveac">
-        <di:waypoint x="730" y="210" />
-        <di:waypoint x="730" y="184" />
-        <di:waypoint x="810" y="184" />
-        <di:waypoint x="810" y="157" />
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
         <dc:Bounds x="112" y="99" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="EndEvent_0q4qzl9_di" bpmnElement="EndEvent_0q4qzl9">
+        <dc:Bounds x="892" y="99" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0hkyp4b_di" bpmnElement="form1">
         <dc:Bounds x="230" y="210" width="100" height="80" />
@@ -174,9 +181,6 @@
       <bpmndi:BPMNShape id="BPMNShape_0z9w0sv" bpmnElement="multiply4">
         <dc:Bounds x="760" y="77" width="100" height="80" />
         <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="EndEvent_0q4qzl9_di" bpmnElement="EndEvent_0q4qzl9">
-        <dc:Bounds x="892" y="99" width="36" height="36" />
       </bpmndi:BPMNShape>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
