@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_96f6665" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.0.0-dev" xmlns:spiffworkflow="http://spiffworkflow.org/bpmn/schema/1.0/core">
+  <bpmn:collaboration id="Collaboration_0oye1os">
+    <bpmn:participant id="message_initiator" name="Message Initiator" processRef="message_send_process" />
+    <bpmn:participant id="message_receiver" name="Message Receiver" processRef="message_receive_process" />
+    <bpmn:messageFlow id="message_send_flow" name="Message Send Flow" sourceRef="send_message" targetRef="message_receiver" />
+    <bpmn:messageFlow id="message_response_flow" name="Message Response Flow" sourceRef="message_receiver" targetRef="receive_message_response" />
+    <bpmn:correlationKey name="message_correlation_key">
+      <bpmn:correlationPropertyRef>message_correlation_property</bpmn:correlationPropertyRef>
+    </bpmn:correlationKey>
+  </bpmn:collaboration>
+  <bpmn:correlationProperty id="message_correlation_property" name="Message Correlation Property">
+    <bpmn:correlationPropertyRetrievalExpression messageRef="message_send">
+      <bpmn:formalExpression>to.name</bpmn:formalExpression>
+    </bpmn:correlationPropertyRetrievalExpression>
+    <bpmn:correlationPropertyRetrievalExpression messageRef="message_response">
+      <bpmn:formalExpression>from.name</bpmn:formalExpression>
+    </bpmn:correlationPropertyRetrievalExpression>
+  </bpmn:correlationProperty>
+  <bpmn:process id="message_send_process" name="Message Send Process" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>Flow_0nbzcuk</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:endEvent id="Event_0kndoyu">
+      <bpmn:incoming>Flow_1hlmr49</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sendTask id="send_message" name="Send Message" messageRef="message_send">
+      <bpmn:extensionElements>
+        <spiffworkflow:messagePayload>{
+          "to": { "name": "the_recipient" }
+          }</spiffworkflow:messagePayload>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0nbzcuk</bpmn:incoming>
+      <bpmn:outgoing>Flow_0gmnr7d</bpmn:outgoing>
+    </bpmn:sendTask>
+    <bpmn:receiveTask id="receive_message_response" name="Receive Message Response" messageRef="message_response">
+      <bpmn:incoming>Flow_0gmnr7d</bpmn:incoming>
+      <bpmn:outgoing>Flow_1hlmr49</bpmn:outgoing>
+    </bpmn:receiveTask>
+    <bpmn:sequenceFlow id="Flow_1hlmr49" sourceRef="receive_message_response" targetRef="Event_0kndoyu" />
+    <bpmn:sequenceFlow id="Flow_0gmnr7d" sourceRef="send_message" targetRef="receive_message_response" />
+    <bpmn:sequenceFlow id="Flow_0nbzcuk" sourceRef="StartEvent_1" targetRef="send_message" />
+  </bpmn:process>
+  <bpmn:process id="message_receive_process" name="Message Receive Process" />
+  <bpmn:message id="message_send" name="Message Send" />
+  <bpmn:message id="message_response" name="Message Response" />
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_0oye1os">
+      <bpmndi:BPMNShape id="Participant_0bjh770_di" bpmnElement="message_initiator" isHorizontal="true">
+        <dc:Bounds x="120" y="52" width="600" height="250" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_0nbzcuk_di" bpmnElement="Flow_0nbzcuk">
+        <di:waypoint x="215" y="177" />
+        <di:waypoint x="270" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0gmnr7d_di" bpmnElement="Flow_0gmnr7d">
+        <di:waypoint x="370" y="177" />
+        <di:waypoint x="430" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1hlmr49_di" bpmnElement="Flow_1hlmr49">
+        <di:waypoint x="530" y="177" />
+        <di:waypoint x="592" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="179" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0kndoyu_di" bpmnElement="Event_0kndoyu">
+        <dc:Bounds x="592" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0vm33bu_di" bpmnElement="send_message">
+        <dc:Bounds x="270" y="137" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1j9tom5_di" bpmnElement="receive_message_response">
+        <dc:Bounds x="430" y="137" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Participant_1y6sydr_di" bpmnElement="message_receiver" isHorizontal="true">
+        <dc:Bounds x="120" y="350" width="600" height="250" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_1kahg9n_di" bpmnElement="message_send_flow">
+        <di:waypoint x="320" y="217" />
+        <di:waypoint x="320" y="350" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="323" y="306" width="74" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0450t52_di" bpmnElement="message_response_flow">
+        <di:waypoint x="480" y="350" />
+        <di:waypoint x="480" y="217" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="489" y="306" width="81" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
