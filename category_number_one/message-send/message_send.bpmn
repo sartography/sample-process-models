@@ -48,7 +48,12 @@
       <spiffworkflow:messagePayload>{"to": "the_recipient" }</spiffworkflow:messagePayload>
     </bpmn:extensionElements>
   </bpmn:message>
-  <bpmn:message id="message_response" name="Message Response" />
+  <bpmn:message id="message_response" name="Message Response">
+    <bpmn:extensionElements>
+      <spiffworkflow:messagePayload>{"from": {"name": "the_sender"}}</spiffworkflow:messagePayload>
+      <spiffworkflow:preScript>b = 2</spiffworkflow:preScript>
+    </bpmn:extensionElements>
+  </bpmn:message>
   <bpmn:process id="message_receiver_process" name="Message Receiver Process">
     <bpmn:startEvent id="receive_message" name="Receive Message">
       <bpmn:outgoing>Flow_11rbech</bpmn:outgoing>
@@ -60,10 +65,6 @@
       <bpmn:incoming>Flow_09mk0l4</bpmn:incoming>
     </bpmn:endEvent>
     <bpmn:sendTask id="respond_to_message" name="Response To Message" messageRef="message_response">
-      <bpmn:extensionElements>
-        <spiffworkflow:messagePayload>{"from": {"name": "the_sender"}}</spiffworkflow:messagePayload>
-        <spiffworkflow:preScript>b = 2</spiffworkflow:preScript>
-      </bpmn:extensionElements>
       <bpmn:incoming>Flow_11rbech</bpmn:incoming>
       <bpmn:outgoing>Flow_09mk0l4</bpmn:outgoing>
     </bpmn:sendTask>
@@ -74,6 +75,14 @@
         <dc:Bounds x="120" y="52" width="600" height="250" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_17ma9s0_di" bpmnElement="Flow_17ma9s0">
+        <di:waypoint x="340" y="177" />
+        <di:waypoint x="380" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_176e02g_di" bpmnElement="Flow_176e02g">
+        <di:waypoint x="215" y="177" />
+        <di:waypoint x="240" y="177" />
+      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1qgz6p0_di" bpmnElement="Flow_1qgz6p0">
         <di:waypoint x="538" y="177" />
         <di:waypoint x="592" y="177" />
@@ -81,14 +90,6 @@
       <bpmndi:BPMNEdge id="Flow_037vpjk_di" bpmnElement="Flow_037vpjk">
         <di:waypoint x="480" y="177" />
         <di:waypoint x="502" y="177" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_176e02g_di" bpmnElement="Flow_176e02g">
-        <di:waypoint x="215" y="177" />
-        <di:waypoint x="240" y="177" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_17ma9s0_di" bpmnElement="Flow_17ma9s0">
-        <di:waypoint x="340" y="177" />
-        <di:waypoint x="380" y="177" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
         <dc:Bounds x="179" y="159" width="36" height="36" />
