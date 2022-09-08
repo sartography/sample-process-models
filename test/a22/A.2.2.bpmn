@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_96f6665" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.0.0-dev">
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:spiffworkflow="http://spiffworkflow.org/bpmn/schema/1.0/core" id="Definitions_96f6665" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.0.0-dev">
   <bpmn:process id="Process_bd2e724" isExecutable="true">
     <bpmn:startEvent id="StartEvent_1">
       <bpmn:outgoing>Flow_02h0vpd</bpmn:outgoing>
@@ -24,10 +24,16 @@
     <bpmn:sequenceFlow id="Flow_06dsshe" sourceRef="Activity_0za1q0s" targetRef="Event_0jiftlw" />
     <bpmn:sequenceFlow id="Flow_0bs6slr" sourceRef="Activity_1mbqyrn" targetRef="Gateway_1xw4cfe" />
     <bpmn:manualTask id="Activity_1xgtzst" name="Task A">
+      <bpmn:extensionElements>
+        <spiffworkflow:instructionsForEndUser>some_var was {{some_var}} and we took the top branch.</spiffworkflow:instructionsForEndUser>
+      </bpmn:extensionElements>
       <bpmn:incoming>Flow_1if1u6l</bpmn:incoming>
       <bpmn:outgoing>Flow_0hwunwr</bpmn:outgoing>
     </bpmn:manualTask>
     <bpmn:manualTask id="Activity_0za1q0s" name="Task B">
+      <bpmn:extensionElements>
+        <spiffworkflow:instructionsForEndUser>some_var was {{some_var}} and we took the bottom branch.</spiffworkflow:instructionsForEndUser>
+      </bpmn:extensionElements>
       <bpmn:incoming>Flow_0vztihb</bpmn:incoming>
       <bpmn:outgoing>Flow_06dsshe</bpmn:outgoing>
     </bpmn:manualTask>
