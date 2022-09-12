@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/" xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/" xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/" id="Definitions_76910d7" name="DRD" namespace="http://camunda.org/schema/1.0/dmn">
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/" xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/" xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/" xmlns:biodi="http://bpmn.io/schema/dmn/biodi/2.0" id="Definitions_76910d7" name="DRD" namespace="http://camunda.org/schema/1.0/dmn">
   <decision id="submit_involce_valication" name="Submit Involce Valication">
     <decisionTable id="decisionTable_1">
       <input id="input_1" label="Number in Name?">
@@ -7,21 +7,118 @@
           <text>isNameNum</text>
         </inputExpression>
       </input>
+      <input id="InputClause_0yu8sal" label="Invoice Amount Decimal Places?" biodi:width="290">
+        <inputExpression id="LiteralExpression_00vxuvt" typeRef="number">
+          <text>decimal_cnt</text>
+        </inputExpression>
+      </input>
+      <input id="InputClause_0d8pwgu" label="Due Date After?">
+        <inputExpression id="LiteralExpression_0ji7ayg" typeRef="boolean">
+          <text>isDueDateAfter</text>
+        </inputExpression>
+      </input>
       <output id="output_1" label="Validation Outcome" name="isInvoiceSubmitPass" typeRef="boolean" />
+      <output id="OutputClause_1kwdp3o" label="Validation Message" name="submitInvoiceValidationMessage" typeRef="string" biodi:width="496" />
+      <rule id="DecisionRule_1lo9qbk">
+        <inputEntry id="UnaryTests_1nhzb74">
+          <text>False</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1k6u17q">
+          <text>&lt;=2</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1g1c3pq">
+          <text>True</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0nllohu">
+          <text>True</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1deujhc">
+          <text>"No numbers in name, involce amount decimal places not greated than two, invoice due date after today's date"</text>
+        </outputEntry>
+      </rule>
       <rule id="DecisionRule_0fspdx3">
         <inputEntry id="UnaryTests_1t84tf5">
+          <text>True</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_12mqm10">
+          <text>&lt;=2</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_02k712g">
           <text>True</text>
         </inputEntry>
         <outputEntry id="LiteralExpression_1lb6oh8">
           <text>False</text>
         </outputEntry>
+        <outputEntry id="LiteralExpression_0574dis">
+          <text>"Numbers are not allowed in the Contributor Name"</text>
+        </outputEntry>
       </rule>
-      <rule id="DecisionRule_1lo9qbk">
-        <inputEntry id="UnaryTests_1nhzb74">
+      <rule id="DecisionRule_143lm93">
+        <inputEntry id="UnaryTests_03cd5lg">
           <text>False</text>
         </inputEntry>
-        <outputEntry id="LiteralExpression_0nllohu">
+        <inputEntry id="UnaryTests_02u9iam">
+          <text>&gt;2</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_061ri1c">
           <text>True</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1mbfz4b">
+          <text>False</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_0fn0pln">
+          <text>"The involce amount must not have more than two decimal places"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0u8ubah">
+        <inputEntry id="UnaryTests_1foeufx">
+          <text>True</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0f6hqwy">
+          <text>&gt;2</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_12dplyn">
+          <text>True</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_085lex0">
+          <text>False</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_0db07fz">
+          <text>"Numbers are not allowed in the Contributor Name and the involce amount must not have more than two decimal places"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1jc37dk">
+        <inputEntry id="UnaryTests_1pgm4hk">
+          <text>False</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_13kykmb">
+          <text>&lt;=2</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1bsp4mb">
+          <text>False</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1rwhn23">
+          <text>False</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_087snw9">
+          <text>"Invoice due date must be after today's date"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0nec3r1">
+        <inputEntry id="UnaryTests_0qc9563">
+          <text>True</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0nfh2th">
+          <text>&gt;2</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1owttdo">
+          <text>False</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_12bkrav">
+          <text>False</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_0ibz84h">
+          <text>"Numbers are not allowed in the Contributor Name and the involce amount must not have more than two decimal places and invoice due date must be after today's date"</text>
         </outputEntry>
       </rule>
     </decisionTable>
