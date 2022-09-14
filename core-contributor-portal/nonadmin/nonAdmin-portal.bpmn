@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:spiffworkflow="http://spiffworkflow.org/bpmn/schema/1.0/core" id="Definitions_96f6665" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.0.0-dev">
   <bpmn:collaboration id="Collaboration_1f8smlv">
-    <bpmn:participant id="Participant_0j0qj5l" name="Core Contributor - nonAdmin" processRef="Process_bd2e724" />
+    <bpmn:participant id="Participant_0j0qj5l" name="Core Contributor - nonAdmin" processRef="Process_bd2e724z" />
+    <bpmn:correlationKey name="CorrelationKey_Submit_Invoice">
+      <bpmn:correlationPropertyRef>CorrelationProperty_Submit_Invoice</bpmn:correlationPropertyRef>
+    </bpmn:correlationKey>
   </bpmn:collaboration>
-  <bpmn:process id="Process_bd2e724" isExecutable="true">
+  <bpmn:process id="Process_bd2e724z" isExecutable="true">
     <bpmn:startEvent id="StartEvent_1">
       <bpmn:outgoing>Flow_12ps4ez</bpmn:outgoing>
     </bpmn:startEvent>
@@ -78,25 +81,23 @@
         <bpmn:outgoing>Flow_0319lpz</bpmn:outgoing>
       </bpmn:exclusiveGateway>
       <bpmn:intermediateThrowEvent id="Event_021pni2" name="Submit Invoice">
-        <bpmn:messageEventDefinition id="MessageEventDefinition_1idznk2" />
+        <bpmn:incoming>Flow_04x5jyc</bpmn:incoming>
+        <bpmn:outgoing>Flow_0o9dlgv</bpmn:outgoing>
+        <bpmn:messageEventDefinition id="MessageEventDefinition_1idznk2" messageRef="Message_Submit_Invoice" />
       </bpmn:intermediateThrowEvent>
       <bpmn:intermediateThrowEvent id="Event_1f5imqc" name="Something Else">
         <bpmn:messageEventDefinition id="MessageEventDefinition_0uxo9e7" />
       </bpmn:intermediateThrowEvent>
       <bpmn:exclusiveGateway id="Gateway_088v9c8">
-        <bpmn:incoming>Flow_1kghwo7</bpmn:incoming>
         <bpmn:incoming>Flow_12ans71</bpmn:incoming>
+        <bpmn:incoming>Flow_0o9dlgv</bpmn:incoming>
         <bpmn:outgoing>Flow_1vmy0u7</bpmn:outgoing>
       </bpmn:exclusiveGateway>
       <bpmn:sequenceFlow id="Flow_1vmy0u7" sourceRef="Gateway_088v9c8" targetRef="Event_1k87w5f" />
-      <bpmn:sequenceFlow id="Flow_04x5jyc" name="Submit an invoice" sourceRef="Gateway_1qcctp1" targetRef="Activity_Submit_Income">
+      <bpmn:sequenceFlow id="Flow_04x5jyc" name="Submit an invoice" sourceRef="Gateway_1qcctp1" targetRef="Event_021pni2">
         <bpmn:conditionExpression>financeEnumRadio == "Submit an Invoice"</bpmn:conditionExpression>
       </bpmn:sequenceFlow>
-      <bpmn:manualTask id="Activity_Submit_Income" name="Submit Income">
-        <bpmn:incoming>Flow_04x5jyc</bpmn:incoming>
-        <bpmn:outgoing>Flow_1kghwo7</bpmn:outgoing>
-      </bpmn:manualTask>
-      <bpmn:sequenceFlow id="Flow_1kghwo7" sourceRef="Activity_Submit_Income" targetRef="Gateway_088v9c8" />
+      <bpmn:manualTask id="Activity_Submit_Income" name="Submit Income" />
       <bpmn:sequenceFlow id="Flow_0319lpz" name="Something Else" sourceRef="Gateway_1qcctp1" targetRef="Activity_Submit_Something_Else">
         <bpmn:conditionExpression>financeEnumRadio == "Something Else"</bpmn:conditionExpression>
       </bpmn:sequenceFlow>
@@ -105,12 +106,26 @@
         <bpmn:outgoing>Flow_12ans71</bpmn:outgoing>
       </bpmn:manualTask>
       <bpmn:sequenceFlow id="Flow_12ans71" sourceRef="Activity_Submit_Something_Else" targetRef="Gateway_088v9c8" />
+      <bpmn:sequenceFlow id="Flow_0o9dlgv" sourceRef="Event_021pni2" targetRef="Gateway_088v9c8" />
     </bpmn:subProcess>
     <bpmn:sequenceFlow id="Flow_0hqitwz" name="Finance" sourceRef="Gateway_Which_Department" targetRef="SubProcess_Select_Finance_Process">
       <bpmn:conditionExpression>deptEnumRadio == "Finance"</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="Flow_1y39m94" sourceRef="SubProcess_Select_Finance_Process" targetRef="Gateway_08qio04" />
   </bpmn:process>
+  <bpmn:correlationProperty id="CorrelationProperty_Submit_Invoice" name="CorrelationProperty: Submit Invoice">
+    <bpmn:correlationPropertyRetrievalExpression messageRef="Message_Submit_Invoice">
+      <bpmn:formalExpression>topica_one</bpmn:formalExpression>
+    </bpmn:correlationPropertyRetrievalExpression>
+  </bpmn:correlationProperty>
+  <bpmn:message id="Message_Submit_Invoice" name="Message: Submit Invoice">
+    <bpmn:extensionElements>
+      <spiffworkflow:messagePayload>{
+"topica_one":"topic_one_a",
+"init_var_one":"3"
+}</spiffworkflow:messagePayload>
+    </bpmn:extensionElements>
+  </bpmn:message>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_1f8smlv">
       <bpmndi:BPMNShape id="Participant_0j0qj5l_di" bpmnElement="Participant_0j0qj5l" isHorizontal="true">
@@ -214,9 +229,9 @@
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_1dglfc7_di" bpmnElement="Event_021pni2">
-        <dc:Bounds x="812" y="132" width="36" height="36" />
+        <dc:Bounds x="802" y="232" width="36" height="36" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="795" y="175" width="73" height="14" />
+          <dc:Bounds x="785" y="275" width="73" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_17fg4yj_di" bpmnElement="Event_1f5imqc">
@@ -229,7 +244,7 @@
         <dc:Bounds x="945" y="225" width="50" height="50" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0388tnr_di" bpmnElement="Activity_Submit_Income">
-        <dc:Bounds x="780" y="210" width="100" height="80" />
+        <dc:Bounds x="750" y="110" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_080k15n_di" bpmnElement="Activity_Submit_Something_Else">
         <dc:Bounds x="780" y="320" width="100" height="80" />
@@ -248,14 +263,10 @@
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_04x5jyc_di" bpmnElement="Flow_04x5jyc">
         <di:waypoint x="645" y="250" />
-        <di:waypoint x="780" y="250" />
+        <di:waypoint x="802" y="250" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="656" y="232" width="87" height="14" />
+          <dc:Bounds x="683" y="232" width="87" height="14" />
         </bpmndi:BPMNLabel>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_1kghwo7_di" bpmnElement="Flow_1kghwo7">
-        <di:waypoint x="880" y="250" />
-        <di:waypoint x="945" y="250" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0319lpz_di" bpmnElement="Flow_0319lpz">
         <di:waypoint x="620" y="275" />
@@ -269,6 +280,10 @@
         <di:waypoint x="880" y="360" />
         <di:waypoint x="970" y="360" />
         <di:waypoint x="970" y="275" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0o9dlgv_di" bpmnElement="Flow_0o9dlgv">
+        <di:waypoint x="838" y="250" />
+        <di:waypoint x="945" y="250" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>

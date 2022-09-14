@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:spiffworkflow="http://spiffworkflow.org/bpmn/schema/1.0/core" id="Definitions_96f6665" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.0.0-dev">
+  <bpmn:collaboration id="Collaboration_02tdhks">
+    <bpmn:participant id="Participant_0m549h4" processRef="Process_bd2e724" />
+    <bpmn:correlationKey name="CorrelationKey_1">
+      <bpmn:correlationPropertyRef>mcp_topica_one</bpmn:correlationPropertyRef>
+    </bpmn:correlationKey>
+  </bpmn:collaboration>
+  <bpmn:process id="Process_bd2e724" isExecutable="true">
+    <bpmn:sequenceFlow id="Flow_0gy9seo" sourceRef="StartEvent_1" targetRef="Event_0bocxa1" />
+    <bpmn:endEvent id="Event_0bocxa1">
+      <bpmn:incoming>Flow_0gy9seo</bpmn:incoming>
+      <bpmn:messageEventDefinition id="MessageEventDefinition_0m6atpy" messageRef="Message_2" />
+    </bpmn:endEvent>
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>Flow_0gy9seo</bpmn:outgoing>
+      <bpmn:messageEventDefinition id="MessageEventDefinition_1xy0jj9" messageRef="Message_1" />
+    </bpmn:startEvent>
+  </bpmn:process>
+  <bpmn:correlationProperty id="mcp_topica_one" name="MCP TopicA One">
+    <bpmn:correlationPropertyRetrievalExpression messageRef="Message_1">
+      <bpmn:formalExpression>topica_one</bpmn:formalExpression>
+    </bpmn:correlationPropertyRetrievalExpression>
+    <bpmn:correlationPropertyRetrievalExpression messageRef="Message_2">
+      <bpmn:formalExpression>topica_one</bpmn:formalExpression>
+    </bpmn:correlationPropertyRetrievalExpression>
+  </bpmn:correlationProperty>
+  <bpmn:message id="Message_1" name="Message_1">
+    <bpmn:extensionElements>
+      <spiffworkflow:messageVariable>payload_F</spiffworkflow:messageVariable>
+    </bpmn:extensionElements>
+  </bpmn:message>
+  <bpmn:message id="Message_2" name="Message_2">
+    <bpmn:extensionElements>
+      <spiffworkflow:messagePayload>{
+"topica_one": payload_F.topica_one
+}</spiffworkflow:messagePayload>
+    </bpmn:extensionElements>
+  </bpmn:message>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_02tdhks">
+      <bpmndi:BPMNShape id="Participant_0m549h4_di" bpmnElement="Participant_0m549h4" isHorizontal="true">
+        <dc:Bounds x="129" y="60" width="301" height="180" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1stftyh_di" bpmnElement="Event_0bocxa1">
+        <dc:Bounds x="342" y="132" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1tji86c_di" bpmnElement="StartEvent_1">
+        <dc:Bounds x="202" y="132" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_0gy9seo_di" bpmnElement="Flow_0gy9seo">
+        <di:waypoint x="238" y="150" />
+        <di:waypoint x="342" y="150" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
