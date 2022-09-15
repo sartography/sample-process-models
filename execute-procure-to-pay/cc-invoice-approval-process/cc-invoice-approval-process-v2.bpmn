@@ -57,6 +57,7 @@
         <bpmn:flowNodeRef>Event_1egoehb</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_02lq9lo</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_1lgiv0q</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Event_0gxn1v4</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_1so23vf" name="Finance Team">
         <bpmn:flowNodeRef>Activity_0cdgqi0</bpmn:flowNodeRef>
@@ -101,13 +102,12 @@
     <bpmn:sequenceFlow id="Flow_1qq2iv5" sourceRef="Gateway_05ov5p5" targetRef="Activity_0p88elm" />
     <bpmn:sequenceFlow id="Flow_1094cjp" sourceRef="Activity_0o1vc0a" targetRef="Gateway_1717c0p" />
     <bpmn:sequenceFlow id="Flow_1dtnpw3" sourceRef="Activity_0p88elm" targetRef="Gateway_1717c0p" />
-    <bpmn:sequenceFlow id="Flow_0exo5rh" sourceRef="Event_1lgiv0q" targetRef="Gateway_16gxu6s" />
     <bpmn:sequenceFlow id="Flow_0nhu0ew" sourceRef="Event_0oas81w" targetRef="Event_0bvopx2" />
     <bpmn:sequenceFlow id="Flow_13ng1f4" sourceRef="Event_0svbvjn" targetRef="Activity_02lq9lo" />
     <bpmn:sequenceFlow id="Flow_18cic3h" sourceRef="Activity_02lq9lo" targetRef="Gateway_16gxu6s" />
     <bpmn:exclusiveGateway id="Gateway_16gxu6s">
-      <bpmn:incoming>Flow_0exo5rh</bpmn:incoming>
       <bpmn:incoming>Flow_18cic3h</bpmn:incoming>
+      <bpmn:incoming>Flow_1m70ywr</bpmn:incoming>
       <bpmn:outgoing>Flow_11b24we</bpmn:outgoing>
     </bpmn:exclusiveGateway>
     <bpmn:sequenceFlow id="Flow_02moyg7" sourceRef="Submit_the_invoice" targetRef="Activity_18pr24b" />
@@ -300,9 +300,14 @@ Please fix.
       <bpmn:outgoing>Flow_18cic3h</bpmn:outgoing>
     </bpmn:manualTask>
     <bpmn:startEvent id="Event_1lgiv0q">
-      <bpmn:outgoing>Flow_0exo5rh</bpmn:outgoing>
       <bpmn:messageEventDefinition id="MessageEventDefinition_0c23q9z" messageRef="Message_Submit_Invoice" />
     </bpmn:startEvent>
+    <bpmn:startEvent id="Event_0gxn1v4">
+      <bpmn:outgoing>Flow_1m70ywr</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_1m70ywr" sourceRef="Event_0gxn1v4" targetRef="Gateway_16gxu6s" />
+    <bpmn:dataObjectReference id="DataObjectReference_Invoice" name="DataObject_Invoice" dataObjectRef="DataObject_0k9ad65" />
+    <bpmn:dataObject id="DataObject_0k9ad65" />
     <bpmn:textAnnotation id="TextAnnotation_07oqnmr">
       <bpmn:text>Please check your invoice data</bpmn:text>
     </bpmn:textAnnotation>
@@ -464,7 +469,16 @@ Please fix.
         <dc:Bounds x="750" y="320" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_0fufj5j_di" bpmnElement="Event_1lgiv0q">
-        <dc:Bounds x="342" y="504" width="36" height="36" />
+        <dc:Bounds x="362" y="412" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0gxn1v4_di" bpmnElement="Event_0gxn1v4">
+        <dc:Bounds x="382" y="504" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DataObjectReference_1ueltxu_di" bpmnElement="DataObjectReference_Invoice">
+        <dc:Bounds x="782" y="645" width="36" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="759" y="691" width="85" height="27" />
+        </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="TextAnnotation_07oqnmr_di" bpmnElement="TextAnnotation_07oqnmr">
         <dc:Bounds x="1090" y="220" width="100" height="54" />
@@ -600,10 +614,6 @@ Please fix.
         <di:waypoint x="1639" y="572" />
         <di:waypoint x="1639" y="547" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0exo5rh_di" bpmnElement="Flow_0exo5rh">
-        <di:waypoint x="378" y="522" />
-        <di:waypoint x="535" y="522" />
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0nhu0ew_di" bpmnElement="Flow_0nhu0ew">
         <di:waypoint x="1140" y="540" />
         <di:waypoint x="1140" y="622" />
@@ -625,6 +635,10 @@ Please fix.
       <bpmndi:BPMNEdge id="Flow_1ck27i7_di" bpmnElement="Flow_1ck27i7">
         <di:waypoint x="940" y="522" />
         <di:waypoint x="1015" y="522" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1m70ywr_di" bpmnElement="Flow_1m70ywr">
+        <di:waypoint x="418" y="522" />
+        <di:waypoint x="535" y="522" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Association_170uhu5_di" bpmnElement="Association_170uhu5">
         <di:waypoint x="1147" y="306" />
