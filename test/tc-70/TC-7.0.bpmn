@@ -1,19 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:spiffworkflow="http://spiffworkflow.org/bpmn/schema/1.0/core" id="Definitions_96f6665" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.0.0-dev">
   <bpmn:collaboration id="Collaboration_1fqnozz">
-    <bpmn:participant id="Participant_1jk5xyi" processRef="Process_bd2e724" />
+    <bpmn:participant id="Participant_1jk5xyi" processRef="Process_new" />
     <bpmn:participant id="Participant_0h750we" name="Message Receiver N" />
     <bpmn:participant id="Participant_0f30j89" name="Message Receiver F" />
     <bpmn:messageFlow id="Flow_16xu9c1" sourceRef="Event_1r7y0c1" targetRef="Participant_0h750we" />
     <bpmn:messageFlow id="Flow_1wjt03e" sourceRef="Participant_0h750we" targetRef="Activity_08xljas" />
     <bpmn:messageFlow id="Flow_15sm97y" sourceRef="Activity_1kb8wkd" targetRef="Participant_0f30j89" />
     <bpmn:messageFlow id="Flow_12tkb47" sourceRef="Participant_0f30j89" targetRef="Event_1nlyxwl" />
-    <bpmn:correlationKey name="CorrelationKey_1" />
+    <bpmn:correlationKey name="CorrelationKey_1">
+      <bpmn:correlationPropertyRef>mcp_topica_one</bpmn:correlationPropertyRef>
+    </bpmn:correlationKey>
     <bpmn:correlationKey name="CorrelationKey_2">
       <bpmn:correlationPropertyRef>mcp_topica_two</bpmn:correlationPropertyRef>
     </bpmn:correlationKey>
   </bpmn:collaboration>
-  <bpmn:process id="Process_bd2e724" isExecutable="true">
+  <bpmn:process id="Process_new" isExecutable="true">
     <bpmn:startEvent id="StartEvent_1">
       <bpmn:outgoing>Flow_1bk0sdv</bpmn:outgoing>
     </bpmn:startEvent>
@@ -22,15 +24,15 @@
     <bpmn:sequenceFlow id="Flow_10mnhhi" sourceRef="Event_1nlyxwl" targetRef="Event_05735v0" />
     <bpmn:endEvent id="Event_05735v0">
       <bpmn:incoming>Flow_10mnhhi</bpmn:incoming>
-      <bpmn:incoming>Flow_11zewby</bpmn:incoming>
     </bpmn:endEvent>
     <bpmn:intermediateCatchEvent id="Event_1nlyxwl">
+      <bpmn:incoming>Flow_1pjkm2z</bpmn:incoming>
       <bpmn:outgoing>Flow_10mnhhi</bpmn:outgoing>
       <bpmn:messageEventDefinition id="MessageEventDefinition_1b51snf" messageRef="Message_2" />
     </bpmn:intermediateCatchEvent>
     <bpmn:sendTask id="Activity_1kb8wkd" name="Send message" messageRef="Message_1">
       <bpmn:incoming>Flow_1b3025q</bpmn:incoming>
-      <bpmn:outgoing>Flow_11zewby</bpmn:outgoing>
+      <bpmn:outgoing>Flow_1pjkm2z</bpmn:outgoing>
     </bpmn:sendTask>
     <bpmn:receiveTask id="Activity_08xljas" name="Receive message" messageRef="Message_N2">
       <bpmn:incoming>Flow_01oalj4</bpmn:incoming>
@@ -54,7 +56,7 @@ topic_two_b = f"topic_two_b_conversation_{timestamp}"
 del time</bpmn:script>
     </bpmn:scriptTask>
     <bpmn:sequenceFlow id="Flow_1b3025q" sourceRef="Activity_08xljas" targetRef="Activity_1kb8wkd" />
-    <bpmn:sequenceFlow id="Flow_11zewby" sourceRef="Activity_1kb8wkd" targetRef="Event_05735v0" />
+    <bpmn:sequenceFlow id="Flow_1pjkm2z" sourceRef="Activity_1kb8wkd" targetRef="Event_1nlyxwl" />
   </bpmn:process>
   <bpmn:correlationProperty id="mcp_topica_two" name="MCP TopicA Two">
     <bpmn:correlationPropertyRetrievalExpression messageRef="Message_1">
@@ -64,7 +66,7 @@ del time</bpmn:script>
       <bpmn:formalExpression>topica_two</bpmn:formalExpression>
     </bpmn:correlationPropertyRetrievalExpression>
   </bpmn:correlationProperty>
-  <bpmn:correlationProperty id="mcp_topica_one_hello" name="MCP TopicA One">
+  <bpmn:correlationProperty id="mcp_topica_one" name="MCP TopicA One">
     <bpmn:correlationPropertyRetrievalExpression messageRef="Message_N">
       <bpmn:formalExpression>topica_one</bpmn:formalExpression>
     </bpmn:correlationPropertyRetrievalExpression>
@@ -75,9 +77,7 @@ del time</bpmn:script>
   <bpmn:message id="Message_N" name="Message_N">
     <bpmn:extensionElements>
       <spiffworkflow:messagePayload>{
-																																																																																																													  "topica_one": topic_one_a,
-																																																																																																													  "initial_var_one": 3
-																																																																																																													  }</spiffworkflow:messagePayload>
+"topica_one": topic_one_a,																																																																																																									  "initial_var_one": 3																																																																																																									  }</spiffworkflow:messagePayload>
     </bpmn:extensionElements>
   </bpmn:message>
   <bpmn:message id="Message_N2" name="Message_N2">
@@ -88,10 +88,10 @@ del time</bpmn:script>
   <bpmn:message id="Message_1" name="Message_1">
     <bpmn:extensionElements>
       <spiffworkflow:messagePayload>{
-																																																																																																																												      "topica_two": topic_two_a,
-																																																																																																																												      "topicb_two": topic_two_b,
-																																																																																																																												      "initial_var_two": 5
-																																																																																																																												      }</spiffworkflow:messagePayload>
+"topica_two": topic_two_a,
+"topicb_two": topic_two_b,
+"initial_var_two": 6
+}</spiffworkflow:messagePayload>
     </bpmn:extensionElements>
   </bpmn:message>
   <bpmn:message id="Message_2" name="Message_2">
@@ -148,11 +148,9 @@ del time</bpmn:script>
         <di:waypoint x="550" y="150" />
         <di:waypoint x="610" y="150" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_11zewby_di" bpmnElement="Flow_11zewby">
-        <di:waypoint x="660" y="190" />
-        <di:waypoint x="660" y="210" />
-        <di:waypoint x="870" y="210" />
-        <di:waypoint x="870" y="168" />
+      <bpmndi:BPMNEdge id="Flow_1pjkm2z_di" bpmnElement="Flow_1pjkm2z">
+        <di:waypoint x="710" y="150" />
+        <di:waypoint x="762" y="150" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="Participant_10ay6rk_di" bpmnElement="Participant_0h750we" isHorizontal="true">
         <dc:Bounds x="120" y="260" width="600" height="60" />
