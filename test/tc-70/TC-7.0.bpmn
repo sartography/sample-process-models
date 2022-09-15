@@ -8,9 +8,7 @@
     <bpmn:messageFlow id="Flow_1wjt03e" sourceRef="Participant_0h750we" targetRef="Activity_08xljas" />
     <bpmn:messageFlow id="Flow_15sm97y" sourceRef="Activity_1kb8wkd" targetRef="Participant_0f30j89" />
     <bpmn:messageFlow id="Flow_12tkb47" sourceRef="Participant_0f30j89" targetRef="Event_1nlyxwl" />
-    <bpmn:correlationKey name="CorrelationKey_1">
-      <bpmn:correlationPropertyRef>mcp_topica_one</bpmn:correlationPropertyRef>
-    </bpmn:correlationKey>
+    <bpmn:correlationKey name="CorrelationKey_1" />
     <bpmn:correlationKey name="CorrelationKey_2">
       <bpmn:correlationPropertyRef>mcp_topica_two</bpmn:correlationPropertyRef>
     </bpmn:correlationKey>
@@ -58,18 +56,20 @@ del time</bpmn:script>
     <bpmn:sequenceFlow id="Flow_1b3025q" sourceRef="Activity_08xljas" targetRef="Activity_1kb8wkd" />
     <bpmn:sequenceFlow id="Flow_11zewby" sourceRef="Activity_1kb8wkd" targetRef="Event_05735v0" />
   </bpmn:process>
-  <bpmn:correlationProperty id="mcp_topica_one" name="MCP TopicA One">
+  <bpmn:correlationProperty id="mcp_topica_two" name="MCP TopicA Two">
+    <bpmn:correlationPropertyRetrievalExpression messageRef="Message_1">
+      <bpmn:formalExpression>topica_two</bpmn:formalExpression>
+    </bpmn:correlationPropertyRetrievalExpression>
+    <bpmn:correlationPropertyRetrievalExpression messageRef="Message_2">
+      <bpmn:formalExpression>topica_two</bpmn:formalExpression>
+    </bpmn:correlationPropertyRetrievalExpression>
+  </bpmn:correlationProperty>
+  <bpmn:correlationProperty id="mcp_topica_one_hello" name="MCP TopicA One">
     <bpmn:correlationPropertyRetrievalExpression messageRef="Message_N">
       <bpmn:formalExpression>topica_one</bpmn:formalExpression>
     </bpmn:correlationPropertyRetrievalExpression>
     <bpmn:correlationPropertyRetrievalExpression messageRef="Message_N2">
       <bpmn:formalExpression>topica_one</bpmn:formalExpression>
-    </bpmn:correlationPropertyRetrievalExpression>
-    <bpmn:correlationPropertyRetrievalExpression>
-      <bpmn:formalExpression />
-    </bpmn:correlationPropertyRetrievalExpression>
-    <bpmn:correlationPropertyRetrievalExpression>
-      <bpmn:formalExpression />
     </bpmn:correlationPropertyRetrievalExpression>
   </bpmn:correlationProperty>
   <bpmn:message id="Message_N" name="Message_N">
@@ -99,14 +99,6 @@ del time</bpmn:script>
       <spiffworkflow:messageVariable>var2</spiffworkflow:messageVariable>
     </bpmn:extensionElements>
   </bpmn:message>
-  <bpmn:correlationProperty id="mcp_topica_two" name="MCP TopicA Two">
-    <bpmn:correlationPropertyRetrievalExpression messageRef="Message_1">
-      <bpmn:formalExpression>topica_two</bpmn:formalExpression>
-    </bpmn:correlationPropertyRetrievalExpression>
-    <bpmn:correlationPropertyRetrievalExpression messageRef="Message_2">
-      <bpmn:formalExpression>topica_two</bpmn:formalExpression>
-    </bpmn:correlationPropertyRetrievalExpression>
-  </bpmn:correlationProperty>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_1fqnozz">
       <bpmndi:BPMNShape id="Participant_1jk5xyi_di" bpmnElement="Participant_1jk5xyi" isHorizontal="true">
