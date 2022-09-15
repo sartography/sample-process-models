@@ -31,7 +31,7 @@
         <bpmn:flowNodeRef>Gateway_16gxu6s</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Gateway_0wt7ine</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_0svbvjn</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Event_0oas81w</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Event_Invoice_is_accepted</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Gateway_1lbghql</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_0x83ruk</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_0m3ri6v</bpmn:flowNodeRef>
@@ -53,7 +53,7 @@
         <bpmn:flowNodeRef>Activity_08koius</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_0gkejaj</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_1ucvkk4</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Activity_18pr24b</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>SubProcess_Data_validation_rules</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_1egoehb</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_02lq9lo</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_1lgiv0q</bpmn:flowNodeRef>
@@ -64,7 +64,7 @@
         <bpmn:flowNodeRef>Event_16u0f7b</bpmn:flowNodeRef>
       </bpmn:lane>
     </bpmn:laneSet>
-    <bpmn:sequenceFlow id="Flow_1x4rtop" name="Yes" sourceRef="Gateway_0wt7ine" targetRef="Event_0oas81w" />
+    <bpmn:sequenceFlow id="Flow_1x4rtop" name="Yes" sourceRef="Gateway_0wt7ine" targetRef="Event_Invoice_is_accepted" />
     <bpmn:sequenceFlow id="Flow_05ffq52" name="No" sourceRef="Gateway_0wt7ine" targetRef="Event_0svbvjn">
       <bpmn:conditionExpression>not(isInvoiceSubmitPass)</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
@@ -78,7 +78,13 @@
           <spiffworkflow:property name="formJsonSchemaFilename" value="Submit-the-invoice_JSONSchema.json" />
           <spiffworkflow:property name="formUiSchemaFilename" value="Submit-the-invoice_UISchema.json" />
         </spiffworkflow:properties>
-        <spiffworkflow:postScript />
+        <spiffworkflow:postScript>invoice = {
+	"contributorName":contributorName
+	"contributorId":contributorId,
+	"invoiceId":invoiceId,
+	"invoiceAmount":invoiceAmount,
+	"dueDate":dueDate
+}</spiffworkflow:postScript>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_11b24we</bpmn:incoming>
       <bpmn:outgoing>Flow_02moyg7</bpmn:outgoing>
@@ -102,7 +108,7 @@
     <bpmn:sequenceFlow id="Flow_1qq2iv5" sourceRef="Gateway_05ov5p5" targetRef="Activity_0p88elm" />
     <bpmn:sequenceFlow id="Flow_1094cjp" sourceRef="Activity_0o1vc0a" targetRef="Gateway_1717c0p" />
     <bpmn:sequenceFlow id="Flow_1dtnpw3" sourceRef="Activity_0p88elm" targetRef="Gateway_1717c0p" />
-    <bpmn:sequenceFlow id="Flow_0nhu0ew" sourceRef="Event_0oas81w" targetRef="Event_0bvopx2" />
+    <bpmn:sequenceFlow id="Flow_0nhu0ew" sourceRef="Event_Invoice_is_accepted" targetRef="Event_0bvopx2" />
     <bpmn:sequenceFlow id="Flow_13ng1f4" sourceRef="Event_0svbvjn" targetRef="Activity_02lq9lo" />
     <bpmn:sequenceFlow id="Flow_18cic3h" sourceRef="Activity_02lq9lo" targetRef="Gateway_16gxu6s" />
     <bpmn:exclusiveGateway id="Gateway_16gxu6s">
@@ -110,8 +116,8 @@
       <bpmn:incoming>Flow_1m70ywr</bpmn:incoming>
       <bpmn:outgoing>Flow_11b24we</bpmn:outgoing>
     </bpmn:exclusiveGateway>
-    <bpmn:sequenceFlow id="Flow_02moyg7" sourceRef="Submit_the_invoice" targetRef="Activity_18pr24b" />
-    <bpmn:sequenceFlow id="Flow_1ck27i7" sourceRef="Activity_18pr24b" targetRef="Gateway_0wt7ine" />
+    <bpmn:sequenceFlow id="Flow_02moyg7" sourceRef="Submit_the_invoice" targetRef="SubProcess_Data_validation_rules" />
+    <bpmn:sequenceFlow id="Flow_1ck27i7" sourceRef="SubProcess_Data_validation_rules" targetRef="Gateway_0wt7ine" />
     <bpmn:exclusiveGateway id="Gateway_0wt7ine" name="Successful?" default="Flow_1x4rtop">
       <bpmn:incoming>Flow_1ck27i7</bpmn:incoming>
       <bpmn:outgoing>Flow_1x4rtop</bpmn:outgoing>
@@ -122,7 +128,7 @@
       <bpmn:incoming>Flow_05ffq52</bpmn:incoming>
       <bpmn:outgoing>Flow_13ng1f4</bpmn:outgoing>
     </bpmn:intermediateThrowEvent>
-    <bpmn:intermediateThrowEvent id="Event_0oas81w" name="Invoice is accepted">
+    <bpmn:intermediateThrowEvent id="Event_Invoice_is_accepted" name="Invoice is accepted">
       <bpmn:documentation>Process milestone should update the process metadata field “milestone reached”</bpmn:documentation>
       <bpmn:incoming>Flow_1x4rtop</bpmn:incoming>
       <bpmn:outgoing>Flow_0nhu0ew</bpmn:outgoing>
@@ -217,7 +223,7 @@
       <bpmn:incoming>Flow_0nhu0ew</bpmn:incoming>
     </bpmn:endEvent>
     <bpmn:sendTask id="Activity_08koius" name="Send the Error to front-end" />
-    <bpmn:subProcess id="Activity_18pr24b" name="2b. Data validation rules">
+    <bpmn:subProcess id="SubProcess_Data_validation_rules" name="2b. Data validation rules">
       <bpmn:incoming>Flow_02moyg7</bpmn:incoming>
       <bpmn:outgoing>Flow_1ck27i7</bpmn:outgoing>
       <bpmn:startEvent id="Event_1qkuk5g">
@@ -244,7 +250,7 @@ del datetime</bpmn:script>
         <bpmn:incoming>Flow_0tzjowk</bpmn:incoming>
       </bpmn:endEvent>
       <bpmn:sequenceFlow id="Flow_1avkxpe" sourceRef="Event_1qkuk5g" targetRef="Activity_1eafxuh" />
-      <bpmn:scriptTask id="Activity_1eafxuh" name="Check Contributor Name">
+      <bpmn:scriptTask id="Activity_1eafxuh" name="Check Contributor Name" scriptFormat="python">
         <bpmn:incoming>Flow_1avkxpe</bpmn:incoming>
         <bpmn:outgoing>Flow_18qyq02</bpmn:outgoing>
         <bpmn:script>isNameNum = False
@@ -255,7 +261,7 @@ for c in contributorName:
       </bpmn:scriptTask>
       <bpmn:sequenceFlow id="Flow_18qyq02" sourceRef="Activity_1eafxuh" targetRef="Activity_0jimgyd" />
       <bpmn:sequenceFlow id="Flow_1okg2rg" sourceRef="Activity_0jimgyd" targetRef="Activity_12usv4w" />
-      <bpmn:scriptTask id="Activity_0jimgyd" name="Check Invoice Amount">
+      <bpmn:scriptTask id="Activity_0jimgyd" name="Check Invoice Amount" scriptFormat="python">
         <bpmn:incoming>Flow_18qyq02</bpmn:incoming>
         <bpmn:outgoing>Flow_1okg2rg</bpmn:outgoing>
         <bpmn:script>import decimal
@@ -306,8 +312,8 @@ Please fix.
       <bpmn:outgoing>Flow_1m70ywr</bpmn:outgoing>
     </bpmn:startEvent>
     <bpmn:sequenceFlow id="Flow_1m70ywr" sourceRef="Event_0gxn1v4" targetRef="Gateway_16gxu6s" />
-    <bpmn:dataObjectReference id="DataObjectReference_Invoice" name="DataObject_Invoice" dataObjectRef="DataObject_0k9ad65" />
-    <bpmn:dataObject id="DataObject_0k9ad65" />
+    <bpmn:dataObjectReference id="DataObjectReference_Invoice" name="invoice" dataObjectRef="invoice" />
+    <bpmn:dataObject id="invoice" />
     <bpmn:textAnnotation id="TextAnnotation_07oqnmr">
       <bpmn:text>Please check your invoice data</bpmn:text>
     </bpmn:textAnnotation>
@@ -359,7 +365,7 @@ Please fix.
           <dc:Bounds x="936" y="433" width="76" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_0oas81w_di" bpmnElement="Event_0oas81w">
+      <bpmndi:BPMNShape id="Event_0oas81w_di" bpmnElement="Event_Invoice_is_accepted">
         <dc:Bounds x="1122" y="504" width="36" height="36" />
         <bpmndi:BPMNLabel>
           <dc:Bounds x="1117" y="467" width="46" height="27" />
@@ -461,7 +467,7 @@ Please fix.
       <bpmndi:BPMNShape id="Activity_0qaxjv6_di" bpmnElement="Activity_08koius">
         <dc:Bounds x="1110" y="306" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0z13hw3_di" bpmnElement="Activity_18pr24b">
+      <bpmndi:BPMNShape id="Activity_0z13hw3_di" bpmnElement="SubProcess_Data_validation_rules">
         <dc:Bounds x="840" y="482" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
@@ -477,7 +483,7 @@ Please fix.
       <bpmndi:BPMNShape id="DataObjectReference_1ueltxu_di" bpmnElement="DataObjectReference_Invoice">
         <dc:Bounds x="782" y="645" width="36" height="50" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="759" y="691" width="85" height="27" />
+          <dc:Bounds x="786" y="691" width="35" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="TextAnnotation_07oqnmr_di" bpmnElement="TextAnnotation_07oqnmr">
@@ -708,7 +714,7 @@ Please fix.
     <bpmndi:BPMNPlane bpmnElement="Activity_1ucvkk4" />
   </bpmndi:BPMNDiagram>
   <bpmndi:BPMNDiagram id="BPMNDiagram_0e5tdrz">
-    <bpmndi:BPMNPlane id="BPMNPlane_04v9fws" bpmnElement="Activity_18pr24b">
+    <bpmndi:BPMNPlane id="BPMNPlane_04v9fws" bpmnElement="SubProcess_Data_validation_rules">
       <bpmndi:BPMNShape id="Event_1qkuk5g_di" bpmnElement="Event_1qkuk5g">
         <dc:Bounds x="232" y="192" width="36" height="36" />
       </bpmndi:BPMNShape>
