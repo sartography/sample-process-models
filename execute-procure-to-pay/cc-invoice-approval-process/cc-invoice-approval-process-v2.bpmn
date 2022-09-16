@@ -57,7 +57,6 @@
         <bpmn:flowNodeRef>Event_1egoehb</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_02lq9lo</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_1lgiv0q</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Event_0gxn1v4</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_1so23vf" name="Finance Team">
         <bpmn:flowNodeRef>Activity_0cdgqi0</bpmn:flowNodeRef>
@@ -79,7 +78,7 @@
           <spiffworkflow:property name="formUiSchemaFilename" value="Submit-the-invoice_UISchema.json" />
         </spiffworkflow:properties>
         <spiffworkflow:postScript>invoice = {
-	"contributorName":contributorName
+	"contributorName":contributorName,
 	"contributorId":contributorId,
 	"invoiceId":invoiceId,
 	"invoiceAmount":invoiceAmount,
@@ -88,6 +87,9 @@
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_11b24we</bpmn:incoming>
       <bpmn:outgoing>Flow_02moyg7</bpmn:outgoing>
+      <bpmn:dataOutputAssociation id="DataOutputAssociation_1myrn23">
+        <bpmn:targetRef>DataObjectReference_Invoice</bpmn:targetRef>
+      </bpmn:dataOutputAssociation>
     </bpmn:userTask>
     <bpmn:sequenceFlow id="Flow_11b24we" sourceRef="Gateway_16gxu6s" targetRef="Submit_the_invoice" />
     <bpmn:sequenceFlow id="Flow_1ex5hfx" sourceRef="Event_15y55nw" targetRef="Activity_0gkejaj" />
@@ -113,7 +115,7 @@
     <bpmn:sequenceFlow id="Flow_18cic3h" sourceRef="Activity_02lq9lo" targetRef="Gateway_16gxu6s" />
     <bpmn:exclusiveGateway id="Gateway_16gxu6s">
       <bpmn:incoming>Flow_18cic3h</bpmn:incoming>
-      <bpmn:incoming>Flow_1m70ywr</bpmn:incoming>
+      <bpmn:incoming>Flow_12bfyqx</bpmn:incoming>
       <bpmn:outgoing>Flow_11b24we</bpmn:outgoing>
     </bpmn:exclusiveGateway>
     <bpmn:sequenceFlow id="Flow_02moyg7" sourceRef="Submit_the_invoice" targetRef="SubProcess_Data_validation_rules" />
@@ -226,6 +228,11 @@
     <bpmn:subProcess id="SubProcess_Data_validation_rules" name="2b. Data validation rules">
       <bpmn:incoming>Flow_02moyg7</bpmn:incoming>
       <bpmn:outgoing>Flow_1ck27i7</bpmn:outgoing>
+      <bpmn:property id="Property_137rqqj" name="__targetRef_placeholder" />
+      <bpmn:dataInputAssociation id="DataInputAssociation_1kpgeww">
+        <bpmn:sourceRef>DataObjectReference_Invoice</bpmn:sourceRef>
+        <bpmn:targetRef>Property_137rqqj</bpmn:targetRef>
+      </bpmn:dataInputAssociation>
       <bpmn:startEvent id="Event_1qkuk5g">
         <bpmn:outgoing>Flow_1avkxpe</bpmn:outgoing>
       </bpmn:startEvent>
@@ -305,15 +312,13 @@ Please fix.
       <bpmn:incoming>Flow_13ng1f4</bpmn:incoming>
       <bpmn:outgoing>Flow_18cic3h</bpmn:outgoing>
     </bpmn:manualTask>
-    <bpmn:startEvent id="Event_1lgiv0q">
-      <bpmn:messageEventDefinition id="MessageEventDefinition_0c23q9z" messageRef="Message_Submit_Invoice" />
-    </bpmn:startEvent>
-    <bpmn:startEvent id="Event_0gxn1v4">
-      <bpmn:outgoing>Flow_1m70ywr</bpmn:outgoing>
-    </bpmn:startEvent>
-    <bpmn:sequenceFlow id="Flow_1m70ywr" sourceRef="Event_0gxn1v4" targetRef="Gateway_16gxu6s" />
     <bpmn:dataObjectReference id="DataObjectReference_Invoice" name="invoice" dataObjectRef="invoice" />
     <bpmn:dataObject id="invoice" />
+    <bpmn:startEvent id="Event_1lgiv0q">
+      <bpmn:outgoing>Flow_12bfyqx</bpmn:outgoing>
+      <bpmn:messageEventDefinition id="MessageEventDefinition_0c23q9z" messageRef="Message_Submit_Invoice" />
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_12bfyqx" sourceRef="Event_1lgiv0q" targetRef="Gateway_16gxu6s" />
     <bpmn:textAnnotation id="TextAnnotation_07oqnmr">
       <bpmn:text>Please check your invoice data</bpmn:text>
     </bpmn:textAnnotation>
@@ -404,6 +409,9 @@ Please fix.
           <dc:Bounds x="2732" y="402" width="54" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0fufj5j_di" bpmnElement="Event_1lgiv0q">
+        <dc:Bounds x="362" y="504" width="36" height="36" />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1rn2mgi_di" bpmnElement="Activity_0gkejaj">
         <dc:Bounds x="1979" y="482" width="100" height="80" />
       </bpmndi:BPMNShape>
@@ -473,12 +481,6 @@ Please fix.
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0qtkhpi_di" bpmnElement="Activity_02lq9lo">
         <dc:Bounds x="750" y="320" width="100" height="80" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_0fufj5j_di" bpmnElement="Event_1lgiv0q">
-        <dc:Bounds x="362" y="412" width="36" height="36" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_0gxn1v4_di" bpmnElement="Event_0gxn1v4">
-        <dc:Bounds x="382" y="504" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="DataObjectReference_1ueltxu_di" bpmnElement="DataObjectReference_Invoice">
         <dc:Bounds x="782" y="645" width="36" height="50" />
@@ -642,13 +644,13 @@ Please fix.
         <di:waypoint x="940" y="522" />
         <di:waypoint x="1015" y="522" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_1m70ywr_di" bpmnElement="Flow_1m70ywr">
-        <di:waypoint x="418" y="522" />
-        <di:waypoint x="535" y="522" />
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Association_170uhu5_di" bpmnElement="Association_170uhu5">
         <di:waypoint x="1147" y="306" />
         <di:waypoint x="1137" y="274" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_12bfyqx_di" bpmnElement="Flow_12bfyqx">
+        <di:waypoint x="398" y="522" />
+        <di:waypoint x="535" y="522" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="Participant_0a8arrz_di" bpmnElement="Participant_0a8arrz" isHorizontal="true">
         <dc:Bounds x="1103" y="1040" width="320" height="80" />
@@ -662,6 +664,14 @@ Please fix.
       <bpmndi:BPMNShape id="TextAnnotation_1uaw1w7_di" bpmnElement="TextAnnotation_1uaw1w7">
         <dc:Bounds x="490" y="-170" width="400" height="30" />
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="DataOutputAssociation_1myrn23_di" bpmnElement="DataOutputAssociation_1myrn23">
+        <di:waypoint x="731" y="562" />
+        <di:waypoint x="785" y="645" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DataInputAssociation_1kpgeww_di" bpmnElement="DataInputAssociation_1kpgeww">
+        <di:waypoint x="818" y="645" />
+        <di:waypoint x="876" y="562" />
+      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Association_1eygti7_di" bpmnElement="Association_1eygti7">
         <di:waypoint x="1855" y="-1415" />
         <di:waypoint x="690" y="-190" />
