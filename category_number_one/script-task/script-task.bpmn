@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:spiffworkflow="http://spiffworkflow.org/bpmn/schema/1.0/core" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_96f6665" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.0.0-dev">
+  <bpmn:process id="Process_bd2e724" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>Flow_12id8ez</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_12id8ez" sourceRef="StartEvent_1" targetRef="Activity_06mbkcn" />
+    <bpmn:scriptTask id="Activity_06mbkcn" name="Set Variables">
+      <bpmn:incoming>Flow_12id8ez</bpmn:incoming>
+      <bpmn:outgoing>Flow_1ykl7il</bpmn:outgoing>
+      <bpmn:script>a = 1
+b = "Monday"
+c = True</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:sequenceFlow id="Flow_1ykl7il" sourceRef="Activity_06mbkcn" targetRef="Activity_1sopb90" />
+    <bpmn:manualTask id="Activity_1sopb90" name="Display Variables">
+      <bpmn:extensionElements>
+        <spiffworkflow:instructionsForEndUser>b is {{ b }}
+a is {{ a }}
+c is {{ c }}</spiffworkflow:instructionsForEndUser>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1ykl7il</bpmn:incoming>
+      <bpmn:outgoing>Flow_13jnrzp</bpmn:outgoing>
+    </bpmn:manualTask>
+    <bpmn:endEvent id="Event_0tdnvqi">
+      <bpmn:incoming>Flow_13jnrzp</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_13jnrzp" sourceRef="Activity_1sopb90" targetRef="Event_0tdnvqi" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_bd2e724">
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="179" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_196ijhw_di" bpmnElement="Activity_06mbkcn">
+        <dc:Bounds x="270" y="137" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1x6sg6w_di" bpmnElement="Activity_1sopb90">
+        <dc:Bounds x="430" y="137" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0tdnvqi_di" bpmnElement="Event_0tdnvqi">
+        <dc:Bounds x="592" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_12id8ez_di" bpmnElement="Flow_12id8ez">
+        <di:waypoint x="215" y="177" />
+        <di:waypoint x="270" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1ykl7il_di" bpmnElement="Flow_1ykl7il">
+        <di:waypoint x="370" y="177" />
+        <di:waypoint x="430" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_13jnrzp_di" bpmnElement="Flow_13jnrzp">
+        <di:waypoint x="530" y="177" />
+        <di:waypoint x="592" y="177" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
