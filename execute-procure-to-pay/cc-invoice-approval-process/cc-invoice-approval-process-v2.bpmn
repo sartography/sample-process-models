@@ -3,9 +3,9 @@
   <bpmn:collaboration id="Collaboration_130jph2">
     <bpmn:participant id="Participant_1fsb6gv" name="Core Contributor" processRef="Process_cc_invoice_approval_process_v2_b" />
     <bpmn:participant id="Participant_11ab2hx" name="Process management platform" processRef="Process_cc_invoice_approval_process_v2_a" />
-    <bpmn:participant id="Participant_0a8arrz" name="AWS DynamoDB" processRef="Process_08z2t5r" />
-    <bpmn:participant id="Participant_1qabwrg" name="AWS S3" processRef="Process_122m26r" />
-    <bpmn:participant id="Participant_0b27sri" name="Xero" processRef="Process_0fg1bh1" />
+    <bpmn:participant id="Participant_0a8arrz" name="AWS DynamoDB" />
+    <bpmn:participant id="Participant_1qabwrg" name="AWS S3" />
+    <bpmn:participant id="Participant_0b27sri" name="Xero" />
     <bpmn:messageFlow id="Flow_0ppupld" sourceRef="Activity_0o1vc0a" targetRef="Participant_0a8arrz" />
     <bpmn:messageFlow id="Flow_0yfnc92" sourceRef="Activity_0p88elm" targetRef="Participant_1qabwrg" />
     <bpmn:messageFlow id="Flow_0e6f26d" sourceRef="Activity_08koius" targetRef="Participant_1fsb6gv" />
@@ -315,10 +315,11 @@ Please fix.
     <bpmn:dataObject id="DataObject_1yd7hl5" />
     <bpmn:dataObjectReference id="DataObjectReference_Invoice" name="invoice" dataObjectRef="invoice" />
     <bpmn:dataObject id="invoice" />
+    <bpmn:sequenceFlow id="Flow_1hskul7" sourceRef="Event_12qepud" targetRef="Gateway_16gxu6s" />
     <bpmn:startEvent id="Event_12qepud">
       <bpmn:outgoing>Flow_1hskul7</bpmn:outgoing>
+      <bpmn:messageEventDefinition id="MessageEventDefinition_0073dqo" messageRef="Message_Submit_Invoice" />
     </bpmn:startEvent>
-    <bpmn:sequenceFlow id="Flow_1hskul7" sourceRef="Event_12qepud" targetRef="Gateway_16gxu6s" />
     <bpmn:textAnnotation id="TextAnnotation_07oqnmr">
       <bpmn:text>Please check your invoice data</bpmn:text>
     </bpmn:textAnnotation>
@@ -409,7 +410,7 @@ Please fix.
           <dc:Bounds x="2732" y="402" width="54" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_12qepud_di" bpmnElement="Event_12qepud">
+      <bpmndi:BPMNShape id="Event_148eyb8_di" bpmnElement="Event_12qepud">
         <dc:Bounds x="382" y="504" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1rn2mgi_di" bpmnElement="Activity_0gkejaj">
@@ -644,13 +645,13 @@ Please fix.
         <di:waypoint x="940" y="522" />
         <di:waypoint x="1015" y="522" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Association_170uhu5_di" bpmnElement="Association_170uhu5">
-        <di:waypoint x="1147" y="306" />
-        <di:waypoint x="1137" y="274" />
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1hskul7_di" bpmnElement="Flow_1hskul7">
         <di:waypoint x="418" y="522" />
         <di:waypoint x="535" y="522" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Association_170uhu5_di" bpmnElement="Association_170uhu5">
+        <di:waypoint x="1147" y="306" />
+        <di:waypoint x="1137" y="274" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="Participant_0a8arrz_di" bpmnElement="Participant_0a8arrz" isHorizontal="true">
         <dc:Bounds x="1103" y="1040" width="320" height="80" />
