@@ -4,6 +4,9 @@
     <bpmn:participant id="Participant_1jk5xyi" processRef="Process_test_tc_42_TC_4_1_bd2e724" />
     <bpmn:participant id="Participant_1van3p6" />
     <bpmn:messageFlow id="Flow_0ym94lp" sourceRef="Event_0jmg8ts" targetRef="Participant_1van3p6" />
+    <bpmn:correlationKey name="CorrelationKey_1">
+      <bpmn:correlationPropertyRef>CorrelationProperty_1</bpmn:correlationPropertyRef>
+    </bpmn:correlationKey>
   </bpmn:collaboration>
   <bpmn:process id="Process_test_tc_42_TC_4_1_bd2e724" isExecutable="true">
     <bpmn:startEvent id="StartEvent_1">
@@ -12,7 +15,7 @@
     <bpmn:sequenceFlow id="Flow_15bgmal" sourceRef="StartEvent_1" targetRef="Activity_1unqzlg" />
     <bpmn:endEvent id="Event_0jmg8ts">
       <bpmn:incoming>Flow_1euq8c9</bpmn:incoming>
-      <bpmn:messageEventDefinition id="MessageEventDefinition_17qimw8" messageRef="Message_1xbnpir" />
+      <bpmn:messageEventDefinition id="MessageEventDefinition_17qimw8" messageRef="Message_1" />
     </bpmn:endEvent>
     <bpmn:sequenceFlow id="Flow_1euq8c9" sourceRef="Activity_1unqzlg" targetRef="Event_0jmg8ts" />
     <bpmn:scriptTask id="Activity_1unqzlg" name="Set Topic One">
@@ -24,7 +27,7 @@ topic_one_a = f"topic_one_a_conversation_{timestamp}"
 del time</bpmn:script>
     </bpmn:scriptTask>
   </bpmn:process>
-  <bpmn:message id="Message_1xbnpir" name="Message_1xbnpir">
+  <bpmn:message id="Message_1" name="Message_1">
     <bpmn:extensionElements>
       <spiffworkflow:messagePayload>{
 "topica_one": topic_one_a,
@@ -32,6 +35,11 @@ del time</bpmn:script>
 }</spiffworkflow:messagePayload>
     </bpmn:extensionElements>
   </bpmn:message>
+  <bpmn:correlationProperty id="CorrelationProperty_1" name="CorrelationProperty_1">
+    <bpmn:correlationPropertyRetrievalExpression messageRef="Message_1">
+      <bpmn:formalExpression>topica_one</bpmn:formalExpression>
+    </bpmn:correlationPropertyRetrievalExpression>
+  </bpmn:correlationProperty>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_1fqnozz">
       <bpmndi:BPMNShape id="Participant_1jk5xyi_di" bpmnElement="Participant_1jk5xyi" isHorizontal="true">
