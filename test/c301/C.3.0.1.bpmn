@@ -13,13 +13,25 @@
       <bpmn:incoming>Flow_03qkpm0</bpmn:incoming>
     </bpmn:endEvent>
     <bpmn:sequenceFlow id="Flow_03qkpm0" sourceRef="Event_09x0fd5" targetRef="Event_13jbmm8" />
-    <bpmn:manualTask id="Activity_1rbciok" name="Task 1">
+    <bpmn:subProcess id="Activity_1rbciok" name="Task 1">
       <bpmn:incoming>Flow_1xxp9l1</bpmn:incoming>
       <bpmn:outgoing>Flow_00gnk4l</bpmn:outgoing>
-    </bpmn:manualTask>
-    <bpmn:boundaryEvent id="Event_09x0fd5" name="30 seconds" cancelActivity="false" attachedToRef="Activity_1rbciok">
+      <bpmn:startEvent id="Event_15rpd77">
+        <bpmn:outgoing>Flow_0e0anj9</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:endEvent id="Event_1hhxhzk">
+        <bpmn:incoming>Flow_1kpppzr</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:sequenceFlow id="Flow_1kpppzr" sourceRef="Activity_18encd6" targetRef="Event_1hhxhzk" />
+      <bpmn:manualTask id="Activity_18encd6" name="Manual Task">
+        <bpmn:incoming>Flow_0e0anj9</bpmn:incoming>
+        <bpmn:outgoing>Flow_1kpppzr</bpmn:outgoing>
+      </bpmn:manualTask>
+      <bpmn:sequenceFlow id="Flow_0e0anj9" sourceRef="Event_15rpd77" targetRef="Activity_18encd6" />
+    </bpmn:subProcess>
+    <bpmn:boundaryEvent id="Event_09x0fd5" name="30 seconds" attachedToRef="Activity_1rbciok">
       <bpmn:outgoing>Flow_03qkpm0</bpmn:outgoing>
-      <bpmn:timerEventDefinition id="TimerEventDefinition_1h3azwz">
+      <bpmn:timerEventDefinition id="TimerEventDefinition_1qmrwpp">
         <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">timedelta(seconds=30)</bpmn:timeDuration>
       </bpmn:timerEventDefinition>
     </bpmn:boundaryEvent>
@@ -35,10 +47,10 @@
       <bpmndi:BPMNShape id="Event_13jbmm8_di" bpmnElement="Event_13jbmm8">
         <dc:Bounds x="402" y="252" width="36" height="36" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_19r4i18_di" bpmnElement="Activity_1rbciok">
+      <bpmndi:BPMNShape id="Activity_0y7wich_di" bpmnElement="Activity_1rbciok">
         <dc:Bounds x="270" y="137" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_1xxlrqh_di" bpmnElement="Event_09x0fd5">
+      <bpmndi:BPMNShape id="Event_1jcxgvj_di" bpmnElement="Event_09x0fd5">
         <dc:Bounds x="322" y="199" width="36" height="36" />
         <bpmndi:BPMNLabel>
           <dc:Bounds x="312" y="242" width="57" height="14" />
@@ -56,6 +68,28 @@
         <di:waypoint x="340" y="235" />
         <di:waypoint x="340" y="270" />
         <di:waypoint x="402" y="270" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_17svoea">
+    <bpmndi:BPMNPlane id="BPMNPlane_0vhvr5m" bpmnElement="Activity_1rbciok">
+      <bpmndi:BPMNShape id="Event_15rpd77_di" bpmnElement="Event_15rpd77">
+        <dc:Bounds x="222" y="192" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1hhxhzk_di" bpmnElement="Event_1hhxhzk">
+        <dc:Bounds x="462" y="192" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1lxr8r7_di" bpmnElement="Activity_18encd6">
+        <dc:Bounds x="310" y="170" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_1kpppzr_di" bpmnElement="Flow_1kpppzr">
+        <di:waypoint x="410" y="210" />
+        <di:waypoint x="462" y="210" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0e0anj9_di" bpmnElement="Flow_0e0anj9">
+        <di:waypoint x="258" y="210" />
+        <di:waypoint x="310" y="210" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
