@@ -80,24 +80,15 @@
         <bpmn:outgoing>Flow_04x5jyc</bpmn:outgoing>
         <bpmn:outgoing>Flow_0319lpz</bpmn:outgoing>
       </bpmn:exclusiveGateway>
-      <bpmn:intermediateThrowEvent id="Event_021pni2" name="Submit Invoice">
-        <bpmn:incoming>Flow_04x5jyc</bpmn:incoming>
-        <bpmn:outgoing>Flow_0o9dlgv</bpmn:outgoing>
-        <bpmn:messageEventDefinition id="MessageEventDefinition_1idznk2" messageRef="Message_Submit_Invoice" />
-      </bpmn:intermediateThrowEvent>
-      <bpmn:intermediateThrowEvent id="Event_1f5imqc" name="Something Else">
-        <bpmn:messageEventDefinition id="MessageEventDefinition_0uxo9e7" />
-      </bpmn:intermediateThrowEvent>
       <bpmn:exclusiveGateway id="Gateway_088v9c8">
         <bpmn:incoming>Flow_12ans71</bpmn:incoming>
-        <bpmn:incoming>Flow_0o9dlgv</bpmn:incoming>
+        <bpmn:incoming>Flow_1a6ux7r</bpmn:incoming>
         <bpmn:outgoing>Flow_1vmy0u7</bpmn:outgoing>
       </bpmn:exclusiveGateway>
       <bpmn:sequenceFlow id="Flow_1vmy0u7" sourceRef="Gateway_088v9c8" targetRef="Event_1k87w5f" />
-      <bpmn:sequenceFlow id="Flow_04x5jyc" name="Submit an invoice" sourceRef="Gateway_1qcctp1" targetRef="Event_021pni2">
+      <bpmn:sequenceFlow id="Flow_04x5jyc" name="Submit an invoice" sourceRef="Gateway_1qcctp1" targetRef="Activity_Submit_Income">
         <bpmn:conditionExpression>financeEnumRadio == "Submit an Invoice"</bpmn:conditionExpression>
       </bpmn:sequenceFlow>
-      <bpmn:manualTask id="Activity_Submit_Income" name="Submit Income" />
       <bpmn:sequenceFlow id="Flow_0319lpz" name="Something Else" sourceRef="Gateway_1qcctp1" targetRef="Activity_Submit_Something_Else">
         <bpmn:conditionExpression>financeEnumRadio == "Something Else"</bpmn:conditionExpression>
       </bpmn:sequenceFlow>
@@ -106,7 +97,11 @@
         <bpmn:outgoing>Flow_12ans71</bpmn:outgoing>
       </bpmn:manualTask>
       <bpmn:sequenceFlow id="Flow_12ans71" sourceRef="Activity_Submit_Something_Else" targetRef="Gateway_088v9c8" />
-      <bpmn:sequenceFlow id="Flow_0o9dlgv" sourceRef="Event_021pni2" targetRef="Gateway_088v9c8" />
+      <bpmn:sequenceFlow id="Flow_1a6ux7r" sourceRef="Activity_Submit_Income" targetRef="Gateway_088v9c8" />
+      <bpmn:callActivity id="Activity_Submit_Income" name="Submit Income" calledElement="Process_cc_invoice_approval_process_v2_a">
+        <bpmn:incoming>Flow_04x5jyc</bpmn:incoming>
+        <bpmn:outgoing>Flow_1a6ux7r</bpmn:outgoing>
+      </bpmn:callActivity>
     </bpmn:subProcess>
     <bpmn:sequenceFlow id="Flow_0hqitwz" name="Finance" sourceRef="Gateway_Which_Department" targetRef="SubProcess_Select_Finance_Process">
       <bpmn:conditionExpression>deptEnumRadio == "Finance"</bpmn:conditionExpression>
@@ -217,7 +212,7 @@
         <dc:Bounds x="420" y="210" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_1k87w5f_di" bpmnElement="Event_1k87w5f">
-        <dc:Bounds x="1102" y="232" width="36" height="36" />
+        <dc:Bounds x="1202" y="232" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_0iy5df8_di" bpmnElement="Event_0iy5df8">
         <dc:Bounds x="322" y="232" width="36" height="36" />
@@ -228,26 +223,14 @@
           <dc:Bounds x="583" y="187.5" width="73" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_1dglfc7_di" bpmnElement="Event_021pni2">
-        <dc:Bounds x="802" y="232" width="36" height="36" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="785" y="275" width="73" height="14" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_17fg4yj_di" bpmnElement="Event_1f5imqc">
-        <dc:Bounds x="812" y="432" width="36" height="36" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="793" y="475" width="78" height="14" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Gateway_088v9c8_di" bpmnElement="Gateway_088v9c8" isMarkerVisible="true">
-        <dc:Bounds x="945" y="225" width="50" height="50" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0388tnr_di" bpmnElement="Activity_Submit_Income">
-        <dc:Bounds x="750" y="110" width="100" height="80" />
+        <dc:Bounds x="1045" y="225" width="50" height="50" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_080k15n_di" bpmnElement="Activity_Submit_Something_Else">
         <dc:Bounds x="780" y="320" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0mtjk97_di" bpmnElement="Activity_Submit_Income">
+        <dc:Bounds x="780" y="210" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_023hsr3_di" bpmnElement="Flow_023hsr3">
         <di:waypoint x="520" y="250" />
@@ -258,14 +241,14 @@
         <di:waypoint x="420" y="250" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1vmy0u7_di" bpmnElement="Flow_1vmy0u7">
-        <di:waypoint x="995" y="250" />
-        <di:waypoint x="1102" y="250" />
+        <di:waypoint x="1095" y="250" />
+        <di:waypoint x="1202" y="250" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_04x5jyc_di" bpmnElement="Flow_04x5jyc">
         <di:waypoint x="645" y="250" />
-        <di:waypoint x="802" y="250" />
+        <di:waypoint x="780" y="250" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="683" y="232" width="87" height="14" />
+          <dc:Bounds x="666" y="232" width="87" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0319lpz_di" bpmnElement="Flow_0319lpz">
@@ -273,17 +256,17 @@
         <di:waypoint x="620" y="360" />
         <di:waypoint x="780" y="360" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="661" y="343" width="78" height="14" />
+          <dc:Bounds x="671" y="343" width="78" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_12ans71_di" bpmnElement="Flow_12ans71">
         <di:waypoint x="880" y="360" />
-        <di:waypoint x="970" y="360" />
-        <di:waypoint x="970" y="275" />
+        <di:waypoint x="1070" y="360" />
+        <di:waypoint x="1070" y="275" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0o9dlgv_di" bpmnElement="Flow_0o9dlgv">
-        <di:waypoint x="838" y="250" />
-        <di:waypoint x="945" y="250" />
+      <bpmndi:BPMNEdge id="Flow_1a6ux7r_di" bpmnElement="Flow_1a6ux7r">
+        <di:waypoint x="880" y="250" />
+        <di:waypoint x="1045" y="250" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
