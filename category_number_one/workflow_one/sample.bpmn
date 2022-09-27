@@ -10,6 +10,31 @@
     </bpmn:endEvent>
     <bpmn:sequenceFlow id="Flow_0htxke7" sourceRef="Activity_0pxf6g1" targetRef="Activity_0a21ntf" />
     <bpmn:scriptTask id="Activity_0pxf6g1" name="My Script">
+      <bpmn:extensionElements>
+        <spiffworkflow:unitTests>
+          <spiffworkflow:unitTest id="test1">
+            <spiffworkflow:inputJson>{
+  "current_user": {
+    "id": "2",
+    "username": "ciadmin1"
+  }
+}</spiffworkflow:inputJson>
+            <spiffworkflow:expectedOutputJson>{
+  "Mike": "Awesome",
+  "current_user": {
+    "id": "2",
+    "username": "ciadmin1"
+  },
+  "my_var": "Hello World",
+  "person": "Kevin"
+}</spiffworkflow:expectedOutputJson>
+          </spiffworkflow:unitTest>
+          <spiffworkflow:unitTest id="ScriptUnitTest_06ysv2z">
+            <spiffworkflow:inputJson>{}</spiffworkflow:inputJson>
+            <spiffworkflow:expectedOutputJson>{}</spiffworkflow:expectedOutputJson>
+          </spiffworkflow:unitTest>
+        </spiffworkflow:unitTests>
+      </bpmn:extensionElements>
       <bpmn:incoming>Flow_10jwwqy</bpmn:incoming>
       <bpmn:outgoing>Flow_0htxke7</bpmn:outgoing>
       <bpmn:script>my_var = "Hello World"
@@ -27,18 +52,9 @@ person = "Kevin"</bpmn:script>
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="sample">
-      <bpmndi:BPMNEdge id="Flow_1hd6o66_di" bpmnElement="Flow_1hd6o66">
-        <di:waypoint x="510" y="120" />
-        <di:waypoint x="582" y="120" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0htxke7_di" bpmnElement="Flow_0htxke7">
-        <di:waypoint x="340" y="120" />
-        <di:waypoint x="410" y="120" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_10jwwqy_di" bpmnElement="Flow_10jwwqy">
-        <di:waypoint x="168" y="120" />
-        <di:waypoint x="240" y="120" />
-      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="132" y="102" width="36" height="36" />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_1qb1u6a_di" bpmnElement="Event_1qb1u6a">
         <dc:Bounds x="582" y="102" width="36" height="36" />
       </bpmndi:BPMNShape>
@@ -50,9 +66,18 @@ person = "Kevin"</bpmn:script>
         <dc:Bounds x="410" y="80" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
-        <dc:Bounds x="132" y="102" width="36" height="36" />
-      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_10jwwqy_di" bpmnElement="Flow_10jwwqy">
+        <di:waypoint x="168" y="120" />
+        <di:waypoint x="240" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0htxke7_di" bpmnElement="Flow_0htxke7">
+        <di:waypoint x="340" y="120" />
+        <di:waypoint x="410" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1hd6o66_di" bpmnElement="Flow_1hd6o66">
+        <di:waypoint x="510" y="120" />
+        <di:waypoint x="582" y="120" />
+      </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
 </bpmn:definitions>
