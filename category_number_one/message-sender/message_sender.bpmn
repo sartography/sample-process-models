@@ -1,13 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:spiffworkflow="http://spiffworkflow.org/bpmn/schema/1.0/core" id="Definitions_96f6665" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.0.0-dev">
   <bpmn:collaboration id="Collaboration_0oye1os">
-    <bpmn:participant id="message_initiator" name="Message Initiator" processRef="message_send_process" />
     <bpmn:participant id="message-receiver-one" name="Message Receiver One" />
-    <bpmn:participant id="message-receiver-two" name="Message Receiver Two" />
+    <bpmn:participant id="message_initiator" name="Message Initiator" processRef="message_send_process" />
     <bpmn:messageFlow id="message_send_flow" name="Message Send Flow" sourceRef="send_message_to_one" targetRef="message-receiver-one" />
     <bpmn:messageFlow id="message_response_flow" name="Message Response Flow" sourceRef="message-receiver-one" targetRef="receive_message_response_one" />
-    <bpmn:messageFlow id="Flow_1i4pf72" sourceRef="Event_1wcluza" targetRef="message-receiver-two" />
-    <bpmn:messageFlow id="Flow_14idwnd" sourceRef="message-receiver-two" targetRef="receive_message_response_two" />
     <bpmn:correlationKey name="message_correlation_key_one">
       <bpmn:correlationPropertyRef>mcp_topica_one</bpmn:correlationPropertyRef>
       <bpmn:correlationPropertyRef>mcp_topicb_one</bpmn:correlationPropertyRef>
@@ -33,60 +30,6 @@
       <bpmn:formalExpression>payload_var_one.topicb</bpmn:formalExpression>
     </bpmn:correlationPropertyRetrievalExpression>
   </bpmn:correlationProperty>
-  <bpmn:process id="message_send_process" name="Message Send Process" isExecutable="true">
-    <bpmn:sequenceFlow id="Flow_10conab" sourceRef="StartEvent_1" targetRef="set_topic_one" />
-    <bpmn:sequenceFlow id="Flow_1yt3owq" sourceRef="Event_1wcluza" targetRef="receive_message_response_two" />
-    <bpmn:sequenceFlow id="Flow_01u8qkn" sourceRef="receive_message_response_two" targetRef="receive_message_response_one" />
-    <bpmn:sequenceFlow id="Flow_0sxqx67" sourceRef="receive_message_response_one" targetRef="Event_0j4tp01" />
-    <bpmn:sequenceFlow id="Flow_1ihr88m" sourceRef="set_topic_one" targetRef="send_message_to_one" />
-    <bpmn:sequenceFlow id="Flow_0q3clix" sourceRef="set_topic_two" targetRef="Event_1wcluza" />
-    <bpmn:endEvent id="Event_0j4tp01">
-      <bpmn:incoming>Flow_0sxqx67</bpmn:incoming>
-    </bpmn:endEvent>
-    <bpmn:intermediateCatchEvent id="receive_message_response_one" name="Receive Message Response One">
-      <bpmn:incoming>Flow_01u8qkn</bpmn:incoming>
-      <bpmn:outgoing>Flow_0sxqx67</bpmn:outgoing>
-      <bpmn:messageEventDefinition id="MessageEventDefinition_1l3n0zr" messageRef="message_response_one" />
-    </bpmn:intermediateCatchEvent>
-    <bpmn:receiveTask id="receive_message_response_two" name="Receive Message Response Two" messageRef="message_response_two">
-      <bpmn:incoming>Flow_1yt3owq</bpmn:incoming>
-      <bpmn:outgoing>Flow_01u8qkn</bpmn:outgoing>
-    </bpmn:receiveTask>
-    <bpmn:startEvent id="StartEvent_1">
-      <bpmn:outgoing>Flow_10conab</bpmn:outgoing>
-    </bpmn:startEvent>
-    <bpmn:scriptTask id="set_topic_one" name="Set Topic One" scriptFormat="python">
-      <bpmn:incoming>Flow_10conab</bpmn:incoming>
-      <bpmn:outgoing>Flow_1ihr88m</bpmn:outgoing>
-      <bpmn:script>import time
-timestamp = time.time()
-topic_one_a = f"topic_one_a_conversation_{timestamp}"
-topic_one_b = f"topic_one_b_conversation_{timestamp}"
-del time</bpmn:script>
-    </bpmn:scriptTask>
-    <bpmn:sendTask id="send_message_to_one" name="Send Message To One" messageRef="message_send_one">
-      <bpmn:extensionElements>
-        <spiffworkflow:preScript>the_topic = "first_conversation" </spiffworkflow:preScript>
-      </bpmn:extensionElements>
-      <bpmn:incoming>Flow_1ihr88m</bpmn:incoming>
-      <bpmn:outgoing>Flow_0n4m9ti</bpmn:outgoing>
-    </bpmn:sendTask>
-    <bpmn:sequenceFlow id="Flow_0n4m9ti" sourceRef="send_message_to_one" targetRef="set_topic_two" />
-    <bpmn:intermediateThrowEvent id="Event_1wcluza">
-      <bpmn:incoming>Flow_0q3clix</bpmn:incoming>
-      <bpmn:outgoing>Flow_1yt3owq</bpmn:outgoing>
-      <bpmn:messageEventDefinition id="MessageEventDefinition_1p7urhm" messageRef="message_send_two" />
-    </bpmn:intermediateThrowEvent>
-    <bpmn:scriptTask id="set_topic_two" name="Set Topic Two">
-      <bpmn:incoming>Flow_0n4m9ti</bpmn:incoming>
-      <bpmn:outgoing>Flow_0q3clix</bpmn:outgoing>
-      <bpmn:script>import time
-timestamp = time.time()
-topic_two_a = f"topic_two_a_conversation_{timestamp}"
-topic_two_b = f"topic_two_b_conversation_{timestamp}"
-del time</bpmn:script>
-    </bpmn:scriptTask>
-  </bpmn:process>
   <bpmn:message id="message_send_one" name="Message Send One">
     <bpmn:extensionElements>
       <spiffworkflow:messagePayload>{
@@ -131,79 +74,125 @@ del time</bpmn:script>
       <bpmn:formalExpression>topicb_two</bpmn:formalExpression>
     </bpmn:correlationPropertyRetrievalExpression>
   </bpmn:correlationProperty>
+  <bpmn:process id="message_send_process" name="Message Send Process" isExecutable="true">
+    <bpmn:sendTask id="send_message_to_one" name="Send Message To One" messageRef="message_send_one">
+      <bpmn:extensionElements>
+        <spiffworkflow:preScript>the_topic = "first_conversation" </spiffworkflow:preScript>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1ihr88m</bpmn:incoming>
+      <bpmn:outgoing>Flow_0xfdvc7</bpmn:outgoing>
+    </bpmn:sendTask>
+    <bpmn:scriptTask id="set_topic_one" name="Set Topic One" scriptFormat="python">
+      <bpmn:incoming>Flow_10conab</bpmn:incoming>
+      <bpmn:outgoing>Flow_1ihr88m</bpmn:outgoing>
+      <bpmn:script>import time
+timestamp = time.time()
+topic_one_a = f"topic_one_a_conversation_{timestamp}"
+topic_one_b = f"topic_one_b_conversation_{timestamp}"
+del time</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:sequenceFlow id="Flow_1ihr88m" sourceRef="set_topic_one" targetRef="send_message_to_one" />
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>Flow_10conab</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_10conab" sourceRef="StartEvent_1" targetRef="set_topic_one" />
+    <bpmn:sequenceFlow id="Flow_0sxqx67" sourceRef="receive_message_response_one" targetRef="Event_0j4tp01" />
+    <bpmn:sequenceFlow id="Flow_0xfdvc7" sourceRef="send_message_to_one" targetRef="Activity_08oqtsv" />
+    <bpmn:subProcess id="Activity_08oqtsv">
+      <bpmn:incoming>Flow_0xfdvc7</bpmn:incoming>
+      <bpmn:outgoing>Flow_158rycj</bpmn:outgoing>
+      <bpmn:startEvent id="Event_1nfm9dj">
+        <bpmn:outgoing>Flow_0o5ojq9</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:intermediateThrowEvent id="send_message_to_two" name="Send Message To Two">
+        <bpmn:incoming>Flow_17gfxad</bpmn:incoming>
+        <bpmn:outgoing>Flow_16geikj</bpmn:outgoing>
+        <bpmn:messageEventDefinition id="MessageEventDefinition_1naivcg" messageRef="message_send_two" />
+      </bpmn:intermediateThrowEvent>
+      <bpmn:scriptTask id="set_topic_two" name="Set Topic Two">
+        <bpmn:incoming>Flow_0o5ojq9</bpmn:incoming>
+        <bpmn:outgoing>Flow_17gfxad</bpmn:outgoing>
+        <bpmn:script>import time
+timestamp = time.time()
+topic_two_a = f"topic_two_a_conversation_{timestamp}"
+topic_two_b = f"topic_two_b_conversation_{timestamp}"
+del time</bpmn:script>
+      </bpmn:scriptTask>
+      <bpmn:receiveTask id="receive_message_response_two" name="Receive Message Response Two" messageRef="message_response_two">
+        <bpmn:incoming>Flow_16geikj</bpmn:incoming>
+        <bpmn:outgoing>Flow_1s6ov6l</bpmn:outgoing>
+      </bpmn:receiveTask>
+      <bpmn:sequenceFlow id="Flow_0o5ojq9" sourceRef="Event_1nfm9dj" targetRef="set_topic_two" />
+      <bpmn:sequenceFlow id="Flow_17gfxad" sourceRef="set_topic_two" targetRef="send_message_to_two" />
+      <bpmn:sequenceFlow id="Flow_16geikj" sourceRef="send_message_to_two" targetRef="receive_message_response_two" />
+      <bpmn:endEvent id="Event_1isj5zu">
+        <bpmn:incoming>Flow_1s6ov6l</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:sequenceFlow id="Flow_1s6ov6l" sourceRef="receive_message_response_two" targetRef="Event_1isj5zu" />
+    </bpmn:subProcess>
+    <bpmn:sequenceFlow id="Flow_158rycj" sourceRef="Activity_08oqtsv" targetRef="receive_message_response_one" />
+    <bpmn:endEvent id="Event_0j4tp01">
+      <bpmn:incoming>Flow_0sxqx67</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:intermediateCatchEvent id="receive_message_response_one" name="Receive Message Response One">
+      <bpmn:incoming>Flow_158rycj</bpmn:incoming>
+      <bpmn:outgoing>Flow_0sxqx67</bpmn:outgoing>
+      <bpmn:messageEventDefinition id="MessageEventDefinition_1l3n0zr" messageRef="message_response_one" />
+    </bpmn:intermediateCatchEvent>
+  </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_0oye1os">
+      <bpmndi:BPMNShape id="Participant_158b3ei_di" bpmnElement="message-receiver-one" isHorizontal="true">
+        <dc:Bounds x="120" y="330" width="710" height="60" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Participant_0bjh770_di" bpmnElement="message_initiator" isHorizontal="true">
-        <dc:Bounds x="120" y="52" width="850" height="218" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_0j4tp01_di" bpmnElement="Event_0j4tp01">
-        <dc:Bounds x="912" y="159" width="36" height="36" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_0yt48xb_di" bpmnElement="receive_message_response_one">
-        <dc:Bounds x="842" y="159" width="36" height="36" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="816" y="121.5" width="88" height="27" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1s2ka15_di" bpmnElement="receive_message_response_two">
-        <dc:Bounds x="710" y="137" width="100" height="80" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
-        <dc:Bounds x="162" y="159" width="36" height="36" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1t3nq1h_di" bpmnElement="set_topic_one">
-        <dc:Bounds x="220" y="137" width="100" height="80" />
+        <dc:Bounds x="120" y="50" width="720" height="220" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0vm33bu_di" bpmnElement="send_message_to_one">
         <dc:Bounds x="340" y="137" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_136zeg2_di" bpmnElement="Event_1wcluza">
-        <dc:Bounds x="632" y="159" width="36" height="36" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_06ri99m_di" bpmnElement="set_topic_two">
-        <dc:Bounds x="490" y="137" width="100" height="80" />
+      <bpmndi:BPMNShape id="Activity_1t3nq1h_di" bpmnElement="set_topic_one">
+        <dc:Bounds x="220" y="137" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge id="Flow_10conab_di" bpmnElement="Flow_10conab">
-        <di:waypoint x="198" y="177" />
-        <di:waypoint x="220" y="177" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_1yt3owq_di" bpmnElement="Flow_1yt3owq">
-        <di:waypoint x="668" y="177" />
-        <di:waypoint x="710" y="177" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_01u8qkn_di" bpmnElement="Flow_01u8qkn">
-        <di:waypoint x="810" y="177" />
-        <di:waypoint x="842" y="177" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0sxqx67_di" bpmnElement="Flow_0sxqx67">
-        <di:waypoint x="878" y="177" />
-        <di:waypoint x="912" y="177" />
-      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="162" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0j4tp01_di" bpmnElement="Event_0j4tp01">
+        <dc:Bounds x="772" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0yt48xb_di" bpmnElement="receive_message_response_one">
+        <dc:Bounds x="672" y="159" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="646" y="122" width="88" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_08oqtsv_di" bpmnElement="Activity_08oqtsv" isExpanded="false">
+        <dc:Bounds x="500" y="137" width="100" height="80" />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_1ihr88m_di" bpmnElement="Flow_1ihr88m">
         <di:waypoint x="320" y="177" />
         <di:waypoint x="340" y="177" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0q3clix_di" bpmnElement="Flow_0q3clix">
-        <di:waypoint x="590" y="177" />
-        <di:waypoint x="632" y="177" />
+      <bpmndi:BPMNEdge id="Flow_10conab_di" bpmnElement="Flow_10conab">
+        <di:waypoint x="198" y="177" />
+        <di:waypoint x="220" y="177" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0n4m9ti_di" bpmnElement="Flow_0n4m9ti">
+      <bpmndi:BPMNEdge id="Flow_0sxqx67_di" bpmnElement="Flow_0sxqx67">
+        <di:waypoint x="708" y="177" />
+        <di:waypoint x="772" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0xfdvc7_di" bpmnElement="Flow_0xfdvc7">
         <di:waypoint x="440" y="177" />
-        <di:waypoint x="490" y="177" />
+        <di:waypoint x="500" y="177" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="Participant_158b3ei_di" bpmnElement="message-receiver-one" isHorizontal="true">
-        <dc:Bounds x="120" y="330" width="850" height="60" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Participant_1xfm9l2_di" bpmnElement="message-receiver-two" isHorizontal="true">
-        <dc:Bounds x="120" y="-50" width="850" height="60" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_158rycj_di" bpmnElement="Flow_158rycj">
+        <di:waypoint x="600" y="177" />
+        <di:waypoint x="672" y="177" />
+      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1ueajoz_di" bpmnElement="message_send_flow">
         <di:waypoint x="360" y="217" />
         <di:waypoint x="360" y="330" />
@@ -212,19 +201,51 @@ del time</bpmn:script>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1n96n67_di" bpmnElement="message_response_flow">
-        <di:waypoint x="860" y="330" />
-        <di:waypoint x="860" y="195" />
+        <di:waypoint x="690" y="330" />
+        <di:waypoint x="690" y="195" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="862" y="280" width="76" height="27" />
+          <dc:Bounds x="692" y="280" width="76" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_1i4pf72_di" bpmnElement="Flow_1i4pf72">
-        <di:waypoint x="650" y="159" />
-        <di:waypoint x="650" y="10" />
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_0nns746">
+    <bpmndi:BPMNPlane id="BPMNPlane_0edwvmd" bpmnElement="Activity_08oqtsv">
+      <bpmndi:BPMNShape id="Event_1nfm9dj_di" bpmnElement="Event_1nfm9dj">
+        <dc:Bounds x="180" y="160" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_0dw19q5" bpmnElement="send_message_to_two">
+        <dc:Bounds x="402" y="160" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="377" y="203" width="88" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_13hfx3m" bpmnElement="set_topic_two">
+        <dc:Bounds x="250" y="138" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_0wsmay9" bpmnElement="receive_message_response_two">
+        <dc:Bounds x="480" y="138" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1isj5zu_di" bpmnElement="Event_1isj5zu">
+        <dc:Bounds x="622" y="160" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_0o5ojq9_di" bpmnElement="Flow_0o5ojq9">
+        <di:waypoint x="216" y="178" />
+        <di:waypoint x="250" y="178" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_14idwnd_di" bpmnElement="Flow_14idwnd">
-        <di:waypoint x="760" y="10" />
-        <di:waypoint x="760" y="137" />
+      <bpmndi:BPMNEdge id="Flow_17gfxad_di" bpmnElement="Flow_17gfxad">
+        <di:waypoint x="350" y="178" />
+        <di:waypoint x="402" y="178" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_16geikj_di" bpmnElement="Flow_16geikj">
+        <di:waypoint x="438" y="178" />
+        <di:waypoint x="480" y="178" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1s6ov6l_di" bpmnElement="Flow_1s6ov6l">
+        <di:waypoint x="580" y="178" />
+        <di:waypoint x="622" y="178" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
