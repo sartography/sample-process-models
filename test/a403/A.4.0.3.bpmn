@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:spiffworkflow="http://spiffworkflow.org/bpmn/schema/1.0/core" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_96f6665" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.0.0-dev">
+  <bpmn:process id="Proccess_1ymqtyd" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>Flow_1620hjj</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_1620hjj" sourceRef="StartEvent_1" targetRef="Activity_16j3pji" />
+    <bpmn:endEvent id="Event_1pjk2nn">
+      <bpmn:incoming>Flow_0kizf51</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_0kizf51" sourceRef="Activity_16j3pji" targetRef="Event_1pjk2nn" />
+    <bpmn:subProcess id="Activity_16j3pji" name="Sub Process">
+      <bpmn:incoming>Flow_1620hjj</bpmn:incoming>
+      <bpmn:outgoing>Flow_0kizf51</bpmn:outgoing>
+      <bpmn:startEvent id="Event_0nho7vh">
+        <bpmn:outgoing>Flow_1ngccjr</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:sequenceFlow id="Flow_1ngccjr" sourceRef="Event_0nho7vh" targetRef="Activity_059r026" />
+      <bpmn:sequenceFlow id="Flow_0k0fqq4" sourceRef="Activity_059r026" targetRef="Activity_01skil2" />
+      <bpmn:endEvent id="Event_1h75vnq">
+        <bpmn:incoming>Flow_05v408h</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:sequenceFlow id="Flow_05v408h" sourceRef="Activity_01skil2" targetRef="Event_1h75vnq" />
+      <bpmn:scriptTask id="Activity_059r026" name="Set BR Variable">
+        <bpmn:incoming>Flow_1ngccjr</bpmn:incoming>
+        <bpmn:outgoing>Flow_0k0fqq4</bpmn:outgoing>
+        <bpmn:script>question = "X"</bpmn:script>
+      </bpmn:scriptTask>
+      <bpmn:businessRuleTask id="Activity_01skil2" name="Business Rules">
+        <bpmn:extensionElements>
+          <spiffworkflow:calledDecisionId>decision_2</spiffworkflow:calledDecisionId>
+        </bpmn:extensionElements>
+        <bpmn:incoming>Flow_0k0fqq4</bpmn:incoming>
+        <bpmn:outgoing>Flow_05v408h</bpmn:outgoing>
+      </bpmn:businessRuleTask>
+    </bpmn:subProcess>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Proccess_1ymqtyd">
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="179" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1pjk2nn_di" bpmnElement="Event_1pjk2nn">
+        <dc:Bounds x="432" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1ufz5rv_di" bpmnElement="Activity_16j3pji">
+        <dc:Bounds x="270" y="137" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_1620hjj_di" bpmnElement="Flow_1620hjj">
+        <di:waypoint x="215" y="177" />
+        <di:waypoint x="270" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0kizf51_di" bpmnElement="Flow_0kizf51">
+        <di:waypoint x="370" y="177" />
+        <di:waypoint x="432" y="177" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1lgafnx">
+    <bpmndi:BPMNPlane id="BPMNPlane_0mod6a6" bpmnElement="Activity_16j3pji">
+      <bpmndi:BPMNShape id="Event_0nho7vh_di" bpmnElement="Event_0nho7vh">
+        <dc:Bounds x="172" y="192" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1h75vnq_di" bpmnElement="Event_1h75vnq">
+        <dc:Bounds x="582" y="192" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1mqrogd_di" bpmnElement="Activity_059r026">
+        <dc:Bounds x="260" y="170" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0lmsolv_di" bpmnElement="Activity_01skil2">
+        <dc:Bounds x="420" y="170" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_1ngccjr_di" bpmnElement="Flow_1ngccjr">
+        <di:waypoint x="208" y="210" />
+        <di:waypoint x="260" y="210" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0k0fqq4_di" bpmnElement="Flow_0k0fqq4">
+        <di:waypoint x="360" y="210" />
+        <di:waypoint x="420" y="210" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_05v408h_di" bpmnElement="Flow_05v408h">
+        <di:waypoint x="520" y="210" />
+        <di:waypoint x="582" y="210" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
