@@ -7,9 +7,6 @@
     </bpmn:correlationKey>
   </bpmn:collaboration>
   <bpmn:process id="Process_bd2e724z" isExecutable="true">
-    <bpmn:startEvent id="StartEvent_1">
-      <bpmn:outgoing>Flow_12ps4ez</bpmn:outgoing>
-    </bpmn:startEvent>
     <bpmn:userTask id="Activity_Select_Department" name="Select Department">
       <bpmn:extensionElements>
         <spiffworkflow:properties>
@@ -17,7 +14,7 @@
           <spiffworkflow:property name="formUiSchemaFilename" value="Select-the_department_UISchema.json" />
         </spiffworkflow:properties>
       </bpmn:extensionElements>
-      <bpmn:incoming>Flow_12ps4ez</bpmn:incoming>
+      <bpmn:incoming>Flow_0n7p17z</bpmn:incoming>
       <bpmn:outgoing>Flow_1me5mdj</bpmn:outgoing>
     </bpmn:userTask>
     <bpmn:endEvent id="Event_1e95c19">
@@ -29,7 +26,7 @@
       <bpmn:outgoing>Flow_1qk44me</bpmn:outgoing>
       <bpmn:outgoing>Flow_0hqitwz</bpmn:outgoing>
     </bpmn:exclusiveGateway>
-    <bpmn:sequenceFlow id="Flow_12ps4ez" sourceRef="StartEvent_1" targetRef="Activity_Select_Department" />
+    <bpmn:sequenceFlow id="Flow_12ps4ez" sourceRef="StartEvent_1" targetRef="Activity_1oohn7c" />
     <bpmn:sequenceFlow id="Flow_1me5mdj" sourceRef="Activity_Select_Department" targetRef="Gateway_Which_Department" />
     <bpmn:sequenceFlow id="Flow_1r70j0z" name="HR" sourceRef="Gateway_Which_Department" targetRef="Activity_Select_HR_Process">
       <bpmn:conditionExpression>deptEnumRadio == "HR"</bpmn:conditionExpression>
@@ -107,6 +104,17 @@
       <bpmn:conditionExpression>deptEnumRadio == "Finance"</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="Flow_1y39m94" sourceRef="SubProcess_Select_Finance_Process" targetRef="Gateway_08qio04" />
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>Flow_12ps4ez</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_0n7p17z" sourceRef="Activity_1oohn7c" targetRef="Activity_Select_Department" />
+    <bpmn:manualTask id="Activity_1oohn7c" name="Show Waiting Tasks">
+      <bpmn:extensionElements>
+        <spiffworkflow:instructionsForEndUser>Waitiing Tasks Shown Here</spiffworkflow:instructionsForEndUser>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_12ps4ez</bpmn:incoming>
+      <bpmn:outgoing>Flow_0n7p17z</bpmn:outgoing>
+    </bpmn:manualTask>
   </bpmn:process>
   <bpmn:correlationProperty id="CorrelationProperty_Submit_Invoice" name="CorrelationProperty: Submit Invoice">
     <bpmn:correlationPropertyRetrievalExpression messageRef="Message_Submit_Invoice">
@@ -125,11 +133,8 @@
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_1f8smlv">
       <bpmndi:BPMNShape id="Participant_0j0qj5l_di" bpmnElement="Participant_0j0qj5l" isHorizontal="true">
-        <dc:Bounds x="129" y="0" width="831" height="468" />
+        <dc:Bounds x="-10" y="0" width="970" height="468" />
         <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
-        <dc:Bounds x="179" y="160" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1e82nzu_di" bpmnElement="Activity_Select_Department">
         <dc:Bounds x="270" y="138" width="100" height="80" />
@@ -153,12 +158,18 @@
       <bpmndi:BPMNShape id="Activity_1e1pldb_di" bpmnElement="Activity_Select_Legal_Process">
         <dc:Bounds x="550" y="270" width="100" height="80" />
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="32" y="160" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1adwjso_di" bpmnElement="Activity_1oohn7c">
+        <dc:Bounds x="110" y="138" width="100" height="80" />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0p4rc9r_di" bpmnElement="SubProcess_Select_Finance_Process">
         <dc:Bounds x="550" y="20" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_12ps4ez_di" bpmnElement="Flow_12ps4ez">
-        <di:waypoint x="215" y="178" />
-        <di:waypoint x="270" y="178" />
+        <di:waypoint x="68" y="178" />
+        <di:waypoint x="110" y="178" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1me5mdj_di" bpmnElement="Flow_1me5mdj">
         <di:waypoint x="370" y="178" />
@@ -204,6 +215,10 @@
         <di:waypoint x="650" y="60" />
         <di:waypoint x="730" y="60" />
         <di:waypoint x="730" y="153" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0n7p17z_di" bpmnElement="Flow_0n7p17z">
+        <di:waypoint x="210" y="178" />
+        <di:waypoint x="270" y="178" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
