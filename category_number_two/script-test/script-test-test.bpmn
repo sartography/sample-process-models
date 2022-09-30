@@ -1,0 +1,57 @@
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_96f6665" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.0.0-dev">
+  <bpmn:process id="Proccess_vg5yaps" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>Flow_1ce0q1m</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_1ce0q1m" sourceRef="StartEvent_1" targetRef="Activity_04jtpky"/>
+    <bpmn:scriptTask id="Activity_1j543tn" name="Check Name">
+      <bpmn:incoming>Flow_0t7cs8c</bpmn:incoming>
+      <bpmn:outgoing>Flow_1kqtcv6</bpmn:outgoing>
+      <bpmn:script>isNameNum = False
+for c in contributorName:
+	if c.isdigit():
+		isNameNum = True
+		break
+
+del c</bpmn:script>
+    <bpmn:extensionElements><ns0:unitTests xmlns:ns0="http://spiffworkflow.org/bpmn/schema/1.0/core"><ns0:unitTest id="unit_test_LY5NEIE"><ns0:inputJson>{"contributorName": "Harmeet", "current_user": {"id": "1", "username": "ciuser1"}}</ns0:inputJson><ns0:expectedOutputJson>{"contributorName": "Harmeet", "current_user": {"id": "1", "username": "ciuser1"}, "isNameNum": false}</ns0:expectedOutputJson></ns0:unitTest></ns0:unitTests></bpmn:extensionElements></bpmn:scriptTask>
+    <bpmn:endEvent id="Event_1chp9mc">
+      <bpmn:incoming>Flow_1kqtcv6</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_1kqtcv6" sourceRef="Activity_1j543tn" targetRef="Event_1chp9mc"/>
+    <bpmn:sequenceFlow id="Flow_0t7cs8c" sourceRef="Activity_04jtpky" targetRef="Activity_1j543tn"/>
+    <bpmn:scriptTask id="Activity_04jtpky" name="Set Name">
+      <bpmn:incoming>Flow_1ce0q1m</bpmn:incoming>
+      <bpmn:outgoing>Flow_0t7cs8c</bpmn:outgoing>
+      <bpmn:script>contributorName = "Harmeet"</bpmn:script>
+    </bpmn:scriptTask>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Proccess_vg5yaps">
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="179" y="159" width="36" height="36"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1chp9mc_di" bpmnElement="Event_1chp9mc">
+        <dc:Bounds x="612" y="159" width="36" height="36"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_02utom1_di" bpmnElement="Activity_1j543tn">
+        <dc:Bounds x="420" y="137" width="100" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0nih34l_di" bpmnElement="Activity_04jtpky">
+        <dc:Bounds x="260" y="137" width="100" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_1ce0q1m_di" bpmnElement="Flow_1ce0q1m">
+        <di:waypoint x="215" y="177"/>
+        <di:waypoint x="260" y="177"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1kqtcv6_di" bpmnElement="Flow_1kqtcv6">
+        <di:waypoint x="520" y="177"/>
+        <di:waypoint x="612" y="177"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0t7cs8c_di" bpmnElement="Flow_0t7cs8c">
+        <di:waypoint x="360" y="177"/>
+        <di:waypoint x="420" y="177"/>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
