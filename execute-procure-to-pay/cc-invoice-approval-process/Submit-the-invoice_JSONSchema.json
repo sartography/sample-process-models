@@ -1,34 +1,94 @@
 {
+  "definitions": {
+    "currencyEnum": {
+      "type": "string",
+      "anyOf": [{
+          "type": "string",
+          "title": "Australian Dollar (AUD)",
+          "enum": [
+            "AUD"
+          ]
+        },
+        {
+          "type": "string",
+          "title": "Canadian Dollar (CAD)",
+          "enum": [
+            "CAD"
+          ]
+        },
+        {
+          "type": "string",
+          "title": "Swiss Franc (CHF)",
+          "enum": [
+            "CHF"
+          ]
+        },
+        {
+          "type": "string",
+          "title": "Euro (EUR)",
+          "enum": [
+            "EUR"
+          ]
+        },
+        {
+          "type": "string",
+          "title": "Pound sterling (GBP)",
+          "enum": [
+            "GBP"
+          ]
+        },
+        {
+          "type": "string",
+          "title": "Singapore Dollar (SGD)",
+          "enum": [
+            "SGD"
+          ]
+        },
+        {
+          "type": "string",
+          "title": "US Dollar (USD)",
+          "enum": [
+            "USD"
+          ]
+        }
+      ]
+    }
+  },
   "title": "Submit Invoice",
   "description": "Information for submitting an invoice.",
   "type": "object",
   "required": [
-    "contributorName",
-    "contributorId",
-  	"invoiceId",
-  	"invoiceAmount",
-  	"dueDate"
+    "invoice.contributorName",
+    "invoice.contributorId",
+    "invoice.invoiceId",
+    "invoice.invoiceAmount",
+    "invoice.invoiceCurrency",
+    "invoice.dueDate"
   ],
   "properties": {
-    "contributorName": {
+    "invoice.contributorName": {
       "type": "string",
       "title": "Contributor Name"
     },
-    "contributorId": {
+    "invoice.contributorId": {
       "type": "integer",
       "title": "Contributor Id",
-      "minLength": 2	  
+      "minLength": 2
     },
-    "invoiceId": {
+    "invoice.invoiceId": {
       "type": "integer",
       "title": "Invoice Id",
       "minLength": 4
     },
-    "invoiceAmount": {
+    "invoice.invoiceAmount": {
       "type": "number",
       "title": "Invoice Amount"
     },
-    "dueDate": {
+    "invoice.invoiceCurrency": {
+      "$ref": "#/definitions/currencyEnum",
+      "title": "Select Currency"
+    },
+    "invoice.dueDate": {
       "type": "string",
       "title": "Due Date"
     }

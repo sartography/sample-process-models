@@ -1,14 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_96f6665" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.0.0-dev">
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:spiffworkflow="http://spiffworkflow.org/bpmn/schema/1.0/core" id="Definitions_96f6665" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.0.0-dev">
+  <bpmn:collaboration id="Collaboration_0vhnzyt">
+    <bpmn:participant id="Participant_17p64wg" processRef="Proccess_6ay3put" />
+    <bpmn:correlationKey name="CorrelationKey_1">
+      <bpmn:correlationPropertyRef>mcp_topica_one</bpmn:correlationPropertyRef>
+    </bpmn:correlationKey>
+  </bpmn:collaboration>
   <bpmn:process id="Proccess_6ay3put" isExecutable="true">
     <bpmn:startEvent id="StartEvent_1">
       <bpmn:outgoing>Flow_1v773sk</bpmn:outgoing>
     </bpmn:startEvent>
-    <bpmn:sequenceFlow id="Flow_1v773sk" sourceRef="StartEvent_1" targetRef="Activity_039s1le" />
     <bpmn:endEvent id="Event_1h8dssq">
       <bpmn:incoming>Flow_008k59o</bpmn:incoming>
     </bpmn:endEvent>
-    <bpmn:sequenceFlow id="Flow_008k59o" sourceRef="Activity_039s1le" targetRef="Event_1h8dssq" />
     <bpmn:subProcess id="Activity_039s1le" name="Sub Process">
       <bpmn:incoming>Flow_1v773sk</bpmn:incoming>
       <bpmn:outgoing>Flow_008k59o</bpmn:outgoing>
@@ -24,15 +28,37 @@
       <bpmn:scriptTask id="Activity_032nk4u" name="Set Topic One">
         <bpmn:incoming>Flow_17cp9lq</bpmn:incoming>
         <bpmn:outgoing>Flow_1o5couk</bpmn:outgoing>
+        <bpmn:script>import time
+timestamp = time.time()
+topic_one_a = f"topic_one_a_conversation_{timestamp}"
+del time</bpmn:script>
       </bpmn:scriptTask>
-      <bpmn:sendTask id="Activity_1dcqdmq" name="Send message">
+      <bpmn:sendTask id="Activity_1dcqdmq" name="Send message" messageRef="Message_X">
         <bpmn:incoming>Flow_1o5couk</bpmn:incoming>
         <bpmn:outgoing>Flow_0cwfqd7</bpmn:outgoing>
       </bpmn:sendTask>
     </bpmn:subProcess>
+    <bpmn:sequenceFlow id="Flow_1v773sk" sourceRef="StartEvent_1" targetRef="Activity_039s1le" />
+    <bpmn:sequenceFlow id="Flow_008k59o" sourceRef="Activity_039s1le" targetRef="Event_1h8dssq" />
   </bpmn:process>
+  <bpmn:correlationProperty id="mcp_topica_one" name="MCP TopicA One">
+    <bpmn:correlationPropertyRetrievalExpression messageRef="Message_X">
+      <bpmn:formalExpression>topica_one</bpmn:formalExpression>
+    </bpmn:correlationPropertyRetrievalExpression>
+  </bpmn:correlationProperty>
+  <bpmn:message id="Message_X" name="Message_X">
+    <bpmn:extensionElements>
+      <spiffworkflow:messagePayload>{
+"topica_one": topic_one_a,
+"initial_var_one": 3
+}</spiffworkflow:messagePayload>
+    </bpmn:extensionElements>
+  </bpmn:message>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
-    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Proccess_6ay3put">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_0vhnzyt">
+      <bpmndi:BPMNShape id="Participant_17p64wg_di" bpmnElement="Participant_17p64wg" isHorizontal="true">
+        <dc:Bounds x="129" y="52" width="401" height="250" />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
         <dc:Bounds x="179" y="159" width="36" height="36" />
       </bpmndi:BPMNShape>
