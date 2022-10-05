@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:spiffworkflow="http://spiffworkflow.org/bpmn/schema/1.0/core" id="Definitions_96f6665" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.0.0-dev">
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:spiffworkflow="http://spiffworkflow.org/bpmn/schema/1.0/core" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="Definitions_96f6665" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.0.0-dev">
   <bpmn:process id="Proccess_m9e0urn" isExecutable="true">
     <bpmn:startEvent id="StartEvent_1">
       <bpmn:outgoing>Flow_0blz8m6</bpmn:outgoing>
     </bpmn:startEvent>
     <bpmn:sequenceFlow id="Flow_0blz8m6" sourceRef="StartEvent_1" targetRef="Activity_1dx9now" />
     <bpmn:endEvent id="Event_1qdv7c0">
-      <bpmn:incoming>Flow_1jdrc20</bpmn:incoming>
+      <bpmn:incoming>Flow_1ghl3no</bpmn:incoming>
     </bpmn:endEvent>
-    <bpmn:sequenceFlow id="Flow_1jdrc20" sourceRef="Activity_1dx9now" targetRef="Event_1qdv7c0" />
+    <bpmn:sequenceFlow id="Flow_1jdrc20" sourceRef="Activity_1dx9now" targetRef="Event_1dbafvu" />
     <bpmn:businessRuleTask id="Activity_1dx9now" name="Choose a vaule">
       <bpmn:extensionElements>
         <spiffworkflow:calledDecisionId>decision_1</spiffworkflow:calledDecisionId>
@@ -16,18 +16,29 @@
       <bpmn:incoming>Flow_0blz8m6</bpmn:incoming>
       <bpmn:outgoing>Flow_1jdrc20</bpmn:outgoing>
     </bpmn:businessRuleTask>
+    <bpmn:sequenceFlow id="Flow_1ghl3no" sourceRef="Event_1dbafvu" targetRef="Event_1qdv7c0" />
+    <bpmn:intermediateCatchEvent id="Event_1dbafvu">
+      <bpmn:incoming>Flow_1jdrc20</bpmn:incoming>
+      <bpmn:outgoing>Flow_1ghl3no</bpmn:outgoing>
+      <bpmn:timerEventDefinition id="TimerEventDefinition_1x44x37">
+        <bpmn:timeDuration xsi:type="bpmn:tFormalExpression" />
+      </bpmn:timerEventDefinition>
+    </bpmn:intermediateCatchEvent>
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Proccess_m9e0urn">
       <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
         <dc:Bounds x="179" y="159" width="36" height="36" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_1qdv7c0_di" bpmnElement="Event_1qdv7c0">
-        <dc:Bounds x="432" y="159" width="36" height="36" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_18m16xx_di" bpmnElement="Activity_1dx9now">
         <dc:Bounds x="270" y="137" width="100" height="80" />
         <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1qdv7c0_di" bpmnElement="Event_1qdv7c0">
+        <dc:Bounds x="672" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1yscpb0_di" bpmnElement="Event_1dbafvu">
+        <dc:Bounds x="452" y="159" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_0blz8m6_di" bpmnElement="Flow_0blz8m6">
         <di:waypoint x="215" y="177" />
@@ -35,7 +46,11 @@
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1jdrc20_di" bpmnElement="Flow_1jdrc20">
         <di:waypoint x="370" y="177" />
-        <di:waypoint x="432" y="177" />
+        <di:waypoint x="452" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1ghl3no_di" bpmnElement="Flow_1ghl3no">
+        <di:waypoint x="488" y="177" />
+        <di:waypoint x="672" y="177" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
