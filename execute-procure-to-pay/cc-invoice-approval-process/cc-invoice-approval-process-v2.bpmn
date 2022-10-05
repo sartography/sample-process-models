@@ -74,7 +74,7 @@
     <bpmn:sequenceFlow id="Flow_1gohkts" name="Yes" sourceRef="Gateway_1lbghql" targetRef="Event_0m3ri6v" />
     <bpmn:sequenceFlow id="Flow_18xvx8w" name="yes" sourceRef="Gateway_1l4tz4i" targetRef="Activity_0fq1nb4" />
     <bpmn:sequenceFlow id="Flow_1m8oeg0" sourceRef="Activity_1ucvkk4" targetRef="Activity_06b32ar" />
-    <bpmn:userTask id="Submit_the_invoice" name="2. Submit the invoice" scriptFormat="python" script="import decimal&#10;&#10;# Check if there are more than two decimal places &#10;d = decimal.Decimal(&#39;56.4325&#39;)&#10;d_cnt = d.as_tuple().exponent&#10;if d_cnt &#60; -2:&#10;	isDecimal = False&#10;else:&#10;	isDecimal = True&#10;&#10;isNameNum = False&#10;for c in contributorName:&#10;	if c.isdigit():&#10;		isNameNum = True&#10;		break">
+    <bpmn:userTask id="Submit_the_invoice" name="2. Submit the invoice" scriptFormat="python" script="# Check if there are more than two decimal places &#10;d = decimal.Decimal(&#39;56.4325&#39;)&#10;d_cnt = d.as_tuple().exponent&#10;if d_cnt &#60; -2:&#10;	isDecimal = False&#10;else:&#10;	isDecimal = True&#10;&#10;isNameNum = False&#10;for c in contributorName:&#10;	if c.isdigit():&#10;		isNameNum = True&#10;		break">
       <bpmn:extensionElements>
         <spiffworkflow:properties>
           <spiffworkflow:property name="formJsonSchemaFilename" value="Submit-the-invoice_JSONSchema.json" />
@@ -292,7 +292,7 @@
       <bpmn:scriptTask id="Activity_Check_Due_Date" name="Check Due Date" scriptFormat="python">
         <bpmn:incoming>Flow_0iiotdb</bpmn:incoming>
         <bpmn:outgoing>Flow_1s4qhn1</bpmn:outgoing>
-        <bpmn:script>from datetime import datetime
+        <bpmn:script>
 
 invoice_date_obj = datetime.strptime(invoice.dueDate, '%Y-%m-%d')
 local_date_time_obj = datetime.strptime(local_date_str, '%Y-%m-%d')
@@ -337,7 +337,7 @@ del c</bpmn:script>
       <bpmn:scriptTask id="Activity_check_invoice_amount" name="Check Invoice Amount" scriptFormat="python">
         <bpmn:incoming>Flow_18qyq02</bpmn:incoming>
         <bpmn:outgoing>Flow_1okg2rg</bpmn:outgoing>
-        <bpmn:script>import decimal
+        <bpmn:script>
 
 # Check if there are more than two decimal places
 invoiceAmount_str = str(invoice.invoiceAmount)
