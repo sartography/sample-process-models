@@ -34,6 +34,14 @@
         <bpmn:flowNodeRef>Gateway_1lbghql</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_0x83ruk</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_0m3ri6v</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_1lq96cy</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_102t7tk</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_0fq1nb4</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Gateway_1l4tz4i</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_0fsoa08</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Event_1b58a3z</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_1ftzr6x</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Event_0f3d2bp</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_0gkejaj</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_1ucvkk4</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_15y55nw</bpmn:flowNodeRef>
@@ -49,20 +57,14 @@
         <bpmn:flowNodeRef>Event_12qepud</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_Invoice_is_accepted</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_1egoehb</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Activity_1lq96cy</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Activity_102t7tk</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Activity_0fq1nb4</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Gateway_1l4tz4i</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Activity_0fsoa08</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Event_1b58a3z</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Activity_1ftzr6x</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Event_0f3d2bp</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_1so23vf" name="Finance Team">
-        <bpmn:flowNodeRef>Event_16u0f7b</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_0cdgqi0</bpmn:flowNodeRef>
       </bpmn:lane>
-      <bpmn:lane id="Lane_1b7abal" name="Approver" />
+      <bpmn:lane id="Lane_1b7abal" name="Approver">
+        <bpmn:flowNodeRef>Activity_06b32ar</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Event_09q0ym0</bpmn:flowNodeRef>
+      </bpmn:lane>
     </bpmn:laneSet>
     <bpmn:sequenceFlow id="Flow_1x4rtop" name="Yes" sourceRef="Gateway_validation_successful_question_mark" targetRef="Event_Invoice_is_accepted" />
     <bpmn:sequenceFlow id="Flow_05ffq52" name="No" sourceRef="Gateway_validation_successful_question_mark" targetRef="Event_invoice_validation_failed">
@@ -71,7 +73,7 @@
     <bpmn:sequenceFlow id="Flow_1c5u447" sourceRef="Activity_0gkejaj" targetRef="Gateway_1lbghql" />
     <bpmn:sequenceFlow id="Flow_1gohkts" name="Yes" sourceRef="Gateway_1lbghql" targetRef="Event_0m3ri6v" />
     <bpmn:sequenceFlow id="Flow_18xvx8w" name="yes" sourceRef="Gateway_1l4tz4i" targetRef="Activity_0fq1nb4" />
-    <bpmn:sequenceFlow id="Flow_1m8oeg0" sourceRef="Activity_1ucvkk4" targetRef="Gateway_1l4tz4i" />
+    <bpmn:sequenceFlow id="Flow_1m8oeg0" sourceRef="Activity_1ucvkk4" targetRef="Activity_06b32ar" />
     <bpmn:userTask id="Submit_the_invoice" name="2. Submit the invoice" scriptFormat="python" script="import decimal&#10;&#10;# Check if there are more than two decimal places &#10;d = decimal.Decimal(&#39;56.4325&#39;)&#10;d_cnt = d.as_tuple().exponent&#10;if d_cnt &#60; -2:&#10;	isDecimal = False&#10;else:&#10;	isDecimal = True&#10;&#10;isNameNum = False&#10;for c in contributorName:&#10;	if c.isdigit():&#10;		isNameNum = True&#10;		break">
       <bpmn:extensionElements>
         <spiffworkflow:properties>
@@ -415,7 +417,6 @@ Please fix.
       <bpmn:outgoing>Flow_01cnc1i</bpmn:outgoing>
     </bpmn:serviceTask>
     <bpmn:exclusiveGateway id="Gateway_1l4tz4i" name="Approved?">
-      <bpmn:incoming>Flow_1m8oeg0</bpmn:incoming>
       <bpmn:outgoing>Flow_18xvx8w</bpmn:outgoing>
       <bpmn:outgoing>Flow_0bfs2xe</bpmn:outgoing>
     </bpmn:exclusiveGateway>
@@ -433,6 +434,10 @@ Please fix.
     <bpmn:endEvent id="Event_0f3d2bp" name="Invoice is declined">
       <bpmn:incoming>Flow_1wturr2</bpmn:incoming>
     </bpmn:endEvent>
+    <bpmn:manualTask id="Activity_06b32ar" name="Approve invocie manually">
+      <bpmn:incoming>Flow_1m8oeg0</bpmn:incoming>
+    </bpmn:manualTask>
+    <bpmn:boundaryEvent id="Event_09q0ym0" attachedToRef="Activity_06b32ar" />
     <bpmn:textAnnotation id="TextAnnotation_07oqnmr">
       <bpmn:text>Please check your invoice data</bpmn:text>
     </bpmn:textAnnotation>
@@ -463,11 +468,11 @@ Please fix.
         <dc:Bounds x="280" y="210" width="3150" height="920" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Lane_1b7abal_di" bpmnElement="Lane_1b7abal" isHorizontal="true">
-        <dc:Bounds x="310" y="800" width="3120" height="120" />
+        <dc:Bounds x="310" y="800" width="3120" height="160" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Lane_1so23vf_di" bpmnElement="Lane_1so23vf" isHorizontal="true">
-        <dc:Bounds x="310" y="920" width="3120" height="210" />
+        <dc:Bounds x="310" y="960" width="3120" height="170" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Lane_1a0qu8e_di" bpmnElement="Lane_1a0qu8e" isHorizontal="true">
         <dc:Bounds x="310" y="210" width="3120" height="590" />
@@ -545,6 +550,10 @@ Please fix.
           <dc:Bounds x="2808" y="525" width="46" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0gj0xhy_di" bpmnElement="Activity_06b32ar">
+        <dc:Bounds x="2450" y="820" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1rn2mgi_di" bpmnElement="Activity_0gkejaj">
         <dc:Bounds x="1979" y="482" width="100" height="80" />
       </bpmndi:BPMNShape>
@@ -618,6 +627,9 @@ Please fix.
           <dc:Bounds x="2312" y="463" width="33" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0wcy53p_di" bpmnElement="Event_09q0ym0">
+        <dc:Bounds x="2512" y="882" width="36" height="36" />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_1x4rtop_di" bpmnElement="Flow_1x4rtop">
         <di:waypoint x="1065" y="522" />
         <di:waypoint x="1122" y="522" />
@@ -653,7 +665,9 @@ Please fix.
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1m8oeg0_di" bpmnElement="Flow_1m8oeg0">
         <di:waypoint x="2379" y="412" />
-        <di:waypoint x="2935" y="412" />
+        <di:waypoint x="2415" y="412" />
+        <di:waypoint x="2415" y="860" />
+        <di:waypoint x="2450" y="860" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_11b24we_di" bpmnElement="Flow_11b24we">
         <di:waypoint x="585" y="522" />
