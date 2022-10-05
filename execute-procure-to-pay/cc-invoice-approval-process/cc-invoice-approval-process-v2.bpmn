@@ -215,6 +215,23 @@
     <bpmn:subProcess id="Activity_1ucvkk4" name="4a. Manual approval process">
       <bpmn:incoming>Flow_138hkfx</bpmn:incoming>
       <bpmn:outgoing>Flow_1m8oeg0</bpmn:outgoing>
+      <bpmn:startEvent id="Event_0jcphtt">
+        <bpmn:outgoing>Flow_1cqninh</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:exclusiveGateway id="Gateway_1l74xlc">
+        <bpmn:incoming>Flow_1cqninh</bpmn:incoming>
+        <bpmn:outgoing>Flow_1am9jcz</bpmn:outgoing>
+        <bpmn:outgoing>Flow_0kx6gsl</bpmn:outgoing>
+      </bpmn:exclusiveGateway>
+      <bpmn:sequenceFlow id="Flow_1cqninh" sourceRef="Event_0jcphtt" targetRef="Gateway_1l74xlc" />
+      <bpmn:sequenceFlow id="Flow_1am9jcz" sourceRef="Gateway_1l74xlc" targetRef="Activity_1w6kg4p" />
+      <bpmn:serviceTask id="Activity_1w6kg4p" name="4ai. Get Team_Lead info">
+        <bpmn:incoming>Flow_1am9jcz</bpmn:incoming>
+      </bpmn:serviceTask>
+      <bpmn:task id="Activity_0respgl" name="4aii. Get Invoice details">
+        <bpmn:incoming>Flow_0kx6gsl</bpmn:incoming>
+      </bpmn:task>
+      <bpmn:sequenceFlow id="Flow_0kx6gsl" sourceRef="Gateway_1l74xlc" targetRef="Activity_0respgl" />
     </bpmn:subProcess>
     <bpmn:intermediateThrowEvent id="Event_15y55nw" name="Invoice is submitted">
       <bpmn:documentation>Process milestone should update the process metadata field “milestone reached”</bpmn:documentation>
@@ -419,15 +436,15 @@ Please fix.
       <bpmndi:BPMNShape id="Participant_11ab2hx_di" bpmnElement="Participant_11ab2hx" isHorizontal="true">
         <dc:Bounds x="280" y="210" width="3150" height="920" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Lane_1a0qu8e_di" bpmnElement="Lane_1a0qu8e" isHorizontal="true">
-        <dc:Bounds x="310" y="210" width="3120" height="590" />
+      <bpmndi:BPMNShape id="Lane_1b7abal_di" bpmnElement="Lane_1b7abal" isHorizontal="true">
+        <dc:Bounds x="310" y="800" width="3120" height="120" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Lane_1so23vf_di" bpmnElement="Lane_1so23vf" isHorizontal="true">
         <dc:Bounds x="310" y="920" width="3120" height="210" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Lane_1b7abal_di" bpmnElement="Lane_1b7abal" isHorizontal="true">
-        <dc:Bounds x="310" y="800" width="3120" height="120" />
+      <bpmndi:BPMNShape id="Lane_1a0qu8e_di" bpmnElement="Lane_1a0qu8e" isHorizontal="true">
+        <dc:Bounds x="310" y="210" width="3120" height="590" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1h7igan_di" bpmnElement="Submit_the_invoice">
@@ -476,15 +493,6 @@ Please fix.
         <dc:Bounds x="2664" y="387" width="50" height="50" />
         <bpmndi:BPMNLabel>
           <dc:Bounds x="2732" y="402" width="54" height="14" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0xwniza_di" bpmnElement="Activity_0cdgqi0">
-        <dc:Bounds x="2989" y="990" width="100" height="80" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_16u0f7b_di" bpmnElement="Event_16u0f7b">
-        <dc:Bounds x="3322" y="1012" width="36" height="36" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="3302" y="1175" width="77" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1rn2mgi_di" bpmnElement="Activity_0gkejaj">
@@ -564,6 +572,15 @@ Please fix.
         <dc:Bounds x="782" y="685" width="36" height="50" />
         <bpmndi:BPMNLabel>
           <dc:Bounds x="783" y="731" width="35" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0xwniza_di" bpmnElement="Activity_0cdgqi0">
+        <dc:Bounds x="2989" y="990" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_16u0f7b_di" bpmnElement="Event_16u0f7b">
+        <dc:Bounds x="3322" y="1012" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="3302" y="1175" width="77" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="TextAnnotation_07oqnmr_di" bpmnElement="TextAnnotation_07oqnmr">
@@ -915,7 +932,35 @@ Please fix.
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
   <bpmndi:BPMNDiagram>
-    <bpmndi:BPMNPlane bpmnElement="Activity_1ucvkk4" />
+    <bpmndi:BPMNPlane bpmnElement="Activity_1ucvkk4">
+      <bpmndi:BPMNShape id="Event_0jcphtt_di" bpmnElement="Event_0jcphtt">
+        <dc:Bounds x="152" y="222" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_1l74xlc_di" bpmnElement="Gateway_1l74xlc" isMarkerVisible="true">
+        <dc:Bounds x="245" y="215" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_01bnz9l_di" bpmnElement="Activity_1w6kg4p">
+        <dc:Bounds x="360" y="200" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0respgl_di" bpmnElement="Activity_0respgl">
+        <dc:Bounds x="490" y="90" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_1cqninh_di" bpmnElement="Flow_1cqninh">
+        <di:waypoint x="188" y="240" />
+        <di:waypoint x="245" y="240" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1am9jcz_di" bpmnElement="Flow_1am9jcz">
+        <di:waypoint x="295" y="240" />
+        <di:waypoint x="360" y="240" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0kx6gsl_di" bpmnElement="Flow_0kx6gsl">
+        <di:waypoint x="270" y="215" />
+        <di:waypoint x="270" y="130" />
+        <di:waypoint x="490" y="130" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
   <bpmndi:BPMNDiagram id="BPMNDiagram_0e5tdrz">
     <bpmndi:BPMNPlane id="BPMNPlane_04v9fws" bpmnElement="SubProcess_Data_validation_rules">
