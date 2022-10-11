@@ -297,8 +297,6 @@
         <bpmn:outgoing>Flow_1avkxpe</bpmn:outgoing>
       </bpmn:startEvent>
       <bpmn:scriptTask id="Activity_Check_Due_Date" name="Check Due Date" scriptFormat="python">
-        <bpmn:incoming>Flow_0iiotdb</bpmn:incoming>
-        <bpmn:outgoing>Flow_1s4qhn1</bpmn:outgoing>
         <bpmn:script>invoice_date_obj = datetime.strptime(invoice.dueDate, '%Y-%m-%d')
 local_date_time_obj = datetime.strptime(local_date_str, '%Y-%m-%d')
 
@@ -338,10 +336,9 @@ for c in invoice.contributorName:
 del c</bpmn:script>
       </bpmn:scriptTask>
       <bpmn:sequenceFlow id="Flow_18qyq02" sourceRef="Activity_check_contributor_name" targetRef="Activity_check_invoice_amount" />
-      <bpmn:sequenceFlow id="Flow_1okg2rg" sourceRef="Activity_check_invoice_amount" targetRef="Activity_call_local_date_and_time" />
       <bpmn:scriptTask id="Activity_check_invoice_amount" name="Check Invoice Amount" scriptFormat="python">
         <bpmn:incoming>Flow_18qyq02</bpmn:incoming>
-        <bpmn:outgoing>Flow_1okg2rg</bpmn:outgoing>
+        <bpmn:outgoing>Flow_0s1utue</bpmn:outgoing>
         <bpmn:script>
 
 # Check if there are more than two decimal places
@@ -360,15 +357,11 @@ del decimal</bpmn:script>
         <bpmn:extensionElements>
           <spiffworkflow:calledDecisionId>submit_involce_valication</spiffworkflow:calledDecisionId>
         </bpmn:extensionElements>
-        <bpmn:incoming>Flow_1s4qhn1</bpmn:incoming>
+        <bpmn:incoming>Flow_0s1utue</bpmn:incoming>
         <bpmn:outgoing>Flow_0tzjowk</bpmn:outgoing>
       </bpmn:businessRuleTask>
-      <bpmn:sequenceFlow id="Flow_1s4qhn1" sourceRef="Activity_Check_Due_Date" targetRef="Activity_check_validation_rules" />
-      <bpmn:callActivity id="Activity_call_local_date_and_time" name="Call Local Date &#38; Time" calledElement="Shared_Local_Date_Time">
-        <bpmn:incoming>Flow_1okg2rg</bpmn:incoming>
-        <bpmn:outgoing>Flow_0iiotdb</bpmn:outgoing>
-      </bpmn:callActivity>
-      <bpmn:sequenceFlow id="Flow_0iiotdb" sourceRef="Activity_call_local_date_and_time" targetRef="Activity_Check_Due_Date" />
+      <bpmn:callActivity id="Activity_call_local_date_and_time" name="Call Local Date &#38; Time" calledElement="Shared_Local_Date_Time" />
+      <bpmn:sequenceFlow id="Flow_0s1utue" sourceRef="Activity_check_invoice_amount" targetRef="Activity_check_validation_rules" />
     </bpmn:subProcess>
     <bpmn:manualTask id="Activity_show_errors" name="Show Error(s)">
       <bpmn:extensionElements>
@@ -1064,9 +1057,6 @@ Please fix.
       <bpmndi:BPMNShape id="Event_1qkuk5g_di" bpmnElement="Event_1qkuk5g">
         <dc:Bounds x="232" y="192" width="36" height="36" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_05nw8eq_di" bpmnElement="Activity_Check_Due_Date">
-        <dc:Bounds x="850" y="170" width="100" height="80" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_015l7j8_di" bpmnElement="Event_015l7j8">
         <dc:Bounds x="1182" y="192" width="36" height="36" />
       </bpmndi:BPMNShape>
@@ -1080,8 +1070,11 @@ Please fix.
         <dc:Bounds x="1020" y="170" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0fc4t79_di" bpmnElement="Activity_call_local_date_and_time">
-        <dc:Bounds x="690" y="170" width="100" height="80" />
+        <dc:Bounds x="690" y="360" width="100" height="80" />
         <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_05nw8eq_di" bpmnElement="Activity_Check_Due_Date">
+        <dc:Bounds x="850" y="360" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_1avkxpe_di" bpmnElement="Flow_1avkxpe">
         <di:waypoint x="268" y="210" />
@@ -1091,21 +1084,13 @@ Please fix.
         <di:waypoint x="440" y="210" />
         <di:waypoint x="520" y="210" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_1okg2rg_di" bpmnElement="Flow_1okg2rg">
-        <di:waypoint x="620" y="210" />
-        <di:waypoint x="690" y="210" />
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0tzjowk_di" bpmnElement="Flow_0tzjowk">
         <di:waypoint x="1120" y="210" />
         <di:waypoint x="1182" y="210" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_1s4qhn1_di" bpmnElement="Flow_1s4qhn1">
-        <di:waypoint x="950" y="210" />
+      <bpmndi:BPMNEdge id="Flow_0s1utue_di" bpmnElement="Flow_0s1utue">
+        <di:waypoint x="620" y="210" />
         <di:waypoint x="1020" y="210" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0iiotdb_di" bpmnElement="Flow_0iiotdb">
-        <di:waypoint x="790" y="210" />
-        <di:waypoint x="850" y="210" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
