@@ -37,9 +37,7 @@
         <bpmn:flowNodeRef>Event_15y55nw</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Gateway_05ov5p5</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_0o1vc0a</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Activity_0p88elm</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Gateway_1717c0p</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Event_0bvopx2</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_08koius</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_12qepud</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_show_errors</bpmn:flowNodeRef>
@@ -57,6 +55,8 @@
         <bpmn:flowNodeRef>Activity_1ucvkk4</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>SubProcess_Data_validation_rules</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_0yrv2bc</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Event_0bvopx2</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_0p88elm</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_1so23vf" name="Finance Team">
         <bpmn:flowNodeRef>Event_16u0f7b</bpmn:flowNodeRef>
@@ -90,10 +90,8 @@
     <bpmn:sequenceFlow id="Flow_1n7wssu" sourceRef="Gateway_1717c0p" targetRef="Activity_0cfvsk7" />
     <bpmn:sequenceFlow id="Flow_1l1n5j5" sourceRef="Activity_0cfvsk7" targetRef="Event_15y55nw" />
     <bpmn:sequenceFlow id="Flow_1i8r773" sourceRef="Gateway_05ov5p5" targetRef="Activity_0o1vc0a" />
-    <bpmn:sequenceFlow id="Flow_1qq2iv5" sourceRef="Gateway_05ov5p5" targetRef="Activity_0p88elm" />
     <bpmn:sequenceFlow id="Flow_1094cjp" sourceRef="Activity_0o1vc0a" targetRef="Gateway_1717c0p" />
-    <bpmn:sequenceFlow id="Flow_1dtnpw3" sourceRef="Activity_0p88elm" targetRef="Gateway_1717c0p" />
-    <bpmn:sequenceFlow id="Flow_0nhu0ew" sourceRef="Event_Invoice_is_accepted" targetRef="Event_0bvopx2" />
+    <bpmn:sequenceFlow id="Flow_0nhu0ew" sourceRef="Event_Invoice_is_accepted" targetRef="Activity_0p88elm" />
     <bpmn:sequenceFlow id="Flow_13ng1f4" sourceRef="Event_invoice_validation_failed" targetRef="Activity_show_errors" />
     <bpmn:sequenceFlow id="Flow_18cic3h" sourceRef="Activity_show_errors" targetRef="Gateway_16gxu6s" />
     <bpmn:exclusiveGateway id="Gateway_16gxu6s">
@@ -266,24 +264,15 @@
     </bpmn:intermediateThrowEvent>
     <bpmn:parallelGateway id="Gateway_05ov5p5">
       <bpmn:outgoing>Flow_1i8r773</bpmn:outgoing>
-      <bpmn:outgoing>Flow_1qq2iv5</bpmn:outgoing>
     </bpmn:parallelGateway>
     <bpmn:serviceTask id="Activity_0o1vc0a" name="2c. Save Invoice Data">
       <bpmn:incoming>Flow_1i8r773</bpmn:incoming>
       <bpmn:outgoing>Flow_1094cjp</bpmn:outgoing>
     </bpmn:serviceTask>
-    <bpmn:serviceTask id="Activity_0p88elm" name="2d. Upload Invoice PDF document">
-      <bpmn:incoming>Flow_1qq2iv5</bpmn:incoming>
-      <bpmn:outgoing>Flow_1dtnpw3</bpmn:outgoing>
-    </bpmn:serviceTask>
     <bpmn:parallelGateway id="Gateway_1717c0p">
       <bpmn:incoming>Flow_1094cjp</bpmn:incoming>
-      <bpmn:incoming>Flow_1dtnpw3</bpmn:incoming>
       <bpmn:outgoing>Flow_1n7wssu</bpmn:outgoing>
     </bpmn:parallelGateway>
-    <bpmn:endEvent id="Event_0bvopx2" name="Temp End Event">
-      <bpmn:incoming>Flow_0nhu0ew</bpmn:incoming>
-    </bpmn:endEvent>
     <bpmn:sendTask id="Activity_08koius" name="Send the Error to front-end" messageRef="Message_Submit_Invoice" />
     <bpmn:subProcess id="SubProcess_Data_validation_rules" name="2b. Data validation rules">
       <bpmn:incoming>Flow_02moyg7</bpmn:incoming>
@@ -444,6 +433,29 @@ Please fix.
       <bpmn:outgoing>Flow_1mfw1j8</bpmn:outgoing>
       <bpmn:script>currency_enum_options = [{"value": "AUD", "label": "Australian Dollar (AUD)"}, {"value": "CAD", "label": "Canadian Dollar (CAD)"}, {"value": "EUR", "label": "Euro (EUR)"}, {"value": "GBP", "label": "Pound sterling (GBP)"}, {"value": "SGD", "label": "Singapore Dollar (SGD)"}, {"value": "CHF", "label": "Swiss Franc (CHF)"}, {"value": "USD", "label": "US Dollar (USD)"}]</bpmn:script>
     </bpmn:scriptTask>
+    <bpmn:endEvent id="Event_0bvopx2" name="Temp End Event">
+      <bpmn:incoming>Flow_0xg97ht</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:serviceTask id="Activity_0p88elm" name="2d. Upload Invoice PDF document">
+      <bpmn:extensionElements>
+        <spiffworkflow:serviceTaskOperator id="pdf/CreatePDFAndUploadToS3">
+          <spiffworkflow:parameters>
+            <spiffworkflow:parameter id="aws_object_name" type="str" value="&#39;test_invoice.pdf&#39;" />
+            <spiffworkflow:parameter id="template" type="str" value="&#39;file:execute-procure-to-pay/cc-invoice-approval/invoice_template.md&#39;" />
+          </spiffworkflow:parameters>
+        </spiffworkflow:serviceTaskOperator>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0nhu0ew</bpmn:incoming>
+      <bpmn:outgoing>Flow_0xg97ht</bpmn:outgoing>
+      <bpmn:property id="Property_0gwue2n" name="__targetRef_placeholder" />
+      <bpmn:dataInputAssociation id="DataInputAssociation_0myc5qf">
+        <bpmn:sourceRef>DataObjectReference_07aj1tf</bpmn:sourceRef>
+        <bpmn:targetRef>Property_0gwue2n</bpmn:targetRef>
+      </bpmn:dataInputAssociation>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="Flow_0xg97ht" sourceRef="Activity_0p88elm" targetRef="Event_0bvopx2" />
+    <bpmn:dataObjectReference id="DataObjectReference_07aj1tf" name="invoice" dataObjectRef="invoice" />
+    <bpmn:dataObject id="DataObject_08fjad1" />
     <bpmn:textAnnotation id="TextAnnotation_07oqnmr">
       <bpmn:text>Please check your invoice data</bpmn:text>
     </bpmn:textAnnotation>
@@ -523,6 +535,15 @@ Please fix.
           <dc:Bounds x="2362" y="625" width="57" height="40" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0bvopx2_di" bpmnElement="Event_0bvopx2">
+        <dc:Bounds x="1302" y="722" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1283" y="765" width="81" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0zssftc_di" bpmnElement="Activity_0p88elm">
+        <dc:Bounds x="1270" y="580" width="100" height="80" />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1rn2mgi_di" bpmnElement="Activity_0gkejaj">
         <dc:Bounds x="2159" y="482" width="100" height="80" />
       </bpmndi:BPMNShape>
@@ -541,17 +562,8 @@ Please fix.
       <bpmndi:BPMNShape id="Activity_076kb81_di" bpmnElement="Activity_0o1vc0a">
         <dc:Bounds x="1470" y="422" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0zssftc_di" bpmnElement="Activity_0p88elm">
-        <dc:Bounds x="1640" y="532" width="100" height="80" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Gateway_05ztwup_di" bpmnElement="Gateway_1717c0p">
         <dc:Bounds x="1794" y="497" width="50" height="50" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_0bvopx2_di" bpmnElement="Event_0bvopx2">
-        <dc:Bounds x="1302" y="622" width="36" height="36" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="1283" y="665" width="81" height="14" />
-        </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0qaxjv6_di" bpmnElement="Activity_08koius">
         <dc:Bounds x="1290" y="306" width="100" height="80" />
@@ -743,24 +755,14 @@ Please fix.
         <di:waypoint x="1420" y="462" />
         <di:waypoint x="1470" y="462" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_1qq2iv5_di" bpmnElement="Flow_1qq2iv5">
-        <di:waypoint x="1420" y="547" />
-        <di:waypoint x="1420" y="572" />
-        <di:waypoint x="1640" y="572" />
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1094cjp_di" bpmnElement="Flow_1094cjp">
         <di:waypoint x="1570" y="462" />
         <di:waypoint x="1819" y="462" />
         <di:waypoint x="1819" y="497" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_1dtnpw3_di" bpmnElement="Flow_1dtnpw3">
-        <di:waypoint x="1740" y="572" />
-        <di:waypoint x="1819" y="572" />
-        <di:waypoint x="1819" y="547" />
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0nhu0ew_di" bpmnElement="Flow_0nhu0ew">
         <di:waypoint x="1320" y="540" />
-        <di:waypoint x="1320" y="622" />
+        <di:waypoint x="1320" y="580" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_13ng1f4_di" bpmnElement="Flow_13ng1f4">
         <di:waypoint x="1220" y="422" />
@@ -804,6 +806,16 @@ Please fix.
         <di:waypoint x="1327" y="306" />
         <di:waypoint x="1317" y="274" />
       </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0xg97ht_di" bpmnElement="Flow_0xg97ht">
+        <di:waypoint x="1320" y="660" />
+        <di:waypoint x="1320" y="722" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="DataObjectReference_07aj1tf_di" bpmnElement="DataObjectReference_07aj1tf">
+        <dc:Bounds x="1172" y="685" width="36" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1172" y="731" width="35" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Participant_0a8arrz_di" bpmnElement="Participant_0a8arrz" isHorizontal="true">
         <dc:Bounds x="1270" y="1180" width="320" height="80" />
       </bpmndi:BPMNShape>
@@ -833,7 +845,10 @@ Please fix.
         <di:waypoint x="1520" y="1180" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0yfnc92_di" bpmnElement="Flow_0yfnc92">
-        <di:waypoint x="1690" y="612" />
+        <di:waypoint x="1370" y="620" />
+        <di:waypoint x="1430" y="620" />
+        <di:waypoint x="1430" y="920" />
+        <di:waypoint x="1690" y="920" />
         <di:waypoint x="1690" y="1180" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0e6f26d_di" bpmnElement="Flow_0e6f26d">
@@ -866,6 +881,10 @@ Please fix.
       <bpmndi:BPMNEdge id="Flow_1dgkwzr_di" bpmnElement="Flow_1dgkwzr">
         <di:waypoint x="3280" y="560" />
         <di:waypoint x="3280" y="150" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DataInputAssociation_0myc5qf_di" bpmnElement="DataInputAssociation_0myc5qf">
+        <di:waypoint x="1208" y="698" />
+        <di:waypoint x="1272" y="655" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
@@ -1063,6 +1082,9 @@ Please fix.
       <bpmndi:BPMNShape id="Event_1qkuk5g_di" bpmnElement="Event_1qkuk5g">
         <dc:Bounds x="232" y="192" width="36" height="36" />
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_05nw8eq_di" bpmnElement="Activity_Check_Due_Date">
+        <dc:Bounds x="850" y="360" width="100" height="80" />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_015l7j8_di" bpmnElement="Event_015l7j8">
         <dc:Bounds x="1182" y="192" width="36" height="36" />
       </bpmndi:BPMNShape>
@@ -1078,9 +1100,6 @@ Please fix.
       <bpmndi:BPMNShape id="Activity_0fc4t79_di" bpmnElement="Activity_call_local_date_and_time">
         <dc:Bounds x="690" y="360" width="100" height="80" />
         <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_05nw8eq_di" bpmnElement="Activity_Check_Due_Date">
-        <dc:Bounds x="850" y="360" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_05q4kby_di" bpmnElement="Activity_1px1nvz">
         <dc:Bounds x="760" y="170" width="100" height="80" />
