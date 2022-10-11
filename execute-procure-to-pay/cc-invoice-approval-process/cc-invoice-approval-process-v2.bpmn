@@ -436,7 +436,7 @@ Please fix.
     <bpmn:endEvent id="Event_0bvopx2" name="Temp End Event">
       <bpmn:incoming>Flow_0xg97ht</bpmn:incoming>
     </bpmn:endEvent>
-    <bpmn:serviceTask id="Activity_0p88elm" name="2d. Upload Invoice PDF document">
+    <bpmn:serviceTask id="Activity_0p88elm" name="2d. Upload Invoice PDF document" scriptFormat="python" script="invoice_name = invoice.contributorName + &#34;_&#34; + invoice.invoiceId">
       <bpmn:extensionElements>
         <spiffworkflow:serviceTaskOperator id="pdf/CreatePDFAndUploadToS3">
           <spiffworkflow:parameters>
@@ -444,6 +444,7 @@ Please fix.
             <spiffworkflow:parameter id="template" type="str" value="&#39;file:execute-procure-to-pay/cc-invoice-approval-process/invoice_template.md&#39;" />
           </spiffworkflow:parameters>
         </spiffworkflow:serviceTaskOperator>
+        <spiffworkflow:preScript>invoice_name = invoice.contributorName + "_" + invoice.invoiceId</spiffworkflow:preScript>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_0nhu0ew</bpmn:incoming>
       <bpmn:outgoing>Flow_0xg97ht</bpmn:outgoing>
