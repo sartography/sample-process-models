@@ -107,7 +107,7 @@
     </bpmn:startEvent>
     <bpmn:sequenceFlow id="Flow_1v8dszb" sourceRef="Event_09q0ym0" targetRef="Activity_1ftzr6x" />
     <bpmn:sequenceFlow id="Flow_0yvmfqu" sourceRef="Activity_06b32ar" targetRef="Gateway_1l4tz4i" />
-    <bpmn:userTask id="Submit_the_invoice" name="2. Submit the invoice" scriptFormat="python" script="# Check if there are more than two decimal places &#10;d = decimal.Decimal(&#39;56.4325&#39;)&#10;d_cnt = d.as_tuple().exponent&#10;if d_cnt &#60; -2:&#10;	isDecimal = False&#10;else:&#10;	isDecimal = True&#10;&#10;isNameNum = False&#10;for c in contributorName:&#10;	if c.isdigit():&#10;		isNameNum = True&#10;		break">
+    <bpmn:userTask id="Submit_the_invoice" name="2. Submit the invoice" scriptFormat="python" script="SdgsdGsdhgwsDEHhww">
       <bpmn:extensionElements>
         <spiffworkflow:properties>
           <spiffworkflow:property name="formJsonSchemaFilename" value="Submit-the-invoice_JSONSchema.json" />
@@ -440,11 +440,11 @@ Please fix.
       <bpmn:extensionElements>
         <spiffworkflow:serviceTaskOperator id="pdf/CreatePDFAndUploadToS3">
           <spiffworkflow:parameters>
-            <spiffworkflow:parameter id="aws_object_name" type="str" value="&#39;test_invoice.pdf&#39;" />
+            <spiffworkflow:parameter id="aws_object_name" type="str" value="invoice_name" />
             <spiffworkflow:parameter id="template" type="str" value="&#39;file:execute-procure-to-pay/cc-invoice-approval-process/invoice_template.md&#39;" />
           </spiffworkflow:parameters>
         </spiffworkflow:serviceTaskOperator>
-        <spiffworkflow:preScript>invoice_name = invoice.contributorName + "_" + invoice.invoiceId</spiffworkflow:preScript>
+        <spiffworkflow:preScript>invoice_name = invoice.contributorName + "_" + invoice.invoiceId + ".pdf"</spiffworkflow:preScript>
         <spiffworkflow:postScript />
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_0nhu0ew</bpmn:incoming>
