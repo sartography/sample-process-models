@@ -440,7 +440,7 @@ Please fix.
       <bpmn:extensionElements>
         <spiffworkflow:serviceTaskOperator id="pdf/CreatePDFAndUploadToS3">
           <spiffworkflow:parameters>
-            <spiffworkflow:parameter id="aws_object_name" type="str" value="&#39;jon_staging.pdf&#39;" />
+            <spiffworkflow:parameter id="aws_object_name" type="str" value="invoice_file_name" />
             <spiffworkflow:parameter id="template" type="str" value="&#39;file:execute-procure-to-pay/cc-invoice-approval-process/invoice_template.md&#39;" />
           </spiffworkflow:parameters>
         </spiffworkflow:serviceTaskOperator>
@@ -468,7 +468,7 @@ Please fix.
         <bpmn:sourceRef>DataObjectReference_0r84rok</bpmn:sourceRef>
         <bpmn:targetRef>Property_09mkxyl</bpmn:targetRef>
       </bpmn:dataInputAssociation>
-      <bpmn:script>invoice_name = invoice.contributorName + "_" + str(invoice.invoiceId) + ".pdf"</bpmn:script>
+      <bpmn:script>invoice_file_name = invoice.contributorName + "_" + str(invoice.invoiceId) + ".pdf"</bpmn:script>
     </bpmn:scriptTask>
     <bpmn:dataObjectReference id="DataObjectReference_0r84rok" name="invoice" dataObjectRef="invoice" />
     <bpmn:dataObject id="DataObject_08l7zz3" />
@@ -532,9 +532,6 @@ Please fix.
         <bpmndi:BPMNLabel>
           <dc:Bounds x="1116" y="433" width="76" height="14" />
         </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0bgyf4i_di" bpmnElement="Activity_104xpp8">
-        <dc:Bounds x="1330" y="482" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0z13hw3_di" bpmnElement="SubProcess_Data_validation_rules">
         <dc:Bounds x="1020" y="482" width="100" height="80" />
@@ -663,6 +660,15 @@ Please fix.
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0zssftc_di" bpmnElement="Activity_0p88elm">
         <dc:Bounds x="1480" y="580" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0bgyf4i_di" bpmnElement="Activity_104xpp8">
+        <dc:Bounds x="1330" y="482" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DataObjectReference_0r84rok_di" bpmnElement="DataObjectReference_0r84rok">
+        <dc:Bounds x="1352" y="355" width="36" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1353" y="401" width="35" height="14" />
+        </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="TextAnnotation_07oqnmr_di" bpmnElement="TextAnnotation_07oqnmr">
         <dc:Bounds x="1480" y="220" width="100" height="54" />
@@ -831,20 +837,14 @@ Please fix.
         <di:waypoint x="1530" y="660" />
         <di:waypoint x="1530" y="722" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Association_170uhu5_di" bpmnElement="Association_170uhu5">
-        <di:waypoint x="1537" y="306" />
-        <di:waypoint x="1527" y="274" />
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_147kb1l_di" bpmnElement="Flow_147kb1l">
         <di:waypoint x="1430" y="522" />
         <di:waypoint x="1512" y="522" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="DataObjectReference_0r84rok_di" bpmnElement="DataObjectReference_0r84rok">
-        <dc:Bounds x="1352" y="355" width="36" height="50" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="1353" y="401" width="35" height="14" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Association_170uhu5_di" bpmnElement="Association_170uhu5">
+        <di:waypoint x="1537" y="306" />
+        <di:waypoint x="1527" y="274" />
+      </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="Participant_0a8arrz_di" bpmnElement="Participant_0a8arrz" isHorizontal="true">
         <dc:Bounds x="1480" y="1180" width="320" height="80" />
       </bpmndi:BPMNShape>
@@ -868,6 +868,10 @@ Please fix.
       <bpmndi:BPMNEdge id="DataInputAssociation_0myc5qf_di" bpmnElement="DataInputAssociation_0myc5qf">
         <di:waypoint x="1208" y="705" />
         <di:waypoint x="1480" y="636" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DataInputAssociation_1s1efok_di" bpmnElement="DataInputAssociation_1s1efok">
+        <di:waypoint x="1372" y="405" />
+        <di:waypoint x="1379" y="482" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Association_1eygti7_di" bpmnElement="Association_1eygti7">
         <di:waypoint x="756" y="-70" />
@@ -914,10 +918,6 @@ Please fix.
       <bpmndi:BPMNEdge id="Flow_1dgkwzr_di" bpmnElement="Flow_1dgkwzr">
         <di:waypoint x="3490" y="560" />
         <di:waypoint x="3490" y="150" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="DataInputAssociation_1s1efok_di" bpmnElement="DataInputAssociation_1s1efok">
-        <di:waypoint x="1372" y="405" />
-        <di:waypoint x="1379" y="482" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
