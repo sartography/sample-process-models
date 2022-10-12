@@ -68,7 +68,7 @@
         <bpmn:flowNodeRef>Event_09q0ym0</bpmn:flowNodeRef>
       </bpmn:lane>
     </bpmn:laneSet>
-    <bpmn:sequenceFlow id="Flow_1x4rtop" name="Yes" sourceRef="Gateway_validation_successful_question_mark" targetRef="Event_Invoice_is_accepted" />
+    <bpmn:sequenceFlow id="Flow_1x4rtop" name="Yes" sourceRef="Gateway_validation_successful_question_mark" targetRef="Activity_104xpp8" />
     <bpmn:sequenceFlow id="Flow_05ffq52" name="No" sourceRef="Gateway_validation_successful_question_mark" targetRef="Event_invoice_validation_failed">
       <bpmn:conditionExpression>not(isInvoiceSubmitPass)</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
@@ -386,7 +386,7 @@ Please fix.
     </bpmn:serviceTask>
     <bpmn:intermediateThrowEvent id="Event_Invoice_is_accepted" name="Invoice is accepted">
       <bpmn:documentation>Process milestone should update the process metadata field “milestone reached”</bpmn:documentation>
-      <bpmn:incoming>Flow_1x4rtop</bpmn:incoming>
+      <bpmn:incoming>Flow_147kb1l</bpmn:incoming>
       <bpmn:outgoing>Flow_0nhu0ew</bpmn:outgoing>
       <bpmn:messageEventDefinition id="MessageEventDefinition_0uo5shi" messageRef="Message_Submit_Invoice" />
     </bpmn:intermediateThrowEvent>
@@ -459,9 +459,19 @@ Please fix.
       <bpmn:outgoing>Flow_1v8dszb</bpmn:outgoing>
       <bpmn:timerEventDefinition id="TimerEventDefinition_0y2jolb" />
     </bpmn:boundaryEvent>
+    <bpmn:sequenceFlow id="Flow_147kb1l" sourceRef="Activity_104xpp8" targetRef="Event_Invoice_is_accepted" />
     <bpmn:scriptTask id="Activity_104xpp8" name="Temp">
+      <bpmn:incoming>Flow_1x4rtop</bpmn:incoming>
+      <bpmn:outgoing>Flow_147kb1l</bpmn:outgoing>
+      <bpmn:property id="Property_09mkxyl" name="__targetRef_placeholder" />
+      <bpmn:dataInputAssociation id="DataInputAssociation_1s1efok">
+        <bpmn:sourceRef>DataObjectReference_0r84rok</bpmn:sourceRef>
+        <bpmn:targetRef>Property_09mkxyl</bpmn:targetRef>
+      </bpmn:dataInputAssociation>
       <bpmn:script>invoice_name = invoice.contributorName + "_" + str(invoice.invoiceId) + ".pdf"</bpmn:script>
     </bpmn:scriptTask>
+    <bpmn:dataObjectReference id="DataObjectReference_0r84rok" name="invoice" dataObjectRef="invoice" />
+    <bpmn:dataObject id="DataObject_08l7zz3" />
     <bpmn:textAnnotation id="TextAnnotation_07oqnmr">
       <bpmn:text>Please check your invoice data</bpmn:text>
     </bpmn:textAnnotation>
@@ -524,7 +534,7 @@ Please fix.
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0bgyf4i_di" bpmnElement="Activity_104xpp8">
-        <dc:Bounds x="1320" y="410" width="100" height="80" />
+        <dc:Bounds x="1330" y="482" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0z13hw3_di" bpmnElement="SubProcess_Data_validation_rules">
         <dc:Bounds x="1020" y="482" width="100" height="80" />
@@ -665,9 +675,9 @@ Please fix.
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_1x4rtop_di" bpmnElement="Flow_1x4rtop">
         <di:waypoint x="1245" y="522" />
-        <di:waypoint x="1512" y="522" />
+        <di:waypoint x="1330" y="522" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="1257" y="498" width="18" height="14" />
+          <dc:Bounds x="1251" y="498" width="18" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_05ffq52_di" bpmnElement="Flow_05ffq52">
@@ -825,6 +835,16 @@ Please fix.
         <di:waypoint x="1537" y="306" />
         <di:waypoint x="1527" y="274" />
       </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_147kb1l_di" bpmnElement="Flow_147kb1l">
+        <di:waypoint x="1430" y="522" />
+        <di:waypoint x="1512" y="522" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="DataObjectReference_0r84rok_di" bpmnElement="DataObjectReference_0r84rok">
+        <dc:Bounds x="1352" y="355" width="36" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1353" y="401" width="35" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Participant_0a8arrz_di" bpmnElement="Participant_0a8arrz" isHorizontal="true">
         <dc:Bounds x="1480" y="1180" width="320" height="80" />
       </bpmndi:BPMNShape>
@@ -894,6 +914,10 @@ Please fix.
       <bpmndi:BPMNEdge id="Flow_1dgkwzr_di" bpmnElement="Flow_1dgkwzr">
         <di:waypoint x="3490" y="560" />
         <di:waypoint x="3490" y="150" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DataInputAssociation_1s1efok_di" bpmnElement="DataInputAssociation_1s1efok">
+        <di:waypoint x="1372" y="405" />
+        <di:waypoint x="1379" y="482" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
