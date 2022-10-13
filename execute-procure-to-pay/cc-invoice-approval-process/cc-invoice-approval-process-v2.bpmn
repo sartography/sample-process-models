@@ -372,6 +372,14 @@ Please fix.
       <bpmn:outgoing>Flow_1i8r773</bpmn:outgoing>
     </bpmn:parallelGateway>
     <bpmn:serviceTask id="Activity_0o1vc0a" name="2c. Save Invoice Data">
+      <bpmn:extensionElements>
+        <spiffworkflow:serviceTaskOperator id="aws/AddDynamoItem">
+          <spiffworkflow:parameters>
+            <spiffworkflow:parameter id="item_data" type="str" value="{ &#34;ContributorName&#34;: invoice.contributorName, &#34;ContributorId&#34;: invoice.contributorId, &#34;InvoiceId&#34;: invoice.invoiceId, &#34;InvoiceAmount&#34;: invoiceAmount, &#34;InvoiceCurrency&#34;: invoice.invoiceCurrency, &#34;DueDate&#34;: invoice.dueDate }" />
+            <spiffworkflow:parameter id="table_name" type="str" value="Invoices" />
+          </spiffworkflow:parameters>
+        </spiffworkflow:serviceTaskOperator>
+      </bpmn:extensionElements>
       <bpmn:incoming>Flow_1i8r773</bpmn:incoming>
       <bpmn:outgoing>Flow_1094cjp</bpmn:outgoing>
     </bpmn:serviceTask>
