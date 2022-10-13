@@ -39,7 +39,6 @@
         <bpmn:flowNodeRef>Gateway_05ov5p5</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Gateway_1717c0p</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_0cfvsk7</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Event_Invoice_is_accepted</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_1lq96cy</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_102t7tk</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_0fq1nb4</bpmn:flowNodeRef>
@@ -56,6 +55,7 @@
         <bpmn:flowNodeRef>Activity_1ucvkk4</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_invoice_validation_failed</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_0o1vc0a</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Event_Invoice_is_accepted</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_1so23vf" name="Finance Team">
         <bpmn:flowNodeRef>Event_16u0f7b</bpmn:flowNodeRef>
@@ -287,12 +287,6 @@ Please fix.
     <bpmn:serviceTask id="Activity_0cfvsk7" name="3. Notify CC via Waku&#10;&#34;invoice uploaded&#34;">
       <bpmn:outgoing>Flow_1l1n5j5</bpmn:outgoing>
     </bpmn:serviceTask>
-    <bpmn:intermediateThrowEvent id="Event_Invoice_is_accepted" name="Invoice is accepted">
-      <bpmn:documentation>Process milestone should update the process metadata field “milestone reached”</bpmn:documentation>
-      <bpmn:incoming>Flow_1x4rtop</bpmn:incoming>
-      <bpmn:outgoing>Flow_0wuedtr</bpmn:outgoing>
-      <bpmn:messageEventDefinition id="MessageEventDefinition_0uo5shi" messageRef="Message_Submit_Invoice" />
-    </bpmn:intermediateThrowEvent>
     <bpmn:endEvent id="Event_16u0f7b" name="Invoice is ready for payment">
       <bpmn:incoming>Flow_0vd1pxu</bpmn:incoming>
     </bpmn:endEvent>
@@ -484,6 +478,11 @@ Please fix.
     <bpmn:dataObjectReference id="DataObjectReference_1maxg3b" name="Invoice" dataObjectRef="Invoice" />
     <bpmn:dataObjectReference id="DataObjectReference_1lmqmkm" name="Invoice" dataObjectRef="Invoice" />
     <bpmn:dataObjectReference id="DataObjectReference_13v4og7" name="Invoice" dataObjectRef="Invoice" />
+    <bpmn:intermediateThrowEvent id="Event_Invoice_is_accepted" name="Invoice is accepted">
+      <bpmn:documentation>Process milestone should update the process metadata field “milestone reached”</bpmn:documentation>
+      <bpmn:incoming>Flow_1x4rtop</bpmn:incoming>
+      <bpmn:outgoing>Flow_0wuedtr</bpmn:outgoing>
+    </bpmn:intermediateThrowEvent>
   </bpmn:process>
   <bpmn:process id="Process_cc_invoice_approval_process_v2_c" isExecutable="false" />
   <bpmn:process id="Process_cc_invoice_approval_process_v2_d" isExecutable="false" />
@@ -535,6 +534,12 @@ Please fix.
           <dc:Bounds x="1190" y="557" width="60" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_09hbqdm_di" bpmnElement="Event_Invoice_is_accepted">
+        <dc:Bounds x="1312" y="504" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1307" y="467" width="46" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0z13hw3_di" bpmnElement="SubProcess_Data_validation_rules">
         <dc:Bounds x="1020" y="482" width="100" height="80" />
         <bpmndi:BPMNLabel />
@@ -583,12 +588,6 @@ Please fix.
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1jg5wtk_di" bpmnElement="Activity_0cfvsk7">
         <dc:Bounds x="1910" y="482" width="100" height="80" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_1lluywm_di" bpmnElement="Event_Invoice_is_accepted">
-        <dc:Bounds x="1312" y="504" width="36" height="36" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="1307" y="467" width="46" height="27" />
-        </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_16u0f7b_di" bpmnElement="Event_16u0f7b">
         <dc:Bounds x="3512" y="1012" width="36" height="36" />
@@ -656,6 +655,30 @@ Please fix.
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_076kb81_di" bpmnElement="Activity_0o1vc0a">
         <dc:Bounds x="1550" y="400" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DataObjectReference_022sgdh_di" bpmnElement="DataObjectReference_022sgdh">
+        <dc:Bounds x="962" y="625" width="36" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="963" y="671" width="35" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DataObjectReference_1maxg3b_di" bpmnElement="DataObjectReference_1maxg3b">
+        <dc:Bounds x="1392" y="675" width="36" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1392" y="721" width="35" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DataObjectReference_1lmqmkm_di" bpmnElement="DataObjectReference_1lmqmkm">
+        <dc:Bounds x="1632" y="675" width="36" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1633" y="721" width="35" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DataObjectReference_13v4og7_di" bpmnElement="DataObjectReference_13v4og7">
+        <dc:Bounds x="1482" y="285" width="36" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1482" y="331" width="35" height="14" />
+        </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_1n1umf8_di" bpmnElement="Event_09q0ym0">
         <dc:Bounds x="2702" y="882" width="36" height="36" />
@@ -832,30 +855,6 @@ Please fix.
         <di:waypoint x="1829" y="440" />
         <di:waypoint x="1829" y="497" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="DataObjectReference_022sgdh_di" bpmnElement="DataObjectReference_022sgdh">
-        <dc:Bounds x="962" y="625" width="36" height="50" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="963" y="671" width="35" height="14" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="DataObjectReference_1maxg3b_di" bpmnElement="DataObjectReference_1maxg3b">
-        <dc:Bounds x="1392" y="675" width="36" height="50" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="1392" y="721" width="35" height="14" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="DataObjectReference_1lmqmkm_di" bpmnElement="DataObjectReference_1lmqmkm">
-        <dc:Bounds x="1632" y="675" width="36" height="50" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="1633" y="721" width="35" height="14" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="DataObjectReference_13v4og7_di" bpmnElement="DataObjectReference_13v4og7">
-        <dc:Bounds x="1482" y="285" width="36" height="50" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="1482" y="331" width="35" height="14" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Participant_0a8arrz_di" bpmnElement="Participant_0a8arrz" isHorizontal="true">
         <dc:Bounds x="1330" y="1180" width="320" height="80" />
       </bpmndi:BPMNShape>
@@ -868,6 +867,26 @@ Please fix.
       <bpmndi:BPMNShape id="TextAnnotation_1uaw1w7_di" bpmnElement="TextAnnotation_1uaw1w7">
         <dc:Bounds x="490" y="-170" width="580" height="30" />
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="DataOutputAssociation_0ozt3u0_di" bpmnElement="DataOutputAssociation_0ozt3u0">
+        <di:waypoint x="917" y="562" />
+        <di:waypoint x="966" y="625" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DataInputAssociation_1mohg1e_di" bpmnElement="DataInputAssociation_1mohg1e">
+        <di:waypoint x="994" y="625" />
+        <di:waypoint x="1029" y="562" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DataInputAssociation_14wfcfp_di" bpmnElement="DataInputAssociation_14wfcfp">
+        <di:waypoint x="1668" y="678" />
+        <di:waypoint x="1698" y="640" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DataInputAssociation_1s46evt_di" bpmnElement="DataInputAssociation_1s46evt">
+        <di:waypoint x="1428" y="689" />
+        <di:waypoint x="1504" y="640" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DataInputAssociation_0yekmax_di" bpmnElement="DataInputAssociation_0yekmax">
+        <di:waypoint x="1518" y="330" />
+        <di:waypoint x="1582" y="400" />
+      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Association_1eygti7_di" bpmnElement="Association_1eygti7">
         <di:waypoint x="756" y="-70" />
         <di:waypoint x="823" y="-140" />
@@ -906,26 +925,6 @@ Please fix.
       <bpmndi:BPMNEdge id="Flow_1dgkwzr_di" bpmnElement="Flow_1dgkwzr">
         <di:waypoint x="3290" y="560" />
         <di:waypoint x="3290" y="150" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="DataOutputAssociation_0ozt3u0_di" bpmnElement="DataOutputAssociation_0ozt3u0">
-        <di:waypoint x="917" y="562" />
-        <di:waypoint x="966" y="625" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="DataInputAssociation_1mohg1e_di" bpmnElement="DataInputAssociation_1mohg1e">
-        <di:waypoint x="994" y="625" />
-        <di:waypoint x="1029" y="562" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="DataInputAssociation_1s46evt_di" bpmnElement="DataInputAssociation_1s46evt">
-        <di:waypoint x="1428" y="689" />
-        <di:waypoint x="1504" y="640" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="DataInputAssociation_14wfcfp_di" bpmnElement="DataInputAssociation_14wfcfp">
-        <di:waypoint x="1668" y="678" />
-        <di:waypoint x="1698" y="640" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="DataInputAssociation_0yekmax_di" bpmnElement="DataInputAssociation_0yekmax">
-        <di:waypoint x="1518" y="330" />
-        <di:waypoint x="1582" y="400" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
