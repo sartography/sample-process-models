@@ -31,7 +31,6 @@
         <bpmn:flowNodeRef>Submit_the_invoice</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Gateway_validation_successful_question_mark</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_0p88elm</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Activity_0o1vc0a</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_104xpp8</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Gateway_1lbghql</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_0x83ruk</bpmn:flowNodeRef>
@@ -56,6 +55,7 @@
         <bpmn:flowNodeRef>Activity_0gkejaj</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_1ucvkk4</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_invoice_validation_failed</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_0o1vc0a</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_1so23vf" name="Finance Team">
         <bpmn:flowNodeRef>Event_16u0f7b</bpmn:flowNodeRef>
@@ -88,7 +88,6 @@
     <bpmn:sequenceFlow id="Flow_0vkr4vr" sourceRef="Activity_1lq96cy" targetRef="Activity_0cdgqi0" />
     <bpmn:sequenceFlow id="Flow_1n7wssu" sourceRef="Gateway_1717c0p" targetRef="Event_0bvopx2" />
     <bpmn:sequenceFlow id="Flow_1l1n5j5" sourceRef="Activity_0cfvsk7" targetRef="Event_15y55nw" />
-    <bpmn:sequenceFlow id="Flow_1i8r773" sourceRef="Gateway_05ov5p5" targetRef="Gateway_1717c0p" />
     <bpmn:sequenceFlow id="Flow_13ng1f4" sourceRef="Event_invoice_validation_failed" targetRef="Activity_show_errors" />
     <bpmn:sequenceFlow id="Flow_18cic3h" sourceRef="Activity_show_errors" targetRef="Gateway_16gxu6s" />
     <bpmn:exclusiveGateway id="Gateway_16gxu6s">
@@ -250,16 +249,6 @@ Please fix.
         <bpmn:targetRef>Property_0gwue2n</bpmn:targetRef>
       </bpmn:dataInputAssociation>
     </bpmn:serviceTask>
-    <bpmn:serviceTask id="Activity_0o1vc0a" name="2c. Save Invoice Data">
-      <bpmn:extensionElements>
-        <spiffworkflow:serviceTaskOperator id="aws/AddDynamoItem" resultVariable="responseAddDynamoInvoice">
-          <spiffworkflow:parameters>
-            <spiffworkflow:parameter id="item_data" type="str" value="{ &#34;ContributorName&#34;: invoice.contributorName, &#34;ContributorId&#34;: invoice.contributorId, &#34;InvoiceId&#34;: invoice.invoiceId, &#34;InvoiceAmount&#34;: invoice.invoiceAmount, &#34;InvoiceCurrency&#34;: invoice.invoiceCurrency, &#34;DueDate&#34;: invoice.dueDate }" />
-            <spiffworkflow:parameter id="table_name" type="str" value="Invoices" />
-          </spiffworkflow:parameters>
-        </spiffworkflow:serviceTaskOperator>
-      </bpmn:extensionElements>
-    </bpmn:serviceTask>
     <bpmn:dataObjectReference id="DataObjectReference_07aj1tf" name="invoice" dataObjectRef="invoice" />
     <bpmn:scriptTask id="Activity_104xpp8" name="Temp">
       <bpmn:incoming>Flow_12cqm3u</bpmn:incoming>
@@ -293,12 +282,12 @@ Please fix.
     </bpmn:intermediateThrowEvent>
     <bpmn:parallelGateway id="Gateway_05ov5p5">
       <bpmn:incoming>Flow_0wuedtr</bpmn:incoming>
-      <bpmn:outgoing>Flow_1i8r773</bpmn:outgoing>
       <bpmn:outgoing>Flow_12cqm3u</bpmn:outgoing>
+      <bpmn:outgoing>Flow_0u082s9</bpmn:outgoing>
     </bpmn:parallelGateway>
     <bpmn:parallelGateway id="Gateway_1717c0p">
       <bpmn:incoming>Flow_0l5nhy3</bpmn:incoming>
-      <bpmn:incoming>Flow_1i8r773</bpmn:incoming>
+      <bpmn:incoming>Flow_0iq1cvk</bpmn:incoming>
       <bpmn:outgoing>Flow_1n7wssu</bpmn:outgoing>
     </bpmn:parallelGateway>
     <bpmn:serviceTask id="Activity_0cfvsk7" name="3. Notify CC via Waku&#10;&#34;invoice uploaded&#34;">
@@ -477,6 +466,20 @@ Please fix.
       <bpmn:incoming>Flow_05ffq52</bpmn:incoming>
       <bpmn:outgoing>Flow_13ng1f4</bpmn:outgoing>
     </bpmn:intermediateThrowEvent>
+    <bpmn:sequenceFlow id="Flow_0u082s9" sourceRef="Gateway_05ov5p5" targetRef="Activity_0o1vc0a" />
+    <bpmn:sequenceFlow id="Flow_0iq1cvk" sourceRef="Activity_0o1vc0a" targetRef="Gateway_1717c0p" />
+    <bpmn:serviceTask id="Activity_0o1vc0a" name="2c. Save Invoice Data">
+      <bpmn:extensionElements>
+        <spiffworkflow:serviceTaskOperator id="aws/AddDynamoItem" resultVariable="responseAddDynamoInvoice">
+          <spiffworkflow:parameters>
+            <spiffworkflow:parameter id="item_data" type="str" value="{ &#34;ContributorName&#34;: invoice.contributorName, &#34;ContributorId&#34;: invoice.contributorId, &#34;InvoiceId&#34;: invoice.invoiceId, &#34;InvoiceAmount&#34;: invoice.invoiceAmount, &#34;InvoiceCurrency&#34;: invoice.invoiceCurrency, &#34;DueDate&#34;: invoice.dueDate }" />
+            <spiffworkflow:parameter id="table_name" type="str" value="&#39;Invoices&#39;" />
+          </spiffworkflow:parameters>
+        </spiffworkflow:serviceTaskOperator>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0u082s9</bpmn:incoming>
+      <bpmn:outgoing>Flow_0iq1cvk</bpmn:outgoing>
+    </bpmn:serviceTask>
   </bpmn:process>
   <bpmn:process id="Process_cc_invoice_approval_process_v2_c" isExecutable="false" />
   <bpmn:process id="Process_cc_invoice_approval_process_v2_d" isExecutable="false" />
@@ -528,11 +531,27 @@ Please fix.
           <dc:Bounds x="1190" y="557" width="60" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_076kb81_di" bpmnElement="Activity_0o1vc0a">
+        <dc:Bounds x="1550" y="400" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0z13hw3_di" bpmnElement="SubProcess_Data_validation_rules">
+        <dc:Bounds x="1020" y="482" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0qtkhpi_di" bpmnElement="Activity_show_errors">
+        <dc:Bounds x="930" y="320" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DataObjectReference_19srmyi_di" bpmnElement="DataObjectReference_19srmyi">
+        <dc:Bounds x="962" y="685" width="36" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="963" y="731" width="35" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0twut50_di" bpmnElement="Activity_0yrv2bc">
+        <dc:Bounds x="660" y="482" width="100" height="80" />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0zssftc_di" bpmnElement="Activity_0p88elm">
         <dc:Bounds x="1680" y="560" width="100" height="80" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_076kb81_di" bpmnElement="Activity_0o1vc0a">
-        <dc:Bounds x="1550" y="422" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="DataObjectReference_07aj1tf_di" bpmnElement="DataObjectReference_07aj1tf">
         <dc:Bounds x="1642" y="685" width="36" height="50" />
@@ -640,33 +659,17 @@ Please fix.
           <dc:Bounds x="1843" y="705" width="81" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_0svbvjn_di" bpmnElement="Event_invoice_validation_failed">
-        <dc:Bounds x="1202" y="412" width="36" height="36" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="1116" y="423" width="76" height="14" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0z13hw3_di" bpmnElement="SubProcess_Data_validation_rules">
-        <dc:Bounds x="1020" y="482" width="100" height="80" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0qtkhpi_di" bpmnElement="Activity_show_errors">
-        <dc:Bounds x="930" y="320" width="100" height="80" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="DataObjectReference_19srmyi_di" bpmnElement="DataObjectReference_19srmyi">
-        <dc:Bounds x="962" y="685" width="36" height="50" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="963" y="731" width="35" height="14" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0twut50_di" bpmnElement="Activity_0yrv2bc">
-        <dc:Bounds x="660" y="482" width="100" height="80" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1rn2mgi_di" bpmnElement="Activity_0gkejaj">
         <dc:Bounds x="2169" y="482" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0j807g0_di" bpmnElement="Activity_1ucvkk4">
         <dc:Bounds x="2469" y="372" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0svbvjn_di" bpmnElement="Event_invoice_validation_failed">
+        <dc:Bounds x="1202" y="412" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1116" y="423" width="76" height="14" />
+        </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_1n1umf8_di" bpmnElement="Event_09q0ym0">
         <dc:Bounds x="2702" y="882" width="36" height="36" />
@@ -777,10 +780,6 @@ Please fix.
         <di:waypoint x="2010" y="522" />
         <di:waypoint x="2051" y="522" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_1i8r773_di" bpmnElement="Flow_1i8r773">
-        <di:waypoint x="1455" y="522" />
-        <di:waypoint x="1804" y="522" />
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_13ng1f4_di" bpmnElement="Flow_13ng1f4">
         <di:waypoint x="1220" y="412" />
         <di:waypoint x="1220" y="360" />
@@ -837,6 +836,16 @@ Please fix.
         <di:waypoint x="1570" y="600" />
         <di:waypoint x="1680" y="600" />
       </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0u082s9_di" bpmnElement="Flow_0u082s9">
+        <di:waypoint x="1430" y="497" />
+        <di:waypoint x="1430" y="440" />
+        <di:waypoint x="1550" y="440" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0iq1cvk_di" bpmnElement="Flow_0iq1cvk">
+        <di:waypoint x="1650" y="440" />
+        <di:waypoint x="1829" y="440" />
+        <di:waypoint x="1829" y="497" />
+      </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="Participant_0a8arrz_di" bpmnElement="Participant_0a8arrz" isHorizontal="true">
         <dc:Bounds x="1280" y="1180" width="320" height="80" />
       </bpmndi:BPMNShape>
@@ -857,20 +866,20 @@ Please fix.
         <di:waypoint x="993" y="685" />
         <di:waypoint x="1059" y="562" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="DataInputAssociation_1s1efok_di" bpmnElement="DataInputAssociation_1s1efok">
-        <di:waypoint x="1468" y="675" />
-        <di:waypoint x="1494" y="640" />
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="DataInputAssociation_0myc5qf_di" bpmnElement="DataInputAssociation_0myc5qf">
         <di:waypoint x="1676" y="685" />
         <di:waypoint x="1706" y="640" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DataInputAssociation_1s1efok_di" bpmnElement="DataInputAssociation_1s1efok">
+        <di:waypoint x="1468" y="675" />
+        <di:waypoint x="1494" y="640" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Association_1eygti7_di" bpmnElement="Association_1eygti7">
         <di:waypoint x="756" y="-70" />
         <di:waypoint x="823" y="-140" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0ppupld_di" bpmnElement="Flow_0ppupld">
-        <di:waypoint x="1600" y="502" />
+        <di:waypoint x="1600" y="480" />
         <di:waypoint x="1600" y="1180" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0yfnc92_di" bpmnElement="Flow_0yfnc92">
