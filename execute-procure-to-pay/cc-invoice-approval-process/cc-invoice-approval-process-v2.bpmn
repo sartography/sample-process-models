@@ -114,6 +114,11 @@
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_1mfw1j8</bpmn:incoming>
       <bpmn:outgoing>Flow_02moyg7</bpmn:outgoing>
+      <bpmn:property id="Property_117cjrq" name="__targetRef_placeholder" />
+      <bpmn:dataInputAssociation id="DataInputAssociation_0nstm1j">
+        <bpmn:sourceRef>DataObjectReference_1lpftk7</bpmn:sourceRef>
+        <bpmn:targetRef>Property_117cjrq</bpmn:targetRef>
+      </bpmn:dataInputAssociation>
     </bpmn:userTask>
     <bpmn:exclusiveGateway id="Gateway_validation_successful_question_mark" name="Successful?" default="Flow_1x4rtop">
       <bpmn:incoming>Flow_1ck27i7</bpmn:incoming>
@@ -209,6 +214,9 @@ Please fix.
     <bpmn:scriptTask id="Activity_0yrv2bc" name="Get Currencies">
       <bpmn:incoming>Flow_11b24we</bpmn:incoming>
       <bpmn:outgoing>Flow_1mfw1j8</bpmn:outgoing>
+      <bpmn:dataOutputAssociation id="DataOutputAssociation_0pn9zj2">
+        <bpmn:targetRef>DataObjectReference_1lpftk7</bpmn:targetRef>
+      </bpmn:dataOutputAssociation>
       <bpmn:script>currency_enum_options = [{"value": "AUD", "label": "Australian Dollar (AUD)"}, {"value": "CAD", "label": "Canadian Dollar (CAD)"}, {"value": "EUR", "label": "Euro (EUR)"}, {"value": "GBP", "label": "Pound sterling (GBP)"}, {"value": "SGD", "label": "Singapore Dollar (SGD)"}, {"value": "CHF", "label": "Swiss Franc (CHF)"}, {"value": "USD", "label": "US Dollar (USD)"}]</bpmn:script>
     </bpmn:scriptTask>
     <bpmn:sequenceFlow id="Flow_12cqm3u" sourceRef="Gateway_05ov5p5" targetRef="Activity_104xpp8" />
@@ -233,6 +241,11 @@ Please fix.
     <bpmn:scriptTask id="Activity_104xpp8" name="Temp">
       <bpmn:incoming>Flow_12cqm3u</bpmn:incoming>
       <bpmn:outgoing>Flow_12wlind</bpmn:outgoing>
+      <bpmn:property id="Property_0atwnl6" name="__targetRef_placeholder" />
+      <bpmn:dataInputAssociation id="DataInputAssociation_1x5lmtc">
+        <bpmn:sourceRef>DataObjectReference_18ucout</bpmn:sourceRef>
+        <bpmn:targetRef>Property_0atwnl6</bpmn:targetRef>
+      </bpmn:dataInputAssociation>
       <bpmn:script>invoice_file_name = invoice.contributorName + "_" + str(invoice.invoiceId) + ".pdf"</bpmn:script>
     </bpmn:scriptTask>
     <bpmn:exclusiveGateway id="Gateway_1lbghql" name="match?">
@@ -430,6 +443,11 @@ Please fix.
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_0hev3yn</bpmn:incoming>
       <bpmn:outgoing>Flow_02o270g</bpmn:outgoing>
+      <bpmn:property id="Property_039uu3h" name="__targetRef_placeholder" />
+      <bpmn:dataInputAssociation id="DataInputAssociation_1rm3xsh">
+        <bpmn:sourceRef>DataObjectReference_1lka1xq</bpmn:sourceRef>
+        <bpmn:targetRef>Property_039uu3h</bpmn:targetRef>
+      </bpmn:dataInputAssociation>
     </bpmn:serviceTask>
     <bpmn:intermediateThrowEvent id="Event_Invoice_is_accepted" name="Invoice is accepted">
       <bpmn:documentation>Process milestone should update the process metadata field “milestone reached”</bpmn:documentation>
@@ -453,6 +471,12 @@ Please fix.
       <bpmn:incoming>Flow_0vd1pxu</bpmn:incoming>
     </bpmn:endEvent>
     <bpmn:dataObject id="invoice" />
+    <bpmn:dataObjectReference id="DataObjectReference_1lpftk7" name="invoice" dataObjectRef="invoice" />
+    <bpmn:dataObject id="DataObject_161sblp" />
+    <bpmn:dataObjectReference id="DataObjectReference_18ucout" name="invoice" dataObjectRef="invoice" />
+    <bpmn:dataObject id="DataObject_0i3e5ck" />
+    <bpmn:dataObjectReference id="DataObjectReference_1lka1xq" name="invoice" dataObjectRef="invoice" />
+    <bpmn:dataObject id="DataObject_1tz3302" />
   </bpmn:process>
   <bpmn:process id="Process_cc_invoice_approval_process_v2_c" isExecutable="false" />
   <bpmn:process id="Process_cc_invoice_approval_process_v2_d" isExecutable="false" />
@@ -800,6 +824,24 @@ Please fix.
         <di:waypoint x="1829" y="440" />
         <di:waypoint x="1829" y="497" />
       </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="DataObjectReference_1lpftk7_di" bpmnElement="DataObjectReference_1lpftk7">
+        <dc:Bounds x="782" y="655" width="36" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="782" y="701" width="35" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DataObjectReference_18ucout_di" bpmnElement="DataObjectReference_18ucout">
+        <dc:Bounds x="1412" y="685" width="36" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1413" y="731" width="35" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DataObjectReference_1lka1xq_di" bpmnElement="DataObjectReference_1lka1xq">
+        <dc:Bounds x="1482" y="285" width="36" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1483" y="331" width="35" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Participant_0a8arrz_di" bpmnElement="Participant_0a8arrz" isHorizontal="true">
         <dc:Bounds x="1330" y="1180" width="320" height="80" />
       </bpmndi:BPMNShape>
@@ -850,6 +892,22 @@ Please fix.
       <bpmndi:BPMNEdge id="Flow_1dgkwzr_di" bpmnElement="Flow_1dgkwzr">
         <di:waypoint x="3290" y="560" />
         <di:waypoint x="3290" y="150" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DataOutputAssociation_0pn9zj2_di" bpmnElement="DataOutputAssociation_0pn9zj2">
+        <di:waypoint x="733" y="562" />
+        <di:waypoint x="786" y="655" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DataInputAssociation_0nstm1j_di" bpmnElement="DataInputAssociation_0nstm1j">
+        <di:waypoint x="817" y="655" />
+        <di:waypoint x="878" y="562" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DataInputAssociation_1x5lmtc_di" bpmnElement="DataInputAssociation_1x5lmtc">
+        <di:waypoint x="1448" y="692" />
+        <di:waypoint x="1500" y="640" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DataInputAssociation_1rm3xsh_di" bpmnElement="DataInputAssociation_1rm3xsh">
+        <di:waypoint x="1518" y="330" />
+        <di:waypoint x="1582" y="400" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
