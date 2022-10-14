@@ -60,10 +60,10 @@
         <bpmn:flowNodeRef>Event_16u0f7b</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_1b7abal" name="Team Lead">
-        <bpmn:flowNodeRef>Activity_06b32ar</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Event_09q0ym0</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_1ftzr6x</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_0f3d2bp</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_06b32ar</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Event_09q0ym0</bpmn:flowNodeRef>
       </bpmn:lane>
     </bpmn:laneSet>
     <bpmn:sequenceFlow id="Flow_1x4rtop" name="Yes" sourceRef="Gateway_validation_successful_question_mark" targetRef="Event_Invoice_is_accepted" />
@@ -304,10 +304,6 @@ Please fix.
     <bpmn:endEvent id="Event_1b58a3z" name="Invoice is declined">
       <bpmn:incoming>Flow_0c0c9mw</bpmn:incoming>
     </bpmn:endEvent>
-    <bpmn:manualTask id="Activity_06b32ar" name="Approve invocie manually">
-      <bpmn:incoming>Flow_1m8oeg0</bpmn:incoming>
-      <bpmn:outgoing>Flow_0yvmfqu</bpmn:outgoing>
-    </bpmn:manualTask>
     <bpmn:endEvent id="Event_0bvopx2" name="Temp End Event">
       <bpmn:incoming>Flow_1n7wssu</bpmn:incoming>
     </bpmn:endEvent>
@@ -428,10 +424,6 @@ Please fix.
       </bpmn:endEvent>
       <bpmn:sequenceFlow id="Flow_0zkxpa1" sourceRef="Gateway_1vl3ipe" targetRef="Event_0n6sfiu" />
     </bpmn:subProcess>
-    <bpmn:boundaryEvent id="Event_09q0ym0" name="3 days" cancelActivity="false" attachedToRef="Activity_06b32ar">
-      <bpmn:outgoing>Flow_1v8dszb</bpmn:outgoing>
-      <bpmn:timerEventDefinition id="TimerEventDefinition_0y2jolb" />
-    </bpmn:boundaryEvent>
     <bpmn:intermediateThrowEvent id="Event_invoice_validation_failed" name="Invoice is failed">
       <bpmn:documentation>Process milestone should update the process metadata field “milestone reached”</bpmn:documentation>
       <bpmn:incoming>Flow_05ffq52</bpmn:incoming>
@@ -480,6 +472,14 @@ Please fix.
     <bpmn:dataObjectReference id="DataObjectReference_1lpftk7" name="invoice" dataObjectRef="invoice" />
     <bpmn:dataObjectReference id="DataObjectReference_15hvy5y" name="invoice" dataObjectRef="invoice" />
     <bpmn:dataObject id="invoice" />
+    <bpmn:userTask id="Activity_06b32ar" name="Approve invocie manually">
+      <bpmn:incoming>Flow_1m8oeg0</bpmn:incoming>
+      <bpmn:outgoing>Flow_0yvmfqu</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:boundaryEvent id="Event_09q0ym0" name="3 days" cancelActivity="false" attachedToRef="Activity_06b32ar">
+      <bpmn:outgoing>Flow_1v8dszb</bpmn:outgoing>
+      <bpmn:timerEventDefinition id="TimerEventDefinition_0y2jolb" />
+    </bpmn:boundaryEvent>
   </bpmn:process>
   <bpmn:process id="Process_cc_invoice_approval_process_v2_c" isExecutable="false" />
   <bpmn:process id="Process_cc_invoice_approval_process_v2_d" isExecutable="false" />
@@ -536,6 +536,9 @@ Please fix.
         <bpmndi:BPMNLabel>
           <dc:Bounds x="2612" y="331" width="35" height="14" />
         </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_05nao2p_di" bpmnElement="Activity_06b32ar">
+        <dc:Bounds x="2640" y="820" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0z13hw3_di" bpmnElement="SubProcess_Data_validation_rules">
         <dc:Bounds x="1020" y="482" width="100" height="80" />
@@ -609,10 +612,6 @@ Please fix.
         <bpmndi:BPMNLabel>
           <dc:Bounds x="3216" y="335" width="90" height="14" />
         </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0gj0xhy_di" bpmnElement="Activity_06b32ar">
-        <dc:Bounds x="2640" y="820" width="100" height="80" />
-        <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_0bvopx2_di" bpmnElement="Event_0bvopx2">
         <dc:Bounds x="1862" y="662" width="36" height="36" />
