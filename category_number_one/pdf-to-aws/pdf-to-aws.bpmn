@@ -4,30 +4,40 @@
     <bpmn:startEvent id="StartEvent_1">
       <bpmn:outgoing>Flow_0zgq59w</bpmn:outgoing>
     </bpmn:startEvent>
-    <bpmn:sequenceFlow id="Flow_0zgq59w" sourceRef="StartEvent_1" targetRef="Activity_183h83b" />
+    <bpmn:sequenceFlow id="Flow_0zgq59w" sourceRef="StartEvent_1" targetRef="Activity_0061b4a" />
     <bpmn:endEvent id="Event_0svxq6k">
       <bpmn:incoming>Flow_193c4bn</bpmn:incoming>
     </bpmn:endEvent>
     <bpmn:sequenceFlow id="Flow_193c4bn" sourceRef="Activity_1g922mx" targetRef="Event_0svxq6k" />
     <bpmn:serviceTask id="Activity_1g922mx" name="pdf to aws">
       <bpmn:extensionElements>
-        <spiffworkflow:serviceTaskOperator id="pdf/CreatePDFAndUploadToS3">
+        <spiffworkflow:serviceTaskOperator id="aws/UploadFileData">
           <spiffworkflow:parameters>
-            <spiffworkflow:parameter id="aws_object_name" type="str" value="&#39;jon_staging.pdf&#39;" />
-            <spiffworkflow:parameter id="template" type="str" value="&#39;file:category_number_one/pdf-to-aws/invoice.md&#39;" />
+            <spiffworkflow:parameter id="bucket" type="str" value="&#39;sartography-status-pdfs&#39;" />
+            <spiffworkflow:parameter id="file_data" type="str" value="filesAccept" />
+            <spiffworkflow:parameter id="object_name" type="str" value="invoice_file_name" />
           </spiffworkflow:parameters>
         </spiffworkflow:serviceTaskOperator>
       </bpmn:extensionElements>
-      <bpmn:incoming>Flow_1ifa52m</bpmn:incoming>
+      <bpmn:incoming>Flow_17ugqan</bpmn:incoming>
       <bpmn:outgoing>Flow_193c4bn</bpmn:outgoing>
     </bpmn:serviceTask>
-    <bpmn:sequenceFlow id="Flow_1ifa52m" sourceRef="Activity_183h83b" targetRef="Activity_1g922mx" />
-    <bpmn:scriptTask id="Activity_183h83b" name="prep the vars">
+    <bpmn:sequenceFlow id="Flow_0ks0fo2" sourceRef="Activity_0061b4a" targetRef="Activity_1wibmo6" />
+    <bpmn:userTask id="Activity_0061b4a" name="submit pdf">
+      <bpmn:extensionElements>
+        <spiffworkflow:properties>
+          <spiffworkflow:property name="formJsonSchemaFilename" value="schema.json" />
+          <spiffworkflow:property name="formUiSchemaFilename" value="ui.json" />
+        </spiffworkflow:properties>
+      </bpmn:extensionElements>
       <bpmn:incoming>Flow_0zgq59w</bpmn:incoming>
-      <bpmn:outgoing>Flow_1ifa52m</bpmn:outgoing>
-      <bpmn:script>name='Jon Testing'
-amount='$43.34'
-due_date='10/28/2022'</bpmn:script>
+      <bpmn:outgoing>Flow_0ks0fo2</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:sequenceFlow id="Flow_17ugqan" sourceRef="Activity_1wibmo6" targetRef="Activity_1g922mx" />
+    <bpmn:scriptTask id="Activity_1wibmo6" name="set file name">
+      <bpmn:incoming>Flow_0ks0fo2</bpmn:incoming>
+      <bpmn:outgoing>Flow_17ugqan</bpmn:outgoing>
+      <bpmn:script>invoice_file_name = invoice.contributorName + "_" + str(invoice.invoiceId) + ".pdf"</bpmn:script>
     </bpmn:scriptTask>
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
@@ -36,26 +46,34 @@ due_date='10/28/2022'</bpmn:script>
         <dc:Bounds x="179" y="159" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_0svxq6k_di" bpmnElement="Event_0svxq6k">
-        <dc:Bounds x="632" y="159" width="36" height="36" />
+        <dc:Bounds x="662" y="172" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_10tlb3s_di" bpmnElement="Activity_1g922mx">
-        <dc:Bounds x="473" y="137" width="100" height="80" />
+        <dc:Bounds x="540" y="150" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_119g7r6_di" bpmnElement="Activity_183h83b">
-        <dc:Bounds x="280" y="137" width="100" height="80" />
+      <bpmndi:BPMNShape id="Activity_0bfj3sm_di" bpmnElement="Activity_0061b4a">
+        <dc:Bounds x="240" y="150" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_17s0t0b_di" bpmnElement="Activity_1wibmo6">
+        <dc:Bounds x="390" y="150" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_0zgq59w_di" bpmnElement="Flow_0zgq59w">
         <di:waypoint x="215" y="177" />
-        <di:waypoint x="280" y="177" />
+        <di:waypoint x="240" y="177" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_193c4bn_di" bpmnElement="Flow_193c4bn">
-        <di:waypoint x="573" y="177" />
-        <di:waypoint x="632" y="177" />
+        <di:waypoint x="640" y="190" />
+        <di:waypoint x="662" y="190" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_1ifa52m_di" bpmnElement="Flow_1ifa52m">
-        <di:waypoint x="380" y="177" />
-        <di:waypoint x="473" y="177" />
+      <bpmndi:BPMNEdge id="Flow_0ks0fo2_di" bpmnElement="Flow_0ks0fo2">
+        <di:waypoint x="340" y="190" />
+        <di:waypoint x="390" y="190" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_17ugqan_di" bpmnElement="Flow_17ugqan">
+        <di:waypoint x="490" y="190" />
+        <di:waypoint x="540" y="190" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
