@@ -21,7 +21,8 @@
     <bpmn:sequenceFlow id="Flow_1195zgn" sourceRef="Activity_0v7nz5r" targetRef="Activity_0twfaq6" />
     <bpmn:manualTask id="Activity_0s0ak1j" name="Call The Real Chuck Norris">
       <bpmn:extensionElements>
-        <spiffworkflow:instructionsForEndUser>**First Name:** {{ firstName }}.  
+        <spiffworkflow:instructionsForEndUser>## Call The Real Chuck Norris. 
+**First Name:** {{ firstName }}.  
 **Last Name:** {{ lastName }}.  
 **Telephone:** {{ telephone_all }}  .  
 . 
@@ -84,6 +85,12 @@ telephone_all = country_code + " " + area_code + " " + phone_number_all</bpmn:sc
     </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="Flow_0r7plsj" sourceRef="Gateway_06fiuk8" targetRef="Activity_1aggwmx" />
     <bpmn:manualTask id="Activity_1aggwmx" name="Call Chuck&#39;s Fan Club">
+      <bpmn:extensionElements>
+        <spiffworkflow:instructionsForEndUser>##. Call Chuck's Fan Club   
+**First Name:** {{ firstName }}.  
+**Last Name:** {{ lastName }}.  
+**Telephone:** {{ telephone_all }}  .  </spiffworkflow:instructionsForEndUser>
+      </bpmn:extensionElements>
       <bpmn:incoming>Flow_0r7plsj</bpmn:incoming>
       <bpmn:outgoing>Flow_1yshk2s</bpmn:outgoing>
     </bpmn:manualTask>
@@ -109,13 +116,25 @@ telephone_all = country_code + " " + area_code + " " + phone_number_all</bpmn:sc
     <bpmn:sequenceFlow id="Flow_12yxktn" sourceRef="Activity_0s0ak1j" targetRef="Gateway_1em7510" />
     <bpmn:sequenceFlow id="Flow_1yshk2s" sourceRef="Activity_1aggwmx" targetRef="Gateway_1em7510" />
     <bpmn:sequenceFlow id="Flow_1czgyj5" sourceRef="Gateway_1em7510" targetRef="Event_0c62aiv" />
-    <bpmn:userTask id="Activity_0uxorq8" name="Call Some Other Check Norris">
-      <bpmn:incoming>Flow_07urdvu</bpmn:incoming>
-      <bpmn:outgoing>Flow_0gr5f0w</bpmn:outgoing>
-    </bpmn:userTask>
     <bpmn:manualTask id="Activity_1ewbhqq" name="Call Some Other Chuck">
+      <bpmn:extensionElements>
+        <spiffworkflow:instructionsForEndUser>## Call Some Other Chuck. 
+**First Name:** {{ firstName }}.  
+**Last Name:** {{ lastName }}.  
+**Telephone:** {{ telephone_all }}  .  </spiffworkflow:instructionsForEndUser>
+      </bpmn:extensionElements>
       <bpmn:incoming>Flow_0u5kd7m</bpmn:incoming>
       <bpmn:outgoing>Flow_0q4rvgc</bpmn:outgoing>
+    </bpmn:manualTask>
+    <bpmn:manualTask id="Activity_0uxorq8" name="Call Some Other Check Norris">
+      <bpmn:extensionElements>
+        <spiffworkflow:instructionsForEndUser>## Call Some Other Check Norris
+**First Name:** {{ firstName }}.  
+**Last Name:** {{ lastName }}.  
+**Telephone:** {{ telephone_all }}  .  </spiffworkflow:instructionsForEndUser>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_07urdvu</bpmn:incoming>
+      <bpmn:outgoing>Flow_0gr5f0w</bpmn:outgoing>
     </bpmn:manualTask>
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
@@ -163,11 +182,12 @@ telephone_all = country_code + " " + area_code + " " + phone_number_all</bpmn:sc
       <bpmndi:BPMNShape id="Gateway_1em7510_di" bpmnElement="Gateway_1em7510" isMarkerVisible="true">
         <dc:Bounds x="995" y="115" width="50" height="50" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_10fvdo9_di" bpmnElement="Activity_0uxorq8">
-        <dc:Bounds x="800" y="20" width="100" height="80" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_08p2k71_di" bpmnElement="Activity_1ewbhqq">
         <dc:Bounds x="800" y="-100" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_063pfne_di" bpmnElement="Activity_0uxorq8">
+        <dc:Bounds x="800" y="20" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_15c4wm3_di" bpmnElement="Flow_15c4wm3">
         <di:waypoint x="-22" y="217" />
