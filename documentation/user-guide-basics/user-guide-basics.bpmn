@@ -16,10 +16,9 @@
       <bpmn:outgoing>Flow_1195zgn</bpmn:outgoing>
     </bpmn:userTask>
     <bpmn:endEvent id="Event_0c62aiv">
-      <bpmn:incoming>Flow_1g9el64</bpmn:incoming>
+      <bpmn:incoming>Flow_1czgyj5</bpmn:incoming>
     </bpmn:endEvent>
     <bpmn:sequenceFlow id="Flow_1195zgn" sourceRef="Activity_0v7nz5r" targetRef="Activity_0twfaq6" />
-    <bpmn:sequenceFlow id="Flow_1g9el64" sourceRef="Activity_0s0ak1j" targetRef="Event_0c62aiv" />
     <bpmn:manualTask id="Activity_0s0ak1j" name="Call Chuck">
       <bpmn:extensionElements>
         <spiffworkflow:instructionsForEndUser>**First Name:** {{ firstName }}.  
@@ -30,7 +29,7 @@
 </spiffworkflow:instructionsForEndUser>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_0kdjagb</bpmn:incoming>
-      <bpmn:outgoing>Flow_1g9el64</bpmn:outgoing>
+      <bpmn:outgoing>Flow_12yxktn</bpmn:outgoing>
     </bpmn:manualTask>
     <bpmn:scriptTask id="Activity_0twfaq6" name="Format Telephone Number" scriptFormat="python">
       <bpmn:incoming>Flow_1195zgn</bpmn:incoming>
@@ -82,6 +81,7 @@ telephone_all = country_code + " " + area_code + " " + phone_number_all</bpmn:sc
     <bpmn:sequenceFlow id="Flow_0r7plsj" sourceRef="Gateway_06fiuk8" targetRef="Activity_1aggwmx" />
     <bpmn:manualTask id="Activity_1aggwmx" name="Call Chuck&#39;s Fan Club">
       <bpmn:incoming>Flow_0r7plsj</bpmn:incoming>
+      <bpmn:outgoing>Flow_1yshk2s</bpmn:outgoing>
     </bpmn:manualTask>
     <bpmn:exclusiveGateway id="Gateway_0winlbl">
       <bpmn:incoming>Flow_0gbomzh</bpmn:incoming>
@@ -91,12 +91,26 @@ telephone_all = country_code + " " + area_code + " " + phone_number_all</bpmn:sc
     <bpmn:sequenceFlow id="Flow_0gbomzh" sourceRef="Gateway_1nez60d" targetRef="Gateway_0winlbl" />
     <bpmn:task id="Activity_0uxorq8">
       <bpmn:incoming>Flow_07urdvu</bpmn:incoming>
+      <bpmn:outgoing>Flow_0gr5f0w</bpmn:outgoing>
     </bpmn:task>
     <bpmn:sequenceFlow id="Flow_07urdvu" sourceRef="Gateway_0winlbl" targetRef="Activity_0uxorq8" />
     <bpmn:task id="Activity_1ewbhqq">
       <bpmn:incoming>Flow_0u5kd7m</bpmn:incoming>
+      <bpmn:outgoing>Flow_0q4rvgc</bpmn:outgoing>
     </bpmn:task>
     <bpmn:sequenceFlow id="Flow_0u5kd7m" sourceRef="Gateway_0winlbl" targetRef="Activity_1ewbhqq" />
+    <bpmn:exclusiveGateway id="Gateway_1em7510">
+      <bpmn:incoming>Flow_0q4rvgc</bpmn:incoming>
+      <bpmn:incoming>Flow_0gr5f0w</bpmn:incoming>
+      <bpmn:incoming>Flow_12yxktn</bpmn:incoming>
+      <bpmn:incoming>Flow_1yshk2s</bpmn:incoming>
+      <bpmn:outgoing>Flow_1czgyj5</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="Flow_0q4rvgc" sourceRef="Activity_1ewbhqq" targetRef="Gateway_1em7510" />
+    <bpmn:sequenceFlow id="Flow_0gr5f0w" sourceRef="Activity_0uxorq8" targetRef="Gateway_1em7510" />
+    <bpmn:sequenceFlow id="Flow_12yxktn" sourceRef="Activity_0s0ak1j" targetRef="Gateway_1em7510" />
+    <bpmn:sequenceFlow id="Flow_1yshk2s" sourceRef="Activity_1aggwmx" targetRef="Gateway_1em7510" />
+    <bpmn:sequenceFlow id="Flow_1czgyj5" sourceRef="Gateway_1em7510" targetRef="Event_0c62aiv" />
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Proccess_rlm9uj3">
@@ -134,14 +148,17 @@ telephone_all = country_code + " " + area_code + " " + phone_number_all</bpmn:sc
       <bpmndi:BPMNShape id="Gateway_0winlbl_di" bpmnElement="Gateway_0winlbl" isMarkerVisible="true">
         <dc:Bounds x="665" y="35" width="50" height="50" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_0c62aiv_di" bpmnElement="Event_0c62aiv">
-        <dc:Bounds x="1172" y="159" width="36" height="36" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0uxorq8_di" bpmnElement="Activity_0uxorq8">
         <dc:Bounds x="800" y="20" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1ewbhqq_di" bpmnElement="Activity_1ewbhqq">
-        <dc:Bounds x="800" y="-90" width="100" height="80" />
+        <dc:Bounds x="800" y="-100" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_1em7510_di" bpmnElement="Gateway_1em7510" isMarkerVisible="true">
+        <dc:Bounds x="995" y="95" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0c62aiv_di" bpmnElement="Event_0c62aiv">
+        <dc:Bounds x="1132" y="102" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_15c4wm3_di" bpmnElement="Flow_15c4wm3">
         <di:waypoint x="-22" y="177" />
@@ -150,10 +167,6 @@ telephone_all = country_code + " " + area_code + " " + phone_number_all</bpmn:sc
       <bpmndi:BPMNEdge id="Flow_1195zgn_di" bpmnElement="Flow_1195zgn">
         <di:waypoint x="160" y="177" />
         <di:waypoint x="210" y="177" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_1g9el64_di" bpmnElement="Flow_1g9el64">
-        <di:waypoint x="900" y="177" />
-        <di:waypoint x="1172" y="177" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1vfw75z_di" bpmnElement="Flow_1vfw75z">
         <di:waypoint x="310" y="177" />
@@ -187,8 +200,32 @@ telephone_all = country_code + " " + area_code + " " + phone_number_all</bpmn:sc
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0u5kd7m_di" bpmnElement="Flow_0u5kd7m">
         <di:waypoint x="690" y="35" />
-        <di:waypoint x="690" y="-50" />
-        <di:waypoint x="800" y="-50" />
+        <di:waypoint x="690" y="-60" />
+        <di:waypoint x="800" y="-60" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0q4rvgc_di" bpmnElement="Flow_0q4rvgc">
+        <di:waypoint x="900" y="-60" />
+        <di:waypoint x="1020" y="-60" />
+        <di:waypoint x="1020" y="95" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0gr5f0w_di" bpmnElement="Flow_0gr5f0w">
+        <di:waypoint x="900" y="60" />
+        <di:waypoint x="1020" y="60" />
+        <di:waypoint x="1020" y="95" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_12yxktn_di" bpmnElement="Flow_12yxktn">
+        <di:waypoint x="900" y="177" />
+        <di:waypoint x="1020" y="177" />
+        <di:waypoint x="1020" y="145" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1yshk2s_di" bpmnElement="Flow_1yshk2s">
+        <di:waypoint x="900" y="290" />
+        <di:waypoint x="1020" y="290" />
+        <di:waypoint x="1020" y="145" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1czgyj5_di" bpmnElement="Flow_1czgyj5">
+        <di:waypoint x="1045" y="120" />
+        <di:waypoint x="1132" y="120" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
