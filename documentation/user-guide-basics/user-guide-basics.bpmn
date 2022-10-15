@@ -24,7 +24,7 @@
       <bpmn:extensionElements>
         <spiffworkflow:instructionsForEndUser>**First Name:** {{ firstName }}.  
 **Last Name:** {{ lastName }}.  
-**Telephone:** {{ telephone }}  (1-800-KIC-KASS).  
+**Telephone:** {{ telephone_all }}  .  
 . 
 
 </spiffworkflow:instructionsForEndUser>
@@ -33,9 +33,31 @@
       <bpmn:outgoing>Flow_1g9el64</bpmn:outgoing>
     </bpmn:manualTask>
     <bpmn:sequenceFlow id="Flow_03ueb3r" sourceRef="Activity_0twfaq6" targetRef="Activity_0s0ak1j" />
-    <bpmn:scriptTask id="Activity_0twfaq6" name="Format Telephone Number">
+    <bpmn:scriptTask id="Activity_0twfaq6" name="Format Telephone Number" scriptFormat="python">
       <bpmn:incoming>Flow_1195zgn</bpmn:incoming>
       <bpmn:outgoing>Flow_03ueb3r</bpmn:outgoing>
+      <bpmn:script># Get lenth of phone number entered
+tel_len = len(telephone)
+
+# Determine if the US country code was entered or not
+if tel_len == 11:
+    country_code = telephone[0]
+    area_code_strt = 1
+else:
+    country_code = "1"
+    area_code_strt = 0
+
+# Set where phone number starts
+phone_strt = area_code_strt + 3
+
+# Get area code
+area_code = "(" + telephone[area_code_strt:area_code_strt+3] + ")"
+
+# Get phone number
+phone_before_hyphen = telephone[phone_strt:phone_strt+3]
+phone_after_hyphen = telephone[phone_strt+3:]
+phone_number_all = phone_before_hyphen + "-" + phone_after_hyphen
+telephone_all = country_code + area_code + phone_number_all</bpmn:script>
     </bpmn:scriptTask>
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
