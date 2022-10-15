@@ -74,18 +74,20 @@ telephone_all = country_code + " " + area_code + " " + phone_number_all</bpmn:sc
     <bpmn:sequenceFlow id="Flow_0z3tg6l" name="Yes" sourceRef="Gateway_1nez60d" targetRef="Gateway_06fiuk8">
       <bpmn:conditionExpression>isRealCheckNorris</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
-    <bpmn:exclusiveGateway id="Gateway_06fiuk8" name="Which of The Real Chuck&#39;s Phone Numbers?">
+    <bpmn:exclusiveGateway id="Gateway_06fiuk8" name="Which of The Real Chuck&#39;s Phone Numbers?" default="Flow_0r7plsj">
       <bpmn:incoming>Flow_0z3tg6l</bpmn:incoming>
       <bpmn:outgoing>Flow_0kdjagb</bpmn:outgoing>
       <bpmn:outgoing>Flow_0r7plsj</bpmn:outgoing>
     </bpmn:exclusiveGateway>
-    <bpmn:sequenceFlow id="Flow_0kdjagb" sourceRef="Gateway_06fiuk8" targetRef="Activity_0s0ak1j" />
+    <bpmn:sequenceFlow id="Flow_0kdjagb" sourceRef="Gateway_06fiuk8" targetRef="Activity_0s0ak1j">
+      <bpmn:conditionExpression>whichNumber == "Chuck's Personal Number"</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="Flow_0r7plsj" sourceRef="Gateway_06fiuk8" targetRef="Activity_1aggwmx" />
     <bpmn:manualTask id="Activity_1aggwmx" name="Call Chuck&#39;s Fan Club">
       <bpmn:incoming>Flow_0r7plsj</bpmn:incoming>
       <bpmn:outgoing>Flow_1yshk2s</bpmn:outgoing>
     </bpmn:manualTask>
-    <bpmn:exclusiveGateway id="Gateway_0winlbl" name="Which Other Chuck?">
+    <bpmn:exclusiveGateway id="Gateway_0winlbl" name="Which Other Chuck?" default="Flow_0u5kd7m">
       <bpmn:incoming>Flow_0gbomzh</bpmn:incoming>
       <bpmn:outgoing>Flow_07urdvu</bpmn:outgoing>
       <bpmn:outgoing>Flow_0u5kd7m</bpmn:outgoing>
