@@ -66,12 +66,14 @@ telephone_all = country_code + " " + area_code + " " + phone_number_all</bpmn:sc
     </bpmn:businessRuleTask>
     <bpmn:sequenceFlow id="Flow_1vfw75z" sourceRef="Activity_0twfaq6" targetRef="Activity_0sualuq" />
     <bpmn:sequenceFlow id="Flow_0z9399c" sourceRef="Activity_0sualuq" targetRef="Gateway_1nez60d" />
-    <bpmn:exclusiveGateway id="Gateway_1nez60d" name="The Real Chuck Norris?">
+    <bpmn:exclusiveGateway id="Gateway_1nez60d" name="The Real Chuck Norris?" default="Flow_0gbomzh">
       <bpmn:incoming>Flow_0z9399c</bpmn:incoming>
       <bpmn:outgoing>Flow_0z3tg6l</bpmn:outgoing>
       <bpmn:outgoing>Flow_0gbomzh</bpmn:outgoing>
     </bpmn:exclusiveGateway>
-    <bpmn:sequenceFlow id="Flow_0z3tg6l" sourceRef="Gateway_1nez60d" targetRef="Gateway_06fiuk8" />
+    <bpmn:sequenceFlow id="Flow_0z3tg6l" name="Yes" sourceRef="Gateway_1nez60d" targetRef="Gateway_06fiuk8">
+      <bpmn:conditionExpression>isRealCheckNorris</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
     <bpmn:exclusiveGateway id="Gateway_06fiuk8" name="Which of Chuck&#39;s Phone Numbers?">
       <bpmn:incoming>Flow_0z3tg6l</bpmn:incoming>
       <bpmn:outgoing>Flow_0kdjagb</bpmn:outgoing>
@@ -88,7 +90,7 @@ telephone_all = country_code + " " + area_code + " " + phone_number_all</bpmn:sc
       <bpmn:outgoing>Flow_07urdvu</bpmn:outgoing>
       <bpmn:outgoing>Flow_0u5kd7m</bpmn:outgoing>
     </bpmn:exclusiveGateway>
-    <bpmn:sequenceFlow id="Flow_0gbomzh" sourceRef="Gateway_1nez60d" targetRef="Gateway_0winlbl" />
+    <bpmn:sequenceFlow id="Flow_0gbomzh" name="No" sourceRef="Gateway_1nez60d" targetRef="Gateway_0winlbl" />
     <bpmn:sequenceFlow id="Flow_07urdvu" sourceRef="Gateway_0winlbl" targetRef="Activity_0uxorq8" />
     <bpmn:sequenceFlow id="Flow_0u5kd7m" sourceRef="Gateway_0winlbl" targetRef="Activity_1ewbhqq" />
     <bpmn:exclusiveGateway id="Gateway_1em7510">
@@ -120,15 +122,18 @@ telephone_all = country_code + " " + area_code + " " + phone_number_all</bpmn:sc
       <bpmndi:BPMNShape id="Activity_15rn7j8_di" bpmnElement="Activity_0v7nz5r">
         <dc:Bounds x="60" y="137" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0igyd4t_di" bpmnElement="Activity_0sualuq">
-        <dc:Bounds x="360" y="137" width="100" height="80" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0qqdrd7_di" bpmnElement="Activity_0twfaq6">
-        <dc:Bounds x="210" y="137" width="100" height="80" />
+      <bpmndi:BPMNShape id="Event_0c62aiv_di" bpmnElement="Event_0c62aiv">
+        <dc:Bounds x="1132" y="102" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1235hph_di" bpmnElement="Activity_0s0ak1j">
         <dc:Bounds x="800" y="137" width="100" height="80" />
         <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0qqdrd7_di" bpmnElement="Activity_0twfaq6">
+        <dc:Bounds x="210" y="137" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0igyd4t_di" bpmnElement="Activity_0sualuq">
+        <dc:Bounds x="360" y="137" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Gateway_1nez60d_di" bpmnElement="Gateway_1nez60d" isMarkerVisible="true">
         <dc:Bounds x="535" y="152" width="50" height="50" />
@@ -150,9 +155,6 @@ telephone_all = country_code + " " + area_code + " " + phone_number_all</bpmn:sc
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Gateway_1em7510_di" bpmnElement="Gateway_1em7510" isMarkerVisible="true">
         <dc:Bounds x="995" y="95" width="50" height="50" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_0c62aiv_di" bpmnElement="Event_0c62aiv">
-        <dc:Bounds x="1132" y="102" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_10fvdo9_di" bpmnElement="Activity_0uxorq8">
         <dc:Bounds x="800" y="20" width="100" height="80" />
@@ -179,6 +181,9 @@ telephone_all = country_code + " " + area_code + " " + phone_number_all</bpmn:sc
       <bpmndi:BPMNEdge id="Flow_0z3tg6l_di" bpmnElement="Flow_0z3tg6l">
         <di:waypoint x="585" y="177" />
         <di:waypoint x="665" y="177" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="616" y="159" width="18" height="14" />
+        </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0kdjagb_di" bpmnElement="Flow_0kdjagb">
         <di:waypoint x="715" y="177" />
@@ -193,6 +198,9 @@ telephone_all = country_code + " " + area_code + " " + phone_number_all</bpmn:sc
         <di:waypoint x="560" y="152" />
         <di:waypoint x="560" y="60" />
         <di:waypoint x="665" y="60" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="568" y="103" width="15" height="14" />
+        </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_07urdvu_di" bpmnElement="Flow_07urdvu">
         <di:waypoint x="715" y="60" />
