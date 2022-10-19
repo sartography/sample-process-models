@@ -27,7 +27,6 @@
     <bpmn:laneSet id="LaneSet_0txkzqg">
       <bpmn:lane id="Lane_1a0qu8e" name="Core Contributor">
         <bpmn:flowNodeRef>Gateway_16gxu6s</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Event_12qepud</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Submit_the_invoice</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Gateway_validation_successful_question_mark</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>SubProcess_Data_validation_rules</bpmn:flowNodeRef>
@@ -54,6 +53,7 @@
         <bpmn:flowNodeRef>Activity_0p88elm</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_15y55nw</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_0bvopx2</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Event_0b7jjfd</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_1so23vf" name="Finance Team">
         <bpmn:flowNodeRef>Activity_0cdgqi0</bpmn:flowNodeRef>
@@ -91,15 +91,10 @@
     <bpmn:sequenceFlow id="Flow_18cic3h" sourceRef="Activity_show_errors" targetRef="Gateway_16gxu6s" />
     <bpmn:exclusiveGateway id="Gateway_16gxu6s">
       <bpmn:incoming>Flow_18cic3h</bpmn:incoming>
-      <bpmn:incoming>Flow_0lc8yoi</bpmn:incoming>
       <bpmn:outgoing>Flow_11b24we</bpmn:outgoing>
     </bpmn:exclusiveGateway>
     <bpmn:sequenceFlow id="Flow_02moyg7" sourceRef="Submit_the_invoice" targetRef="SubProcess_Data_validation_rules" />
     <bpmn:sequenceFlow id="Flow_1ck27i7" sourceRef="SubProcess_Data_validation_rules" targetRef="Gateway_validation_successful_question_mark" />
-    <bpmn:sequenceFlow id="Flow_0lc8yoi" sourceRef="Event_12qepud" targetRef="Gateway_16gxu6s" />
-    <bpmn:startEvent id="Event_12qepud">
-      <bpmn:outgoing>Flow_0lc8yoi</bpmn:outgoing>
-    </bpmn:startEvent>
     <bpmn:sequenceFlow id="Flow_1v8dszb" sourceRef="Event_09q0ym0" targetRef="Activity_1ftzr6x" />
     <bpmn:sequenceFlow id="Flow_0yvmfqu" sourceRef="Activity_06b32ar" targetRef="Gateway_1l4tz4i" />
     <bpmn:userTask id="Submit_the_invoice" name="2. Submit the invoice" scriptFormat="python" script="SdgsdGsdhgwsDEHhww">
@@ -261,7 +256,6 @@ Please fix.
     <bpmn:parallelGateway id="Gateway_1717c0p">
       <bpmn:incoming>Flow_02o270g</bpmn:incoming>
       <bpmn:incoming>Flow_0o94g4u</bpmn:incoming>
-      <bpmn:outgoing>Flow_0u8090n</bpmn:outgoing>
     </bpmn:parallelGateway>
     <bpmn:serviceTask id="Activity_0cfvsk7" name="3. Notify CC via Waku&#10;&#34;invoice uploaded&#34;">
       <bpmn:extensionElements>
@@ -273,7 +267,7 @@ Please fix.
           </spiffworkflow:parameters>
         </spiffworkflow:serviceTaskOperator>
       </bpmn:extensionElements>
-      <bpmn:incoming>Flow_0u8090n</bpmn:incoming>
+      <bpmn:incoming>Flow_1sxygbw</bpmn:incoming>
       <bpmn:outgoing>Flow_1l1n5j5</bpmn:outgoing>
     </bpmn:serviceTask>
     <bpmn:serviceTask id="Activity_1lq96cy" name="7. Notify CC via Waku&#10;&#34;invoice received and approved&#34;">
@@ -498,7 +492,10 @@ Please fix.
     <bpmn:endEvent id="Event_0bvopx2" name="Temp End Event">
       <bpmn:incoming>Flow_1l1n5j5</bpmn:incoming>
     </bpmn:endEvent>
-    <bpmn:sequenceFlow id="Flow_0u8090n" sourceRef="Gateway_1717c0p" targetRef="Activity_0cfvsk7" />
+    <bpmn:startEvent id="Event_0b7jjfd">
+      <bpmn:outgoing>Flow_1sxygbw</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_1sxygbw" sourceRef="Event_0b7jjfd" targetRef="Activity_0cfvsk7" />
   </bpmn:process>
   <bpmn:process id="Process_cc_invoice_approval_process_v2_c" isExecutable="false" />
   <bpmn:process id="Process_cc_invoice_approval_process_v2_d" isExecutable="false" />
@@ -538,9 +535,6 @@ Please fix.
       <bpmndi:BPMNShape id="Gateway_16gxu6s_di" bpmnElement="Gateway_16gxu6s" isMarkerVisible="true">
         <dc:Bounds x="535" y="497" width="50" height="50" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_1m2s5lx_di" bpmnElement="Event_12qepud">
-        <dc:Bounds x="382" y="504" width="36" height="36" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1h7igan_di" bpmnElement="Submit_the_invoice">
         <dc:Bounds x="835" y="482" width="100" height="80" />
       </bpmndi:BPMNShape>
@@ -561,6 +555,9 @@ Please fix.
         <bpmndi:BPMNLabel>
           <dc:Bounds x="2013" y="705" width="81" height="14" />
         </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0b7jjfd_di" bpmnElement="Event_0b7jjfd">
+        <dc:Bounds x="1862" y="372" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0z13hw3_di" bpmnElement="SubProcess_Data_validation_rules">
         <dc:Bounds x="1020" y="482" width="100" height="80" />
@@ -818,10 +815,6 @@ Please fix.
         <di:waypoint x="1120" y="522" />
         <di:waypoint x="1195" y="522" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0lc8yoi_di" bpmnElement="Flow_0lc8yoi">
-        <di:waypoint x="418" y="522" />
-        <di:waypoint x="535" y="522" />
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1v8dszb_di" bpmnElement="Flow_1v8dszb">
         <di:waypoint x="2720" y="918" />
         <di:waypoint x="2720" y="938" />
@@ -865,9 +858,11 @@ Please fix.
         <di:waypoint x="1829" y="600" />
         <di:waypoint x="1829" y="547" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0u8090n_di" bpmnElement="Flow_0u8090n">
-        <di:waypoint x="1854" y="522" />
-        <di:waypoint x="1910" y="522" />
+      <bpmndi:BPMNEdge id="Flow_1sxygbw_di" bpmnElement="Flow_1sxygbw">
+        <di:waypoint x="1880" y="408" />
+        <di:waypoint x="1880" y="445" />
+        <di:waypoint x="1920" y="445" />
+        <di:waypoint x="1920" y="482" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="Participant_0a8arrz_di" bpmnElement="Participant_0a8arrz" isHorizontal="true">
         <dc:Bounds x="1330" y="1180" width="320" height="80" />
