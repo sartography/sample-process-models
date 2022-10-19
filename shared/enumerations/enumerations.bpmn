@@ -25,14 +25,14 @@
       <bpmn:incoming>Flow_03owp8l</bpmn:incoming>
       <bpmn:outgoing>Flow_1igx0a1</bpmn:outgoing>
     </bpmn:manualTask>
-    <bpmn:userTask id="enumeration_user_task" name="Which Enumeration">
+    <bpmn:userTask id="enumeration_user_task" name="Add Enumeration">
       <bpmn:extensionElements>
         <spiffworkflow:properties>
           <spiffworkflow:property name="formJsonSchemaFilename" value="enumeration-JSONSchema.json" />
           <spiffworkflow:property name="formUiSchemaFilename" value="enumeration-UISchema.json" />
         </spiffworkflow:properties>
       </bpmn:extensionElements>
-      <bpmn:incoming>Flow_148h40r</bpmn:incoming>
+      <bpmn:incoming>Flow_0u5uu9p</bpmn:incoming>
       <bpmn:outgoing>Flow_0t80m1i</bpmn:outgoing>
     </bpmn:userTask>
     <bpmn:sequenceFlow id="Flow_1sjh867" sourceRef="Activity_1cl0n43" targetRef="Activity_1slo4pb" />
@@ -68,7 +68,7 @@
       <bpmn:incoming>Flow_0q0h9tc</bpmn:incoming>
       <bpmn:outgoing>Flow_1p5fxob</bpmn:outgoing>
     </bpmn:callActivity>
-    <bpmn:sequenceFlow id="Flow_148h40r" sourceRef="Activity_1ig6ogz" targetRef="enumeration_user_task" />
+    <bpmn:sequenceFlow id="Flow_148h40r" sourceRef="Activity_1ig6ogz" targetRef="Activity_0bvdyir" />
     <bpmn:scriptTask id="Activity_1ig6ogz" name="Build Enum List">
       <bpmn:incoming>Flow_1p5fxob</bpmn:incoming>
       <bpmn:outgoing>Flow_148h40r</bpmn:outgoing>
@@ -77,29 +77,16 @@ enumerations_list = []
 enumerations_list.append({'label': 'Add New', 'value': 'add'})
 enumerations_list.append(enumerations_items_list)</bpmn:script>
     </bpmn:scriptTask>
+    <bpmn:sequenceFlow id="Flow_0u5uu9p" sourceRef="Activity_0bvdyir" targetRef="enumeration_user_task" />
+    <bpmn:userTask id="Activity_0bvdyir" name="Which Enumeration">
+      <bpmn:incoming>Flow_148h40r</bpmn:incoming>
+      <bpmn:outgoing>Flow_0u5uu9p</bpmn:outgoing>
+    </bpmn:userTask>
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Sharred_Enumeration_Table">
       <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
         <dc:Bounds x="-278" y="159" width="36" height="36" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_0fdez0y_di" bpmnElement="Event_0fdez0y">
-        <dc:Bounds x="832" y="159" width="36" height="36" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1cpupwx_di" bpmnElement="Activity_18npi29">
-        <dc:Bounds x="680" y="137" width="100" height="80" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0nciy2q_di" bpmnElement="enumeration_user_task">
-        <dc:Bounds x="180" y="137" width="100" height="80" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0k89mkq_di" bpmnElement="Activity_1cl0n43">
-        <dc:Bounds x="350" y="137" width="100" height="80" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1fe77xz_di" bpmnElement="Activity_1slo4pb">
-        <dc:Bounds x="520" y="137" width="100" height="80" />
-        <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1i2gua9_di" bpmnElement="Call_Shared_Build_Enum_List_from_AWS">
         <dc:Bounds x="-170" y="137" width="100" height="80" />
@@ -109,25 +96,46 @@ enumerations_list.append(enumerations_items_list)</bpmn:script>
         <dc:Bounds x="0" y="137" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0fdez0y_di" bpmnElement="Event_0fdez0y">
+        <dc:Bounds x="1002" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1cpupwx_di" bpmnElement="Activity_18npi29">
+        <dc:Bounds x="850" y="137" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0nciy2q_di" bpmnElement="enumeration_user_task">
+        <dc:Bounds x="350" y="137" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0k89mkq_di" bpmnElement="Activity_1cl0n43">
+        <dc:Bounds x="520" y="137" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1fe77xz_di" bpmnElement="Activity_1slo4pb">
+        <dc:Bounds x="690" y="137" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_05qgorp_di" bpmnElement="Activity_0bvdyir">
+        <dc:Bounds x="170" y="137" width="100" height="80" />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_0q0h9tc_di" bpmnElement="Flow_0q0h9tc">
         <di:waypoint x="-242" y="177" />
         <di:waypoint x="-170" y="177" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0t80m1i_di" bpmnElement="Flow_0t80m1i">
-        <di:waypoint x="280" y="177" />
-        <di:waypoint x="350" y="177" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_1igx0a1_di" bpmnElement="Flow_1igx0a1">
-        <di:waypoint x="780" y="177" />
-        <di:waypoint x="832" y="177" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_1sjh867_di" bpmnElement="Flow_1sjh867">
         <di:waypoint x="450" y="177" />
         <di:waypoint x="520" y="177" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_03owp8l_di" bpmnElement="Flow_03owp8l">
+      <bpmndi:BPMNEdge id="Flow_1igx0a1_di" bpmnElement="Flow_1igx0a1">
+        <di:waypoint x="950" y="177" />
+        <di:waypoint x="1002" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1sjh867_di" bpmnElement="Flow_1sjh867">
         <di:waypoint x="620" y="177" />
-        <di:waypoint x="680" y="177" />
+        <di:waypoint x="690" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_03owp8l_di" bpmnElement="Flow_03owp8l">
+        <di:waypoint x="790" y="177" />
+        <di:waypoint x="850" y="177" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1p5fxob_di" bpmnElement="Flow_1p5fxob">
         <di:waypoint x="-70" y="177" />
@@ -135,7 +143,11 @@ enumerations_list.append(enumerations_items_list)</bpmn:script>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_148h40r_di" bpmnElement="Flow_148h40r">
         <di:waypoint x="100" y="177" />
-        <di:waypoint x="180" y="177" />
+        <di:waypoint x="170" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0u5uu9p_di" bpmnElement="Flow_0u5uu9p">
+        <di:waypoint x="270" y="177" />
+        <di:waypoint x="350" y="177" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
