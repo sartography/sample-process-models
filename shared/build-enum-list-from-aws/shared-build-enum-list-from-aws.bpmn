@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_96f6665" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.0.0-dev">
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:spiffworkflow="http://spiffworkflow.org/bpmn/schema/1.0/core" id="Definitions_96f6665" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.0.0-dev">
   <bpmn:process id="Shared_Build_Enum_List_from_AWS" name="Shared: Build Enum List from AWS" isExecutable="true">
     <bpmn:startEvent id="StartEvent_1">
       <bpmn:outgoing>Flow_17dzzly</bpmn:outgoing>
     </bpmn:startEvent>
-    <bpmn:sequenceFlow id="Flow_17dzzly" sourceRef="StartEvent_1" targetRef="Activity_0w26t4e" />
+    <bpmn:sequenceFlow id="Flow_17dzzly" sourceRef="StartEvent_1" targetRef="Activity_0jnxeox" />
     <bpmn:scriptTask id="Activity_0w26t4e" name="Build Enum List from AWS">
-      <bpmn:incoming>Flow_17dzzly</bpmn:incoming>
+      <bpmn:incoming>Flow_1dc7oe2</bpmn:incoming>
       <bpmn:outgoing>Flow_1lst375</bpmn:outgoing>
       <bpmn:script># Build Enum List from AWS
 enumerations_items_list = []
@@ -17,12 +17,21 @@ enumerations_items_list.append(enumerations["Items"])</bpmn:script>
       <bpmn:incoming>Flow_1lst375</bpmn:incoming>
     </bpmn:endEvent>
     <bpmn:sequenceFlow id="Flow_1lst375" sourceRef="Activity_0w26t4e" targetRef="Event_0imyhx8" />
+    <bpmn:sequenceFlow id="Flow_1dc7oe2" sourceRef="Activity_0jnxeox" targetRef="Activity_0w26t4e" />
+    <bpmn:serviceTask id="Activity_0jnxeox" name="Scan AWS Enum Tabl;e">
+      <bpmn:extensionElements>
+        <spiffworkflow:serviceTaskOperator id="aws/ScanDynamoTable">
+          <spiffworkflow:parameters>
+            <spiffworkflow:parameter id="table_name" type="str" value="awsEnumTable" />
+          </spiffworkflow:parameters>
+        </spiffworkflow:serviceTaskOperator>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_17dzzly</bpmn:incoming>
+      <bpmn:outgoing>Flow_1dc7oe2</bpmn:outgoing>
+    </bpmn:serviceTask>
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Shared_Build_Enum_List_from_AWS">
-      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
-        <dc:Bounds x="179" y="159" width="36" height="36" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1lf3qci_di" bpmnElement="Activity_0w26t4e">
         <dc:Bounds x="270" y="137" width="100" height="80" />
         <bpmndi:BPMNLabel />
@@ -30,13 +39,24 @@ enumerations_items_list.append(enumerations["Items"])</bpmn:script>
       <bpmndi:BPMNShape id="Event_0imyhx8_di" bpmnElement="Event_0imyhx8">
         <dc:Bounds x="432" y="159" width="36" height="36" />
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="-38" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0q9yh3w_di" bpmnElement="Activity_0jnxeox">
+        <dc:Bounds x="70" y="137" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_17dzzly_di" bpmnElement="Flow_17dzzly">
-        <di:waypoint x="215" y="177" />
-        <di:waypoint x="270" y="177" />
+        <di:waypoint x="-2" y="177" />
+        <di:waypoint x="70" y="177" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1lst375_di" bpmnElement="Flow_1lst375">
         <di:waypoint x="370" y="177" />
         <di:waypoint x="432" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1dc7oe2_di" bpmnElement="Flow_1dc7oe2">
+        <di:waypoint x="170" y="177" />
+        <di:waypoint x="270" y="177" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
