@@ -53,7 +53,7 @@
         <bpmn:flowNodeRef>Activity_0p88elm</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_15y55nw</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_0bvopx2</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Event_013vwws</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Event_0g3juu1</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_1so23vf" name="Finance Team">
         <bpmn:flowNodeRef>Activity_0cdgqi0</bpmn:flowNodeRef>
@@ -90,6 +90,7 @@
     <bpmn:sequenceFlow id="Flow_18cic3h" sourceRef="Activity_show_errors" targetRef="Gateway_16gxu6s" />
     <bpmn:exclusiveGateway id="Gateway_16gxu6s">
       <bpmn:incoming>Flow_18cic3h</bpmn:incoming>
+      <bpmn:incoming>Flow_1pgeqkj</bpmn:incoming>
       <bpmn:outgoing>Flow_11b24we</bpmn:outgoing>
     </bpmn:exclusiveGateway>
     <bpmn:sequenceFlow id="Flow_02moyg7" sourceRef="Submit_the_invoice" targetRef="SubProcess_Data_validation_rules" />
@@ -255,6 +256,7 @@ Please fix.
     <bpmn:parallelGateway id="Gateway_1717c0p">
       <bpmn:incoming>Flow_02o270g</bpmn:incoming>
       <bpmn:incoming>Flow_0o94g4u</bpmn:incoming>
+      <bpmn:outgoing>Flow_0gvctch</bpmn:outgoing>
     </bpmn:parallelGateway>
     <bpmn:serviceTask id="Activity_0cfvsk7" name="3. Notify CC via Waku&#10;&#34;invoice uploaded&#34;">
       <bpmn:extensionElements>
@@ -266,7 +268,7 @@ Please fix.
           </spiffworkflow:parameters>
         </spiffworkflow:serviceTaskOperator>
       </bpmn:extensionElements>
-      <bpmn:incoming>Flow_0v5i4fr</bpmn:incoming>
+      <bpmn:incoming>Flow_0gvctch</bpmn:incoming>
       <bpmn:outgoing>Flow_00jefuo</bpmn:outgoing>
     </bpmn:serviceTask>
     <bpmn:serviceTask id="Activity_1lq96cy" name="7. Notify CC via Waku&#10;&#34;invoice received and approved&#34;">
@@ -492,10 +494,11 @@ Please fix.
       <bpmn:incoming>Flow_00jefuo</bpmn:incoming>
     </bpmn:endEvent>
     <bpmn:sequenceFlow id="Flow_00jefuo" sourceRef="Activity_0cfvsk7" targetRef="Event_0bvopx2" />
-    <bpmn:startEvent id="Event_013vwws">
-      <bpmn:outgoing>Flow_0v5i4fr</bpmn:outgoing>
+    <bpmn:sequenceFlow id="Flow_0gvctch" sourceRef="Gateway_1717c0p" targetRef="Activity_0cfvsk7" />
+    <bpmn:startEvent id="Event_0g3juu1">
+      <bpmn:outgoing>Flow_1pgeqkj</bpmn:outgoing>
     </bpmn:startEvent>
-    <bpmn:sequenceFlow id="Flow_0v5i4fr" sourceRef="Event_013vwws" targetRef="Activity_0cfvsk7" />
+    <bpmn:sequenceFlow id="Flow_1pgeqkj" sourceRef="Event_0g3juu1" targetRef="Gateway_16gxu6s" />
   </bpmn:process>
   <bpmn:process id="Process_cc_invoice_approval_process_v2_c" isExecutable="false" />
   <bpmn:process id="Process_cc_invoice_approval_process_v2_d" isExecutable="false" />
@@ -543,6 +546,9 @@ Please fix.
         <bpmndi:BPMNLabel>
           <dc:Bounds x="1190" y="557" width="60" height="14" />
         </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0g3juu1_di" bpmnElement="Event_0g3juu1">
+        <dc:Bounds x="402" y="504" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0z13hw3_di" bpmnElement="SubProcess_Data_validation_rules">
         <dc:Bounds x="1020" y="482" width="100" height="80" />
@@ -688,9 +694,6 @@ Please fix.
         <bpmndi:BPMNLabel>
           <dc:Bounds x="1923" y="735" width="81" height="14" />
         </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_013vwws_di" bpmnElement="Event_013vwws">
-        <dc:Bounds x="1882" y="372" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_1n1umf8_di" bpmnElement="Event_09q0ym0">
         <dc:Bounds x="2702" y="882" width="36" height="36" />
@@ -857,11 +860,13 @@ Please fix.
         <di:waypoint x="1960" y="562" />
         <di:waypoint x="1960" y="692" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0v5i4fr_di" bpmnElement="Flow_0v5i4fr">
-        <di:waypoint x="1900" y="408" />
-        <di:waypoint x="1900" y="445" />
-        <di:waypoint x="1960" y="445" />
-        <di:waypoint x="1960" y="482" />
+      <bpmndi:BPMNEdge id="Flow_0gvctch_di" bpmnElement="Flow_0gvctch">
+        <di:waypoint x="1854" y="522" />
+        <di:waypoint x="1910" y="522" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1pgeqkj_di" bpmnElement="Flow_1pgeqkj">
+        <di:waypoint x="438" y="522" />
+        <di:waypoint x="535" y="522" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="Participant_0a8arrz_di" bpmnElement="Participant_0a8arrz" isHorizontal="true">
         <dc:Bounds x="1330" y="1180" width="320" height="80" />
