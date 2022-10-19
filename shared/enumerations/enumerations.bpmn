@@ -4,7 +4,7 @@
     <bpmn:startEvent id="StartEvent_1">
       <bpmn:outgoing>Flow_0q0h9tc</bpmn:outgoing>
     </bpmn:startEvent>
-    <bpmn:sequenceFlow id="Flow_0q0h9tc" sourceRef="StartEvent_1" targetRef="enumeration_user_task" />
+    <bpmn:sequenceFlow id="Flow_0q0h9tc" sourceRef="StartEvent_1" targetRef="Activity_0kxf2qc" />
     <bpmn:endEvent id="Event_0fdez0y">
       <bpmn:incoming>Flow_1igx0a1</bpmn:incoming>
     </bpmn:endEvent>
@@ -32,7 +32,7 @@
           <spiffworkflow:property name="formUiSchemaFilename" value="enumeration-UISchema.json" />
         </spiffworkflow:properties>
       </bpmn:extensionElements>
-      <bpmn:incoming>Flow_0q0h9tc</bpmn:incoming>
+      <bpmn:incoming>Flow_07p4s89</bpmn:incoming>
       <bpmn:outgoing>Flow_0t80m1i</bpmn:outgoing>
     </bpmn:userTask>
     <bpmn:sequenceFlow id="Flow_1sjh867" sourceRef="Activity_1cl0n43" targetRef="Activity_1slo4pb" />
@@ -60,12 +60,33 @@
       <bpmn:incoming>Flow_1sjh867</bpmn:incoming>
       <bpmn:outgoing>Flow_03owp8l</bpmn:outgoing>
     </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="Flow_07p4s89" sourceRef="Activity_0kxf2qc" targetRef="enumeration_user_task" />
+    <bpmn:subProcess id="Activity_0kxf2qc" name="Get AWS Enumeration List">
+      <bpmn:incoming>Flow_0q0h9tc</bpmn:incoming>
+      <bpmn:outgoing>Flow_07p4s89</bpmn:outgoing>
+      <bpmn:startEvent id="Event_0eqswxf">
+        <bpmn:outgoing>Flow_1jzrkzh</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:serviceTask id="Activity_0lbriwb" name="Get Records">
+        <bpmn:extensionElements>
+          <spiffworkflow:serviceTaskOperator id="aws/ScanDynamoTable" resultVariable="enumerations">
+            <spiffworkflow:parameters>
+              <spiffworkflow:parameter id="table_name" type="str" value="&#39;Enumeration&#39;" />
+            </spiffworkflow:parameters>
+          </spiffworkflow:serviceTaskOperator>
+        </bpmn:extensionElements>
+        <bpmn:incoming>Flow_1jzrkzh</bpmn:incoming>
+        <bpmn:outgoing>Flow_11gy235</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:sequenceFlow id="Flow_1jzrkzh" sourceRef="Event_0eqswxf" targetRef="Activity_0lbriwb" />
+      <bpmn:endEvent id="Event_1hbs784">
+        <bpmn:incoming>Flow_11gy235</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:sequenceFlow id="Flow_11gy235" sourceRef="Activity_0lbriwb" targetRef="Event_1hbs784" />
+    </bpmn:subProcess>
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Sharred_Enumeration_Table">
-      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
-        <dc:Bounds x="-78" y="159" width="36" height="36" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_0fdez0y_di" bpmnElement="Event_0fdez0y">
         <dc:Bounds x="662" y="159" width="36" height="36" />
       </bpmndi:BPMNShape>
@@ -84,9 +105,15 @@
         <dc:Bounds x="350" y="137" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="-278" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0arvduy_di" bpmnElement="Activity_0kxf2qc">
+        <dc:Bounds x="-180" y="137" width="100" height="80" />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_0q0h9tc_di" bpmnElement="Flow_0q0h9tc">
-        <di:waypoint x="-42" y="177" />
-        <di:waypoint x="10" y="177" />
+        <di:waypoint x="-242" y="177" />
+        <di:waypoint x="-180" y="177" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0t80m1i_di" bpmnElement="Flow_0t80m1i">
         <di:waypoint x="110" y="177" />
@@ -103,6 +130,32 @@
       <bpmndi:BPMNEdge id="Flow_03owp8l_di" bpmnElement="Flow_03owp8l">
         <di:waypoint x="450" y="177" />
         <di:waypoint x="510" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_07p4s89_di" bpmnElement="Flow_07p4s89">
+        <di:waypoint x="-80" y="177" />
+        <di:waypoint x="10" y="177" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_17vui1d">
+    <bpmndi:BPMNPlane id="BPMNPlane_116wnmy" bpmnElement="Activity_0kxf2qc">
+      <bpmndi:BPMNShape id="Event_0eqswxf_di" bpmnElement="Event_0eqswxf">
+        <dc:Bounds x="272" y="222" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_010rvtp" bpmnElement="Activity_0lbriwb">
+        <dc:Bounds x="380" y="200" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1hbs784_di" bpmnElement="Event_1hbs784">
+        <dc:Bounds x="732" y="222" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_1jzrkzh_di" bpmnElement="Flow_1jzrkzh">
+        <di:waypoint x="308" y="240" />
+        <di:waypoint x="380" y="240" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_11gy235_di" bpmnElement="Flow_11gy235">
+        <di:waypoint x="480" y="240" />
+        <di:waypoint x="732" y="240" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
