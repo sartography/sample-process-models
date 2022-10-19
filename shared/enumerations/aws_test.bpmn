@@ -12,16 +12,14 @@
     <bpmn:sequenceFlow id="Flow_1igx0a1" sourceRef="Activity_18npi29" targetRef="Event_0fdez0y" />
     <bpmn:manualTask id="Activity_18npi29" name="Show Records">
       <bpmn:extensionElements>
-        <spiffworkflow:instructionsForEndUser>Viking List:
+        <spiffworkflow:instructionsForEndUser>Enumerations:
 -----------------
 
-|Name |DOB| Details|
-|-----|--------|------|
-{% for viking in vikings.Items %}
-|{{viking.Name}}|{{viking.BirthDate}}|{{viking.Details}} |
+| value | label |
+|-----|------|
+{% for enumeration in enumerations.Items %}
+| {{value}} | {{label}} |
 {% endfor %}
-
-
 </spiffworkflow:instructionsForEndUser>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_03owp8l</bpmn:incoming>
@@ -40,10 +38,10 @@
     <bpmn:sequenceFlow id="Flow_1sjh867" sourceRef="Activity_1cl0n43" targetRef="Activity_1slo4pb" />
     <bpmn:serviceTask id="Activity_1cl0n43" name="Add Record">
       <bpmn:extensionElements>
-        <spiffworkflow:serviceTaskOperator id="aws/AddDynamoItem">
+        <spiffworkflow:serviceTaskOperator id="aws/AddDynamoItem" resultVariable="enumerationsAdd">
           <spiffworkflow:parameters>
-            <spiffworkflow:parameter id="item_data" type="str" value="{ &#34;Name&#34;: Name, &#34;BirthDate&#34;: BirthDate, &#34;Details&#34;:Details}" />
-            <spiffworkflow:parameter id="table_name" type="str" value="&#39;Viking&#39;" />
+            <spiffworkflow:parameter id="item_data" type="str" value="{ &#34;value&#34;: value, &#34;label&#34;: label }" />
+            <spiffworkflow:parameter id="table_name" type="str" value="&#39;Enumeration&#39;" />
           </spiffworkflow:parameters>
         </spiffworkflow:serviceTaskOperator>
       </bpmn:extensionElements>
@@ -53,9 +51,9 @@
     <bpmn:sequenceFlow id="Flow_03owp8l" sourceRef="Activity_1slo4pb" targetRef="Activity_18npi29" />
     <bpmn:serviceTask id="Activity_1slo4pb" name="Get Records">
       <bpmn:extensionElements>
-        <spiffworkflow:serviceTaskOperator id="aws/ScanDynamoTable" resultVariable="vikings">
+        <spiffworkflow:serviceTaskOperator id="aws/ScanDynamoTable" resultVariable="enumerationsGet">
           <spiffworkflow:parameters>
-            <spiffworkflow:parameter id="table_name" type="str" value="&#39;Viking&#39;" />
+            <spiffworkflow:parameter id="table_name" type="str" value="&#39;Enumeration&#39;" />
           </spiffworkflow:parameters>
         </spiffworkflow:serviceTaskOperator>
       </bpmn:extensionElements>
