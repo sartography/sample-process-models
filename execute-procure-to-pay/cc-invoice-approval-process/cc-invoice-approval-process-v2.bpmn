@@ -439,6 +439,15 @@ Please fix.
       <bpmn:sequenceFlow id="Flow_0zkxpa1" sourceRef="Gateway_1vl3ipe" targetRef="Event_0n6sfiu" />
     </bpmn:subProcess>
     <bpmn:serviceTask id="Activity_1ftzr6x" name="4b. Notify CC via Waku&#10;&#34;invoice rejected&#34;">
+      <bpmn:extensionElements>
+        <spiffworkflow:serviceTaskOperator id="waku/SendMessage">
+          <spiffworkflow:parameters>
+            <spiffworkflow:parameter id="message" type="str" value="&#34;Hi, your invoice has been rejected. The reason specified for the rejection is: [comment]. Please get in touch with your Project Lead to discuss this further.&#34;" />
+            <spiffworkflow:parameter id="message_type" type="str" />
+            <spiffworkflow:parameter id="recipient" type="str" />
+          </spiffworkflow:parameters>
+        </spiffworkflow:serviceTaskOperator>
+      </bpmn:extensionElements>
       <bpmn:incoming>Flow_1v8dszb</bpmn:incoming>
       <bpmn:outgoing>Flow_1wturr2</bpmn:outgoing>
     </bpmn:serviceTask>
