@@ -109,9 +109,6 @@
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_1mfw1j8</bpmn:incoming>
       <bpmn:outgoing>Flow_02moyg7</bpmn:outgoing>
-      <bpmn:dataOutputAssociation id="DataOutputAssociation_0qwudri">
-        <bpmn:targetRef>DataObjectReference_1lpftk7</bpmn:targetRef>
-      </bpmn:dataOutputAssociation>
     </bpmn:userTask>
     <bpmn:exclusiveGateway id="Gateway_validation_successful_question_mark" name="Successful?" default="Flow_1x4rtop">
       <bpmn:incoming>Flow_1ck27i7</bpmn:incoming>
@@ -121,14 +118,6 @@
     <bpmn:subProcess id="SubProcess_Data_validation_rules" name="2b. Data validation rules">
       <bpmn:incoming>Flow_02moyg7</bpmn:incoming>
       <bpmn:outgoing>Flow_1ck27i7</bpmn:outgoing>
-      <bpmn:property id="Property_0bs76wq" name="__targetRef_placeholder" />
-      <bpmn:dataInputAssociation id="DataInputAssociation_1bf0klb">
-        <bpmn:sourceRef>DataObjectReference_1lpftk7</bpmn:sourceRef>
-        <bpmn:targetRef>Property_0bs76wq</bpmn:targetRef>
-      </bpmn:dataInputAssociation>
-      <bpmn:dataOutputAssociation id="DataOutputAssociation_085jyy1">
-        <bpmn:targetRef>DataObjectReference_0nw9e8r</bpmn:targetRef>
-      </bpmn:dataOutputAssociation>
       <bpmn:startEvent id="Event_1qkuk5g">
         <bpmn:outgoing>Flow_1avkxpe</bpmn:outgoing>
       </bpmn:startEvent>
@@ -232,11 +221,6 @@ Please fix.
     <bpmn:scriptTask id="Activity_104xpp8" name="Temp">
       <bpmn:incoming>Flow_12cqm3u</bpmn:incoming>
       <bpmn:outgoing>Flow_01p5kjj</bpmn:outgoing>
-      <bpmn:property id="Property_0atwnl6" name="__targetRef_placeholder" />
-      <bpmn:dataInputAssociation id="DataInputAssociation_1x5lmtc">
-        <bpmn:sourceRef>DataObjectReference_18ucout</bpmn:sourceRef>
-        <bpmn:targetRef>Property_0atwnl6</bpmn:targetRef>
-      </bpmn:dataInputAssociation>
       <bpmn:script>invoice_file_name = invoice.contributorName + "_" + str(invoice.invoiceId) + ".pdf"</bpmn:script>
     </bpmn:scriptTask>
     <bpmn:parallelGateway id="Gateway_05ov5p5">
@@ -278,9 +262,7 @@ Please fix.
     </bpmn:intermediateThrowEvent>
     <bpmn:sequenceFlow id="Flow_0hev3yn" sourceRef="Gateway_05ov5p5" targetRef="Activity_0o1vc0a" />
     <bpmn:sequenceFlow id="Flow_02o270g" sourceRef="Activity_0o1vc0a" targetRef="Gateway_1717c0p" />
-    <bpmn:dataObjectReference id="DataObjectReference_18ucout" name="invoice" dataObjectRef="invoice" />
-    <bpmn:dataObjectReference id="DataObjectReference_1lka1xq" name="invoice" dataObjectRef="invoice" />
-    <bpmn:dataObjectReference id="DataObjectReference_1lpftk7" name="invoice" dataObjectRef="invoice" />
+    <bpmn:dataObjectReference id="DataObjectReference_1lka1xq" name="invoice" />
     <bpmn:sequenceFlow id="Flow_01p5kjj" sourceRef="Activity_104xpp8" targetRef="Activity_0p88elm" />
     <bpmn:serviceTask id="Activity_0p88elm" name="2d. Upload Invoice PDF document" scriptFormat="python" script="invoice_name = invoice.contributorName + &#34;_&#34; + invoice.invoiceId">
       <bpmn:extensionElements>
@@ -486,7 +468,7 @@ Please fix.
     <bpmn:endEvent id="Event_16u0f7b" name="Invoice is ready for payment">
       <bpmn:incoming>Flow_0vd1pxu</bpmn:incoming>
     </bpmn:endEvent>
-    <bpmn:dataObjectReference id="DataObjectReference_15hvy5y" name="invoice" dataObjectRef="invoice" />
+    <bpmn:dataObjectReference id="DataObjectReference_15hvy5y" name="invoice" />
     <bpmn:userTask id="Activity_06b32ar" name="Approve invocie manually">
       <bpmn:incoming>Flow_1m8oeg0</bpmn:incoming>
       <bpmn:outgoing>Flow_0yvmfqu</bpmn:outgoing>
@@ -506,22 +488,11 @@ Please fix.
     <bpmn:scriptTask id="Activity_109lq0m" name="Set Invoice Status" scriptFormat="python">
       <bpmn:incoming>Flow_0gvctch</bpmn:incoming>
       <bpmn:outgoing>Flow_0xr28gt</bpmn:outgoing>
-      <bpmn:property id="Property_02q61fd" name="__targetRef_placeholder" />
-      <bpmn:dataInputAssociation id="DataInputAssociation_0lhn06o">
-        <bpmn:sourceRef>DataObjectReference_1nc9xeo</bpmn:sourceRef>
-        <bpmn:targetRef>Property_02q61fd</bpmn:targetRef>
-      </bpmn:dataInputAssociation>
-      <bpmn:dataOutputAssociation id="DataOutputAssociation_0ctuz60">
-        <bpmn:targetRef>DataObjectReference_1580p9o</bpmn:targetRef>
-      </bpmn:dataOutputAssociation>
       <bpmn:script># Set Invoice Status
 invoice["invoiceStatus"] = "Awaiting approval"
 temp_test = invoice["invoiceStatus"]
 # temp_message = "hello " + invoice.invoiceStatus</bpmn:script>
     </bpmn:scriptTask>
-    <bpmn:dataObjectReference id="DataObjectReference_1nc9xeo" name="invoice" dataObjectRef="invoice" />
-    <bpmn:dataObjectReference id="DataObjectReference_0nw9e8r" name="invoice" dataObjectRef="invoice" />
-    <bpmn:dataObjectReference id="DataObjectReference_1580p9o" name="invoice" dataObjectRef="invoice" />
   </bpmn:process>
   <bpmn:process id="Process_cc_invoice_approval_process_v2_c" isExecutable="false" />
   <bpmn:process id="Process_cc_invoice_approval_process_v2_d" isExecutable="false" />
@@ -604,22 +575,10 @@ temp_test = invoice["invoiceStatus"]
           <dc:Bounds x="1307" y="467" width="46" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="DataObjectReference_18ucout_di" bpmnElement="DataObjectReference_18ucout">
-        <dc:Bounds x="1412" y="685" width="36" height="50" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="1413" y="731" width="35" height="14" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="DataObjectReference_1lka1xq_di" bpmnElement="DataObjectReference_1lka1xq">
         <dc:Bounds x="1482" y="285" width="36" height="50" />
         <bpmndi:BPMNLabel>
           <dc:Bounds x="1483" y="331" width="35" height="14" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="DataObjectReference_1lpftk7_di" bpmnElement="DataObjectReference_1lpftk7">
-        <dc:Bounds x="962" y="645" width="36" height="50" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="962" y="691" width="35" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0zssftc_di" bpmnElement="Activity_0p88elm">
@@ -720,24 +679,6 @@ temp_test = invoice["invoiceStatus"]
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_08ykqm8_di" bpmnElement="Activity_109lq0m">
         <dc:Bounds x="1910" y="482" width="100" height="80" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="DataObjectReference_1nc9xeo_di" bpmnElement="DataObjectReference_1nc9xeo">
-        <dc:Bounds x="1872" y="645" width="36" height="50" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="1872" y="691" width="35" height="14" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="DataObjectReference_0nw9e8r_di" bpmnElement="DataObjectReference_0nw9e8r">
-        <dc:Bounds x="1142" y="645" width="36" height="50" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="1143" y="691" width="35" height="14" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="DataObjectReference_1580p9o_di" bpmnElement="DataObjectReference_1580p9o">
-        <dc:Bounds x="2002" y="645" width="36" height="50" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="2003" y="691" width="35" height="14" />
-        </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_1n1umf8_di" bpmnElement="Event_09q0ym0">
         <dc:Bounds x="2862" y="882" width="36" height="36" />
@@ -928,22 +869,6 @@ temp_test = invoice["invoiceStatus"]
       <bpmndi:BPMNShape id="TextAnnotation_1uaw1w7_di" bpmnElement="TextAnnotation_1uaw1w7">
         <dc:Bounds x="490" y="-170" width="580" height="30" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge id="DataOutputAssociation_0qwudri_di" bpmnElement="DataOutputAssociation_0qwudri">
-        <di:waypoint x="910" y="562" />
-        <di:waypoint x="963" y="645" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="DataInputAssociation_1bf0klb_di" bpmnElement="DataInputAssociation_1bf0klb">
-        <di:waypoint x="998" y="645" />
-        <di:waypoint x="1056" y="562" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="DataOutputAssociation_085jyy1_di" bpmnElement="DataOutputAssociation_085jyy1">
-        <di:waypoint x="1095" y="562" />
-        <di:waypoint x="1146" y="645" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="DataInputAssociation_1x5lmtc_di" bpmnElement="DataInputAssociation_1x5lmtc">
-        <di:waypoint x="1448" y="692" />
-        <di:waypoint x="1500" y="640" />
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="DataInputAssociation_1rm3xsh_di" bpmnElement="DataInputAssociation_1rm3xsh">
         <di:waypoint x="1518" y="330" />
         <di:waypoint x="1582" y="400" />
@@ -951,14 +876,6 @@ temp_test = invoice["invoiceStatus"]
       <bpmndi:BPMNEdge id="DataInputAssociation_1n4yvgg_di" bpmnElement="DataInputAssociation_1n4yvgg">
         <di:waypoint x="2772" y="328" />
         <di:waypoint x="2726" y="375" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="DataInputAssociation_0lhn06o_di" bpmnElement="DataInputAssociation_0lhn06o">
-        <di:waypoint x="1905" y="645" />
-        <di:waypoint x="1953" y="562" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="DataOutputAssociation_0ctuz60_di" bpmnElement="DataOutputAssociation_0ctuz60">
-        <di:waypoint x="1976" y="562" />
-        <di:waypoint x="2010" y="645" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Association_1eygti7_di" bpmnElement="Association_1eygti7">
         <di:waypoint x="756" y="-70" />
