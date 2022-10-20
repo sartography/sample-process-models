@@ -365,11 +365,13 @@ Please fix.
         <bpmn:extensionElements>
           <spiffworkflow:serviceTaskOperator id="aws/QueryDynamoTable" resultVariable="&#39;respFetchInvoiceDetails&#39;">
             <spiffworkflow:parameters>
-              <spiffworkflow:parameter id="key" type="str" value="invoice.contributorId" />
+              <spiffworkflow:parameter id="key" type="str" value="str(invoice.contributorId)" />
               <spiffworkflow:parameter id="table_name" type="str" value="&#34;Invoice&#34;" />
             </spiffworkflow:parameters>
           </spiffworkflow:serviceTaskOperator>
         </bpmn:extensionElements>
+        <bpmn:incoming>Flow_0zx2qx4</bpmn:incoming>
+        <bpmn:outgoing>Flow_0ekzvux</bpmn:outgoing>
       </bpmn:serviceTask>
       <bpmn:businessRuleTask id="Activity_1yhwhps" name="Compare the BambooHR.compensation/12 amount with invoice amount">
         <bpmn:extensionElements>
@@ -421,7 +423,7 @@ Please fix.
         <bpmn:script>annual_salary = 24000</bpmn:script>
       </bpmn:scriptTask>
       <bpmn:scriptTask id="Activity_0b87ocm" name="Get Invoice Amount" scriptFormat="python">
-        <bpmn:incoming>Flow_0zx2qx4</bpmn:incoming>
+        <bpmn:incoming>Flow_0ekzvux</bpmn:incoming>
         <bpmn:outgoing>Flow_1m8uxeg</bpmn:outgoing>
         <bpmn:script>invoice_amount = invoice.invoiceAmount</bpmn:script>
       </bpmn:scriptTask>
@@ -431,7 +433,8 @@ Please fix.
         <bpmn:incoming>Flow_04do8x7</bpmn:incoming>
       </bpmn:endEvent>
       <bpmn:sequenceFlow id="Flow_04do8x7" sourceRef="Activity_1yhwhps" targetRef="Event_0cmri19" />
-      <bpmn:sequenceFlow id="Flow_0zx2qx4" sourceRef="Activity_02go8ec" targetRef="Activity_0b87ocm" />
+      <bpmn:sequenceFlow id="Flow_0zx2qx4" sourceRef="Activity_02go8ec" targetRef="Activity_0ymkf8l" />
+      <bpmn:sequenceFlow id="Flow_0ekzvux" sourceRef="Activity_0ymkf8l" targetRef="Activity_0b87ocm" />
     </bpmn:subProcess>
     <bpmn:serviceTask id="Activity_1ftzr6x" name="4b. Notify CC via Waku&#10;&#34;invoice rejected&#34;">
       <bpmn:extensionElements>
@@ -1008,10 +1011,6 @@ del(userStatusKey)</bpmn:script>
         <dc:Bounds x="270" y="190" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1rv8bm9_di" bpmnElement="Activity_0ymkf8l">
-        <dc:Bounds x="440" y="190" width="100" height="80" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_08gpeul_di" bpmnElement="Activity_1yhwhps">
         <dc:Bounds x="610" y="190" width="100" height="80" />
       </bpmndi:BPMNShape>
@@ -1057,6 +1056,10 @@ del(userStatusKey)</bpmn:script>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_0cmri19_di" bpmnElement="Event_0cmri19">
         <dc:Bounds x="642" y="62" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1rv8bm9_di" bpmnElement="Activity_0ymkf8l">
+        <dc:Bounds x="370" y="350" width="100" height="80" />
+        <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_08ftr1r_di" bpmnElement="Flow_08ftr1r">
         <di:waypoint x="835" y="230" />
@@ -1116,6 +1119,10 @@ del(userStatusKey)</bpmn:script>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0zx2qx4_di" bpmnElement="Flow_0zx2qx4">
         <di:waypoint x="330" y="390" />
+        <di:waypoint x="370" y="390" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0ekzvux_di" bpmnElement="Flow_0ekzvux">
+        <di:waypoint x="470" y="390" />
         <di:waypoint x="520" y="390" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
