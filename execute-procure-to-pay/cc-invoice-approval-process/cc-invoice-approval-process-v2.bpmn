@@ -376,20 +376,18 @@ Please fix.
       <bpmn:startEvent id="Event_0w5o6hr">
         <bpmn:outgoing>Flow_1sc1v4y</bpmn:outgoing>
       </bpmn:startEvent>
-      <bpmn:serviceTask id="Activity_108oe6k" name="Fetch the compensation information and approval data">
-        <bpmn:outgoing>Flow_0qdtda7</bpmn:outgoing>
-      </bpmn:serviceTask>
-      <bpmn:sequenceFlow id="Flow_0qdtda7" sourceRef="Activity_108oe6k" targetRef="Activity_0ymkf8l" />
-      <bpmn:serviceTask id="Activity_0ymkf8l" name="Fetch invoice details">
+      <bpmn:serviceTask id="Activity_108oe6k" name="Fetch the compensation information and approval data" />
+      <bpmn:serviceTask id="Activity_0ymkf8l" name="Fetch Invoice Details">
         <bpmn:extensionElements>
-          <spiffworkflow:serviceTaskOperator id="aws/QueryDynamoTable">
+          <spiffworkflow:serviceTaskOperator id="aws/QueryDynamoTable" resultVariable="respFetchInvoiceDetails">
             <spiffworkflow:parameters>
               <spiffworkflow:parameter id="key" type="str" value="invoice.contributorId" />
               <spiffworkflow:parameter id="table_name" type="str" value="Invoice" />
             </spiffworkflow:parameters>
           </spiffworkflow:serviceTaskOperator>
         </bpmn:extensionElements>
-        <bpmn:incoming>Flow_0qdtda7</bpmn:incoming>
+        <bpmn:incoming>Flow_02u9thp</bpmn:incoming>
+        <bpmn:outgoing>Flow_0wo4cx5</bpmn:outgoing>
       </bpmn:serviceTask>
       <bpmn:businessRuleTask id="Activity_1yhwhps" name="Compare the BambooHR.compensation/12 amount with invoice amount">
         <bpmn:extensionElements>
@@ -440,9 +438,9 @@ Please fix.
         <bpmn:outgoing>Flow_02u9thp</bpmn:outgoing>
         <bpmn:script>annual_salary = 24000</bpmn:script>
       </bpmn:scriptTask>
-      <bpmn:sequenceFlow id="Flow_02u9thp" sourceRef="Activity_02go8ec" targetRef="Activity_0b87ocm" />
+      <bpmn:sequenceFlow id="Flow_02u9thp" sourceRef="Activity_02go8ec" targetRef="Activity_0ymkf8l" />
       <bpmn:scriptTask id="Activity_0b87ocm" name="Get Invoice Amount" scriptFormat="python">
-        <bpmn:incoming>Flow_02u9thp</bpmn:incoming>
+        <bpmn:incoming>Flow_0wo4cx5</bpmn:incoming>
         <bpmn:outgoing>Flow_1m8uxeg</bpmn:outgoing>
         <bpmn:script>invoice_amount = invoice.invoiceAmount
 match_test = (annual_salary/12)/invoice_amount</bpmn:script>
@@ -453,6 +451,7 @@ match_test = (annual_salary/12)/invoice_amount</bpmn:script>
         <bpmn:incoming>Flow_04do8x7</bpmn:incoming>
       </bpmn:endEvent>
       <bpmn:sequenceFlow id="Flow_04do8x7" sourceRef="Activity_1yhwhps" targetRef="Event_0cmri19" />
+      <bpmn:sequenceFlow id="Flow_0wo4cx5" sourceRef="Activity_0ymkf8l" targetRef="Activity_0b87ocm" />
     </bpmn:subProcess>
     <bpmn:serviceTask id="Activity_1ftzr6x" name="4b. Notify CC via Waku&#10;&#34;invoice rejected&#34;">
       <bpmn:extensionElements>
@@ -978,9 +977,6 @@ temp_test = invoice["invoiceStatus"]
         <dc:Bounds x="270" y="190" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1rv8bm9_di" bpmnElement="Activity_0ymkf8l">
-        <dc:Bounds x="440" y="190" width="100" height="80" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_08gpeul_di" bpmnElement="Activity_1yhwhps">
         <dc:Bounds x="610" y="190" width="100" height="80" />
       </bpmndi:BPMNShape>
@@ -1018,19 +1014,19 @@ temp_test = invoice["invoiceStatus"]
       <bpmndi:BPMNShape id="Event_04023ne_di" bpmnElement="Event_04023ne">
         <dc:Bounds x="1452" y="472" width="36" height="36" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0fzlb0w_di" bpmnElement="Activity_02go8ec">
-        <dc:Bounds x="270" y="350" width="100" height="80" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1f5dpwy_di" bpmnElement="Activity_0b87ocm">
-        <dc:Bounds x="420" y="350" width="100" height="80" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_0cmri19_di" bpmnElement="Event_0cmri19">
         <dc:Bounds x="642" y="62" width="36" height="36" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge id="Flow_0qdtda7_di" bpmnElement="Flow_0qdtda7">
-        <di:waypoint x="370" y="230" />
-        <di:waypoint x="440" y="230" />
-      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="Activity_1f5dpwy_di" bpmnElement="Activity_0b87ocm">
+        <dc:Bounds x="520" y="350" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0fzlb0w_di" bpmnElement="Activity_02go8ec">
+        <dc:Bounds x="230" y="350" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1rv8bm9_di" bpmnElement="Activity_0ymkf8l">
+        <dc:Bounds x="370" y="350" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_08ftr1r_di" bpmnElement="Flow_08ftr1r">
         <di:waypoint x="835" y="230" />
         <di:waypoint x="912" y="230" />
@@ -1074,22 +1070,26 @@ temp_test = invoice["invoiceStatus"]
         <di:waypoint x="1452" y="490" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_02u9thp_di" bpmnElement="Flow_02u9thp">
+        <di:waypoint x="330" y="390" />
         <di:waypoint x="370" y="390" />
-        <di:waypoint x="420" y="390" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1sc1v4y_di" bpmnElement="Flow_1sc1v4y">
         <di:waypoint x="190" y="248" />
         <di:waypoint x="190" y="390" />
-        <di:waypoint x="270" y="390" />
+        <di:waypoint x="230" y="390" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1m8uxeg_di" bpmnElement="Flow_1m8uxeg">
-        <di:waypoint x="520" y="390" />
+        <di:waypoint x="620" y="390" />
         <di:waypoint x="660" y="390" />
         <di:waypoint x="660" y="270" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_04do8x7_di" bpmnElement="Flow_04do8x7">
         <di:waypoint x="660" y="190" />
         <di:waypoint x="660" y="98" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0wo4cx5_di" bpmnElement="Flow_0wo4cx5">
+        <di:waypoint x="470" y="390" />
+        <di:waypoint x="520" y="390" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
