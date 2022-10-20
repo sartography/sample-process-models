@@ -24,19 +24,26 @@
     <bpmn:sequenceFlow id="Flow_0i96b90" name="Yes" sourceRef="Gateway_0xlrnzx" targetRef="Activity_1a9fimb" />
     <bpmn:exclusiveGateway id="Gateway_1ifycz3">
       <bpmn:incoming>Flow_020y0gy</bpmn:incoming>
-      <bpmn:incoming>Flow_0d47w7r</bpmn:incoming>
+      <bpmn:incoming>Flow_1xyb00m</bpmn:incoming>
       <bpmn:outgoing>Flow_1usol5m</bpmn:outgoing>
     </bpmn:exclusiveGateway>
     <bpmn:sequenceFlow id="Flow_1usol5m" sourceRef="Gateway_1ifycz3" targetRef="Event_0fb034d" />
     <bpmn:sequenceFlow id="Flow_020y0gy" sourceRef="Activity_1a9fimb" targetRef="Gateway_1ifycz3" />
-    <bpmn:sequenceFlow id="Flow_0d47w7r" name="No" sourceRef="Gateway_0xlrnzx" targetRef="Gateway_1ifycz3">
+    <bpmn:sequenceFlow id="Flow_0d47w7r" name="No" sourceRef="Gateway_0xlrnzx" targetRef="Activity_1gv90o4">
       <bpmn:conditionExpression>not(isCurrentUser)</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:scriptTask id="Activity_1a9fimb" name="Update Current User" scriptFormat="python">
       <bpmn:incoming>Flow_0i96b90</bpmn:incoming>
       <bpmn:outgoing>Flow_020y0gy</bpmn:outgoing>
       <bpmn:script># Update Current User
-current_user["full_name"] = userFullName</bpmn:script>
+current_user["full_name"] = userFullName
+test_check = "inside"</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:sequenceFlow id="Flow_1xyb00m" sourceRef="Activity_1gv90o4" targetRef="Gateway_1ifycz3" />
+    <bpmn:scriptTask id="Activity_1gv90o4" name="Temp">
+      <bpmn:incoming>Flow_0d47w7r</bpmn:incoming>
+      <bpmn:outgoing>Flow_1xyb00m</bpmn:outgoing>
+      <bpmn:script>test_check = "outside"</bpmn:script>
     </bpmn:scriptTask>
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
@@ -63,6 +70,9 @@ current_user["full_name"] = userFullName</bpmn:script>
         <dc:Bounds x="570" y="137" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1082hn5_di" bpmnElement="Activity_1gv90o4">
+        <dc:Bounds x="500" y="10" width="100" height="80" />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_1q8xtg6_di" bpmnElement="Flow_1q8xtg6">
         <di:waypoint x="215" y="177" />
         <di:waypoint x="270" y="177" />
@@ -88,12 +98,16 @@ current_user["full_name"] = userFullName</bpmn:script>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0d47w7r_di" bpmnElement="Flow_0d47w7r">
         <di:waypoint x="460" y="152" />
-        <di:waypoint x="460" y="90" />
-        <di:waypoint x="790" y="90" />
-        <di:waypoint x="790" y="152" />
+        <di:waypoint x="460" y="50" />
+        <di:waypoint x="500" y="50" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="618" y="72" width="15" height="14" />
+          <dc:Bounds x="568" y="32" width="15" height="14" />
         </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1xyb00m_di" bpmnElement="Flow_1xyb00m">
+        <di:waypoint x="600" y="50" />
+        <di:waypoint x="790" y="50" />
+        <di:waypoint x="790" y="152" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
