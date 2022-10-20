@@ -93,7 +93,7 @@
     <bpmn:sequenceFlow id="Flow_1v8dszb" sourceRef="Event_09q0ym0" targetRef="Activity_1ftzr6x" />
     <bpmn:sequenceFlow id="Flow_0yvmfqu" sourceRef="Activity_06b32ar" targetRef="Gateway_1l4tz4i" />
     <bpmn:sequenceFlow id="Flow_1mfw1j8" sourceRef="Activity_0yrv2bc" targetRef="Submit_the_invoice" />
-    <bpmn:sequenceFlow id="Flow_12cqm3u" sourceRef="Gateway_05ov5p5" targetRef="Activity_0p88elm" />
+    <bpmn:sequenceFlow id="Flow_12cqm3u" sourceRef="Gateway_05ov5p5" targetRef="Activity_104xpp8" />
     <bpmn:sequenceFlow id="Flow_0wuedtr" sourceRef="Event_Invoice_is_accepted" targetRef="Gateway_05ov5p5" />
     <bpmn:sequenceFlow id="Flow_0hev3yn" sourceRef="Gateway_05ov5p5" targetRef="Activity_0o1vc0a" />
     <bpmn:sequenceFlow id="Flow_02o270g" sourceRef="Activity_0o1vc0a" targetRef="Gateway_1717c0p" />
@@ -260,7 +260,7 @@ Please fix.
     </bpmn:intermediateThrowEvent>
     <bpmn:serviceTask id="Activity_0p88elm" name="2d. Upload Invoice PDF document" scriptFormat="python" script="invoice_name = invoice.contributorName + &#34;_&#34; + invoice.invoiceId">
       <bpmn:extensionElements>
-        <spiffworkflow:preScript>invoice_file_name = invoice.contributorName + "_" + str(invoice.invoiceId) + ".pdf"</spiffworkflow:preScript>
+        <spiffworkflow:preScript />
         <spiffworkflow:postScript>del(filesAccept)</spiffworkflow:postScript>
         <spiffworkflow:serviceTaskOperator id="aws/UploadFileData">
           <spiffworkflow:parameters>
@@ -270,7 +270,7 @@ Please fix.
           </spiffworkflow:parameters>
         </spiffworkflow:serviceTaskOperator>
       </bpmn:extensionElements>
-      <bpmn:incoming>Flow_12cqm3u</bpmn:incoming>
+      <bpmn:incoming>Flow_0p6vvu0</bpmn:incoming>
       <bpmn:outgoing>Flow_0o94g4u</bpmn:outgoing>
     </bpmn:serviceTask>
     <bpmn:exclusiveGateway id="Gateway_1lbghql" name="Match?" default="Flow_1gohkts">
@@ -603,8 +603,11 @@ del(userStatusKey)</bpmn:script>
     <bpmn:sequenceFlow id="Flow_0h96w9j" name="Yes" sourceRef="Gateway_1ytq6m7" targetRef="Activity_0fq1nb4" />
     <bpmn:sequenceFlow id="Flow_053ca95" sourceRef="Activity_0fq1nb4" targetRef="Activity_102t7tk" />
     <bpmn:scriptTask id="Activity_104xpp8" name="Temp">
+      <bpmn:incoming>Flow_12cqm3u</bpmn:incoming>
+      <bpmn:outgoing>Flow_0p6vvu0</bpmn:outgoing>
       <bpmn:script>invoice_file_name = invoice.contributorName + "_" + str(invoice.invoiceId) + ".pdf"</bpmn:script>
     </bpmn:scriptTask>
+    <bpmn:sequenceFlow id="Flow_0p6vvu0" sourceRef="Activity_104xpp8" targetRef="Activity_0p88elm" />
   </bpmn:process>
   <bpmn:process id="Process_cc_invoice_approval_process_v2_c" isExecutable="false" />
   <bpmn:process id="Process_cc_invoice_approval_process_v2_d" isExecutable="false" />
@@ -657,7 +660,7 @@ del(userStatusKey)</bpmn:script>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0bgyf4i_di" bpmnElement="Activity_104xpp8">
-        <dc:Bounds x="1620" y="620" width="100" height="80" />
+        <dc:Bounds x="1620" y="560" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0z13hw3_di" bpmnElement="SubProcess_Data_validation_rules">
         <dc:Bounds x="1170" y="482" width="100" height="80" />
@@ -896,7 +899,7 @@ del(userStatusKey)</bpmn:script>
       <bpmndi:BPMNEdge id="Flow_12cqm3u_di" bpmnElement="Flow_12cqm3u">
         <di:waypoint x="1580" y="547" />
         <di:waypoint x="1580" y="600" />
-        <di:waypoint x="1830" y="600" />
+        <di:waypoint x="1620" y="600" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0wuedtr_di" bpmnElement="Flow_0wuedtr">
         <di:waypoint x="1498" y="522" />
@@ -981,6 +984,10 @@ del(userStatusKey)</bpmn:script>
       <bpmndi:BPMNEdge id="Flow_053ca95_di" bpmnElement="Flow_053ca95">
         <di:waypoint x="3870" y="600" />
         <di:waypoint x="3920" y="600" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0p6vvu0_di" bpmnElement="Flow_0p6vvu0">
+        <di:waypoint x="1720" y="600" />
+        <di:waypoint x="1830" y="600" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="Participant_0a8arrz_di" bpmnElement="Participant_0a8arrz" isHorizontal="true">
         <dc:Bounds x="1480" y="1180" width="320" height="80" />
