@@ -82,7 +82,7 @@
     </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="Flow_1wturr2" sourceRef="Activity_1ftzr6x" targetRef="Event_0f3d2bp" />
     <bpmn:sequenceFlow id="Flow_0bfs2xe" name="No" sourceRef="Gateway_1l4tz4i" targetRef="Activity_0fsoa08">
-      <bpmn:conditionExpression>1=2</bpmn:conditionExpression>
+      <bpmn:conditionExpression>not(isInvoiceApproved)</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="Flow_0c0c9mw" sourceRef="Activity_0fsoa08" targetRef="Event_1b58a3z" />
     <bpmn:sequenceFlow id="Flow_0vd1pxu" sourceRef="Activity_0cdgqi0" targetRef="Event_16u0f7b" />
@@ -577,7 +577,7 @@ del(userStatusKey)</bpmn:script>
           <spiffworkflow:parameters>
             <spiffworkflow:parameter id="message" type="str" value="&#34;Hi, your invoice has been approved. It will be paid in the next pay run.&#34;" />
             <spiffworkflow:parameter id="message_type" type="str" value="&#34;wakuext_sendOneToOneMessage&#34;" />
-            <spiffworkflow:parameter id="recipient" type="str" value="&#34;0x04cf9f835bfb5f5b94b4c6f36378fd14bde09960a4d021928981125d314fa423fa79cde37003b9c6135b52dc20734590dcac5a68b73af74d58060628b2c531faf1&#34;" />
+            <spiffworkflow:parameter id="recipient" type="str" value="current_user_extras[&#34;status_key&#34;]" />
           </spiffworkflow:parameters>
         </spiffworkflow:serviceTaskOperator>
       </bpmn:extensionElements>
