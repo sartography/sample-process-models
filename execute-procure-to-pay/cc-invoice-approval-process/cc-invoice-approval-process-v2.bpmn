@@ -73,14 +73,14 @@
       <bpmn:conditionExpression>not(isInvoiceSubmitPass)</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="Flow_1c5u447" sourceRef="Activity_0gkejaj" targetRef="Gateway_1lbghql" />
-    <bpmn:sequenceFlow id="Flow_1gohkts" name="Yes" sourceRef="Gateway_1lbghql" targetRef="Event_0m3ri6v">
-      <bpmn:conditionExpression>isNeedsApproval</bpmn:conditionExpression>
-    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_1gohkts" name="Yes" sourceRef="Gateway_1lbghql" targetRef="Event_0m3ri6v" />
     <bpmn:sequenceFlow id="Flow_18xvx8w" name="yes" sourceRef="Gateway_1l4tz4i" targetRef="Activity_0fq1nb4" />
     <bpmn:sequenceFlow id="Flow_1m8oeg0" sourceRef="Activity_1ucvkk4" targetRef="Activity_06b32ar" />
     <bpmn:sequenceFlow id="Flow_11b24we" sourceRef="Gateway_16gxu6s" targetRef="Activity_0yrv2bc" />
     <bpmn:sequenceFlow id="Flow_1ex5hfx" sourceRef="Event_15y55nw" targetRef="Activity_0gkejaj" />
-    <bpmn:sequenceFlow id="Flow_16bw9hx" name="No" sourceRef="Gateway_1lbghql" targetRef="Event_0x83ruk" />
+    <bpmn:sequenceFlow id="Flow_16bw9hx" name="No" sourceRef="Gateway_1lbghql" targetRef="Event_0x83ruk">
+      <bpmn:conditionExpression>isMatch</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="Flow_1wturr2" sourceRef="Activity_1ftzr6x" targetRef="Event_0f3d2bp" />
     <bpmn:sequenceFlow id="Flow_0bfs2xe" name="no" sourceRef="Gateway_1l4tz4i" targetRef="Activity_0fsoa08" />
     <bpmn:sequenceFlow id="Flow_0c0c9mw" sourceRef="Activity_0fsoa08" targetRef="Event_1b58a3z" />
@@ -281,7 +281,7 @@ Please fix.
       <bpmn:incoming>Flow_01p5kjj</bpmn:incoming>
       <bpmn:outgoing>Flow_0o94g4u</bpmn:outgoing>
     </bpmn:serviceTask>
-    <bpmn:exclusiveGateway id="Gateway_1lbghql" name="match?" default="Flow_16bw9hx">
+    <bpmn:exclusiveGateway id="Gateway_1lbghql" name="Match?" default="Flow_1gohkts">
       <bpmn:incoming>Flow_1c5u447</bpmn:incoming>
       <bpmn:outgoing>Flow_1gohkts</bpmn:outgoing>
       <bpmn:outgoing>Flow_16bw9hx</bpmn:outgoing>
