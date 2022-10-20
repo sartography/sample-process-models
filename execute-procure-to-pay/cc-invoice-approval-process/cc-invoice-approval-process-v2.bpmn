@@ -46,8 +46,6 @@
         <bpmn:flowNodeRef>Activity_102t7tk</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_0fq1nb4</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Gateway_1l4tz4i</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Activity_0fsoa08</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Event_1b58a3z</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_1r3yh2k</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_15y55nw</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_109lq0m</bpmn:flowNodeRef>
@@ -57,6 +55,8 @@
         <bpmn:flowNodeRef>Activity_1ucvkk4</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_1usbnt0</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_1staolh</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_0fsoa08</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Event_1b58a3z</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_1so23vf" name="Finance Team">
         <bpmn:flowNodeRef>Activity_0cdgqi0</bpmn:flowNodeRef>
@@ -82,7 +82,9 @@
       <bpmn:conditionExpression>not(isMatch)</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="Flow_1wturr2" sourceRef="Activity_1ftzr6x" targetRef="Event_0f3d2bp" />
-    <bpmn:sequenceFlow id="Flow_0bfs2xe" name="no" sourceRef="Gateway_1l4tz4i" targetRef="Activity_0fsoa08" />
+    <bpmn:sequenceFlow id="Flow_0bfs2xe" name="No" sourceRef="Gateway_1l4tz4i" targetRef="Activity_0fsoa08">
+      <bpmn:conditionExpression>1=2</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="Flow_0c0c9mw" sourceRef="Activity_0fsoa08" targetRef="Event_1b58a3z" />
     <bpmn:sequenceFlow id="Flow_0vd1pxu" sourceRef="Activity_0cdgqi0" targetRef="Event_16u0f7b" />
     <bpmn:sequenceFlow id="Flow_01cnc1i" sourceRef="Activity_0fq1nb4" targetRef="Activity_102t7tk" />
@@ -348,27 +350,11 @@ Please fix.
       <bpmn:incoming>Flow_04ccp12</bpmn:incoming>
       <bpmn:outgoing>Flow_01cnc1i</bpmn:outgoing>
     </bpmn:serviceTask>
-    <bpmn:exclusiveGateway id="Gateway_1l4tz4i" name="Approved?">
+    <bpmn:exclusiveGateway id="Gateway_1l4tz4i" name="Approved?" default="Flow_18xvx8w">
       <bpmn:incoming>Flow_0yvmfqu</bpmn:incoming>
       <bpmn:outgoing>Flow_18xvx8w</bpmn:outgoing>
       <bpmn:outgoing>Flow_0bfs2xe</bpmn:outgoing>
     </bpmn:exclusiveGateway>
-    <bpmn:serviceTask id="Activity_0fsoa08" name="4c. Notify CC via Waku&#10;&#34;invoice rejected&#34;">
-      <bpmn:extensionElements>
-        <spiffworkflow:serviceTaskOperator id="waku/SendMessage" resultVariable="waku_response">
-          <spiffworkflow:parameters>
-            <spiffworkflow:parameter id="message" type="str" value="&#34;Hi, your invoice has been approved. It will be paid in the next pay run.&#34;" />
-            <spiffworkflow:parameter id="message_type" type="str" value="&#34;wakuext_sendOneToOneMessage&#34;" />
-            <spiffworkflow:parameter id="recipient" type="str" value="&#34;0x04cf9f835bfb5f5b94b4c6f36378fd14bde09960a4d021928981125d314fa423fa79cde37003b9c6135b52dc20734590dcac5a68b73af74d58060628b2c531faf1&#34;" />
-          </spiffworkflow:parameters>
-        </spiffworkflow:serviceTaskOperator>
-      </bpmn:extensionElements>
-      <bpmn:incoming>Flow_0bfs2xe</bpmn:incoming>
-      <bpmn:outgoing>Flow_0c0c9mw</bpmn:outgoing>
-    </bpmn:serviceTask>
-    <bpmn:endEvent id="Event_1b58a3z" name="Invoice is rejected by Approver">
-      <bpmn:incoming>Flow_0c0c9mw</bpmn:incoming>
-    </bpmn:endEvent>
     <bpmn:subProcess id="Activity_0gkejaj" name="4. Compare Invoice data vs Enterprise systems data">
       <bpmn:incoming>Flow_1ex5hfx</bpmn:incoming>
       <bpmn:outgoing>Flow_1c5u447</bpmn:outgoing>
@@ -584,6 +570,22 @@ del(userStatusKey)</bpmn:script>
       <bpmn:incoming>Flow_0b2yf0l</bpmn:incoming>
     </bpmn:endEvent>
     <bpmn:sequenceFlow id="Flow_0b2yf0l" sourceRef="Activity_1ucvkk4" targetRef="Event_1staolh" />
+    <bpmn:serviceTask id="Activity_0fsoa08" name="4c. Notify CC via Waku&#10;&#34;invoice rejected&#34;">
+      <bpmn:extensionElements>
+        <spiffworkflow:serviceTaskOperator id="waku/SendMessage" resultVariable="waku_response">
+          <spiffworkflow:parameters>
+            <spiffworkflow:parameter id="message" type="str" value="&#34;Hi, your invoice has been approved. It will be paid in the next pay run.&#34;" />
+            <spiffworkflow:parameter id="message_type" type="str" value="&#34;wakuext_sendOneToOneMessage&#34;" />
+            <spiffworkflow:parameter id="recipient" type="str" value="&#34;0x04cf9f835bfb5f5b94b4c6f36378fd14bde09960a4d021928981125d314fa423fa79cde37003b9c6135b52dc20734590dcac5a68b73af74d58060628b2c531faf1&#34;" />
+          </spiffworkflow:parameters>
+        </spiffworkflow:serviceTaskOperator>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0bfs2xe</bpmn:incoming>
+      <bpmn:outgoing>Flow_0c0c9mw</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:endEvent id="Event_1b58a3z" name="Invoice is rejected by Approver">
+      <bpmn:incoming>Flow_0c0c9mw</bpmn:incoming>
+    </bpmn:endEvent>
   </bpmn:process>
   <bpmn:process id="Process_cc_invoice_approval_process_v2_c" isExecutable="false" />
   <bpmn:process id="Process_cc_invoice_approval_process_v2_d" isExecutable="false" />
@@ -633,6 +635,15 @@ del(userStatusKey)</bpmn:script>
         <dc:Bounds x="1345" y="497" width="50" height="50" />
         <bpmndi:BPMNLabel>
           <dc:Bounds x="1340" y="557" width="60" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0kcw8l6_di" bpmnElement="Activity_0fsoa08">
+        <dc:Bounds x="3410" y="260" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1b58a3z_di" bpmnElement="Event_1b58a3z">
+        <dc:Bounds x="3552" y="282" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="3546" y="325" width="54" height="40" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0z13hw3_di" bpmnElement="SubProcess_Data_validation_rules">
@@ -706,15 +717,6 @@ del(userStatusKey)</bpmn:script>
         <dc:Bounds x="3435" y="387" width="50" height="50" />
         <bpmndi:BPMNLabel>
           <dc:Bounds x="3495" y="405" width="54" height="14" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0kcw8l6_di" bpmnElement="Activity_0fsoa08">
-        <dc:Bounds x="3410" y="270" width="100" height="80" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_1b58a3z_di" bpmnElement="Event_1b58a3z">
-        <dc:Bounds x="3552" y="292" width="36" height="36" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="3546" y="335" width="54" height="40" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1rn2mgi_di" bpmnElement="Activity_0gkejaj">
@@ -824,14 +826,14 @@ del(userStatusKey)</bpmn:script>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0bfs2xe_di" bpmnElement="Flow_0bfs2xe">
         <di:waypoint x="3460" y="387" />
-        <di:waypoint x="3460" y="350" />
+        <di:waypoint x="3460" y="340" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="3469" y="359" width="13" height="14" />
+          <dc:Bounds x="3468" y="353" width="15" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0c0c9mw_di" bpmnElement="Flow_0c0c9mw">
-        <di:waypoint x="3510" y="310" />
-        <di:waypoint x="3552" y="310" />
+        <di:waypoint x="3510" y="300" />
+        <di:waypoint x="3552" y="300" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0vd1pxu_di" bpmnElement="Flow_0vd1pxu">
         <di:waypoint x="3790" y="1070" />
@@ -982,7 +984,7 @@ del(userStatusKey)</bpmn:script>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1getkzr_di" bpmnElement="Flow_1getkzr">
-        <di:waypoint x="3460" y="270" />
+        <di:waypoint x="3460" y="260" />
         <di:waypoint x="3460" y="150" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0ozze4c_di" bpmnElement="Flow_0ozze4c">
