@@ -288,7 +288,7 @@ Please fix.
     </bpmn:intermediateThrowEvent>
     <bpmn:serviceTask id="Activity_0cfvsk7" name="3. Notify CC via Waku&#10;&#34;invoice uploaded&#34;">
       <bpmn:extensionElements>
-        <spiffworkflow:serviceTaskOperator id="waku/SendMessage" resultVariable="waku_response">
+        <spiffworkflow:serviceTaskOperator id="waku/SendMessage" resultVariable="waku_response.notifu_cc_invoice_uploaded">
           <spiffworkflow:parameters>
             <spiffworkflow:parameter id="message" type="str" value="&#34;Thanks for submitting your invoice &#34; + current_user_extras[&#34;first_name&#34;] + &#34;.  We will keep you updated on the next steps.&#34; + invoice.invoiceStatus" />
             <spiffworkflow:parameter id="message_type" type="str" value="&#34;wakuext_sendOneToOneMessage&#34;" />
@@ -298,6 +298,9 @@ Please fix.
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_0xr28gt</bpmn:incoming>
       <bpmn:outgoing>Flow_1n239ad</bpmn:outgoing>
+      <bpmn:dataOutputAssociation id="DataOutputAssociation_13lfo97">
+        <bpmn:targetRef>DataObjectReference_0eypr1k</bpmn:targetRef>
+      </bpmn:dataOutputAssociation>
     </bpmn:serviceTask>
     <bpmn:exclusiveGateway id="Gateway_1l4tz4i" name="Approved?" default="Flow_18xvx8w">
       <bpmn:incoming>Flow_0yvmfqu</bpmn:incoming>
@@ -608,6 +611,8 @@ del(userStatusKey)</bpmn:script>
       <bpmn:script>invoice_file_name = invoice.contributorName + "_" + str(invoice.invoiceId) + ".pdf"</bpmn:script>
     </bpmn:scriptTask>
     <bpmn:sequenceFlow id="Flow_0p6vvu0" sourceRef="Activity_104xpp8" targetRef="Activity_0p88elm" />
+    <bpmn:dataObject id="waku_response" />
+    <bpmn:dataObjectReference id="DataObjectReference_0eypr1k" name="waku_response" dataObjectRef="waku_response" />
     <bpmn:dataObject id="waku_response" />
   </bpmn:process>
   <bpmn:process id="Process_cc_invoice_approval_process_v2_c" isExecutable="false" />
@@ -990,6 +995,12 @@ del(userStatusKey)</bpmn:script>
         <di:waypoint x="1720" y="600" />
         <di:waypoint x="1830" y="600" />
       </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="DataObjectReference_0eypr1k_di" bpmnElement="DataObjectReference_0eypr1k">
+        <dc:Bounds x="2332" y="365" width="36" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2311" y="418" width="78" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Participant_0a8arrz_di" bpmnElement="Participant_0a8arrz" isHorizontal="true">
         <dc:Bounds x="1480" y="1180" width="320" height="80" />
       </bpmndi:BPMNShape>
@@ -1040,6 +1051,10 @@ del(userStatusKey)</bpmn:script>
       <bpmndi:BPMNEdge id="Flow_1dgkwzr_di" bpmnElement="Flow_1dgkwzr">
         <di:waypoint x="3970" y="560" />
         <di:waypoint x="3970" y="150" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DataOutputAssociation_13lfo97_di" bpmnElement="DataOutputAssociation_13lfo97">
+        <di:waypoint x="2295" y="482" />
+        <di:waypoint x="2336" y="415" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
