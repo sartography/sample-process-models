@@ -69,13 +69,14 @@
       <bpmn:outgoing>Flow_1p5fxob</bpmn:outgoing>
     </bpmn:callActivity>
     <bpmn:sequenceFlow id="Flow_148h40r" sourceRef="Activity_1ig6ogz" targetRef="Activity_0bvdyir" />
-    <bpmn:scriptTask id="Activity_1ig6ogz" name="Build Enum List">
+    <bpmn:scriptTask id="Activity_1ig6ogz" name="Build Enum List" scriptFormat="python">
       <bpmn:incoming>Flow_1p5fxob</bpmn:incoming>
       <bpmn:outgoing>Flow_148h40r</bpmn:outgoing>
       <bpmn:script># Build Enum List
 enumerations_list = []
 enumerations_list.append({'label': 'Add New', 'value': 'add'})
-enumerations_list.append(enumerations_items_list)</bpmn:script>
+for n in range(0, enumerations_items_list_cnt):
+    enumerations_list.append(enumerations_items_list[n])</bpmn:script>
     </bpmn:scriptTask>
     <bpmn:sequenceFlow id="Flow_0u5uu9p" sourceRef="Activity_0bvdyir" targetRef="enumeration_user_task" />
     <bpmn:userTask id="Activity_0bvdyir" name="Which Enumeration">
