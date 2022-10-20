@@ -528,7 +528,7 @@ isCurrentUser = True</spiffworkflow:preScript>
         <bpmn:outgoing>Flow_0idsdf0</bpmn:outgoing>
       </bpmn:startEvent>
       <bpmn:endEvent id="Event_1nkaxn4">
-        <bpmn:incoming>Flow_0jxxlq6</bpmn:incoming>
+        <bpmn:incoming>Flow_1cynsak</bpmn:incoming>
       </bpmn:endEvent>
       <bpmn:sequenceFlow id="Flow_0idsdf0" sourceRef="Event_00px1yx" targetRef="Activity_00b66gy" />
       <bpmn:sequenceFlow id="Flow_1rar1oi" sourceRef="Activity_00b66gy" targetRef="Activity_0lmpdui" />
@@ -539,7 +539,7 @@ isCurrentUser = True</spiffworkflow:preScript>
         <bpmn:incoming>Flow_0idsdf0</bpmn:incoming>
         <bpmn:outgoing>Flow_1rar1oi</bpmn:outgoing>
       </bpmn:callActivity>
-      <bpmn:sequenceFlow id="Flow_0jxxlq6" sourceRef="Activity_0lmpdui" targetRef="Event_1nkaxn4" />
+      <bpmn:sequenceFlow id="Flow_0jxxlq6" sourceRef="Activity_0lmpdui" targetRef="Activity_1ve0iqu" />
       <bpmn:scriptTask id="Activity_0lmpdui" name="Set Team Lead Info" scriptFormat="python">
         <bpmn:incoming>Flow_1rar1oi</bpmn:incoming>
         <bpmn:outgoing>Flow_0jxxlq6</bpmn:outgoing>
@@ -557,6 +557,20 @@ del(userEmail)
 del(userTeamLead)
 del(userStatusKey)</bpmn:script>
       </bpmn:scriptTask>
+      <bpmn:sequenceFlow id="Flow_1cynsak" sourceRef="Activity_1ve0iqu" targetRef="Event_1nkaxn4" />
+      <bpmn:serviceTask id="Activity_1ve0iqu" name="Notify Team Lead">
+        <bpmn:extensionElements>
+          <spiffworkflow:serviceTaskOperator id="waku/SendMessage">
+            <spiffworkflow:parameters>
+              <spiffworkflow:parameter id="message" type="str" />
+              <spiffworkflow:parameter id="message_type" type="str" />
+              <spiffworkflow:parameter id="recipient" type="str" />
+            </spiffworkflow:parameters>
+          </spiffworkflow:serviceTaskOperator>
+        </bpmn:extensionElements>
+        <bpmn:incoming>Flow_0jxxlq6</bpmn:incoming>
+        <bpmn:outgoing>Flow_1cynsak</bpmn:outgoing>
+      </bpmn:serviceTask>
     </bpmn:subProcess>
     <bpmn:sequenceFlow id="Flow_1n239ad" sourceRef="Activity_0cfvsk7" targetRef="Event_15y55nw" />
     <bpmn:sequenceFlow id="Flow_04ccp12" sourceRef="Event_0m3ri6v" targetRef="Activity_0fq1nb4" />
@@ -1120,6 +1134,9 @@ del(userStatusKey)</bpmn:script>
       <bpmndi:BPMNShape id="Event_00px1yx_di" bpmnElement="Event_00px1yx">
         <dc:Bounds x="142" y="402" width="36" height="36" />
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1nkaxn4_di" bpmnElement="Event_1nkaxn4">
+        <dc:Bounds x="762" y="402" width="36" height="36" />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1gex892_di" bpmnElement="Activity_00b66gy">
         <dc:Bounds x="250" y="380" width="100" height="80" />
         <bpmndi:BPMNLabel />
@@ -1127,8 +1144,9 @@ del(userStatusKey)</bpmn:script>
       <bpmndi:BPMNShape id="Activity_0z9h5bp_di" bpmnElement="Activity_0lmpdui">
         <dc:Bounds x="440" y="380" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_1nkaxn4_di" bpmnElement="Event_1nkaxn4">
-        <dc:Bounds x="762" y="402" width="36" height="36" />
+      <bpmndi:BPMNShape id="Activity_0s32al0_di" bpmnElement="Activity_1ve0iqu">
+        <dc:Bounds x="610" y="380" width="100" height="80" />
+        <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_1am9jcz_di" bpmnElement="Flow_1am9jcz">
         <di:waypoint x="295" y="240" />
@@ -1158,6 +1176,10 @@ del(userStatusKey)</bpmn:script>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0jxxlq6_di" bpmnElement="Flow_0jxxlq6">
         <di:waypoint x="540" y="420" />
+        <di:waypoint x="610" y="420" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1cynsak_di" bpmnElement="Flow_1cynsak">
+        <di:waypoint x="710" y="420" />
         <di:waypoint x="762" y="420" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
