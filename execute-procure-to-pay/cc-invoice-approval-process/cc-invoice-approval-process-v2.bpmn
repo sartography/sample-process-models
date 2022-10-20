@@ -475,19 +475,28 @@ isCurrentUser = True</spiffworkflow:preScript>
         <bpmn:incoming>Flow_1cynsak</bpmn:incoming>
       </bpmn:endEvent>
       <bpmn:sequenceFlow id="Flow_0idsdf0" sourceRef="Event_00px1yx" targetRef="Activity_00b66gy" />
-      <bpmn:sequenceFlow id="Flow_1rar1oi" sourceRef="Activity_00b66gy" targetRef="Activity_0lmpdui" />
       <bpmn:callActivity id="Activity_00b66gy" name="Call Shared: User Info" calledElement="Shared_User_Info">
         <bpmn:extensionElements>
           <spiffworkflow:preScript>find_user = current_user_extras["team_lead_username"]
 isCurrentUser = False</spiffworkflow:preScript>
+          <spiffworkflow:postScript># Set Team Lead Info
+team_lead_info = {}
+team_lead_info["full_name"] = userFullName
+team_lead_info["first_name"] = userFirstName
+team_lead_info["email"] = userEmail
+team_lead_info["team_lead_username"] = userTeamLeadUsername
+team_lead_info["status_key"] = userStatusKey
+
+del(userFullName)
+del(userFirstName)
+del(userEmail)
+# del(userTeamLeadUsername)
+del(userStatusKey)</spiffworkflow:postScript>
         </bpmn:extensionElements>
         <bpmn:incoming>Flow_0idsdf0</bpmn:incoming>
-        <bpmn:outgoing>Flow_1rar1oi</bpmn:outgoing>
+        <bpmn:outgoing>Flow_0kt63rn</bpmn:outgoing>
       </bpmn:callActivity>
-      <bpmn:sequenceFlow id="Flow_0jxxlq6" sourceRef="Activity_0lmpdui" targetRef="Activity_1ve0iqu" />
       <bpmn:scriptTask id="Activity_0lmpdui" name="Set Team Lead Info" scriptFormat="python">
-        <bpmn:incoming>Flow_1rar1oi</bpmn:incoming>
-        <bpmn:outgoing>Flow_0jxxlq6</bpmn:outgoing>
         <bpmn:script># Set Team Lead Info
 team_lead_info = {}
 team_lead_info["full_name"] = userFullName
@@ -513,9 +522,10 @@ del(userStatusKey)</bpmn:script>
             </spiffworkflow:parameters>
           </spiffworkflow:serviceTaskOperator>
         </bpmn:extensionElements>
-        <bpmn:incoming>Flow_0jxxlq6</bpmn:incoming>
+        <bpmn:incoming>Flow_0kt63rn</bpmn:incoming>
         <bpmn:outgoing>Flow_1cynsak</bpmn:outgoing>
       </bpmn:serviceTask>
+      <bpmn:sequenceFlow id="Flow_0kt63rn" sourceRef="Activity_00b66gy" targetRef="Activity_1ve0iqu" />
     </bpmn:subProcess>
     <bpmn:sequenceFlow id="Flow_1n239ad" sourceRef="Activity_0cfvsk7" targetRef="Event_15y55nw" />
     <bpmn:sequenceFlow id="Flow_04ccp12" sourceRef="Event_0m3ri6v" targetRef="Activity_1lq96cy" />
@@ -1181,12 +1191,12 @@ del(userStatusKey)</bpmn:script>
         <dc:Bounds x="250" y="380" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0z9h5bp_di" bpmnElement="Activity_0lmpdui">
-        <dc:Bounds x="440" y="380" width="100" height="80" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0s32al0_di" bpmnElement="Activity_1ve0iqu">
         <dc:Bounds x="610" y="380" width="100" height="80" />
         <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0z9h5bp_di" bpmnElement="Activity_0lmpdui">
+        <dc:Bounds x="440" y="550" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_1am9jcz_di" bpmnElement="Flow_1am9jcz">
         <di:waypoint x="295" y="240" />
@@ -1210,17 +1220,13 @@ del(userStatusKey)</bpmn:script>
         <di:waypoint x="178" y="420" />
         <di:waypoint x="250" y="420" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_1rar1oi_di" bpmnElement="Flow_1rar1oi">
-        <di:waypoint x="350" y="420" />
-        <di:waypoint x="440" y="420" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0jxxlq6_di" bpmnElement="Flow_0jxxlq6">
-        <di:waypoint x="540" y="420" />
-        <di:waypoint x="610" y="420" />
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1cynsak_di" bpmnElement="Flow_1cynsak">
         <di:waypoint x="710" y="420" />
         <di:waypoint x="762" y="420" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0kt63rn_di" bpmnElement="Flow_0kt63rn">
+        <di:waypoint x="350" y="420" />
+        <di:waypoint x="610" y="420" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
