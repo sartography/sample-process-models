@@ -540,9 +540,22 @@ isCurrentUser = True</spiffworkflow:preScript>
         <bpmn:outgoing>Flow_1rar1oi</bpmn:outgoing>
       </bpmn:callActivity>
       <bpmn:sequenceFlow id="Flow_0jxxlq6" sourceRef="Activity_0lmpdui" targetRef="Event_1nkaxn4" />
-      <bpmn:scriptTask id="Activity_0lmpdui" name="Set Team Lead Info">
+      <bpmn:scriptTask id="Activity_0lmpdui" name="Set Team Lead Info" scriptFormat="python">
         <bpmn:incoming>Flow_1rar1oi</bpmn:incoming>
         <bpmn:outgoing>Flow_0jxxlq6</bpmn:outgoing>
+        <bpmn:script># Set Team Lead Info
+team_lead_info = {}
+team_lead_info["full_name"] = userFullName
+team_lead_info["first_name"] = userFirstName
+team_lead_info["email"] = userEmail
+team_lead_info["team_lead"] = userTeamLead
+team_lead_info["status_key"] = userStatusKey
+
+del(userFullName)
+del (userFirstName)
+del(userEmail)
+del(userTeamLead)
+del(userStatusKey)</bpmn:script>
       </bpmn:scriptTask>
     </bpmn:subProcess>
     <bpmn:sequenceFlow id="Flow_1n239ad" sourceRef="Activity_0cfvsk7" targetRef="Event_15y55nw" />
