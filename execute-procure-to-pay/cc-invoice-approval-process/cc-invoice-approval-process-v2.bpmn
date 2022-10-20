@@ -54,8 +54,8 @@
         <bpmn:flowNodeRef>SubProcess_Data_validation_rules</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_0gkejaj</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_1u89kok</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Event_0jbkk44</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_1ucvkk4</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Event_0jbkk44</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_1so23vf" name="Finance Team">
         <bpmn:flowNodeRef>Activity_0cdgqi0</bpmn:flowNodeRef>
@@ -292,7 +292,7 @@ Please fix.
     </bpmn:intermediateThrowEvent>
     <bpmn:intermediateThrowEvent id="Event_0m3ri6v" name="Invoice is verified and approved">
       <bpmn:incoming>Flow_1gohkts</bpmn:incoming>
-      <bpmn:outgoing>Flow_1ir2tvf</bpmn:outgoing>
+      <bpmn:outgoing>Flow_04ccp12</bpmn:outgoing>
     </bpmn:intermediateThrowEvent>
     <bpmn:serviceTask id="Activity_0cfvsk7" name="3. Notify CC via Waku&#10;&#34;invoice uploaded&#34;">
       <bpmn:extensionElements>
@@ -335,6 +335,7 @@ Please fix.
     </bpmn:serviceTask>
     <bpmn:serviceTask id="Activity_0fq1nb4" name="5. Create Invoice in Xero">
       <bpmn:incoming>Flow_18xvx8w</bpmn:incoming>
+      <bpmn:incoming>Flow_04ccp12</bpmn:incoming>
       <bpmn:outgoing>Flow_01cnc1i</bpmn:outgoing>
     </bpmn:serviceTask>
     <bpmn:exclusiveGateway id="Gateway_1l4tz4i" name="Approved?">
@@ -483,11 +484,6 @@ temp_test = invoice["invoiceStatus"]
       <bpmn:incoming>Flow_1vxagrf</bpmn:incoming>
       <bpmn:outgoing>Flow_0bipj9q</bpmn:outgoing>
     </bpmn:callActivity>
-    <bpmn:endEvent id="Event_0jbkk44">
-      <bpmn:incoming>Flow_1ir2tvf</bpmn:incoming>
-      <bpmn:incoming>Flow_1ste2zw</bpmn:incoming>
-    </bpmn:endEvent>
-    <bpmn:sequenceFlow id="Flow_1ir2tvf" sourceRef="Event_0m3ri6v" targetRef="Event_0jbkk44" />
     <bpmn:subProcess id="Activity_1ucvkk4" name="4a. Manual approval process">
       <bpmn:outgoing>Flow_1m8oeg0</bpmn:outgoing>
       <bpmn:startEvent id="Event_0jcphtt">
@@ -536,6 +532,10 @@ temp_test = invoice["invoiceStatus"]
     </bpmn:subProcess>
     <bpmn:sequenceFlow id="Flow_1ste2zw" sourceRef="Event_0x83ruk" targetRef="Event_0jbkk44" />
     <bpmn:sequenceFlow id="Flow_1n239ad" sourceRef="Activity_0cfvsk7" targetRef="Event_15y55nw" />
+    <bpmn:endEvent id="Event_0jbkk44">
+      <bpmn:incoming>Flow_1ste2zw</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_04ccp12" sourceRef="Event_0m3ri6v" targetRef="Activity_0fq1nb4" />
   </bpmn:process>
   <bpmn:process id="Process_cc_invoice_approval_process_v2_c" isExecutable="false" />
   <bpmn:process id="Process_cc_invoice_approval_process_v2_d" isExecutable="false" />
@@ -586,6 +586,9 @@ temp_test = invoice["invoiceStatus"]
         <bpmndi:BPMNLabel>
           <dc:Bounds x="1340" y="557" width="60" height="14" />
         </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0jbkk44_di" bpmnElement="Event_0jbkk44">
+        <dc:Bounds x="2792" y="394" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0z13hw3_di" bpmnElement="SubProcess_Data_validation_rules">
         <dc:Bounds x="1170" y="482" width="100" height="80" />
@@ -704,9 +707,6 @@ temp_test = invoice["invoiceStatus"]
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_193pz3d_di" bpmnElement="Activity_1u89kok">
         <dc:Bounds x="510" y="482" width="100" height="80" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_0jbkk44_di" bpmnElement="Event_0jbkk44">
-        <dc:Bounds x="2752" y="504" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0j807g0_di" bpmnElement="Activity_1ucvkk4">
         <dc:Bounds x="2950" y="372" width="100" height="80" />
@@ -878,19 +878,17 @@ temp_test = invoice["invoiceStatus"]
         <di:waypoint x="610" y="522" />
         <di:waypoint x="685" y="522" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_1ir2tvf_di" bpmnElement="Flow_1ir2tvf">
-        <di:waypoint x="2727" y="600" />
-        <di:waypoint x="2770" y="600" />
-        <di:waypoint x="2770" y="540" />
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1ste2zw_di" bpmnElement="Flow_1ste2zw">
         <di:waypoint x="2727" y="412" />
-        <di:waypoint x="2770" y="412" />
-        <di:waypoint x="2770" y="504" />
+        <di:waypoint x="2792" y="412" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1n239ad_di" bpmnElement="Flow_1n239ad">
         <di:waypoint x="2320" y="522" />
         <di:waypoint x="2402" y="522" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_04ccp12_di" bpmnElement="Flow_04ccp12">
+        <di:waypoint x="2727" y="600" />
+        <di:waypoint x="3410" y="600" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="Participant_0a8arrz_di" bpmnElement="Participant_0a8arrz" isHorizontal="true">
         <dc:Bounds x="1480" y="1180" width="320" height="80" />
