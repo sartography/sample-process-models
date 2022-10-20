@@ -8,7 +8,7 @@
     <bpmn:endEvent id="Event_0fdez0y">
       <bpmn:incoming>Flow_1igx0a1</bpmn:incoming>
     </bpmn:endEvent>
-    <bpmn:sequenceFlow id="Flow_0t80m1i" sourceRef="enumeration_user_task" targetRef="Activity_1cl0n43" />
+    <bpmn:sequenceFlow id="Flow_0t80m1i" sourceRef="enumeration_user_task" targetRef="Activity_1ifnmsg" />
     <bpmn:sequenceFlow id="Flow_1igx0a1" sourceRef="Activity_18npi29" targetRef="Event_0fdez0y" />
     <bpmn:manualTask id="Activity_18npi29" name="Show Records">
       <bpmn:extensionElements>
@@ -35,7 +35,7 @@
           </spiffworkflow:parameters>
         </spiffworkflow:serviceTaskOperator>
       </bpmn:extensionElements>
-      <bpmn:incoming>Flow_0t80m1i</bpmn:incoming>
+      <bpmn:incoming>Flow_0322grc</bpmn:incoming>
       <bpmn:outgoing>Flow_1sjh867</bpmn:outgoing>
     </bpmn:serviceTask>
     <bpmn:sequenceFlow id="Flow_03owp8l" sourceRef="Activity_1slo4pb" targetRef="Activity_18npi29" />
@@ -69,7 +69,6 @@ enumerations_list.append({'label': 'Add New', 'value': 'add'})
 for n in range(0, enumerations_items_list_cnt):
     enumerations_list.append(enumerations_items_list[n])</bpmn:script>
     </bpmn:scriptTask>
-    <bpmn:sequenceFlow id="Flow_0u5uu9p" sourceRef="Activity_0bvdyir" targetRef="Activity_1ifnmsg" />
     <bpmn:userTask id="Activity_0bvdyir" name="Which Enumeration">
       <bpmn:extensionElements>
         <spiffworkflow:properties>
@@ -77,13 +76,8 @@ for n in range(0, enumerations_items_list_cnt):
         </spiffworkflow:properties>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_148h40r</bpmn:incoming>
-      <bpmn:outgoing>Flow_0u5uu9p</bpmn:outgoing>
+      <bpmn:outgoing>Flow_0d8570g</bpmn:outgoing>
     </bpmn:userTask>
-    <bpmn:sequenceFlow id="Flow_1h3240i" sourceRef="Activity_1ifnmsg" targetRef="enumeration_user_task" />
-    <bpmn:manualTask id="Activity_1ifnmsg" name="Set Subject">
-      <bpmn:incoming>Flow_0u5uu9p</bpmn:incoming>
-      <bpmn:outgoing>Flow_1h3240i</bpmn:outgoing>
-    </bpmn:manualTask>
     <bpmn:userTask id="enumeration_user_task" name="Add Enumeration">
       <bpmn:extensionElements>
         <spiffworkflow:properties>
@@ -91,9 +85,17 @@ for n in range(0, enumerations_items_list_cnt):
           <spiffworkflow:property name="formUiSchemaFilename" value="enumeration-UISchema.json" />
         </spiffworkflow:properties>
       </bpmn:extensionElements>
-      <bpmn:incoming>Flow_1h3240i</bpmn:incoming>
+      <bpmn:incoming>Flow_0d8570g</bpmn:incoming>
       <bpmn:outgoing>Flow_0t80m1i</bpmn:outgoing>
     </bpmn:userTask>
+    <bpmn:scriptTask id="Activity_1ifnmsg" name="Set Subject" scriptFormat="python">
+      <bpmn:incoming>Flow_0t80m1i</bpmn:incoming>
+      <bpmn:outgoing>Flow_0322grc</bpmn:outgoing>
+      <bpmn:script>if whichEnum == "add":
+    addSubject = "Enumeration"</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:sequenceFlow id="Flow_0d8570g" sourceRef="Activity_0bvdyir" targetRef="enumeration_user_task" />
+    <bpmn:sequenceFlow id="Flow_0322grc" sourceRef="Activity_1ifnmsg" targetRef="Activity_1cl0n43" />
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Sharred_Enumeration_Table">
@@ -125,10 +127,10 @@ for n in range(0, enumerations_items_list_cnt):
       <bpmndi:BPMNShape id="Activity_05qgorp_di" bpmnElement="Activity_0bvdyir">
         <dc:Bounds x="170" y="137" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1gil8qq_di" bpmnElement="Activity_1ifnmsg">
-        <dc:Bounds x="340" y="137" width="100" height="80" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_10fjqyn_di" bpmnElement="enumeration_user_task">
+        <dc:Bounds x="350" y="137" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1xmj9ir_di" bpmnElement="Activity_1ifnmsg">
         <dc:Bounds x="520" y="137" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_0q0h9tc_di" bpmnElement="Flow_0q0h9tc">
@@ -136,8 +138,8 @@ for n in range(0, enumerations_items_list_cnt):
         <di:waypoint x="-170" y="177" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0t80m1i_di" bpmnElement="Flow_0t80m1i">
-        <di:waypoint x="620" y="177" />
-        <di:waypoint x="690" y="177" />
+        <di:waypoint x="450" y="177" />
+        <di:waypoint x="520" y="177" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1igx0a1_di" bpmnElement="Flow_1igx0a1">
         <di:waypoint x="1120" y="177" />
@@ -159,13 +161,13 @@ for n in range(0, enumerations_items_list_cnt):
         <di:waypoint x="100" y="177" />
         <di:waypoint x="170" y="177" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0u5uu9p_di" bpmnElement="Flow_0u5uu9p">
+      <bpmndi:BPMNEdge id="Flow_0d8570g_di" bpmnElement="Flow_0d8570g">
         <di:waypoint x="270" y="177" />
-        <di:waypoint x="340" y="177" />
+        <di:waypoint x="350" y="177" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_1h3240i_di" bpmnElement="Flow_1h3240i">
-        <di:waypoint x="440" y="177" />
-        <di:waypoint x="520" y="177" />
+      <bpmndi:BPMNEdge id="Flow_0322grc_di" bpmnElement="Flow_0322grc">
+        <di:waypoint x="620" y="177" />
+        <di:waypoint x="690" y="177" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
