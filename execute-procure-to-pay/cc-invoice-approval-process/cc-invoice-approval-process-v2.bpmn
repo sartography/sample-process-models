@@ -54,7 +54,6 @@
         <bpmn:flowNodeRef>Activity_1u89kok</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_1ucvkk4</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_1usbnt0</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Event_1staolh</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_0fsoa08</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_1b58a3z</bpmn:flowNodeRef>
       </bpmn:lane>
@@ -458,6 +457,12 @@ Please fix.
       <bpmn:incoming>Flow_0vd1pxu</bpmn:incoming>
     </bpmn:endEvent>
     <bpmn:userTask id="Activity_06b32ar" name="Approve invocie manually">
+      <bpmn:extensionElements>
+        <spiffworkflow:properties>
+          <spiffworkflow:property name="formJsonSchemaFilename" value="team_lead_approval-JSONSchema.json" />
+        </spiffworkflow:properties>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0lfqk0y</bpmn:incoming>
       <bpmn:outgoing>Flow_0yvmfqu</bpmn:outgoing>
     </bpmn:userTask>
     <bpmn:intermediateThrowEvent id="Event_15y55nw" name="Invoice is submitted">
@@ -488,7 +493,7 @@ isCurrentUser = True</spiffworkflow:preScript>
     </bpmn:callActivity>
     <bpmn:subProcess id="Activity_1ucvkk4" name="4a. Manual approval process">
       <bpmn:incoming>Flow_0kngdw4</bpmn:incoming>
-      <bpmn:outgoing>Flow_0b2yf0l</bpmn:outgoing>
+      <bpmn:outgoing>Flow_0lfqk0y</bpmn:outgoing>
       <bpmn:exclusiveGateway id="Gateway_1l74xlc">
         <bpmn:outgoing>Flow_1am9jcz</bpmn:outgoing>
         <bpmn:outgoing>Flow_0kx6gsl</bpmn:outgoing>
@@ -566,10 +571,6 @@ del(userStatusKey)</bpmn:script>
     </bpmn:endEvent>
     <bpmn:sequenceFlow id="Flow_1r0a699" sourceRef="Activity_102t7tk" targetRef="Event_1usbnt0" />
     <bpmn:sequenceFlow id="Flow_0kngdw4" sourceRef="Event_0x83ruk" targetRef="Activity_1ucvkk4" />
-    <bpmn:endEvent id="Event_1staolh">
-      <bpmn:incoming>Flow_0b2yf0l</bpmn:incoming>
-    </bpmn:endEvent>
-    <bpmn:sequenceFlow id="Flow_0b2yf0l" sourceRef="Activity_1ucvkk4" targetRef="Event_1staolh" />
     <bpmn:serviceTask id="Activity_0fsoa08" name="4c. Notify CC via Waku&#10;&#34;invoice rejected&#34;">
       <bpmn:extensionElements>
         <spiffworkflow:serviceTaskOperator id="waku/SendMessage" resultVariable="waku_response">
@@ -586,6 +587,7 @@ del(userStatusKey)</bpmn:script>
     <bpmn:endEvent id="Event_1b58a3z" name="Invoice is rejected by Approver">
       <bpmn:incoming>Flow_0c0c9mw</bpmn:incoming>
     </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_0lfqk0y" sourceRef="Activity_1ucvkk4" targetRef="Activity_06b32ar" />
   </bpmn:process>
   <bpmn:process id="Process_cc_invoice_approval_process_v2_c" isExecutable="false" />
   <bpmn:process id="Process_cc_invoice_approval_process_v2_d" isExecutable="false" />
@@ -635,15 +637,6 @@ del(userStatusKey)</bpmn:script>
         <dc:Bounds x="1345" y="497" width="50" height="50" />
         <bpmndi:BPMNLabel>
           <dc:Bounds x="1340" y="557" width="60" height="14" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0kcw8l6_di" bpmnElement="Activity_0fsoa08">
-        <dc:Bounds x="3410" y="260" width="100" height="80" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_1b58a3z_di" bpmnElement="Event_1b58a3z">
-        <dc:Bounds x="3552" y="282" width="36" height="36" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="3546" y="325" width="54" height="40" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0z13hw3_di" bpmnElement="SubProcess_Data_validation_rules">
@@ -762,8 +755,14 @@ del(userStatusKey)</bpmn:script>
       <bpmndi:BPMNShape id="Event_1usbnt0_di" bpmnElement="Event_1usbnt0">
         <dc:Bounds x="3582" y="682" width="36" height="36" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_1staolh_di" bpmnElement="Event_1staolh">
-        <dc:Bounds x="2982" y="522" width="36" height="36" />
+      <bpmndi:BPMNShape id="Activity_0kcw8l6_di" bpmnElement="Activity_0fsoa08">
+        <dc:Bounds x="3410" y="260" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1b58a3z_di" bpmnElement="Event_1b58a3z">
+        <dc:Bounds x="3552" y="282" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="3546" y="325" width="54" height="40" />
+        </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_1n1umf8_di" bpmnElement="Event_09q0ym0">
         <dc:Bounds x="3012" y="882" width="36" height="36" />
@@ -940,9 +939,9 @@ del(userStatusKey)</bpmn:script>
         <di:waypoint x="2727" y="412" />
         <di:waypoint x="2950" y="412" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0b2yf0l_di" bpmnElement="Flow_0b2yf0l">
+      <bpmndi:BPMNEdge id="Flow_0lfqk0y_di" bpmnElement="Flow_0lfqk0y">
         <di:waypoint x="3000" y="452" />
-        <di:waypoint x="3000" y="522" />
+        <di:waypoint x="3000" y="820" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="Participant_0a8arrz_di" bpmnElement="Participant_0a8arrz" isHorizontal="true">
         <dc:Bounds x="1480" y="1180" width="320" height="80" />
