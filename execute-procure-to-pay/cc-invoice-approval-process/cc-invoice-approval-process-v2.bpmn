@@ -56,6 +56,7 @@
         <bpmn:flowNodeRef>Activity_1u89kok</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_1ucvkk4</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_0jbkk44</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Event_1usbnt0</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_1so23vf" name="Finance Team">
         <bpmn:flowNodeRef>Activity_0cdgqi0</bpmn:flowNodeRef>
@@ -85,7 +86,6 @@
     <bpmn:sequenceFlow id="Flow_0bfs2xe" name="no" sourceRef="Gateway_1l4tz4i" targetRef="Activity_0fsoa08" />
     <bpmn:sequenceFlow id="Flow_0c0c9mw" sourceRef="Activity_0fsoa08" targetRef="Event_1b58a3z" />
     <bpmn:sequenceFlow id="Flow_0vd1pxu" sourceRef="Activity_0cdgqi0" targetRef="Event_16u0f7b" />
-    <bpmn:sequenceFlow id="Flow_1an91fc" sourceRef="Activity_102t7tk" targetRef="Activity_1lq96cy" />
     <bpmn:sequenceFlow id="Flow_01cnc1i" sourceRef="Activity_0fq1nb4" targetRef="Activity_102t7tk" />
     <bpmn:sequenceFlow id="Flow_0vkr4vr" sourceRef="Activity_1lq96cy" targetRef="Activity_0cdgqi0" />
     <bpmn:sequenceFlow id="Flow_13ng1f4" sourceRef="Event_invoice_validation_failed" targetRef="Activity_show_errors" />
@@ -317,7 +317,6 @@ Please fix.
           </spiffworkflow:parameters>
         </spiffworkflow:serviceTaskOperator>
       </bpmn:extensionElements>
-      <bpmn:incoming>Flow_1an91fc</bpmn:incoming>
       <bpmn:outgoing>Flow_0vkr4vr</bpmn:outgoing>
     </bpmn:serviceTask>
     <bpmn:serviceTask id="Activity_102t7tk" name="6. Notify CC via Waku&#10;&#34;invoice approved&#34;">
@@ -331,7 +330,7 @@ Please fix.
         </spiffworkflow:serviceTaskOperator>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_01cnc1i</bpmn:incoming>
-      <bpmn:outgoing>Flow_1an91fc</bpmn:outgoing>
+      <bpmn:outgoing>Flow_1r0a699</bpmn:outgoing>
     </bpmn:serviceTask>
     <bpmn:serviceTask id="Activity_0fq1nb4" name="5. Create Invoice in Xero">
       <bpmn:extensionElements>
@@ -547,6 +546,10 @@ temp_test = invoice["invoiceStatus"]
       <bpmn:incoming>Flow_1ste2zw</bpmn:incoming>
     </bpmn:endEvent>
     <bpmn:sequenceFlow id="Flow_04ccp12" sourceRef="Event_0m3ri6v" targetRef="Activity_0fq1nb4" />
+    <bpmn:endEvent id="Event_1usbnt0">
+      <bpmn:incoming>Flow_1r0a699</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_1r0a699" sourceRef="Activity_102t7tk" targetRef="Event_1usbnt0" />
   </bpmn:process>
   <bpmn:process id="Process_cc_invoice_approval_process_v2_c" isExecutable="false" />
   <bpmn:process id="Process_cc_invoice_approval_process_v2_d" isExecutable="false" />
@@ -597,6 +600,9 @@ temp_test = invoice["invoiceStatus"]
         <bpmndi:BPMNLabel>
           <dc:Bounds x="1340" y="557" width="60" height="14" />
         </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1usbnt0_di" bpmnElement="Event_1usbnt0">
+        <dc:Bounds x="3582" y="682" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0z13hw3_di" bpmnElement="SubProcess_Data_validation_rules">
         <dc:Bounds x="1170" y="482" width="100" height="80" />
@@ -800,10 +806,6 @@ temp_test = invoice["invoiceStatus"]
         <di:waypoint x="3790" y="1070" />
         <di:waypoint x="3822" y="1070" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_1an91fc_di" bpmnElement="Flow_1an91fc">
-        <di:waypoint x="3650" y="600" />
-        <di:waypoint x="3690" y="600" />
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_01cnc1i_di" bpmnElement="Flow_01cnc1i">
         <di:waypoint x="3510" y="600" />
         <di:waypoint x="3550" y="600" />
@@ -900,6 +902,10 @@ temp_test = invoice["invoiceStatus"]
       <bpmndi:BPMNEdge id="Flow_04ccp12_di" bpmnElement="Flow_04ccp12">
         <di:waypoint x="2727" y="600" />
         <di:waypoint x="3410" y="600" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1r0a699_di" bpmnElement="Flow_1r0a699">
+        <di:waypoint x="3600" y="640" />
+        <di:waypoint x="3600" y="682" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="Participant_0a8arrz_di" bpmnElement="Participant_0a8arrz" isHorizontal="true">
         <dc:Bounds x="1480" y="1180" width="320" height="80" />
