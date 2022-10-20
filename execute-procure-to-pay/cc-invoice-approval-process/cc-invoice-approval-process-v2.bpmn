@@ -381,6 +381,14 @@ Please fix.
       </bpmn:serviceTask>
       <bpmn:sequenceFlow id="Flow_0qdtda7" sourceRef="Activity_108oe6k" targetRef="Activity_0ymkf8l" />
       <bpmn:serviceTask id="Activity_0ymkf8l" name="Fetch invoice details">
+        <bpmn:extensionElements>
+          <spiffworkflow:serviceTaskOperator id="aws/QueryDynamoTable">
+            <spiffworkflow:parameters>
+              <spiffworkflow:parameter id="key" type="str" value="invoice.invoiceId" />
+              <spiffworkflow:parameter id="table_name" type="str" value="Invoice" />
+            </spiffworkflow:parameters>
+          </spiffworkflow:serviceTaskOperator>
+        </bpmn:extensionElements>
         <bpmn:incoming>Flow_0qdtda7</bpmn:incoming>
       </bpmn:serviceTask>
       <bpmn:businessRuleTask id="Activity_1yhwhps" name="Compare the BambooHR.compensation/12 amount with invoice amount">
