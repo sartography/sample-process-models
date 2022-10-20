@@ -227,7 +227,7 @@ Please fix.
       <bpmn:outgoing>Flow_1mfw1j8</bpmn:outgoing>
       <bpmn:script>currency_enum_options = [{"value": "AUD", "label": "Australian Dollar (AUD)"}, {"value": "CAD", "label": "Canadian Dollar (CAD)"}, {"value": "EUR", "label": "Euro (EUR)"}, {"value": "GBP", "label": "Pound sterling (GBP)"}, {"value": "SGD", "label": "Singapore Dollar (SGD)"}, {"value": "CHF", "label": "Swiss Franc (CHF)"}, {"value": "USD", "label": "US Dollar (USD)"}]</bpmn:script>
     </bpmn:scriptTask>
-    <bpmn:scriptTask id="Activity_104xpp8" name="Temp Test">
+    <bpmn:scriptTask id="Activity_104xpp8" name="Temp">
       <bpmn:incoming>Flow_12cqm3u</bpmn:incoming>
       <bpmn:outgoing>Flow_01p5kjj</bpmn:outgoing>
       <bpmn:script>invoice_file_name = invoice.contributorName + "_" + str(invoice.invoiceId) + ".pdf"</bpmn:script>
@@ -561,6 +561,12 @@ del(userStatusKey)</bpmn:script>
     </bpmn:serviceTask>
     <bpmn:sequenceFlow id="Flow_1ds4s8o" sourceRef="Activity_1lq96cy" targetRef="Activity_0cdgqi0" />
     <bpmn:userTask id="Activity_0cdgqi0" name="Approve Invoice">
+      <bpmn:extensionElements>
+        <spiffworkflow:properties>
+          <spiffworkflow:property name="formJsonSchemaFilename" value="team_lead_approval-JSONSchema.json" />
+          <spiffworkflow:property name="formUiSchemaFilename" value="team_lead_approval-UISchema.json" />
+        </spiffworkflow:properties>
+      </bpmn:extensionElements>
       <bpmn:incoming>Flow_1ds4s8o</bpmn:incoming>
       <bpmn:outgoing>Flow_09wwily</bpmn:outgoing>
     </bpmn:userTask>
@@ -674,7 +680,6 @@ del(userStatusKey)</bpmn:script>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0bgyf4i_di" bpmnElement="Activity_104xpp8">
         <dc:Bounds x="1620" y="560" width="100" height="80" />
-        <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Gateway_10gbs8m_di" bpmnElement="Gateway_05ov5p5">
         <dc:Bounds x="1555" y="497" width="50" height="50" />
@@ -1193,12 +1198,12 @@ del(userStatusKey)</bpmn:script>
         <dc:Bounds x="250" y="380" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0z9h5bp_di" bpmnElement="Activity_0lmpdui">
+        <dc:Bounds x="440" y="550" width="100" height="80" />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0s32al0_di" bpmnElement="Activity_1ve0iqu">
         <dc:Bounds x="610" y="380" width="100" height="80" />
         <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0z9h5bp_di" bpmnElement="Activity_0lmpdui">
-        <dc:Bounds x="440" y="550" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_1am9jcz_di" bpmnElement="Flow_1am9jcz">
         <di:waypoint x="295" y="240" />
