@@ -28,14 +28,16 @@
       <bpmn:outgoing>Flow_1usol5m</bpmn:outgoing>
     </bpmn:exclusiveGateway>
     <bpmn:sequenceFlow id="Flow_1usol5m" sourceRef="Gateway_1ifycz3" targetRef="Event_0fb034d" />
-    <bpmn:task id="Activity_1a9fimb">
-      <bpmn:incoming>Flow_0i96b90</bpmn:incoming>
-      <bpmn:outgoing>Flow_020y0gy</bpmn:outgoing>
-    </bpmn:task>
     <bpmn:sequenceFlow id="Flow_020y0gy" sourceRef="Activity_1a9fimb" targetRef="Gateway_1ifycz3" />
     <bpmn:sequenceFlow id="Flow_0d47w7r" name="No" sourceRef="Gateway_0xlrnzx" targetRef="Gateway_1ifycz3">
       <bpmn:conditionExpression>not(isCurrentUser)</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
+    <bpmn:scriptTask id="Activity_1a9fimb" name="Update Current User" scriptFormat="python">
+      <bpmn:incoming>Flow_0i96b90</bpmn:incoming>
+      <bpmn:outgoing>Flow_020y0gy</bpmn:outgoing>
+      <bpmn:script># Update Current User
+current_user["FullName"] = userFullName</bpmn:script>
+    </bpmn:scriptTask>
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Shared_User_Info">
@@ -57,8 +59,9 @@
       <bpmndi:BPMNShape id="Gateway_1ifycz3_di" bpmnElement="Gateway_1ifycz3" isMarkerVisible="true">
         <dc:Bounds x="765" y="152" width="50" height="50" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1a9fimb_di" bpmnElement="Activity_1a9fimb">
+      <bpmndi:BPMNShape id="Activity_0rvcg5l_di" bpmnElement="Activity_1a9fimb">
         <dc:Bounds x="570" y="137" width="100" height="80" />
+        <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_1q8xtg6_di" bpmnElement="Flow_1q8xtg6">
         <di:waypoint x="215" y="177" />
