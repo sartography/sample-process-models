@@ -25,16 +25,6 @@
       <bpmn:incoming>Flow_03owp8l</bpmn:incoming>
       <bpmn:outgoing>Flow_1igx0a1</bpmn:outgoing>
     </bpmn:manualTask>
-    <bpmn:userTask id="enumeration_user_task" name="Add Enumeration">
-      <bpmn:extensionElements>
-        <spiffworkflow:properties>
-          <spiffworkflow:property name="formJsonSchemaFilename" value="enumeration-JSONSchema.json" />
-          <spiffworkflow:property name="formUiSchemaFilename" value="enumeration-UISchema.json" />
-        </spiffworkflow:properties>
-      </bpmn:extensionElements>
-      <bpmn:incoming>Flow_1h3240i</bpmn:incoming>
-      <bpmn:outgoing>Flow_0t80m1i</bpmn:outgoing>
-    </bpmn:userTask>
     <bpmn:sequenceFlow id="Flow_1sjh867" sourceRef="Activity_1cl0n43" targetRef="Activity_1slo4pb" />
     <bpmn:serviceTask id="Activity_1cl0n43" name="Add Record">
       <bpmn:extensionElements>
@@ -95,11 +85,35 @@ for n in range(0, enumerations_items_list_cnt):
       <bpmn:outgoing>Flow_1h3240i</bpmn:outgoing>
       <bpmn:script>Set Subject</bpmn:script>
     </bpmn:scriptTask>
+    <bpmn:manualTask id="enumeration_user_task" name="Add Enumeration">
+      <bpmn:extensionElements>
+        <spiffworkflow:properties>
+          <spiffworkflow:property name="formJsonSchemaFilename" value="enumeration-JSONSchema.json" />
+          <spiffworkflow:property name="formUiSchemaFilename" value="enumeration-UISchema.json" />
+        </spiffworkflow:properties>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1h3240i</bpmn:incoming>
+      <bpmn:outgoing>Flow_0t80m1i</bpmn:outgoing>
+    </bpmn:manualTask>
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Sharred_Enumeration_Table">
       <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
         <dc:Bounds x="-278" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0fdez0y_di" bpmnElement="Event_0fdez0y">
+        <dc:Bounds x="1172" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1cpupwx_di" bpmnElement="Activity_18npi29">
+        <dc:Bounds x="1020" y="137" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0k89mkq_di" bpmnElement="Activity_1cl0n43">
+        <dc:Bounds x="690" y="137" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1fe77xz_di" bpmnElement="Activity_1slo4pb">
+        <dc:Bounds x="860" y="137" width="100" height="80" />
+        <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1i2gua9_di" bpmnElement="Call_Shared_Build_Enum_List_from_AWS">
         <dc:Bounds x="-170" y="137" width="100" height="80" />
@@ -112,26 +126,11 @@ for n in range(0, enumerations_items_list_cnt):
       <bpmndi:BPMNShape id="Activity_05qgorp_di" bpmnElement="Activity_0bvdyir">
         <dc:Bounds x="170" y="137" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_0fdez0y_di" bpmnElement="Event_0fdez0y">
-        <dc:Bounds x="1172" y="159" width="36" height="36" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1cpupwx_di" bpmnElement="Activity_18npi29">
-        <dc:Bounds x="1020" y="137" width="100" height="80" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0nciy2q_di" bpmnElement="enumeration_user_task">
-        <dc:Bounds x="520" y="137" width="100" height="80" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0k89mkq_di" bpmnElement="Activity_1cl0n43">
-        <dc:Bounds x="690" y="137" width="100" height="80" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1fe77xz_di" bpmnElement="Activity_1slo4pb">
-        <dc:Bounds x="860" y="137" width="100" height="80" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_19kstkv_di" bpmnElement="Activity_1ifnmsg">
         <dc:Bounds x="340" y="137" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1bpm7ej_di" bpmnElement="enumeration_user_task">
+        <dc:Bounds x="520" y="137" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_0q0h9tc_di" bpmnElement="Flow_0q0h9tc">
         <di:waypoint x="-242" y="177" />
