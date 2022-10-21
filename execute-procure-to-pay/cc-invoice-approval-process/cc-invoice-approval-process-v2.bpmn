@@ -243,7 +243,7 @@ Please fix.
     </bpmn:intermediateThrowEvent>
     <bpmn:serviceTask id="Activity_0p88elm" name="2d. Upload Invoice PDF document" scriptFormat="python" script="invoice_name = invoice.contributorName + &#34;_&#34; + invoice.invoiceId">
       <bpmn:extensionElements>
-        <spiffworkflow:preScript />
+        <spiffworkflow:preScript>invoice_file_name = invoice.contributorName + "_" + str(invoice.invoiceId) + ".pdf"</spiffworkflow:preScript>
         <spiffworkflow:postScript>del(filesAccept)</spiffworkflow:postScript>
         <spiffworkflow:serviceTaskOperator id="aws/UploadFileData">
           <spiffworkflow:parameters>
@@ -581,10 +581,11 @@ del(userStatusKey)</bpmn:script>
     </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="Flow_0h96w9j" name="Yes" sourceRef="Gateway_1ytq6m7" targetRef="Activity_0fq1nb4" />
     <bpmn:sequenceFlow id="Flow_053ca95" sourceRef="Activity_0fq1nb4" targetRef="Activity_102t7tk" />
-    <bpmn:scriptTask id="Activity_104xpp8" name="Temp">
+    <bpmn:scriptTask id="Activity_104xpp8" name="Temp" scriptFormat="python">
       <bpmn:incoming>Flow_12cqm3u</bpmn:incoming>
       <bpmn:outgoing>Flow_0p6vvu0</bpmn:outgoing>
-      <bpmn:script>invoice_file_name = invoice.contributorName + "_" + str(invoice.invoiceId) + ".pdf"</bpmn:script>
+      <bpmn:script>a=1
+# invoice_file_name = invoice.contributorName + "_" + str(invoice.invoiceId) + ".pdf"</bpmn:script>
     </bpmn:scriptTask>
     <bpmn:sequenceFlow id="Flow_0p6vvu0" sourceRef="Activity_104xpp8" targetRef="Activity_0p88elm" />
     <bpmn:dataObject id="wr" />
