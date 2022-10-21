@@ -26,19 +26,15 @@
       <bpmn:incoming>Flow_0322grc</bpmn:incoming>
       <bpmn:outgoing>Flow_1pvx3ro</bpmn:outgoing>
     </bpmn:serviceTask>
-    <bpmn:sequenceFlow id="Flow_1p5fxob" sourceRef="Call_Shared_Build_Enum_List_from_AWS" targetRef="Activity_1ig6ogz" />
     <bpmn:callActivity id="Call_Shared_Build_Enum_List_from_AWS" name="Call Shared: Build Enum List from AWS" calledElement="Shared_Build_Enum_List_from_AWS">
       <bpmn:extensionElements>
         <spiffworkflow:preScript>whichSubject = "Enumeration"</spiffworkflow:preScript>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_07a2oxo</bpmn:incoming>
       <bpmn:incoming>Flow_1nenbjs</bpmn:incoming>
-      <bpmn:outgoing>Flow_1p5fxob</bpmn:outgoing>
+      <bpmn:outgoing>Flow_1vvnsbc</bpmn:outgoing>
     </bpmn:callActivity>
-    <bpmn:sequenceFlow id="Flow_148h40r" sourceRef="Activity_1ig6ogz" targetRef="Activity_0bvdyir" />
     <bpmn:scriptTask id="Activity_1ig6ogz" name="Build Enum List" scriptFormat="python">
-      <bpmn:incoming>Flow_1p5fxob</bpmn:incoming>
-      <bpmn:outgoing>Flow_148h40r</bpmn:outgoing>
       <bpmn:script># Build Enum List
 enumerations_items_list_cnt = enumerations["Count"]
 enumerations_list = []
@@ -53,8 +49,8 @@ for n in range(0, enumerations_items_list_cnt):
           <spiffworkflow:property name="formJsonSchemaFilename" value="which_enumeration-JSONSchema.json" />
         </spiffworkflow:properties>
       </bpmn:extensionElements>
-      <bpmn:incoming>Flow_148h40r</bpmn:incoming>
       <bpmn:incoming>Flow_0otubfa</bpmn:incoming>
+      <bpmn:incoming>Flow_1vvnsbc</bpmn:incoming>
       <bpmn:outgoing>Flow_0d8570g</bpmn:outgoing>
     </bpmn:userTask>
     <bpmn:userTask id="enumeration_user_task" name="Add Enumeration">
@@ -139,6 +135,7 @@ addLabel = ""</spiffworkflow:postScript>
       <bpmn:conditionExpression>whatNext == "Add an enum for another subject"</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="Flow_1nenbjs" sourceRef="Gateway_1wd2vi1" targetRef="Call_Shared_Build_Enum_List_from_AWS" />
+    <bpmn:sequenceFlow id="Flow_1vvnsbc" sourceRef="Call_Shared_Build_Enum_List_from_AWS" targetRef="Activity_0bvdyir" />
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Sharred_Enumeration_Table">
@@ -147,14 +144,6 @@ addLabel = ""</spiffworkflow:postScript>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0k89mkq_di" bpmnElement="Activity_1cl0n43">
         <dc:Bounds x="700" y="137" width="100" height="80" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1i2gua9_di" bpmnElement="Call_Shared_Build_Enum_List_from_AWS">
-        <dc:Bounds x="-170" y="137" width="100" height="80" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1gnw1ju_di" bpmnElement="Activity_1ig6ogz">
-        <dc:Bounds x="0" y="137" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_05qgorp_di" bpmnElement="Activity_0bvdyir">
@@ -175,9 +164,6 @@ addLabel = ""</spiffworkflow:postScript>
       <bpmndi:BPMNShape id="Activity_112vjvq_di" bpmnElement="Activity_0exwh7c">
         <dc:Bounds x="870" y="137" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_00b9bxo_di" bpmnElement="Event_00b9bxo">
-        <dc:Bounds x="-288" y="159" width="36" height="36" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Gateway_1clgwgu_di" bpmnElement="Gateway_1clgwgu" isMarkerVisible="true">
         <dc:Bounds x="375" y="335" width="50" height="50" />
         <bpmndi:BPMNLabel>
@@ -190,14 +176,17 @@ addLabel = ""</spiffworkflow:postScript>
       <bpmndi:BPMNShape id="Gateway_1wd2vi1_di" bpmnElement="Gateway_1wd2vi1" isMarkerVisible="true">
         <dc:Bounds x="195" y="335" width="50" height="50" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge id="Flow_1p5fxob_di" bpmnElement="Flow_1p5fxob">
-        <di:waypoint x="-70" y="177" />
-        <di:waypoint x="0" y="177" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_148h40r_di" bpmnElement="Flow_148h40r">
-        <di:waypoint x="100" y="177" />
-        <di:waypoint x="170" y="177" />
-      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="Activity_1gnw1ju_di" bpmnElement="Activity_1ig6ogz">
+        <dc:Bounds x="0" y="30" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_00b9bxo_di" bpmnElement="Event_00b9bxo">
+        <dc:Bounds x="-128" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1i2gua9_di" bpmnElement="Call_Shared_Build_Enum_List_from_AWS">
+        <dc:Bounds x="-10" y="137" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_0d8570g_di" bpmnElement="Flow_0d8570g">
         <di:waypoint x="270" y="177" />
         <di:waypoint x="350" y="177" />
@@ -211,8 +200,8 @@ addLabel = ""</spiffworkflow:postScript>
         <di:waypoint x="520" y="177" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_07a2oxo_di" bpmnElement="Flow_07a2oxo">
-        <di:waypoint x="-252" y="177" />
-        <di:waypoint x="-170" y="177" />
+        <di:waypoint x="-92" y="177" />
+        <di:waypoint x="-10" y="177" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1pvx3ro_di" bpmnElement="Flow_1pvx3ro">
         <di:waypoint x="800" y="177" />
@@ -251,8 +240,12 @@ addLabel = ""</spiffworkflow:postScript>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1nenbjs_di" bpmnElement="Flow_1nenbjs">
         <di:waypoint x="195" y="360" />
-        <di:waypoint x="-120" y="360" />
-        <di:waypoint x="-120" y="217" />
+        <di:waypoint x="40" y="360" />
+        <di:waypoint x="40" y="217" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1vvnsbc_di" bpmnElement="Flow_1vvnsbc">
+        <di:waypoint x="90" y="177" />
+        <di:waypoint x="170" y="177" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
