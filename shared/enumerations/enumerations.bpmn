@@ -5,7 +5,6 @@
       <bpmn:outgoing>Flow_0q0h9tc</bpmn:outgoing>
     </bpmn:startEvent>
     <bpmn:sequenceFlow id="Flow_0q0h9tc" sourceRef="StartEvent_1" targetRef="Call_Shared_Build_Enum_List_from_AWS" />
-    <bpmn:sequenceFlow id="Flow_0t80m1i" sourceRef="enumeration_user_task" targetRef="Activity_1lt54pm" />
     <bpmn:manualTask id="Activity_18npi29" name="Show Records">
       <bpmn:extensionElements>
         <spiffworkflow:instructionsForEndUser>Enumerations:
@@ -29,7 +28,7 @@
           </spiffworkflow:parameters>
         </spiffworkflow:serviceTaskOperator>
       </bpmn:extensionElements>
-      <bpmn:incoming>Flow_0322grc</bpmn:incoming>
+      <bpmn:incoming>Flow_0b7s3yr</bpmn:incoming>
       <bpmn:outgoing>Flow_1sjh867</bpmn:outgoing>
     </bpmn:serviceTask>
     <bpmn:sequenceFlow id="Flow_1p5fxob" sourceRef="Call_Shared_Build_Enum_List_from_AWS" targetRef="Activity_1ig6ogz" />
@@ -68,10 +67,10 @@ for n in range(0, enumerations_items_list_cnt):
         </spiffworkflow:properties>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_0d8570g</bpmn:incoming>
-      <bpmn:outgoing>Flow_0t80m1i</bpmn:outgoing>
+      <bpmn:outgoing>Flow_0i6hbp9</bpmn:outgoing>
     </bpmn:userTask>
     <bpmn:scriptTask id="Activity_1ifnmsg" name="Set Subject" scriptFormat="python">
-      <bpmn:incoming>Flow_0jcctpu</bpmn:incoming>
+      <bpmn:incoming>Flow_0i6hbp9</bpmn:incoming>
       <bpmn:outgoing>Flow_0322grc</bpmn:outgoing>
       <bpmn:script>if whichEnum == "add":
     addSubject = "Enumeration"
@@ -79,7 +78,7 @@ else:
     addSubject = next(filter(lambda d: d['value'] == whichEnum, enumerations_list))['label']</bpmn:script>
     </bpmn:scriptTask>
     <bpmn:sequenceFlow id="Flow_0d8570g" sourceRef="Activity_0bvdyir" targetRef="enumeration_user_task" />
-    <bpmn:sequenceFlow id="Flow_0322grc" sourceRef="Activity_1ifnmsg" targetRef="Activity_1cl0n43" />
+    <bpmn:sequenceFlow id="Flow_0322grc" sourceRef="Activity_1ifnmsg" targetRef="Activity_1lt54pm" />
     <bpmn:serviceTask id="Activity_1ad6wc2" name="Get Enumeration List">
       <bpmn:extensionElements>
         <spiffworkflow:serviceTaskOperator id="aws/QueryDynamoTable">
@@ -97,11 +96,12 @@ else:
       <bpmn:incoming>Flow_1bvuyh3</bpmn:incoming>
     </bpmn:endEvent>
     <bpmn:sequenceFlow id="Flow_1bvuyh3" sourceRef="Activity_1ad6wc2" targetRef="Event_0d2gsze" />
-    <bpmn:sequenceFlow id="Flow_0jcctpu" sourceRef="Activity_1lt54pm" targetRef="Activity_1ifnmsg" />
     <bpmn:manualTask id="Activity_1lt54pm" name="Temp">
-      <bpmn:incoming>Flow_0t80m1i</bpmn:incoming>
-      <bpmn:outgoing>Flow_0jcctpu</bpmn:outgoing>
+      <bpmn:incoming>Flow_0322grc</bpmn:incoming>
+      <bpmn:outgoing>Flow_0b7s3yr</bpmn:outgoing>
     </bpmn:manualTask>
+    <bpmn:sequenceFlow id="Flow_0i6hbp9" sourceRef="enumeration_user_task" targetRef="Activity_1ifnmsg" />
+    <bpmn:sequenceFlow id="Flow_0b7s3yr" sourceRef="Activity_1lt54pm" targetRef="Activity_1cl0n43" />
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Sharred_Enumeration_Table">
@@ -129,25 +129,21 @@ else:
       <bpmndi:BPMNShape id="Activity_10fjqyn_di" bpmnElement="enumeration_user_task">
         <dc:Bounds x="350" y="137" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1xmj9ir_di" bpmnElement="Activity_1ifnmsg">
-        <dc:Bounds x="690" y="137" width="100" height="80" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1oz9lvi_di" bpmnElement="Activity_1ad6wc2">
         <dc:Bounds x="1020" y="137" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_0d2gsze_di" bpmnElement="Event_0d2gsze">
         <dc:Bounds x="1052" y="292" width="36" height="36" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1yjav9r_di" bpmnElement="Activity_1lt54pm">
+      <bpmndi:BPMNShape id="Activity_1xmj9ir_di" bpmnElement="Activity_1ifnmsg">
         <dc:Bounds x="520" y="137" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1yjav9r_di" bpmnElement="Activity_1lt54pm">
+        <dc:Bounds x="690" y="137" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_0q0h9tc_di" bpmnElement="Flow_0q0h9tc">
         <di:waypoint x="-242" y="177" />
         <di:waypoint x="-170" y="177" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0t80m1i_di" bpmnElement="Flow_0t80m1i">
-        <di:waypoint x="450" y="177" />
-        <di:waypoint x="520" y="177" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1sjh867_di" bpmnElement="Flow_1sjh867">
         <di:waypoint x="960" y="177" />
@@ -166,16 +162,20 @@ else:
         <di:waypoint x="350" y="177" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0322grc_di" bpmnElement="Flow_0322grc">
-        <di:waypoint x="790" y="177" />
-        <di:waypoint x="860" y="177" />
+        <di:waypoint x="620" y="177" />
+        <di:waypoint x="690" y="177" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1bvuyh3_di" bpmnElement="Flow_1bvuyh3">
         <di:waypoint x="1070" y="217" />
         <di:waypoint x="1070" y="292" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0jcctpu_di" bpmnElement="Flow_0jcctpu">
-        <di:waypoint x="620" y="177" />
-        <di:waypoint x="690" y="177" />
+      <bpmndi:BPMNEdge id="Flow_0i6hbp9_di" bpmnElement="Flow_0i6hbp9">
+        <di:waypoint x="450" y="177" />
+        <di:waypoint x="520" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0b7s3yr_di" bpmnElement="Flow_0b7s3yr">
+        <di:waypoint x="790" y="177" />
+        <di:waypoint x="860" y="177" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
