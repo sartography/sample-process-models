@@ -24,12 +24,14 @@
         </spiffworkflow:serviceTaskOperator>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_0322grc</bpmn:incoming>
+      <bpmn:outgoing>Flow_1pvx3ro</bpmn:outgoing>
     </bpmn:serviceTask>
     <bpmn:sequenceFlow id="Flow_1p5fxob" sourceRef="Call_Shared_Build_Enum_List_from_AWS" targetRef="Activity_1ig6ogz" />
     <bpmn:callActivity id="Call_Shared_Build_Enum_List_from_AWS" name="Call Shared: Build Enum List from AWS" calledElement="Shared_Build_Enum_List_from_AWS">
       <bpmn:extensionElements>
         <spiffworkflow:preScript />
       </bpmn:extensionElements>
+      <bpmn:incoming>Flow_07a2oxo</bpmn:incoming>
       <bpmn:outgoing>Flow_1p5fxob</bpmn:outgoing>
     </bpmn:callActivity>
     <bpmn:sequenceFlow id="Flow_148h40r" sourceRef="Activity_1ig6ogz" targetRef="Activity_0bvdyir" />
@@ -85,7 +87,7 @@ else:
       </bpmn:extensionElements>
     </bpmn:serviceTask>
     <bpmn:endEvent id="Event_0d2gsze">
-      <bpmn:incoming>Flow_001i5u7</bpmn:incoming>
+      <bpmn:incoming>Flow_17i0vic</bpmn:incoming>
     </bpmn:endEvent>
     <bpmn:sequenceFlow id="Flow_0i6hbp9" sourceRef="enumeration_user_task" targetRef="Activity_1ifnmsg" />
     <bpmn:userTask id="Activity_0exwh7c" name="Check Add Another?">
@@ -95,25 +97,18 @@ else:
           <spiffworkflow:property name="formUiSchemaFilename" value="what_next-UISchema.json" />
         </spiffworkflow:properties>
       </bpmn:extensionElements>
-      <bpmn:incoming>Flow_17048ip</bpmn:incoming>
-      <bpmn:outgoing>Flow_01w91df</bpmn:outgoing>
+      <bpmn:incoming>Flow_1pvx3ro</bpmn:incoming>
+      <bpmn:outgoing>Flow_17i0vic</bpmn:outgoing>
     </bpmn:userTask>
-    <bpmn:sequenceFlow id="Flow_01w91df" sourceRef="Activity_0exwh7c" targetRef="Activity_0bj5j4u" />
-    <bpmn:startEvent id="Event_0g0aabd">
-      <bpmn:outgoing>Flow_17048ip</bpmn:outgoing>
+    <bpmn:startEvent id="Event_00b9bxo">
+      <bpmn:outgoing>Flow_07a2oxo</bpmn:outgoing>
     </bpmn:startEvent>
-    <bpmn:sequenceFlow id="Flow_17048ip" sourceRef="Event_0g0aabd" targetRef="Activity_0exwh7c" />
-    <bpmn:sequenceFlow id="Flow_001i5u7" sourceRef="Activity_0bj5j4u" targetRef="Event_0d2gsze" />
-    <bpmn:manualTask id="Activity_0bj5j4u" name="Temp">
-      <bpmn:incoming>Flow_01w91df</bpmn:incoming>
-      <bpmn:outgoing>Flow_001i5u7</bpmn:outgoing>
-    </bpmn:manualTask>
+    <bpmn:sequenceFlow id="Flow_07a2oxo" sourceRef="Event_00b9bxo" targetRef="Call_Shared_Build_Enum_List_from_AWS" />
+    <bpmn:sequenceFlow id="Flow_1pvx3ro" sourceRef="Activity_1cl0n43" targetRef="Activity_0exwh7c" />
+    <bpmn:sequenceFlow id="Flow_17i0vic" sourceRef="Activity_0exwh7c" targetRef="Event_0d2gsze" />
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Sharred_Enumeration_Table">
-      <bpmndi:BPMNShape id="Activity_1cpupwx_di" bpmnElement="Activity_18npi29">
-        <dc:Bounds x="1190" y="137" width="100" height="80" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0k89mkq_di" bpmnElement="Activity_1cl0n43">
         <dc:Bounds x="700" y="137" width="100" height="80" />
         <bpmndi:BPMNLabel />
@@ -135,20 +130,20 @@ else:
       <bpmndi:BPMNShape id="Activity_1xmj9ir_di" bpmnElement="Activity_1ifnmsg">
         <dc:Bounds x="520" y="137" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1oz9lvi_di" bpmnElement="Activity_1ad6wc2">
-        <dc:Bounds x="1020" y="137" width="100" height="80" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_112vjvq_di" bpmnElement="Activity_0exwh7c">
         <dc:Bounds x="860" y="137" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_0g0aabd_di" bpmnElement="Event_0g0aabd">
-        <dc:Bounds x="892" y="12" width="36" height="36" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_0d2gsze_di" bpmnElement="Event_0d2gsze">
-        <dc:Bounds x="892" y="442" width="36" height="36" />
+        <dc:Bounds x="1372" y="159" width="36" height="36" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1xog4jw_di" bpmnElement="Activity_0bj5j4u">
-        <dc:Bounds x="860" y="280" width="100" height="80" />
+      <bpmndi:BPMNShape id="Event_00b9bxo_di" bpmnElement="Event_00b9bxo">
+        <dc:Bounds x="-288" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1oz9lvi_di" bpmnElement="Activity_1ad6wc2">
+        <dc:Bounds x="1020" y="10" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1cpupwx_di" bpmnElement="Activity_18npi29">
+        <dc:Bounds x="1190" y="10" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_1p5fxob_di" bpmnElement="Flow_1p5fxob">
         <di:waypoint x="-70" y="177" />
@@ -170,17 +165,17 @@ else:
         <di:waypoint x="450" y="177" />
         <di:waypoint x="520" y="177" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_01w91df_di" bpmnElement="Flow_01w91df">
-        <di:waypoint x="910" y="217" />
-        <di:waypoint x="910" y="280" />
+      <bpmndi:BPMNEdge id="Flow_07a2oxo_di" bpmnElement="Flow_07a2oxo">
+        <di:waypoint x="-252" y="177" />
+        <di:waypoint x="-170" y="177" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_17048ip_di" bpmnElement="Flow_17048ip">
-        <di:waypoint x="910" y="48" />
-        <di:waypoint x="910" y="137" />
+      <bpmndi:BPMNEdge id="Flow_1pvx3ro_di" bpmnElement="Flow_1pvx3ro">
+        <di:waypoint x="800" y="177" />
+        <di:waypoint x="860" y="177" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_001i5u7_di" bpmnElement="Flow_001i5u7">
-        <di:waypoint x="910" y="360" />
-        <di:waypoint x="910" y="442" />
+      <bpmndi:BPMNEdge id="Flow_17i0vic_di" bpmnElement="Flow_17i0vic">
+        <di:waypoint x="960" y="177" />
+        <di:waypoint x="1372" y="177" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
