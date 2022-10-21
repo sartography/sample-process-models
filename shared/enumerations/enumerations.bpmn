@@ -32,6 +32,7 @@
         <spiffworkflow:preScript />
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_07a2oxo</bpmn:incoming>
+      <bpmn:incoming>Flow_1nenbjs</bpmn:incoming>
       <bpmn:outgoing>Flow_1p5fxob</bpmn:outgoing>
     </bpmn:callActivity>
     <bpmn:sequenceFlow id="Flow_148h40r" sourceRef="Activity_1ig6ogz" targetRef="Activity_0bvdyir" />
@@ -52,6 +53,7 @@ for n in range(0, enumerations_items_list_cnt):
         </spiffworkflow:properties>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_148h40r</bpmn:incoming>
+      <bpmn:incoming>Flow_0otubfa</bpmn:incoming>
       <bpmn:outgoing>Flow_0d8570g</bpmn:outgoing>
     </bpmn:userTask>
     <bpmn:userTask id="enumeration_user_task" name="Add Enumeration">
@@ -110,8 +112,9 @@ else:
     <bpmn:exclusiveGateway id="Gateway_1clgwgu" name="Add another enum for the same subject">
       <bpmn:incoming>Flow_1euuoyf</bpmn:incoming>
       <bpmn:outgoing>Flow_06nsc7t</bpmn:outgoing>
+      <bpmn:outgoing>Flow_1u6l44m</bpmn:outgoing>
     </bpmn:exclusiveGateway>
-    <bpmn:exclusiveGateway id="Gateway_04hnj5e">
+    <bpmn:exclusiveGateway id="Gateway_04hnj5e" default="Flow_1euuoyf">
       <bpmn:incoming>Flow_17i0vic</bpmn:incoming>
       <bpmn:outgoing>Flow_1w2k8v1</bpmn:outgoing>
       <bpmn:outgoing>Flow_1euuoyf</bpmn:outgoing>
@@ -123,6 +126,16 @@ else:
     <bpmn:sequenceFlow id="Flow_06nsc7t" name="Add another enum for the same subject" sourceRef="Gateway_1clgwgu" targetRef="enumeration_user_task">
       <bpmn:conditionExpression>whatNext == "Add another enum for the same subject"</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
+    <bpmn:exclusiveGateway id="Gateway_1wd2vi1" default="Flow_1nenbjs">
+      <bpmn:incoming>Flow_1u6l44m</bpmn:incoming>
+      <bpmn:outgoing>Flow_0otubfa</bpmn:outgoing>
+      <bpmn:outgoing>Flow_1nenbjs</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="Flow_1u6l44m" sourceRef="Gateway_1clgwgu" targetRef="Gateway_1wd2vi1" />
+    <bpmn:sequenceFlow id="Flow_0otubfa" name="Add an enum for another subject" sourceRef="Gateway_1wd2vi1" targetRef="Activity_0bvdyir">
+      <bpmn:conditionExpression>whatNext == "Add an enum for another subject"</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_1nenbjs" sourceRef="Gateway_1wd2vi1" targetRef="Call_Shared_Build_Enum_List_from_AWS" />
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Sharred_Enumeration_Table">
@@ -171,6 +184,9 @@ else:
       <bpmndi:BPMNShape id="Gateway_04hnj5e_di" bpmnElement="Gateway_04hnj5e" isMarkerVisible="true">
         <dc:Bounds x="1045" y="152" width="50" height="50" />
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_1wd2vi1_di" bpmnElement="Gateway_1wd2vi1" isMarkerVisible="true">
+        <dc:Bounds x="195" y="285" width="50" height="50" />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_1p5fxob_di" bpmnElement="Flow_1p5fxob">
         <di:waypoint x="-70" y="177" />
         <di:waypoint x="0" y="177" />
@@ -218,6 +234,22 @@ else:
         <bpmndi:BPMNLabel>
           <dc:Bounds x="417" y="240" width="65" height="40" />
         </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1u6l44m_di" bpmnElement="Flow_1u6l44m">
+        <di:waypoint x="375" y="310" />
+        <di:waypoint x="245" y="310" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0otubfa_di" bpmnElement="Flow_0otubfa">
+        <di:waypoint x="220" y="285" />
+        <di:waypoint x="220" y="217" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="239" y="246" width="82" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1nenbjs_di" bpmnElement="Flow_1nenbjs">
+        <di:waypoint x="195" y="310" />
+        <di:waypoint x="-120" y="310" />
+        <di:waypoint x="-120" y="217" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
