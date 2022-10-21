@@ -549,7 +549,7 @@ del(userStatusKey)</bpmn:script>
       <bpmn:extensionElements>
         <spiffworkflow:serviceTaskOperator id="waku/SendMessage" resultVariable="waku_response">
           <spiffworkflow:parameters>
-            <spiffworkflow:parameter id="message" type="str" value="&#34;Hi &#34; + current_user_extras[&#34;first_name&#34;] + &#34;, your invoice has been approved. It will be paid in the next pay run.\nInvoice no: &#34; + invoice.invoiceId + &#34;\nAmount: &#34; + invoice.invoiceCurrency + str(invoice.invoiceAmount) + &#34;\nDate submitted: &#34; + invoice.invoiceDate + &#34;\nStatus: &#34; + invoice.invoiceStatus + &#34;\nProcess Instance Id: &#34; + str(process_instance_id) + &#34;\nLink to Spiff: https://demo.spiffworkflow.org/&#34;" />
+            <spiffworkflow:parameter id="message" type="str" value="&#34;Hi &#34; + current_user_extras[&#34;first_name&#34;] + &#34;, your invoice has been approved. It will be paid in the next pay run.\nInvoice no: &#34; + invoice.invoiceId + &#34;\nAmount: &#34; + invoice.invoiceCurrency + f&#39;{invoice.invoiceAmount:.2f}&#39; + &#34;\nDate submitted: &#34; + invoice.invoiceDate + &#34;\nStatus: &#34; + invoice.invoiceStatus + &#34;\nProcess Instance Id: &#34; + str(process_instance_id) + &#34;\nLink to Spiff: https://demo.spiffworkflow.org/&#34;" />
             <spiffworkflow:parameter id="message_type" type="str" value="&#34;wakuext_sendOneToOneMessage&#34;" />
             <spiffworkflow:parameter id="recipient" type="str" value="current_user_extras[&#34;status_key&#34;]" />
           </spiffworkflow:parameters>
