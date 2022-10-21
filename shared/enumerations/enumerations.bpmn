@@ -87,7 +87,7 @@ else:
       </bpmn:extensionElements>
     </bpmn:serviceTask>
     <bpmn:endEvent id="Event_0d2gsze">
-      <bpmn:incoming>Flow_17i0vic</bpmn:incoming>
+      <bpmn:incoming>Flow_1w2k8v1</bpmn:incoming>
     </bpmn:endEvent>
     <bpmn:sequenceFlow id="Flow_0i6hbp9" sourceRef="enumeration_user_task" targetRef="Activity_1ifnmsg" />
     <bpmn:userTask id="Activity_0exwh7c" name="Check Add Another?">
@@ -105,8 +105,15 @@ else:
     </bpmn:startEvent>
     <bpmn:sequenceFlow id="Flow_07a2oxo" sourceRef="Event_00b9bxo" targetRef="Call_Shared_Build_Enum_List_from_AWS" />
     <bpmn:sequenceFlow id="Flow_1pvx3ro" sourceRef="Activity_1cl0n43" targetRef="Activity_0exwh7c" />
-    <bpmn:sequenceFlow id="Flow_17i0vic" sourceRef="Activity_0exwh7c" targetRef="Event_0d2gsze" />
+    <bpmn:sequenceFlow id="Flow_17i0vic" sourceRef="Activity_0exwh7c" targetRef="Gateway_04hnj5e" />
     <bpmn:exclusiveGateway id="Gateway_1clgwgu" name="Add another enum for the same subject" />
+    <bpmn:exclusiveGateway id="Gateway_04hnj5e">
+      <bpmn:incoming>Flow_17i0vic</bpmn:incoming>
+      <bpmn:outgoing>Flow_1w2k8v1</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="Flow_1w2k8v1" sourceRef="Gateway_04hnj5e" targetRef="Event_0d2gsze">
+      <bpmn:conditionExpression>whatNext == "Exit"</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Sharred_Enumeration_Table">
@@ -152,6 +159,9 @@ else:
           <dc:Bounds x="369" y="342" width="65" height="40" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_04hnj5e_di" bpmnElement="Gateway_04hnj5e" isMarkerVisible="true">
+        <dc:Bounds x="1045" y="152" width="50" height="50" />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_1p5fxob_di" bpmnElement="Flow_1p5fxob">
         <di:waypoint x="-70" y="177" />
         <di:waypoint x="0" y="177" />
@@ -182,6 +192,10 @@ else:
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_17i0vic_di" bpmnElement="Flow_17i0vic">
         <di:waypoint x="970" y="177" />
+        <di:waypoint x="1045" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1w2k8v1_di" bpmnElement="Flow_1w2k8v1">
+        <di:waypoint x="1095" y="177" />
         <di:waypoint x="1372" y="177" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
