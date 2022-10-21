@@ -31,7 +31,6 @@
         <bpmn:flowNodeRef>Activity_1lq96cy</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_1b58a3z</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_102t7tk</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Event_1usbnt0</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_0fq1nb4</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>SubProcess_Data_validation_rules</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_show_errors</bpmn:flowNodeRef>
@@ -57,6 +56,7 @@
         <bpmn:flowNodeRef>Gateway_16gxu6s</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_1u89kok</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_1r3yh2k</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Event_1usbnt0</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_1so23vf" name="Finance Team">
         <bpmn:flowNodeRef>Activity_0cdgqi0</bpmn:flowNodeRef>
@@ -547,7 +547,7 @@ del(userStatusKey)</bpmn:script>
       <bpmn:extensionElements>
         <spiffworkflow:serviceTaskOperator id="waku/SendMessage" resultVariable="waku_response">
           <spiffworkflow:parameters>
-            <spiffworkflow:parameter id="message" type="str" value="&#34;Hi &#34; + current_user_extras[&#34;first_name&#34;] + &#34;,  your invoice has been approved. It will be paid in the next pay run.\n\nInvoice no: &#34; + str(invoiceId) + &#34;\nAmount: &#34; + invoiceCurrency + str(invoiceAmount)" />
+            <spiffworkflow:parameter id="message" type="str" value="&#34;Hi &#34; + current_user_extras[&#34;first_name&#34;] + &#34;, your invoice has been approved. It will be paid in the next pay run.\nInvoice no: &#34; + invoice.invoiceId + &#34;\nAmount: &#34; + invoice.invoiceCurrency + str(invoice.invoiceAmount) + &#34;\nDate submitted: &#34; + invoice.invoiceDate + &#34;\nStatus: &#34; + invoice.invoiceStatus + &#34;\nProcess Instance Id: &#34; + str(process_instance_id) + &#34;\nLink to Spiff: https://demo.spiffworkflow.org/&#34;" />
             <spiffworkflow:parameter id="message_type" type="str" value="&#34;wakuext_sendOneToOneMessage&#34;" />
             <spiffworkflow:parameter id="recipient" type="str" value="current_user_extras[&#34;status_key&#34;]" />
           </spiffworkflow:parameters>
@@ -556,9 +556,6 @@ del(userStatusKey)</bpmn:script>
       <bpmn:incoming>Flow_053ca95</bpmn:incoming>
       <bpmn:outgoing>Flow_1r0a699</bpmn:outgoing>
     </bpmn:serviceTask>
-    <bpmn:endEvent id="Event_1usbnt0">
-      <bpmn:incoming>Flow_1r0a699</bpmn:incoming>
-    </bpmn:endEvent>
     <bpmn:serviceTask id="Activity_0fq1nb4" name="5. Create Invoice in Xero">
       <bpmn:extensionElements>
         <spiffworkflow:serviceTaskOperator id="xero/CreateInvoice">
@@ -626,6 +623,9 @@ isCurrentUser = True</spiffworkflow:preScript>
     <bpmn:startEvent id="Event_1r3yh2k">
       <bpmn:outgoing>Flow_1vxagrf</bpmn:outgoing>
     </bpmn:startEvent>
+    <bpmn:endEvent id="Event_1usbnt0">
+      <bpmn:incoming>Flow_1r0a699</bpmn:incoming>
+    </bpmn:endEvent>
   </bpmn:process>
   <bpmn:process id="Process_cc_invoice_approval_process_v2_c" isExecutable="false" />
   <bpmn:process id="Process_cc_invoice_approval_process_v2_d" isExecutable="false" />
@@ -670,6 +670,9 @@ isCurrentUser = True</spiffworkflow:preScript>
         <bpmndi:BPMNLabel>
           <dc:Bounds x="1340" y="557" width="60" height="14" />
         </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1usbnt0_di" bpmnElement="Event_1usbnt0">
+        <dc:Bounds x="4052" y="582" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0z13hw3_di" bpmnElement="SubProcess_Data_validation_rules">
         <dc:Bounds x="1170" y="482" width="100" height="80" />
@@ -776,9 +779,6 @@ isCurrentUser = True</spiffworkflow:preScript>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0q5d0ku_di" bpmnElement="Activity_102t7tk">
         <dc:Bounds x="3920" y="560" width="100" height="80" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_1usbnt0_di" bpmnElement="Event_1usbnt0">
-        <dc:Bounds x="3952" y="702" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0ejn04g_di" bpmnElement="Activity_0fq1nb4">
         <dc:Bounds x="3770" y="560" width="100" height="80" />
@@ -970,8 +970,8 @@ isCurrentUser = True</spiffworkflow:preScript>
         <di:waypoint x="3410" y="600" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1r0a699_di" bpmnElement="Flow_1r0a699">
-        <di:waypoint x="3970" y="640" />
-        <di:waypoint x="3970" y="702" />
+        <di:waypoint x="4020" y="600" />
+        <di:waypoint x="4052" y="600" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0kngdw4_di" bpmnElement="Flow_0kngdw4">
         <di:waypoint x="2727" y="412" />
