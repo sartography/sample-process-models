@@ -62,6 +62,7 @@ for n in range(0, enumerations_items_list_cnt):
         </spiffworkflow:properties>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_0d8570g</bpmn:incoming>
+      <bpmn:incoming>Flow_06nsc7t</bpmn:incoming>
       <bpmn:outgoing>Flow_0i6hbp9</bpmn:outgoing>
     </bpmn:userTask>
     <bpmn:scriptTask id="Activity_1ifnmsg" name="Set Subject" scriptFormat="python">
@@ -106,13 +107,21 @@ else:
     <bpmn:sequenceFlow id="Flow_07a2oxo" sourceRef="Event_00b9bxo" targetRef="Call_Shared_Build_Enum_List_from_AWS" />
     <bpmn:sequenceFlow id="Flow_1pvx3ro" sourceRef="Activity_1cl0n43" targetRef="Activity_0exwh7c" />
     <bpmn:sequenceFlow id="Flow_17i0vic" sourceRef="Activity_0exwh7c" targetRef="Gateway_04hnj5e" />
-    <bpmn:exclusiveGateway id="Gateway_1clgwgu" name="Add another enum for the same subject" />
+    <bpmn:exclusiveGateway id="Gateway_1clgwgu" name="Add another enum for the same subject">
+      <bpmn:incoming>Flow_1euuoyf</bpmn:incoming>
+      <bpmn:outgoing>Flow_06nsc7t</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
     <bpmn:exclusiveGateway id="Gateway_04hnj5e">
       <bpmn:incoming>Flow_17i0vic</bpmn:incoming>
       <bpmn:outgoing>Flow_1w2k8v1</bpmn:outgoing>
+      <bpmn:outgoing>Flow_1euuoyf</bpmn:outgoing>
     </bpmn:exclusiveGateway>
     <bpmn:sequenceFlow id="Flow_1w2k8v1" sourceRef="Gateway_04hnj5e" targetRef="Event_0d2gsze">
       <bpmn:conditionExpression>whatNext == "Exit"</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_1euuoyf" sourceRef="Gateway_04hnj5e" targetRef="Gateway_1clgwgu" />
+    <bpmn:sequenceFlow id="Flow_06nsc7t" name="Add another enum for the same subject" sourceRef="Gateway_1clgwgu" targetRef="enumeration_user_task">
+      <bpmn:conditionExpression>whatNext == "Add another enum for the same subject"</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
@@ -197,6 +206,18 @@ else:
       <bpmndi:BPMNEdge id="Flow_1w2k8v1_di" bpmnElement="Flow_1w2k8v1">
         <di:waypoint x="1095" y="177" />
         <di:waypoint x="1372" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1euuoyf_di" bpmnElement="Flow_1euuoyf">
+        <di:waypoint x="1070" y="202" />
+        <di:waypoint x="1070" y="310" />
+        <di:waypoint x="425" y="310" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_06nsc7t_di" bpmnElement="Flow_06nsc7t">
+        <di:waypoint x="400" y="285" />
+        <di:waypoint x="400" y="217" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="417" y="240" width="65" height="40" />
+        </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
