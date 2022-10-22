@@ -14,10 +14,10 @@ addNew = False</spiffworkflow:preScript>
       <bpmn:outgoing>Flow_0oh3r7q</bpmn:outgoing>
     </bpmn:callActivity>
     <bpmn:endEvent id="Event_0brhprl">
-      <bpmn:incoming>Flow_18zj1kx</bpmn:incoming>
+      <bpmn:incoming>Flow_174qezd</bpmn:incoming>
     </bpmn:endEvent>
     <bpmn:sequenceFlow id="Flow_0oh3r7q" sourceRef="Activity_05iptty" targetRef="Activity_0j2b9gv" />
-    <bpmn:sequenceFlow id="Flow_18zj1kx" sourceRef="Activity_0j2b9gv" targetRef="Event_0brhprl" />
+    <bpmn:sequenceFlow id="Flow_18zj1kx" sourceRef="Activity_0j2b9gv" targetRef="Activity_1gp7tds" />
     <bpmn:userTask id="Activity_0j2b9gv" name="Select Currency">
       <bpmn:extensionElements>
         <spiffworkflow:properties>
@@ -28,6 +28,14 @@ addNew = False</spiffworkflow:preScript>
       <bpmn:incoming>Flow_0oh3r7q</bpmn:incoming>
       <bpmn:outgoing>Flow_18zj1kx</bpmn:outgoing>
     </bpmn:userTask>
+    <bpmn:sequenceFlow id="Flow_174qezd" sourceRef="Activity_1gp7tds" targetRef="Event_0brhprl" />
+    <bpmn:businessRuleTask id="Activity_1gp7tds" name="Get Currency Formatting Info">
+      <bpmn:extensionElements>
+        <spiffworkflow:calledDecisionId>Currency_Format</spiffworkflow:calledDecisionId>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_18zj1kx</bpmn:incoming>
+      <bpmn:outgoing>Flow_174qezd</bpmn:outgoing>
+    </bpmn:businessRuleTask>
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Proccess_fsb94qw">
@@ -38,11 +46,14 @@ addNew = False</spiffworkflow:preScript>
         <dc:Bounds x="270" y="137" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_0brhprl_di" bpmnElement="Event_0brhprl">
-        <dc:Bounds x="882" y="159" width="36" height="36" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_145za7d_di" bpmnElement="Activity_0j2b9gv">
         <dc:Bounds x="440" y="137" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0z2f649_di" bpmnElement="Activity_1gp7tds">
+        <dc:Bounds x="610" y="137" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0brhprl_di" bpmnElement="Event_0brhprl">
+        <dc:Bounds x="1032" y="159" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_1gd0615_di" bpmnElement="Flow_1gd0615">
         <di:waypoint x="215" y="177" />
@@ -54,7 +65,11 @@ addNew = False</spiffworkflow:preScript>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_18zj1kx_di" bpmnElement="Flow_18zj1kx">
         <di:waypoint x="540" y="177" />
-        <di:waypoint x="882" y="177" />
+        <di:waypoint x="610" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_174qezd_di" bpmnElement="Flow_174qezd">
+        <di:waypoint x="710" y="177" />
+        <di:waypoint x="1032" y="177" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
