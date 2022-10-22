@@ -43,6 +43,12 @@ addNew = False</spiffworkflow:preScript>
       <bpmn:script># Add zeros if less than two decimal digits
 curAmount_str = "{:0,.2f}".format(curAmount)
 
+# Check if separaters need to be swapped
+if curThousandsSeparator == ".":
+    main_currency, fractional_currency = curAmount_str.split(".")[0], curAmount_str.split(".")[1]
+    new_main_currency = main_currency.replace(",", ".")
+    curAmount_str = new_main_currency + curFractionalSeparator + fractional_currency
+
 # Add Currency Symbol
 if curSymbolLocation == "Left"
    curAmount_str = curSymbol + " " * curSymbolSpaces + curAmount_str
@@ -50,27 +56,7 @@ elif curSymbolLocation == "Right"
    curAmount_str = curAmount_str + " " * curSymbolSpaces + curSymbol
 
 # Add Currency Code
-curAmount_str = curAmount_str + " " + curCode
-
-# Check if separaters need to be swapped
-if curThousandsSeparator == ".":
-    main_currency, fractional_currency = currency.split(".")[0], currency.split(".")[1]
-    new_main_currency = main_currency.replace(",", ".")
-    currency = new_main_currency + fractional_separator + fractional_currency
-
-
-
-
-"curSymbol": "$",
-  "addNew": false,
-  "curAmount": 2000,
-  "curAmount_str": "2,000.00",
-  "curCode": "AUD",
-  "curFractionalSeparator": ".",
-  "curName": "Australian Dollar",
-  "curSymbolLocation": "Left",
-  "curSymbolSpaces": 1,
-  "curThousandsSeparator": ",",</bpmn:script>
+curAmount_str = curAmount_str + " " + curCode</bpmn:script>
     </bpmn:scriptTask>
     <bpmn:sequenceFlow id="Flow_0ljzxco" sourceRef="Activity_0045py7" targetRef="Event_0brhprl" />
     <bpmn:manualTask id="Activity_0045py7" name="Display Currency Format">
