@@ -88,8 +88,7 @@ else:
           <spiffworkflow:property name="formJsonSchemaFilename" value="what_next-JSONSchema.json" />
           <spiffworkflow:property name="formUiSchemaFilename" value="what_next-UISchema.json" />
         </spiffworkflow:properties>
-        <spiffworkflow:postScript>addValue = ""
-addLabel = ""</spiffworkflow:postScript>
+        <spiffworkflow:postScript />
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_1pvx3ro</bpmn:incoming>
       <bpmn:outgoing>Flow_17i0vic</bpmn:outgoing>
@@ -101,7 +100,7 @@ addLabel = ""</spiffworkflow:postScript>
     <bpmn:sequenceFlow id="Flow_1pvx3ro" sourceRef="Activity_1cl0n43" targetRef="Activity_0exwh7c" />
     <bpmn:sequenceFlow id="Flow_17i0vic" sourceRef="Activity_0exwh7c" targetRef="Gateway_04hnj5e" />
     <bpmn:exclusiveGateway id="Gateway_1clgwgu" name="Add another enum for the same subject" default="Flow_1u6l44m">
-      <bpmn:incoming>Flow_1euuoyf</bpmn:incoming>
+      <bpmn:incoming>Flow_1yld5u8</bpmn:incoming>
       <bpmn:outgoing>Flow_06nsc7t</bpmn:outgoing>
       <bpmn:outgoing>Flow_1u6l44m</bpmn:outgoing>
     </bpmn:exclusiveGateway>
@@ -113,7 +112,7 @@ addLabel = ""</spiffworkflow:postScript>
     <bpmn:sequenceFlow id="Flow_1w2k8v1" sourceRef="Gateway_04hnj5e" targetRef="Event_0d2gsze">
       <bpmn:conditionExpression>whatNext == "Exit"</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
-    <bpmn:sequenceFlow id="Flow_1euuoyf" sourceRef="Gateway_04hnj5e" targetRef="Gateway_1clgwgu" />
+    <bpmn:sequenceFlow id="Flow_1euuoyf" sourceRef="Gateway_04hnj5e" targetRef="Activity_0h7n179" />
     <bpmn:sequenceFlow id="Flow_06nsc7t" name="Add another enum for the same subject" sourceRef="Gateway_1clgwgu" targetRef="enumeration_user_task">
       <bpmn:conditionExpression>whatNext == "Add another enum for the same subject"</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
@@ -128,6 +127,13 @@ addLabel = ""</spiffworkflow:postScript>
     </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="Flow_1nenbjs" sourceRef="Gateway_1wd2vi1" targetRef="Call_Shared_Build_Enum_List_from_AWS" />
     <bpmn:sequenceFlow id="Flow_1vvnsbc" sourceRef="Call_Shared_Build_Enum_List_from_AWS" targetRef="Activity_0bvdyir" />
+    <bpmn:sequenceFlow id="Flow_1yld5u8" sourceRef="Activity_0h7n179" targetRef="Gateway_1clgwgu" />
+    <bpmn:scriptTask id="Activity_0h7n179" name="Reset Variables">
+      <bpmn:incoming>Flow_1euuoyf</bpmn:incoming>
+      <bpmn:outgoing>Flow_1yld5u8</bpmn:outgoing>
+      <bpmn:script>addValue = ""
+addLabel = ""</bpmn:script>
+    </bpmn:scriptTask>
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Sharred_Enumeration_Table">
@@ -175,6 +181,9 @@ addLabel = ""</spiffworkflow:postScript>
       <bpmndi:BPMNShape id="Gateway_1wd2vi1_di" bpmnElement="Gateway_1wd2vi1" isMarkerVisible="true">
         <dc:Bounds x="195" y="335" width="50" height="50" />
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_15i1l61_di" bpmnElement="Activity_0h7n179">
+        <dc:Bounds x="700" y="320" width="100" height="80" />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_0d8570g_di" bpmnElement="Flow_0d8570g">
         <di:waypoint x="270" y="177" />
         <di:waypoint x="350" y="177" />
@@ -206,7 +215,7 @@ addLabel = ""</spiffworkflow:postScript>
       <bpmndi:BPMNEdge id="Flow_1euuoyf_di" bpmnElement="Flow_1euuoyf">
         <di:waypoint x="1070" y="202" />
         <di:waypoint x="1070" y="360" />
-        <di:waypoint x="425" y="360" />
+        <di:waypoint x="800" y="360" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_06nsc7t_di" bpmnElement="Flow_06nsc7t">
         <di:waypoint x="400" y="335" />
@@ -234,6 +243,10 @@ addLabel = ""</spiffworkflow:postScript>
       <bpmndi:BPMNEdge id="Flow_1vvnsbc_di" bpmnElement="Flow_1vvnsbc">
         <di:waypoint x="90" y="177" />
         <di:waypoint x="170" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1yld5u8_di" bpmnElement="Flow_1yld5u8">
+        <di:waypoint x="700" y="360" />
+        <di:waypoint x="425" y="360" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
