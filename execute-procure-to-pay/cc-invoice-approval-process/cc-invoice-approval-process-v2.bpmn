@@ -611,6 +611,11 @@ del(userStatusKey)</bpmn:script>
       </bpmn:timerEventDefinition>
     </bpmn:boundaryEvent>
     <bpmn:callActivity id="Activity_10p5t0r" name="Call Shared: Currency Format" calledElement="Shared_Currency_Format">
+      <bpmn:extensionElements>
+        <spiffworkflow:preScript>curCode = invoice.invoiceCurrency
+curAmount = invoice.invoiceAmount</spiffworkflow:preScript>
+        <spiffworkflow:postScript>invoice.invoiceAmount_str = curAmount_str</spiffworkflow:postScript>
+      </bpmn:extensionElements>
       <bpmn:incoming>Flow_0a9w301</bpmn:incoming>
       <bpmn:outgoing>Flow_0h1x7y6</bpmn:outgoing>
     </bpmn:callActivity>
@@ -665,6 +670,36 @@ del(userStatusKey)</bpmn:script>
         <bpmndi:BPMNLabel>
           <dc:Bounds x="1340" y="557" width="60" height="14" />
         </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0z13hw3_di" bpmnElement="SubProcess_Data_validation_rules">
+        <dc:Bounds x="1170" y="482" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0qtkhpi_di" bpmnElement="Activity_show_errors">
+        <dc:Bounds x="1080" y="320" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0svbvjn_di" bpmnElement="Event_invoice_validation_failed">
+        <dc:Bounds x="1352" y="412" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1262" y="411" width="85" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_13dc2qg_di" bpmnElement="Activity_1colhao">
+        <dc:Bounds x="810" y="482" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_16gxu6s_di" bpmnElement="Gateway_16gxu6s" isMarkerVisible="true">
+        <dc:Bounds x="685" y="495" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_193pz3d_di" bpmnElement="Activity_1u89kok">
+        <dc:Bounds x="510" y="480" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1r3yh2k_di" bpmnElement="Event_1r3yh2k">
+        <dc:Bounds x="402" y="502" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_05tnrhv_di" bpmnElement="Activity_080qvey">
+        <dc:Bounds x="750" y="640" width="100" height="80" />
+        <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Gateway_10gbs8m_di" bpmnElement="Gateway_05ov5p5">
         <dc:Bounds x="1605" y="497" width="50" height="50" />
@@ -778,49 +813,19 @@ del(userStatusKey)</bpmn:script>
       <bpmndi:BPMNShape id="Event_1usbnt0_di" bpmnElement="Event_1usbnt0">
         <dc:Bounds x="4152" y="582" width="36" height="36" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1xg4kby_di" bpmnElement="Activity_10p5t0r">
-        <dc:Bounds x="2130" y="482" width="100" height="80" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Gateway_05ztwup_di" bpmnElement="Gateway_1717c0p">
-        <dc:Bounds x="2004" y="495" width="50" height="50" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0z13hw3_di" bpmnElement="SubProcess_Data_validation_rules">
-        <dc:Bounds x="1170" y="482" width="100" height="80" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0qtkhpi_di" bpmnElement="Activity_show_errors">
-        <dc:Bounds x="1080" y="320" width="100" height="80" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_0svbvjn_di" bpmnElement="Event_invoice_validation_failed">
-        <dc:Bounds x="1352" y="412" width="36" height="36" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="1262" y="411" width="85" height="27" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_13dc2qg_di" bpmnElement="Activity_1colhao">
-        <dc:Bounds x="810" y="482" width="100" height="80" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Gateway_16gxu6s_di" bpmnElement="Gateway_16gxu6s" isMarkerVisible="true">
-        <dc:Bounds x="685" y="495" width="50" height="50" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_193pz3d_di" bpmnElement="Activity_1u89kok">
-        <dc:Bounds x="510" y="480" width="100" height="80" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_1r3yh2k_di" bpmnElement="Event_1r3yh2k">
-        <dc:Bounds x="402" y="502" width="36" height="36" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_05tnrhv_di" bpmnElement="Activity_080qvey">
-        <dc:Bounds x="750" y="640" width="100" height="80" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1rn2mgi_di" bpmnElement="Activity_0gkejaj">
         <dc:Bounds x="2579" y="482" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0j807g0_di" bpmnElement="Activity_1ucvkk4">
         <dc:Bounds x="3050" y="372" width="100" height="80" />
         <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1xg4kby_di" bpmnElement="Activity_10p5t0r">
+        <dc:Bounds x="2130" y="482" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_05ztwup_di" bpmnElement="Gateway_1717c0p">
+        <dc:Bounds x="2004" y="495" width="50" height="50" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_1n1umf8_di" bpmnElement="Event_09q0ym0">
         <dc:Bounds x="3112" y="882" width="36" height="36" />
