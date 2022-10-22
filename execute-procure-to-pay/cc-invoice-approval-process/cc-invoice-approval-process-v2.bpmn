@@ -316,7 +316,7 @@ temp_test = invoice["invoiceStatus"]
       <bpmn:extensionElements>
         <spiffworkflow:serviceTaskOperator id="waku/SendMessage" resultVariable="wr">
           <spiffworkflow:parameters>
-            <spiffworkflow:parameter id="message" type="str" value="&#34;Thanks for submitting your invoice &#34; + current_user_extras[&#34;first_name&#34;] + &#34;.  We will keep you updated on the next steps.\nInvoice no: &#34; + invoice.invoiceId + &#34;\nAmount: &#34; + invoice.invoiceCurrency + invoice.invoiceAmount_str + &#34;\nDate submitted: &#34; + invoice.invoiceDate  + &#34;\nStatus: &#34; + invoice.invoiceStatus + &#34;\nProcess Instance Id: &#34; + str(process_instance_id) + &#34;\nLink to Spiff: https://demo.spiffworkflow.org/&#34;" />
+            <spiffworkflow:parameter id="message" type="str" value="&#34;Thanks for submitting your invoice &#34; + current_user_extras[&#34;first_name&#34;] + &#34;.  We will keep you updated on the next steps.\nInvoice no: &#34; + invoice.invoiceId + &#34;\nAmount: &#34; + invoice.invoiceAmount_str + &#34;\nDate submitted: &#34; + invoice.invoiceDate  + &#34;\nStatus: &#34; + invoice.invoiceStatus + &#34;\nProcess Instance Id: &#34; + str(process_instance_id) + &#34;\nLink to Spiff: https://demo.spiffworkflow.org/&#34;" />
             <spiffworkflow:parameter id="message_type" type="str" value="&#34;wakuext_sendOneToOneMessage&#34;" />
             <spiffworkflow:parameter id="recipient" type="str" value="current_user_extras[&#34;status_key&#34;]" />
           </spiffworkflow:parameters>
@@ -324,6 +324,9 @@ temp_test = invoice["invoiceStatus"]
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_0h1x7y6</bpmn:incoming>
       <bpmn:outgoing>Flow_1n239ad</bpmn:outgoing>
+      <bpmn:dataOutputAssociation id="DataOutputAssociation_1sosfhs">
+        <bpmn:targetRef>DataObjectReference_12rfrua</bpmn:targetRef>
+      </bpmn:dataOutputAssociation>
     </bpmn:serviceTask>
     <bpmn:exclusiveGateway id="Gateway_1l4tz4i" name="Approved?" default="Flow_18xvx8w">
       <bpmn:incoming>Flow_0yvmfqu</bpmn:incoming>
@@ -1072,6 +1075,10 @@ isTest = False</spiffworkflow:preScript>
       <bpmndi:BPMNEdge id="Flow_1dgkwzr_di" bpmnElement="Flow_1dgkwzr">
         <di:waypoint x="4070" y="560" />
         <di:waypoint x="4070" y="150" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DataOutputAssociation_1sosfhs_di" bpmnElement="DataOutputAssociation_1sosfhs">
+        <di:waypoint x="2391" y="482" />
+        <di:waypoint x="2427" y="415" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
