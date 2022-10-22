@@ -367,7 +367,7 @@ temp_test = invoice["invoiceStatus"]
       <bpmn:extensionElements>
         <spiffworkflow:serviceTaskOperator id="waku/SendMessage" resultVariable="waku_response">
           <spiffworkflow:parameters>
-            <spiffworkflow:parameter id="message" type="str" value="&#34;Hi &#34; + current_user_extras[&#34;first_name&#34;] + &#34;, your invoice has been rejected. The reason specified for the rejection is: [&#34; + invoice.comment + &#34;]. Please get in touch with your Project Lead to discuss this further.\nInvoice no: &#34; + invoice.invoiceId + &#34;\nAmount: &#34; + invoice.invoiceCurrency + f&#39;{invoice.invoiceAmount:.2f}&#39; + &#34;\nDate submitted: &#34; + invoice.invoiceDate + &#34;\nStatus: &#34; + invoice.invoiceStatus + &#34;\nProcess Instance Id: &#34; + str(process_instance_id) + &#34;\nLink to Spiff: https://demo.spiffworkflow.org/&#34;" />
+            <spiffworkflow:parameter id="message" type="str" value="&#34;Hi &#34; + current_user_extras[&#34;first_name&#34;] + &#34;, your invoice has been rejected. The reason specified for the rejection is: [&#34; + invoice.comment + &#34;]. Please get in touch with your Project Lead to discuss this further.\nInvoice no: &#34; + invoice.invoiceId + &#34;\nAmount: &#34; + invoice.invoiceAmount_str + &#34;\nDate submitted: &#34; + invoice.invoiceDate + &#34;\nStatus: &#34; + invoice.invoiceStatus + &#34;\nProcess Instance Id: &#34; + str(process_instance_id) + &#34;\nLink to Spiff: https://demo.spiffworkflow.org/&#34;" />
             <spiffworkflow:parameter id="message_type" type="str" value="&#34;wakuext_sendOneToOneMessage&#34;" />
             <spiffworkflow:parameter id="recipient" type="str" value="current_user_extras[&#34;status_key&#34;]" />
           </spiffworkflow:parameters>
@@ -1031,6 +1031,10 @@ isTest = False</spiffworkflow:preScript>
       <bpmndi:BPMNShape id="TextAnnotation_1uaw1w7_di" bpmnElement="TextAnnotation_1uaw1w7">
         <dc:Bounds x="640" y="-170" width="580" height="30" />
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="DataOutputAssociation_1sosfhs_di" bpmnElement="DataOutputAssociation_1sosfhs">
+        <di:waypoint x="2391" y="482" />
+        <di:waypoint x="2427" y="415" />
+      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Association_1eygti7_di" bpmnElement="Association_1eygti7">
         <di:waypoint x="906" y="-70" />
         <di:waypoint x="973" y="-140" />
@@ -1069,10 +1073,6 @@ isTest = False</spiffworkflow:preScript>
       <bpmndi:BPMNEdge id="Flow_1dgkwzr_di" bpmnElement="Flow_1dgkwzr">
         <di:waypoint x="4070" y="560" />
         <di:waypoint x="4070" y="150" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="DataOutputAssociation_1sosfhs_di" bpmnElement="DataOutputAssociation_1sosfhs">
-        <di:waypoint x="2391" y="482" />
-        <di:waypoint x="2427" y="415" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
