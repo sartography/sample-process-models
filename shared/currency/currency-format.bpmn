@@ -91,18 +91,21 @@ catch NameError:
     </bpmn:exclusiveGateway>
     <bpmn:sequenceFlow id="Flow_0nlsajj" sourceRef="Gateway_0lpxoao" targetRef="Activity_1gp7tds" />
     <bpmn:sequenceFlow id="Flow_17jio5w" name="No" sourceRef="Gateway_0qu1agy" targetRef="Gateway_0lpxoao" />
-    <bpmn:exclusiveGateway id="Gateway_0u1hfe0" name="Testing?">
+    <bpmn:exclusiveGateway id="Gateway_0u1hfe0" name="Testing?" default="Flow_0hyui7b">
       <bpmn:incoming>Flow_1jyj2rk</bpmn:incoming>
       <bpmn:outgoing>Flow_1qlhanf</bpmn:outgoing>
+      <bpmn:outgoing>Flow_0hyui7b</bpmn:outgoing>
     </bpmn:exclusiveGateway>
     <bpmn:sequenceFlow id="Flow_1qlhanf" name="Yes" sourceRef="Gateway_0u1hfe0" targetRef="Activity_0045py7">
       <bpmn:conditionExpression>isTest</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:exclusiveGateway id="Gateway_0jk8rox">
       <bpmn:incoming>Flow_0ljzxco</bpmn:incoming>
+      <bpmn:incoming>Flow_0hyui7b</bpmn:incoming>
       <bpmn:outgoing>Flow_18r0v1l</bpmn:outgoing>
     </bpmn:exclusiveGateway>
     <bpmn:sequenceFlow id="Flow_18r0v1l" sourceRef="Gateway_0jk8rox" targetRef="Event_0brhprl" />
+    <bpmn:sequenceFlow id="Flow_0hyui7b" name="No" sourceRef="Gateway_0u1hfe0" targetRef="Gateway_0jk8rox" />
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Proccess_fsb94qw">
@@ -207,6 +210,15 @@ catch NameError:
       <bpmndi:BPMNEdge id="Flow_18r0v1l_di" bpmnElement="Flow_18r0v1l">
         <di:waypoint x="1355" y="177" />
         <di:waypoint x="1422" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0hyui7b_di" bpmnElement="Flow_0hyui7b">
+        <di:waypoint x="1040" y="152" />
+        <di:waypoint x="1040" y="110" />
+        <di:waypoint x="1330" y="110" />
+        <di:waypoint x="1330" y="152" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1178" y="92" width="15" height="14" />
+        </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
