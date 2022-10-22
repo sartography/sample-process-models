@@ -29,7 +29,6 @@
         <bpmn:flowNodeRef>Submit_the_invoice</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Gateway_validation_successful_question_mark</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Gateway_05ov5p5</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Gateway_1717c0p</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_0o1vc0a</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_0p88elm</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_104xpp8</bpmn:flowNodeRef>
@@ -56,6 +55,8 @@
         <bpmn:flowNodeRef>Activity_080qvey</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_0gkejaj</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_1ucvkk4</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_10p5t0r</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Gateway_1717c0p</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_1so23vf" name="Finance Team">
         <bpmn:flowNodeRef>Activity_0cdgqi0</bpmn:flowNodeRef>
@@ -257,10 +258,6 @@ isCurrentUser = True</spiffworkflow:preScript>
       <bpmn:outgoing>Flow_12cqm3u</bpmn:outgoing>
       <bpmn:outgoing>Flow_0hev3yn</bpmn:outgoing>
     </bpmn:parallelGateway>
-    <bpmn:parallelGateway id="Gateway_1717c0p">
-      <bpmn:incoming>Flow_02o270g</bpmn:incoming>
-      <bpmn:incoming>Flow_0o94g4u</bpmn:incoming>
-    </bpmn:parallelGateway>
     <bpmn:serviceTask id="Activity_0o1vc0a" name="2c. Save Invoice Data">
       <bpmn:extensionElements>
         <spiffworkflow:serviceTaskOperator id="aws/AddDynamoItem" resultVariable="&#39;responseAddDynamoInvoice&#39;">
@@ -325,6 +322,7 @@ temp_test = invoice["invoiceStatus"]
           </spiffworkflow:parameters>
         </spiffworkflow:serviceTaskOperator>
       </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0h1x7y6</bpmn:incoming>
       <bpmn:outgoing>Flow_1n239ad</bpmn:outgoing>
       <bpmn:dataOutputAssociation id="DataOutputAssociation_0qbdnmg">
         <bpmn:targetRef>DataObjectReference_12rfrua</bpmn:targetRef>
@@ -612,6 +610,17 @@ del(userStatusKey)</bpmn:script>
         <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">timedelta(minutes=3)</bpmn:timeDuration>
       </bpmn:timerEventDefinition>
     </bpmn:boundaryEvent>
+    <bpmn:callActivity id="Activity_10p5t0r" name="Call Shared: Currency Format" calledElement="Shared_Currency_Format">
+      <bpmn:incoming>Flow_0a9w301</bpmn:incoming>
+      <bpmn:outgoing>Flow_0h1x7y6</bpmn:outgoing>
+    </bpmn:callActivity>
+    <bpmn:sequenceFlow id="Flow_0a9w301" sourceRef="Gateway_1717c0p" targetRef="Activity_10p5t0r" />
+    <bpmn:sequenceFlow id="Flow_0h1x7y6" sourceRef="Activity_10p5t0r" targetRef="Activity_0cfvsk7" />
+    <bpmn:parallelGateway id="Gateway_1717c0p">
+      <bpmn:incoming>Flow_02o270g</bpmn:incoming>
+      <bpmn:incoming>Flow_0o94g4u</bpmn:incoming>
+      <bpmn:outgoing>Flow_0a9w301</bpmn:outgoing>
+    </bpmn:parallelGateway>
   </bpmn:process>
   <bpmn:process id="Process_cc_invoice_approval_process_v2_c" isExecutable="false" />
   <bpmn:process id="Process_cc_invoice_approval_process_v2_d" isExecutable="false" />
@@ -659,9 +668,6 @@ del(userStatusKey)</bpmn:script>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Gateway_10gbs8m_di" bpmnElement="Gateway_05ov5p5">
         <dc:Bounds x="1605" y="497" width="50" height="50" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Gateway_05ztwup_di" bpmnElement="Gateway_1717c0p">
-        <dc:Bounds x="2004" y="497" width="50" height="50" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_076kb81_di" bpmnElement="Activity_0o1vc0a">
         <dc:Bounds x="1750" y="400" width="100" height="80" />
@@ -771,6 +777,13 @@ del(userStatusKey)</bpmn:script>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_1usbnt0_di" bpmnElement="Event_1usbnt0">
         <dc:Bounds x="4152" y="582" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1xg4kby_di" bpmnElement="Activity_10p5t0r">
+        <dc:Bounds x="2130" y="482" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_05ztwup_di" bpmnElement="Gateway_1717c0p">
+        <dc:Bounds x="2004" y="495" width="50" height="50" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0z13hw3_di" bpmnElement="SubProcess_Data_validation_rules">
         <dc:Bounds x="1170" y="482" width="100" height="80" />
@@ -917,12 +930,12 @@ del(userStatusKey)</bpmn:script>
       <bpmndi:BPMNEdge id="Flow_02o270g_di" bpmnElement="Flow_02o270g">
         <di:waypoint x="1850" y="440" />
         <di:waypoint x="2029" y="440" />
-        <di:waypoint x="2029" y="497" />
+        <di:waypoint x="2029" y="495" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0o94g4u_di" bpmnElement="Flow_0o94g4u">
         <di:waypoint x="1980" y="600" />
         <di:waypoint x="2029" y="600" />
-        <di:waypoint x="2029" y="547" />
+        <di:waypoint x="2029" y="545" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1vxagrf_di" bpmnElement="Flow_1vxagrf">
         <di:waypoint x="438" y="520" />
@@ -996,6 +1009,14 @@ del(userStatusKey)</bpmn:script>
       <bpmndi:BPMNEdge id="Flow_0u5z1vc_di" bpmnElement="Flow_0u5z1vc">
         <di:waypoint x="1550" y="522" />
         <di:waypoint x="1605" y="522" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0a9w301_di" bpmnElement="Flow_0a9w301">
+        <di:waypoint x="2054" y="520" />
+        <di:waypoint x="2130" y="520" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0h1x7y6_di" bpmnElement="Flow_0h1x7y6">
+        <di:waypoint x="2230" y="522" />
+        <di:waypoint x="2320" y="522" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="Participant_0a8arrz_di" bpmnElement="Participant_0a8arrz" isHorizontal="true">
         <dc:Bounds x="1480" y="1180" width="370" height="80" />
