@@ -415,6 +415,10 @@ approvalComment = ""</spiffworkflow:postScript>
             <spiffworkflow:parameter id="recipient" type="str" value="current_user_extras[&#34;status_key&#34;]" />
           </spiffworkflow:parameters>
         </spiffworkflow:serviceTaskOperator>
+        <spiffworkflow:preScript>if isMatch:
+    messageApproved = "Hi " + current_user_extras["first_name"] + ", your invoice has been approved. It will be paid in the next pay run.\nInvoice no: " + invoice.invoiceId + "\nAmount: " + invoice.invoiceAmount_str + "\nDate submitted: " + invoice.invoiceDate + "\nStatus: " + invoice.invoiceStatus + "\nFinance Comments: " + invoice.commentsFinance + "\nProcess Instance Id: " + str(process_instance_id) + "\nLink to Spiff: https://demo.spiffworkflow.org/"
+else:
+    messageApproved = "Hi " + current_user_extras["first_name"] + ", your invoice has been approved. It will be paid in the next pay run.\nInvoice no: " + invoice.invoiceId + "\nAmount: " + invoice.invoiceAmount_str + "\nDate submitted: " + invoice.invoiceDate + "\nStatus: " + invoice.invoiceStatus + "\nTeam Lead Comments: " + invoice.commentsTeamLead + "\nFinance Comments: " + invoice.commentsFinance + "\nProcess Instance Id: " + str(process_instance_id) + "\nLink to Spiff: https://demo.spiffworkflow.org/"</spiffworkflow:preScript>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_053ca95</bpmn:incoming>
       <bpmn:outgoing>Flow_1r0a699</bpmn:outgoing>
