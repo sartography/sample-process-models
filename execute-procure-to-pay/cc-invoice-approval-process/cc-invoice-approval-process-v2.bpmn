@@ -56,6 +56,7 @@
         <bpmn:flowNodeRef>Activity_1ucvkk4</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_10p5t0r</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Gateway_1717c0p</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_0faln91</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_1so23vf" name="Finance Team">
         <bpmn:flowNodeRef>Activity_0cdgqi0</bpmn:flowNodeRef>
@@ -90,7 +91,7 @@
     <bpmn:sequenceFlow id="Flow_02moyg7" sourceRef="Submit_the_invoice" targetRef="SubProcess_Data_validation_rules" />
     <bpmn:sequenceFlow id="Flow_1ck27i7" sourceRef="SubProcess_Data_validation_rules" targetRef="Gateway_validation_successful_question_mark" />
     <bpmn:sequenceFlow id="Flow_1v8dszb" sourceRef="Event_09q0ym0" targetRef="Activity_1ftzr6x" />
-    <bpmn:sequenceFlow id="Flow_0yvmfqu" sourceRef="Activity_06b32ar" targetRef="Gateway_1l4tz4i" />
+    <bpmn:sequenceFlow id="Flow_0yvmfqu" sourceRef="Activity_06b32ar" targetRef="Activity_0faln91" />
     <bpmn:sequenceFlow id="Flow_12cqm3u" sourceRef="Gateway_05ov5p5" targetRef="Activity_104xpp8" />
     <bpmn:sequenceFlow id="Flow_0hev3yn" sourceRef="Gateway_05ov5p5" targetRef="Activity_0o1vc0a" />
     <bpmn:sequenceFlow id="Flow_02o270g" sourceRef="Activity_0o1vc0a" targetRef="Gateway_1717c0p" />
@@ -327,8 +328,8 @@ temp_test = invoice["invoiceStatus"]
       </bpmn:dataOutputAssociation>
     </bpmn:serviceTask>
     <bpmn:exclusiveGateway id="Gateway_1l4tz4i" name="Approved?" default="Flow_18xvx8w">
-      <bpmn:incoming>Flow_0yvmfqu</bpmn:incoming>
       <bpmn:incoming>Flow_00kky3k</bpmn:incoming>
+      <bpmn:incoming>Flow_15pzvrr</bpmn:incoming>
       <bpmn:outgoing>Flow_18xvx8w</bpmn:outgoing>
       <bpmn:outgoing>Flow_0bfs2xe</bpmn:outgoing>
     </bpmn:exclusiveGateway>
@@ -354,8 +355,7 @@ temp_test = invoice["invoiceStatus"]
           <spiffworkflow:property name="formJsonSchemaFilename" value="invoice-approval_JSONSchema.json" />
           <spiffworkflow:property name="formUiSchemaFilename" value="invoice-approval_UISchema.json" />
         </spiffworkflow:properties>
-        <spiffworkflow:postScript>invoice.commentsTeamLead = approvalComment
-approvalComment = ""</spiffworkflow:postScript>
+        <spiffworkflow:postScript />
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_0lfqk0y</bpmn:incoming>
       <bpmn:outgoing>Flow_0yvmfqu</bpmn:outgoing>
@@ -632,6 +632,13 @@ isTest = False</spiffworkflow:preScript>
       <bpmn:incoming>Flow_0o94g4u</bpmn:incoming>
       <bpmn:outgoing>Flow_0a9w301</bpmn:outgoing>
     </bpmn:parallelGateway>
+    <bpmn:sequenceFlow id="Flow_15pzvrr" sourceRef="Activity_0faln91" targetRef="Gateway_1l4tz4i" />
+    <bpmn:scriptTask id="Activity_0faln91" name="Temp Message Storage">
+      <bpmn:incoming>Flow_0yvmfqu</bpmn:incoming>
+      <bpmn:outgoing>Flow_15pzvrr</bpmn:outgoing>
+      <bpmn:script>invoice.commentsTeamLead = approvalComment
+approvalComment = ""</bpmn:script>
+    </bpmn:scriptTask>
   </bpmn:process>
   <bpmn:process id="Process_cc_invoice_approval_process_v2_c" isExecutable="false" />
   <bpmn:process id="Process_cc_invoice_approval_process_v2_d" isExecutable="false" />
@@ -676,6 +683,9 @@ isTest = False</spiffworkflow:preScript>
         <bpmndi:BPMNLabel>
           <dc:Bounds x="1340" y="557" width="60" height="14" />
         </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1vzea12_di" bpmnElement="Activity_0faln91">
+        <dc:Bounds x="3370" y="670" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0z13hw3_di" bpmnElement="SubProcess_Data_validation_rules">
         <dc:Bounds x="1170" y="482" width="100" height="80" />
@@ -923,8 +933,7 @@ isTest = False</spiffworkflow:preScript>
       <bpmndi:BPMNEdge id="Flow_0yvmfqu_di" bpmnElement="Flow_0yvmfqu">
         <di:waypoint x="3150" y="860" />
         <di:waypoint x="3420" y="860" />
-        <di:waypoint x="3420" y="412" />
-        <di:waypoint x="3535" y="412" />
+        <di:waypoint x="3420" y="750" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_12cqm3u_di" bpmnElement="Flow_12cqm3u">
         <di:waypoint x="1630" y="547" />
@@ -1026,6 +1035,11 @@ isTest = False</spiffworkflow:preScript>
       <bpmndi:BPMNEdge id="Flow_0h1x7y6_di" bpmnElement="Flow_0h1x7y6">
         <di:waypoint x="2230" y="522" />
         <di:waypoint x="2320" y="522" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_15pzvrr_di" bpmnElement="Flow_15pzvrr">
+        <di:waypoint x="3420" y="670" />
+        <di:waypoint x="3420" y="412" />
+        <di:waypoint x="3535" y="412" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="Participant_0a8arrz_di" bpmnElement="Participant_0a8arrz" isHorizontal="true">
         <dc:Bounds x="1480" y="1180" width="370" height="80" />
