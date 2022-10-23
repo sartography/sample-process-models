@@ -620,10 +620,14 @@ approvalComment = ""</bpmn:script>
     <bpmn:endEvent id="Event_1usbnt0">
       <bpmn:incoming>Flow_1r0a699</bpmn:incoming>
     </bpmn:endEvent>
-    <bpmn:scriptTask id="Activity_1b6tead" name="Temp Set Message" scriptFormat="python">
+    <bpmn:scriptTask id="Activity_1b6tead" name="Set Invoice Status to Approved and Awaiting Payment" scriptFormat="python">
       <bpmn:incoming>Flow_053ca95</bpmn:incoming>
       <bpmn:outgoing>Flow_00tndkb</bpmn:outgoing>
-      <bpmn:script>if isMatch:
+      <bpmn:script># Set Invoice Status to Approved and Awaiting Payment
+invoice.invoiceStatus = "Approved and Awaiting Payment"
+
+
+if isMatch:
     messageApproved = "Hi " + current_user_extras["first_name"] + ", your invoice has been approved. It will be paid in the next pay run." + "\n++++++++++++++++" + "\nInvoice no: " + invoice.invoiceId + "\nAmount: " + invoice.invoiceAmount_str + "\nDate submitted: " + invoice.invoiceDate + "\nStatus: " + invoice.invoiceStatus + "\nFinance Comments: " + invoice.commentsFinance + "\nProcess Instance Id: " + str(process_instance_id) + "\nLink to Spiff: https://demo.spiffworkflow.org/"
 else:
     messageApproved = "Hi " + current_user_extras["first_name"] + ", your invoice has been approved. It will be paid in the next pay run." + "\n++++++++++++++++" + "\nInvoice no: " + invoice.invoiceId + "\nAmount: " + invoice.invoiceAmount_str + "\nDate submitted: " + invoice.invoiceDate + "\nStatus: " + invoice.invoiceStatus + "\nTeam Lead Comments: " + invoice.commentsTeamLead + "\nFinance Comments: " + invoice.commentsFinance + "\nProcess Instance Id: " + str(process_instance_id) + "\nLink to Spiff: https://demo.spiffworkflow.org/"</bpmn:script>
@@ -697,9 +701,6 @@ else:
         <bpmndi:BPMNLabel>
           <dc:Bounds x="1340" y="557" width="60" height="14" />
         </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0q5d0ku_di" bpmnElement="Activity_102t7tk">
-        <dc:Bounds x="4420" y="560" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0z13hw3_di" bpmnElement="SubProcess_Data_validation_rules">
         <dc:Bounds x="1170" y="482" width="100" height="80" />
@@ -851,6 +852,7 @@ else:
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0pne05v_di" bpmnElement="Activity_1b6tead">
         <dc:Bounds x="4250" y="560" width="100" height="80" />
+        <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Gateway_1ytq6m7_di" bpmnElement="Gateway_1ytq6m7" isMarkerVisible="true">
         <dc:Bounds x="3795" y="1045" width="50" height="50" />
@@ -860,6 +862,9 @@ else:
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1j1zo4f_di" bpmnElement="Activity_11stdua">
         <dc:Bounds x="3650" y="1030" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0q5d0ku_di" bpmnElement="Activity_102t7tk">
+        <dc:Bounds x="4420" y="560" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_1n1umf8_di" bpmnElement="Event_09q0ym0">
         <dc:Bounds x="3112" y="882" width="36" height="36" />
