@@ -35,9 +35,11 @@
     <bpmn:sequenceFlow id="Flow_0w8qz52" sourceRef="Activity_1pstq0l" targetRef="Call_Waku_Messages_Message_Footer" />
     <bpmn:sequenceFlow id="Flow_0blijzp" sourceRef="Call_Waku_Messages_Message_Footer" targetRef="Activity_1ll59ee" />
     <bpmn:sequenceFlow id="Flow_1b2tmcm" sourceRef="Activity_1ll59ee" targetRef="Event_0hgb9d6" />
-    <bpmn:scriptTask id="Activity_1ll59ee" name="Set Message">
+    <bpmn:scriptTask id="Activity_1ll59ee" name="Set Message" scriptFormat="python">
       <bpmn:incoming>Flow_0blijzp</bpmn:incoming>
       <bpmn:outgoing>Flow_1b2tmcm</bpmn:outgoing>
+      <bpmn:script># Set Message
+waku_message_body + "\n- - - - - - - - - - - - - - - - - - - - - - -" + "Sent:" + "\n- - - - - - - - - - - - - - - - - - - - - - -" + waku_message_variables  + waku_message_footer</bpmn:script>
     </bpmn:scriptTask>
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
