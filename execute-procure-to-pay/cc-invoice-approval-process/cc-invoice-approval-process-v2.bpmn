@@ -693,13 +693,13 @@ invoice.invoiceStatus = "Approved and Pending Payment"</bpmn:script>
       </bpmn:serviceTask>
       <bpmn:sequenceFlow id="Flow_1buk0a2" sourceRef="waku_payment_pending" targetRef="Event_0fbz176" />
       <bpmn:sequenceFlow id="Flow_1kwmbz2" sourceRef="Activity_0iquip7" targetRef="Get_Waku_Messages_Message_Body" />
-      <bpmn:scriptTask id="Activity_0iquip7" name="Set Which Message">
+      <bpmn:scriptTask id="Activity_0iquip7" name="Set Which Message" scriptFormat="python">
         <bpmn:incoming>Flow_1wnjy2u</bpmn:incoming>
         <bpmn:outgoing>Flow_1kwmbz2</bpmn:outgoing>
         <bpmn:script>if isMatch:
-    task_id = waku_payment_pending_ismatch
+    task_id = "waku_payment_pending_ismatch"
 else:
-    task_id = waku_payment_pending_not_ismatch</bpmn:script>
+    task_id = "waku_payment_pending_not_ismatch"</bpmn:script>
       </bpmn:scriptTask>
     </bpmn:subProcess>
     <bpmn:endEvent id="Event_1usbnt0">
