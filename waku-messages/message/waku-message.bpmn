@@ -26,14 +26,19 @@
       </bpmn:extensionElements>
     </bpmn:businessRuleTask>
     <bpmn:endEvent id="Event_0hgb9d6">
-      <bpmn:incoming>Flow_0blijzp</bpmn:incoming>
+      <bpmn:incoming>Flow_1b2tmcm</bpmn:incoming>
     </bpmn:endEvent>
     <bpmn:callActivity id="Call_Waku_Messages_Message_Footer" name="Call Waku Messages: Message Footer" calledElement="Waku_Messages_Message_Footer">
       <bpmn:incoming>Flow_0w8qz52</bpmn:incoming>
       <bpmn:outgoing>Flow_0blijzp</bpmn:outgoing>
     </bpmn:callActivity>
     <bpmn:sequenceFlow id="Flow_0w8qz52" sourceRef="Activity_1pstq0l" targetRef="Call_Waku_Messages_Message_Footer" />
-    <bpmn:sequenceFlow id="Flow_0blijzp" sourceRef="Call_Waku_Messages_Message_Footer" targetRef="Event_0hgb9d6" />
+    <bpmn:sequenceFlow id="Flow_0blijzp" sourceRef="Call_Waku_Messages_Message_Footer" targetRef="Activity_1ll59ee" />
+    <bpmn:sequenceFlow id="Flow_1b2tmcm" sourceRef="Activity_1ll59ee" targetRef="Event_0hgb9d6" />
+    <bpmn:scriptTask id="Activity_1ll59ee" name="Set Message">
+      <bpmn:incoming>Flow_0blijzp</bpmn:incoming>
+      <bpmn:outgoing>Flow_1b2tmcm</bpmn:outgoing>
+    </bpmn:scriptTask>
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Waku_Messages_Message">
@@ -57,7 +62,10 @@
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_0hgb9d6_di" bpmnElement="Event_0hgb9d6">
-        <dc:Bounds x="752" y="156" width="36" height="36" />
+        <dc:Bounds x="912" y="156" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1h667no_di" bpmnElement="Activity_1ll59ee">
+        <dc:Bounds x="750" y="134" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_1elf0y3_di" bpmnElement="Flow_1elf0y3">
         <di:waypoint x="215" y="177" />
@@ -73,7 +81,11 @@
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0blijzp_di" bpmnElement="Flow_0blijzp">
         <di:waypoint x="690" y="174" />
-        <di:waypoint x="752" y="174" />
+        <di:waypoint x="750" y="174" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1b2tmcm_di" bpmnElement="Flow_1b2tmcm">
+        <di:waypoint x="850" y="174" />
+        <di:waypoint x="912" y="174" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
