@@ -746,9 +746,14 @@ else:
       <bpmn:sequenceFlow id="Flow_01i59kw" sourceRef="waku_invoice_rejected" targetRef="Event_0ihhn4w" />
       <bpmn:sequenceFlow id="Flow_01qooso" sourceRef="Activity_1e88apc" targetRef="waku_invoice_rejected" />
       <bpmn:sequenceFlow id="Flow_0umhf4u" sourceRef="Activity_04kw0jc" targetRef="Activity_0eh4so1" />
-      <bpmn:scriptTask id="Activity_04kw0jc" name="Set Which Message">
+      <bpmn:scriptTask id="Activity_04kw0jc" name="Set Which Message" scriptFormat="python">
         <bpmn:incoming>Flow_14x1v12</bpmn:incoming>
         <bpmn:outgoing>Flow_0umhf4u</bpmn:outgoing>
+        <bpmn:script># Set who rejected
+if not(invoice.isTeamLeadApprove):
+    whoRejected = "Team Lead"
+else:
+    whoRejected = "Finance"</bpmn:script>
       </bpmn:scriptTask>
     </bpmn:subProcess>
   </bpmn:process>
