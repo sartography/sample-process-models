@@ -11,7 +11,7 @@
     <bpmn:messageFlow id="Flow_0jciftq" sourceRef="Activity_0gkpa9s" targetRef="Participant_1fsb6gv" />
     <bpmn:messageFlow id="Flow_0p0bc5u" sourceRef="Activity_0fq1nb4" targetRef="Participant_0b27sri" />
     <bpmn:messageFlow id="Flow_0n9qxyw" sourceRef="Submit_the_invoice" targetRef="Participant_1fsb6gv" />
-    <bpmn:messageFlow id="Flow_1getkzr" sourceRef="Activity_0fsoa08" targetRef="Participant_1fsb6gv" />
+    <bpmn:messageFlow id="Flow_1getkzr" sourceRef="Activity_0rae8g6" targetRef="Participant_1fsb6gv" />
     <bpmn:messageFlow id="Flow_0ozze4c" sourceRef="Activity_1ftzr6x" targetRef="Participant_1fsb6gv" />
     <bpmn:messageFlow id="Flow_1dgkwzr" sourceRef="Waku_Message_Pending_Payment" targetRef="Participant_1fsb6gv" />
     <bpmn:textAnnotation id="TextAnnotation_1uaw1w7">
@@ -48,7 +48,6 @@
         <bpmn:flowNodeRef>Event_0x83ruk</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_0m3ri6v</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Gateway_1l4tz4i</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Activity_0fsoa08</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_1lq96cy</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_1b58a3z</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_0gkejaj</bpmn:flowNodeRef>
@@ -84,10 +83,10 @@
       <bpmn:conditionExpression>not(isMatch)</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="Flow_1wturr2" sourceRef="Activity_1ftzr6x" targetRef="Event_0f3d2bp" />
-    <bpmn:sequenceFlow id="Flow_0bfs2xe" name="No" sourceRef="Gateway_1l4tz4i" targetRef="Activity_0fsoa08">
+    <bpmn:sequenceFlow id="Flow_0bfs2xe" name="No" sourceRef="Gateway_1l4tz4i" targetRef="Activity_0rae8g6">
       <bpmn:conditionExpression>not(isInvoiceApproved)</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
-    <bpmn:sequenceFlow id="Flow_0c0c9mw" sourceRef="Activity_0fsoa08" targetRef="Event_1b58a3z" />
+    <bpmn:sequenceFlow id="Flow_0c0c9mw" sourceRef="Activity_0rae8g6" targetRef="Event_1b58a3z" />
     <bpmn:sequenceFlow id="Flow_13ng1f4" sourceRef="Event_invoice_validation_failed" targetRef="Activity_show_errors" />
     <bpmn:sequenceFlow id="Flow_18cic3h" sourceRef="Activity_show_errors" targetRef="Gateway_16gxu6s" />
     <bpmn:sequenceFlow id="Flow_02moyg7" sourceRef="Submit_the_invoice" targetRef="SubProcess_Data_validation_rules" />
@@ -408,19 +407,6 @@ isTest = False</spiffworkflow:preScript>
       <bpmn:incoming>Flow_0lfqk0y</bpmn:incoming>
       <bpmn:outgoing>Flow_0yvmfqu</bpmn:outgoing>
     </bpmn:userTask>
-    <bpmn:serviceTask id="Activity_0fsoa08" name="4c. Notify CC via Waku&#10;&#34;invoice rejected&#34;">
-      <bpmn:extensionElements>
-        <spiffworkflow:serviceTaskOperator id="waku/SendMessage" resultVariable="waku_response">
-          <spiffworkflow:parameters>
-            <spiffworkflow:parameter id="message" type="str" value="&#34;Hi &#34; + current_user_extras[&#34;first_name&#34;] + &#34;, your invoice has been rejected. The reason specified for the rejection is: [&#34; + invoice.comment + &#34;]. Please get in touch with your Project Lead to discuss this further.\nInvoice no: &#34; + invoice.invoiceId + &#34;\nAmount: &#34; + invoice.invoiceAmount_str + &#34;\nDate submitted: &#34; + invoice.invoiceDate + &#34;\nStatus: &#34; + invoice.invoiceStatus + &#34;\nTeam Lead Comments: &#34; + invoice.commentsTeamLead + &#34;\nProcess Instance Id: &#34; + str(process_instance_id) + &#34;\nLink to Spiff: https://demo.spiffworkflow.org/&#34;" />
-            <spiffworkflow:parameter id="message_type" type="str" value="&#34;wakuext_sendOneToOneMessage&#34;" />
-            <spiffworkflow:parameter id="recipient" type="str" value="current_user_extras[&#34;status_key&#34;]" />
-          </spiffworkflow:parameters>
-        </spiffworkflow:serviceTaskOperator>
-      </bpmn:extensionElements>
-      <bpmn:incoming>Flow_0bfs2xe</bpmn:incoming>
-      <bpmn:outgoing>Flow_0c0c9mw</bpmn:outgoing>
-    </bpmn:serviceTask>
     <bpmn:serviceTask id="Activity_1lq96cy" name="7. Notify Finance via Waku&#34;invoice received and approved&#34;">
       <bpmn:extensionElements>
         <spiffworkflow:serviceTaskOperator id="waku/SendMessage" resultVariable="waku_response">
@@ -711,6 +697,8 @@ else:
       <bpmn:incoming>Flow_1jfb24q</bpmn:incoming>
     </bpmn:endEvent>
     <bpmn:subProcess id="Activity_0rae8g6" name="Waku Message: Invoice Rejected">
+      <bpmn:incoming>Flow_0bfs2xe</bpmn:incoming>
+      <bpmn:outgoing>Flow_0c0c9mw</bpmn:outgoing>
       <bpmn:startEvent id="Event_0ialhor">
         <bpmn:outgoing>Flow_14x1v12</bpmn:outgoing>
       </bpmn:startEvent>
@@ -908,9 +896,6 @@ else:
         <dc:Bounds x="2990" y="820" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0kcw8l6_di" bpmnElement="Activity_0fsoa08">
-        <dc:Bounds x="3450" y="260" width="100" height="80" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0latih8_di" bpmnElement="Activity_1lq96cy">
         <dc:Bounds x="3450" y="560" width="100" height="80" />
         <bpmndi:BPMNLabel />
@@ -971,7 +956,7 @@ else:
         <dc:Bounds x="4522" y="582" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0n0ue58_di" bpmnElement="Activity_0rae8g6">
-        <dc:Bounds x="3290" y="260" width="100" height="80" />
+        <dc:Bounds x="3450" y="260" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_1n1umf8_di" bpmnElement="Event_09q0ym0">
         <dc:Bounds x="3052" y="882" width="36" height="36" />
@@ -1032,7 +1017,7 @@ else:
         <di:waypoint x="3500" y="387" />
         <di:waypoint x="3500" y="340" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="3508" y="353" width="15" height="14" />
+          <dc:Bounds x="3512" y="363" width="15" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0c0c9mw_di" bpmnElement="Flow_0c0c9mw">
