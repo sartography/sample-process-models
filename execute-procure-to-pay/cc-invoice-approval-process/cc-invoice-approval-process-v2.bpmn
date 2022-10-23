@@ -346,7 +346,7 @@ isTest = False</spiffworkflow:preScript>
           </spiffworkflow:serviceTaskOperator>
           <spiffworkflow:preScript />
         </bpmn:extensionElements>
-        <bpmn:incoming>Flow_14to1qt</bpmn:incoming>
+        <bpmn:incoming>Flow_01hcn89</bpmn:incoming>
         <bpmn:outgoing>Flow_17xbb2s</bpmn:outgoing>
       </bpmn:serviceTask>
       <bpmn:sequenceFlow id="Flow_17xbb2s" sourceRef="Activity_1fsffcq" targetRef="Event_0xohu5m" />
@@ -355,9 +355,12 @@ isTest = False</spiffworkflow:preScript>
         <bpmn:outgoing>Flow_14to1qt</bpmn:outgoing>
       </bpmn:callActivity>
       <bpmn:scriptTask id="Activity_1mndvag" name="Set Task Id">
+        <bpmn:incoming>Flow_14to1qt</bpmn:incoming>
+        <bpmn:outgoing>Flow_01hcn89</bpmn:outgoing>
         <bpmn:script>task_id = "waku_invoice_submitted"</bpmn:script>
       </bpmn:scriptTask>
-      <bpmn:sequenceFlow id="Flow_14to1qt" sourceRef="Call_Waku_Messages_Message" targetRef="Activity_1fsffcq" />
+      <bpmn:sequenceFlow id="Flow_14to1qt" sourceRef="Call_Waku_Messages_Message" targetRef="Activity_1mndvag" />
+      <bpmn:sequenceFlow id="Flow_01hcn89" sourceRef="Activity_1mndvag" targetRef="Activity_1fsffcq" />
     </bpmn:subProcess>
     <bpmn:dataObjectReference id="DataObjectReference_12rfrua" name="wr" dataObjectRef="wr" />
     <bpmn:dataObject id="wr" />
@@ -1487,7 +1490,7 @@ else:
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0sjnk6j_di" bpmnElement="Activity_1mndvag">
-        <dc:Bounds x="520" y="340" width="100" height="80" />
+        <dc:Bounds x="520" y="170" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_0h40vf3_di" bpmnElement="Flow_0h40vf3">
         <di:waypoint x="298" y="210" />
@@ -1499,6 +1502,10 @@ else:
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_14to1qt_di" bpmnElement="Flow_14to1qt">
         <di:waypoint x="470" y="210" />
+        <di:waypoint x="520" y="210" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_01hcn89_di" bpmnElement="Flow_01hcn89">
+        <di:waypoint x="620" y="210" />
         <di:waypoint x="670" y="210" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
