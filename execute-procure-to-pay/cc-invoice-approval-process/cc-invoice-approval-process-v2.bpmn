@@ -8,7 +8,7 @@
     <bpmn:participant id="Participant_0b27sri" name="Xero" />
     <bpmn:messageFlow id="Flow_0ppupld" sourceRef="Activity_0o1vc0a" targetRef="Participant_0a8arrz" />
     <bpmn:messageFlow id="Flow_0yfnc92" sourceRef="Activity_0p88elm" targetRef="Participant_1qabwrg" />
-    <bpmn:messageFlow id="Flow_0jciftq" sourceRef="Activity_0cfvsk7" targetRef="Participant_1fsb6gv" />
+    <bpmn:messageFlow id="Flow_0jciftq" sourceRef="waku_invoice_submitted" targetRef="Participant_1fsb6gv" />
     <bpmn:messageFlow id="Flow_0p0bc5u" sourceRef="Activity_0fq1nb4" targetRef="Participant_0b27sri" />
     <bpmn:messageFlow id="Flow_0n9qxyw" sourceRef="Submit_the_invoice" targetRef="Participant_1fsb6gv" />
     <bpmn:messageFlow id="Flow_1getkzr" sourceRef="Activity_0fsoa08" targetRef="Participant_1fsb6gv" />
@@ -46,7 +46,7 @@
         <bpmn:flowNodeRef>Gateway_1lbghql</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_0x83ruk</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_0m3ri6v</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Activity_0cfvsk7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>waku_invoice_submitted</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Gateway_1l4tz4i</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_15y55nw</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_0fsoa08</bpmn:flowNodeRef>
@@ -215,7 +215,7 @@ Please fix.
       <bpmn:outgoing>Flow_13ng1f4</bpmn:outgoing>
     </bpmn:intermediateThrowEvent>
     <bpmn:sequenceFlow id="Flow_0bipj9q" sourceRef="Activity_1u89kok" targetRef="Gateway_16gxu6s" />
-    <bpmn:sequenceFlow id="Flow_1n239ad" sourceRef="Activity_0cfvsk7" targetRef="Event_15y55nw" />
+    <bpmn:sequenceFlow id="Flow_1n239ad" sourceRef="waku_invoice_submitted" targetRef="Event_15y55nw" />
     <bpmn:sequenceFlow id="Flow_04ccp12" sourceRef="Event_0m3ri6v" targetRef="Activity_1lq96cy" />
     <bpmn:sequenceFlow id="Flow_1r0a699" sourceRef="Activity_102t7tk" targetRef="Event_1usbnt0" />
     <bpmn:sequenceFlow id="Flow_0kngdw4" sourceRef="Event_0x83ruk" targetRef="Activity_1ucvkk4" />
@@ -313,7 +313,7 @@ temp_test = invoice["invoiceStatus"]
       <bpmn:incoming>Flow_1gohkts</bpmn:incoming>
       <bpmn:outgoing>Flow_04ccp12</bpmn:outgoing>
     </bpmn:intermediateThrowEvent>
-    <bpmn:serviceTask id="Activity_0cfvsk7" name="3. Notify CC via Waku &#34;invoice submitted&#34;">
+    <bpmn:serviceTask id="waku_invoice_submitted" name="3. Notify CC via Waku &#34;invoice submitted&#34;">
       <bpmn:extensionElements>
         <spiffworkflow:serviceTaskOperator id="waku/SendMessage" resultVariable="wr">
           <spiffworkflow:parameters>
@@ -586,7 +586,7 @@ isTest = False</spiffworkflow:preScript>
       <bpmn:outgoing>Flow_0h1x7y6</bpmn:outgoing>
     </bpmn:callActivity>
     <bpmn:sequenceFlow id="Flow_0a9w301" sourceRef="Gateway_1717c0p" targetRef="Activity_10p5t0r" />
-    <bpmn:sequenceFlow id="Flow_0h1x7y6" sourceRef="Activity_10p5t0r" targetRef="Activity_0cfvsk7" />
+    <bpmn:sequenceFlow id="Flow_0h1x7y6" sourceRef="Activity_10p5t0r" targetRef="waku_invoice_submitted" />
     <bpmn:parallelGateway id="Gateway_1717c0p">
       <bpmn:incoming>Flow_02o270g</bpmn:incoming>
       <bpmn:incoming>Flow_0o94g4u</bpmn:incoming>
@@ -764,7 +764,7 @@ else:
           <dc:Bounds x="2782" y="625" width="57" height="40" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1jg5wtk_di" bpmnElement="Activity_0cfvsk7">
+      <bpmndi:BPMNShape id="Activity_1jg5wtk_di" bpmnElement="waku_invoice_submitted">
         <dc:Bounds x="2320" y="482" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
