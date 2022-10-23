@@ -676,19 +676,19 @@ invoice.invoiceStatus = "Approved and Pending Payment"</bpmn:script>
       <bpmn:endEvent id="Event_0fbz176">
         <bpmn:incoming>Flow_1buk0a2</bpmn:incoming>
       </bpmn:endEvent>
-      <bpmn:sequenceFlow id="Flow_1ca84s5" sourceRef="Get_Waku_Messages_Message_Variables-Payment_Pending" targetRef="Activity_1n3jssm" />
+      <bpmn:sequenceFlow id="Flow_1ca84s5" sourceRef="Get_Waku_Messages_Message_Variables-Payment_Pending" targetRef="waku_payment_pending" />
       <bpmn:serviceTask id="waku_payment_pending" name="6. Notify CC via Waku&#10;&#34;invoice approved&#34;">
         <bpmn:extensionElements>
           <spiffworkflow:serviceTaskOperator id="waku/SendMessage" resultVariable="waku_response">
             <spiffworkflow:parameters>
-              <spiffworkflow:parameter id="message" type="str" value="messageApproved" />
+              <spiffworkflow:parameter id="message" type="str" value="waku_message_body + &#34;\n- - - - - - - - - - - - - - - - - - - - - - -&#34; + waku_message_variables" />
               <spiffworkflow:parameter id="message_type" type="str" value="&#34;wakuext_sendOneToOneMessage&#34;" />
               <spiffworkflow:parameter id="recipient" type="str" value="current_user_extras[&#34;status_key&#34;]" />
             </spiffworkflow:parameters>
           </spiffworkflow:serviceTaskOperator>
           <spiffworkflow:preScript />
         </bpmn:extensionElements>
-        <bpmn:incoming>Flow_0q83m3h</bpmn:incoming>
+        <bpmn:incoming>Flow_1ca84s5</bpmn:incoming>
         <bpmn:outgoing>Flow_1buk0a2</bpmn:outgoing>
       </bpmn:serviceTask>
       <bpmn:sequenceFlow id="Flow_1buk0a2" sourceRef="waku_payment_pending" targetRef="Event_0fbz176" />
@@ -700,11 +700,6 @@ invoice.invoiceStatus = "Approved and Pending Payment"</bpmn:script>
     task_id = waku_payment_pending_ismatch
 else:
     task_id = waku_payment_pending_not_ismatch</bpmn:script>
-      </bpmn:scriptTask>
-      <bpmn:sequenceFlow id="Flow_0q83m3h" sourceRef="Activity_1n3jssm" targetRef="waku_payment_pending" />
-      <bpmn:scriptTask id="Activity_1n3jssm" name="Set Message">
-        <bpmn:incoming>Flow_1ca84s5</bpmn:incoming>
-        <bpmn:outgoing>Flow_0q83m3h</bpmn:outgoing>
       </bpmn:scriptTask>
     </bpmn:subProcess>
     <bpmn:endEvent id="Event_1usbnt0">
@@ -1476,14 +1471,11 @@ else:
         <dc:Bounds x="170" y="140" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_0fbz176_di" bpmnElement="Event_0fbz176">
-        <dc:Bounds x="1002" y="162" width="36" height="36" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1obuojx_di" bpmnElement="Activity_1n3jssm">
-        <dc:Bounds x="670" y="140" width="100" height="80" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="BPMNShape_0h6o7ep" bpmnElement="waku_payment_pending">
-        <dc:Bounds x="840" y="140" width="100" height="80" />
+        <dc:Bounds x="680" y="140" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0fbz176_di" bpmnElement="Event_0fbz176">
+        <dc:Bounds x="852" y="162" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_1wnjy2u_di" bpmnElement="Flow_1wnjy2u">
         <di:waypoint x="108" y="180" />
@@ -1495,19 +1487,15 @@ else:
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1ca84s5_di" bpmnElement="Flow_1ca84s5">
         <di:waypoint x="600" y="180" />
-        <di:waypoint x="670" y="180" />
+        <di:waypoint x="680" y="180" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1buk0a2_di" bpmnElement="Flow_1buk0a2">
-        <di:waypoint x="940" y="180" />
-        <di:waypoint x="1002" y="180" />
+        <di:waypoint x="780" y="180" />
+        <di:waypoint x="852" y="180" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1kwmbz2_di" bpmnElement="Flow_1kwmbz2">
         <di:waypoint x="270" y="180" />
         <di:waypoint x="340" y="180" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0q83m3h_di" bpmnElement="Flow_0q83m3h">
-        <di:waypoint x="770" y="180" />
-        <di:waypoint x="840" y="180" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
