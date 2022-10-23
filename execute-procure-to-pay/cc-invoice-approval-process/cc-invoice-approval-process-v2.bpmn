@@ -712,9 +712,13 @@ invoice.invoiceStatus = "Approved and Pending Payment"</bpmn:script>
       </bpmn:serviceTask>
       <bpmn:sequenceFlow id="Flow_1buk0a2" sourceRef="waku_payment_pending" targetRef="Event_0fbz176" />
       <bpmn:sequenceFlow id="Flow_1kwmbz2" sourceRef="Activity_0iquip7" targetRef="Get_Waku_Messages_Message_Body" />
-      <bpmn:scriptTask id="Activity_0iquip7" name="Get Message Details">
+      <bpmn:scriptTask id="Activity_0iquip7" name="Set Which Message">
         <bpmn:incoming>Flow_1wnjy2u</bpmn:incoming>
         <bpmn:outgoing>Flow_1kwmbz2</bpmn:outgoing>
+        <bpmn:script>if isMatch:
+    task_id = waku_payment_pending_ismatch
+else:
+    task_id = waku_payment_pending_not_ismatch</bpmn:script>
       </bpmn:scriptTask>
     </bpmn:subProcess>
   </bpmn:process>
@@ -1494,6 +1498,7 @@ invoice.invoiceStatus = "Approved and Pending Payment"</bpmn:script>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0tevtzs_di" bpmnElement="Activity_0iquip7">
         <dc:Bounds x="170" y="140" width="100" height="80" />
+        <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_1wnjy2u_di" bpmnElement="Flow_1wnjy2u">
         <di:waypoint x="108" y="180" />
