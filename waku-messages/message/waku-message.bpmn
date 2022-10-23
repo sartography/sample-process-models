@@ -1,21 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_96f6665" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.0.0-dev">
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:spiffworkflow="http://spiffworkflow.org/bpmn/schema/1.0/core" id="Definitions_96f6665" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.0.0-dev">
   <bpmn:process id="Proccess_wv5os62" isExecutable="true">
     <bpmn:startEvent id="StartEvent_1">
       <bpmn:outgoing>Flow_1elf0y3</bpmn:outgoing>
     </bpmn:startEvent>
     <bpmn:sequenceFlow id="Flow_1elf0y3" sourceRef="StartEvent_1" targetRef="Activity_0xuhps4" />
     <bpmn:businessRuleTask id="Activity_0xuhps4" name="Get Waku Message Body">
+      <bpmn:extensionElements>
+        <spiffworkflow:calledDecisionId>Waku_Message_Body</spiffworkflow:calledDecisionId>
+      </bpmn:extensionElements>
       <bpmn:incoming>Flow_1elf0y3</bpmn:incoming>
       <bpmn:outgoing>Flow_1m360zk</bpmn:outgoing>
     </bpmn:businessRuleTask>
     <bpmn:sequenceFlow id="Flow_1m360zk" sourceRef="Activity_0xuhps4" targetRef="Activity_1pstq0l" />
     <bpmn:businessRuleTask id="Activity_1pstq0l" name="Get Waku Message Variables">
+      <bpmn:extensionElements>
+        <spiffworkflow:calledDecisionId>Waku_Message_Variables</spiffworkflow:calledDecisionId>
+      </bpmn:extensionElements>
       <bpmn:incoming>Flow_1m360zk</bpmn:incoming>
       <bpmn:outgoing>Flow_09kuo6x</bpmn:outgoing>
     </bpmn:businessRuleTask>
     <bpmn:sequenceFlow id="Flow_09kuo6x" sourceRef="Activity_1pstq0l" targetRef="Activity_02abidw" />
     <bpmn:businessRuleTask id="Activity_02abidw" name="Get Waku Message Footer">
+      <bpmn:extensionElements>
+        <spiffworkflow:calledDecisionId>Waku_Message_Footer</spiffworkflow:calledDecisionId>
+      </bpmn:extensionElements>
       <bpmn:incoming>Flow_09kuo6x</bpmn:incoming>
       <bpmn:outgoing>Flow_0nq5ggj</bpmn:outgoing>
     </bpmn:businessRuleTask>
