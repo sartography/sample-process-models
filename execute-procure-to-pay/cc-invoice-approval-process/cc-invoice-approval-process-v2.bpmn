@@ -327,8 +327,8 @@ isTest = False</spiffworkflow:preScript>
       <bpmn:startEvent id="Event_0a4hscg">
         <bpmn:outgoing>Flow_0h40vf3</bpmn:outgoing>
       </bpmn:startEvent>
-      <bpmn:sequenceFlow id="Flow_0h40vf3" sourceRef="Event_0a4hscg" targetRef="Activity_1ong3lc" />
-      <bpmn:callActivity id="Activity_1ong3lc" name="Get Waku Messages: Message Body" calledElement="Waku_Messages_Message_Body">
+      <bpmn:sequenceFlow id="Flow_0h40vf3" sourceRef="Event_0a4hscg" targetRef="Call_Waku_Messages_Message_Body" />
+      <bpmn:callActivity id="Call_Waku_Messages_Message_Body" name="Call Waku Messages: Message Body" calledElement="Waku_Messages_Message_Body">
         <bpmn:extensionElements>
           <spiffworkflow:preScript>task_id = "waku_invoice_submitted"</spiffworkflow:preScript>
         </bpmn:extensionElements>
@@ -338,7 +338,7 @@ isTest = False</spiffworkflow:preScript>
       <bpmn:endEvent id="Event_0xohu5m">
         <bpmn:incoming>Flow_17xbb2s</bpmn:incoming>
       </bpmn:endEvent>
-      <bpmn:sequenceFlow id="Flow_0gq7x6m" sourceRef="Activity_1ong3lc" targetRef="Get_Waku_Messages_Message_Variables" />
+      <bpmn:sequenceFlow id="Flow_0gq7x6m" sourceRef="Call_Waku_Messages_Message_Body" targetRef="Call_Waku_Messages_Message_Variables" />
       <bpmn:serviceTask id="Activity_1fsffcq" name="3. Notify CC via Waku &#34;invoice submitted&#34;">
         <bpmn:extensionElements>
           <spiffworkflow:serviceTaskOperator id="waku/SendMessage" resultVariable="wr">
@@ -353,8 +353,8 @@ isTest = False</spiffworkflow:preScript>
         <bpmn:outgoing>Flow_17xbb2s</bpmn:outgoing>
       </bpmn:serviceTask>
       <bpmn:sequenceFlow id="Flow_17xbb2s" sourceRef="Activity_1fsffcq" targetRef="Event_0xohu5m" />
-      <bpmn:sequenceFlow id="Flow_0nh3yk5" sourceRef="Get_Waku_Messages_Message_Variables" targetRef="Activity_1fsffcq" />
-      <bpmn:callActivity id="Get_Waku_Messages_Message_Variables" name="Get Waku Messages: Message Variables" calledElement="Waku_Messages_Message_Variables">
+      <bpmn:sequenceFlow id="Flow_0nh3yk5" sourceRef="Call_Waku_Messages_Message_Variables" targetRef="Activity_1fsffcq" />
+      <bpmn:callActivity id="Call_Waku_Messages_Message_Variables" name="Call Waku Messages: Message Variables" calledElement="Waku_Messages_Message_Variables">
         <bpmn:incoming>Flow_0gq7x6m</bpmn:incoming>
         <bpmn:outgoing>Flow_0nh3yk5</bpmn:outgoing>
       </bpmn:callActivity>
@@ -1422,7 +1422,7 @@ else:
       <bpmndi:BPMNShape id="Event_0a4hscg_di" bpmnElement="Event_0a4hscg">
         <dc:Bounds x="132" y="192" width="36" height="36" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1ygnlnn_di" bpmnElement="Activity_1ong3lc">
+      <bpmndi:BPMNShape id="Activity_1ygnlnn_di" bpmnElement="Call_Waku_Messages_Message_Body">
         <dc:Bounds x="210" y="170" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
@@ -1433,8 +1433,9 @@ else:
         <dc:Bounds x="540" y="170" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_17rdv3g_di" bpmnElement="Get_Waku_Messages_Message_Variables">
+      <bpmndi:BPMNShape id="Activity_17rdv3g_di" bpmnElement="Call_Waku_Messages_Message_Variables">
         <dc:Bounds x="370" y="170" width="100" height="80" />
+        <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_0h40vf3_di" bpmnElement="Flow_0h40vf3">
         <di:waypoint x="168" y="210" />
