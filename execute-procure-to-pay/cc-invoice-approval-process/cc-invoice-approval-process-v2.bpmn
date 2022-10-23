@@ -634,14 +634,8 @@ approvalComment = ""</bpmn:script>
     <bpmn:scriptTask id="Activity_1b6tead" name="Set Invoice Status to Approved and Awaiting Payment" scriptFormat="python">
       <bpmn:incoming>Flow_053ca95</bpmn:incoming>
       <bpmn:outgoing>Flow_00tndkb</bpmn:outgoing>
-      <bpmn:script># Set Invoice Status to Approved and Awaiting Payment
-invoice.invoiceStatus = "Approved and Awaiting Payment"
-
-
-if isMatch:
-    messageApproved = "Hi " + current_user_extras["first_name"] + ", your invoice has been approved. It will be paid in the next pay run." + "\n++++++++++++++++++++++++++" + "\nInvoice no: " + invoice.invoiceId + "\nAmount: " + invoice.invoiceAmount_str + "\nDate submitted: " + invoice.invoiceDate + "\nStatus: " + invoice.invoiceStatus + "\nFinance Comments: " + invoice.commentsFinance + "\nProcess Instance Id: " + str(process_instance_id) + "\nLink to Spiff: https://demo.spiffworkflow.org/"
-else:
-    messageApproved = "Hi " + current_user_extras["first_name"] + ", your invoice has been approved. It will be paid in the next pay run." + "\n++++++++++++++++++++++++++" + "\nInvoice no: " + invoice.invoiceId + "\nAmount: " + invoice.invoiceAmount_str + "\nDate submitted: " + invoice.invoiceDate + "\nStatus: " + invoice.invoiceStatus + "\nTeam Lead Comments: " + invoice.commentsTeamLead + "\nFinance Comments: " + invoice.commentsFinance + "\nProcess Instance Id: " + str(process_instance_id) + "\nLink to Spiff: https://demo.spiffworkflow.org/"</bpmn:script>
+      <bpmn:script># Set Invoice Status to Approved and Pending Payment
+invoice.invoiceStatus = "Approved and Pending Payment"</bpmn:script>
     </bpmn:scriptTask>
     <bpmn:exclusiveGateway id="Gateway_1ytq6m7" name="Approved?" default="Flow_0h96w9j">
       <bpmn:incoming>Flow_02v6lr2</bpmn:incoming>
