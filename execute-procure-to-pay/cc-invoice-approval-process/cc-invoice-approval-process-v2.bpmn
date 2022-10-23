@@ -13,7 +13,7 @@
     <bpmn:messageFlow id="Flow_0n9qxyw" sourceRef="Submit_the_invoice" targetRef="Participant_1fsb6gv" />
     <bpmn:messageFlow id="Flow_1getkzr" sourceRef="Activity_0fsoa08" targetRef="Participant_1fsb6gv" />
     <bpmn:messageFlow id="Flow_0ozze4c" sourceRef="Activity_1ftzr6x" targetRef="Participant_1fsb6gv" />
-    <bpmn:messageFlow id="Flow_1dgkwzr" sourceRef="Activity_102t7tk" targetRef="Participant_1fsb6gv" />
+    <bpmn:messageFlow id="Flow_1dgkwzr" sourceRef="Waku_Message_Pending_Payment" targetRef="Participant_1fsb6gv" />
     <bpmn:textAnnotation id="TextAnnotation_1uaw1w7">
       <bpmn:text>Environment - Vendor portal, Mailbox, etc.</bpmn:text>
     </bpmn:textAnnotation>
@@ -29,7 +29,6 @@
         <bpmn:flowNodeRef>Submit_the_invoice</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Gateway_validation_successful_question_mark</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_1usbnt0</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Activity_102t7tk</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>SubProcess_Data_validation_rules</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_show_errors</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_invoice_validation_failed</bpmn:flowNodeRef>
@@ -216,7 +215,6 @@ Please fix.
     </bpmn:intermediateThrowEvent>
     <bpmn:sequenceFlow id="Flow_0bipj9q" sourceRef="Activity_1u89kok" targetRef="Gateway_16gxu6s" />
     <bpmn:sequenceFlow id="Flow_04ccp12" sourceRef="Event_0m3ri6v" targetRef="Activity_1lq96cy" />
-    <bpmn:sequenceFlow id="Flow_1r0a699" sourceRef="Activity_102t7tk" targetRef="Event_1usbnt0" />
     <bpmn:sequenceFlow id="Flow_0kngdw4" sourceRef="Event_0x83ruk" targetRef="Activity_1ucvkk4" />
     <bpmn:sequenceFlow id="Flow_0lfqk0y" sourceRef="Activity_1ucvkk4" targetRef="Activity_06b32ar" />
     <bpmn:sequenceFlow id="Flow_1ds4s8o" sourceRef="Activity_1lq96cy" targetRef="Activity_0cdgqi0" />
@@ -658,24 +656,7 @@ invoice.invoiceStatus = "Approved and Pending Payment"</bpmn:script>
       <bpmn:incoming>Flow_04fl87d</bpmn:incoming>
       <bpmn:outgoing>Flow_1ex5hfx</bpmn:outgoing>
     </bpmn:intermediateThrowEvent>
-    <bpmn:endEvent id="Event_1usbnt0">
-      <bpmn:incoming>Flow_1r0a699</bpmn:incoming>
-    </bpmn:endEvent>
-    <bpmn:serviceTask id="Activity_102t7tk" name="6. Notify CC via Waku&#10;&#34;invoice approved&#34;">
-      <bpmn:extensionElements>
-        <spiffworkflow:serviceTaskOperator id="waku/SendMessage" resultVariable="waku_response">
-          <spiffworkflow:parameters>
-            <spiffworkflow:parameter id="message" type="str" value="messageApproved" />
-            <spiffworkflow:parameter id="message_type" type="str" value="&#34;wakuext_sendOneToOneMessage&#34;" />
-            <spiffworkflow:parameter id="recipient" type="str" value="current_user_extras[&#34;status_key&#34;]" />
-          </spiffworkflow:parameters>
-        </spiffworkflow:serviceTaskOperator>
-        <spiffworkflow:preScript />
-      </bpmn:extensionElements>
-      <bpmn:incoming>Flow_1jfb24q</bpmn:incoming>
-      <bpmn:outgoing>Flow_1r0a699</bpmn:outgoing>
-    </bpmn:serviceTask>
-    <bpmn:sequenceFlow id="Flow_1jfb24q" sourceRef="Waku_Message_Pending_Payment" targetRef="Activity_102t7tk" />
+    <bpmn:sequenceFlow id="Flow_1jfb24q" sourceRef="Waku_Message_Pending_Payment" targetRef="Event_1usbnt0" />
     <bpmn:subProcess id="Waku_Message_Pending_Payment" name="Waku Message: Pending Payment">
       <bpmn:incoming>Flow_00tndkb</bpmn:incoming>
       <bpmn:outgoing>Flow_1jfb24q</bpmn:outgoing>
@@ -695,7 +676,7 @@ invoice.invoiceStatus = "Approved and Pending Payment"</bpmn:script>
       <bpmn:endEvent id="Event_0fbz176">
         <bpmn:incoming>Flow_1buk0a2</bpmn:incoming>
       </bpmn:endEvent>
-      <bpmn:sequenceFlow id="Flow_1ca84s5" sourceRef="Get_Waku_Messages_Message_Variables-Payment_Pending" targetRef="waku_payment_pending" />
+      <bpmn:sequenceFlow id="Flow_1ca84s5" sourceRef="Get_Waku_Messages_Message_Variables-Payment_Pending" targetRef="Activity_1n3jssm" />
       <bpmn:serviceTask id="waku_payment_pending" name="6. Notify CC via Waku&#10;&#34;invoice approved&#34;">
         <bpmn:extensionElements>
           <spiffworkflow:serviceTaskOperator id="waku/SendMessage" resultVariable="waku_response">
@@ -707,7 +688,7 @@ invoice.invoiceStatus = "Approved and Pending Payment"</bpmn:script>
           </spiffworkflow:serviceTaskOperator>
           <spiffworkflow:preScript />
         </bpmn:extensionElements>
-        <bpmn:incoming>Flow_1ca84s5</bpmn:incoming>
+        <bpmn:incoming>Flow_0q83m3h</bpmn:incoming>
         <bpmn:outgoing>Flow_1buk0a2</bpmn:outgoing>
       </bpmn:serviceTask>
       <bpmn:sequenceFlow id="Flow_1buk0a2" sourceRef="waku_payment_pending" targetRef="Event_0fbz176" />
@@ -720,7 +701,15 @@ invoice.invoiceStatus = "Approved and Pending Payment"</bpmn:script>
 else:
     task_id = waku_payment_pending_not_ismatch</bpmn:script>
       </bpmn:scriptTask>
+      <bpmn:sequenceFlow id="Flow_0q83m3h" sourceRef="Activity_1n3jssm" targetRef="waku_payment_pending" />
+      <bpmn:scriptTask id="Activity_1n3jssm" name="Set Message">
+        <bpmn:incoming>Flow_1ca84s5</bpmn:incoming>
+        <bpmn:outgoing>Flow_0q83m3h</bpmn:outgoing>
+      </bpmn:scriptTask>
     </bpmn:subProcess>
+    <bpmn:endEvent id="Event_1usbnt0">
+      <bpmn:incoming>Flow_1jfb24q</bpmn:incoming>
+    </bpmn:endEvent>
   </bpmn:process>
   <bpmn:process id="Process_cc_invoice_approval_process_v2_c" isExecutable="false" />
   <bpmn:process id="Process_cc_invoice_approval_process_v2_d" isExecutable="false" />
@@ -741,20 +730,20 @@ else:
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_130jph2">
       <bpmndi:BPMNShape id="Participant_1fsb6gv_di" bpmnElement="Participant_1fsb6gv" isHorizontal="true">
-        <dc:Bounds x="280" y="-70" width="4500" height="220" />
+        <dc:Bounds x="280" y="-70" width="4350" height="220" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Participant_11ab2hx_di" bpmnElement="Participant_11ab2hx" isHorizontal="true">
-        <dc:Bounds x="280" y="210" width="4500" height="920" />
+        <dc:Bounds x="280" y="210" width="4350" height="920" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Lane_1b7abal_di" bpmnElement="Lane_1b7abal" isHorizontal="true">
-        <dc:Bounds x="310" y="800" width="4470" height="212" />
+        <dc:Bounds x="310" y="800" width="4320" height="212" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Lane_1so23vf_di" bpmnElement="Lane_1so23vf" isHorizontal="true">
-        <dc:Bounds x="310" y="1012" width="4470" height="118" />
+        <dc:Bounds x="310" y="1012" width="4320" height="118" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Lane_1a0qu8e_di" bpmnElement="Lane_1a0qu8e" isHorizontal="true">
-        <dc:Bounds x="310" y="210" width="4470" height="590" />
+        <dc:Bounds x="310" y="210" width="4320" height="590" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1h7igan_di" bpmnElement="Submit_the_invoice">
@@ -767,10 +756,7 @@ else:
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_1usbnt0_di" bpmnElement="Event_1usbnt0">
-        <dc:Bounds x="4672" y="582" width="36" height="36" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0q5d0ku_di" bpmnElement="Activity_102t7tk">
-        <dc:Bounds x="4530" y="560" width="100" height="80" />
+        <dc:Bounds x="4522" y="582" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0z13hw3_di" bpmnElement="SubProcess_Data_validation_rules">
         <dc:Bounds x="1170" y="482" width="100" height="80" />
@@ -1054,10 +1040,6 @@ else:
         <di:waypoint x="2767" y="600" />
         <di:waypoint x="3450" y="600" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_1r0a699_di" bpmnElement="Flow_1r0a699">
-        <di:waypoint x="4630" y="600" />
-        <di:waypoint x="4672" y="600" />
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0kngdw4_di" bpmnElement="Flow_0kngdw4">
         <di:waypoint x="2767" y="412" />
         <di:waypoint x="2990" y="412" />
@@ -1138,7 +1120,7 @@ else:
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1jfb24q_di" bpmnElement="Flow_1jfb24q">
         <di:waypoint x="4460" y="600" />
-        <di:waypoint x="4530" y="600" />
+        <di:waypoint x="4522" y="600" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="Participant_0a8arrz_di" bpmnElement="Participant_0a8arrz" isHorizontal="true">
         <dc:Bounds x="1480" y="1180" width="370" height="80" />
@@ -1192,8 +1174,8 @@ else:
         <di:waypoint x="3200" y="150" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1dgkwzr_di" bpmnElement="Flow_1dgkwzr">
-        <di:waypoint x="4580" y="560" />
-        <di:waypoint x="4580" y="150" />
+        <di:waypoint x="4410" y="560" />
+        <di:waypoint x="4410" y="150" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
@@ -1479,6 +1461,9 @@ else:
   </bpmndi:BPMNDiagram>
   <bpmndi:BPMNDiagram id="BPMNDiagram_03yq39k">
     <bpmndi:BPMNPlane id="BPMNPlane_19vekoo" bpmnElement="Waku_Message_Pending_Payment">
+      <bpmndi:BPMNShape id="Event_13cibxi_di" bpmnElement="Event_13cibxi">
+        <dc:Bounds x="72" y="162" width="36" height="36" />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0848qfu_di" bpmnElement="Get_Waku_Messages_Message_Body">
         <dc:Bounds x="340" y="140" width="100" height="80" />
         <bpmndi:BPMNLabel />
@@ -1487,18 +1472,18 @@ else:
         <dc:Bounds x="500" y="140" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_0fbz176_di" bpmnElement="Event_0fbz176">
-        <dc:Bounds x="812" y="162" width="36" height="36" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="BPMNShape_0h6o7ep" bpmnElement="waku_payment_pending">
-        <dc:Bounds x="660" y="140" width="100" height="80" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_13cibxi_di" bpmnElement="Event_13cibxi">
-        <dc:Bounds x="72" y="162" width="36" height="36" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0tevtzs_di" bpmnElement="Activity_0iquip7">
         <dc:Bounds x="170" y="140" width="100" height="80" />
         <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0fbz176_di" bpmnElement="Event_0fbz176">
+        <dc:Bounds x="1002" y="162" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1obuojx_di" bpmnElement="Activity_1n3jssm">
+        <dc:Bounds x="670" y="140" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_0h6o7ep" bpmnElement="waku_payment_pending">
+        <dc:Bounds x="840" y="140" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_1wnjy2u_di" bpmnElement="Flow_1wnjy2u">
         <di:waypoint x="108" y="180" />
@@ -1510,15 +1495,19 @@ else:
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1ca84s5_di" bpmnElement="Flow_1ca84s5">
         <di:waypoint x="600" y="180" />
-        <di:waypoint x="660" y="180" />
+        <di:waypoint x="670" y="180" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1buk0a2_di" bpmnElement="Flow_1buk0a2">
-        <di:waypoint x="760" y="180" />
-        <di:waypoint x="812" y="180" />
+        <di:waypoint x="940" y="180" />
+        <di:waypoint x="1002" y="180" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1kwmbz2_di" bpmnElement="Flow_1kwmbz2">
         <di:waypoint x="270" y="180" />
         <di:waypoint x="340" y="180" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0q83m3h_di" bpmnElement="Flow_0q83m3h">
+        <di:waypoint x="770" y="180" />
+        <di:waypoint x="840" y="180" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
