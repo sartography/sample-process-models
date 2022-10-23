@@ -682,9 +682,9 @@ invoice.invoiceStatus = "Approved and Pending Payment"</bpmn:script>
       <bpmn:startEvent id="Event_13cibxi">
         <bpmn:outgoing>Flow_1wnjy2u</bpmn:outgoing>
       </bpmn:startEvent>
-      <bpmn:sequenceFlow id="Flow_1wnjy2u" sourceRef="Event_13cibxi" targetRef="Get_Waku_Messages_Message_Body" />
+      <bpmn:sequenceFlow id="Flow_1wnjy2u" sourceRef="Event_13cibxi" targetRef="Activity_0iquip7" />
       <bpmn:callActivity id="Get_Waku_Messages_Message_Body" name="Get Waku Messages: Message Body" calledElement="Waku_Messages_Message_Body">
-        <bpmn:incoming>Flow_1wnjy2u</bpmn:incoming>
+        <bpmn:incoming>Flow_1kwmbz2</bpmn:incoming>
         <bpmn:outgoing>Flow_1w7kqay</bpmn:outgoing>
       </bpmn:callActivity>
       <bpmn:sequenceFlow id="Flow_1w7kqay" sourceRef="Get_Waku_Messages_Message_Body" targetRef="Get_Waku_Messages_Message_Variables-Payment_Pending" />
@@ -711,6 +711,11 @@ invoice.invoiceStatus = "Approved and Pending Payment"</bpmn:script>
         <bpmn:outgoing>Flow_1buk0a2</bpmn:outgoing>
       </bpmn:serviceTask>
       <bpmn:sequenceFlow id="Flow_1buk0a2" sourceRef="waku_payment_pending" targetRef="Event_0fbz176" />
+      <bpmn:sequenceFlow id="Flow_1kwmbz2" sourceRef="Activity_0iquip7" targetRef="Get_Waku_Messages_Message_Body" />
+      <bpmn:scriptTask id="Activity_0iquip7" name="Get Message Details">
+        <bpmn:incoming>Flow_1wnjy2u</bpmn:incoming>
+        <bpmn:outgoing>Flow_1kwmbz2</bpmn:outgoing>
+      </bpmn:scriptTask>
     </bpmn:subProcess>
   </bpmn:process>
   <bpmn:process id="Process_cc_invoice_approval_process_v2_c" isExecutable="false" />
@@ -1470,9 +1475,6 @@ invoice.invoiceStatus = "Approved and Pending Payment"</bpmn:script>
   </bpmndi:BPMNDiagram>
   <bpmndi:BPMNDiagram id="BPMNDiagram_03yq39k">
     <bpmndi:BPMNPlane id="BPMNPlane_19vekoo" bpmnElement="Waku_Message_Pending_Payment">
-      <bpmndi:BPMNShape id="Event_13cibxi_di" bpmnElement="Event_13cibxi">
-        <dc:Bounds x="252" y="162" width="36" height="36" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0848qfu_di" bpmnElement="Get_Waku_Messages_Message_Body">
         <dc:Bounds x="340" y="140" width="100" height="80" />
         <bpmndi:BPMNLabel />
@@ -1487,9 +1489,15 @@ invoice.invoiceStatus = "Approved and Pending Payment"</bpmn:script>
       <bpmndi:BPMNShape id="BPMNShape_0h6o7ep" bpmnElement="waku_payment_pending">
         <dc:Bounds x="660" y="140" width="100" height="80" />
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_13cibxi_di" bpmnElement="Event_13cibxi">
+        <dc:Bounds x="72" y="162" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0tevtzs_di" bpmnElement="Activity_0iquip7">
+        <dc:Bounds x="170" y="140" width="100" height="80" />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_1wnjy2u_di" bpmnElement="Flow_1wnjy2u">
-        <di:waypoint x="288" y="180" />
-        <di:waypoint x="340" y="180" />
+        <di:waypoint x="108" y="180" />
+        <di:waypoint x="170" y="180" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1w7kqay_di" bpmnElement="Flow_1w7kqay">
         <di:waypoint x="440" y="180" />
@@ -1502,6 +1510,10 @@ invoice.invoiceStatus = "Approved and Pending Payment"</bpmn:script>
       <bpmndi:BPMNEdge id="Flow_1buk0a2_di" bpmnElement="Flow_1buk0a2">
         <di:waypoint x="760" y="180" />
         <di:waypoint x="812" y="180" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1kwmbz2_di" bpmnElement="Flow_1kwmbz2">
+        <di:waypoint x="270" y="180" />
+        <di:waypoint x="340" y="180" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
