@@ -662,6 +662,18 @@ else:
     <bpmn:subProcess id="Activity_0gkpa9s" name="Waku Message: Notify CC Invoice Submitted">
       <bpmn:incoming>Flow_0h1x7y6</bpmn:incoming>
       <bpmn:outgoing>Flow_04fl87d</bpmn:outgoing>
+      <bpmn:startEvent id="Event_0a4hscg">
+        <bpmn:outgoing>Flow_0h40vf3</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:sequenceFlow id="Flow_0h40vf3" sourceRef="Event_0a4hscg" targetRef="Activity_1ong3lc" />
+      <bpmn:callActivity id="Activity_1ong3lc" name="Get Waku: Message Body" calledElement="Get_Waku_Message_Body">
+        <bpmn:incoming>Flow_0h40vf3</bpmn:incoming>
+        <bpmn:outgoing>Flow_0gq7x6m</bpmn:outgoing>
+      </bpmn:callActivity>
+      <bpmn:endEvent id="Event_0xohu5m">
+        <bpmn:incoming>Flow_0gq7x6m</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:sequenceFlow id="Flow_0gq7x6m" sourceRef="Activity_1ong3lc" targetRef="Event_0xohu5m" />
     </bpmn:subProcess>
   </bpmn:process>
   <bpmn:process id="Process_cc_invoice_approval_process_v2_c" isExecutable="false" />
@@ -1389,6 +1401,25 @@ else:
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1wh5lkq">
-    <bpmndi:BPMNPlane id="BPMNPlane_1b2zhk5" bpmnElement="Activity_0gkpa9s" />
+    <bpmndi:BPMNPlane id="BPMNPlane_1b2zhk5" bpmnElement="Activity_0gkpa9s">
+      <bpmndi:BPMNShape id="Event_0a4hscg_di" bpmnElement="Event_0a4hscg">
+        <dc:Bounds x="242" y="192" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1ygnlnn_di" bpmnElement="Activity_1ong3lc">
+        <dc:Bounds x="330" y="170" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0xohu5m_di" bpmnElement="Event_0xohu5m">
+        <dc:Bounds x="482" y="192" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_0h40vf3_di" bpmnElement="Flow_0h40vf3">
+        <di:waypoint x="278" y="210" />
+        <di:waypoint x="330" y="210" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0gq7x6m_di" bpmnElement="Flow_0gq7x6m">
+        <di:waypoint x="430" y="210" />
+        <di:waypoint x="482" y="210" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
 </bpmn:definitions>
