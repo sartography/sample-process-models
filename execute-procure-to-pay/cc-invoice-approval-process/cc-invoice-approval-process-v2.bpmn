@@ -351,10 +351,14 @@ isTest = False</spiffworkflow:preScript>
         <bpmn:incoming>Flow_05xzdav</bpmn:incoming>
         <bpmn:outgoing>Flow_0j4xxzp</bpmn:outgoing>
       </bpmn:callActivity>
-      <bpmn:scriptTask id="Activity_1mndvag" name="Set Task Id">
+      <bpmn:scriptTask id="Activity_1mndvag" name="Set Task Id" scriptFormat="python">
         <bpmn:incoming>Flow_0h40vf3</bpmn:incoming>
         <bpmn:outgoing>Flow_05xzdav</bpmn:outgoing>
-        <bpmn:script>task_id = "waku_invoice_submitted"</bpmn:script>
+        <bpmn:script># Set Task List
+task_id = "waku_invoice_submitted"
+
+# Set Message should be generated
+isSetMessage = True</bpmn:script>
       </bpmn:scriptTask>
       <bpmn:sequenceFlow id="Flow_0j4xxzp" sourceRef="Call_Waku_Messages_Message" targetRef="Activity_1fsffcq" />
       <bpmn:sequenceFlow id="Flow_05xzdav" sourceRef="Activity_1mndvag" targetRef="Call_Waku_Messages_Message" />
@@ -1557,19 +1561,19 @@ else:
         <dc:Bounds x="250" y="180" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="BPMNShape_0t7nhr7" bpmnElement="Activity_1e88apc">
-        <dc:Bounds x="410" y="180" width="100" height="80" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0py9spx_di" bpmnElement="Activity_04kw0jc">
-        <dc:Bounds x="70" y="180" width="100" height="80" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="BPMNShape_06ie9hh" bpmnElement="Event_0ihhn4w">
         <dc:Bounds x="922" y="202" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="BPMNShape_1lk7fz8" bpmnElement="waku_invoice_rejected">
         <dc:Bounds x="760" y="180" width="100" height="80" />
         <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_0t7nhr7" bpmnElement="Activity_1e88apc">
+        <dc:Bounds x="410" y="180" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0py9spx_di" bpmnElement="Activity_04kw0jc">
+        <dc:Bounds x="70" y="180" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_08c60j8_di" bpmnElement="Activity_03duc95">
         <dc:Bounds x="590" y="180" width="100" height="80" />
