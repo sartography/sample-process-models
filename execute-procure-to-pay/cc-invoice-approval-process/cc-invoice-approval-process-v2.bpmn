@@ -346,21 +346,18 @@ isTest = False</spiffworkflow:preScript>
           </spiffworkflow:serviceTaskOperator>
           <spiffworkflow:preScript />
         </bpmn:extensionElements>
-        <bpmn:incoming>Flow_1hs49on</bpmn:incoming>
+        <bpmn:incoming>Flow_14to1qt</bpmn:incoming>
         <bpmn:outgoing>Flow_17xbb2s</bpmn:outgoing>
       </bpmn:serviceTask>
       <bpmn:sequenceFlow id="Flow_17xbb2s" sourceRef="Activity_1fsffcq" targetRef="Event_0xohu5m" />
-      <bpmn:sequenceFlow id="Flow_0nh3yk5" sourceRef="Call_Waku_Messages_Message" targetRef="Activity_1mndvag" />
       <bpmn:callActivity id="Call_Waku_Messages_Message" name="Call Waku Messages: Message" calledElement="Waku_Messages_Message">
         <bpmn:incoming>Flow_0h40vf3</bpmn:incoming>
-        <bpmn:outgoing>Flow_0nh3yk5</bpmn:outgoing>
+        <bpmn:outgoing>Flow_14to1qt</bpmn:outgoing>
       </bpmn:callActivity>
-      <bpmn:sequenceFlow id="Flow_1hs49on" sourceRef="Activity_1mndvag" targetRef="Activity_1fsffcq" />
       <bpmn:scriptTask id="Activity_1mndvag" name="Set Task Id">
-        <bpmn:incoming>Flow_0nh3yk5</bpmn:incoming>
-        <bpmn:outgoing>Flow_1hs49on</bpmn:outgoing>
-        <bpmn:script>task_data = "waku_invoice_submitted"</bpmn:script>
+        <bpmn:script>task_id = "waku_invoice_submitted"</bpmn:script>
       </bpmn:scriptTask>
+      <bpmn:sequenceFlow id="Flow_14to1qt" sourceRef="Call_Waku_Messages_Message" targetRef="Activity_1fsffcq" />
     </bpmn:subProcess>
     <bpmn:dataObjectReference id="DataObjectReference_12rfrua" name="wr" dataObjectRef="wr" />
     <bpmn:dataObject id="wr" />
@@ -1478,10 +1475,6 @@ else:
       <bpmndi:BPMNShape id="Event_0a4hscg_di" bpmnElement="Event_0a4hscg">
         <dc:Bounds x="262" y="192" width="36" height="36" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_17rdv3g_di" bpmnElement="Call_Waku_Messages_Message">
-        <dc:Bounds x="370" y="170" width="100" height="80" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_0xohu5m_di" bpmnElement="Event_0xohu5m">
         <dc:Bounds x="832" y="192" width="36" height="36" />
       </bpmndi:BPMNShape>
@@ -1489,8 +1482,12 @@ else:
         <dc:Bounds x="670" y="170" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_17rdv3g_di" bpmnElement="Call_Waku_Messages_Message">
+        <dc:Bounds x="370" y="170" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0sjnk6j_di" bpmnElement="Activity_1mndvag">
-        <dc:Bounds x="520" y="170" width="100" height="80" />
+        <dc:Bounds x="520" y="340" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_0h40vf3_di" bpmnElement="Flow_0h40vf3">
         <di:waypoint x="298" y="210" />
@@ -1500,12 +1497,8 @@ else:
         <di:waypoint x="770" y="210" />
         <di:waypoint x="832" y="210" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0nh3yk5_di" bpmnElement="Flow_0nh3yk5">
+      <bpmndi:BPMNEdge id="Flow_14to1qt_di" bpmnElement="Flow_14to1qt">
         <di:waypoint x="470" y="210" />
-        <di:waypoint x="520" y="210" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_1hs49on_di" bpmnElement="Flow_1hs49on">
-        <di:waypoint x="620" y="210" />
         <di:waypoint x="670" y="210" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
