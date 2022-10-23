@@ -58,7 +58,7 @@
         <bpmn:flowNodeRef>Activity_0fq1nb4</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_1b6tead</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_15y55nw</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Activity_18rn1n9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Waku_Message_Pending_Payment</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_1so23vf" name="Finance Team">
         <bpmn:flowNodeRef>Activity_0cdgqi0</bpmn:flowNodeRef>
@@ -317,7 +317,7 @@ isTest = False</spiffworkflow:preScript>
       <bpmn:outgoing>Flow_0a9w301</bpmn:outgoing>
     </bpmn:parallelGateway>
     <bpmn:sequenceFlow id="Flow_15pzvrr" sourceRef="Activity_0faln91" targetRef="Gateway_1l4tz4i" />
-    <bpmn:sequenceFlow id="Flow_00tndkb" sourceRef="Activity_1b6tead" targetRef="Activity_18rn1n9" />
+    <bpmn:sequenceFlow id="Flow_00tndkb" sourceRef="Activity_1b6tead" targetRef="Waku_Message_Pending_Payment" />
     <bpmn:sequenceFlow id="Flow_02v6lr2" sourceRef="Activity_11stdua" targetRef="Gateway_1ytq6m7" />
     <bpmn:sequenceFlow id="Flow_04fl87d" sourceRef="Activity_0gkpa9s" targetRef="Event_15y55nw" />
     <bpmn:subProcess id="Activity_0gkpa9s" name="Waku Message: Notify CC Invoice Submitted">
@@ -681,11 +681,23 @@ else:
       <bpmn:incoming>Flow_1jfb24q</bpmn:incoming>
       <bpmn:outgoing>Flow_1r0a699</bpmn:outgoing>
     </bpmn:serviceTask>
-    <bpmn:task id="Activity_18rn1n9">
+    <bpmn:sequenceFlow id="Flow_1jfb24q" sourceRef="Waku_Message_Pending_Payment" targetRef="Activity_102t7tk" />
+    <bpmn:subProcess id="Waku_Message_Pending_Payment" name="Waku Message: Pending Payment">
       <bpmn:incoming>Flow_00tndkb</bpmn:incoming>
       <bpmn:outgoing>Flow_1jfb24q</bpmn:outgoing>
-    </bpmn:task>
-    <bpmn:sequenceFlow id="Flow_1jfb24q" sourceRef="Activity_18rn1n9" targetRef="Activity_102t7tk" />
+      <bpmn:startEvent id="Event_13cibxi">
+        <bpmn:outgoing>Flow_1wnjy2u</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:sequenceFlow id="Flow_1wnjy2u" sourceRef="Event_13cibxi" targetRef="Get_Waku_Messages_Message_Body" />
+      <bpmn:callActivity id="Get_Waku_Messages_Message_Body" name="Get Waku Messages: Message Body" calledElement="Waku_Messages_Message_Body">
+        <bpmn:incoming>Flow_1wnjy2u</bpmn:incoming>
+        <bpmn:outgoing>Flow_1w7kqay</bpmn:outgoing>
+      </bpmn:callActivity>
+      <bpmn:sequenceFlow id="Flow_1w7kqay" sourceRef="Get_Waku_Messages_Message_Body" targetRef="Get_Waku_Messages_Message_Variables-Payment_Pending" />
+      <bpmn:callActivity id="Get_Waku_Messages_Message_Variables-Payment_Pending" name="Get Waku Messages: Message Variables" calledElement="Waku_Messages_Message_Variables">
+        <bpmn:incoming>Flow_1w7kqay</bpmn:incoming>
+      </bpmn:callActivity>
+    </bpmn:subProcess>
   </bpmn:process>
   <bpmn:process id="Process_cc_invoice_approval_process_v2_c" isExecutable="false" />
   <bpmn:process id="Process_cc_invoice_approval_process_v2_d" isExecutable="false" />
@@ -736,9 +748,6 @@ else:
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0q5d0ku_di" bpmnElement="Activity_102t7tk">
         <dc:Bounds x="4530" y="560" width="100" height="80" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_18rn1n9_di" bpmnElement="Activity_18rn1n9">
-        <dc:Bounds x="4360" y="560" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0z13hw3_di" bpmnElement="SubProcess_Data_validation_rules">
         <dc:Bounds x="1170" y="482" width="100" height="80" />
@@ -891,6 +900,10 @@ else:
         <bpmndi:BPMNLabel>
           <dc:Bounds x="2426" y="547" width="48" height="27" />
         </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1tlgf7q_di" bpmnElement="Waku_Message_Pending_Payment">
+        <dc:Bounds x="4360" y="560" width="100" height="80" />
+        <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_1n1umf8_di" bpmnElement="Event_09q0ym0">
         <dc:Bounds x="3052" y="882" width="36" height="36" />
@@ -1438,6 +1451,29 @@ else:
       <bpmndi:BPMNEdge id="Flow_0nh3yk5_di" bpmnElement="Flow_0nh3yk5">
         <di:waypoint x="470" y="210" />
         <di:waypoint x="540" y="210" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_03yq39k">
+    <bpmndi:BPMNPlane id="BPMNPlane_19vekoo" bpmnElement="Waku_Message_Pending_Payment">
+      <bpmndi:BPMNShape id="Event_13cibxi_di" bpmnElement="Event_13cibxi">
+        <dc:Bounds x="252" y="162" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0848qfu_di" bpmnElement="Get_Waku_Messages_Message_Body">
+        <dc:Bounds x="340" y="140" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_07h8k4e_di" bpmnElement="Get_Waku_Messages_Message_Variables-Payment_Pending">
+        <dc:Bounds x="500" y="140" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_1wnjy2u_di" bpmnElement="Flow_1wnjy2u">
+        <di:waypoint x="288" y="180" />
+        <di:waypoint x="340" y="180" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1w7kqay_di" bpmnElement="Flow_1w7kqay">
+        <di:waypoint x="440" y="180" />
+        <di:waypoint x="500" y="180" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
