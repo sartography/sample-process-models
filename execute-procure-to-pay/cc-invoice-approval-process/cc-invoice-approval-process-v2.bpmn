@@ -734,7 +734,7 @@ else:
             </spiffworkflow:parameters>
           </spiffworkflow:serviceTaskOperator>
         </bpmn:extensionElements>
-        <bpmn:incoming>Flow_01qooso</bpmn:incoming>
+        <bpmn:incoming>Flow_1d0phao</bpmn:incoming>
         <bpmn:outgoing>Flow_01i59kw</bpmn:outgoing>
       </bpmn:serviceTask>
       <bpmn:callActivity id="Activity_1e88apc" name="Call Waku Messages: Message Variables" calledElement="Waku_Messages_Message_Variables">
@@ -744,7 +744,7 @@ else:
       <bpmn:sequenceFlow id="Flow_14x1v12" sourceRef="Event_0ialhor" targetRef="Activity_04kw0jc" />
       <bpmn:sequenceFlow id="Flow_1wq6gzs" sourceRef="Activity_0eh4so1" targetRef="Activity_1e88apc" />
       <bpmn:sequenceFlow id="Flow_01i59kw" sourceRef="waku_invoice_rejected" targetRef="Event_0ihhn4w" />
-      <bpmn:sequenceFlow id="Flow_01qooso" sourceRef="Activity_1e88apc" targetRef="waku_invoice_rejected" />
+      <bpmn:sequenceFlow id="Flow_01qooso" sourceRef="Activity_1e88apc" targetRef="Activity_03duc95" />
       <bpmn:sequenceFlow id="Flow_0umhf4u" sourceRef="Activity_04kw0jc" targetRef="Activity_0eh4so1" />
       <bpmn:scriptTask id="Activity_04kw0jc" name="Set Which Message" scriptFormat="python">
         <bpmn:incoming>Flow_14x1v12</bpmn:incoming>
@@ -754,6 +754,16 @@ if not(invoice.isTeamLeadApprove):
     task_id = "waku_invoice_rejected-Team_Lead"
 else:
     task_id = "waku_invoice_rejected-Finance"</bpmn:script>
+      </bpmn:scriptTask>
+      <bpmn:sequenceFlow id="Flow_1d0phao" sourceRef="Activity_03duc95" targetRef="waku_invoice_rejected" />
+      <bpmn:scriptTask id="Activity_03duc95" name="Set Message" scriptFormat="python">
+        <bpmn:incoming>Flow_01qooso</bpmn:incoming>
+        <bpmn:outgoing>Flow_1d0phao</bpmn:outgoing>
+        <bpmn:script># Set who rejected
+if not(invoice.isTeamLeadApprove):
+    waku_message = waku_message_body + "\n- - - - - - - - - - - - - - - - - - - - - - -" + "\nSent: " + local_date_str + " @ " + local_time_str + "\n- - - - - - - - - - - - - - - - - - - - - - -" + waku_message_variables  + waku_message_footer
+else:
+    waku_message = waku_message_body + "\n- - - - - - - - - - - - - - - - - - - - - - -" + "\nSent: " + local_date_str + " @ " + local_time_str + "\n- - - - - - - - - - - - - - - - - - - - - - -" + waku_message_variables  + waku_message_footer</bpmn:script>
       </bpmn:scriptTask>
     </bpmn:subProcess>
   </bpmn:process>
@@ -1562,19 +1572,22 @@ else:
         <dc:Bounds x="250" y="180" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="BPMNShape_06ie9hh" bpmnElement="Event_0ihhn4w">
-        <dc:Bounds x="742" y="202" width="36" height="36" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="BPMNShape_1lk7fz8" bpmnElement="waku_invoice_rejected">
-        <dc:Bounds x="580" y="180" width="100" height="80" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="BPMNShape_0t7nhr7" bpmnElement="Activity_1e88apc">
         <dc:Bounds x="410" y="180" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0py9spx_di" bpmnElement="Activity_04kw0jc">
         <dc:Bounds x="70" y="180" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_06ie9hh" bpmnElement="Event_0ihhn4w">
+        <dc:Bounds x="922" y="202" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_1lk7fz8" bpmnElement="waku_invoice_rejected">
+        <dc:Bounds x="760" y="180" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_08c60j8_di" bpmnElement="Activity_03duc95">
+        <dc:Bounds x="590" y="180" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="BPMNEdge_04mzj46" bpmnElement="Flow_14x1v12">
         <di:waypoint x="-2" y="220" />
@@ -1585,16 +1598,20 @@ else:
         <di:waypoint x="410" y="220" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="BPMNEdge_16ht4ok" bpmnElement="Flow_01i59kw">
-        <di:waypoint x="680" y="220" />
-        <di:waypoint x="742" y="220" />
+        <di:waypoint x="860" y="220" />
+        <di:waypoint x="922" y="220" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="BPMNEdge_01vg97v" bpmnElement="Flow_01qooso">
         <di:waypoint x="510" y="220" />
-        <di:waypoint x="580" y="220" />
+        <di:waypoint x="590" y="220" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0umhf4u_di" bpmnElement="Flow_0umhf4u">
         <di:waypoint x="170" y="220" />
         <di:waypoint x="250" y="220" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1d0phao_di" bpmnElement="Flow_1d0phao">
+        <di:waypoint x="690" y="220" />
+        <di:waypoint x="760" y="220" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
