@@ -64,10 +64,10 @@
         <bpmn:flowNodeRef>Activity_11stdua</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_1b7abal" name="Team Lead">
-        <bpmn:flowNodeRef>Event_0f3d2bp</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_06b32ar</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_1t8wi0r</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_09q0ym0</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Gateway_06i3we9</bpmn:flowNodeRef>
       </bpmn:lane>
     </bpmn:laneSet>
     <bpmn:sequenceFlow id="Flow_1x4rtop" name="Yes" sourceRef="Gateway_validation_successful_question_mark" targetRef="Activity_109lq0m" />
@@ -81,7 +81,6 @@
     <bpmn:sequenceFlow id="Flow_16bw9hx" name="No" sourceRef="Gateway_1lbghql" targetRef="Event_0x83ruk">
       <bpmn:conditionExpression>not(isMatch)</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
-    <bpmn:sequenceFlow id="Flow_1wturr2" sourceRef="Activity_1t8wi0r" targetRef="Event_0f3d2bp" />
     <bpmn:sequenceFlow id="Flow_0bfs2xe" name="No" sourceRef="Gateway_1l4tz4i" targetRef="Activity_0rae8g6">
       <bpmn:conditionExpression>not(isInvoiceApproved)</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
@@ -91,7 +90,7 @@
     <bpmn:sequenceFlow id="Flow_02moyg7" sourceRef="Submit_the_invoice" targetRef="SubProcess_Data_validation_rules" />
     <bpmn:sequenceFlow id="Flow_1ck27i7" sourceRef="SubProcess_Data_validation_rules" targetRef="Gateway_validation_successful_question_mark" />
     <bpmn:sequenceFlow id="Flow_1v8dszb" sourceRef="Event_09q0ym0" targetRef="Activity_1t8wi0r" />
-    <bpmn:sequenceFlow id="Flow_0yvmfqu" sourceRef="Activity_06b32ar" targetRef="Activity_0faln91" />
+    <bpmn:sequenceFlow id="Flow_0yvmfqu" sourceRef="Activity_06b32ar" targetRef="Gateway_06i3we9" />
     <bpmn:sequenceFlow id="Flow_12cqm3u" sourceRef="Gateway_05ov5p5" targetRef="Activity_104xpp8" />
     <bpmn:sequenceFlow id="Flow_0hev3yn" sourceRef="Gateway_05ov5p5" targetRef="Activity_0o1vc0a" />
     <bpmn:sequenceFlow id="Flow_02o270g" sourceRef="Activity_0o1vc0a" targetRef="Gateway_1717c0p" />
@@ -381,9 +380,6 @@ isSetMessage = True</bpmn:script>
       <bpmn:outgoing>Flow_18xvx8w</bpmn:outgoing>
       <bpmn:outgoing>Flow_0bfs2xe</bpmn:outgoing>
     </bpmn:exclusiveGateway>
-    <bpmn:endEvent id="Event_0f3d2bp" name="Invoice is declined due to Approver inaction">
-      <bpmn:incoming>Flow_1wturr2</bpmn:incoming>
-    </bpmn:endEvent>
     <bpmn:userTask id="Activity_06b32ar" name="Approve Invocie - Proejct Lead">
       <bpmn:extensionElements>
         <spiffworkflow:properties>
@@ -581,7 +577,7 @@ del(userStatusKey)</bpmn:script>
       </bpmn:callActivity>
     </bpmn:subProcess>
     <bpmn:scriptTask id="Activity_0faln91" name="Temp Message Storage" scriptFormat="python">
-      <bpmn:incoming>Flow_0yvmfqu</bpmn:incoming>
+      <bpmn:incoming>Flow_1qf14hx</bpmn:incoming>
       <bpmn:outgoing>Flow_15pzvrr</bpmn:outgoing>
       <bpmn:script># Store Team Lead comments elsewhere and clear form comments
 if isApprovalTimer:
@@ -780,7 +776,7 @@ isSetMessage = True</bpmn:script>
     </bpmn:subProcess>
     <bpmn:scriptTask id="Activity_1t8wi0r" name="Waku Message: No Project Lead Response">
       <bpmn:incoming>Flow_1v8dszb</bpmn:incoming>
-      <bpmn:outgoing>Flow_1wturr2</bpmn:outgoing>
+      <bpmn:outgoing>Flow_1w4cqkv</bpmn:outgoing>
       <bpmn:script># Set Timer Check
 isApprovalTimer = True</bpmn:script>
     </bpmn:scriptTask>
@@ -790,6 +786,13 @@ isApprovalTimer = True</bpmn:script>
         <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">timedelta(minutes=1)</bpmn:timeDuration>
       </bpmn:timerEventDefinition>
     </bpmn:boundaryEvent>
+    <bpmn:exclusiveGateway id="Gateway_06i3we9">
+      <bpmn:incoming>Flow_0yvmfqu</bpmn:incoming>
+      <bpmn:incoming>Flow_1w4cqkv</bpmn:incoming>
+      <bpmn:outgoing>Flow_1qf14hx</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="Flow_1qf14hx" sourceRef="Gateway_06i3we9" targetRef="Activity_0faln91" />
+    <bpmn:sequenceFlow id="Flow_1w4cqkv" sourceRef="Activity_1t8wi0r" targetRef="Gateway_06i3we9" />
   </bpmn:process>
   <bpmn:process id="Process_cc_invoice_approval_process_v2_c" isExecutable="false" />
   <bpmn:process id="Process_cc_invoice_approval_process_v2_d" isExecutable="false" />
@@ -834,6 +837,9 @@ isApprovalTimer = True</bpmn:script>
         <bpmndi:BPMNLabel>
           <dc:Bounds x="1340" y="557" width="60" height="14" />
         </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_06i3we9_di" bpmnElement="Gateway_06i3we9" isMarkerVisible="true">
+        <dc:Bounds x="3335" y="835" width="50" height="50" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0z13hw3_di" bpmnElement="SubProcess_Data_validation_rules">
         <dc:Bounds x="1170" y="482" width="100" height="80" />
@@ -911,12 +917,6 @@ isApprovalTimer = True</bpmn:script>
         <dc:Bounds x="3475" y="387" width="50" height="50" />
         <bpmndi:BPMNLabel>
           <dc:Bounds x="3423" y="383" width="54" height="14" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_0f3d2bp_di" bpmnElement="Event_0f3d2bp">
-        <dc:Bounds x="3302" y="920" width="36" height="36" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="3280" y="966" width="86" height="40" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_05nao2p_di" bpmnElement="Activity_06b32ar">
@@ -1044,10 +1044,6 @@ isApprovalTimer = True</bpmn:script>
           <dc:Bounds x="2707" y="454" width="15" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_1wturr2_di" bpmnElement="Flow_1wturr2">
-        <di:waypoint x="3260" y="938" />
-        <di:waypoint x="3302" y="938" />
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0bfs2xe_di" bpmnElement="Flow_0bfs2xe">
         <di:waypoint x="3500" y="387" />
         <di:waypoint x="3500" y="340" />
@@ -1084,8 +1080,7 @@ isApprovalTimer = True</bpmn:script>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0yvmfqu_di" bpmnElement="Flow_0yvmfqu">
         <di:waypoint x="3090" y="860" />
-        <di:waypoint x="3360" y="860" />
-        <di:waypoint x="3360" y="750" />
+        <di:waypoint x="3335" y="860" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_12cqm3u_di" bpmnElement="Flow_12cqm3u">
         <di:waypoint x="1630" y="547" />
@@ -1200,6 +1195,15 @@ isApprovalTimer = True</bpmn:script>
       <bpmndi:BPMNEdge id="Flow_1jfb24q_di" bpmnElement="Flow_1jfb24q">
         <di:waypoint x="4460" y="600" />
         <di:waypoint x="4522" y="600" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1qf14hx_di" bpmnElement="Flow_1qf14hx">
+        <di:waypoint x="3360" y="835" />
+        <di:waypoint x="3360" y="750" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1w4cqkv_di" bpmnElement="Flow_1w4cqkv">
+        <di:waypoint x="3260" y="938" />
+        <di:waypoint x="3360" y="938" />
+        <di:waypoint x="3360" y="885" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="Participant_0a8arrz_di" bpmnElement="Participant_0a8arrz" isHorizontal="true">
         <dc:Bounds x="1480" y="1180" width="370" height="80" />
