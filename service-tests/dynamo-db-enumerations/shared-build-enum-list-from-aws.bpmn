@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:spiffworkflow="http://spiffworkflow.org/bpmn/schema/1.0/core" id="Definitions_96f6665" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.0.0-dev">
+  <bpmn:process id="Build_Enum_List_from_AWS_example" name="Build Enum List from AWS" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>Flow_17dzzly</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_17dzzly" sourceRef="StartEvent_1" targetRef="Activity_1845tea" />
+    <bpmn:scriptTask id="Activity_0w26t4e" name="Build Enum List from AWS" scriptFormat="python">
+      <bpmn:extensionElements>
+        <spiffworkflow:unitTests>
+          <spiffworkflow:unitTest id="ScriptUnitTest_058uzf3">
+            <spiffworkflow:inputJson>{
+    "addNew": true,
+    "whichSubject": "xxx",
+    "enumerations": {
+        "Count": 1,
+        "Items": [
+            {
+            "Subject": "xxx",
+            "Value": 1, 
+            "Label": "One"
+            }
+        ]
+        }
+}</spiffworkflow:inputJson>
+            <spiffworkflow:expectedOutputJson> {"addNew":true,
+ "enumerations_list":
+ [{"label":"Add New","value":"add"},
+ {"label":"One","value":1}],"n":0,"whichSubject":"xxx"}</spiffworkflow:expectedOutputJson>
+          </spiffworkflow:unitTest>
+        </spiffworkflow:unitTests>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1dc7oe2</bpmn:incoming>
+      <bpmn:outgoing>Flow_1lst375</bpmn:outgoing>
+      <bpmn:script># Build Enum List from AWS
+enumerations_items_list = enumerations["Items"]
+
+# Build Enum List
+enumerations_items_list_cnt = enumerations["Count"]
+enumerations_list = []
+addNew=True
+if addNew:
+    enumerations_list.append({'label': 'Add New', 'value': 'add'})
+for n in range(0, enumerations_items_list_cnt):
+    if enumerations_items_list[n]["Subject"] == whichSubject:
+        enumerations_list.append({'label': enumerations_items_list[n]["Label"], 'value': enumerations_items_list[n]["Value"]})
+
+del(enumerations)
+del(enumerations_items_list)
+del(enumerations_items_list_cnt)</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:endEvent id="Event_0imyhx8">
+      <bpmn:incoming>Flow_1lst375</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_1lst375" sourceRef="Activity_0w26t4e" targetRef="Event_0imyhx8" />
+    <bpmn:sequenceFlow id="Flow_1dc7oe2" sourceRef="Activity_0jnxeox" targetRef="Activity_0w26t4e" />
+    <bpmn:serviceTask id="Activity_0jnxeox" name="Scan AWS Enum Table">
+      <bpmn:extensionElements>
+        <spiffworkflow:serviceTaskOperator id="aws/QueryDynamoTable">
+          <spiffworkflow:parameters>
+            <spiffworkflow:parameter id="partition_key" type="str" value="&#39;Currency&#39;" />
+            <spiffworkflow:parameter id="sort_key" type="str" />
+            <spiffworkflow:parameter id="table_name" type="str" value="&#39;Enumeration&#39;" />
+          </spiffworkflow:parameters>
+        </spiffworkflow:serviceTaskOperator>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0ojyeb0</bpmn:incoming>
+      <bpmn:outgoing>Flow_1dc7oe2</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="Flow_0ojyeb0" sourceRef="Activity_1845tea" targetRef="Activity_0jnxeox" />
+    <bpmn:scriptTask id="Activity_1845tea">
+      <bpmn:incoming>Flow_17dzzly</bpmn:incoming>
+      <bpmn:outgoing>Flow_0ojyeb0</bpmn:outgoing>
+      <bpmn:script>whichSubject="Currency"
+addNew = True</bpmn:script>
+    </bpmn:scriptTask>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Build_Enum_List_from_AWS_example">
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="-128" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1lf3qci_di" bpmnElement="Activity_0w26t4e">
+        <dc:Bounds x="240" y="137" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0imyhx8_di" bpmnElement="Event_0imyhx8">
+        <dc:Bounds x="402" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1flxoqs_di" bpmnElement="Activity_1845tea">
+        <dc:Bounds x="-70" y="137" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0q9yh3w_di" bpmnElement="Activity_0jnxeox">
+        <dc:Bounds x="80" y="137" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_17dzzly_di" bpmnElement="Flow_17dzzly">
+        <di:waypoint x="-92" y="177" />
+        <di:waypoint x="-70" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1lst375_di" bpmnElement="Flow_1lst375">
+        <di:waypoint x="340" y="177" />
+        <di:waypoint x="402" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1dc7oe2_di" bpmnElement="Flow_1dc7oe2">
+        <di:waypoint x="180" y="177" />
+        <di:waypoint x="240" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0ojyeb0_di" bpmnElement="Flow_0ojyeb0">
+        <di:waypoint x="30" y="177" />
+        <di:waypoint x="80" y="177" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
