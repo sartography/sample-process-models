@@ -14,18 +14,6 @@
 </spiffworkflow:instructionsForEndUser>
       </bpmn:extensionElements>
     </bpmn:manualTask>
-    <bpmn:serviceTask id="Activity_1cl0n43" name="Add Record">
-      <bpmn:extensionElements>
-        <spiffworkflow:serviceTaskOperator id="aws/AddDynamoItem" resultVariable="enumerationsAdd">
-          <spiffworkflow:parameters>
-            <spiffworkflow:parameter id="item_data" type="str" value="{ &#34;Subject&#34;: addSubject, &#34;Value&#34;: addValue, &#34;Label&#34;: addLabel }" />
-            <spiffworkflow:parameter id="table_name" type="str" value="&#39;Enumeration&#39;" />
-          </spiffworkflow:parameters>
-        </spiffworkflow:serviceTaskOperator>
-      </bpmn:extensionElements>
-      <bpmn:incoming>Flow_0322grc</bpmn:incoming>
-      <bpmn:outgoing>Flow_1pvx3ro</bpmn:outgoing>
-    </bpmn:serviceTask>
     <bpmn:callActivity id="Call_Shared_Build_Enum_List_from_AWS" name="Call Shared: Build Enum List from AWS" calledElement="Shared_Build_Enum_List_from_AWS">
       <bpmn:extensionElements>
         <spiffworkflow:preScript>whichSubject = "Enumeration"
@@ -58,7 +46,7 @@ addNew = True</spiffworkflow:preScript>
     </bpmn:userTask>
     <bpmn:scriptTask id="Activity_1ifnmsg" name="Set Subject" scriptFormat="python">
       <bpmn:incoming>Flow_0i6hbp9</bpmn:incoming>
-      <bpmn:outgoing>Flow_0322grc</bpmn:outgoing>
+      <bpmn:outgoing>Flow_1xbvsd3</bpmn:outgoing>
       <bpmn:script>if whichEnum == "add":
     addSubject = "Enumeration"
 else:
@@ -66,7 +54,6 @@ else:
     addSubject = matched[0]['label'] if matched else None</bpmn:script>
     </bpmn:scriptTask>
     <bpmn:sequenceFlow id="Flow_0d8570g" sourceRef="Activity_0bvdyir" targetRef="enumeration_user_task" />
-    <bpmn:sequenceFlow id="Flow_0322grc" sourceRef="Activity_1ifnmsg" targetRef="Activity_1cl0n43" />
     <bpmn:serviceTask id="Activity_1ad6wc2" name="Get Enumeration List">
       <bpmn:extensionElements>
         <spiffworkflow:serviceTaskOperator id="aws/QueryDynamoTable">
@@ -90,14 +77,13 @@ else:
         </spiffworkflow:properties>
         <spiffworkflow:postScript />
       </bpmn:extensionElements>
-      <bpmn:incoming>Flow_1pvx3ro</bpmn:incoming>
+      <bpmn:incoming>Flow_0lpik93</bpmn:incoming>
       <bpmn:outgoing>Flow_17i0vic</bpmn:outgoing>
     </bpmn:userTask>
     <bpmn:startEvent id="Event_00b9bxo">
       <bpmn:outgoing>Flow_07a2oxo</bpmn:outgoing>
     </bpmn:startEvent>
     <bpmn:sequenceFlow id="Flow_07a2oxo" sourceRef="Event_00b9bxo" targetRef="Call_Shared_Build_Enum_List_from_AWS" />
-    <bpmn:sequenceFlow id="Flow_1pvx3ro" sourceRef="Activity_1cl0n43" targetRef="Activity_0exwh7c" />
     <bpmn:sequenceFlow id="Flow_17i0vic" sourceRef="Activity_0exwh7c" targetRef="Gateway_04hnj5e" />
     <bpmn:exclusiveGateway id="Gateway_1clgwgu" name="Add another enum for the same subject" default="Flow_1u6l44m">
       <bpmn:incoming>Flow_1yld5u8</bpmn:incoming>
@@ -149,16 +135,16 @@ addLabel = ""</bpmn:script>
           </spiffworkflow:parameters>
         </spiffworkflow:serviceTaskOperator>
       </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1xbvsd3</bpmn:incoming>
+      <bpmn:outgoing>Flow_0lpik93</bpmn:outgoing>
     </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="Flow_1xbvsd3" sourceRef="Activity_1ifnmsg" targetRef="Activity_09grhpn" />
+    <bpmn:sequenceFlow id="Flow_0lpik93" sourceRef="Activity_09grhpn" targetRef="Activity_0exwh7c" />
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Sharred_Enumeration_Table">
       <bpmndi:BPMNShape id="Activity_1cpupwx_di" bpmnElement="Activity_18npi29">
         <dc:Bounds x="1280" y="10" width="100" height="80" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0k89mkq_di" bpmnElement="Activity_1cl0n43">
-        <dc:Bounds x="790" y="137" width="100" height="80" />
-        <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1i2gua9_di" bpmnElement="Call_Shared_Build_Enum_List_from_AWS">
         <dc:Bounds x="-10" y="137" width="100" height="80" />
@@ -205,15 +191,11 @@ addLabel = ""</bpmn:script>
         <dc:Bounds x="310" y="320" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0wrg2tu_di" bpmnElement="Activity_09grhpn">
-        <dc:Bounds x="790" y="20" width="100" height="80" />
+        <dc:Bounds x="790" y="137" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_0d8570g_di" bpmnElement="Flow_0d8570g">
         <di:waypoint x="270" y="177" />
         <di:waypoint x="440" y="177" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0322grc_di" bpmnElement="Flow_0322grc">
-        <di:waypoint x="710" y="177" />
-        <di:waypoint x="790" y="177" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0i6hbp9_di" bpmnElement="Flow_0i6hbp9">
         <di:waypoint x="540" y="177" />
@@ -222,10 +204,6 @@ addLabel = ""</bpmn:script>
       <bpmndi:BPMNEdge id="Flow_07a2oxo_di" bpmnElement="Flow_07a2oxo">
         <di:waypoint x="-92" y="177" />
         <di:waypoint x="-10" y="177" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_1pvx3ro_di" bpmnElement="Flow_1pvx3ro">
-        <di:waypoint x="890" y="177" />
-        <di:waypoint x="960" y="177" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_17i0vic_di" bpmnElement="Flow_17i0vic">
         <di:waypoint x="1060" y="177" />
@@ -274,6 +252,14 @@ addLabel = ""</bpmn:script>
       <bpmndi:BPMNEdge id="Flow_137swmd_di" bpmnElement="Flow_137swmd">
         <di:waypoint x="310" y="360" />
         <di:waypoint x="245" y="360" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1xbvsd3_di" bpmnElement="Flow_1xbvsd3">
+        <di:waypoint x="710" y="177" />
+        <di:waypoint x="790" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0lpik93_di" bpmnElement="Flow_0lpik93">
+        <di:waypoint x="890" y="177" />
+        <di:waypoint x="960" y="177" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
