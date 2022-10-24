@@ -6,7 +6,7 @@
     <bpmn:participant id="Participant_0a8arrz" name="AWS DynamoDB" />
     <bpmn:participant id="Participant_1qabwrg" name="AWS S3" />
     <bpmn:participant id="Participant_0b27sri" name="Xero" />
-    <bpmn:messageFlow id="Flow_0ppupld" sourceRef="Activity_0o1vc0a" targetRef="Participant_0a8arrz" />
+    <bpmn:messageFlow id="Flow_0ppupld" sourceRef="Activity_175j3o7" targetRef="Participant_0a8arrz" />
     <bpmn:messageFlow id="Flow_0yfnc92" sourceRef="Activity_0p88elm" targetRef="Participant_1qabwrg" />
     <bpmn:messageFlow id="Flow_0jciftq" sourceRef="Activity_0gkpa9s" targetRef="Participant_1fsb6gv" />
     <bpmn:messageFlow id="Flow_0p0bc5u" sourceRef="Activity_0fq1nb4" targetRef="Participant_0b27sri" />
@@ -36,7 +36,6 @@
         <bpmn:flowNodeRef>Activity_1u89kok</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_1r3yh2k</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Gateway_05ov5p5</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Activity_0o1vc0a</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_0p88elm</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_104xpp8</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_109lq0m</bpmn:flowNodeRef>
@@ -57,6 +56,7 @@
         <bpmn:flowNodeRef>Waku_Message_Pending_Payment</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_0rae8g6</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_1kgaqpf</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_175j3o7</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_1so23vf" name="Finance Team">
         <bpmn:flowNodeRef>Activity_0cdgqi0</bpmn:flowNodeRef>
@@ -92,8 +92,8 @@
     <bpmn:sequenceFlow id="Flow_1v8dszb" sourceRef="Event_09q0ym0" targetRef="Activity_1t8wi0r" />
     <bpmn:sequenceFlow id="Flow_0yvmfqu" sourceRef="Activity_06b32ar" targetRef="Gateway_06i3we9" />
     <bpmn:sequenceFlow id="Flow_12cqm3u" sourceRef="Gateway_05ov5p5" targetRef="Activity_104xpp8" />
-    <bpmn:sequenceFlow id="Flow_0hev3yn" sourceRef="Gateway_05ov5p5" targetRef="Activity_0o1vc0a" />
-    <bpmn:sequenceFlow id="Flow_02o270g" sourceRef="Activity_0o1vc0a" targetRef="Gateway_1717c0p" />
+    <bpmn:sequenceFlow id="Flow_0hev3yn" sourceRef="Gateway_05ov5p5" targetRef="Activity_175j3o7" />
+    <bpmn:sequenceFlow id="Flow_02o270g" sourceRef="Activity_175j3o7" targetRef="Gateway_1717c0p" />
     <bpmn:sequenceFlow id="Flow_0o94g4u" sourceRef="Activity_0p88elm" targetRef="Gateway_1717c0p" />
     <bpmn:sequenceFlow id="Flow_1vxagrf" sourceRef="Event_1r3yh2k" targetRef="Activity_1u89kok" />
     <bpmn:userTask id="Submit_the_invoice" name="2. Submit the invoice" scriptFormat="python" script="SdgsdGsdhgwsDEHhww">
@@ -254,18 +254,6 @@ isCurrentUser = True</spiffworkflow:preScript>
       <bpmn:outgoing>Flow_12cqm3u</bpmn:outgoing>
       <bpmn:outgoing>Flow_0hev3yn</bpmn:outgoing>
     </bpmn:parallelGateway>
-    <bpmn:serviceTask id="Activity_0o1vc0a" name="2c. Save Invoice Data">
-      <bpmn:extensionElements>
-        <spiffworkflow:serviceTaskOperator id="aws/AddDynamoItem" resultVariable="&#39;responseAddDynamoInvoice&#39;">
-          <spiffworkflow:parameters>
-            <spiffworkflow:parameter id="item_data" type="str" value="{ &#34;ContributorName&#34;: invoice.contributorName, &#34;ContributorId&#34;: invoice.contributorId, &#34;InvoiceId&#34;: invoice.invoiceId, &#34;InvoiceAmount&#34;: invoice.invoiceAmount, &#34;InvoiceCurrency&#34;: invoice.invoiceCurrency, &#34;DueDate&#34;: invoice.dueDate }" />
-            <spiffworkflow:parameter id="table_name" type="str" value="&#39;Invoice&#39;" />
-          </spiffworkflow:parameters>
-        </spiffworkflow:serviceTaskOperator>
-      </bpmn:extensionElements>
-      <bpmn:incoming>Flow_0hev3yn</bpmn:incoming>
-      <bpmn:outgoing>Flow_02o270g</bpmn:outgoing>
-    </bpmn:serviceTask>
     <bpmn:serviceTask id="Activity_0p88elm" name="2d. Upload Invoice PDF document" scriptFormat="python" script="invoice_name = invoice.contributorName + &#34;_&#34; + invoice.invoiceId">
       <bpmn:extensionElements>
         <spiffworkflow:preScript />
@@ -793,6 +781,18 @@ isApprovalTimer = True</bpmn:script>
     </bpmn:exclusiveGateway>
     <bpmn:sequenceFlow id="Flow_1qf14hx" sourceRef="Gateway_06i3we9" targetRef="Activity_0faln91" />
     <bpmn:sequenceFlow id="Flow_1w4cqkv" sourceRef="Activity_1t8wi0r" targetRef="Gateway_06i3we9" />
+    <bpmn:serviceTask id="Activity_175j3o7" name="2c. Save Invoice Data">
+      <bpmn:extensionElements>
+        <spiffworkflow:serviceTaskOperator id="aws/AddDynamoItem">
+          <spiffworkflow:parameters>
+            <spiffworkflow:parameter id="item_data" type="str" value="{ &#34;ContributorName&#34;: invoice.contributorName, &#34;ContributorId&#34;: invoice.contributorId, &#34;InvoiceId&#34;: invoice.invoiceId, &#34;InvoiceAmount&#34;: invoice.invoiceAmount, &#34;InvoiceCurrency&#34;: invoice.invoiceCurrency, &#34;DueDate&#34;: invoice.dueDate }" />
+            <spiffworkflow:parameter id="table_name" type="str" value="&#39;Invoice&#39;" />
+          </spiffworkflow:parameters>
+        </spiffworkflow:serviceTaskOperator>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0hev3yn</bpmn:incoming>
+      <bpmn:outgoing>Flow_02o270g</bpmn:outgoing>
+    </bpmn:serviceTask>
   </bpmn:process>
   <bpmn:process id="Process_cc_invoice_approval_process_v2_c" isExecutable="false" />
   <bpmn:process id="Process_cc_invoice_approval_process_v2_d" isExecutable="false" />
@@ -838,6 +838,9 @@ isApprovalTimer = True</bpmn:script>
           <dc:Bounds x="1340" y="557" width="60" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1hpp8tn_di" bpmnElement="Activity_175j3o7">
+        <dc:Bounds x="1750" y="372" width="100" height="80" />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0z13hw3_di" bpmnElement="SubProcess_Data_validation_rules">
         <dc:Bounds x="1170" y="482" width="100" height="80" />
         <bpmndi:BPMNLabel />
@@ -867,9 +870,6 @@ isApprovalTimer = True</bpmn:script>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Gateway_10gbs8m_di" bpmnElement="Gateway_05ov5p5">
         <dc:Bounds x="1605" y="497" width="50" height="50" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_076kb81_di" bpmnElement="Activity_0o1vc0a">
-        <dc:Bounds x="1750" y="400" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0zssftc_di" bpmnElement="Activity_0p88elm">
         <dc:Bounds x="1880" y="560" width="100" height="80" />
@@ -1089,12 +1089,12 @@ isApprovalTimer = True</bpmn:script>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0hev3yn_di" bpmnElement="Flow_0hev3yn">
         <di:waypoint x="1630" y="497" />
-        <di:waypoint x="1630" y="440" />
-        <di:waypoint x="1750" y="440" />
+        <di:waypoint x="1630" y="412" />
+        <di:waypoint x="1750" y="412" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_02o270g_di" bpmnElement="Flow_02o270g">
-        <di:waypoint x="1850" y="440" />
-        <di:waypoint x="2029" y="440" />
+        <di:waypoint x="1850" y="412" />
+        <di:waypoint x="2029" y="412" />
         <di:waypoint x="2029" y="495" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0o94g4u_di" bpmnElement="Flow_0o94g4u">
@@ -1226,7 +1226,7 @@ isApprovalTimer = True</bpmn:script>
         <di:waypoint x="973" y="-140" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0ppupld_di" bpmnElement="Flow_0ppupld">
-        <di:waypoint x="1800" y="480" />
+        <di:waypoint x="1800" y="452" />
         <di:waypoint x="1800" y="1180" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0yfnc92_di" bpmnElement="Flow_0yfnc92">
