@@ -410,11 +410,11 @@ isSetMessage = True</bpmn:script>
       </bpmn:businessRuleTask>
       <bpmn:scriptTask id="Activity_02go8ec" name="Get Annual Salary">
         <bpmn:incoming>Flow_1sc1v4y</bpmn:incoming>
-        <bpmn:outgoing>Flow_1nlal9u</bpmn:outgoing>
+        <bpmn:outgoing>Flow_0nxzc38</bpmn:outgoing>
         <bpmn:script>annual_salary = 24000</bpmn:script>
       </bpmn:scriptTask>
       <bpmn:scriptTask id="Activity_0b87ocm" name="Get Invoice Amount" scriptFormat="python">
-        <bpmn:incoming>Flow_01eh2ws</bpmn:incoming>
+        <bpmn:incoming>Flow_0xtzqkg</bpmn:incoming>
         <bpmn:outgoing>Flow_1m8uxeg</bpmn:outgoing>
         <bpmn:script>invoice_amount = invoice.invoiceAmount</bpmn:script>
       </bpmn:scriptTask>
@@ -424,21 +424,6 @@ isSetMessage = True</bpmn:script>
         <bpmn:incoming>Flow_04do8x7</bpmn:incoming>
       </bpmn:endEvent>
       <bpmn:sequenceFlow id="Flow_04do8x7" sourceRef="Activity_1yhwhps" targetRef="Event_0cmri19" />
-      <bpmn:sequenceFlow id="Flow_1nlal9u" sourceRef="Activity_02go8ec" targetRef="Activity_0j1a5yh" />
-      <bpmn:sequenceFlow id="Flow_01eh2ws" sourceRef="Activity_0j1a5yh" targetRef="Activity_0b87ocm" />
-      <bpmn:serviceTask id="Activity_0j1a5yh" name="Fetch Invoice Details">
-        <bpmn:extensionElements>
-          <spiffworkflow:serviceTaskOperator id="aws/QueryDynamoTable" resultVariable="resp_FetchInvoiceDetails">
-            <spiffworkflow:parameters>
-              <spiffworkflow:parameter id="partition_key" type="str" value="invoice.contributorId" />
-              <spiffworkflow:parameter id="sort_key" type="str" value="invoice.invoiceId" />
-              <spiffworkflow:parameter id="table_name" type="str" value="&#39;Invoice&#39;" />
-            </spiffworkflow:parameters>
-          </spiffworkflow:serviceTaskOperator>
-        </bpmn:extensionElements>
-        <bpmn:incoming>Flow_1nlal9u</bpmn:incoming>
-        <bpmn:outgoing>Flow_01eh2ws</bpmn:outgoing>
-      </bpmn:serviceTask>
       <bpmn:serviceTask id="Activity_1k25w3x" name="Query Invoice Details">
         <bpmn:extensionElements>
           <spiffworkflow:serviceTaskOperator id="aws/QueryDynamoTable" resultVariable="resp_QuertInvoiceDetails">
@@ -449,7 +434,11 @@ isSetMessage = True</bpmn:script>
             </spiffworkflow:parameters>
           </spiffworkflow:serviceTaskOperator>
         </bpmn:extensionElements>
+        <bpmn:incoming>Flow_0nxzc38</bpmn:incoming>
+        <bpmn:outgoing>Flow_0xtzqkg</bpmn:outgoing>
       </bpmn:serviceTask>
+      <bpmn:sequenceFlow id="Flow_0nxzc38" sourceRef="Activity_02go8ec" targetRef="Activity_1k25w3x" />
+      <bpmn:sequenceFlow id="Flow_0xtzqkg" sourceRef="Activity_1k25w3x" targetRef="Activity_0b87ocm" />
     </bpmn:subProcess>
     <bpmn:subProcess id="Activity_1ucvkk4" name="Waku Message: Notify Project Lead">
       <bpmn:incoming>Flow_0kngdw4</bpmn:incoming>
@@ -1238,9 +1227,6 @@ isApprovalTimer = True</bpmn:script>
       <bpmndi:BPMNShape id="Activity_1f5dpwy_di" bpmnElement="Activity_0b87ocm">
         <dc:Bounds x="520" y="350" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_150gd1q_di" bpmnElement="Activity_0j1a5yh">
-        <dc:Bounds x="370" y="350" width="100" height="80" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_0cmri19_di" bpmnElement="Event_0cmri19">
         <dc:Bounds x="842" y="372" width="36" height="36" />
       </bpmndi:BPMNShape>
@@ -1254,7 +1240,7 @@ isApprovalTimer = True</bpmn:script>
         <dc:Bounds x="210" y="350" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0x1ak9n_di" bpmnElement="Activity_1k25w3x">
-        <dc:Bounds x="360" y="220" width="100" height="80" />
+        <dc:Bounds x="360" y="350" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_1sc1v4y_di" bpmnElement="Flow_1sc1v4y">
         <di:waypoint x="148" y="390" />
@@ -1268,12 +1254,12 @@ isApprovalTimer = True</bpmn:script>
         <di:waypoint x="780" y="390" />
         <di:waypoint x="842" y="390" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_1nlal9u_di" bpmnElement="Flow_1nlal9u">
+      <bpmndi:BPMNEdge id="Flow_0nxzc38_di" bpmnElement="Flow_0nxzc38">
         <di:waypoint x="310" y="390" />
-        <di:waypoint x="370" y="390" />
+        <di:waypoint x="360" y="390" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_01eh2ws_di" bpmnElement="Flow_01eh2ws">
-        <di:waypoint x="470" y="390" />
+      <bpmndi:BPMNEdge id="Flow_0xtzqkg_di" bpmnElement="Flow_0xtzqkg">
+        <di:waypoint x="460" y="390" />
         <di:waypoint x="520" y="390" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
