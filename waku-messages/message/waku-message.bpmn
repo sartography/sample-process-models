@@ -39,13 +39,13 @@ waku_message = waku_message_body + "\n- - - - - - - - - - - - - - - - - - - - - 
       <bpmn:outgoing>Flow_1mr3ufe</bpmn:outgoing>
     </bpmn:callActivity>
     <bpmn:sequenceFlow id="Flow_0awdfjq" sourceRef="StartEvent_1" targetRef="Call_Waku_Messages_Message_Body" />
-    <bpmn:sequenceFlow id="Flow_0bn6hlv" sourceRef="Activity_18vg53t" targetRef="Gateway_0quuycl" />
+    <bpmn:sequenceFlow id="Flow_0bn6hlv" sourceRef="Activity_18vg53t" targetRef="Activity_1114i9z" />
     <bpmn:callActivity id="Activity_18vg53t" name="Call Shared: Local Date Time" calledElement="Shared_Local_Date_Time">
       <bpmn:incoming>Flow_0blijzp</bpmn:incoming>
       <bpmn:outgoing>Flow_0bn6hlv</bpmn:outgoing>
     </bpmn:callActivity>
     <bpmn:exclusiveGateway id="Gateway_0quuycl" name="Set Message" default="Flow_0frd453">
-      <bpmn:incoming>Flow_0bn6hlv</bpmn:incoming>
+      <bpmn:incoming>Flow_0n2gvya</bpmn:incoming>
       <bpmn:outgoing>Flow_0frd453</bpmn:outgoing>
       <bpmn:outgoing>Flow_1ypunfo</bpmn:outgoing>
     </bpmn:exclusiveGateway>
@@ -65,6 +65,12 @@ waku_message = waku_message_body + "\n- - - - - - - - - - - - - - - - - - - - - 
     </bpmn:callActivity>
     <bpmn:sequenceFlow id="Flow_1mr3ufe" sourceRef="Call_Waku_Messages_Message_Body" targetRef="Call_Waku_Messages_Message_Variables" />
     <bpmn:sequenceFlow id="Flow_0xlyajo" sourceRef="Call_Waku_Messages_Message_Variables" targetRef="Call_Waku_Messages_Message_Footer" />
+    <bpmn:sequenceFlow id="Flow_0n2gvya" sourceRef="Activity_1114i9z" targetRef="Gateway_0quuycl" />
+    <bpmn:scriptTask id="Activity_1114i9z" name="Set Waku Message Timestamp">
+      <bpmn:incoming>Flow_0bn6hlv</bpmn:incoming>
+      <bpmn:outgoing>Flow_0n2gvya</bpmn:outgoing>
+      <bpmn:script>waku_message_timestamp = "\n- - - - - - - - - - - - - - - - - - - - - - -" + "\nSent: " + local_date_str + " @ " + local_time_str + "\n- - - - - - - - - - - - - - - - - - - - - - -"</bpmn:script>
+    </bpmn:scriptTask>
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Waku_Messages_Message">
@@ -79,21 +85,6 @@ waku_message = waku_message_body + "\n- - - - - - - - - - - - - - - - - - - - - 
       <bpmndi:BPMNShape id="Activity_091bh2s_di" bpmnElement="Get_Waku_Messages_Message_Footer">
         <dc:Bounds x="590" y="270" width="100" height="80" />
         <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_0hgb9d6_di" bpmnElement="Event_0hgb9d6">
-        <dc:Bounds x="1272" y="156" width="36" height="36" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1h667no_di" bpmnElement="Activity_1ll59ee">
-        <dc:Bounds x="1020" y="134" width="100" height="80" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Gateway_0quuycl_di" bpmnElement="Gateway_0quuycl" isMarkerVisible="true">
-        <dc:Bounds x="895" y="149" width="50" height="50" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="888" y="206" width="65" height="14" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Gateway_1szvllt_di" bpmnElement="Gateway_1szvllt" isMarkerVisible="true">
-        <dc:Bounds x="1185" y="149" width="50" height="50" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0vtbbbx_di" bpmnElement="Activity_18vg53t">
         <dc:Bounds x="750" y="134" width="100" height="80" />
@@ -113,13 +104,32 @@ waku_message = waku_message_body + "\n- - - - - - - - - - - - - - - - - - - - - 
       <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
         <dc:Bounds x="179" y="156" width="36" height="36" />
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0hgb9d6_di" bpmnElement="Event_0hgb9d6">
+        <dc:Bounds x="1442" y="156" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1h667no_di" bpmnElement="Activity_1ll59ee">
+        <dc:Bounds x="1190" y="134" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_0quuycl_di" bpmnElement="Gateway_0quuycl" isMarkerVisible="true">
+        <dc:Bounds x="1065" y="149" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1058" y="206" width="65" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_1szvllt_di" bpmnElement="Gateway_1szvllt" isMarkerVisible="true">
+        <dc:Bounds x="1355" y="149" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_13tt0o4_di" bpmnElement="Activity_1114i9z">
+        <dc:Bounds x="920" y="134" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_0blijzp_di" bpmnElement="Flow_0blijzp">
         <di:waypoint x="690" y="174" />
         <di:waypoint x="750" y="174" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1b2tmcm_di" bpmnElement="Flow_1b2tmcm">
-        <di:waypoint x="1120" y="174" />
-        <di:waypoint x="1185" y="174" />
+        <di:waypoint x="1290" y="174" />
+        <di:waypoint x="1355" y="174" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0awdfjq_di" bpmnElement="Flow_0awdfjq">
         <di:waypoint x="215" y="174" />
@@ -127,23 +137,23 @@ waku_message = waku_message_body + "\n- - - - - - - - - - - - - - - - - - - - - 
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0bn6hlv_di" bpmnElement="Flow_0bn6hlv">
         <di:waypoint x="850" y="174" />
-        <di:waypoint x="895" y="174" />
+        <di:waypoint x="920" y="174" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0frd453_di" bpmnElement="Flow_0frd453">
-        <di:waypoint x="945" y="174" />
-        <di:waypoint x="1020" y="174" />
+        <di:waypoint x="1115" y="174" />
+        <di:waypoint x="1190" y="174" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1lxrn9n_di" bpmnElement="Flow_1lxrn9n">
-        <di:waypoint x="1235" y="174" />
-        <di:waypoint x="1272" y="174" />
+        <di:waypoint x="1405" y="174" />
+        <di:waypoint x="1442" y="174" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1ypunfo_di" bpmnElement="Flow_1ypunfo">
-        <di:waypoint x="920" y="149" />
-        <di:waypoint x="920" y="100" />
-        <di:waypoint x="1210" y="100" />
-        <di:waypoint x="1210" y="149" />
+        <di:waypoint x="1090" y="149" />
+        <di:waypoint x="1090" y="100" />
+        <di:waypoint x="1380" y="100" />
+        <di:waypoint x="1380" y="149" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="1058" y="82" width="15" height="14" />
+          <dc:Bounds x="1228" y="82" width="15" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1mr3ufe_di" bpmnElement="Flow_1mr3ufe">
@@ -153,6 +163,10 @@ waku_message = waku_message_body + "\n- - - - - - - - - - - - - - - - - - - - - 
       <bpmndi:BPMNEdge id="Flow_0xlyajo_di" bpmnElement="Flow_0xlyajo">
         <di:waypoint x="530" y="174" />
         <di:waypoint x="590" y="174" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0n2gvya_di" bpmnElement="Flow_0n2gvya">
+        <di:waypoint x="1020" y="174" />
+        <di:waypoint x="1065" y="174" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
