@@ -784,7 +784,45 @@ isSetMessage = True</bpmn:script>
       <bpmn:sequenceFlow id="Flow_0n3djvs" sourceRef="Activity_1wqf9dm" targetRef="Activity_0ez288q" />
       <bpmn:sequenceFlow id="Flow_0lr2fpj" sourceRef="Activity_0ez288q" targetRef="Event_0czwuqb" />
     </bpmn:subProcess>
-    <bpmn:subProcess id="Activity_1t8wi0r" name="Waku Message: No Team Lead Response" />
+    <bpmn:subProcess id="Activity_1t8wi0r" name="Waku Message: No Team Lead Response">
+      <bpmn:startEvent id="Event_1d1g2t6">
+        <bpmn:outgoing>Flow_1a3nz0q</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:callActivity id="Activity_1tnzb4e" name="Get Waku Messages: Message" calledElement="Waku_Messages_Message">
+        <bpmn:incoming>Flow_14d1zey</bpmn:incoming>
+        <bpmn:outgoing>Flow_1u7h5vu</bpmn:outgoing>
+      </bpmn:callActivity>
+      <bpmn:endEvent id="Event_1bwp33i">
+        <bpmn:incoming>Flow_1gx63tj</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:serviceTask id="Activity_00wqw7u" name="6. Notify CC via Waku&#10;&#34;invoice approved&#34;">
+        <bpmn:extensionElements>
+          <spiffworkflow:serviceTaskOperator id="waku/SendMessage" resultVariable="waku_response">
+            <spiffworkflow:parameters>
+              <spiffworkflow:parameter id="message" type="str" value="waku_message" />
+              <spiffworkflow:parameter id="message_type" type="str" value="&#34;wakuext_sendOneToOneMessage&#34;" />
+              <spiffworkflow:parameter id="recipient" type="str" value="current_user_extras[&#34;status_key&#34;]" />
+            </spiffworkflow:parameters>
+          </spiffworkflow:serviceTaskOperator>
+          <spiffworkflow:preScript />
+        </bpmn:extensionElements>
+        <bpmn:incoming>Flow_1u7h5vu</bpmn:incoming>
+        <bpmn:outgoing>Flow_1gx63tj</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:scriptTask id="Activity_1wuxaq1" name="Set Which Message" scriptFormat="python">
+        <bpmn:incoming>Flow_1a3nz0q</bpmn:incoming>
+        <bpmn:outgoing>Flow_14d1zey</bpmn:outgoing>
+        <bpmn:script># Set Task Id
+task_id = "waku_no_team_lead_response"
+
+# Set Message in Call Activity
+isSetMessage = True</bpmn:script>
+      </bpmn:scriptTask>
+      <bpmn:sequenceFlow id="Flow_1a3nz0q" sourceRef="Event_1d1g2t6" targetRef="Activity_1wuxaq1" />
+      <bpmn:sequenceFlow id="Flow_14d1zey" sourceRef="Activity_1wuxaq1" targetRef="Activity_1tnzb4e" />
+      <bpmn:sequenceFlow id="Flow_1u7h5vu" sourceRef="Activity_1tnzb4e" targetRef="Activity_00wqw7u" />
+      <bpmn:sequenceFlow id="Flow_1gx63tj" sourceRef="Activity_00wqw7u" targetRef="Event_1bwp33i" />
+    </bpmn:subProcess>
   </bpmn:process>
   <bpmn:process id="Process_cc_invoice_approval_process_v2_c" isExecutable="false" />
   <bpmn:process id="Process_cc_invoice_approval_process_v2_d" isExecutable="false" />
@@ -1655,6 +1693,40 @@ isSetMessage = True</bpmn:script>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1tp2kri">
-    <bpmndi:BPMNPlane id="BPMNPlane_0vshbk0" bpmnElement="Activity_1t8wi0r" />
+    <bpmndi:BPMNPlane id="BPMNPlane_0vshbk0" bpmnElement="Activity_1t8wi0r">
+      <bpmndi:BPMNShape id="BPMNShape_0mfcyj5" bpmnElement="Event_1d1g2t6">
+        <dc:Bounds x="72" y="252" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_0evp782" bpmnElement="Activity_1tnzb4e">
+        <dc:Bounds x="340" y="230" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_0qiqfx2" bpmnElement="Event_1bwp33i">
+        <dc:Bounds x="702" y="252" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_1o6g6ax" bpmnElement="Activity_00wqw7u">
+        <dc:Bounds x="530" y="230" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_1meefy4" bpmnElement="Activity_1wuxaq1">
+        <dc:Bounds x="170" y="230" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="BPMNEdge_0oq708i" bpmnElement="Flow_1a3nz0q">
+        <di:waypoint x="108" y="270" />
+        <di:waypoint x="170" y="270" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_0ly3qyh" bpmnElement="Flow_14d1zey">
+        <di:waypoint x="270" y="270" />
+        <di:waypoint x="340" y="270" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_0r6rqrw" bpmnElement="Flow_1u7h5vu">
+        <di:waypoint x="440" y="270" />
+        <di:waypoint x="530" y="270" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_09nyysd" bpmnElement="Flow_1gx63tj">
+        <di:waypoint x="630" y="270" />
+        <di:waypoint x="702" y="270" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
 </bpmn:definitions>
