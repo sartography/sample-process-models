@@ -439,6 +439,17 @@ isSetMessage = True</bpmn:script>
         <bpmn:incoming>Flow_1nlal9u</bpmn:incoming>
         <bpmn:outgoing>Flow_01eh2ws</bpmn:outgoing>
       </bpmn:serviceTask>
+      <bpmn:serviceTask id="Activity_1k25w3x" name="Query Invoice Details">
+        <bpmn:extensionElements>
+          <spiffworkflow:serviceTaskOperator id="aws/QueryDynamoTable" resultVariable="resp_QuertInvoiceDetails">
+            <spiffworkflow:parameters>
+              <spiffworkflow:parameter id="partition_key" type="str" value="invoice.contributorId" />
+              <spiffworkflow:parameter id="sort_key" type="str" value="invoice.invoiceId" />
+              <spiffworkflow:parameter id="table_name" type="str" value="&#39;Invoice&#39;" />
+            </spiffworkflow:parameters>
+          </spiffworkflow:serviceTaskOperator>
+        </bpmn:extensionElements>
+      </bpmn:serviceTask>
     </bpmn:subProcess>
     <bpmn:subProcess id="Activity_1ucvkk4" name="Waku Message: Notify Project Lead">
       <bpmn:incoming>Flow_0kngdw4</bpmn:incoming>
@@ -1241,6 +1252,9 @@ isApprovalTimer = True</bpmn:script>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0fzlb0w_di" bpmnElement="Activity_02go8ec">
         <dc:Bounds x="210" y="350" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0x1ak9n_di" bpmnElement="Activity_1k25w3x">
+        <dc:Bounds x="360" y="220" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_1sc1v4y_di" bpmnElement="Flow_1sc1v4y">
         <di:waypoint x="148" y="390" />
