@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:spiffworkflow="http://spiffworkflow.org/bpmn/schema/1.0/core" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_96f6665" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.0.0-dev">
+  <bpmn:process id="Proccess_u0brn8z" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>Flow_0vkhjsx</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_0vkhjsx" sourceRef="StartEvent_1" targetRef="Activity_07ukzg7" />
+    <bpmn:sequenceFlow id="Flow_18da78l" sourceRef="Activity_07ukzg7" targetRef="Activity_14fy1ti" />
+    <bpmn:endEvent id="Event_0k6yta0">
+      <bpmn:incoming>Flow_0cklxrl</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_0cklxrl" sourceRef="Activity_14fy1ti" targetRef="Event_0k6yta0" />
+    <bpmn:scriptTask id="Activity_07ukzg7" name="Set Record" scriptFormat="python">
+      <bpmn:extensionElements>
+        <spiffworkflow:unitTests>
+          <spiffworkflow:unitTest id="ScriptUnitTest_1mb67h7">
+            <spiffworkflow:inputJson>{}</spiffworkflow:inputJson>
+            <spiffworkflow:expectedOutputJson> {"inoice":{"contributorId":"999","contributorName":"Dan Funk","dueDate":"12/24/2023","invoiceAmount":100,"invoiceCurrency":"USD","invoiceId":"111"}</spiffworkflow:expectedOutputJson>
+          </spiffworkflow:unitTest>
+        </spiffworkflow:unitTests>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0vkhjsx</bpmn:incoming>
+      <bpmn:outgoing>Flow_18da78l</bpmn:outgoing>
+      <bpmn:script>inoice = {
+    'contributorName': 'Dan Funk',
+    'contributorId': '999',
+    'invoiceId': '111',
+    'invoiceAmount': 100.00,
+    'invoiceCurrency': 'USD',
+    'dueDate':'12/24/2023'
+}
+</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:serviceTask id="Activity_14fy1ti" name="Save Record">
+      <bpmn:extensionElements>
+        <spiffworkflow:serviceTaskOperator id="aws/AddDynamoItem">
+          <spiffworkflow:parameters>
+            <spiffworkflow:parameter id="item_data" type="str" value="{ &#34;ContributorName&#34;: invoice.contributorName, &#34;ContributorId&#34;: invoice.contributorId, &#34;InvoiceId&#34;: invoice.invoiceId, &#34;InvoiceAmount&#34;: invoice.invoiceAmount, &#34;InvoiceCurrency&#34;: invoice.invoiceCurrency, &#34;DueDate&#34;: invoice.dueDate }" />
+            <spiffworkflow:parameter id="table_name" type="str" value="&#39;Invoice&#39;" />
+          </spiffworkflow:parameters>
+        </spiffworkflow:serviceTaskOperator>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_18da78l</bpmn:incoming>
+      <bpmn:outgoing>Flow_0cklxrl</bpmn:outgoing>
+    </bpmn:serviceTask>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Proccess_u0brn8z">
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="122" y="182" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0k6yta0_di" bpmnElement="Event_0k6yta0">
+        <dc:Bounds x="532" y="182" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0cfg4ai_di" bpmnElement="Activity_07ukzg7">
+        <dc:Bounds x="210" y="160" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0nbdq9m_di" bpmnElement="Activity_14fy1ti">
+        <dc:Bounds x="370" y="160" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_0vkhjsx_di" bpmnElement="Flow_0vkhjsx">
+        <di:waypoint x="158" y="200" />
+        <di:waypoint x="210" y="200" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_18da78l_di" bpmnElement="Flow_18da78l">
+        <di:waypoint x="310" y="200" />
+        <di:waypoint x="370" y="200" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0cklxrl_di" bpmnElement="Flow_0cklxrl">
+        <di:waypoint x="470" y="200" />
+        <di:waypoint x="532" y="200" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
