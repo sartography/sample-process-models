@@ -477,23 +477,20 @@ isSetMessage = True</bpmn:script>
       <bpmn:sequenceFlow id="Flow_0lyg5zb" sourceRef="Activity_0respgl" targetRef="Gateway_1vl3ipe" />
       <bpmn:dataObjectReference id="DataObjectReference_0frvqwx" />
       <bpmn:startEvent id="Event_00px1yx">
-        <bpmn:outgoing>Flow_0idsdf0</bpmn:outgoing>
+        <bpmn:outgoing>Flow_0omj9kq</bpmn:outgoing>
       </bpmn:startEvent>
       <bpmn:endEvent id="Event_1nkaxn4">
         <bpmn:incoming>Flow_1cynsak</bpmn:incoming>
       </bpmn:endEvent>
-      <bpmn:sequenceFlow id="Flow_0idsdf0" sourceRef="Event_00px1yx" targetRef="Activity_00b66gy" />
       <bpmn:callActivity id="Activity_00b66gy" name="Call Shared: User Info" calledElement="Shared_User_Info">
         <bpmn:extensionElements>
           <spiffworkflow:preScript>find_user = current_user_extras["team_lead_username"]
 isCurrentUser = False</spiffworkflow:preScript>
           <spiffworkflow:postScript />
         </bpmn:extensionElements>
-        <bpmn:incoming>Flow_0idsdf0</bpmn:incoming>
-        <bpmn:outgoing>Flow_0mwwhvb</bpmn:outgoing>
       </bpmn:callActivity>
       <bpmn:scriptTask id="Activity_0lmpdui" name="Set Project Lead Info" scriptFormat="python">
-        <bpmn:incoming>Flow_0mwwhvb</bpmn:incoming>
+        <bpmn:incoming>Flow_0omj9kq</bpmn:incoming>
         <bpmn:outgoing>Flow_04uuejh</bpmn:outgoing>
         <bpmn:script># Set Team Lead Info
 team_lead_info = {}
@@ -530,13 +527,13 @@ del(userStatusKey)</bpmn:script>
         <bpmn:incoming>Flow_06j4pij</bpmn:incoming>
         <bpmn:outgoing>Flow_1cynsak</bpmn:outgoing>
       </bpmn:serviceTask>
-      <bpmn:sequenceFlow id="Flow_0mwwhvb" sourceRef="Activity_00b66gy" targetRef="Activity_0lmpdui" />
       <bpmn:sequenceFlow id="Flow_04uuejh" sourceRef="Activity_0lmpdui" targetRef="Call_Waku_Messages_Message-Notify_Proejct_Lead" />
       <bpmn:sequenceFlow id="Flow_06j4pij" sourceRef="Call_Waku_Messages_Message-Notify_Proejct_Lead" targetRef="Activity_1ve0iqu" />
       <bpmn:callActivity id="Call_Waku_Messages_Message-Notify_Proejct_Lead" name="Call Waku Messages: Message" calledElement="Waku_Messages_Message">
         <bpmn:incoming>Flow_04uuejh</bpmn:incoming>
         <bpmn:outgoing>Flow_06j4pij</bpmn:outgoing>
       </bpmn:callActivity>
+      <bpmn:sequenceFlow id="Flow_0omj9kq" sourceRef="Event_00px1yx" targetRef="Activity_0lmpdui" />
     </bpmn:subProcess>
     <bpmn:scriptTask id="Activity_0faln91" name="Temp Message Storage" scriptFormat="python">
       <bpmn:incoming>Flow_1qf14hx</bpmn:incoming>
@@ -1236,6 +1233,9 @@ isApprovalTimer = True</bpmn:script>
   </bpmndi:BPMNDiagram>
   <bpmndi:BPMNDiagram>
     <bpmndi:BPMNPlane bpmnElement="Activity_0gkejaj">
+      <bpmndi:BPMNShape id="Event_0w5o6hr_di" bpmnElement="Event_0w5o6hr">
+        <dc:Bounds x="-48" y="372" width="36" height="36" />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_08gpeul_di" bpmnElement="Activity_1yhwhps">
         <dc:Bounds x="680" y="350" width="100" height="80" />
       </bpmndi:BPMNShape>
@@ -1250,9 +1250,6 @@ isApprovalTimer = True</bpmn:script>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0x1ak9n_di" bpmnElement="Activity_1k25w3x">
         <dc:Bounds x="360" y="350" width="100" height="80" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_0w5o6hr_di" bpmnElement="Event_0w5o6hr">
-        <dc:Bounds x="-48" y="372" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0emlo6d_di" bpmnElement="Activity_0mcykih">
         <dc:Bounds x="50" y="350" width="100" height="80" />
@@ -1299,9 +1296,6 @@ isApprovalTimer = True</bpmn:script>
       <bpmndi:BPMNShape id="Gateway_1vl3ipe_di" bpmnElement="Gateway_1vl3ipe" isMarkerVisible="true">
         <dc:Bounds x="625" y="215" width="50" height="50" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_00px1yx_di" bpmnElement="Event_00px1yx">
-        <dc:Bounds x="72" y="402" width="36" height="36" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_1nkaxn4_di" bpmnElement="Event_1nkaxn4">
         <dc:Bounds x="842" y="402" width="36" height="36" />
       </bpmndi:BPMNShape>
@@ -1319,6 +1313,9 @@ isApprovalTimer = True</bpmn:script>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0mxxp3b_di" bpmnElement="Call_Waku_Messages_Message-Notify_Proejct_Lead">
         <dc:Bounds x="520" y="380" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_00px1yx_di" bpmnElement="Event_00px1yx">
+        <dc:Bounds x="392" y="552" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_1am9jcz_di" bpmnElement="Flow_1am9jcz">
         <di:waypoint x="295" y="240" />
@@ -1338,17 +1335,9 @@ isApprovalTimer = True</bpmn:script>
         <di:waypoint x="650" y="130" />
         <di:waypoint x="650" y="215" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0idsdf0_di" bpmnElement="Flow_0idsdf0">
-        <di:waypoint x="108" y="420" />
-        <di:waypoint x="180" y="420" />
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1cynsak_di" bpmnElement="Flow_1cynsak">
         <di:waypoint x="760" y="420" />
         <di:waypoint x="842" y="420" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0mwwhvb_di" bpmnElement="Flow_0mwwhvb">
-        <di:waypoint x="280" y="420" />
-        <di:waypoint x="360" y="420" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_04uuejh_di" bpmnElement="Flow_04uuejh">
         <di:waypoint x="460" y="420" />
@@ -1357,6 +1346,10 @@ isApprovalTimer = True</bpmn:script>
       <bpmndi:BPMNEdge id="Flow_06j4pij_di" bpmnElement="Flow_06j4pij">
         <di:waypoint x="620" y="420" />
         <di:waypoint x="660" y="420" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0omj9kq_di" bpmnElement="Flow_0omj9kq">
+        <di:waypoint x="410" y="552" />
+        <di:waypoint x="410" y="460" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
