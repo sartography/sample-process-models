@@ -312,9 +312,8 @@ isTest = False</spiffworkflow:preScript>
         <bpmn:targetRef>DataObjectReference_12rfrua</bpmn:targetRef>
       </bpmn:dataOutputAssociation>
       <bpmn:startEvent id="Event_0a4hscg">
-        <bpmn:outgoing>Flow_0h40vf3</bpmn:outgoing>
+        <bpmn:outgoing>Flow_1yktpsd</bpmn:outgoing>
       </bpmn:startEvent>
-      <bpmn:sequenceFlow id="Flow_0h40vf3" sourceRef="Event_0a4hscg" targetRef="Activity_1mndvag" />
       <bpmn:endEvent id="Event_0xohu5m">
         <bpmn:incoming>Flow_17xbb2s</bpmn:incoming>
       </bpmn:endEvent>
@@ -334,12 +333,17 @@ isTest = False</spiffworkflow:preScript>
       </bpmn:serviceTask>
       <bpmn:sequenceFlow id="Flow_17xbb2s" sourceRef="Activity_1fsffcq" targetRef="Event_0xohu5m" />
       <bpmn:callActivity id="Call_Waku_Messages_Message" name="Call Waku Messages: Message" calledElement="Waku_Messages_Message">
-        <bpmn:incoming>Flow_05xzdav</bpmn:incoming>
+        <bpmn:extensionElements>
+          <spiffworkflow:preScript># Set Task List
+task_id = "waku_invoice_submitted"
+
+# Set Message should be generated
+isSetMessage = True</spiffworkflow:preScript>
+        </bpmn:extensionElements>
+        <bpmn:incoming>Flow_1yktpsd</bpmn:incoming>
         <bpmn:outgoing>Flow_0j4xxzp</bpmn:outgoing>
       </bpmn:callActivity>
       <bpmn:scriptTask id="Activity_1mndvag" name="Set Task Id" scriptFormat="python">
-        <bpmn:incoming>Flow_0h40vf3</bpmn:incoming>
-        <bpmn:outgoing>Flow_05xzdav</bpmn:outgoing>
         <bpmn:script># Set Task List
 task_id = "waku_invoice_submitted"
 
@@ -347,7 +351,7 @@ task_id = "waku_invoice_submitted"
 isSetMessage = True</bpmn:script>
       </bpmn:scriptTask>
       <bpmn:sequenceFlow id="Flow_0j4xxzp" sourceRef="Call_Waku_Messages_Message" targetRef="Activity_1fsffcq" />
-      <bpmn:sequenceFlow id="Flow_05xzdav" sourceRef="Activity_1mndvag" targetRef="Call_Waku_Messages_Message" />
+      <bpmn:sequenceFlow id="Flow_1yktpsd" sourceRef="Event_0a4hscg" targetRef="Call_Waku_Messages_Message" />
     </bpmn:subProcess>
     <bpmn:exclusiveGateway id="Gateway_1lbghql" name="Match?" default="Flow_1gohkts">
       <bpmn:incoming>Flow_1c5u447</bpmn:incoming>
@@ -1299,6 +1303,9 @@ isApprovalTimer = True</bpmn:script>
       <bpmndi:BPMNShape id="Gateway_1vl3ipe_di" bpmnElement="Gateway_1vl3ipe" isMarkerVisible="true">
         <dc:Bounds x="625" y="215" width="50" height="50" />
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_00px1yx_di" bpmnElement="Event_00px1yx">
+        <dc:Bounds x="42" y="402" width="36" height="36" />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_1nkaxn4_di" bpmnElement="Event_1nkaxn4">
         <dc:Bounds x="842" y="402" width="36" height="36" />
       </bpmndi:BPMNShape>
@@ -1316,9 +1323,6 @@ isApprovalTimer = True</bpmn:script>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0mxxp3b_di" bpmnElement="Call_Waku_Messages_Message-Notify_Proejct_Lead">
         <dc:Bounds x="520" y="380" width="100" height="80" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_00px1yx_di" bpmnElement="Event_00px1yx">
-        <dc:Bounds x="42" y="402" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_1am9jcz_di" bpmnElement="Flow_1am9jcz">
         <di:waypoint x="295" y="240" />
@@ -1427,12 +1431,8 @@ isApprovalTimer = True</bpmn:script>
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0sjnk6j_di" bpmnElement="Activity_1mndvag">
-        <dc:Bounds x="340" y="170" width="100" height="80" />
+        <dc:Bounds x="340" y="310" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge id="Flow_0h40vf3_di" bpmnElement="Flow_0h40vf3">
-        <di:waypoint x="298" y="210" />
-        <di:waypoint x="340" y="210" />
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_17xbb2s_di" bpmnElement="Flow_17xbb2s">
         <di:waypoint x="780" y="210" />
         <di:waypoint x="832" y="210" />
@@ -1441,8 +1441,8 @@ isApprovalTimer = True</bpmn:script>
         <di:waypoint x="610" y="210" />
         <di:waypoint x="680" y="210" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_05xzdav_di" bpmnElement="Flow_05xzdav">
-        <di:waypoint x="440" y="210" />
+      <bpmndi:BPMNEdge id="Flow_1yktpsd_di" bpmnElement="Flow_1yktpsd">
+        <di:waypoint x="298" y="210" />
         <di:waypoint x="510" y="210" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
