@@ -31,8 +31,6 @@
         <bpmn:flowNodeRef>SubProcess_Data_validation_rules</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_show_errors</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_invoice_validation_failed</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Activity_1colhao</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Gateway_16gxu6s</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_1u89kok</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_1r3yh2k</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Gateway_05ov5p5</bpmn:flowNodeRef>
@@ -57,6 +55,8 @@
         <bpmn:flowNodeRef>Activity_0rae8g6</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_1kgaqpf</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_175j3o7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Gateway_0wk5se9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_1colhao</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_1so23vf" name="Finance Team">
         <bpmn:flowNodeRef>Activity_0cdgqi0</bpmn:flowNodeRef>
@@ -86,7 +86,7 @@
     </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="Flow_0c0c9mw" sourceRef="Activity_0rae8g6" targetRef="Event_1b58a3z" />
     <bpmn:sequenceFlow id="Flow_13ng1f4" sourceRef="Event_invoice_validation_failed" targetRef="Activity_show_errors" />
-    <bpmn:sequenceFlow id="Flow_18cic3h" sourceRef="Activity_show_errors" targetRef="Gateway_16gxu6s" />
+    <bpmn:sequenceFlow id="Flow_18cic3h" sourceRef="Activity_show_errors" targetRef="Gateway_0wk5se9" />
     <bpmn:sequenceFlow id="Flow_02moyg7" sourceRef="Submit_the_invoice" targetRef="SubProcess_Data_validation_rules" />
     <bpmn:sequenceFlow id="Flow_1ck27i7" sourceRef="SubProcess_Data_validation_rules" targetRef="Gateway_validation_successful_question_mark" />
     <bpmn:sequenceFlow id="Flow_1v8dszb" sourceRef="Event_09q0ym0" targetRef="Activity_1t8wi0r" />
@@ -105,7 +105,7 @@
         <spiffworkflow:postScript />
         <spiffworkflow:preScript />
       </bpmn:extensionElements>
-      <bpmn:incoming>Flow_00p30u2</bpmn:incoming>
+      <bpmn:incoming>Flow_17vkjgc</bpmn:incoming>
       <bpmn:outgoing>Flow_02moyg7</bpmn:outgoing>
     </bpmn:userTask>
     <bpmn:exclusiveGateway id="Gateway_validation_successful_question_mark" name="Successful?" default="Flow_1x4rtop">
@@ -214,7 +214,7 @@ Please fix.
       <bpmn:incoming>Flow_05ffq52</bpmn:incoming>
       <bpmn:outgoing>Flow_13ng1f4</bpmn:outgoing>
     </bpmn:intermediateThrowEvent>
-    <bpmn:sequenceFlow id="Flow_0bipj9q" sourceRef="Activity_1u89kok" targetRef="Gateway_16gxu6s" />
+    <bpmn:sequenceFlow id="Flow_0bipj9q" sourceRef="Activity_1u89kok" targetRef="Activity_1colhao" />
     <bpmn:sequenceFlow id="Flow_04ccp12" sourceRef="Event_0m3ri6v" targetRef="Activity_1kgaqpf" />
     <bpmn:sequenceFlow id="Flow_0kngdw4" sourceRef="Event_0x83ruk" targetRef="Activity_1ucvkk4" />
     <bpmn:sequenceFlow id="Flow_0lfqk0y" sourceRef="Activity_1ucvkk4" targetRef="Activity_06b32ar" />
@@ -226,21 +226,7 @@ Please fix.
     <bpmn:sequenceFlow id="Flow_0h96w9j" name="Yes" sourceRef="Gateway_1ytq6m7" targetRef="Activity_0fq1nb4" />
     <bpmn:sequenceFlow id="Flow_053ca95" sourceRef="Activity_0fq1nb4" targetRef="Activity_1b6tead" />
     <bpmn:sequenceFlow id="Flow_0p6vvu0" sourceRef="Activity_104xpp8" targetRef="Activity_0p88elm" />
-    <bpmn:sequenceFlow id="Flow_0v2hmuf" sourceRef="Gateway_16gxu6s" targetRef="Activity_1colhao" />
-    <bpmn:sequenceFlow id="Flow_00p30u2" sourceRef="Activity_1colhao" targetRef="Submit_the_invoice" />
-    <bpmn:callActivity id="Activity_1colhao" name="Call Shared: Build Enum List from AWS" calledElement="Shared_Build_Enum_List_from_AWS">
-      <bpmn:extensionElements>
-        <spiffworkflow:preScript>whichSubject = "Currency"
-addNew = False</spiffworkflow:preScript>
-      </bpmn:extensionElements>
-      <bpmn:incoming>Flow_0v2hmuf</bpmn:incoming>
-      <bpmn:outgoing>Flow_00p30u2</bpmn:outgoing>
-    </bpmn:callActivity>
-    <bpmn:exclusiveGateway id="Gateway_16gxu6s">
-      <bpmn:incoming>Flow_18cic3h</bpmn:incoming>
-      <bpmn:incoming>Flow_0bipj9q</bpmn:incoming>
-      <bpmn:outgoing>Flow_0v2hmuf</bpmn:outgoing>
-    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="Flow_00p30u2" sourceRef="Activity_1colhao" targetRef="Gateway_0wk5se9" />
     <bpmn:callActivity id="Activity_1u89kok" name="Call Shared: Start Process" calledElement="Shared_Start_Process">
       <bpmn:extensionElements>
         <spiffworkflow:preScript>find_user =  current_user["username"]
@@ -789,6 +775,20 @@ isApprovalTimer = True</bpmn:script>
     <bpmn:dataObject id="enumerations_list" />
     <bpmn:dataObjectReference id="DataObjectReference_0bymrvr" name="enumerations_list" dataObjectRef="enumerations_list" />
     <bpmn:dataObject id="wr-notify_cc_invoice_uploaded" />
+    <bpmn:sequenceFlow id="Flow_17vkjgc" sourceRef="Gateway_0wk5se9" targetRef="Submit_the_invoice" />
+    <bpmn:exclusiveGateway id="Gateway_0wk5se9">
+      <bpmn:incoming>Flow_00p30u2</bpmn:incoming>
+      <bpmn:incoming>Flow_18cic3h</bpmn:incoming>
+      <bpmn:outgoing>Flow_17vkjgc</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:callActivity id="Activity_1colhao" name="Call Shared: Build Enum List from AWS" calledElement="Shared_Build_Enum_List_from_AWS">
+      <bpmn:extensionElements>
+        <spiffworkflow:preScript>whichSubject = "Currency"
+addNew = False</spiffworkflow:preScript>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0bipj9q</bpmn:incoming>
+      <bpmn:outgoing>Flow_00p30u2</bpmn:outgoing>
+    </bpmn:callActivity>
   </bpmn:process>
   <bpmn:process id="Process_cc_invoice_approval_process_v2_c" isExecutable="false" />
   <bpmn:process id="Process_cc_invoice_approval_process_v2_d" isExecutable="false" />
@@ -834,6 +834,13 @@ isApprovalTimer = True</bpmn:script>
           <dc:Bounds x="1340" y="557" width="60" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_0wk5se9_di" bpmnElement="Gateway_0wk5se9" isMarkerVisible="true">
+        <dc:Bounds x="865" y="497" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_13dc2qg_di" bpmnElement="Activity_1colhao">
+        <dc:Bounds x="690" y="482" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0z13hw3_di" bpmnElement="SubProcess_Data_validation_rules">
         <dc:Bounds x="1170" y="482" width="100" height="80" />
         <bpmndi:BPMNLabel />
@@ -846,13 +853,6 @@ isApprovalTimer = True</bpmn:script>
         <bpmndi:BPMNLabel>
           <dc:Bounds x="1262" y="411" width="85" height="27" />
         </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_13dc2qg_di" bpmnElement="Activity_1colhao">
-        <dc:Bounds x="810" y="482" width="100" height="80" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Gateway_16gxu6s_di" bpmnElement="Gateway_16gxu6s" isMarkerVisible="true">
-        <dc:Bounds x="685" y="495" width="50" height="50" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_193pz3d_di" bpmnElement="Activity_1u89kok">
         <dc:Bounds x="510" y="480" width="100" height="80" />
@@ -1064,8 +1064,8 @@ isApprovalTimer = True</bpmn:script>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_18cic3h_di" bpmnElement="Flow_18cic3h">
         <di:waypoint x="1080" y="360" />
-        <di:waypoint x="710" y="360" />
-        <di:waypoint x="710" y="495" />
+        <di:waypoint x="890" y="360" />
+        <di:waypoint x="890" y="497" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_02moyg7_di" bpmnElement="Flow_02moyg7">
         <di:waypoint x="1085" y="522" />
@@ -1110,7 +1110,7 @@ isApprovalTimer = True</bpmn:script>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0bipj9q_di" bpmnElement="Flow_0bipj9q">
         <di:waypoint x="610" y="520" />
-        <di:waypoint x="685" y="520" />
+        <di:waypoint x="690" y="520" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_04ccp12_di" bpmnElement="Flow_04ccp12">
         <di:waypoint x="2767" y="600" />
@@ -1157,13 +1157,9 @@ isApprovalTimer = True</bpmn:script>
         <di:waypoint x="1770" y="600" />
         <di:waypoint x="1880" y="600" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0v2hmuf_di" bpmnElement="Flow_0v2hmuf">
-        <di:waypoint x="735" y="520" />
-        <di:waypoint x="810" y="520" />
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_00p30u2_di" bpmnElement="Flow_00p30u2">
-        <di:waypoint x="910" y="522" />
-        <di:waypoint x="985" y="522" />
+        <di:waypoint x="790" y="522" />
+        <di:waypoint x="865" y="522" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0u5z1vc_di" bpmnElement="Flow_0u5z1vc">
         <di:waypoint x="1550" y="522" />
@@ -1206,6 +1202,10 @@ isApprovalTimer = True</bpmn:script>
         <di:waypoint x="3260" y="938" />
         <di:waypoint x="3360" y="938" />
         <di:waypoint x="3360" y="885" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_17vkjgc_di" bpmnElement="Flow_17vkjgc">
+        <di:waypoint x="915" y="522" />
+        <di:waypoint x="985" y="522" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="Participant_0a8arrz_di" bpmnElement="Participant_0a8arrz" isHorizontal="true">
         <dc:Bounds x="1480" y="1180" width="370" height="80" />
