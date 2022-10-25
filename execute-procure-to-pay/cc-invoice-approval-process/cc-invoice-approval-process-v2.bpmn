@@ -401,10 +401,14 @@ isApprovalTimer = False</spiffworkflow:preScript>
         <bpmn:incoming>Flow_1m8uxeg</bpmn:incoming>
         <bpmn:outgoing>Flow_04do8x7</bpmn:outgoing>
       </bpmn:businessRuleTask>
-      <bpmn:scriptTask id="Activity_02go8ec" name="Get Annual Salary">
+      <bpmn:scriptTask id="Activity_02go8ec" name="Get Annual Salary" scriptFormat="python">
         <bpmn:incoming>Flow_02g4qn2</bpmn:incoming>
         <bpmn:outgoing>Flow_0nxzc38</bpmn:outgoing>
-        <bpmn:script>annual_salary = 24000</bpmn:script>
+        <bpmn:script>annual_salary_str = resp_BambooPayRate["amount"]
+annual_salary = float(payRate_str)
+
+
+# annual_salary = 24000</bpmn:script>
       </bpmn:scriptTask>
       <bpmn:scriptTask id="Activity_0b87ocm" name="Get Invoice Amount" scriptFormat="python">
         <bpmn:incoming>Flow_0xtzqkg</bpmn:incoming>
@@ -1019,6 +1023,12 @@ addNew = False</spiffworkflow:preScript>
           <dc:Bounds x="4288" y="751" width="85" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DataObjectReference_1g4gzsx_di" bpmnElement="DataObjectReference_1g4gzsx">
+        <dc:Bounds x="4122" y="445" width="36" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="4097" y="491" width="85" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_08bsj2m_di" bpmnElement="Event_09q0ym0">
         <dc:Bounds x="3052" y="882" width="36" height="36" />
         <bpmndi:BPMNLabel>
@@ -1231,12 +1241,6 @@ addNew = False</spiffworkflow:preScript>
         <di:waypoint x="915" y="522" />
         <di:waypoint x="985" y="522" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="DataObjectReference_1g4gzsx_di" bpmnElement="DataObjectReference_1g4gzsx">
-        <dc:Bounds x="4122" y="445" width="36" height="50" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="4097" y="491" width="85" height="27" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Participant_0a8arrz_di" bpmnElement="Participant_0a8arrz" isHorizontal="true">
         <dc:Bounds x="1480" y="1180" width="370" height="80" />
       </bpmndi:BPMNShape>
@@ -1256,6 +1260,10 @@ addNew = False</spiffworkflow:preScript>
       <bpmndi:BPMNEdge id="DataOutputAssociation_04ohdyt_di" bpmnElement="DataOutputAssociation_04ohdyt">
         <di:waypoint x="2361" y="482" />
         <di:waypoint x="2406" y="425" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DataOutputAssociation_076hmxy_di" bpmnElement="DataOutputAssociation_076hmxy">
+        <di:waypoint x="4091" y="560" />
+        <di:waypoint x="4125" y="495" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="DataOutputAssociation_0lf2wuo_di" bpmnElement="DataOutputAssociation_0lf2wuo">
         <di:waypoint x="4385" y="640" />
@@ -1303,10 +1311,6 @@ addNew = False</spiffworkflow:preScript>
       <bpmndi:BPMNEdge id="Flow_1dgkwzr_di" bpmnElement="Flow_1dgkwzr">
         <di:waypoint x="4410" y="560" />
         <di:waypoint x="4410" y="150" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="DataOutputAssociation_076hmxy_di" bpmnElement="DataOutputAssociation_076hmxy">
-        <di:waypoint x="4091" y="560" />
-        <di:waypoint x="4125" y="495" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
