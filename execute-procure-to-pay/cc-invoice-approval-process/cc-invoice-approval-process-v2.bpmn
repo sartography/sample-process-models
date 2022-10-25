@@ -297,8 +297,8 @@ isTest = False</spiffworkflow:preScript>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_0h1x7y6</bpmn:incoming>
       <bpmn:outgoing>Flow_04fl87d</bpmn:outgoing>
-      <bpmn:dataOutputAssociation id="DataOutputAssociation_1q29emf">
-        <bpmn:targetRef>DataObjectReference_12rfrua</bpmn:targetRef>
+      <bpmn:dataOutputAssociation id="DataOutputAssociation_04ohdyt">
+        <bpmn:targetRef>DataObjectReference_1ykzuco</bpmn:targetRef>
       </bpmn:dataOutputAssociation>
       <bpmn:startEvent id="Event_0a4hscg">
         <bpmn:outgoing>Flow_1yktpsd</bpmn:outgoing>
@@ -308,7 +308,7 @@ isTest = False</spiffworkflow:preScript>
       </bpmn:endEvent>
       <bpmn:serviceTask id="Activity_1fsffcq" name="Waku Message: Notify CC Invoice Submitted">
         <bpmn:extensionElements>
-          <spiffworkflow:serviceTaskOperator id="waku/SendMessage" resultVariable="resp_wakuInvoiceSubmitted">
+          <spiffworkflow:serviceTaskOperator id="waku/SendMessage" resultVariable="wr_InvoiceSubmitted">
             <spiffworkflow:parameters>
               <spiffworkflow:parameter id="message" type="str" value="waku_message" />
               <spiffworkflow:parameter id="message_type" type="str" value="&#34;wakuext_sendOneToOneMessage&#34;" />
@@ -388,7 +388,6 @@ isApprovalTimer = False</spiffworkflow:preScript>
     <bpmn:endEvent id="Event_1b58a3z" name="Invoice is rejected by Approver">
       <bpmn:incoming>Flow_0c0c9mw</bpmn:incoming>
     </bpmn:endEvent>
-    <bpmn:dataObjectReference id="DataObjectReference_0okfp91" name="wr-notify_cc_invoice_uploaded" dataObjectRef="wr-notify_cc_invoice_uploaded" />
     <bpmn:subProcess id="Activity_0gkejaj" name="4. Compare Invoice data vs Enterprise systems data">
       <bpmn:incoming>Flow_1ex5hfx</bpmn:incoming>
       <bpmn:outgoing>Flow_1c5u447</bpmn:outgoing>
@@ -688,8 +687,6 @@ else:
     waku_message = waku_message_body + waku_message_timestamp + waku_message_variables * "\nProject Lead Comments: " + invoice.commentsProjectLead + waku_message_footer</bpmn:script>
       </bpmn:scriptTask>
     </bpmn:subProcess>
-    <bpmn:dataObjectReference id="DataObjectReference_12rfrua" name="wr" dataObjectRef="wr" />
-    <bpmn:dataObject id="wr" />
     <bpmn:subProcess id="Activity_1kgaqpf" name="Waku Message: Notify Finance">
       <bpmn:incoming>Flow_18xvx8w</bpmn:incoming>
       <bpmn:incoming>Flow_04ccp12</bpmn:incoming>
@@ -766,9 +763,7 @@ isApprovalTimer = True</bpmn:script>
       <bpmn:incoming>Flow_0hev3yn</bpmn:incoming>
       <bpmn:outgoing>Flow_02o270g</bpmn:outgoing>
     </bpmn:serviceTask>
-    <bpmn:dataObject id="enumerations_list" />
     <bpmn:dataObjectReference id="DataObjectReference_0bymrvr" name="enumerations_list" dataObjectRef="enumerations_list" />
-    <bpmn:dataObject id="wr-notify_cc_invoice_uploaded" />
     <bpmn:sequenceFlow id="Flow_17vkjgc" sourceRef="Gateway_0wk5se9" targetRef="Submit_the_invoice" />
     <bpmn:exclusiveGateway id="Gateway_0wk5se9">
       <bpmn:incoming>Flow_00p30u2</bpmn:incoming>
@@ -783,6 +778,9 @@ addNew = False</spiffworkflow:preScript>
       <bpmn:incoming>Flow_0bipj9q</bpmn:incoming>
       <bpmn:outgoing>Flow_00p30u2</bpmn:outgoing>
     </bpmn:callActivity>
+    <bpmn:dataObject id="wr_InvoiceSubmitted" />
+    <bpmn:dataObjectReference id="DataObjectReference_1ykzuco" name="wr_InvoiceSubmitted" dataObjectRef="wr_InvoiceSubmitted" />
+    <bpmn:dataObject id="enumerations_list" />
   </bpmn:process>
   <bpmn:process id="Process_cc_invoice_approval_process_v2_c" isExecutable="false" />
   <bpmn:process id="Process_cc_invoice_approval_process_v2_d" isExecutable="false" />
@@ -910,12 +908,6 @@ addNew = False</spiffworkflow:preScript>
           <dc:Bounds x="3576" y="325" width="54" height="40" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="DataObjectReference_0okfp91_di" bpmnElement="DataObjectReference_0okfp91">
-        <dc:Bounds x="2532" y="315" width="36" height="50" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="2511" y="355" width="78" height="40" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1rn2mgi_di" bpmnElement="Activity_0gkejaj">
         <dc:Bounds x="2519" y="482" width="100" height="80" />
       </bpmndi:BPMNShape>
@@ -957,12 +949,6 @@ addNew = False</spiffworkflow:preScript>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0n0ue58_di" bpmnElement="Activity_0rae8g6">
         <dc:Bounds x="3450" y="260" width="100" height="80" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="DataObjectReference_12rfrua_di" bpmnElement="DataObjectReference_12rfrua">
-        <dc:Bounds x="2382" y="365" width="36" height="50" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="2394" y="418" width="12" height="14" />
-        </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1tb6ao6_di" bpmnElement="Activity_1kgaqpf">
         <dc:Bounds x="3450" y="560" width="100" height="80" />
@@ -1201,6 +1187,12 @@ addNew = False</spiffworkflow:preScript>
         <di:waypoint x="915" y="522" />
         <di:waypoint x="985" y="522" />
       </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="DataObjectReference_1ykzuco_di" bpmnElement="DataObjectReference_1ykzuco">
+        <dc:Bounds x="2402" y="375" width="36" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2376" y="428" width="87" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Participant_0a8arrz_di" bpmnElement="Participant_0a8arrz" isHorizontal="true">
         <dc:Bounds x="1480" y="1180" width="370" height="80" />
       </bpmndi:BPMNShape>
@@ -1216,10 +1208,6 @@ addNew = False</spiffworkflow:preScript>
       <bpmndi:BPMNEdge id="DataOutputAssociation_1topzui_di" bpmnElement="DataOutputAssociation_1topzui">
         <di:waypoint x="1233" y="562" />
         <di:waypoint x="1261" y="645" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="DataOutputAssociation_1q29emf_di" bpmnElement="DataOutputAssociation_1q29emf">
-        <di:waypoint x="2349" y="482" />
-        <di:waypoint x="2382" y="413" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Association_1eygti7_di" bpmnElement="Association_1eygti7">
         <di:waypoint x="906" y="-70" />
@@ -1255,6 +1243,10 @@ addNew = False</spiffworkflow:preScript>
       <bpmndi:BPMNEdge id="Flow_1dgkwzr_di" bpmnElement="Flow_1dgkwzr">
         <di:waypoint x="4410" y="560" />
         <di:waypoint x="4410" y="150" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DataOutputAssociation_04ohdyt_di" bpmnElement="DataOutputAssociation_04ohdyt">
+        <di:waypoint x="2361" y="482" />
+        <di:waypoint x="2406" y="425" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
