@@ -477,7 +477,19 @@ isSetMessage = True</bpmn:script>
       <bpmn:callActivity id="Activity_00b66gy" name="Call Shared: User Info" calledElement="Shared_User_Info">
         <bpmn:extensionElements>
           <spiffworkflow:preScript />
-          <spiffworkflow:postScript />
+          <spiffworkflow:postScript># Set Project Lead Info
+project_lead_info = {}
+project_lead_info["full_name"] = userFullName
+project_lead_info["first_name"] = userFirstName
+project_lead_info["email"] = userEmail
+project_lead_info["team_lead_username"] = userProjectLeadUsername
+project_lead_info["status_key"] = userStatusKey
+
+del(userFullName)
+del(userFirstName)
+del(userEmail)
+del(userProjectLeadUsername)
+del(userStatusKey)</spiffworkflow:postScript>
         </bpmn:extensionElements>
         <bpmn:incoming>Flow_1fiu9l4</bpmn:incoming>
         <bpmn:outgoing>Flow_0phvbsa</bpmn:outgoing>
@@ -485,26 +497,12 @@ isSetMessage = True</bpmn:script>
       <bpmn:scriptTask id="Activity_0lmpdui" name="Set Project Lead Info" scriptFormat="python">
         <bpmn:incoming>Flow_0phvbsa</bpmn:incoming>
         <bpmn:outgoing>Flow_04uuejh</bpmn:outgoing>
-        <bpmn:script># Set Team Lead Info
-team_lead_info = {}
-team_lead_info["full_name"] = userFullName
-team_lead_info["first_name"] = userFirstName
-team_lead_info["email"] = userEmail
-team_lead_info["team_lead_username"] = userTeamLeadUsername
-team_lead_info["status_key"] = userStatusKey
-
-# Set Waku message variables
+        <bpmn:script># Set Waku message variables
 task_id = "waku_notify_project_lead"
 isSetMessage = True
 
 # Set Timer Check 
-isApprovalTimer = False
-
-del(userFullName)
-del(userFirstName)
-del(userEmail)
-# del(userTeamLeadUsername)
-del(userStatusKey)</bpmn:script>
+isApprovalTimer = False</bpmn:script>
       </bpmn:scriptTask>
       <bpmn:sequenceFlow id="Flow_1cynsak" sourceRef="Activity_1ve0iqu" targetRef="Event_1nkaxn4" />
       <bpmn:serviceTask id="Activity_1ve0iqu" name="Waku Message: Notify Proejct Lead">
@@ -834,13 +832,6 @@ addNew = False</spiffworkflow:preScript>
           <dc:Bounds x="1340" y="557" width="60" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Gateway_0wk5se9_di" bpmnElement="Gateway_0wk5se9" isMarkerVisible="true">
-        <dc:Bounds x="865" y="497" width="50" height="50" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_13dc2qg_di" bpmnElement="Activity_1colhao">
-        <dc:Bounds x="690" y="482" width="100" height="80" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0z13hw3_di" bpmnElement="SubProcess_Data_validation_rules">
         <dc:Bounds x="1170" y="482" width="100" height="80" />
         <bpmndi:BPMNLabel />
@@ -994,6 +985,13 @@ addNew = False</spiffworkflow:preScript>
         <bpmndi:BPMNLabel>
           <dc:Bounds x="1227" y="685" width="87" height="14" />
         </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_0wk5se9_di" bpmnElement="Gateway_0wk5se9" isMarkerVisible="true">
+        <dc:Bounds x="865" y="497" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_13dc2qg_di" bpmnElement="Activity_1colhao">
+        <dc:Bounds x="690" y="482" width="100" height="80" />
+        <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_08bsj2m_di" bpmnElement="Event_09q0ym0">
         <dc:Bounds x="3052" y="882" width="36" height="36" />
