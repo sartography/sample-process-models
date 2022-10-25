@@ -490,11 +490,11 @@ isSetMessage = True</bpmn:script>
       </bpmn:endEvent>
       <bpmn:callActivity id="Activity_00b66gy" name="Call Shared: User Info" calledElement="Shared_User_Info">
         <bpmn:extensionElements>
-          <spiffworkflow:preScript>find_user = current_user_extras["team_lead_username"]
+          <spiffworkflow:preScript>find_user = current_user_extras["project_lead_username"]
 isCurrentUser = False</spiffworkflow:preScript>
           <spiffworkflow:postScript />
         </bpmn:extensionElements>
-        <bpmn:incoming>Flow_095rnj5</bpmn:incoming>
+        <bpmn:incoming>Flow_1fiu9l4</bpmn:incoming>
         <bpmn:outgoing>Flow_0phvbsa</bpmn:outgoing>
       </bpmn:callActivity>
       <bpmn:scriptTask id="Activity_0lmpdui" name="Set Project Lead Info" scriptFormat="python">
@@ -541,8 +541,13 @@ del(userStatusKey)</bpmn:script>
         <bpmn:incoming>Flow_04uuejh</bpmn:incoming>
         <bpmn:outgoing>Flow_06j4pij</bpmn:outgoing>
       </bpmn:callActivity>
-      <bpmn:sequenceFlow id="Flow_095rnj5" sourceRef="Event_00px1yx" targetRef="Activity_00b66gy" />
+      <bpmn:sequenceFlow id="Flow_095rnj5" sourceRef="Event_00px1yx" targetRef="Activity_1jtcvfx" />
       <bpmn:sequenceFlow id="Flow_0phvbsa" sourceRef="Activity_00b66gy" targetRef="Activity_0lmpdui" />
+      <bpmn:task id="Activity_1jtcvfx" name="Temp Set Project">
+        <bpmn:incoming>Flow_095rnj5</bpmn:incoming>
+        <bpmn:outgoing>Flow_1fiu9l4</bpmn:outgoing>
+      </bpmn:task>
+      <bpmn:sequenceFlow id="Flow_1fiu9l4" sourceRef="Activity_1jtcvfx" targetRef="Activity_00b66gy" />
     </bpmn:subProcess>
     <bpmn:scriptTask id="Activity_0faln91" name="Temp Message Storage" scriptFormat="python">
       <bpmn:incoming>Flow_1qf14hx</bpmn:incoming>
@@ -983,6 +988,12 @@ isApprovalTimer = True</bpmn:script>
       <bpmndi:BPMNShape id="Activity_1hpp8tn_di" bpmnElement="Activity_175j3o7">
         <dc:Bounds x="1750" y="372" width="100" height="80" />
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DataObjectReference_0bymrvr_di" bpmnElement="DataObjectReference_0bymrvr">
+        <dc:Bounds x="1252" y="645" width="36" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1227" y="685" width="87" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_08bsj2m_di" bpmnElement="Event_09q0ym0">
         <dc:Bounds x="3052" y="882" width="36" height="36" />
         <bpmndi:BPMNLabel>
@@ -1195,12 +1206,6 @@ isApprovalTimer = True</bpmn:script>
         <di:waypoint x="3360" y="938" />
         <di:waypoint x="3360" y="885" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="DataObjectReference_0bymrvr_di" bpmnElement="DataObjectReference_0bymrvr">
-        <dc:Bounds x="1252" y="645" width="36" height="50" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="1227" y="685" width="87" height="14" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Participant_0a8arrz_di" bpmnElement="Participant_0a8arrz" isHorizontal="true">
         <dc:Bounds x="1480" y="1180" width="370" height="80" />
       </bpmndi:BPMNShape>
@@ -1213,6 +1218,10 @@ isApprovalTimer = True</bpmn:script>
       <bpmndi:BPMNShape id="TextAnnotation_1uaw1w7_di" bpmnElement="TextAnnotation_1uaw1w7">
         <dc:Bounds x="640" y="-170" width="580" height="30" />
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="DataOutputAssociation_1topzui_di" bpmnElement="DataOutputAssociation_1topzui">
+        <di:waypoint x="1233" y="562" />
+        <di:waypoint x="1261" y="645" />
+      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="DataOutputAssociation_1q29emf_di" bpmnElement="DataOutputAssociation_1q29emf">
         <di:waypoint x="2349" y="482" />
         <di:waypoint x="2382" y="413" />
@@ -1251,10 +1260,6 @@ isApprovalTimer = True</bpmn:script>
       <bpmndi:BPMNEdge id="Flow_1dgkwzr_di" bpmnElement="Flow_1dgkwzr">
         <di:waypoint x="4410" y="560" />
         <di:waypoint x="4410" y="150" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="DataOutputAssociation_1topzui_di" bpmnElement="DataOutputAssociation_1topzui">
-        <di:waypoint x="1233" y="562" />
-        <di:waypoint x="1261" y="645" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
@@ -1323,9 +1328,6 @@ isApprovalTimer = True</bpmn:script>
       <bpmndi:BPMNShape id="Gateway_1vl3ipe_di" bpmnElement="Gateway_1vl3ipe" isMarkerVisible="true">
         <dc:Bounds x="625" y="215" width="50" height="50" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_00px1yx_di" bpmnElement="Event_00px1yx">
-        <dc:Bounds x="42" y="402" width="36" height="36" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_1nkaxn4_di" bpmnElement="Event_1nkaxn4">
         <dc:Bounds x="842" y="402" width="36" height="36" />
       </bpmndi:BPMNShape>
@@ -1343,6 +1345,13 @@ isApprovalTimer = True</bpmn:script>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0mxxp3b_di" bpmnElement="Call_Waku_Messages_Message-Notify_Proejct_Lead">
         <dc:Bounds x="520" y="380" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_00px1yx_di" bpmnElement="Event_00px1yx">
+        <dc:Bounds x="-88" y="402" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1jtcvfx_di" bpmnElement="Activity_1jtcvfx">
+        <dc:Bounds x="20" y="380" width="100" height="80" />
+        <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_1am9jcz_di" bpmnElement="Flow_1am9jcz">
         <di:waypoint x="295" y="240" />
@@ -1375,12 +1384,16 @@ isApprovalTimer = True</bpmn:script>
         <di:waypoint x="660" y="420" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_095rnj5_di" bpmnElement="Flow_095rnj5">
-        <di:waypoint x="78" y="420" />
-        <di:waypoint x="180" y="420" />
+        <di:waypoint x="-52" y="420" />
+        <di:waypoint x="20" y="420" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0phvbsa_di" bpmnElement="Flow_0phvbsa">
         <di:waypoint x="280" y="420" />
         <di:waypoint x="360" y="420" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1fiu9l4_di" bpmnElement="Flow_1fiu9l4">
+        <di:waypoint x="120" y="420" />
+        <di:waypoint x="180" y="420" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
