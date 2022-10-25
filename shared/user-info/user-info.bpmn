@@ -23,7 +23,7 @@
     </bpmn:exclusiveGateway>
     <bpmn:sequenceFlow id="Flow_0i96b90" name="Yes" sourceRef="Gateway_0xlrnzx" targetRef="Activity_1a9fimb" />
     <bpmn:sequenceFlow id="Flow_020y0gy" sourceRef="Activity_1a9fimb" targetRef="Activity_1uw66e8" />
-    <bpmn:sequenceFlow id="Flow_0d47w7r" name="No" sourceRef="Gateway_0xlrnzx" targetRef="Activity_1gv90o4">
+    <bpmn:sequenceFlow id="Flow_0d47w7r" name="No" sourceRef="Gateway_0xlrnzx" targetRef="Gateway_0byohhl">
       <bpmn:conditionExpression>not(isCurrentUser)</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:scriptTask id="Activity_1a9fimb" name="Update Current User Extras" scriptFormat="python">
@@ -37,25 +37,6 @@ current_user_extras["first_name"] = userFirstName
 current_user_extras["email"] = userEmail
 current_user_extras["project_lead_username"] = userProjectLeadUsername
 current_user_extras["status_key"] = userStatusKey
-
-del(userFullName)
-del (userFirstName)
-del(userEmail)
-del(userProjectLeadUsername)
-del(userStatusKey)</bpmn:script>
-    </bpmn:scriptTask>
-    <bpmn:sequenceFlow id="Flow_1xyb00m" sourceRef="Activity_1gv90o4" targetRef="Gateway_0byohhl" />
-    <bpmn:scriptTask id="Activity_1gv90o4" name="Temp" scriptFormat="python">
-      <bpmn:incoming>Flow_0d47w7r</bpmn:incoming>
-      <bpmn:outgoing>Flow_1xyb00m</bpmn:outgoing>
-      <bpmn:script># Update Not Current User Extras
-not_current_user_extras = {}
-not_current_user_extras["bamboo_id"] = userBambooId
-not_current_user_extras["full_name"] = userFullName
-not_current_user_extras["first_name"] = userFirstName
-not_current_user_extras["email"] = userEmail
-not_current_user_extras["project_lead_username"] = userProjectLeadUsername
-not_current_user_extras["status_key"] = userStatusKey
 
 del(userFullName)
 del (userFirstName)
@@ -78,7 +59,7 @@ del(userStatusKey)</bpmn:script>
     <bpmn:sequenceFlow id="Flow_009u4d4" sourceRef="Activity_1uw66e8" targetRef="Gateway_0byohhl" />
     <bpmn:exclusiveGateway id="Gateway_0byohhl">
       <bpmn:incoming>Flow_009u4d4</bpmn:incoming>
-      <bpmn:incoming>Flow_1xyb00m</bpmn:incoming>
+      <bpmn:incoming>Flow_0d47w7r</bpmn:incoming>
       <bpmn:outgoing>Flow_1gd83n0</bpmn:outgoing>
     </bpmn:exclusiveGateway>
     <bpmn:sequenceFlow id="Flow_1gd83n0" sourceRef="Gateway_0byohhl" targetRef="Event_0fb034d" />
@@ -103,9 +84,6 @@ del(userStatusKey)</bpmn:script>
       <bpmndi:BPMNShape id="Activity_0rvcg5l_di" bpmnElement="Activity_1a9fimb">
         <dc:Bounds x="570" y="137" width="100" height="80" />
         <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1082hn5_di" bpmnElement="Activity_1gv90o4">
-        <dc:Bounds x="500" y="10" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0nftxgp_di" bpmnElement="Activity_1uw66e8">
         <dc:Bounds x="760" y="137" width="100" height="80" />
@@ -134,16 +112,12 @@ del(userStatusKey)</bpmn:script>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0d47w7r_di" bpmnElement="Flow_0d47w7r">
         <di:waypoint x="460" y="152" />
-        <di:waypoint x="460" y="50" />
-        <di:waypoint x="500" y="50" />
+        <di:waypoint x="460" y="60" />
+        <di:waypoint x="960" y="60" />
+        <di:waypoint x="960" y="152" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="632" y="32" width="15" height="14" />
+          <dc:Bounds x="712" y="33" width="15" height="14" />
         </bpmndi:BPMNLabel>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_1xyb00m_di" bpmnElement="Flow_1xyb00m">
-        <di:waypoint x="600" y="50" />
-        <di:waypoint x="960" y="50" />
-        <di:waypoint x="960" y="150" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_009u4d4_di" bpmnElement="Flow_009u4d4">
         <di:waypoint x="860" y="177" />
