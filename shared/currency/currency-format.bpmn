@@ -28,7 +28,7 @@ addNew = False</spiffworkflow:preScript>
       <bpmn:extensionElements>
         <spiffworkflow:calledDecisionId>Currency_Format</spiffworkflow:calledDecisionId>
       </bpmn:extensionElements>
-      <bpmn:incoming>Flow_0nlsajj</bpmn:incoming>
+      <bpmn:incoming>Flow_1146lni</bpmn:incoming>
       <bpmn:outgoing>Flow_174qezd</bpmn:outgoing>
     </bpmn:businessRuleTask>
     <bpmn:sequenceFlow id="Flow_1jyj2rk" sourceRef="Activity_1q2cms5" targetRef="Gateway_0u1hfe0" />
@@ -61,9 +61,6 @@ curAmount_str = curAmount_str + " " + curCode</bpmn:script>
       <bpmn:incoming>Flow_1qlhanf</bpmn:incoming>
       <bpmn:outgoing>Flow_0ljzxco</bpmn:outgoing>
     </bpmn:manualTask>
-    <bpmn:startEvent id="StartEvent_1">
-      <bpmn:outgoing>Flow_0pxbn5q</bpmn:outgoing>
-    </bpmn:startEvent>
     <bpmn:scriptTask id="Activity_1ok1tfd" name="Check iI Testing" scriptFormat="python">
       <bpmn:script># Check If Testing
 try:
@@ -72,7 +69,6 @@ catch NameError:
   isCurTest = True</bpmn:script>
     </bpmn:scriptTask>
     <bpmn:exclusiveGateway id="Gateway_0qu1agy" name="Testing?" default="Flow_17jio5w">
-      <bpmn:incoming>Flow_0pxbn5q</bpmn:incoming>
       <bpmn:outgoing>Flow_1m6sgai</bpmn:outgoing>
       <bpmn:outgoing>Flow_17jio5w</bpmn:outgoing>
     </bpmn:exclusiveGateway>
@@ -82,9 +78,7 @@ catch NameError:
     <bpmn:exclusiveGateway id="Gateway_0lpxoao">
       <bpmn:incoming>Flow_18zj1kx</bpmn:incoming>
       <bpmn:incoming>Flow_17jio5w</bpmn:incoming>
-      <bpmn:outgoing>Flow_0nlsajj</bpmn:outgoing>
     </bpmn:exclusiveGateway>
-    <bpmn:sequenceFlow id="Flow_0nlsajj" sourceRef="Gateway_0lpxoao" targetRef="Activity_1gp7tds" />
     <bpmn:sequenceFlow id="Flow_17jio5w" name="No" sourceRef="Gateway_0qu1agy" targetRef="Gateway_0lpxoao" />
     <bpmn:exclusiveGateway id="Gateway_0u1hfe0" name="Testing?" default="Flow_0hyui7b">
       <bpmn:incoming>Flow_1jyj2rk</bpmn:incoming>
@@ -101,8 +95,11 @@ catch NameError:
     </bpmn:exclusiveGateway>
     <bpmn:sequenceFlow id="Flow_18r0v1l" sourceRef="Gateway_0jk8rox" targetRef="Event_0brhprl" />
     <bpmn:sequenceFlow id="Flow_0hyui7b" name="No" sourceRef="Gateway_0u1hfe0" targetRef="Gateway_0jk8rox" />
-    <bpmn:sequenceFlow id="Flow_0pxbn5q" sourceRef="StartEvent_1" targetRef="Gateway_0qu1agy" />
     <bpmn:sequenceFlow id="Flow_0xpgl88" sourceRef="Activity_05iptty" targetRef="Activity_0j2b9gv" />
+    <bpmn:startEvent id="Event_1bw8dfr">
+      <bpmn:outgoing>Flow_1146lni</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_1146lni" sourceRef="Event_1bw8dfr" targetRef="Activity_1gp7tds" />
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Shared_Currency_Format">
@@ -125,9 +122,6 @@ catch NameError:
       <bpmndi:BPMNShape id="Activity_0bc9xkn_di" bpmnElement="Activity_0045py7">
         <dc:Bounds x="1140" y="137" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
-        <dc:Bounds x="-148" y="159" width="36" height="36" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1ca0h53_di" bpmnElement="Activity_1ok1tfd">
         <dc:Bounds x="-50" y="20" width="100" height="80" />
       </bpmndi:BPMNShape>
@@ -148,6 +142,9 @@ catch NameError:
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Gateway_0jk8rox_di" bpmnElement="Gateway_0jk8rox" isMarkerVisible="true">
         <dc:Bounds x="1305" y="152" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1bw8dfr_di" bpmnElement="Event_1bw8dfr">
+        <dc:Bounds x="732" y="302" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_18zj1kx_di" bpmnElement="Flow_18zj1kx">
         <di:waypoint x="520" y="177" />
@@ -171,10 +168,6 @@ catch NameError:
         <bpmndi:BPMNLabel>
           <dc:Bounds x="185" y="153" width="18" height="14" />
         </bpmndi:BPMNLabel>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0nlsajj_di" bpmnElement="Flow_0nlsajj">
-        <di:waypoint x="625" y="177" />
-        <di:waypoint x="700" y="177" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_17jio5w_di" bpmnElement="Flow_17jio5w">
         <di:waypoint x="140" y="152" />
@@ -205,13 +198,13 @@ catch NameError:
           <dc:Bounds x="1178" y="92" width="15" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0pxbn5q_di" bpmnElement="Flow_0pxbn5q">
-        <di:waypoint x="-112" y="177" />
-        <di:waypoint x="115" y="177" />
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0xpgl88_di" bpmnElement="Flow_0xpgl88">
         <di:waypoint x="360" y="177" />
         <di:waypoint x="420" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1146lni_di" bpmnElement="Flow_1146lni">
+        <di:waypoint x="750" y="302" />
+        <di:waypoint x="750" y="217" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
