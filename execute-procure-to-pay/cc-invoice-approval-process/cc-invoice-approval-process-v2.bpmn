@@ -498,11 +498,7 @@ del(userStatusKey)</spiffworkflow:postScript>
       <bpmn:scriptTask id="Activity_0lmpdui" name="Set Project Lead Info" scriptFormat="python">
         <bpmn:incoming>Flow_0phvbsa</bpmn:incoming>
         <bpmn:outgoing>Flow_04uuejh</bpmn:outgoing>
-        <bpmn:script># Set Waku message variables
-task_id = "waku_notify_project_lead"
-isSetMessage = True
-
-# Set Timer Check 
+        <bpmn:script># Set Timer Check 
 isApprovalTimer = False</bpmn:script>
       </bpmn:scriptTask>
       <bpmn:sequenceFlow id="Flow_1cynsak" sourceRef="Activity_1ve0iqu" targetRef="Event_1nkaxn4" />
@@ -522,6 +518,11 @@ isApprovalTimer = False</bpmn:script>
       <bpmn:sequenceFlow id="Flow_04uuejh" sourceRef="Activity_0lmpdui" targetRef="Call_Waku_Messages_Message-Notify_Proejct_Lead" />
       <bpmn:sequenceFlow id="Flow_06j4pij" sourceRef="Call_Waku_Messages_Message-Notify_Proejct_Lead" targetRef="Activity_1ve0iqu" />
       <bpmn:callActivity id="Call_Waku_Messages_Message-Notify_Proejct_Lead" name="Call Waku Messages: Message" calledElement="Waku_Messages_Message">
+        <bpmn:extensionElements>
+          <spiffworkflow:preScript># Set Waku message variables
+task_id = "waku_notify_project_lead"
+isSetMessage = True</spiffworkflow:preScript>
+        </bpmn:extensionElements>
         <bpmn:incoming>Flow_04uuejh</bpmn:incoming>
         <bpmn:outgoing>Flow_06j4pij</bpmn:outgoing>
       </bpmn:callActivity>
@@ -1325,6 +1326,9 @@ addNew = False</spiffworkflow:preScript>
       <bpmndi:BPMNShape id="Gateway_1vl3ipe_di" bpmnElement="Gateway_1vl3ipe" isMarkerVisible="true">
         <dc:Bounds x="625" y="215" width="50" height="50" />
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_00px1yx_di" bpmnElement="Event_00px1yx">
+        <dc:Bounds x="52" y="402" width="36" height="36" />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_1nkaxn4_di" bpmnElement="Event_1nkaxn4">
         <dc:Bounds x="842" y="402" width="36" height="36" />
       </bpmndi:BPMNShape>
@@ -1345,9 +1349,6 @@ addNew = False</spiffworkflow:preScript>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_02v8rpk_di" bpmnElement="Activity_1jtcvfx">
         <dc:Bounds x="20" y="490" width="100" height="80" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_00px1yx_di" bpmnElement="Event_00px1yx">
-        <dc:Bounds x="52" y="402" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_1am9jcz_di" bpmnElement="Flow_1am9jcz">
         <di:waypoint x="295" y="240" />
