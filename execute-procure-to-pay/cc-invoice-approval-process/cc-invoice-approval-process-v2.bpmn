@@ -480,19 +480,7 @@ isApprovalTimer = False</spiffworkflow:preScript>
         <bpmn:extensionElements>
           <spiffworkflow:preScript>find_user = current_user_extras["project_lead_username"]
 isCurrentUser = False</spiffworkflow:preScript>
-          <spiffworkflow:postScript># Set Project Lead Info
-project_lead_info = {}
-project_lead_info["full_name"] = userFullName
-project_lead_info["first_name"] = userFirstName
-project_lead_info["email"] = userEmail
-project_lead_info["team_lead_username"] = userProjectLeadUsername
-project_lead_info["status_key"] = userStatusKey
-
-del(userFullName)
-del(userFirstName)
-del(userEmail)
-del(userProjectLeadUsername)
-del(userStatusKey)</spiffworkflow:postScript>
+          <spiffworkflow:postScript />
         </bpmn:extensionElements>
         <bpmn:incoming>Flow_106rgaj</bpmn:incoming>
         <bpmn:outgoing>Flow_0phvbsa</bpmn:outgoing>
@@ -522,9 +510,20 @@ isSetMessage = True</spiffworkflow:preScript>
         <bpmn:outgoing>Flow_06j4pij</bpmn:outgoing>
       </bpmn:callActivity>
       <bpmn:sequenceFlow id="Flow_0phvbsa" sourceRef="Activity_00b66gy" targetRef="Call_Waku_Messages_Message-Notify_Proejct_Lead" />
-      <bpmn:scriptTask id="Activity_1jtcvfx" name="Temp Set Project">
-        <bpmn:script>find_user = current_user_extras["project_lead_username"]
-isCurrentUser = False</bpmn:script>
+      <bpmn:scriptTask id="Activity_1jtcvfx" name="Temp Post Script" scriptFormat="python">
+        <bpmn:script># Set Project Lead Info
+project_lead_info = {}
+project_lead_info["full_name"] = userFullName
+project_lead_info["first_name"] = userFirstName
+project_lead_info["email"] = userEmail
+project_lead_info["team_lead_username"] = userProjectLeadUsername
+project_lead_info["status_key"] = userStatusKey
+
+del(userFullName)
+del(userFirstName)
+del(userEmail)
+del(userProjectLeadUsername)
+del(userStatusKey)</bpmn:script>
       </bpmn:scriptTask>
       <bpmn:sequenceFlow id="Flow_106rgaj" sourceRef="Event_00px1yx" targetRef="Activity_00b66gy" />
     </bpmn:subProcess>
@@ -1328,18 +1327,19 @@ addNew = False</spiffworkflow:preScript>
         <dc:Bounds x="660" y="380" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_02v8rpk_di" bpmnElement="Activity_1jtcvfx">
-        <dc:Bounds x="20" y="490" width="100" height="80" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0mxxp3b_di" bpmnElement="Call_Waku_Messages_Message-Notify_Proejct_Lead">
         <dc:Bounds x="470" y="380" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1gex892_di" bpmnElement="Activity_00b66gy">
-        <dc:Bounds x="280" y="380" width="100" height="80" />
+      <bpmndi:BPMNShape id="Event_00px1yx_di" bpmnElement="Event_00px1yx">
+        <dc:Bounds x="52" y="402" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_02v8rpk_di" bpmnElement="Activity_1jtcvfx">
+        <dc:Bounds x="330" y="460" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_00px1yx_di" bpmnElement="Event_00px1yx">
-        <dc:Bounds x="142" y="402" width="36" height="36" />
+      <bpmndi:BPMNShape id="Activity_1gex892_di" bpmnElement="Activity_00b66gy">
+        <dc:Bounds x="160" y="380" width="100" height="80" />
+        <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_1am9jcz_di" bpmnElement="Flow_1am9jcz">
         <di:waypoint x="295" y="240" />
@@ -1368,12 +1368,12 @@ addNew = False</spiffworkflow:preScript>
         <di:waypoint x="660" y="420" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0phvbsa_di" bpmnElement="Flow_0phvbsa">
-        <di:waypoint x="380" y="420" />
+        <di:waypoint x="260" y="420" />
         <di:waypoint x="470" y="420" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_106rgaj_di" bpmnElement="Flow_106rgaj">
-        <di:waypoint x="178" y="420" />
-        <di:waypoint x="280" y="420" />
+        <di:waypoint x="88" y="420" />
+        <di:waypoint x="160" y="420" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
