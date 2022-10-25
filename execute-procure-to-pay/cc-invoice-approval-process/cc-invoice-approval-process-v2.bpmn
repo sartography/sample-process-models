@@ -506,11 +506,13 @@ isCurrentUser = False</spiffworkflow:preScript>
 task_id = "waku_notify_project_lead"
 isSetMessage = True</spiffworkflow:preScript>
         </bpmn:extensionElements>
-        <bpmn:incoming>Flow_0phvbsa</bpmn:incoming>
+        <bpmn:incoming>Flow_0t3n7bd</bpmn:incoming>
         <bpmn:outgoing>Flow_06j4pij</bpmn:outgoing>
       </bpmn:callActivity>
-      <bpmn:sequenceFlow id="Flow_0phvbsa" sourceRef="Activity_00b66gy" targetRef="Call_Waku_Messages_Message-Notify_Proejct_Lead" />
+      <bpmn:sequenceFlow id="Flow_0phvbsa" sourceRef="Activity_00b66gy" targetRef="Activity_1jtcvfx" />
       <bpmn:scriptTask id="Activity_1jtcvfx" name="Temp Post Script" scriptFormat="python">
+        <bpmn:incoming>Flow_0phvbsa</bpmn:incoming>
+        <bpmn:outgoing>Flow_0t3n7bd</bpmn:outgoing>
         <bpmn:script># Set Project Lead Info
 project_lead_info = {}
 project_lead_info["full_name"] = userFullName
@@ -526,6 +528,7 @@ del(userProjectLeadUsername)
 del(userStatusKey)</bpmn:script>
       </bpmn:scriptTask>
       <bpmn:sequenceFlow id="Flow_106rgaj" sourceRef="Event_00px1yx" targetRef="Activity_00b66gy" />
+      <bpmn:sequenceFlow id="Flow_0t3n7bd" sourceRef="Activity_1jtcvfx" targetRef="Call_Waku_Messages_Message-Notify_Proejct_Lead" />
     </bpmn:subProcess>
     <bpmn:scriptTask id="Activity_0faln91" name="Temp Message Storage" scriptFormat="python">
       <bpmn:incoming>Flow_1qf14hx</bpmn:incoming>
@@ -1333,12 +1336,12 @@ addNew = False</spiffworkflow:preScript>
       <bpmndi:BPMNShape id="Event_00px1yx_di" bpmnElement="Event_00px1yx">
         <dc:Bounds x="52" y="402" width="36" height="36" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_02v8rpk_di" bpmnElement="Activity_1jtcvfx">
-        <dc:Bounds x="330" y="460" width="100" height="80" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1gex892_di" bpmnElement="Activity_00b66gy">
         <dc:Bounds x="160" y="380" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_02v8rpk_di" bpmnElement="Activity_1jtcvfx">
+        <dc:Bounds x="310" y="380" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_1am9jcz_di" bpmnElement="Flow_1am9jcz">
@@ -1369,11 +1372,15 @@ addNew = False</spiffworkflow:preScript>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0phvbsa_di" bpmnElement="Flow_0phvbsa">
         <di:waypoint x="260" y="420" />
-        <di:waypoint x="470" y="420" />
+        <di:waypoint x="310" y="420" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_106rgaj_di" bpmnElement="Flow_106rgaj">
         <di:waypoint x="88" y="420" />
         <di:waypoint x="160" y="420" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0t3n7bd_di" bpmnElement="Flow_0t3n7bd">
+        <di:waypoint x="410" y="420" />
+        <di:waypoint x="470" y="420" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
