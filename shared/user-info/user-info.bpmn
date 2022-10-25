@@ -50,10 +50,23 @@ del(userProjectLeadUsername)
 del(userStatusKey)</bpmn:script>
     </bpmn:scriptTask>
     <bpmn:sequenceFlow id="Flow_1xyb00m" sourceRef="Activity_1gv90o4" targetRef="Gateway_1ifycz3" />
-    <bpmn:scriptTask id="Activity_1gv90o4" name="Temp">
+    <bpmn:scriptTask id="Activity_1gv90o4" name="Temp" scriptFormat="python">
       <bpmn:incoming>Flow_0d47w7r</bpmn:incoming>
       <bpmn:outgoing>Flow_1xyb00m</bpmn:outgoing>
-      <bpmn:script>test_check = "outside"</bpmn:script>
+      <bpmn:script># Update Not Current User Extras
+not_current_user_extras = {}
+not_current_user_extras["bamboo_id"] = userBambooId
+not_current_user_extras["full_name"] = userFullName
+not_current_user_extras["first_name"] = userFirstName
+vnot_current_user_extras["email"] = userEmail
+not_current_user_extras["project_lead_username"] = userProjectLeadUsername
+not_current_user_extras["status_key"] = userStatusKey
+
+del(userFullName)
+del (userFirstName)
+del(userEmail)
+del(userProjectLeadUsername)
+del(userStatusKey)</bpmn:script>
     </bpmn:scriptTask>
     <bpmn:serviceTask id="Activity_1uw66e8" name="Get User Info From Bamboo">
       <bpmn:extensionElements>
