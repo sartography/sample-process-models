@@ -533,24 +533,20 @@ del(userStatusKey)</bpmn:script>
         <bpmn:script>userBambooId_str = resp_BambooUserInfo["supervisorEid"]</bpmn:script>
       </bpmn:scriptTask>
       <bpmn:sequenceFlow id="Flow_0dvboik" sourceRef="Event_00px1yx" targetRef="Activity_1982sk7" />
-      <bpmn:businessRuleTask id="Activity_1cqx4zy" name="Get Keycloak Username">
-        <bpmn:extensionElements>
-          <spiffworkflow:calledDecisionId>user_info</spiffworkflow:calledDecisionId>
-        </bpmn:extensionElements>
-        <bpmn:incoming>Flow_01ki4jt</bpmn:incoming>
-        <bpmn:outgoing>Flow_1cd3utj</bpmn:outgoing>
-      </bpmn:businessRuleTask>
       <bpmn:sequenceFlow id="Flow_03mru8z" sourceRef="Activity_1nyfxna" targetRef="Activity_00b66gy" />
       <bpmn:scriptTask id="Activity_1nyfxna" name="Temp Pre Script" scriptFormat="python">
-        <bpmn:incoming>Flow_1cd3utj</bpmn:incoming>
+        <bpmn:incoming>Flow_1lbdhwm</bpmn:incoming>
         <bpmn:outgoing>Flow_03mru8z</bpmn:outgoing>
         <bpmn:script># find_user = current_user_extras["project_lead_username"]
 find_user = userKeycloak
 isCurrentUser = False</bpmn:script>
       </bpmn:scriptTask>
-      <bpmn:callActivity id="Activity_1r3o0bm" name="Get Keycloak Username" calledElement="Bamboo_Conversion" />
-      <bpmn:sequenceFlow id="Flow_01ki4jt" sourceRef="Activity_1982sk7" targetRef="Activity_1cqx4zy" />
-      <bpmn:sequenceFlow id="Flow_1cd3utj" sourceRef="Activity_1cqx4zy" targetRef="Activity_1nyfxna" />
+      <bpmn:callActivity id="Activity_1r3o0bm" name="Get Keycloak Username" calledElement="Bamboo_Conversion">
+        <bpmn:incoming>Flow_01ki4jt</bpmn:incoming>
+        <bpmn:outgoing>Flow_1lbdhwm</bpmn:outgoing>
+      </bpmn:callActivity>
+      <bpmn:sequenceFlow id="Flow_01ki4jt" sourceRef="Activity_1982sk7" targetRef="Activity_1r3o0bm" />
+      <bpmn:sequenceFlow id="Flow_1lbdhwm" sourceRef="Activity_1r3o0bm" targetRef="Activity_1nyfxna" />
     </bpmn:subProcess>
     <bpmn:scriptTask id="Activity_0faln91" name="Temp Message Storage" scriptFormat="python">
       <bpmn:incoming>Flow_1qf14hx</bpmn:incoming>
@@ -1433,10 +1429,7 @@ addNew = False</spiffworkflow:preScript>
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1lm44ee_di" bpmnElement="Activity_1r3o0bm">
-        <dc:Bounds x="-130" y="490" width="100" height="80" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_081nj6r_di" bpmnElement="Activity_1cqx4zy">
-        <dc:Bounds x="-130" y="380" width="100" height="80" />
+        <dc:Bounds x="-140" y="380" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_1am9jcz_di" bpmnElement="Flow_1am9jcz">
         <di:waypoint x="295" y="240" />
@@ -1482,10 +1475,10 @@ addNew = False</spiffworkflow:preScript>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_01ki4jt_di" bpmnElement="Flow_01ki4jt">
         <di:waypoint x="-190" y="420" />
-        <di:waypoint x="-130" y="420" />
+        <di:waypoint x="-140" y="420" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_1cd3utj_di" bpmnElement="Flow_1cd3utj">
-        <di:waypoint x="-30" y="420" />
+      <bpmndi:BPMNEdge id="Flow_1lbdhwm_di" bpmnElement="Flow_1lbdhwm">
+        <di:waypoint x="-40" y="420" />
         <di:waypoint x="30" y="420" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
