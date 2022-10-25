@@ -490,8 +490,7 @@ isSetMessage = True</bpmn:script>
       </bpmn:endEvent>
       <bpmn:callActivity id="Activity_00b66gy" name="Call Shared: User Info" calledElement="Shared_User_Info">
         <bpmn:extensionElements>
-          <spiffworkflow:preScript>find_user = current_user_extras["project_lead_username"]
-isCurrentUser = False</spiffworkflow:preScript>
+          <spiffworkflow:preScript />
           <spiffworkflow:postScript />
         </bpmn:extensionElements>
         <bpmn:incoming>Flow_1fiu9l4</bpmn:incoming>
@@ -543,11 +542,13 @@ del(userStatusKey)</bpmn:script>
       </bpmn:callActivity>
       <bpmn:sequenceFlow id="Flow_095rnj5" sourceRef="Event_00px1yx" targetRef="Activity_1jtcvfx" />
       <bpmn:sequenceFlow id="Flow_0phvbsa" sourceRef="Activity_00b66gy" targetRef="Activity_0lmpdui" />
-      <bpmn:task id="Activity_1jtcvfx" name="Temp Set Project">
+      <bpmn:sequenceFlow id="Flow_1fiu9l4" sourceRef="Activity_1jtcvfx" targetRef="Activity_00b66gy" />
+      <bpmn:scriptTask id="Activity_1jtcvfx" name="Temp Set Project">
         <bpmn:incoming>Flow_095rnj5</bpmn:incoming>
         <bpmn:outgoing>Flow_1fiu9l4</bpmn:outgoing>
-      </bpmn:task>
-      <bpmn:sequenceFlow id="Flow_1fiu9l4" sourceRef="Activity_1jtcvfx" targetRef="Activity_00b66gy" />
+        <bpmn:script>find_user = current_user_extras["project_lead_username"]
+isCurrentUser = False</bpmn:script>
+      </bpmn:scriptTask>
     </bpmn:subProcess>
     <bpmn:scriptTask id="Activity_0faln91" name="Temp Message Storage" scriptFormat="python">
       <bpmn:incoming>Flow_1qf14hx</bpmn:incoming>
@@ -1328,6 +1329,9 @@ isApprovalTimer = True</bpmn:script>
       <bpmndi:BPMNShape id="Gateway_1vl3ipe_di" bpmnElement="Gateway_1vl3ipe" isMarkerVisible="true">
         <dc:Bounds x="625" y="215" width="50" height="50" />
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_00px1yx_di" bpmnElement="Event_00px1yx">
+        <dc:Bounds x="-88" y="402" width="36" height="36" />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_1nkaxn4_di" bpmnElement="Event_1nkaxn4">
         <dc:Bounds x="842" y="402" width="36" height="36" />
       </bpmndi:BPMNShape>
@@ -1346,12 +1350,8 @@ isApprovalTimer = True</bpmn:script>
       <bpmndi:BPMNShape id="Activity_0mxxp3b_di" bpmnElement="Call_Waku_Messages_Message-Notify_Proejct_Lead">
         <dc:Bounds x="520" y="380" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_00px1yx_di" bpmnElement="Event_00px1yx">
-        <dc:Bounds x="-88" y="402" width="36" height="36" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1jtcvfx_di" bpmnElement="Activity_1jtcvfx">
+      <bpmndi:BPMNShape id="Activity_02v8rpk_di" bpmnElement="Activity_1jtcvfx">
         <dc:Bounds x="20" y="380" width="100" height="80" />
-        <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_1am9jcz_di" bpmnElement="Flow_1am9jcz">
         <di:waypoint x="295" y="240" />
