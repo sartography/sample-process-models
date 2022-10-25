@@ -478,11 +478,10 @@ annual_salary = float(annual_salary_str)
       </bpmn:endEvent>
       <bpmn:callActivity id="Activity_00b66gy" name="Call Shared: User Info" calledElement="Shared_User_Info">
         <bpmn:extensionElements>
-          <spiffworkflow:preScript>find_user = userKeycloak
-isCurrentUser = False</spiffworkflow:preScript>
+          <spiffworkflow:preScript />
           <spiffworkflow:postScript />
         </bpmn:extensionElements>
-        <bpmn:incoming>Flow_1trnj6d</bpmn:incoming>
+        <bpmn:incoming>Flow_03mru8z</bpmn:incoming>
         <bpmn:outgoing>Flow_0phvbsa</bpmn:outgoing>
       </bpmn:callActivity>
       <bpmn:serviceTask id="Activity_1ve0iqu" name="Waku Message: Notify Proejct Lead">
@@ -535,7 +534,7 @@ del(userStatusKey)</bpmn:script>
         <bpmn:script>userBambooId_str = resp_BambooUserInfo["supervisorEid"]</bpmn:script>
       </bpmn:scriptTask>
       <bpmn:sequenceFlow id="Flow_0dvboik" sourceRef="Event_00px1yx" targetRef="Activity_1982sk7" />
-      <bpmn:sequenceFlow id="Flow_1trnj6d" sourceRef="Activity_1cqx4zy" targetRef="Activity_00b66gy" />
+      <bpmn:sequenceFlow id="Flow_1trnj6d" sourceRef="Activity_1cqx4zy" targetRef="Activity_1nyfxna" />
       <bpmn:businessRuleTask id="Activity_1cqx4zy" name="Get Keycloak Username">
         <bpmn:extensionElements>
           <spiffworkflow:calledDecisionId>user_info</spiffworkflow:calledDecisionId>
@@ -543,6 +542,13 @@ del(userStatusKey)</bpmn:script>
         <bpmn:incoming>Flow_0xxlbay</bpmn:incoming>
         <bpmn:outgoing>Flow_1trnj6d</bpmn:outgoing>
       </bpmn:businessRuleTask>
+      <bpmn:sequenceFlow id="Flow_03mru8z" sourceRef="Activity_1nyfxna" targetRef="Activity_00b66gy" />
+      <bpmn:scriptTask id="Activity_1nyfxna" name="Temp Pre Script">
+        <bpmn:incoming>Flow_1trnj6d</bpmn:incoming>
+        <bpmn:outgoing>Flow_03mru8z</bpmn:outgoing>
+        <bpmn:script>find_user = userKeycloak
+isCurrentUser = False</bpmn:script>
+      </bpmn:scriptTask>
     </bpmn:subProcess>
     <bpmn:scriptTask id="Activity_0faln91" name="Temp Message Storage" scriptFormat="python">
       <bpmn:incoming>Flow_1qf14hx</bpmn:incoming>
@@ -1423,6 +1429,10 @@ addNew = False</spiffworkflow:preScript>
       <bpmndi:BPMNShape id="Activity_081nj6r_di" bpmnElement="Activity_1cqx4zy">
         <dc:Bounds x="-110" y="380" width="100" height="80" />
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0plejcc_di" bpmnElement="Activity_1nyfxna">
+        <dc:Bounds x="30" y="380" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_1am9jcz_di" bpmnElement="Flow_1am9jcz">
         <di:waypoint x="295" y="240" />
         <di:waypoint x="360" y="240" />
@@ -1467,6 +1477,10 @@ addNew = False</spiffworkflow:preScript>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1trnj6d_di" bpmnElement="Flow_1trnj6d">
         <di:waypoint x="-10" y="420" />
+        <di:waypoint x="30" y="420" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_03mru8z_di" bpmnElement="Flow_03mru8z">
+        <di:waypoint x="130" y="420" />
         <di:waypoint x="160" y="420" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
