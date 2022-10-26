@@ -56,9 +56,6 @@
       <bpmn:outgoing>Flow_1utjn0p</bpmn:outgoing>
     </bpmn:parallelGateway>
     <bpmn:sequenceFlow id="Flow_0rftt7g" sourceRef="Activity_00fpxb0" targetRef="Activity_0y8b7ok" />
-    <bpmn:endEvent id="Event_1hdqwrb">
-      <bpmn:incoming>Flow_13x24wm</bpmn:incoming>
-    </bpmn:endEvent>
     <bpmn:sequenceFlow id="Flow_1utjn0p" sourceRef="Gateway_1ycgt3v" targetRef="Activity_1lu7ioj" />
     <bpmn:sequenceFlow id="Flow_1bmyvgw" sourceRef="Activity_0y8b7ok" targetRef="Gateway_1ycgt3v" />
     <bpmn:scriptTask id="Activity_0y8b7ok" name="Delete Temp File">
@@ -66,7 +63,6 @@
       <bpmn:outgoing>Flow_1bmyvgw</bpmn:outgoing>
       <bpmn:script>del(filesAccept)</bpmn:script>
     </bpmn:scriptTask>
-    <bpmn:sequenceFlow id="Flow_13x24wm" sourceRef="Activity_1lu7ioj" targetRef="Event_1hdqwrb" />
     <bpmn:serviceTask id="Activity_1lu7ioj" name="Send Waku Message: Invoice Submitted">
       <bpmn:extensionElements>
         <spiffworkflow:serviceTaskOperator id="waku/SendMessage" resultVariable="wr_SendInvocieSubmitted">
@@ -78,8 +74,48 @@
         </spiffworkflow:serviceTaskOperator>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_1utjn0p</bpmn:incoming>
-      <bpmn:outgoing>Flow_13x24wm</bpmn:outgoing>
+      <bpmn:outgoing>Flow_1b1mmoe</bpmn:outgoing>
     </bpmn:serviceTask>
+    <bpmn:intermediateThrowEvent id="Event_03t9lyz" name="Invoice Submitted">
+      <bpmn:incoming>Flow_1b1mmoe</bpmn:incoming>
+      <bpmn:outgoing>Flow_0fpvf0n</bpmn:outgoing>
+    </bpmn:intermediateThrowEvent>
+    <bpmn:sequenceFlow id="Flow_1b1mmoe" sourceRef="Activity_1lu7ioj" targetRef="Event_03t9lyz" />
+    <bpmn:sequenceFlow id="Flow_0fpvf0n" sourceRef="Event_03t9lyz" targetRef="Activity_1p94uz7" />
+    <bpmn:subProcess id="Activity_1p94uz7" name="Compare Submitted with Bamboo Salady">
+      <bpmn:incoming>Flow_0fpvf0n</bpmn:incoming>
+      <bpmn:startEvent id="Event_17y7mmh">
+        <bpmn:outgoing>Flow_0duu4zp</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:sequenceFlow id="Flow_0duu4zp" sourceRef="Event_17y7mmh" targetRef="Activity_0vjn1x3" />
+      <bpmn:serviceTask id="Activity_0vjn1x3" name="Get Bamboo Salary">
+        <bpmn:extensionElements>
+          <spiffworkflow:serviceTaskOperator id="bamboohr/GetPayRate" resultVariable="resp_GetPayRate">
+            <spiffworkflow:parameters>
+              <spiffworkflow:parameter id="employee_id" type="str" value="109" />
+            </spiffworkflow:parameters>
+          </spiffworkflow:serviceTaskOperator>
+        </bpmn:extensionElements>
+        <bpmn:incoming>Flow_0duu4zp</bpmn:incoming>
+        <bpmn:outgoing>Flow_1i3yle0</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:sequenceFlow id="Flow_1i3yle0" sourceRef="Activity_0vjn1x3" targetRef="Activity_1s9t7oz" />
+      <bpmn:scriptTask id="Activity_1s9t7oz" name="Set Annual Salary">
+        <bpmn:incoming>Flow_1i3yle0</bpmn:incoming>
+        <bpmn:outgoing>Flow_1j5gzff</bpmn:outgoing>
+        <bpmn:script>annual_salary_str = resp_BambooPayRate["amount"]
+annual_salary = float(annual_salary_str)</bpmn:script>
+      </bpmn:scriptTask>
+      <bpmn:sequenceFlow id="Flow_1j5gzff" sourceRef="Activity_1s9t7oz" targetRef="Activity_1idn241" />
+      <bpmn:businessRuleTask id="Activity_1idn241" name="Check Amounts">
+        <bpmn:incoming>Flow_1j5gzff</bpmn:incoming>
+        <bpmn:outgoing>Flow_150qjzb</bpmn:outgoing>
+      </bpmn:businessRuleTask>
+      <bpmn:endEvent id="Event_1dqipiw">
+        <bpmn:incoming>Flow_150qjzb</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:sequenceFlow id="Flow_150qjzb" sourceRef="Activity_1idn241" targetRef="Event_1dqipiw" />
+    </bpmn:subProcess>
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Proccess_tlws0al">
@@ -104,11 +140,18 @@
       <bpmndi:BPMNShape id="Activity_0i29no8_di" bpmnElement="Activity_0y8b7ok">
         <dc:Bounds x="670" y="220" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_1hdqwrb_di" bpmnElement="Event_1hdqwrb">
-        <dc:Bounds x="1062" y="159" width="36" height="36" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1m5hrik_di" bpmnElement="Activity_1lu7ioj">
         <dc:Bounds x="890" y="137" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_03t9lyz_di" bpmnElement="Event_03t9lyz">
+        <dc:Bounds x="1062" y="159" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1037" y="202" width="88" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0kd0p6j_di" bpmnElement="Activity_1p94uz7">
+        <dc:Bounds x="1170" y="137" width="100" height="80" />
+        <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_1mgdvgh_di" bpmnElement="Flow_1mgdvgh">
         <di:waypoint x="215" y="177" />
@@ -146,9 +189,48 @@
         <di:waypoint x="800" y="260" />
         <di:waypoint x="800" y="202" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_13x24wm_di" bpmnElement="Flow_13x24wm">
+      <bpmndi:BPMNEdge id="Flow_1b1mmoe_di" bpmnElement="Flow_1b1mmoe">
         <di:waypoint x="990" y="177" />
         <di:waypoint x="1062" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0fpvf0n_di" bpmnElement="Flow_0fpvf0n">
+        <di:waypoint x="1098" y="177" />
+        <di:waypoint x="1170" y="177" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_162off7">
+    <bpmndi:BPMNPlane id="BPMNPlane_1l04ngk" bpmnElement="Activity_1p94uz7">
+      <bpmndi:BPMNShape id="Event_17y7mmh_di" bpmnElement="Event_17y7mmh">
+        <dc:Bounds x="262" y="212" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0afx55v_di" bpmnElement="Activity_0vjn1x3">
+        <dc:Bounds x="350" y="190" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1o0ktq1_di" bpmnElement="Activity_1s9t7oz">
+        <dc:Bounds x="510" y="190" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0uvbn2c_di" bpmnElement="Activity_1idn241">
+        <dc:Bounds x="670" y="190" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1dqipiw_di" bpmnElement="Event_1dqipiw">
+        <dc:Bounds x="832" y="212" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_0duu4zp_di" bpmnElement="Flow_0duu4zp">
+        <di:waypoint x="298" y="230" />
+        <di:waypoint x="350" y="230" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1i3yle0_di" bpmnElement="Flow_1i3yle0">
+        <di:waypoint x="450" y="230" />
+        <di:waypoint x="510" y="230" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1j5gzff_di" bpmnElement="Flow_1j5gzff">
+        <di:waypoint x="610" y="230" />
+        <di:waypoint x="670" y="230" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_150qjzb_di" bpmnElement="Flow_150qjzb">
+        <di:waypoint x="770" y="230" />
+        <di:waypoint x="832" y="230" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
