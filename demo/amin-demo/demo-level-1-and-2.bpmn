@@ -113,7 +113,7 @@
 annual_salary = float(annual_salary_str)</bpmn:script>
       </bpmn:scriptTask>
     </bpmn:subProcess>
-    <bpmn:exclusiveGateway id="Gateway_Match" name="Match?">
+    <bpmn:exclusiveGateway id="Gateway_Match" name="Match?" default="Flow_Yes">
       <bpmn:incoming>Flow_1rvl8hr</bpmn:incoming>
       <bpmn:outgoing>Flow_No</bpmn:outgoing>
       <bpmn:outgoing>Flow_Yes</bpmn:outgoing>
@@ -123,7 +123,7 @@ annual_salary = float(annual_salary_str)</bpmn:script>
       <bpmn:outgoing>Flow_017p6lf</bpmn:outgoing>
     </bpmn:intermediateThrowEvent>
     <bpmn:sequenceFlow id="Flow_No" name="No" sourceRef="Gateway_Match" targetRef="Event_0b2jycv">
-      <bpmn:conditionExpression />
+      <bpmn:conditionExpression>not(isMatch)</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:endEvent id="Event_0nfwv5b">
       <bpmn:incoming>Flow_08u8awn</bpmn:incoming>
