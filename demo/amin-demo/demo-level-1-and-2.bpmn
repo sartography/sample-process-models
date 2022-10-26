@@ -13,10 +13,10 @@
         </spiffworkflow:properties>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_1vplyx7</bpmn:incoming>
-      <bpmn:outgoing>Flow_0swy6g6</bpmn:outgoing>
+      <bpmn:outgoing>Flow_0plmx5x</bpmn:outgoing>
     </bpmn:userTask>
-    <bpmn:sequenceFlow id="Flow_0swy6g6" sourceRef="Activity_056tlcm" targetRef="Event_1w7e6sz" />
     <bpmn:parallelGateway id="Gateway_0s8nhby">
+      <bpmn:incoming>Flow_0plmx5x</bpmn:incoming>
       <bpmn:outgoing>Flow_1by544v</bpmn:outgoing>
       <bpmn:outgoing>Flow_0lz8sv6</bpmn:outgoing>
     </bpmn:parallelGateway>
@@ -66,13 +66,11 @@
         </spiffworkflow:serviceTaskOperator>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_0msmu5a</bpmn:incoming>
-      <bpmn:outgoing>Flow_1f89h1x</bpmn:outgoing>
+      <bpmn:outgoing>Flow_1ba79qd</bpmn:outgoing>
     </bpmn:serviceTask>
     <bpmn:intermediateThrowEvent id="Event_10awb2b" name="Invoice Submitted">
-      <bpmn:incoming>Flow_1f89h1x</bpmn:incoming>
       <bpmn:outgoing>Flow_09l53uz</bpmn:outgoing>
     </bpmn:intermediateThrowEvent>
-    <bpmn:sequenceFlow id="Flow_1f89h1x" sourceRef="Activity_0gi1l0j" targetRef="Event_10awb2b" />
     <bpmn:sequenceFlow id="Flow_09l53uz" sourceRef="Event_10awb2b" targetRef="Activity_1hfqp9j" />
     <bpmn:subProcess id="Activity_1hfqp9j" name="Compare Submitted with Bamboo Salary">
       <bpmn:incoming>Flow_09l53uz</bpmn:incoming>
@@ -137,8 +135,10 @@
     </bpmn:endEvent>
     <bpmn:sequenceFlow id="Flow_1xyr4g0" sourceRef="Activity_07kfnj9" targetRef="Event_1vyzunj" />
     <bpmn:endEvent id="Event_1w7e6sz">
-      <bpmn:incoming>Flow_0swy6g6</bpmn:incoming>
+      <bpmn:incoming>Flow_1ba79qd</bpmn:incoming>
     </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_0plmx5x" sourceRef="Activity_056tlcm" targetRef="Gateway_0s8nhby" />
+    <bpmn:sequenceFlow id="Flow_1ba79qd" sourceRef="Activity_0gi1l0j" targetRef="Event_1w7e6sz" />
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Proccess_c3aa856">
@@ -168,6 +168,9 @@
         <bpmndi:BPMNLabel>
           <dc:Bounds x="927" y="215" width="88" height="14" />
         </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1w7e6sz_di" bpmnElement="Event_1w7e6sz">
+        <dc:Bounds x="822" y="302" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0gsp3ib_di" bpmnElement="Activity_1hfqp9j">
         <dc:Bounds x="1050" y="150" width="100" height="80" />
@@ -205,18 +208,9 @@
       <bpmndi:BPMNShape id="Event_1vyzunj_di" bpmnElement="Event_1vyzunj">
         <dc:Bounds x="1802" y="172" width="36" height="36" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_1w7e6sz_di" bpmnElement="Event_1w7e6sz">
-        <dc:Bounds x="372" y="262" width="36" height="36" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_1vplyx7_di" bpmnElement="Flow_1vplyx7">
         <di:waypoint x="215" y="177" />
         <di:waypoint x="270" y="177" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0swy6g6_di" bpmnElement="Flow_0swy6g6">
-        <di:waypoint x="320" y="217" />
-        <di:waypoint x="320" y="240" />
-        <di:waypoint x="390" y="240" />
-        <di:waypoint x="390" y="262" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1by544v_di" bpmnElement="Flow_1by544v">
         <di:waypoint x="450" y="152" />
@@ -241,10 +235,6 @@
       <bpmndi:BPMNEdge id="Flow_0msmu5a_di" bpmnElement="Flow_0msmu5a">
         <di:waypoint x="735" y="190" />
         <di:waypoint x="790" y="190" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_1f89h1x_di" bpmnElement="Flow_1f89h1x">
-        <di:waypoint x="890" y="190" />
-        <di:waypoint x="952" y="190" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_09l53uz_di" bpmnElement="Flow_09l53uz">
         <di:waypoint x="988" y="190" />
@@ -282,6 +272,14 @@
       <bpmndi:BPMNEdge id="Flow_1xyr4g0_di" bpmnElement="Flow_1xyr4g0">
         <di:waypoint x="1720" y="190" />
         <di:waypoint x="1802" y="190" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0plmx5x_di" bpmnElement="Flow_0plmx5x">
+        <di:waypoint x="370" y="177" />
+        <di:waypoint x="425" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1ba79qd_di" bpmnElement="Flow_1ba79qd">
+        <di:waypoint x="840" y="230" />
+        <di:waypoint x="840" y="302" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
