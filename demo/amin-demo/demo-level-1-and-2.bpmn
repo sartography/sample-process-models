@@ -51,6 +51,15 @@
     <bpmn:sequenceFlow id="Flow_1oglrmu" sourceRef="Activity_0381iy0" targetRef="Gateway_0w4zj2z" />
     <bpmn:sequenceFlow id="Flow_0msmu5a" sourceRef="Gateway_0w4zj2z" targetRef="Activity_0gi1l0j" />
     <bpmn:serviceTask id="Activity_0gi1l0j" name="Send Waku Message to CC - Invoice Submitted">
+      <bpmn:extensionElements>
+        <spiffworkflow:serviceTaskOperator id="waku/SendMessage">
+          <spiffworkflow:parameters>
+            <spiffworkflow:parameter id="message" type="str" value="&#39;invoice submitted&#39;" />
+            <spiffworkflow:parameter id="message_type" type="str" />
+            <spiffworkflow:parameter id="recipient" type="str" />
+          </spiffworkflow:parameters>
+        </spiffworkflow:serviceTaskOperator>
+      </bpmn:extensionElements>
       <bpmn:incoming>Flow_0msmu5a</bpmn:incoming>
       <bpmn:outgoing>Flow_1f89h1x</bpmn:outgoing>
     </bpmn:serviceTask>
