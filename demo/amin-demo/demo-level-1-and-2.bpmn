@@ -30,6 +30,15 @@
     </bpmn:serviceTask>
     <bpmn:sequenceFlow id="Flow_0lz8sv6" sourceRef="Gateway_0s8nhby" targetRef="Activity_0381iy0" />
     <bpmn:serviceTask id="Activity_0381iy0" name="Save PDF Document to S3">
+      <bpmn:extensionElements>
+        <spiffworkflow:serviceTaskOperator id="aws/UploadFileData">
+          <spiffworkflow:parameters>
+            <spiffworkflow:parameter id="bucket" type="str" />
+            <spiffworkflow:parameter id="file_data" type="str" value="&#39;sartography-status-pdfs&#39;" />
+            <spiffworkflow:parameter id="object_name" type="str" />
+          </spiffworkflow:parameters>
+        </spiffworkflow:serviceTaskOperator>
+      </bpmn:extensionElements>
       <bpmn:incoming>Flow_0lz8sv6</bpmn:incoming>
       <bpmn:outgoing>Flow_1oglrmu</bpmn:outgoing>
     </bpmn:serviceTask>
