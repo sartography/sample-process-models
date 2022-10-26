@@ -18,10 +18,10 @@
     <bpmn:sequenceFlow id="Flow_1by544v" sourceRef="Gateway_0s8nhby" targetRef="Activity_0d288kj" />
     <bpmn:serviceTask id="Activity_0d288kj" name="Save Invoice Data to DynamoDB">
       <bpmn:extensionElements>
-        <spiffworkflow:serviceTaskOperator id="aws/AddDynamoItem">
+        <spiffworkflow:serviceTaskOperator id="aws/AddDynamoItem" resultVariable="resp_AddDynamoItem">
           <spiffworkflow:parameters>
-            <spiffworkflow:parameter id="item_data" type="any" />
-            <spiffworkflow:parameter id="table_name" type="str" />
+            <spiffworkflow:parameter id="item_data" type="any" value="{ &#34;ContributorName&#34;: invoice.contributorName, &#34;ContributorId&#34;: invoice.contributorId, &#34;InvoiceId&#34;: invoice.invoiceId, &#34;InvoiceAmount&#34;: invoice.invoiceAmount, &#34;InvoiceCurrency&#34;: invoice.invoiceCurrency, &#34;DueDate&#34;: invoice.dueDate }" />
+            <spiffworkflow:parameter id="table_name" type="str" value="&#39;Invoice&#39;" />
           </spiffworkflow:parameters>
         </spiffworkflow:serviceTaskOperator>
       </bpmn:extensionElements>
