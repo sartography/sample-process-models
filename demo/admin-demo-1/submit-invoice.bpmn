@@ -97,11 +97,17 @@
           </spiffworkflow:serviceTaskOperator>
         </bpmn:extensionElements>
         <bpmn:incoming>Flow_0duu4zp</bpmn:incoming>
-        <bpmn:outgoing>Flow_1i3yle0</bpmn:outgoing>
+        <bpmn:outgoing>Flow_17xt353</bpmn:outgoing>
       </bpmn:serviceTask>
-      <bpmn:sequenceFlow id="Flow_1i3yle0" sourceRef="Activity_0vjn1x3" targetRef="Activity_1s9t7oz" />
       <bpmn:scriptTask id="Activity_1s9t7oz" name="Set Annual Salary">
-        <bpmn:incoming>Flow_1i3yle0</bpmn:incoming>
+        <bpmn:extensionElements>
+          <spiffworkflow:unitTests>
+            <spiffworkflow:unitTest id="ScriptUnitTest_070ewva">
+              <spiffworkflow:inputJson>{"resp_BambooPayRate": {"amount": "10000"}}</spiffworkflow:inputJson>
+              <spiffworkflow:expectedOutputJson>{"annual_salary":10000,"annual_salary_str":"10000","resp_BambooPayRate":{"amount":"10000"}}</spiffworkflow:expectedOutputJson>
+            </spiffworkflow:unitTest>
+          </spiffworkflow:unitTests>
+        </bpmn:extensionElements>
         <bpmn:outgoing>Flow_1j5gzff</bpmn:outgoing>
         <bpmn:script>annual_salary_str = resp_BambooPayRate["amount"]
 annual_salary = float(annual_salary_str)</bpmn:script>
@@ -115,6 +121,10 @@ annual_salary = float(annual_salary_str)</bpmn:script>
         <bpmn:incoming>Flow_150qjzb</bpmn:incoming>
       </bpmn:endEvent>
       <bpmn:sequenceFlow id="Flow_150qjzb" sourceRef="Activity_1idn241" targetRef="Event_1dqipiw" />
+      <bpmn:endEvent id="Event_02fy8g2">
+        <bpmn:incoming>Flow_17xt353</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:sequenceFlow id="Flow_17xt353" sourceRef="Activity_0vjn1x3" targetRef="Event_02fy8g2" />
     </bpmn:subProcess>
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
@@ -216,13 +226,12 @@ annual_salary = float(annual_salary_str)</bpmn:script>
       <bpmndi:BPMNShape id="Event_1dqipiw_di" bpmnElement="Event_1dqipiw">
         <dc:Bounds x="832" y="212" width="36" height="36" />
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_02fy8g2_di" bpmnElement="Event_02fy8g2">
+        <dc:Bounds x="382" y="332" width="36" height="36" />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_0duu4zp_di" bpmnElement="Flow_0duu4zp">
         <di:waypoint x="298" y="230" />
         <di:waypoint x="350" y="230" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_1i3yle0_di" bpmnElement="Flow_1i3yle0">
-        <di:waypoint x="450" y="230" />
-        <di:waypoint x="510" y="230" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1j5gzff_di" bpmnElement="Flow_1j5gzff">
         <di:waypoint x="610" y="230" />
@@ -231,6 +240,10 @@ annual_salary = float(annual_salary_str)</bpmn:script>
       <bpmndi:BPMNEdge id="Flow_150qjzb_di" bpmnElement="Flow_150qjzb">
         <di:waypoint x="770" y="230" />
         <di:waypoint x="832" y="230" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_17xt353_di" bpmnElement="Flow_17xt353">
+        <di:waypoint x="400" y="270" />
+        <di:waypoint x="400" y="332" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
