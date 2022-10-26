@@ -76,7 +76,7 @@
     <bpmn:sequenceFlow id="Flow_09l53uz" sourceRef="Event_10awb2b" targetRef="Compare_Submitted" />
     <bpmn:subProcess id="Compare_Submitted" name="Compare Submitted with Bamboo Salary">
       <bpmn:incoming>Flow_09l53uz</bpmn:incoming>
-      <bpmn:outgoing>Flow_0om2i3n</bpmn:outgoing>
+      <bpmn:outgoing>Flow_1rvl8hr</bpmn:outgoing>
       <bpmn:startEvent id="Event_1vnuuqu">
         <bpmn:outgoing>Flow_0kf7skq</bpmn:outgoing>
       </bpmn:startEvent>
@@ -114,6 +114,7 @@ annual_salary = float(annual_salary_str)</bpmn:script>
       </bpmn:scriptTask>
     </bpmn:subProcess>
     <bpmn:exclusiveGateway id="Gateway_1k6apn1" name="Match?">
+      <bpmn:incoming>Flow_1rvl8hr</bpmn:incoming>
       <bpmn:outgoing>Flow_0x3diy0</bpmn:outgoing>
       <bpmn:outgoing>Flow_0o81pgv</bpmn:outgoing>
     </bpmn:exclusiveGateway>
@@ -138,6 +139,17 @@ annual_salary = float(annual_salary_str)</bpmn:script>
     <bpmn:sequenceFlow id="Flow_0o81pgv" sourceRef="Gateway_1k6apn1" targetRef="Event_1krrkw9" />
     <bpmn:sequenceFlow id="Flow_0l6898n" sourceRef="Event_1krrkw9" targetRef="Activity_0v6uftd" />
     <bpmn:serviceTask id="Activity_0v6uftd" name="Create Invoice in Xero">
+      <bpmn:extensionElements>
+        <spiffworkflow:serviceTaskOperator id="xero/CreateInvoice">
+          <spiffworkflow:parameters>
+            <spiffworkflow:parameter id="access_token" type="any" />
+            <spiffworkflow:parameter id="amount" type="str" />
+            <spiffworkflow:parameter id="contact_email" type="str" />
+            <spiffworkflow:parameter id="contact_name" type="str" />
+            <spiffworkflow:parameter id="description" type="str" />
+          </spiffworkflow:parameters>
+        </spiffworkflow:serviceTaskOperator>
+      </bpmn:extensionElements>
       <bpmn:incoming>Flow_0l6898n</bpmn:incoming>
       <bpmn:outgoing>Flow_10v7p5i</bpmn:outgoing>
     </bpmn:serviceTask>
@@ -150,12 +162,9 @@ annual_salary = float(annual_salary_str)</bpmn:script>
       <bpmn:incoming>Flow_1xyr4g0</bpmn:incoming>
     </bpmn:endEvent>
     <bpmn:sequenceFlow id="Flow_1xyr4g0" sourceRef="Activity_07kfnj9" targetRef="Event_1vyzunj" />
-    <bpmn:endEvent id="Event_1w7e6sz">
-      <bpmn:incoming>Flow_0om2i3n</bpmn:incoming>
-    </bpmn:endEvent>
     <bpmn:sequenceFlow id="Flow_0plmx5x" sourceRef="Activity_056tlcm" targetRef="Gateway_0s8nhby" />
     <bpmn:sequenceFlow id="Flow_1ku4469" sourceRef="Activity_0gi1l0j" targetRef="Event_10awb2b" />
-    <bpmn:sequenceFlow id="Flow_0om2i3n" sourceRef="Compare_Submitted" targetRef="Event_1w7e6sz" />
+    <bpmn:sequenceFlow id="Flow_1rvl8hr" sourceRef="Compare_Submitted" targetRef="Gateway_1k6apn1" />
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Proccess_c3aa856">
@@ -221,9 +230,6 @@ annual_salary = float(annual_salary_str)</bpmn:script>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_1vyzunj_di" bpmnElement="Event_1vyzunj">
         <dc:Bounds x="1802" y="172" width="36" height="36" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_1w7e6sz_di" bpmnElement="Event_1w7e6sz">
-        <dc:Bounds x="1082" y="302" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_1vplyx7_di" bpmnElement="Flow_1vplyx7">
         <di:waypoint x="215" y="177" />
@@ -294,9 +300,9 @@ annual_salary = float(annual_salary_str)</bpmn:script>
         <di:waypoint x="890" y="190" />
         <di:waypoint x="952" y="190" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0om2i3n_di" bpmnElement="Flow_0om2i3n">
-        <di:waypoint x="1100" y="230" />
-        <di:waypoint x="1100" y="302" />
+      <bpmndi:BPMNEdge id="Flow_1rvl8hr_di" bpmnElement="Flow_1rvl8hr">
+        <di:waypoint x="1150" y="190" />
+        <di:waypoint x="1215" y="190" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
