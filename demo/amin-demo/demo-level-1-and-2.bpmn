@@ -36,7 +36,7 @@
     <bpmn:sequenceFlow id="Flow_0lz8sv6" sourceRef="Gateway_0s8nhby" targetRef="Activity_0381iy0" />
     <bpmn:serviceTask id="Activity_0381iy0" name="Save PDF Document to S3">
       <bpmn:extensionElements>
-        <spiffworkflow:serviceTaskOperator id="aws/UploadFileData">
+        <spiffworkflow:serviceTaskOperator id="aws/UploadFileData" resultVariable="resp_UploadFileData">
           <spiffworkflow:parameters>
             <spiffworkflow:parameter id="bucket" type="str" value="&#39;sartography-status-pdfs&#39;" />
             <spiffworkflow:parameter id="file_data" type="str" value="filesAccept" />
@@ -57,7 +57,7 @@
     <bpmn:sequenceFlow id="Flow_0msmu5a" sourceRef="Gateway_0w4zj2z" targetRef="Activity_0gi1l0j" />
     <bpmn:serviceTask id="Activity_0gi1l0j" name="Send Waku Message to CC - Invoice Submitted">
       <bpmn:extensionElements>
-        <spiffworkflow:serviceTaskOperator id="waku/SendMessage">
+        <spiffworkflow:serviceTaskOperator id="waku/SendMessage" resultVariable="wr_InvoiceSubmitted">
           <spiffworkflow:parameters>
             <spiffworkflow:parameter id="message" type="str" value="&#39;invoice submitted&#39;" />
             <spiffworkflow:parameter id="message_type" type="str" value="&#34;wakuext_sendOneToOneMessage&#34;" />
