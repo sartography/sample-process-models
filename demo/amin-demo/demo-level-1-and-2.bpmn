@@ -155,6 +155,15 @@ annual_salary = float(annual_salary_str)</bpmn:script>
     </bpmn:serviceTask>
     <bpmn:sequenceFlow id="Flow_10v7p5i" sourceRef="Activity_0v6uftd" targetRef="Activity_07kfnj9" />
     <bpmn:serviceTask id="Activity_07kfnj9" name="Send Waku Message to CC Payment Pending">
+      <bpmn:extensionElements>
+        <spiffworkflow:serviceTaskOperator id="waku/SendMessage" resultVariable="wr_PaymentPending">
+          <spiffworkflow:parameters>
+            <spiffworkflow:parameter id="message" type="str" value="&#39;Payment Pending&#39;" />
+            <spiffworkflow:parameter id="message_type" type="str" value="&#34;wakuext_sendOneToOneMessage&#34;" />
+            <spiffworkflow:parameter id="recipient" type="str" value="&#34;0x04622cf750e9f79e60546258bebd4be274f75720b16862bb0c496aaeab746b6fbe897f956b2b08152bc3def5297bed95986a5211ae1a34491d35f51f69713cbf9d&#34;" />
+          </spiffworkflow:parameters>
+        </spiffworkflow:serviceTaskOperator>
+      </bpmn:extensionElements>
       <bpmn:incoming>Flow_10v7p5i</bpmn:incoming>
       <bpmn:outgoing>Flow_1xyr4g0</bpmn:outgoing>
     </bpmn:serviceTask>
