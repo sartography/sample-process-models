@@ -249,7 +249,7 @@ isCurrentUser = True</spiffworkflow:preScript>
     <bpmn:serviceTask id="Activity_0p88elm" name="2d. Upload Invoice PDF document" scriptFormat="python" script="invoice_name = invoice.contributorName + &#34;_&#34; + invoice.invoiceId">
       <bpmn:extensionElements>
         <spiffworkflow:preScript />
-        <spiffworkflow:postScript>del(filesAccept)</spiffworkflow:postScript>
+        <spiffworkflow:postScript />
         <spiffworkflow:serviceTaskOperator id="aws/UploadFileData">
           <spiffworkflow:parameters>
             <spiffworkflow:parameter id="bucket" type="str" value="&#39;sartography-status-pdfs&#39;" />
@@ -277,7 +277,8 @@ invoice["invoiceStatus"] = "Awaiting approval"</bpmn:script>
       <bpmn:extensionElements>
         <spiffworkflow:preScript>curCode = invoice.invoiceCurrency
 curAmount = invoice.invoiceAmount
-isCurTest = False</spiffworkflow:preScript>
+isCurTest = False
+del(filesAccept)</spiffworkflow:preScript>
         <spiffworkflow:postScript>invoice.invoiceAmount_str = curAmount_str</spiffworkflow:postScript>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_0a9w301</bpmn:incoming>
