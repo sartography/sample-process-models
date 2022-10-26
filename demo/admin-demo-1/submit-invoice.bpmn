@@ -23,25 +23,49 @@
     </bpmn:parallelGateway>
     <bpmn:sequenceFlow id="Flow_16kxnzs" sourceRef="Gateway_167dx6j" targetRef="Activity_1hdxh4e" />
     <bpmn:serviceTask id="Activity_1hdxh4e" name="Save Invoice Date to DyamoDB">
+      <bpmn:extensionElements>
+        <spiffworkflow:serviceTaskOperator id="aws/AddDynamoItem" resultVariable="resp_AddDynamoItem">
+          <spiffworkflow:parameters>
+            <spiffworkflow:parameter id="item_data" type="any" value="{ &#34;ContributorName&#34;: contributorName, &#34;ContributorId&#34;: contributorId, &#34;InvoiceId&#34;: invoiceId, &#34;InvoiceAmount&#34;: invoiceAmount, &#34;InvoiceCurrency&#34;: invoiceCurrency, &#34;DueDate&#34;: dueDate }" />
+            <spiffworkflow:parameter id="table_name" type="str" value="&#34;Invoice&#34;" />
+          </spiffworkflow:parameters>
+        </spiffworkflow:serviceTaskOperator>
+      </bpmn:extensionElements>
       <bpmn:incoming>Flow_16kxnzs</bpmn:incoming>
       <bpmn:outgoing>Flow_15dr0c4</bpmn:outgoing>
     </bpmn:serviceTask>
     <bpmn:sequenceFlow id="Flow_0ufr2ul" sourceRef="Gateway_167dx6j" targetRef="Activity_00fpxb0" />
     <bpmn:serviceTask id="Activity_00fpxb0" name="Save PDF Document to S3">
+      <bpmn:extensionElements>
+        <spiffworkflow:serviceTaskOperator id="aws/UploadFileData" resultVariable="resp_UploadFileData">
+          <spiffworkflow:parameters>
+            <spiffworkflow:parameter id="bucket" type="str" value="&#39;sartography-status-pdfs&#39;" />
+            <spiffworkflow:parameter id="file_data" type="str" value="filesAccept" />
+            <spiffworkflow:parameter id="object_name" type="str" value="&#39;Invoice_xxxx.pdf&#39;" />
+          </spiffworkflow:parameters>
+        </spiffworkflow:serviceTaskOperator>
+        <spiffworkflow:postScript />
+      </bpmn:extensionElements>
       <bpmn:incoming>Flow_0ufr2ul</bpmn:incoming>
       <bpmn:outgoing>Flow_0rftt7g</bpmn:outgoing>
     </bpmn:serviceTask>
     <bpmn:sequenceFlow id="Flow_15dr0c4" sourceRef="Activity_1hdxh4e" targetRef="Gateway_1ycgt3v" />
     <bpmn:parallelGateway id="Gateway_1ycgt3v">
       <bpmn:incoming>Flow_15dr0c4</bpmn:incoming>
-      <bpmn:incoming>Flow_0rftt7g</bpmn:incoming>
+      <bpmn:incoming>Flow_1bmyvgw</bpmn:incoming>
       <bpmn:outgoing>Flow_1utjn0p</bpmn:outgoing>
     </bpmn:parallelGateway>
-    <bpmn:sequenceFlow id="Flow_0rftt7g" sourceRef="Activity_00fpxb0" targetRef="Gateway_1ycgt3v" />
+    <bpmn:sequenceFlow id="Flow_0rftt7g" sourceRef="Activity_00fpxb0" targetRef="Activity_0y8b7ok" />
     <bpmn:endEvent id="Event_1hdqwrb">
       <bpmn:incoming>Flow_1utjn0p</bpmn:incoming>
     </bpmn:endEvent>
     <bpmn:sequenceFlow id="Flow_1utjn0p" sourceRef="Gateway_1ycgt3v" targetRef="Event_1hdqwrb" />
+    <bpmn:sequenceFlow id="Flow_1bmyvgw" sourceRef="Activity_0y8b7ok" targetRef="Gateway_1ycgt3v" />
+    <bpmn:scriptTask id="Activity_0y8b7ok" name="Delete Temp File">
+      <bpmn:incoming>Flow_0rftt7g</bpmn:incoming>
+      <bpmn:outgoing>Flow_1bmyvgw</bpmn:outgoing>
+      <bpmn:script>del(filesAccept)</bpmn:script>
+    </bpmn:scriptTask>
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Proccess_tlws0al">
@@ -58,13 +82,16 @@
         <dc:Bounds x="530" y="60" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1mjhyvs_di" bpmnElement="Activity_00fpxb0">
-        <dc:Bounds x="530" y="250" width="100" height="80" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Gateway_1849lvk_di" bpmnElement="Gateway_1ycgt3v">
-        <dc:Bounds x="685" y="152" width="50" height="50" />
+        <dc:Bounds x="530" y="220" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_1hdqwrb_di" bpmnElement="Event_1hdqwrb">
-        <dc:Bounds x="792" y="159" width="36" height="36" />
+        <dc:Bounds x="882" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_1849lvk_di" bpmnElement="Gateway_1ycgt3v">
+        <dc:Bounds x="775" y="152" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0i29no8_di" bpmnElement="Activity_0y8b7ok">
+        <dc:Bounds x="670" y="220" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_1mgdvgh_di" bpmnElement="Flow_1mgdvgh">
         <di:waypoint x="215" y="177" />
@@ -81,22 +108,26 @@
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0ufr2ul_di" bpmnElement="Flow_0ufr2ul">
         <di:waypoint x="450" y="202" />
-        <di:waypoint x="450" y="290" />
-        <di:waypoint x="530" y="290" />
+        <di:waypoint x="450" y="260" />
+        <di:waypoint x="530" y="260" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_15dr0c4_di" bpmnElement="Flow_15dr0c4">
         <di:waypoint x="630" y="100" />
-        <di:waypoint x="710" y="100" />
-        <di:waypoint x="710" y="152" />
+        <di:waypoint x="800" y="100" />
+        <di:waypoint x="800" y="152" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0rftt7g_di" bpmnElement="Flow_0rftt7g">
-        <di:waypoint x="630" y="290" />
-        <di:waypoint x="710" y="290" />
-        <di:waypoint x="710" y="202" />
+        <di:waypoint x="630" y="260" />
+        <di:waypoint x="670" y="260" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1utjn0p_di" bpmnElement="Flow_1utjn0p">
-        <di:waypoint x="735" y="177" />
-        <di:waypoint x="792" y="177" />
+        <di:waypoint x="825" y="177" />
+        <di:waypoint x="882" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1bmyvgw_di" bpmnElement="Flow_1bmyvgw">
+        <di:waypoint x="770" y="260" />
+        <di:waypoint x="800" y="260" />
+        <di:waypoint x="800" y="202" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
