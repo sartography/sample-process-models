@@ -72,6 +72,25 @@
     <bpmn:subProcess id="Activity_1hfqp9j" name="Compare Submitted with Bamboo Salary">
       <bpmn:incoming>Flow_09l53uz</bpmn:incoming>
       <bpmn:outgoing>Flow_19k57t5</bpmn:outgoing>
+      <bpmn:startEvent id="Event_1vnuuqu">
+        <bpmn:outgoing>Flow_0kf7skq</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:sequenceFlow id="Flow_0kf7skq" sourceRef="Event_1vnuuqu" targetRef="Activity_1ipukvu" />
+      <bpmn:serviceTask id="Activity_1ipukvu" name="Get Bamboo Salary">
+        <bpmn:extensionElements>
+          <spiffworkflow:serviceTaskOperator id="bamboohr/GetPayRate" resultVariable="resp_GetPayRate">
+            <spiffworkflow:parameters>
+              <spiffworkflow:parameter id="employee_id" type="str" value="109" />
+            </spiffworkflow:parameters>
+          </spiffworkflow:serviceTaskOperator>
+        </bpmn:extensionElements>
+        <bpmn:incoming>Flow_0kf7skq</bpmn:incoming>
+        <bpmn:outgoing>Flow_0u2o62f</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:endEvent id="Event_0yq2et4">
+        <bpmn:incoming>Flow_0u2o62f</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:sequenceFlow id="Flow_0u2o62f" sourceRef="Activity_1ipukvu" targetRef="Event_0yq2et4" />
     </bpmn:subProcess>
     <bpmn:exclusiveGateway id="Gateway_1k6apn1" name="Match?">
       <bpmn:incoming>Flow_19k57t5</bpmn:incoming>
@@ -254,6 +273,24 @@
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
   <bpmndi:BPMNDiagram id="BPMNDiagram_10r5h6d">
-    <bpmndi:BPMNPlane id="BPMNPlane_19wswc4" bpmnElement="Activity_1hfqp9j" />
+    <bpmndi:BPMNPlane id="BPMNPlane_19wswc4" bpmnElement="Activity_1hfqp9j">
+      <bpmndi:BPMNShape id="Event_1vnuuqu_di" bpmnElement="Event_1vnuuqu">
+        <dc:Bounds x="282" y="212" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0tn2vxw_di" bpmnElement="Activity_1ipukvu">
+        <dc:Bounds x="370" y="190" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0yq2et4_di" bpmnElement="Event_0yq2et4">
+        <dc:Bounds x="522" y="212" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_0kf7skq_di" bpmnElement="Flow_0kf7skq">
+        <di:waypoint x="318" y="230" />
+        <di:waypoint x="370" y="230" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0u2o62f_di" bpmnElement="Flow_0u2o62f">
+        <di:waypoint x="470" y="230" />
+        <di:waypoint x="522" y="230" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
 </bpmn:definitions>
