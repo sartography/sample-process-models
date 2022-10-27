@@ -8,6 +8,7 @@
           <spiffworkflow:property name="formJsonSchemaFilename" value="Submit-the-invoice_JSONSchema.json" />
         </spiffworkflow:properties>
       </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0tro4fv</bpmn:incoming>
       <bpmn:outgoing>Flow_0bwfesh</bpmn:outgoing>
     </bpmn:userTask>
     <bpmn:serviceTask id="Activity_1hdxh4e" name="Save Invoice Date to DyamoDB">
@@ -56,9 +57,10 @@
     </bpmn:serviceTask>
     <bpmn:intermediateThrowEvent id="Event_03t9lyz" name="Invoice Submitted">
       <bpmn:incoming>Flow_022rtd2</bpmn:incoming>
+      <bpmn:outgoing>Flow_1gu5tta</bpmn:outgoing>
     </bpmn:intermediateThrowEvent>
     <bpmn:subProcess id="Activity_1p94uz7" name="Compare Submitted with Bamboo Salary">
-      <bpmn:incoming>Flow_0qsikom</bpmn:incoming>
+      <bpmn:incoming>Flow_1gu5tta</bpmn:incoming>
       <bpmn:outgoing>Flow_0mxtoe5</bpmn:outgoing>
       <bpmn:serviceTask id="Activity_0vjn1x3" name="Get Bamboo Salary">
         <bpmn:extensionElements>
@@ -153,14 +155,15 @@ annual_salary = float(annual_salary_str)</bpmn:script>
     <bpmn:sequenceFlow id="Flow_1u5zhvh" sourceRef="Activity_0y8b7ok" targetRef="Gateway_0fyff11" />
     <bpmn:sequenceFlow id="Flow_1a1v0ae" sourceRef="Gateway_0fyff11" targetRef="Activity_1lu7ioj" />
     <bpmn:sequenceFlow id="Flow_022rtd2" sourceRef="Activity_1lu7ioj" targetRef="Event_03t9lyz" />
-    <bpmn:startEvent id="Event_1n0t28h">
-      <bpmn:outgoing>Flow_0qsikom</bpmn:outgoing>
-    </bpmn:startEvent>
-    <bpmn:sequenceFlow id="Flow_0qsikom" sourceRef="Event_1n0t28h" targetRef="Activity_1p94uz7" />
     <bpmn:endEvent id="Event_18um7h8">
       <bpmn:incoming>Flow_0mxtoe5</bpmn:incoming>
     </bpmn:endEvent>
     <bpmn:sequenceFlow id="Flow_0mxtoe5" sourceRef="Activity_1p94uz7" targetRef="Event_18um7h8" />
+    <bpmn:sequenceFlow id="Flow_1gu5tta" sourceRef="Event_03t9lyz" targetRef="Activity_1p94uz7" />
+    <bpmn:startEvent id="Event_17pvtuv">
+      <bpmn:outgoing>Flow_0tro4fv</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_0tro4fv" sourceRef="Event_17pvtuv" targetRef="Activity_0yes9h3" />
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Proccess_tlws0al">
@@ -184,6 +187,9 @@ annual_salary = float(annual_salary_str)</bpmn:script>
         <bpmndi:BPMNLabel>
           <dc:Bounds x="1097" y="202" width="88" height="14" />
         </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_17pvtuv_di" bpmnElement="Event_17pvtuv">
+        <dc:Bounds x="102" y="159" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0kd0p6j_di" bpmnElement="Activity_1p94uz7">
         <dc:Bounds x="1260" y="137" width="100" height="80" />
@@ -217,9 +223,6 @@ annual_salary = float(annual_salary_str)</bpmn:script>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Gateway_03whczu_di" bpmnElement="Gateway_0fyff11">
         <dc:Bounds x="835" y="152" width="50" height="50" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_1n0t28h_di" bpmnElement="Event_1n0t28h">
-        <dc:Bounds x="1292" y="22" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_18um7h8_di" bpmnElement="Event_18um7h8">
         <dc:Bounds x="1412" y="159" width="36" height="36" />
@@ -260,13 +263,17 @@ annual_salary = float(annual_salary_str)</bpmn:script>
         <di:waypoint x="1050" y="177" />
         <di:waypoint x="1122" y="177" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0qsikom_di" bpmnElement="Flow_0qsikom">
-        <di:waypoint x="1310" y="58" />
-        <di:waypoint x="1310" y="137" />
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0mxtoe5_di" bpmnElement="Flow_0mxtoe5">
         <di:waypoint x="1360" y="177" />
         <di:waypoint x="1412" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1gu5tta_di" bpmnElement="Flow_1gu5tta">
+        <di:waypoint x="1158" y="177" />
+        <di:waypoint x="1260" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0tro4fv_di" bpmnElement="Flow_0tro4fv">
+        <di:waypoint x="138" y="177" />
+        <di:waypoint x="250" y="177" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
