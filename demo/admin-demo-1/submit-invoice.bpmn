@@ -8,7 +8,6 @@
           <spiffworkflow:property name="formJsonSchemaFilename" value="Submit-the-invoice_JSONSchema.json" />
         </spiffworkflow:properties>
       </bpmn:extensionElements>
-      <bpmn:incoming>Flow_1qe930f</bpmn:incoming>
       <bpmn:outgoing>Flow_0bwfesh</bpmn:outgoing>
     </bpmn:userTask>
     <bpmn:serviceTask id="Activity_1hdxh4e" name="Save Invoice Date to DyamoDB">
@@ -59,6 +58,8 @@
       <bpmn:incoming>Flow_022rtd2</bpmn:incoming>
     </bpmn:intermediateThrowEvent>
     <bpmn:subProcess id="Activity_1p94uz7" name="Compare Submitted with Bamboo Salary">
+      <bpmn:incoming>Flow_0qsikom</bpmn:incoming>
+      <bpmn:outgoing>Flow_0mxtoe5</bpmn:outgoing>
       <bpmn:serviceTask id="Activity_0vjn1x3" name="Get Bamboo Salary">
         <bpmn:extensionElements>
           <spiffworkflow:serviceTaskOperator id="bamboohr/GetPayRate" resultVariable="resp_GetPayRate">
@@ -81,9 +82,6 @@
     </bpmn:subProcess>
     <bpmn:intermediateThrowEvent id="Event_1x4b5bx" name="Invoice Approval Rejected" />
     <bpmn:intermediateThrowEvent id="Event_049kpe7" name="Invoice Approved" />
-    <bpmn:startEvent id="Event_1t15ahv">
-      <bpmn:outgoing>Flow_1qe930f</bpmn:outgoing>
-    </bpmn:startEvent>
     <bpmn:serviceTask id="Activity_0jewccr" name="Create Invoice in Xero">
       <bpmn:extensionElements>
         <spiffworkflow:serviceTaskOperator id="xero/CreateInvoice" resultVariable="resp_xeroCreateInvoice">
@@ -123,7 +121,6 @@ annual_salary = float(annual_salary_str)</bpmn:script>
         <spiffworkflow:calledDecisionId>Check_Amounts</spiffworkflow:calledDecisionId>
       </bpmn:extensionElements>
     </bpmn:businessRuleTask>
-    <bpmn:sequenceFlow id="Flow_1qe930f" sourceRef="Event_1t15ahv" targetRef="Activity_0yes9h3" />
     <bpmn:sequenceFlow id="Flow_0bwfesh" sourceRef="Activity_0yes9h3" targetRef="Gateway_0q2aaoo" />
     <bpmn:parallelGateway id="Gateway_0q2aaoo">
       <bpmn:incoming>Flow_0bwfesh</bpmn:incoming>
@@ -142,6 +139,14 @@ annual_salary = float(annual_salary_str)</bpmn:script>
     <bpmn:sequenceFlow id="Flow_1u5zhvh" sourceRef="Activity_0y8b7ok" targetRef="Gateway_0fyff11" />
     <bpmn:sequenceFlow id="Flow_1a1v0ae" sourceRef="Gateway_0fyff11" targetRef="Activity_1lu7ioj" />
     <bpmn:sequenceFlow id="Flow_022rtd2" sourceRef="Activity_1lu7ioj" targetRef="Event_03t9lyz" />
+    <bpmn:startEvent id="Event_1n0t28h">
+      <bpmn:outgoing>Flow_0qsikom</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_0qsikom" sourceRef="Event_1n0t28h" targetRef="Activity_1p94uz7" />
+    <bpmn:endEvent id="Event_18um7h8">
+      <bpmn:incoming>Flow_0mxtoe5</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_0mxtoe5" sourceRef="Activity_1p94uz7" targetRef="Event_18um7h8" />
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Proccess_tlws0al">
@@ -178,9 +183,6 @@ annual_salary = float(annual_salary_str)</bpmn:script>
           <dc:Bounds x="1698" y="725" width="85" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_1t15ahv_di" bpmnElement="Event_1t15ahv">
-        <dc:Bounds x="132" y="159" width="36" height="36" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_051lqwz_di" bpmnElement="Activity_0jewccr">
         <dc:Bounds x="1820" y="670" width="100" height="80" />
         <bpmndi:BPMNLabel />
@@ -201,14 +203,16 @@ annual_salary = float(annual_salary_str)</bpmn:script>
       <bpmndi:BPMNShape id="Gateway_03whczu_di" bpmnElement="Gateway_0fyff11">
         <dc:Bounds x="835" y="152" width="50" height="50" />
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1n0t28h_di" bpmnElement="Event_1n0t28h">
+        <dc:Bounds x="1292" y="22" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_18um7h8_di" bpmnElement="Event_18um7h8">
+        <dc:Bounds x="1412" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0kd0p6j_di" bpmnElement="Activity_1p94uz7">
         <dc:Bounds x="1260" y="137" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge id="Flow_1qe930f_di" bpmnElement="Flow_1qe930f">
-        <di:waypoint x="168" y="177" />
-        <di:waypoint x="250" y="177" />
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0bwfesh_di" bpmnElement="Flow_0bwfesh">
         <di:waypoint x="350" y="177" />
         <di:waypoint x="435" y="177" />
@@ -244,6 +248,14 @@ annual_salary = float(annual_salary_str)</bpmn:script>
       <bpmndi:BPMNEdge id="Flow_022rtd2_di" bpmnElement="Flow_022rtd2">
         <di:waypoint x="1050" y="177" />
         <di:waypoint x="1122" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0qsikom_di" bpmnElement="Flow_0qsikom">
+        <di:waypoint x="1310" y="58" />
+        <di:waypoint x="1310" y="137" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0mxtoe5_di" bpmnElement="Flow_0mxtoe5">
+        <di:waypoint x="1360" y="177" />
+        <di:waypoint x="1412" y="177" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
