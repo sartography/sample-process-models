@@ -143,17 +143,61 @@ annual_salary = float(annual_salary_str)</bpmn:script>
     </bpmn:intermediateThrowEvent>
     <bpmn:sequenceFlow id="Flow_06np4nx" name="Yes" sourceRef="Gateway_035q085" targetRef="Event_049kpe7" />
     <bpmn:endEvent id="Event_0x88bos">
-      <bpmn:incoming>Flow_0dzk438</bpmn:incoming>
+      <bpmn:incoming>Flow_1vtagjg</bpmn:incoming>
     </bpmn:endEvent>
-    <bpmn:sequenceFlow id="Flow_0dzk438" sourceRef="Event_1x4b5bx" targetRef="Event_0x88bos" />
+    <bpmn:sequenceFlow id="Flow_0dzk438" sourceRef="Event_1x4b5bx" targetRef="Activity_10cw4bc" />
     <bpmn:endEvent id="Event_04emuag">
-      <bpmn:incoming>Flow_1x37naq</bpmn:incoming>
+      <bpmn:incoming>Flow_1cztx6b</bpmn:incoming>
     </bpmn:endEvent>
-    <bpmn:sequenceFlow id="Flow_1x37naq" sourceRef="Event_049kpe7" targetRef="Event_04emuag" />
+    <bpmn:sequenceFlow id="Flow_1x37naq" sourceRef="Event_049kpe7" targetRef="Activity_0jewccr" />
     <bpmn:startEvent id="Event_1t15ahv">
       <bpmn:outgoing>Flow_1kiqjaa</bpmn:outgoing>
     </bpmn:startEvent>
     <bpmn:sequenceFlow id="Flow_1kiqjaa" sourceRef="Event_1t15ahv" targetRef="Activity_0yes9h3" />
+    <bpmn:serviceTask id="Activity_10cw4bc" name="Send Waku Message: Invoice Rejected">
+      <bpmn:extensionElements>
+        <spiffworkflow:serviceTaskOperator id="waku/SendMessage" resultVariable="wr_SendInvocieRejected">
+          <spiffworkflow:parameters>
+            <spiffworkflow:parameter id="message" type="str" value="&#34;Invocie rejected&#34;" />
+            <spiffworkflow:parameter id="message_type" type="str" value="&#34;wakuext_sendOneToOneMessage&#34;" />
+            <spiffworkflow:parameter id="recipient" type="str" value="&#34;0x04622cf750e9f79e60546258bebd4be274f75720b16862bb0c496aaeab746b6fbe897f956b2b08152bc3def5297bed95986a5211ae1a34491d35f51f69713cbf9d&#34;" />
+          </spiffworkflow:parameters>
+        </spiffworkflow:serviceTaskOperator>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0dzk438</bpmn:incoming>
+      <bpmn:outgoing>Flow_1vtagjg</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="Flow_1vtagjg" sourceRef="Activity_10cw4bc" targetRef="Event_0x88bos" />
+    <bpmn:serviceTask id="Activity_0k5gpn0" name="Send Waku Message: Invoice Accepted">
+      <bpmn:extensionElements>
+        <spiffworkflow:serviceTaskOperator id="waku/SendMessage" resultVariable="wr_SendInvocieAccepted">
+          <spiffworkflow:parameters>
+            <spiffworkflow:parameter id="message" type="str" value="&#34;Invocie accepted&#34;" />
+            <spiffworkflow:parameter id="message_type" type="str" value="&#34;wakuext_sendOneToOneMessage&#34;" />
+            <spiffworkflow:parameter id="recipient" type="str" value="&#34;0x04622cf750e9f79e60546258bebd4be274f75720b16862bb0c496aaeab746b6fbe897f956b2b08152bc3def5297bed95986a5211ae1a34491d35f51f69713cbf9d&#34;" />
+          </spiffworkflow:parameters>
+        </spiffworkflow:serviceTaskOperator>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0zzhy8f</bpmn:incoming>
+      <bpmn:outgoing>Flow_1cztx6b</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="Flow_1cztx6b" sourceRef="Activity_0k5gpn0" targetRef="Event_04emuag" />
+    <bpmn:sequenceFlow id="Flow_0zzhy8f" sourceRef="Activity_0jewccr" targetRef="Activity_0k5gpn0" />
+    <bpmn:serviceTask id="Activity_0jewccr" name="Create Invoice in Xero">
+      <bpmn:extensionElements>
+        <spiffworkflow:serviceTaskOperator id="xero/CreateInvoice" resultVariable="resp_xeroCreateInvoice">
+          <spiffworkflow:parameters>
+            <spiffworkflow:parameter id="access_token" type="any" value="&#34;secret:xero/OAuth&#34;" />
+            <spiffworkflow:parameter id="amount" type="str" value="invoiceAmount" />
+            <spiffworkflow:parameter id="contact_email" type="str" value="&#39;harmeet@status.im&#39;" />
+            <spiffworkflow:parameter id="contact_name" type="str" value="contributorName" />
+            <spiffworkflow:parameter id="description" type="str" value="&#39;Monthly pay&#39;" />
+          </spiffworkflow:parameters>
+        </spiffworkflow:serviceTaskOperator>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1x37naq</bpmn:incoming>
+      <bpmn:outgoing>Flow_0zzhy8f</bpmn:outgoing>
+    </bpmn:serviceTask>
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Proccess_tlws0al">
@@ -184,6 +228,24 @@ annual_salary = float(annual_salary_str)</bpmn:script>
           <dc:Bounds x="1037" y="202" width="88" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0x88bos_di" bpmnElement="Event_0x88bos">
+        <dc:Bounds x="1732" y="42" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_04emuag_di" bpmnElement="Event_04emuag">
+        <dc:Bounds x="1942" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_160hpeh" bpmnElement="Activity_10cw4bc">
+        <dc:Bounds x="1570" y="20" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_1vjfp2v" bpmnElement="Activity_0k5gpn0">
+        <dc:Bounds x="1740" y="137" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_051lqwz_di" bpmnElement="Activity_0jewccr">
+        <dc:Bounds x="1570" y="137" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0kd0p6j_di" bpmnElement="Activity_1p94uz7">
         <dc:Bounds x="1170" y="137" width="100" height="80" />
         <bpmndi:BPMNLabel />
@@ -205,12 +267,6 @@ annual_salary = float(annual_salary_str)</bpmn:script>
         <bpmndi:BPMNLabel>
           <dc:Bounds x="1448" y="202" width="85" height="14" />
         </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_0x88bos_di" bpmnElement="Event_0x88bos">
-        <dc:Bounds x="1592" y="42" width="36" height="36" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_04emuag_di" bpmnElement="Event_04emuag">
-        <dc:Bounds x="1592" y="159" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_1t15ahv_di" bpmnElement="Event_1t15ahv">
         <dc:Bounds x="132" y="159" width="36" height="36" />
@@ -276,15 +332,27 @@ annual_salary = float(annual_salary_str)</bpmn:script>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0dzk438_di" bpmnElement="Flow_0dzk438">
         <di:waypoint x="1508" y="60" />
-        <di:waypoint x="1592" y="60" />
+        <di:waypoint x="1570" y="60" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1x37naq_di" bpmnElement="Flow_1x37naq">
         <di:waypoint x="1508" y="177" />
-        <di:waypoint x="1592" y="177" />
+        <di:waypoint x="1570" y="177" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1kiqjaa_di" bpmnElement="Flow_1kiqjaa">
         <di:waypoint x="168" y="177" />
         <di:waypoint x="270" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1vtagjg_di" bpmnElement="Flow_1vtagjg">
+        <di:waypoint x="1670" y="60" />
+        <di:waypoint x="1732" y="60" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1cztx6b_di" bpmnElement="Flow_1cztx6b">
+        <di:waypoint x="1840" y="177" />
+        <di:waypoint x="1942" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0zzhy8f_di" bpmnElement="Flow_0zzhy8f">
+        <di:waypoint x="1670" y="177" />
+        <di:waypoint x="1740" y="177" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
