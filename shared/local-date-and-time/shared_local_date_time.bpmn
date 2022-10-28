@@ -8,12 +8,12 @@
     <bpmn:scriptTask id="Activity_Get_Local_Date_Time" name="Get Local Date and Time" scriptFormat="python">
       <bpmn:incoming>Flow_1al74ve</bpmn:incoming>
       <bpmn:outgoing>Flow_0xa8fic</bpmn:outgoing>
-      <bpmn:script>local_date_time_obj = datetime.utcnow()
-# localtime = get_localtime(some_time, timezone)
-local_date_str = local_date_time_obj.strftime('%Y-%m-%d')
-local_time_str = local_date_time_obj.strftime('%I:%M %p')
+      <bpmn:script>timezone = "Europe/Stockholm"
 
-del local_date_time_obj</bpmn:script>
+local_date_time_obj = datetime.utcnow()
+local_date_time_obj = get_localtime(some_time, timezone)
+local_date_str = local_date_time_obj.strftime('%Y-%m-%d')
+local_time_str = local_date_time_obj.strftime('%I:%M %p')</bpmn:script>
     </bpmn:scriptTask>
     <bpmn:endEvent id="Event_1d6y8yr">
       <bpmn:incoming>Flow_0xa8fic</bpmn:incoming>
