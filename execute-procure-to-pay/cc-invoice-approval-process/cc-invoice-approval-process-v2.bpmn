@@ -497,6 +497,7 @@ annual_salary = float(annual_salary_str)
         <bpmn:extensionElements>
           <spiffworkflow:preScript># Set Waku message variables
 task_id = "waku_notify_project_lead"
+timezone = project_lead_info["time_zone"]
 isSetMessage = True</spiffworkflow:preScript>
         </bpmn:extensionElements>
         <bpmn:incoming>Flow_0t3n7bd</bpmn:incoming>
@@ -511,13 +512,14 @@ project_lead_info = {}
 project_lead_info["full_name"] = userFullName
 project_lead_info["first_name"] = userFirstName
 project_lead_info["email"] = userEmail
-project_lead_info["team_lead_username"] = userProjectLeadUsername
+project_lead_info["time_zone"] = userTimeZone
+# project_lead_info["team_lead_username"] = userProjectLeadUsername
 project_lead_info["status_key"] = userStatusKey
 
 del(userFullName)
 del(userFirstName)
 del(userEmail)
-del(userProjectLeadUsername)
+# del(userProjectLeadUsername)
 del(userStatusKey)</bpmn:script>
       </bpmn:scriptTask>
       <bpmn:sequenceFlow id="Flow_0t3n7bd" sourceRef="Activity_1jtcvfx" targetRef="Call_Waku_Messages_Message-Notify_Proejct_Lead" />
