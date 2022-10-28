@@ -454,26 +454,6 @@ annual_salary = float(annual_salary_str)
     <bpmn:subProcess id="Activity_1ucvkk4" name="Waku Message: Notify Project Lead">
       <bpmn:incoming>Flow_0kngdw4</bpmn:incoming>
       <bpmn:outgoing>Flow_0lfqk0y</bpmn:outgoing>
-      <bpmn:exclusiveGateway id="Gateway_1l74xlc">
-        <bpmn:outgoing>Flow_1am9jcz</bpmn:outgoing>
-        <bpmn:outgoing>Flow_0kx6gsl</bpmn:outgoing>
-      </bpmn:exclusiveGateway>
-      <bpmn:sequenceFlow id="Flow_1am9jcz" sourceRef="Gateway_1l74xlc" targetRef="Activity_1w6kg4p" />
-      <bpmn:serviceTask id="Activity_1w6kg4p" name="4ai. Get Team_Lead info">
-        <bpmn:incoming>Flow_1am9jcz</bpmn:incoming>
-        <bpmn:outgoing>Flow_0rbij5a</bpmn:outgoing>
-      </bpmn:serviceTask>
-      <bpmn:task id="Activity_0respgl" name="4aii. Get Invoice details">
-        <bpmn:incoming>Flow_0kx6gsl</bpmn:incoming>
-        <bpmn:outgoing>Flow_0lyg5zb</bpmn:outgoing>
-      </bpmn:task>
-      <bpmn:sequenceFlow id="Flow_0kx6gsl" sourceRef="Gateway_1l74xlc" targetRef="Activity_0respgl" />
-      <bpmn:exclusiveGateway id="Gateway_1vl3ipe">
-        <bpmn:incoming>Flow_0rbij5a</bpmn:incoming>
-        <bpmn:incoming>Flow_0lyg5zb</bpmn:incoming>
-      </bpmn:exclusiveGateway>
-      <bpmn:sequenceFlow id="Flow_0rbij5a" sourceRef="Activity_1w6kg4p" targetRef="Gateway_1vl3ipe" />
-      <bpmn:sequenceFlow id="Flow_0lyg5zb" sourceRef="Activity_0respgl" targetRef="Gateway_1vl3ipe" />
       <bpmn:dataObjectReference id="DataObjectReference_0frvqwx" />
       <bpmn:startEvent id="Event_00px1yx">
         <bpmn:outgoing>Flow_0dvboik</bpmn:outgoing>
@@ -483,10 +463,12 @@ annual_salary = float(annual_salary_str)
       </bpmn:endEvent>
       <bpmn:callActivity id="Activity_00b66gy" name="Call Shared: User Info" calledElement="Shared_User_Info">
         <bpmn:extensionElements>
-          <spiffworkflow:preScript />
+          <spiffworkflow:preScript># Set who for find
+find_user = userKeycloak
+isCurrentUser = False</spiffworkflow:preScript>
           <spiffworkflow:postScript />
         </bpmn:extensionElements>
-        <bpmn:incoming>Flow_03mru8z</bpmn:incoming>
+        <bpmn:incoming>Flow_0bv17h4</bpmn:incoming>
         <bpmn:outgoing>Flow_0phvbsa</bpmn:outgoing>
       </bpmn:callActivity>
       <bpmn:serviceTask id="Activity_1ve0iqu" name="Waku Message: Notify Proejct Lead">
@@ -542,20 +524,17 @@ del(userStatusKey)</bpmn:script>
         <bpmn:script>userBambooId_str = resp_BambooUserInfo["supervisorEid"]</bpmn:script>
       </bpmn:scriptTask>
       <bpmn:sequenceFlow id="Flow_0dvboik" sourceRef="Event_00px1yx" targetRef="Activity_1982sk7" />
-      <bpmn:sequenceFlow id="Flow_03mru8z" sourceRef="Activity_1nyfxna" targetRef="Activity_00b66gy" />
       <bpmn:scriptTask id="Activity_1nyfxna" name="Temp Pre Script" scriptFormat="python">
-        <bpmn:incoming>Flow_1lbdhwm</bpmn:incoming>
-        <bpmn:outgoing>Flow_03mru8z</bpmn:outgoing>
-        <bpmn:script># find_user = current_user_extras["project_lead_username"]
+        <bpmn:script># Set who for find
 find_user = userKeycloak
 isCurrentUser = False</bpmn:script>
       </bpmn:scriptTask>
       <bpmn:callActivity id="Activity_1r3o0bm" name="Get Keycloak Username" calledElement="Bamboo_Conversion">
         <bpmn:incoming>Flow_01ki4jt</bpmn:incoming>
-        <bpmn:outgoing>Flow_1lbdhwm</bpmn:outgoing>
+        <bpmn:outgoing>Flow_0bv17h4</bpmn:outgoing>
       </bpmn:callActivity>
       <bpmn:sequenceFlow id="Flow_01ki4jt" sourceRef="Activity_1982sk7" targetRef="Activity_1r3o0bm" />
-      <bpmn:sequenceFlow id="Flow_1lbdhwm" sourceRef="Activity_1r3o0bm" targetRef="Activity_1nyfxna" />
+      <bpmn:sequenceFlow id="Flow_0bv17h4" sourceRef="Activity_1r3o0bm" targetRef="Activity_00b66gy" />
     </bpmn:subProcess>
     <bpmn:scriptTask id="Activity_0faln91" name="Set Message" scriptFormat="python">
       <bpmn:incoming>Flow_1qf14hx</bpmn:incoming>
@@ -1418,20 +1397,6 @@ addNew = False</spiffworkflow:preScript>
   </bpmndi:BPMNDiagram>
   <bpmndi:BPMNDiagram>
     <bpmndi:BPMNPlane bpmnElement="Activity_1ucvkk4">
-      <bpmndi:BPMNShape id="Gateway_1l74xlc_di" bpmnElement="Gateway_1l74xlc" isMarkerVisible="true">
-        <dc:Bounds x="245" y="215" width="50" height="50" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_01bnz9l_di" bpmnElement="Activity_1w6kg4p">
-        <dc:Bounds x="360" y="200" width="100" height="80" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0respgl_di" bpmnElement="Activity_0respgl">
-        <dc:Bounds x="490" y="90" width="100" height="80" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Gateway_1vl3ipe_di" bpmnElement="Gateway_1vl3ipe" isMarkerVisible="true">
-        <dc:Bounds x="625" y="215" width="50" height="50" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_00px1yx_di" bpmnElement="Event_00px1yx">
         <dc:Bounds x="-408" y="402" width="36" height="36" />
       </bpmndi:BPMNShape>
@@ -1456,31 +1421,13 @@ addNew = False</spiffworkflow:preScript>
       <bpmndi:BPMNShape id="Activity_0iy0fil_di" bpmnElement="Activity_1982sk7">
         <dc:Bounds x="-290" y="380" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0plejcc_di" bpmnElement="Activity_1nyfxna">
-        <dc:Bounds x="30" y="380" width="100" height="80" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1lm44ee_di" bpmnElement="Activity_1r3o0bm">
         <dc:Bounds x="-140" y="380" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge id="Flow_1am9jcz_di" bpmnElement="Flow_1am9jcz">
-        <di:waypoint x="295" y="240" />
-        <di:waypoint x="360" y="240" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0kx6gsl_di" bpmnElement="Flow_0kx6gsl">
-        <di:waypoint x="270" y="215" />
-        <di:waypoint x="270" y="130" />
-        <di:waypoint x="490" y="130" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0rbij5a_di" bpmnElement="Flow_0rbij5a">
-        <di:waypoint x="460" y="240" />
-        <di:waypoint x="625" y="240" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0lyg5zb_di" bpmnElement="Flow_0lyg5zb">
-        <di:waypoint x="590" y="130" />
-        <di:waypoint x="650" y="130" />
-        <di:waypoint x="650" y="215" />
-      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="Activity_0plejcc_di" bpmnElement="Activity_1nyfxna">
+        <dc:Bounds x="30" y="550" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_0phvbsa_di" bpmnElement="Flow_0phvbsa">
         <di:waypoint x="260" y="420" />
         <di:waypoint x="310" y="420" />
@@ -1501,17 +1448,13 @@ addNew = False</spiffworkflow:preScript>
         <di:waypoint x="-372" y="420" />
         <di:waypoint x="-290" y="420" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_03mru8z_di" bpmnElement="Flow_03mru8z">
-        <di:waypoint x="130" y="420" />
-        <di:waypoint x="160" y="420" />
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_01ki4jt_di" bpmnElement="Flow_01ki4jt">
         <di:waypoint x="-190" y="420" />
         <di:waypoint x="-140" y="420" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_1lbdhwm_di" bpmnElement="Flow_1lbdhwm">
+      <bpmndi:BPMNEdge id="Flow_0bv17h4_di" bpmnElement="Flow_0bv17h4">
         <di:waypoint x="-40" y="420" />
-        <di:waypoint x="30" y="420" />
+        <di:waypoint x="160" y="420" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
