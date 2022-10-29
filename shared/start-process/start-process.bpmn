@@ -5,14 +5,16 @@
       <bpmn:outgoing>Flow_1u7dtsr</bpmn:outgoing>
     </bpmn:startEvent>
     <bpmn:sequenceFlow id="Flow_1u7dtsr" sourceRef="StartEvent_1" targetRef="Activity_0i59o4c" />
-    <bpmn:scriptTask id="Activity_0i59o4c" name="Set Process" scriptFormat="python">
+    <bpmn:scriptTask id="Activity_0i59o4c" name="Get Process Info" scriptFormat="python">
+      <bpmn:documentation>Returns dictionary like:
+  "process_info": {
+    "process_instance_id": 96,
+    "process_model_identifier": "execute-procure-to-pay/cc-invoice-approval-process"
+  },</bpmn:documentation>
       <bpmn:incoming>Flow_1u7dtsr</bpmn:incoming>
       <bpmn:outgoing>Flow_1m5aamy</bpmn:outgoing>
-      <bpmn:script>process = {}
-process["group_id"] = "execute-procure-to-pay"
-process["model_id"] = "cc-invoice-approval-process"
-
-test = get_process_info()</bpmn:script>
+      <bpmn:script># Get Process Info
+process_info = get_process_info()</bpmn:script>
     </bpmn:scriptTask>
     <bpmn:endEvent id="Event_1ghzw9d">
       <bpmn:incoming>Flow_00fd8n9</bpmn:incoming>
@@ -31,6 +33,7 @@ test = get_process_info()</bpmn:script>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1f0swho_di" bpmnElement="Activity_0i59o4c">
         <dc:Bounds x="270" y="137" width="100" height="80" />
+        <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_1ghzw9d_di" bpmnElement="Event_1ghzw9d">
         <dc:Bounds x="692" y="159" width="36" height="36" />
