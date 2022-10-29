@@ -2,14 +2,9 @@
 <definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/" xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/" xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/" xmlns:biodi="http://bpmn.io/schema/dmn/biodi/2.0" id="Definitions_76910d7" name="DRD" namespace="http://camunda.org/schema/1.0/dmn">
   <decision id="Waku_Messages_Message_Footer" name="Waku Messages: Message Footer">
     <decisionTable id="decisionTable_1">
-      <input id="input_1" label="Process Group Id">
-        <inputExpression id="inputExpression_1" typeRef="string">
-          <text>process["group_id"]</text>
-        </inputExpression>
-      </input>
-      <input id="InputClause_0704h27" label="Process Model Id" biodi:width="200">
+      <input id="InputClause_0704h27" label="Process Model Id" biodi:width="352">
         <inputExpression id="LiteralExpression_0sfnhkv" typeRef="string">
-          <text>process["model_id"]</text>
+          <text>"process_info["process_model_identifier"]</text>
         </inputExpression>
       </input>
       <input id="InputClause_13wukyr" label="Task Id">
@@ -20,17 +15,14 @@
       <output id="output_1" label="Message Footer" name="waku_message_footer" typeRef="string" biodi:width="501" />
       <rule id="DecisionRule_1m4u79d">
         <description>str(process_instance_id) is not longer working</description>
-        <inputEntry id="UnaryTests_05m0jb8">
-          <text>"execute-procure-to-pay"</text>
-        </inputEntry>
         <inputEntry id="UnaryTests_1kb1te8">
-          <text>"cc-invoice-approval-process"</text>
+          <text>"execute-procure-to-pay/cc-invoice-approval-process"</text>
         </inputEntry>
         <inputEntry id="UnaryTests_0d8t32s">
           <text></text>
         </inputEntry>
         <outputEntry id="LiteralExpression_0y9lgsu">
-          <text>"\nProcess Instance Id: " + "fix me" + "\nLink to Spiff: https://demo.spiffworkflow.org/"</text>
+          <text>"\nProcess Instance Id: " + "process_info["process_instance_id"] + "\nLink to Spiff: https://demo.spiffworkflow.org/"</text>
         </outputEntry>
       </rule>
     </decisionTable>
