@@ -31,7 +31,7 @@
       <bpmn:outgoing>Flow_020y0gy</bpmn:outgoing>
       <bpmn:script># Update Current User Extras
 current_user_extras = {}
-current_user_extras["bamboo_id"] = userBambooId
+current_user_extras["bamboo_api_id"] = userBambooId
 current_user_extras["full_name"] = userFullName
 current_user_extras["first_name"] = userFirstName
 current_user_extras["email"] = userEmail
@@ -53,7 +53,7 @@ del(userTimeFormat)</bpmn:script>
       <bpmn:extensionElements>
         <spiffworkflow:serviceTaskOperator id="bamboohr/GetEmployeeInfo" resultVariable="resp_BambooUserInfo">
           <spiffworkflow:parameters>
-            <spiffworkflow:parameter id="employee_id" type="str" value="current_user_extras[&#34;bamboo_id&#34;]" />
+            <spiffworkflow:parameter id="employee_id" type="str" value="current_user_extras[&#34;bamboo_api_id&#34;]" />
             <spiffworkflow:parameter id="fields" type="str" value="&#39;supervisorEmail,supervisorId,supervisorEid&#39;" />
           </spiffworkflow:parameters>
         </spiffworkflow:serviceTaskOperator>
@@ -86,6 +86,9 @@ current_user_extras["bamboo_supervisor_status_id"] = userBambooId = resp_BambooU
       <bpmndi:BPMNShape id="Activity_0hlcuhi_di" bpmnElement="Activity_0v13afu">
         <dc:Bounds x="270" y="137" width="100" height="80" />
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0fb034d_di" bpmnElement="Event_0fb034d">
+        <dc:Bounds x="1252" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Gateway_0xlrnzx_di" bpmnElement="Gateway_0xlrnzx" isMarkerVisible="true">
         <dc:Bounds x="435" y="152" width="50" height="50" />
         <bpmndi:BPMNLabel>
@@ -98,9 +101,6 @@ current_user_extras["bamboo_supervisor_status_id"] = userBambooId = resp_BambooU
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0nftxgp_di" bpmnElement="Activity_1uw66e8">
         <dc:Bounds x="760" y="137" width="100" height="80" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_0fb034d_di" bpmnElement="Event_0fb034d">
-        <dc:Bounds x="1252" y="159" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Gateway_0byohhl_di" bpmnElement="Gateway_0byohhl" isMarkerVisible="true">
         <dc:Bounds x="1115" y="152" width="50" height="50" />
