@@ -761,7 +761,7 @@ time_zone = "Asia/Dubai"
 date_format = "YMD"
 time_format = "24"</spiffworkflow:preScript>
         </bpmn:extensionElements>
-        <bpmn:incoming>Flow_11zkgke</bpmn:incoming>
+        <bpmn:incoming>Flow_1ale8a2</bpmn:incoming>
         <bpmn:outgoing>Flow_0n3djvs</bpmn:outgoing>
       </bpmn:callActivity>
       <bpmn:endEvent id="Event_0czwuqb">
@@ -780,26 +780,16 @@ time_format = "24"</spiffworkflow:preScript>
         <bpmn:incoming>Flow_0n3djvs</bpmn:incoming>
         <bpmn:outgoing>Flow_0lr2fpj</bpmn:outgoing>
       </bpmn:serviceTask>
-      <bpmn:scriptTask id="Activity_01g159b" name="Temp Pre-Script" scriptFormat="python">
-        <bpmn:script># Set Task Id
-task_id = "waku_notify_finance"
-
-# Set Message should not be set
-isSetMessage = True
-isInvoiceApproved = ""
-
-try:
-  is_format
-except NameError:
-  is_format = False
-
-time_zone = "Asia/Dubai"
-date_format = "YMD"
-time_format = "24"</bpmn:script>
+      <bpmn:scriptTask id="Activity_01g159b" name="Get Finance Team" scriptFormat="python">
+        <bpmn:incoming>Flow_11zkgke</bpmn:incoming>
+        <bpmn:outgoing>Flow_1ale8a2</bpmn:outgoing>
+        <bpmn:script># Get Finance Group Members
+finiance_members = get_group_members("Finance Team")</bpmn:script>
       </bpmn:scriptTask>
       <bpmn:sequenceFlow id="Flow_0n3djvs" sourceRef="Activity_1wqf9dm" targetRef="Activity_0ez288q" />
       <bpmn:sequenceFlow id="Flow_0lr2fpj" sourceRef="Activity_0ez288q" targetRef="Event_0czwuqb" />
-      <bpmn:sequenceFlow id="Flow_11zkgke" sourceRef="Event_0k7eiau" targetRef="Activity_1wqf9dm" />
+      <bpmn:sequenceFlow id="Flow_11zkgke" sourceRef="Event_0k7eiau" targetRef="Activity_01g159b" />
+      <bpmn:sequenceFlow id="Flow_1ale8a2" sourceRef="Activity_01g159b" targetRef="Activity_1wqf9dm" />
     </bpmn:subProcess>
     <bpmn:scriptTask id="Activity_1t8wi0r" name="Waku Message: No Project Lead Response" scriptFormat="python">
       <bpmn:incoming>Flow_1v8dszb</bpmn:incoming>
@@ -1468,6 +1458,10 @@ addNew = False</spiffworkflow:preScript>
       <bpmndi:BPMNShape id="Activity_0mxxp3b_di" bpmnElement="Call_Waku_Messages_Message-Notify_Proejct_Lead">
         <dc:Bounds x="510" y="380" width="100" height="80" />
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_02v8rpk_di" bpmnElement="Activity_1jtcvfx">
+        <dc:Bounds x="330" y="380" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0iy0fil_di" bpmnElement="Activity_1982sk7">
         <dc:Bounds x="-170" y="380" width="100" height="80" />
       </bpmndi:BPMNShape>
@@ -1477,10 +1471,6 @@ addNew = False</spiffworkflow:preScript>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1lm44ee_di" bpmnElement="Activity_1r3o0bm">
         <dc:Bounds x="0" y="380" width="100" height="80" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_02v8rpk_di" bpmnElement="Activity_1jtcvfx">
-        <dc:Bounds x="330" y="380" width="100" height="80" />
-        <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_0re50gq_di" bpmnElement="Flow_0re50gq">
         <di:waypoint x="610" y="420" />
@@ -1687,7 +1677,7 @@ addNew = False</spiffworkflow:preScript>
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="BPMNShape_13jsep6" bpmnElement="Activity_01g159b">
-        <dc:Bounds x="280" y="320" width="100" height="80" />
+        <dc:Bounds x="280" y="200" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="BPMNEdge_1d397qp" bpmnElement="Flow_0n3djvs">
@@ -1700,6 +1690,10 @@ addNew = False</spiffworkflow:preScript>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_11zkgke_di" bpmnElement="Flow_11zkgke">
         <di:waypoint x="208" y="240" />
+        <di:waypoint x="280" y="240" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1ale8a2_di" bpmnElement="Flow_1ale8a2">
+        <di:waypoint x="380" y="240" />
         <di:waypoint x="460" y="240" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
