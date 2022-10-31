@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_96f6665" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.0.0-dev">
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:spiffworkflow="http://spiffworkflow.org/bpmn/schema/1.0/core" id="Definitions_96f6665" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.0.0-dev">
   <bpmn:process id="Shared_Start_Process" name="Shared: Start Process" isExecutable="true">
     <bpmn:startEvent id="StartEvent_1">
       <bpmn:outgoing>Flow_1u7dtsr</bpmn:outgoing>
@@ -30,6 +30,9 @@ which_user_task = "invoice-approval"</bpmn:script>
     </bpmn:callActivity>
     <bpmn:sequenceFlow id="Flow_1qqr59k" sourceRef="Activity_0mc03sy" targetRef="Event_1ghzw9d" />
     <bpmn:businessRuleTask id="Activity_0mc03sy" name="Get User Instruction Text">
+      <bpmn:extensionElements>
+        <spiffworkflow:calledDecisionId>User_Instruction_Text</spiffworkflow:calledDecisionId>
+      </bpmn:extensionElements>
       <bpmn:incoming>Flow_00fd8n9</bpmn:incoming>
       <bpmn:outgoing>Flow_1qqr59k</bpmn:outgoing>
     </bpmn:businessRuleTask>
@@ -43,15 +46,15 @@ which_user_task = "invoice-approval"</bpmn:script>
         <dc:Bounds x="270" y="137" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1ghzw9d_di" bpmnElement="Event_1ghzw9d">
+        <dc:Bounds x="782" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_18fbf94_di" bpmnElement="Activity_0yoy91y">
         <dc:Bounds x="440" y="137" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_08hra1e_di" bpmnElement="Activity_0mc03sy">
         <dc:Bounds x="610" y="137" width="100" height="80" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_1ghzw9d_di" bpmnElement="Event_1ghzw9d">
-        <dc:Bounds x="782" y="159" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_1u7dtsr_di" bpmnElement="Flow_1u7dtsr">
         <di:waypoint x="215" y="177" />
