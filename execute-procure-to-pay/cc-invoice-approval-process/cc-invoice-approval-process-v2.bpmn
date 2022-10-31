@@ -779,12 +779,15 @@ isInvoiceApproved = ""</spiffworkflow:preScript>
         <bpmn:outgoing>Flow_1ale8a2</bpmn:outgoing>
         <bpmn:script># Get Finance Group Members
 finance_members = get_group_members("Finance Team")
-finance_notify = 'sasha'
 
 # Removed all but Sasha for demo
 for member in finance_members:
     if member != "sasha":
-        finance_members.remove(member)</bpmn:script>
+        finance_members.remove(member)
+
+# Set who for find
+find_user = 'sasha'
+isCurrentUser = False</bpmn:script>
       </bpmn:scriptTask>
       <bpmn:sequenceFlow id="Flow_0n3djvs" sourceRef="Activity_1wqf9dm" targetRef="Activity_0ez288q" />
       <bpmn:sequenceFlow id="Flow_0lr2fpj" sourceRef="Activity_0ez288q" targetRef="Event_0czwuqb" />
@@ -792,9 +795,7 @@ for member in finance_members:
       <bpmn:sequenceFlow id="Flow_1ale8a2" sourceRef="Activity_01g159b" targetRef="Activity_1i7fkx2" />
       <bpmn:callActivity id="Activity_1i7fkx2" name="Call Shared: User Info" calledElement="Shared_User_Info">
         <bpmn:extensionElements>
-          <spiffworkflow:preScript># Set who for find
-find_user = finance_notify
-isCurrentUser = False</spiffworkflow:preScript>
+          <spiffworkflow:preScript />
           <spiffworkflow:postScript />
         </bpmn:extensionElements>
         <bpmn:incoming>Flow_1ale8a2</bpmn:incoming>
