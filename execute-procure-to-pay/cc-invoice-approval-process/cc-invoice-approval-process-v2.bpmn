@@ -55,7 +55,6 @@
         <bpmn:flowNodeRef>Gateway_0wk5se9</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_1colhao</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_1b58a3z</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Activity_0o7sdta</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_show_errors</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_0twki30</bpmn:flowNodeRef>
       </bpmn:lane>
@@ -211,7 +210,7 @@ del decimal</bpmn:script>
     <bpmn:sequenceFlow id="Flow_0bipj9q" sourceRef="Activity_1u89kok" targetRef="Activity_1colhao" />
     <bpmn:sequenceFlow id="Flow_04ccp12" sourceRef="Event_0m3ri6v" targetRef="Activity_1kgaqpf" />
     <bpmn:sequenceFlow id="Flow_0kngdw4" sourceRef="Event_0x83ruk" targetRef="Activity_1ucvkk4" />
-    <bpmn:sequenceFlow id="Flow_0lfqk0y" sourceRef="Activity_1ucvkk4" targetRef="Activity_0o7sdta" />
+    <bpmn:sequenceFlow id="Flow_0lfqk0y" sourceRef="Activity_1ucvkk4" targetRef="Activity_06b32ar" />
     <bpmn:sequenceFlow id="Flow_1ds4s8o" sourceRef="Activity_1kgaqpf" targetRef="Activity_0cdgqi0" />
     <bpmn:sequenceFlow id="Flow_09wwily" sourceRef="Activity_0cdgqi0" targetRef="Activity_11stdua" />
     <bpmn:sequenceFlow id="Flow_00kky3k" name="No" sourceRef="Gateway_1ytq6m7" targetRef="Gateway_1l4tz4i">
@@ -370,8 +369,10 @@ time_format = current_user_extras["date_format"]</spiffworkflow:preScript>
         <spiffworkflow:postScript />
         <spiffworkflow:preScript># Set Timer Check 
 isApprovalTimer = False</spiffworkflow:preScript>
+        <spiffworkflow:instructionsForEndUser>Invoice Details:
+Submitted By: {{ invoice.contributorName }}</spiffworkflow:instructionsForEndUser>
       </bpmn:extensionElements>
-      <bpmn:incoming>Flow_0cplnjf</bpmn:incoming>
+      <bpmn:incoming>Flow_0lfqk0y</bpmn:incoming>
       <bpmn:outgoing>Flow_0yvmfqu</bpmn:outgoing>
     </bpmn:userTask>
     <bpmn:userTask id="Activity_0cdgqi0" name="Approve Invoice - Finance">
@@ -889,14 +890,6 @@ addNew = False</spiffworkflow:preScript>
     <bpmn:dataObject id="resp_BambooUserInfo" />
     <bpmn:dataObject id="wr_notifyFinance" />
     <bpmn:dataObjectReference id="DataObjectReference_05liqvr" name="resp_BambooUserInfo" dataObjectRef="resp_BambooUserInfo" />
-    <bpmn:sequenceFlow id="Flow_0cplnjf" sourceRef="Activity_0o7sdta" targetRef="Activity_06b32ar" />
-    <bpmn:manualTask id="Activity_0o7sdta" name="Temp Invoice Info">
-      <bpmn:extensionElements>
-        <spiffworkflow:instructionsForEndUser />
-      </bpmn:extensionElements>
-      <bpmn:incoming>Flow_0lfqk0y</bpmn:incoming>
-      <bpmn:outgoing>Flow_0cplnjf</bpmn:outgoing>
-    </bpmn:manualTask>
     <bpmn:manualTask id="Activity_show_errors" name="Show Error(s)">
       <bpmn:extensionElements>
         <spiffworkflow:instructionsForEndUser>{{ submitInvoiceValidationMessage }}  
@@ -1157,9 +1150,6 @@ if not(svc_is_due_date_after):
           <dc:Bounds x="566" y="398" width="89" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0y6r72x_di" bpmnElement="Activity_0o7sdta">
-        <dc:Bounds x="2990" y="670" width="100" height="80" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_08bsj2m_di" bpmnElement="Event_09q0ym0">
         <dc:Bounds x="3052" y="882" width="36" height="36" />
         <bpmndi:BPMNLabel>
@@ -1286,7 +1276,7 @@ if not(svc_is_due_date_after):
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0lfqk0y_di" bpmnElement="Flow_0lfqk0y">
         <di:waypoint x="3040" y="452" />
-        <di:waypoint x="3040" y="670" />
+        <di:waypoint x="3040" y="820" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1ds4s8o_di" bpmnElement="Flow_1ds4s8o">
         <di:waypoint x="3500" y="640" />
@@ -1370,10 +1360,6 @@ if not(svc_is_due_date_after):
       <bpmndi:BPMNEdge id="Flow_17vkjgc_di" bpmnElement="Flow_17vkjgc">
         <di:waypoint x="915" y="522" />
         <di:waypoint x="985" y="522" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0cplnjf_di" bpmnElement="Flow_0cplnjf">
-        <di:waypoint x="3040" y="750" />
-        <di:waypoint x="3040" y="820" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1pefcgv_di" bpmnElement="Flow_1pefcgv">
         <di:waypoint x="985" y="360" />
