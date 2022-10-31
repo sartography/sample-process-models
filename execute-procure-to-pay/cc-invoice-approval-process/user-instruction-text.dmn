@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/" xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/" xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/" xmlns:biodi="http://bpmn.io/schema/dmn/biodi/2.0" id="Definitions_76910d7" name="DRD" namespace="http://camunda.org/schema/1.0/dmn">
+  <decision id="decision_1" name="User Instruction Text">
+    <decisionTable id="decisionTable_1">
+      <input id="input_1" label="Which User Task?">
+        <inputExpression id="inputExpression_1" typeRef="string">
+          <text>which_user_task</text>
+        </inputExpression>
+      </input>
+      <output id="output_1" label="User Instructions" name="user_instructions" typeRef="string" biodi:width="581" />
+      <rule id="DecisionRule_1xvxx6t">
+        <inputEntry id="UnaryTests_13q8zog">
+          <text>"approval"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_00yco9d">
+          <text>"""Submitted by: {{ invoice."contributorName" }}
+Submiiter Id: {{ contributorId }}
+Invoice Id: {{ invoiceId }}
+Amount: {{ invoiceAmount }}
+Currency: {{ invoiceCurrency }}
+Due Date: {{ dueDate}}"""</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <dmndi:DMNDI>
+    <dmndi:DMNDiagram id="DMNDiagram_1cykosu">
+      <dmndi:DMNShape id="DMNShape_1dhfq2s" dmnElementRef="decision_1">
+        <dc:Bounds height="80" width="180" x="157" y="151" />
+      </dmndi:DMNShape>
+    </dmndi:DMNDiagram>
+  </dmndi:DMNDI>
+</definitions>
