@@ -466,7 +466,30 @@ annual_salary = float(annual_salary_str)
           <spiffworkflow:preScript># Set who for find
 find_user = userKeycloak
 isCurrentUser = False</spiffworkflow:preScript>
-          <spiffworkflow:postScript />
+          <spiffworkflow:postScript># Set Project Lead Info
+project_lead_info = {}
+project_lead_info["full_name"] = userFullName
+project_lead_info["first_name"] = userFirstName
+project_lead_info["email"] = userEmail
+project_lead_info["time_zone"] = userTimeZone
+project_lead_info["time_format"] = userTimeFormat
+project_lead_info["date_format"] = userDateFormat
+project_lead_info["status_key"] = userStatusKey
+
+# Move to pre-script of Waku Message 
+# Set Time Zone
+time_zone = project_lead_info["time_zone"]
+
+# Set Time Format
+time_format = project_lead_info["time_format"]
+
+# Set Date Format
+time_format = project_lead_info["date_format"]
+
+del(userFullName)
+del(userFirstName)
+del(userEmail)
+del(userStatusKey)</spiffworkflow:postScript>
         </bpmn:extensionElements>
         <bpmn:incoming>Flow_0bv17h4</bpmn:incoming>
         <bpmn:outgoing>Flow_0phvbsa</bpmn:outgoing>
@@ -520,7 +543,6 @@ time_format = project_lead_info["date_format"]
 del(userFullName)
 del(userFirstName)
 del(userEmail)
-# del(userProjectLeadUsername)
 del(userStatusKey)</bpmn:script>
       </bpmn:scriptTask>
       <bpmn:sequenceFlow id="Flow_0t3n7bd" sourceRef="Activity_1jtcvfx" targetRef="Call_Waku_Messages_Message-Notify_Proejct_Lead" />
