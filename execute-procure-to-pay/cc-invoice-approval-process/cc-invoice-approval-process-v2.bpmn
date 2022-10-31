@@ -761,7 +761,7 @@ time_zone = "Asia/Dubai"
 date_format = "YMD"
 time_format = "24"</spiffworkflow:preScript>
         </bpmn:extensionElements>
-        <bpmn:incoming>Flow_1ale8a2</bpmn:incoming>
+        <bpmn:incoming>Flow_1gfeknb</bpmn:incoming>
         <bpmn:outgoing>Flow_0n3djvs</bpmn:outgoing>
       </bpmn:callActivity>
       <bpmn:endEvent id="Event_0czwuqb">
@@ -784,12 +784,30 @@ time_format = "24"</spiffworkflow:preScript>
         <bpmn:incoming>Flow_11zkgke</bpmn:incoming>
         <bpmn:outgoing>Flow_1ale8a2</bpmn:outgoing>
         <bpmn:script># Get Finance Group Members
-finance_members = get_group_members("Finance Team")</bpmn:script>
+finance_members = get_group_members("Finance Team")
+
+# Removed all but Sasha for demo
+for member in finance_members:
+    if member != "sasha":
+        finance_members.remove(member)
+    else:
+        finance_notify = member</bpmn:script>
       </bpmn:scriptTask>
       <bpmn:sequenceFlow id="Flow_0n3djvs" sourceRef="Activity_1wqf9dm" targetRef="Activity_0ez288q" />
       <bpmn:sequenceFlow id="Flow_0lr2fpj" sourceRef="Activity_0ez288q" targetRef="Event_0czwuqb" />
       <bpmn:sequenceFlow id="Flow_11zkgke" sourceRef="Event_0k7eiau" targetRef="Activity_01g159b" />
-      <bpmn:sequenceFlow id="Flow_1ale8a2" sourceRef="Activity_01g159b" targetRef="Activity_1wqf9dm" />
+      <bpmn:sequenceFlow id="Flow_1ale8a2" sourceRef="Activity_01g159b" targetRef="Activity_1i7fkx2" />
+      <bpmn:callActivity id="Activity_1i7fkx2" name="Call Shared: User Info" calledElement="Shared_User_Info">
+        <bpmn:extensionElements>
+          <spiffworkflow:preScript># Set who for find
+find_user = finance_notify
+isCurrentUser = False</spiffworkflow:preScript>
+          <spiffworkflow:postScript />
+        </bpmn:extensionElements>
+        <bpmn:incoming>Flow_1ale8a2</bpmn:incoming>
+        <bpmn:outgoing>Flow_1gfeknb</bpmn:outgoing>
+      </bpmn:callActivity>
+      <bpmn:sequenceFlow id="Flow_1gfeknb" sourceRef="Activity_1i7fkx2" targetRef="Activity_1wqf9dm" />
     </bpmn:subProcess>
     <bpmn:scriptTask id="Activity_1t8wi0r" name="Waku Message: No Project Lead Response" scriptFormat="python">
       <bpmn:incoming>Flow_1v8dszb</bpmn:incoming>
@@ -1662,39 +1680,47 @@ addNew = False</spiffworkflow:preScript>
   </bpmndi:BPMNDiagram>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1vlf9fh">
     <bpmndi:BPMNPlane id="BPMNPlane_0pej8du" bpmnElement="Activity_1kgaqpf">
-      <bpmndi:BPMNShape id="BPMNShape_1r0xe85" bpmnElement="Event_0k7eiau">
-        <dc:Bounds x="172" y="222" width="36" height="36" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="BPMNShape_0brjin6" bpmnElement="Activity_1wqf9dm">
-        <dc:Bounds x="460" y="200" width="100" height="80" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="BPMNShape_1kkvray" bpmnElement="Event_0czwuqb">
         <dc:Bounds x="882" y="222" width="36" height="36" />
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_1r0xe85" bpmnElement="Event_0k7eiau">
+        <dc:Bounds x="122" y="222" width="36" height="36" />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="BPMNShape_0x5xk93" bpmnElement="Activity_0ez288q">
-        <dc:Bounds x="660" y="200" width="100" height="80" />
+        <dc:Bounds x="720" y="200" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_0brjin6" bpmnElement="Activity_1wqf9dm">
+        <dc:Bounds x="550" y="200" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_1hvadbq" bpmnElement="Activity_1i7fkx2">
+        <dc:Bounds x="380" y="200" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="BPMNShape_13jsep6" bpmnElement="Activity_01g159b">
-        <dc:Bounds x="280" y="200" width="100" height="80" />
+        <dc:Bounds x="210" y="200" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="BPMNEdge_1d397qp" bpmnElement="Flow_0n3djvs">
-        <di:waypoint x="560" y="240" />
-        <di:waypoint x="660" y="240" />
+        <di:waypoint x="650" y="240" />
+        <di:waypoint x="720" y="240" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="BPMNEdge_0u6zjo7" bpmnElement="Flow_0lr2fpj">
-        <di:waypoint x="760" y="240" />
+        <di:waypoint x="820" y="240" />
         <di:waypoint x="882" y="240" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_11zkgke_di" bpmnElement="Flow_11zkgke">
-        <di:waypoint x="208" y="240" />
-        <di:waypoint x="280" y="240" />
+        <di:waypoint x="158" y="240" />
+        <di:waypoint x="210" y="240" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1ale8a2_di" bpmnElement="Flow_1ale8a2">
+        <di:waypoint x="310" y="240" />
         <di:waypoint x="380" y="240" />
-        <di:waypoint x="460" y="240" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1gfeknb_di" bpmnElement="Flow_1gfeknb">
+        <di:waypoint x="480" y="240" />
+        <di:waypoint x="550" y="240" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
