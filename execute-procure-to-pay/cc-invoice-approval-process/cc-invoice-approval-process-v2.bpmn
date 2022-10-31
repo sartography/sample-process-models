@@ -410,10 +410,7 @@ isApprovalTimer = False</spiffworkflow:preScript>
         <bpmn:incoming>Flow_02g4qn2</bpmn:incoming>
         <bpmn:outgoing>Flow_0nxzc38</bpmn:outgoing>
         <bpmn:script>annual_salary_str = resp_BambooPayRate["amount"]
-annual_salary = float(annual_salary_str)
-
-
-# annual_salary = 24000</bpmn:script>
+annual_salary = float(annual_salary_str)</bpmn:script>
       </bpmn:scriptTask>
       <bpmn:scriptTask id="Activity_0b87ocm" name="Get Invoice Amount" scriptFormat="python">
         <bpmn:incoming>Flow_0xtzqkg</bpmn:incoming>
@@ -446,7 +443,7 @@ annual_salary = float(annual_salary_str)
         <bpmn:extensionElements>
           <spiffworkflow:serviceTaskOperator id="bamboohr/GetPayRate" resultVariable="resp_BambooPayRate">
             <spiffworkflow:parameters>
-              <spiffworkflow:parameter id="employee_id" type="str" value="current_user_extras[&#34;bamboo_id&#34;]" />
+              <spiffworkflow:parameter id="employee_id" type="str" value="current_user_extras[&#34;bamboo_api_id&#34;]" />
             </spiffworkflow:parameters>
           </spiffworkflow:serviceTaskOperator>
         </bpmn:extensionElements>
@@ -885,7 +882,6 @@ addNew = False</spiffworkflow:preScript>
     <bpmn:dataObject id="resp_BambooUserInfo" />
     <bpmn:dataObject id="wr_notifyFinance" />
     <bpmn:dataObjectReference id="DataObjectReference_05liqvr" name="resp_BambooUserInfo" dataObjectRef="resp_BambooUserInfo" />
-    <bpmn:dataObject id="resp_BambooUserInfo" />
   </bpmn:process>
   <bpmn:process id="Process_cc_invoice_approval_process_v2_c" isExecutable="false" />
   <bpmn:process id="Process_cc_invoice_approval_process_v2_d" isExecutable="false" />
@@ -929,12 +925,6 @@ addNew = False</spiffworkflow:preScript>
         <dc:Bounds x="1345" y="497" width="50" height="50" />
         <bpmndi:BPMNLabel>
           <dc:Bounds x="1340" y="557" width="60" height="14" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="DataObjectReference_05liqvr_di" bpmnElement="DataObjectReference_05liqvr">
-        <dc:Bounds x="592" y="345" width="36" height="50" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="566" y="398" width="89" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0z13hw3_di" bpmnElement="SubProcess_Data_validation_rules">
@@ -1116,6 +1106,12 @@ addNew = False</spiffworkflow:preScript>
         <dc:Bounds x="3622" y="282" width="36" height="36" />
         <bpmndi:BPMNLabel>
           <dc:Bounds x="3616" y="325" width="54" height="40" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DataObjectReference_05liqvr_di" bpmnElement="DataObjectReference_05liqvr">
+        <dc:Bounds x="592" y="345" width="36" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="566" y="398" width="89" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_08bsj2m_di" bpmnElement="Event_09q0ym0">
@@ -1346,6 +1342,10 @@ addNew = False</spiffworkflow:preScript>
         <di:waypoint x="1233" y="562" />
         <di:waypoint x="1261" y="645" />
       </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DataOutputAssociation_0buh48w_di" bpmnElement="DataOutputAssociation_0buh48w">
+        <di:waypoint x="573" y="480" />
+        <di:waypoint x="600" y="395" />
+      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="DataOutputAssociation_04ohdyt_di" bpmnElement="DataOutputAssociation_04ohdyt">
         <di:waypoint x="2361" y="482" />
         <di:waypoint x="2406" y="425" />
@@ -1400,10 +1400,6 @@ addNew = False</spiffworkflow:preScript>
       <bpmndi:BPMNEdge id="Flow_1dgkwzr_di" bpmnElement="Flow_1dgkwzr">
         <di:waypoint x="4410" y="560" />
         <di:waypoint x="4410" y="150" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="DataOutputAssociation_0buh48w_di" bpmnElement="DataOutputAssociation_0buh48w">
-        <di:waypoint x="573" y="480" />
-        <di:waypoint x="600" y="395" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
