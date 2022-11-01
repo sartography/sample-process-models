@@ -25,12 +25,28 @@
       <bpmn:outgoing>Flow_13l3max</bpmn:outgoing>
       <bpmn:script>invoice = {}
 
-invoice["contributorName"] = "Harmeet Singh"
+# no numbers in contributor name validation
+if "Number in contributor name" in ValidationChoices:
+    invoice["contributorName"] = "Harmee5 Singh"
+else
+    invoice["contributorName"] = "Harmeet Singh"
+
+# Invoice amount number of decimals validation
+if "Too many decimals in invoice amount" in ValidationChoices:
+    invoice["invoiceAmount"] = 10000.001
+else:
+    invoice["invoiceAmount"] = 10000.00
+
+# Due date validation
+if "Due date before today's date" in ValidationChoices:
+    invoice["dueDate"] = "2021-12-12"
+else:
+    invoice["dueDate"] = "2022-12-12"
+
+# Set remainder of form fields
 invoice["contributorId"] = 12
 invoice["invoiceId"] = 1234
-invoice["invoiceAmount"] = 10000
-invoice["invoiceCurrency"] = "AUD"
-invoice["dueDate"] = "2022-12-12"</bpmn:script>
+invoice["invoiceCurrency"] = "AUD"</bpmn:script>
     </bpmn:scriptTask>
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
