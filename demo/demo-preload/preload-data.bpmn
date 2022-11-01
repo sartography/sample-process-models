@@ -16,9 +16,22 @@
       <bpmn:outgoing>Flow_1szj88a</bpmn:outgoing>
     </bpmn:userTask>
     <bpmn:endEvent id="Event_1by0v3h">
-      <bpmn:incoming>Flow_1szj88a</bpmn:incoming>
+      <bpmn:incoming>Flow_13l3max</bpmn:incoming>
     </bpmn:endEvent>
-    <bpmn:sequenceFlow id="Flow_1szj88a" sourceRef="Activity_05coiy3" targetRef="Event_1by0v3h" />
+    <bpmn:sequenceFlow id="Flow_1szj88a" sourceRef="Activity_05coiy3" targetRef="Activity_0k1o79j" />
+    <bpmn:sequenceFlow id="Flow_13l3max" sourceRef="Activity_0k1o79j" targetRef="Event_1by0v3h" />
+    <bpmn:scriptTask id="Activity_0k1o79j" name="Set Data Preload">
+      <bpmn:incoming>Flow_1szj88a</bpmn:incoming>
+      <bpmn:outgoing>Flow_13l3max</bpmn:outgoing>
+      <bpmn:script>invoice = {}
+
+invoice["contributorName"] = "Harmeet Singh"
+invoice["contributorId"] = 12
+invoice["invoiceId"] = 1234
+invoice["invoiceAmount"] = 10000
+invoice["invoiceCurrency"] = "AUD"
+invoice["dueDate"] = "2022-12-12"</bpmn:script>
+    </bpmn:scriptTask>
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Proccess_9ulv7w8">
@@ -29,7 +42,10 @@
         <dc:Bounds x="270" y="137" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_1by0v3h_di" bpmnElement="Event_1by0v3h">
-        <dc:Bounds x="432" y="159" width="36" height="36" />
+        <dc:Bounds x="622" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1j22zjx_di" bpmnElement="Activity_0k1o79j">
+        <dc:Bounds x="440" y="137" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_0tccoiv_di" bpmnElement="Flow_0tccoiv">
         <di:waypoint x="215" y="177" />
@@ -37,7 +53,11 @@
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1szj88a_di" bpmnElement="Flow_1szj88a">
         <di:waypoint x="370" y="177" />
-        <di:waypoint x="432" y="177" />
+        <di:waypoint x="440" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_13l3max_di" bpmnElement="Flow_13l3max">
+        <di:waypoint x="540" y="177" />
+        <di:waypoint x="622" y="177" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
