@@ -929,7 +929,8 @@ if not(svc_is_due_date_after):
     <bpmn:scriptTask id="Activity_1864qj2" name="Preload Invoice Info">
       <bpmn:incoming>Flow_00p30u2</bpmn:incoming>
       <bpmn:outgoing>Flow_1y5a863</bpmn:outgoing>
-      <bpmn:script>invoice["ContributorName"] = "Harmeet Singh"
+      <bpmn:script>invoice = {}
+invoice["ContributorName"] = "Harmeet Singh"
 invoice["ContributorId"] = 12
 invoice["InvoiceId"] = 1234
 invoice["invoiceAmount"] = 10000
@@ -972,6 +973,23 @@ invoice["dueDate"] = "12/12/2022"</bpmn:script>
         <dc:Bounds x="310" y="210" width="4500" height="590" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_193pz3d_di" bpmnElement="Activity_1u89kok">
+        <dc:Bounds x="510" y="480" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1r3yh2k_di" bpmnElement="Event_1r3yh2k">
+        <dc:Bounds x="402" y="502" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_13dc2qg_di" bpmnElement="Activity_1colhao">
+        <dc:Bounds x="690" y="482" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DataObjectReference_05liqvr_di" bpmnElement="DataObjectReference_05liqvr">
+        <dc:Bounds x="592" y="345" width="36" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="566" y="398" width="89" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1h7igan_di" bpmnElement="Submit_the_invoice">
         <dc:Bounds x="1165" y="482" width="100" height="80" />
       </bpmndi:BPMNShape>
@@ -981,12 +999,9 @@ invoice["dueDate"] = "12/12/2022"</bpmn:script>
           <dc:Bounds x="1520" y="557" width="60" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_193pz3d_di" bpmnElement="Activity_1u89kok">
-        <dc:Bounds x="510" y="480" width="100" height="80" />
+      <bpmndi:BPMNShape id="Activity_0z13hw3_di" bpmnElement="SubProcess_Data_validation_rules">
+        <dc:Bounds x="1350" y="482" width="100" height="80" />
         <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_1r3yh2k_di" bpmnElement="Event_1r3yh2k">
-        <dc:Bounds x="402" y="502" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_0svbvjn_di" bpmnElement="Event_invoice_validation_failed">
         <dc:Bounds x="1532" y="412" width="36" height="36" />
@@ -1014,6 +1029,9 @@ invoice["dueDate"] = "12/12/2022"</bpmn:script>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Gateway_05ztwup_di" bpmnElement="Gateway_1717c0p">
         <dc:Bounds x="2184" y="495" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1xkyv08_di" bpmnElement="Activity_0gkpa9s">
+        <dc:Bounds x="2460" y="482" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Gateway_1lbghql_di" bpmnElement="Gateway_1lbghql" isMarkerVisible="true">
         <dc:Bounds x="2854" y="497" width="50" height="50" />
@@ -1047,6 +1065,13 @@ invoice["dueDate"] = "12/12/2022"</bpmn:script>
         <dc:Bounds x="3630" y="1030" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1rn2mgi_di" bpmnElement="Activity_0gkejaj">
+        <dc:Bounds x="2699" y="482" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0j807g0_di" bpmnElement="Activity_1ucvkk4">
+        <dc:Bounds x="3170" y="372" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1vzea12_di" bpmnElement="Activity_0faln91">
         <dc:Bounds x="3490" y="670" width="100" height="80" />
         <bpmndi:BPMNLabel />
@@ -1074,18 +1099,18 @@ invoice["dueDate"] = "12/12/2022"</bpmn:script>
           <dc:Bounds x="2606" y="547" width="48" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1tlgf7q_di" bpmnElement="Waku_Message_Pending_Payment">
+        <dc:Bounds x="4540" y="560" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_1usbnt0_di" bpmnElement="Event_1usbnt0">
         <dc:Bounds x="4702" y="582" width="36" height="36" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_13dc2qg_di" bpmnElement="Activity_1colhao">
-        <dc:Bounds x="690" y="482" width="100" height="80" />
-        <bpmndi:BPMNLabel />
+      <bpmndi:BPMNShape id="Activity_0n0ue58_di" bpmnElement="Activity_0rae8g6">
+        <dc:Bounds x="3630" y="260" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="DataObjectReference_05liqvr_di" bpmnElement="DataObjectReference_05liqvr">
-        <dc:Bounds x="592" y="345" width="36" height="50" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="566" y="398" width="89" height="27" />
-        </bpmndi:BPMNLabel>
+      <bpmndi:BPMNShape id="Activity_1tb6ao6_di" bpmnElement="Activity_1kgaqpf">
+        <dc:Bounds x="3630" y="560" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1pu369y_di" bpmnElement="Activity_1t8wi0r">
         <dc:Bounds x="3340" y="898" width="100" height="80" />
@@ -1149,30 +1174,6 @@ invoice["dueDate"] = "12/12/2022"</bpmn:script>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_18hhu31_di" bpmnElement="Activity_1864qj2">
         <dc:Bounds x="870" y="482" width="100" height="80" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0z13hw3_di" bpmnElement="SubProcess_Data_validation_rules">
-        <dc:Bounds x="1350" y="482" width="100" height="80" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1xkyv08_di" bpmnElement="Activity_0gkpa9s">
-        <dc:Bounds x="2460" y="482" width="100" height="80" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1rn2mgi_di" bpmnElement="Activity_0gkejaj">
-        <dc:Bounds x="2699" y="482" width="100" height="80" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0j807g0_di" bpmnElement="Activity_1ucvkk4">
-        <dc:Bounds x="3170" y="372" width="100" height="80" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1tlgf7q_di" bpmnElement="Waku_Message_Pending_Payment">
-        <dc:Bounds x="4540" y="560" width="100" height="80" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0n0ue58_di" bpmnElement="Activity_0rae8g6">
-        <dc:Bounds x="3630" y="260" width="100" height="80" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1tb6ao6_di" bpmnElement="Activity_1kgaqpf">
-        <dc:Bounds x="3630" y="560" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_08bsj2m_di" bpmnElement="Event_09q0ym0">
         <dc:Bounds x="3232" y="882" width="36" height="36" />
@@ -1406,13 +1407,13 @@ invoice["dueDate"] = "12/12/2022"</bpmn:script>
       <bpmndi:BPMNShape id="TextAnnotation_1uaw1w7_di" bpmnElement="TextAnnotation_1uaw1w7">
         <dc:Bounds x="640" y="-170" width="760" height="30" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge id="DataOutputAssociation_1topzui_di" bpmnElement="DataOutputAssociation_1topzui">
-        <di:waypoint x="1413" y="562" />
-        <di:waypoint x="1441" y="645" />
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="DataOutputAssociation_0buh48w_di" bpmnElement="DataOutputAssociation_0buh48w">
         <di:waypoint x="573" y="480" />
         <di:waypoint x="600" y="395" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DataOutputAssociation_1topzui_di" bpmnElement="DataOutputAssociation_1topzui">
+        <di:waypoint x="1413" y="562" />
+        <di:waypoint x="1441" y="645" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="DataOutputAssociation_04ohdyt_di" bpmnElement="DataOutputAssociation_04ohdyt">
         <di:waypoint x="2538" y="482" />
