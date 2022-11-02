@@ -50,7 +50,6 @@
         <bpmn:flowNodeRef>Gateway_0wk5se9</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_show_errors</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_0twki30</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Activity_1864qj2</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_1colhao</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_1u89kok</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_1r3yh2k</bpmn:flowNodeRef>
@@ -58,6 +57,7 @@
         <bpmn:flowNodeRef>Waku_Message_Pending_Payment</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_0rae8g6</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_1kgaqpf</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_1864qj2</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_1so23vf" name="Finance Team">
         <bpmn:flowNodeRef>Activity_0cdgqi0</bpmn:flowNodeRef>
@@ -426,7 +426,7 @@ annual_salary = float(annual_salary_str)</bpmn:script>
     <bpmn:dataObject id="enumerations_list" />
     <bpmn:exclusiveGateway id="Gateway_0wk5se9">
       <bpmn:incoming>Flow_1pefcgv</bpmn:incoming>
-      <bpmn:incoming>Flow_0b5cvqy</bpmn:incoming>
+      <bpmn:incoming>Flow_0i1ajnl</bpmn:incoming>
       <bpmn:outgoing>Flow_17vkjgc</bpmn:outgoing>
     </bpmn:exclusiveGateway>
     <bpmn:manualTask id="Activity_show_errors" name="Show Error(s)">
@@ -455,62 +455,7 @@ if not(svc_is_due_date_after):
     </bpmn:scriptTask>
     <bpmn:dataObjectReference id="DataObjectReference_1ykzuco" name="wr_InvoiceSubmitted" dataObjectRef="wr_InvoiceSubmitted" />
     <bpmn:dataObject id="wr_InvoiceSubmitted" />
-    <bpmn:subProcess id="Activity_1864qj2" name="MVP Demo Preload">
-      <bpmn:startEvent id="Event_1qh3xrh">
-        <bpmn:outgoing>Flow_0pwvb62</bpmn:outgoing>
-      </bpmn:startEvent>
-      <bpmn:sequenceFlow id="Flow_0pwvb62" sourceRef="Event_1qh3xrh" targetRef="Activity_0xrsduh" />
-      <bpmn:userTask id="Activity_0xrsduh" name="Select Configuration">
-        <bpmn:extensionElements>
-          <spiffworkflow:properties>
-            <spiffworkflow:property name="formUiSchemaFilename" value="demo-preload_UISchema.json" />
-            <spiffworkflow:property name="formJsonSchemaFilename" value="demo-preload_JSONSchema.json" />
-          </spiffworkflow:properties>
-        </bpmn:extensionElements>
-        <bpmn:incoming>Flow_0pwvb62</bpmn:incoming>
-        <bpmn:outgoing>Flow_0z8ory2</bpmn:outgoing>
-      </bpmn:userTask>
-      <bpmn:sequenceFlow id="Flow_0z8ory2" sourceRef="Activity_0xrsduh" targetRef="Activity_0rww1ya" />
-      <bpmn:scriptTask id="Activity_0rww1ya" name="Set Form Data">
-        <bpmn:incoming>Flow_0z8ory2</bpmn:incoming>
-        <bpmn:outgoing>Flow_1hebd4s</bpmn:outgoing>
-        <bpmn:script>invoice = {}
-
-# no numbers in contributor name validation
-if "  Number in contributor name" in ValidationChoices:
-    invoice["contributorName"] = "Harmee5 Singh"
-else:
-    invoice["contributorName"] = "Harmeet Singh"
-
-# Invoice amount number of decimals validation
-if "  Too many decimals in invoice amount" in ValidationChoices:
-    if scenarioChoices == "Correct invoice amount":
-        invoice["invoiceAmount"] = 10000.001
-    else:
-        invoice["invoiceAmount"] = 10001.001
-else:
-    if scenarioChoices == "Correct invoice amount":
-        invoice["invoiceAmount"] = 10000.00
-    else:
-        invoice["invoiceAmount"] = 10001.00
-
-# Due date validation
-if "  Due date before today's date" in ValidationChoices:
-    invoice["dueDate"] = "2021-12-12"
-else:
-    invoice["dueDate"] = "2022-12-12"
-
-# Set remainder of form fields
-invoice["contributorId"] = 12
-invoice["invoiceId"] = 1234
-invoice["invoiceCurrency"] = "AUD"</bpmn:script>
-      </bpmn:scriptTask>
-      <bpmn:endEvent id="Event_0kmx0m7">
-        <bpmn:incoming>Flow_1hebd4s</bpmn:incoming>
-      </bpmn:endEvent>
-      <bpmn:sequenceFlow id="Flow_1hebd4s" sourceRef="Activity_0rww1ya" targetRef="Event_0kmx0m7" />
-    </bpmn:subProcess>
-    <bpmn:sequenceFlow id="Flow_0b5cvqy" sourceRef="Activity_1colhao" targetRef="Gateway_0wk5se9" />
+    <bpmn:sequenceFlow id="Flow_0b5cvqy" sourceRef="Activity_1colhao" targetRef="Activity_1864qj2" />
     <bpmn:callActivity id="Activity_1colhao" name="Call Shared: Build Enum List from AWS" calledElement="Shared_Build_Enum_List_from_AWS">
       <bpmn:extensionElements>
         <spiffworkflow:preScript>whichSubject = "Currency"
@@ -980,6 +925,64 @@ isApprovalTimer = True</bpmn:script>
         <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">timedelta(minutes=3)</bpmn:timeDuration>
       </bpmn:timerEventDefinition>
     </bpmn:boundaryEvent>
+    <bpmn:subProcess id="Activity_1864qj2" name="MVP Demo Preload">
+      <bpmn:incoming>Flow_0b5cvqy</bpmn:incoming>
+      <bpmn:outgoing>Flow_0i1ajnl</bpmn:outgoing>
+      <bpmn:startEvent id="Event_1qh3xrh">
+        <bpmn:outgoing>Flow_0pwvb62</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:sequenceFlow id="Flow_0pwvb62" sourceRef="Event_1qh3xrh" targetRef="Activity_0xrsduh" />
+      <bpmn:userTask id="Activity_0xrsduh" name="Select Configuration">
+        <bpmn:extensionElements>
+          <spiffworkflow:properties>
+            <spiffworkflow:property name="formUiSchemaFilename" value="demo-preload_UISchema.json" />
+            <spiffworkflow:property name="formJsonSchemaFilename" value="demo-preload_JSONSchema.json" />
+          </spiffworkflow:properties>
+        </bpmn:extensionElements>
+        <bpmn:incoming>Flow_0pwvb62</bpmn:incoming>
+        <bpmn:outgoing>Flow_0z8ory2</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:sequenceFlow id="Flow_0z8ory2" sourceRef="Activity_0xrsduh" targetRef="Activity_0rww1ya" />
+      <bpmn:scriptTask id="Activity_0rww1ya" name="Set Form Data">
+        <bpmn:incoming>Flow_0z8ory2</bpmn:incoming>
+        <bpmn:outgoing>Flow_1hebd4s</bpmn:outgoing>
+        <bpmn:script>invoice = {}
+
+# no numbers in contributor name validation
+if "  Number in contributor name" in ValidationChoices:
+    invoice["contributorName"] = "Harmee5 Singh"
+else:
+    invoice["contributorName"] = "Harmeet Singh"
+
+# Invoice amount number of decimals validation
+if "  Too many decimals in invoice amount" in ValidationChoices:
+    if scenarioChoices == "Correct invoice amount":
+        invoice["invoiceAmount"] = 10000.001
+    else:
+        invoice["invoiceAmount"] = 10001.001
+else:
+    if scenarioChoices == "Correct invoice amount":
+        invoice["invoiceAmount"] = 10000.00
+    else:
+        invoice["invoiceAmount"] = 10001.00
+
+# Due date validation
+if "  Due date before today's date" in ValidationChoices:
+    invoice["dueDate"] = "2021-12-12"
+else:
+    invoice["dueDate"] = "2022-12-12"
+
+# Set remainder of form fields
+invoice["contributorId"] = 12
+invoice["invoiceId"] = 1234
+invoice["invoiceCurrency"] = "AUD"</bpmn:script>
+      </bpmn:scriptTask>
+      <bpmn:endEvent id="Event_0kmx0m7">
+        <bpmn:incoming>Flow_1hebd4s</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:sequenceFlow id="Flow_1hebd4s" sourceRef="Activity_0rww1ya" targetRef="Event_0kmx0m7" />
+    </bpmn:subProcess>
+    <bpmn:sequenceFlow id="Flow_0i1ajnl" sourceRef="Activity_1864qj2" targetRef="Gateway_0wk5se9" />
   </bpmn:process>
   <bpmn:process id="Process_cc_invoice_approval_process_v2_c" isExecutable="false" />
   <bpmn:process id="Process_cc_invoice_approval_process_v2_d" isExecutable="false" />
@@ -1029,80 +1032,6 @@ isApprovalTimer = True</bpmn:script>
         <dc:Bounds x="1525" y="497" width="50" height="50" />
         <bpmndi:BPMNLabel>
           <dc:Bounds x="1520" y="557" width="60" height="14" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Gateway_1l4tz4i_di" bpmnElement="Gateway_1l4tz4i" isMarkerVisible="true">
-        <dc:Bounds x="3535" y="387" width="50" height="50" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="3483" y="383" width="54" height="14" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_05nao2p_di" bpmnElement="Activity_06b32ar">
-        <dc:Bounds x="3050" y="820" width="100" height="80" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0xwniza_di" bpmnElement="Activity_0cdgqi0">
-        <dc:Bounds x="3510" y="1030" width="100" height="80" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1vzea12_di" bpmnElement="Activity_0faln91">
-        <dc:Bounds x="3370" y="670" width="100" height="80" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0ejn04g_di" bpmnElement="Activity_0fq1nb4">
-        <dc:Bounds x="4080" y="560" width="100" height="80" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0pne05v_di" bpmnElement="Activity_1b6tead">
-        <dc:Bounds x="4250" y="560" width="100" height="80" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Gateway_1ytq6m7_di" bpmnElement="Gateway_1ytq6m7" isMarkerVisible="true">
-        <dc:Bounds x="3795" y="1045" width="50" height="50" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="3793" y="1102" width="54" height="14" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1j1zo4f_di" bpmnElement="Activity_11stdua">
-        <dc:Bounds x="3650" y="1030" width="100" height="80" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_1usbnt0_di" bpmnElement="Event_1usbnt0">
-        <dc:Bounds x="4582" y="582" width="36" height="36" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1pu369y_di" bpmnElement="Activity_1t8wi0r">
-        <dc:Bounds x="3220" y="898" width="100" height="80" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Gateway_06i3we9_di" bpmnElement="Gateway_06i3we9" isMarkerVisible="true">
-        <dc:Bounds x="3395" y="835" width="50" height="50" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="DataObjectReference_1wclgyx_di" bpmnElement="DataObjectReference_1wclgyx">
-        <dc:Bounds x="3392" y="235" width="36" height="50" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="3368" y="281" width="84" height="27" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="DataObjectReference_0x2dn5o_di" bpmnElement="DataObjectReference_0x2dn5o">
-        <dc:Bounds x="3662" y="505" width="36" height="50" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="3638" y="551" width="84" height="14" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="DataObjectReference_0br9o6c_di" bpmnElement="DataObjectReference_0br9o6c">
-        <dc:Bounds x="4372" y="705" width="36" height="50" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="4348" y="751" width="85" height="27" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="DataObjectReference_1g4gzsx_di" bpmnElement="DataObjectReference_1g4gzsx">
-        <dc:Bounds x="4182" y="445" width="36" height="50" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="4157" y="491" width="85" height="27" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_1b58a3z_di" bpmnElement="Event_1b58a3z">
-        <dc:Bounds x="3682" y="282" width="36" height="36" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="3676" y="325" width="54" height="40" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0z13hw3_di" bpmnElement="SubProcess_Data_validation_rules">
@@ -1190,10 +1119,6 @@ isApprovalTimer = True</bpmn:script>
           <dc:Bounds x="2576" y="388" width="87" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0l6st3d_di" bpmnElement="Activity_1864qj2">
-        <dc:Bounds x="870" y="580" width="100" height="80" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_13dc2qg_di" bpmnElement="Activity_1colhao">
         <dc:Bounds x="690" y="482" width="100" height="80" />
         <bpmndi:BPMNLabel />
@@ -1205,19 +1130,97 @@ isApprovalTimer = True</bpmn:script>
       <bpmndi:BPMNShape id="Event_1r3yh2k_di" bpmnElement="Event_1r3yh2k">
         <dc:Bounds x="402" y="502" width="36" height="36" />
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_1l4tz4i_di" bpmnElement="Gateway_1l4tz4i" isMarkerVisible="true">
+        <dc:Bounds x="3535" y="387" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="3483" y="383" width="54" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_05nao2p_di" bpmnElement="Activity_06b32ar">
+        <dc:Bounds x="3050" y="820" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0xwniza_di" bpmnElement="Activity_0cdgqi0">
+        <dc:Bounds x="3510" y="1030" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0j807g0_di" bpmnElement="Activity_1ucvkk4">
         <dc:Bounds x="3050" y="372" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1vzea12_di" bpmnElement="Activity_0faln91">
+        <dc:Bounds x="3370" y="670" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0ejn04g_di" bpmnElement="Activity_0fq1nb4">
+        <dc:Bounds x="4080" y="560" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0pne05v_di" bpmnElement="Activity_1b6tead">
+        <dc:Bounds x="4250" y="560" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_1ytq6m7_di" bpmnElement="Gateway_1ytq6m7" isMarkerVisible="true">
+        <dc:Bounds x="3795" y="1045" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="3793" y="1102" width="54" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1j1zo4f_di" bpmnElement="Activity_11stdua">
+        <dc:Bounds x="3650" y="1030" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1tlgf7q_di" bpmnElement="Waku_Message_Pending_Payment">
         <dc:Bounds x="4420" y="560" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1usbnt0_di" bpmnElement="Event_1usbnt0">
+        <dc:Bounds x="4582" y="582" width="36" height="36" />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0n0ue58_di" bpmnElement="Activity_0rae8g6">
         <dc:Bounds x="3510" y="260" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1tb6ao6_di" bpmnElement="Activity_1kgaqpf">
         <dc:Bounds x="3510" y="560" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1pu369y_di" bpmnElement="Activity_1t8wi0r">
+        <dc:Bounds x="3220" y="898" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_06i3we9_di" bpmnElement="Gateway_06i3we9" isMarkerVisible="true">
+        <dc:Bounds x="3395" y="835" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DataObjectReference_1wclgyx_di" bpmnElement="DataObjectReference_1wclgyx">
+        <dc:Bounds x="3392" y="235" width="36" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="3368" y="281" width="84" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DataObjectReference_0x2dn5o_di" bpmnElement="DataObjectReference_0x2dn5o">
+        <dc:Bounds x="3662" y="505" width="36" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="3638" y="551" width="84" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DataObjectReference_0br9o6c_di" bpmnElement="DataObjectReference_0br9o6c">
+        <dc:Bounds x="4372" y="705" width="36" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="4348" y="751" width="85" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DataObjectReference_1g4gzsx_di" bpmnElement="DataObjectReference_1g4gzsx">
+        <dc:Bounds x="4182" y="445" width="36" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="4157" y="491" width="85" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1b58a3z_di" bpmnElement="Event_1b58a3z">
+        <dc:Bounds x="3682" y="282" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="3676" y="325" width="54" height="40" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0l6st3d_di" bpmnElement="Activity_1864qj2">
+        <dc:Bounds x="860" y="482" width="100" height="80" />
+        <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_08bsj2m_di" bpmnElement="Event_09q0ym0">
         <dc:Bounds x="3112" y="882" width="36" height="36" />
@@ -1433,6 +1436,10 @@ isApprovalTimer = True</bpmn:script>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0b5cvqy_di" bpmnElement="Flow_0b5cvqy">
         <di:waypoint x="790" y="522" />
+        <di:waypoint x="860" y="522" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0i1ajnl_di" bpmnElement="Flow_0i1ajnl">
+        <di:waypoint x="960" y="522" />
         <di:waypoint x="1045" y="522" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="Participant_0a8arrz_di" bpmnElement="Participant_0a8arrz" isHorizontal="true">
@@ -1455,6 +1462,10 @@ isApprovalTimer = True</bpmn:script>
         <di:waypoint x="2538" y="482" />
         <di:waypoint x="2608" y="385" />
       </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DataOutputAssociation_0buh48w_di" bpmnElement="DataOutputAssociation_0buh48w">
+        <di:waypoint x="573" y="480" />
+        <di:waypoint x="600" y="395" />
+      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="DataOutputAssociation_076hmxy_di" bpmnElement="DataOutputAssociation_076hmxy">
         <di:waypoint x="4151" y="560" />
         <di:waypoint x="4185" y="495" />
@@ -1470,10 +1481,6 @@ isApprovalTimer = True</bpmn:script>
       <bpmndi:BPMNEdge id="DataOutputAssociation_02537rk_di" bpmnElement="DataOutputAssociation_02537rk">
         <di:waypoint x="3610" y="569" />
         <di:waypoint x="3662" y="537" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="DataOutputAssociation_0buh48w_di" bpmnElement="DataOutputAssociation_0buh48w">
-        <di:waypoint x="573" y="480" />
-        <di:waypoint x="600" y="395" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Association_1eygti7_di" bpmnElement="Association_1eygti7">
         <di:waypoint x="1086" y="-70" />
