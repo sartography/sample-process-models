@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:spiffworkflow="http://spiffworkflow.org/bpmn/schema/1.0/core" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" id="Definitions_1" targetNamespace="http://bpmn.io/schema/bpmn" camunda:diagramRelationId="90585b47-c41e-4414-8a35-65e0247fd456">
+  <bpmn:collaboration id="Collaboration_0o8ucte">
+    <bpmn:participant id="Participant_1ofw49u" name="Spiff" processRef="Process_3a6d195d-59ce-4a6f-a04a-b6eab2a6a4c6" />
+    <bpmn:participant id="Participant_13wnec3" name="BBHR" processRef="Process_0xlcedq" />
+    <bpmn:participant id="Participant_0jh1i9m" name="Status App" processRef="Process_0jvd7pv" />
+    <bpmn:messageFlow id="Flow_0v3vy6r" sourceRef="Activity_1ux86r6" targetRef="Participant_13wnec3" />
+    <bpmn:messageFlow id="Flow_0yo7wyw" sourceRef="Activity_0xs542x" targetRef="Participant_0jh1i9m" />
+    <bpmn:messageFlow id="Flow_1rey29a" sourceRef="Participant_13wnec3" targetRef="Activity_1ux86r6" />
+  </bpmn:collaboration>
+  <bpmn:process id="Process_3a6d195d-59ce-4a6f-a04a-b6eab2a6a4c6" isExecutable="true">
+    <bpmn:serviceTask id="Activity_0xs542x" name="Notify approver via Waku&#10;&#34;Approve Request manually&#34;">
+      <bpmn:extensionElements>
+        <spiffworkflow:serviceTaskOperator id="waku/SendMessage">
+          <spiffworkflow:parameters>
+            <spiffworkflow:parameter id="message" type="str" />
+            <spiffworkflow:parameter id="message_type" type="str" />
+            <spiffworkflow:parameter id="recipient" type="str" />
+          </spiffworkflow:parameters>
+        </spiffworkflow:serviceTaskOperator>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_093kc2f</bpmn:incoming>
+      <bpmn:outgoing>Flow_05fdft2</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:startEvent id="StartEvent_1" name="Input for Approval strategy has been gathered">
+      <bpmn:outgoing>Flow_0zfse3j</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_0zfse3j" sourceRef="StartEvent_1" targetRef="Activity_1ux86r6" />
+    <bpmn:sequenceFlow id="Flow_093kc2f" sourceRef="Activity_1ux86r6" targetRef="Activity_0xs542x" />
+    <bpmn:sequenceFlow id="Flow_05fdft2" sourceRef="Activity_0xs542x" targetRef="Event_1aday4x" />
+    <bpmn:endEvent id="Event_1aday4x" name="Notification via Waku has been sent">
+      <bpmn:incoming>Flow_05fdft2</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:serviceTask id="Activity_1ux86r6" name="Get Team/Project_Lead Info">
+      <bpmn:extensionElements>
+        <spiffworkflow:serviceTaskOperator id="bamboohr/GetEmployeeInfo">
+          <spiffworkflow:parameters>
+            <spiffworkflow:parameter id="employee_id" type="str" />
+            <spiffworkflow:parameter id="fields" type="str" />
+          </spiffworkflow:parameters>
+        </spiffworkflow:serviceTaskOperator>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0zfse3j</bpmn:incoming>
+      <bpmn:outgoing>Flow_093kc2f</bpmn:outgoing>
+    </bpmn:serviceTask>
+  </bpmn:process>
+  <bpmn:process id="Process_0xlcedq" isExecutable="false" />
+  <bpmn:process id="Process_0jvd7pv" isExecutable="false" />
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_0o8ucte">
+      <bpmndi:BPMNShape id="Participant_1ofw49u_di" bpmnElement="Participant_1ofw49u" isHorizontal="true">
+        <dc:Bounds x="160" y="240" width="740" height="220" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_06sw33w_di" bpmnElement="Activity_0xs542x">
+        <dc:Bounds x="630" y="330" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="242" y="352" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="216" y="395" width="88" height="40" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1aday4x_di" bpmnElement="Event_1aday4x">
+        <dc:Bounds x="802" y="352" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="782" y="395" width="77" height="40" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_127jlnh_di" bpmnElement="Activity_1ux86r6">
+        <dc:Bounds x="350" y="330" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_0zfse3j_di" bpmnElement="Flow_0zfse3j">
+        <di:waypoint x="278" y="370" />
+        <di:waypoint x="350" y="370" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_093kc2f_di" bpmnElement="Flow_093kc2f">
+        <di:waypoint x="450" y="370" />
+        <di:waypoint x="630" y="370" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_05fdft2_di" bpmnElement="Flow_05fdft2">
+        <di:waypoint x="730" y="370" />
+        <di:waypoint x="802" y="370" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="Participant_13wnec3_di" bpmnElement="Participant_13wnec3" isHorizontal="true">
+        <dc:Bounds x="250" y="50" width="310" height="110" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_04btdml" bpmnElement="Participant_0jh1i9m" isHorizontal="true">
+        <dc:Bounds x="600" y="50" width="300" height="110" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_0v3vy6r_di" bpmnElement="Flow_0v3vy6r">
+        <di:waypoint x="400" y="330" />
+        <di:waypoint x="400" y="160" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0yo7wyw_di" bpmnElement="Flow_0yo7wyw">
+        <di:waypoint x="680" y="330" />
+        <di:waypoint x="680" y="160" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1rey29a_di" bpmnElement="Flow_1rey29a">
+        <di:waypoint x="430" y="160" />
+        <di:waypoint x="430" y="330" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
