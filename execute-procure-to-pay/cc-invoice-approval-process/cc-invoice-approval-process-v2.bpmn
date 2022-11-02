@@ -924,8 +924,56 @@ if not(svc_is_due_date_after):
         <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">timedelta(minutes=3)</bpmn:timeDuration>
       </bpmn:timerEventDefinition>
     </bpmn:boundaryEvent>
-    <bpmn:callActivity id="Activity_1864qj2" name="Call Demo: MVP Demo Preload" calledElement="MVP_Demo_Preload" />
     <bpmn:sequenceFlow id="Flow_01d7ofh" sourceRef="Activity_1colhao" targetRef="Gateway_0wk5se9" />
+    <bpmn:subProcess id="Activity_1864qj2" name="MVP Demo Preload">
+      <bpmn:startEvent id="Event_1qh3xrh">
+        <bpmn:outgoing>Flow_0pwvb62</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:sequenceFlow id="Flow_0pwvb62" sourceRef="Event_1qh3xrh" targetRef="Activity_0xrsduh" />
+      <bpmn:userTask id="Activity_0xrsduh" name="Select Configuration">
+        <bpmn:incoming>Flow_0pwvb62</bpmn:incoming>
+        <bpmn:outgoing>Flow_0z8ory2</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:sequenceFlow id="Flow_0z8ory2" sourceRef="Activity_0xrsduh" targetRef="Activity_0rww1ya" />
+      <bpmn:scriptTask id="Activity_0rww1ya" name="Set Form Data">
+        <bpmn:incoming>Flow_0z8ory2</bpmn:incoming>
+        <bpmn:outgoing>Flow_1hebd4s</bpmn:outgoing>
+        <bpmn:script>invoice = {}
+
+# no numbers in contributor name validation
+if "  Number in contributor name" in ValidationChoices:
+    invoice["contributorName"] = "Harmee5 Singh"
+else:
+    invoice["contributorName"] = "Harmeet Singh"
+
+# Invoice amount number of decimals validation
+if "  Too many decimals in invoice amount" in ValidationChoices:
+    if scenarioChoices == "Correct invoice amount":
+        invoice["invoiceAmount"] = 10000.001
+    else:
+        invoice["invoiceAmount"] = 10001.001
+else:
+    if scenarioChoices == "Correct invoice amount":
+        invoice["invoiceAmount"] = 10000.00
+    else:
+        invoice["invoiceAmount"] = 10001.00
+
+# Due date validation
+if "  Due date before today's date" in ValidationChoices:
+    invoice["dueDate"] = "2021-12-12"
+else:
+    invoice["dueDate"] = "2022-12-12"
+
+# Set remainder of form fields
+invoice["contributorId"] = 12
+invoice["invoiceId"] = 1234
+invoice["invoiceCurrency"] = "AUD"</bpmn:script>
+      </bpmn:scriptTask>
+      <bpmn:endEvent id="Event_0kmx0m7">
+        <bpmn:incoming>Flow_1hebd4s</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:sequenceFlow id="Flow_1hebd4s" sourceRef="Activity_0rww1ya" targetRef="Event_0kmx0m7" />
+    </bpmn:subProcess>
   </bpmn:process>
   <bpmn:process id="Process_cc_invoice_approval_process_v2_c" isExecutable="false" />
   <bpmn:process id="Process_cc_invoice_approval_process_v2_d" isExecutable="false" />
@@ -987,10 +1035,6 @@ if not(svc_is_due_date_after):
         <bpmndi:BPMNLabel>
           <dc:Bounds x="1520" y="557" width="60" height="14" />
         </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1x0aw0b_di" bpmnElement="Activity_1864qj2">
-        <dc:Bounds x="870" y="620" width="100" height="80" />
-        <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0z13hw3_di" bpmnElement="SubProcess_Data_validation_rules">
         <dc:Bounds x="1350" y="482" width="100" height="80" />
@@ -1164,6 +1208,10 @@ if not(svc_is_due_date_after):
         <bpmndi:BPMNLabel>
           <dc:Bounds x="2576" y="388" width="87" height="27" />
         </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0l6st3d_di" bpmnElement="Activity_1864qj2">
+        <dc:Bounds x="870" y="620" width="100" height="80" />
+        <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_08bsj2m_di" bpmnElement="Event_09q0ym0">
         <dc:Bounds x="3232" y="882" width="36" height="36" />
@@ -1772,6 +1820,34 @@ if not(svc_is_due_date_after):
       <bpmndi:BPMNEdge id="Flow_0u8sn4c_di" bpmnElement="Flow_0u8sn4c">
         <di:waypoint x="650" y="240" />
         <di:waypoint x="730" y="240" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_191w697">
+    <bpmndi:BPMNPlane id="BPMNPlane_1urlpwk" bpmnElement="Activity_1864qj2">
+      <bpmndi:BPMNShape id="Event_1qh3xrh_di" bpmnElement="Event_1qh3xrh">
+        <dc:Bounds x="242" y="182" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1of3arm_di" bpmnElement="Activity_0xrsduh">
+        <dc:Bounds x="330" y="160" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1pc13jq_di" bpmnElement="Activity_0rww1ya">
+        <dc:Bounds x="490" y="160" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0kmx0m7_di" bpmnElement="Event_0kmx0m7">
+        <dc:Bounds x="652" y="182" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_0pwvb62_di" bpmnElement="Flow_0pwvb62">
+        <di:waypoint x="278" y="200" />
+        <di:waypoint x="330" y="200" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0z8ory2_di" bpmnElement="Flow_0z8ory2">
+        <di:waypoint x="430" y="200" />
+        <di:waypoint x="490" y="200" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1hebd4s_di" bpmnElement="Flow_1hebd4s">
+        <di:waypoint x="590" y="200" />
+        <di:waypoint x="652" y="200" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
