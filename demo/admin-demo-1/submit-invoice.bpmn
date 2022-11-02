@@ -9,7 +9,7 @@
         </spiffworkflow:properties>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_0ip2cse</bpmn:incoming>
-      <bpmn:outgoing>Flow_075xc42</bpmn:outgoing>
+      <bpmn:outgoing>Flow_00n0tjo</bpmn:outgoing>
     </bpmn:userTask>
     <bpmn:serviceTask id="Activity_1hdxh4e" name="Save Invoice Date to DyamoDB">
       <bpmn:extensionElements>
@@ -20,6 +20,7 @@
           </spiffworkflow:parameters>
         </spiffworkflow:serviceTaskOperator>
       </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0mc45kl</bpmn:incoming>
       <bpmn:outgoing>Flow_18gjso9</bpmn:outgoing>
     </bpmn:serviceTask>
     <bpmn:serviceTask id="Activity_00fpxb0" name="Save PDF Document to S3">
@@ -33,6 +34,7 @@
         </spiffworkflow:serviceTaskOperator>
         <spiffworkflow:postScript>del(filesAccept)</spiffworkflow:postScript>
       </bpmn:extensionElements>
+      <bpmn:incoming>Flow_17hnq0u</bpmn:incoming>
       <bpmn:outgoing>Flow_1fogk3e</bpmn:outgoing>
     </bpmn:serviceTask>
     <bpmn:serviceTask id="Activity_1lu7ioj" name="Send Waku Message: Invoice Submitted">
@@ -41,7 +43,7 @@
           <spiffworkflow:parameters>
             <spiffworkflow:parameter id="message" type="str" value="&#34;Invocie submitted&#34;" />
             <spiffworkflow:parameter id="message_type" type="str" value="&#34;wakuext_sendOneToOneMessage&#34;" />
-            <spiffworkflow:parameter id="recipient" type="str" value="&#34;0x048736f0d79be71d64b364d7172691a1053ef882017f02657bc2131c40a9e2e32cb87d35930a7410dada1818e2165f4bce671b805d08247de6333206dabab0aaee&#34;" />
+            <spiffworkflow:parameter id="recipient" type="str" value="&#34;0x04c3e87c880510000f3be0152905ab11c6e5c899fd580f4c76fc050a2d99cd2a9f034eafdde7385a31b2aee790bd67d7668dba17d6f282c8c5592488f4f4c4fe33&#34;" />
           </spiffworkflow:parameters>
         </spiffworkflow:serviceTaskOperator>
       </bpmn:extensionElements>
@@ -50,6 +52,7 @@
     </bpmn:serviceTask>
     <bpmn:intermediateThrowEvent id="Event_03t9lyz" name="Invoice Submitted">
       <bpmn:incoming>Flow_022rtd2</bpmn:incoming>
+      <bpmn:outgoing>Flow_1joyful</bpmn:outgoing>
     </bpmn:intermediateThrowEvent>
     <bpmn:subProcess id="Activity_1p94uz7" name="Compare Submitted with Bamboo Salary">
       <bpmn:serviceTask id="Activity_0vjn1x3" name="Get Bamboo Salary">
@@ -176,33 +179,47 @@ annual_salary = float(annual_salary_str)</bpmn:script>
     <bpmn:sequenceFlow id="Flow_1ohvhrq" sourceRef="Activity_1olhflq" targetRef="Event_03qfuyf" />
     <bpmn:sequenceFlow id="Flow_1fogk3e" sourceRef="Activity_00fpxb0" targetRef="Gateway_0fyff11" />
     <bpmn:sequenceFlow id="Flow_0ip2cse" sourceRef="Event_17pvtuv" targetRef="Activity_0yes9h3" />
-    <bpmn:endEvent id="Event_15d2l0d">
-      <bpmn:incoming>Flow_075xc42</bpmn:incoming>
+    <bpmn:sequenceFlow id="Flow_00n0tjo" sourceRef="Activity_0yes9h3" targetRef="Gateway_0slfxai" />
+    <bpmn:parallelGateway id="Gateway_0slfxai">
+      <bpmn:incoming>Flow_00n0tjo</bpmn:incoming>
+      <bpmn:outgoing>Flow_0mc45kl</bpmn:outgoing>
+      <bpmn:outgoing>Flow_17hnq0u</bpmn:outgoing>
+    </bpmn:parallelGateway>
+    <bpmn:sequenceFlow id="Flow_0mc45kl" sourceRef="Gateway_0slfxai" targetRef="Activity_1hdxh4e" />
+    <bpmn:sequenceFlow id="Flow_17hnq0u" sourceRef="Gateway_0slfxai" targetRef="Activity_00fpxb0" />
+    <bpmn:endEvent id="Event_0doq33h">
+      <bpmn:incoming>Flow_1joyful</bpmn:incoming>
     </bpmn:endEvent>
-    <bpmn:sequenceFlow id="Flow_075xc42" sourceRef="Activity_0yes9h3" targetRef="Event_15d2l0d" />
+    <bpmn:sequenceFlow id="Flow_1joyful" sourceRef="Event_03t9lyz" targetRef="Event_0doq33h" />
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Proccess_tlws0al">
       <bpmndi:BPMNShape id="Activity_1we7w4j_di" bpmnElement="Activity_0yes9h3">
         <dc:Bounds x="210" y="-140" width="100" height="80" />
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_0jcoqy4_di" bpmnElement="Gateway_0slfxai">
+        <dc:Bounds x="385" y="-125" width="50" height="50" />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0kzge8i_di" bpmnElement="Activity_1hdxh4e">
-        <dc:Bounds x="540" y="403" width="100" height="80" />
+        <dc:Bounds x="500" y="-237" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1mjhyvs_di" bpmnElement="Activity_00fpxb0">
-        <dc:Bounds x="540" y="603" width="100" height="80" />
+        <dc:Bounds x="500" y="-37" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1m5hrik_di" bpmnElement="Activity_1lu7ioj">
-        <dc:Bounds x="790" y="500" width="100" height="80" />
+        <dc:Bounds x="750" y="-140" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_03t9lyz_di" bpmnElement="Event_03t9lyz">
-        <dc:Bounds x="962" y="522" width="36" height="36" />
+        <dc:Bounds x="922" y="-118" width="36" height="36" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="937" y="565" width="88" height="14" />
+          <dc:Bounds x="897" y="-75" width="88" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_15d2l0d_di" bpmnElement="Event_15d2l0d">
-        <dc:Bounds x="382" y="-118" width="36" height="36" />
+      <bpmndi:BPMNShape id="Gateway_03whczu_di" bpmnElement="Gateway_0fyff11">
+        <dc:Bounds x="635" y="-125" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0doq33h_di" bpmnElement="Event_0doq33h">
+        <dc:Bounds x="1032" y="-118" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0kd0p6j_di" bpmnElement="Activity_1p94uz7">
         <dc:Bounds x="1100" y="500" width="100" height="80" />
@@ -223,9 +240,6 @@ annual_salary = float(annual_salary_str)</bpmn:script>
       <bpmndi:BPMNShape id="Activity_051lqwz_di" bpmnElement="Activity_0jewccr">
         <dc:Bounds x="1640" y="500" width="100" height="80" />
         <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Gateway_03whczu_di" bpmnElement="Gateway_0fyff11">
-        <dc:Bounds x="675" y="515" width="50" height="50" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_17pvtuv_di" bpmnElement="Event_17pvtuv">
         <dc:Bounds x="102" y="-118" width="36" height="36" />
@@ -250,19 +264,6 @@ annual_salary = float(annual_salary_str)</bpmn:script>
       <bpmndi:BPMNShape id="Event_0yfbf9e_di" bpmnElement="Event_0yfbf9e">
         <dc:Bounds x="1832" y="355" width="36" height="36" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge id="Flow_18gjso9_di" bpmnElement="Flow_18gjso9">
-        <di:waypoint x="640" y="443" />
-        <di:waypoint x="700" y="443" />
-        <di:waypoint x="700" y="515" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_1a1v0ae_di" bpmnElement="Flow_1a1v0ae">
-        <di:waypoint x="725" y="540" />
-        <di:waypoint x="790" y="540" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_022rtd2_di" bpmnElement="Flow_022rtd2">
-        <di:waypoint x="890" y="540" />
-        <di:waypoint x="962" y="540" />
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0am2zl6_di" bpmnElement="Flow_0am2zl6">
         <di:waypoint x="1400" y="515" />
         <di:waypoint x="1400" y="373" />
@@ -298,18 +299,45 @@ annual_salary = float(annual_salary_str)</bpmn:script>
         <di:waypoint x="1900" y="540" />
         <di:waypoint x="2002" y="540" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_1fogk3e_di" bpmnElement="Flow_1fogk3e">
-        <di:waypoint x="640" y="643" />
-        <di:waypoint x="700" y="643" />
-        <di:waypoint x="700" y="565" />
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0ip2cse_di" bpmnElement="Flow_0ip2cse">
         <di:waypoint x="138" y="-100" />
         <di:waypoint x="210" y="-100" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_075xc42_di" bpmnElement="Flow_075xc42">
+      <bpmndi:BPMNEdge id="Flow_00n0tjo_di" bpmnElement="Flow_00n0tjo">
         <di:waypoint x="310" y="-100" />
-        <di:waypoint x="382" y="-100" />
+        <di:waypoint x="385" y="-100" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_18gjso9_di" bpmnElement="Flow_18gjso9">
+        <di:waypoint x="600" y="-197" />
+        <di:waypoint x="660" y="-197" />
+        <di:waypoint x="660" y="-125" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1fogk3e_di" bpmnElement="Flow_1fogk3e">
+        <di:waypoint x="600" y="3" />
+        <di:waypoint x="660" y="3" />
+        <di:waypoint x="660" y="-75" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1a1v0ae_di" bpmnElement="Flow_1a1v0ae">
+        <di:waypoint x="685" y="-100" />
+        <di:waypoint x="750" y="-100" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_022rtd2_di" bpmnElement="Flow_022rtd2">
+        <di:waypoint x="850" y="-100" />
+        <di:waypoint x="922" y="-100" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0mc45kl_di" bpmnElement="Flow_0mc45kl">
+        <di:waypoint x="410" y="-125" />
+        <di:waypoint x="410" y="-197" />
+        <di:waypoint x="500" y="-197" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_17hnq0u_di" bpmnElement="Flow_17hnq0u">
+        <di:waypoint x="410" y="-75" />
+        <di:waypoint x="410" y="3" />
+        <di:waypoint x="500" y="3" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1joyful_di" bpmnElement="Flow_1joyful">
+        <di:waypoint x="958" y="-100" />
+        <di:waypoint x="1032" y="-100" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
