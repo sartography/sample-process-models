@@ -6,20 +6,16 @@
   <bpmn:process id="Proccess_um94bzu" isExecutable="true">
     <bpmn:laneSet id="LaneSet_07k91o4">
       <bpmn:lane id="Lane_0k6o2ye" name="HR">
-        <bpmn:flowNodeRef>Activity_16i73bo</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>StartEvent_1</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Activity_0cyvzt6</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_1trufij</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_16i73bo</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_0cyvzt6</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_1hdzlbn" name="admin">
         <bpmn:flowNodeRef>Activity_1pnq1wu</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_0c713ei</bpmn:flowNodeRef>
       </bpmn:lane>
     </bpmn:laneSet>
-    <bpmn:task id="Activity_16i73bo" name="Add to Bamboo HR">
-      <bpmn:incoming>Flow_0yw759m</bpmn:incoming>
-      <bpmn:outgoing>Flow_15ce5it</bpmn:outgoing>
-    </bpmn:task>
     <bpmn:sequenceFlow id="Flow_15ce5it" sourceRef="Activity_16i73bo" targetRef="Activity_1pnq1wu" />
     <bpmn:sequenceFlow id="Flow_0yw759m" sourceRef="StartEvent_1" targetRef="Activity_16i73bo" />
     <bpmn:startEvent id="StartEvent_1">
@@ -28,21 +24,25 @@
     <bpmn:sequenceFlow id="Flow_13vk83w" sourceRef="Activity_1pnq1wu" targetRef="Activity_0c713ei" />
     <bpmn:sequenceFlow id="Flow_0a3x6nr" sourceRef="Activity_0cyvzt6" targetRef="Event_1trufij" />
     <bpmn:sequenceFlow id="Flow_0oesocz" sourceRef="Activity_0c713ei" targetRef="Activity_0cyvzt6" />
-    <bpmn:task id="Activity_1pnq1wu" name="Add to Keycloak">
-      <bpmn:incoming>Flow_15ce5it</bpmn:incoming>
-      <bpmn:outgoing>Flow_13vk83w</bpmn:outgoing>
-    </bpmn:task>
-    <bpmn:task id="Activity_0c713ei" name="Submit Pull Request to add to Spiff config file">
-      <bpmn:incoming>Flow_13vk83w</bpmn:incoming>
-      <bpmn:outgoing>Flow_0oesocz</bpmn:outgoing>
-    </bpmn:task>
-    <bpmn:task id="Activity_0cyvzt6" name="Add to Xero Accounting">
-      <bpmn:incoming>Flow_0oesocz</bpmn:incoming>
-      <bpmn:outgoing>Flow_0a3x6nr</bpmn:outgoing>
-    </bpmn:task>
     <bpmn:endEvent id="Event_1trufij">
       <bpmn:incoming>Flow_0a3x6nr</bpmn:incoming>
     </bpmn:endEvent>
+    <bpmn:manualTask id="Activity_16i73bo" name="Add to Bamboo HR">
+      <bpmn:incoming>Flow_0yw759m</bpmn:incoming>
+      <bpmn:outgoing>Flow_15ce5it</bpmn:outgoing>
+    </bpmn:manualTask>
+    <bpmn:manualTask id="Activity_1pnq1wu" name="Add to Keycloak">
+      <bpmn:incoming>Flow_15ce5it</bpmn:incoming>
+      <bpmn:outgoing>Flow_13vk83w</bpmn:outgoing>
+    </bpmn:manualTask>
+    <bpmn:manualTask id="Activity_0c713ei" name="Submit Pull Request to add to Spiff config file">
+      <bpmn:incoming>Flow_13vk83w</bpmn:incoming>
+      <bpmn:outgoing>Flow_0oesocz</bpmn:outgoing>
+    </bpmn:manualTask>
+    <bpmn:manualTask id="Activity_0cyvzt6" name="Add to Xero Accounting">
+      <bpmn:incoming>Flow_0oesocz</bpmn:incoming>
+      <bpmn:outgoing>Flow_0a3x6nr</bpmn:outgoing>
+    </bpmn:manualTask>
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_1pt47a3">
@@ -58,27 +58,23 @@
         <dc:Bounds x="159" y="70" width="821" height="125" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_16i73bo_di" bpmnElement="Activity_16i73bo">
-        <dc:Bounds x="270" y="96" width="100" height="80" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
         <dc:Bounds x="202" y="118" width="36" height="36" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1pnq1wu_di" bpmnElement="Activity_1pnq1wu">
-        <dc:Bounds x="422" y="220" width="100" height="80" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0c713ei_di" bpmnElement="Activity_0c713ei">
-        <dc:Bounds x="562" y="220" width="100" height="80" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0cyvzt6_di" bpmnElement="Activity_0cyvzt6">
-        <dc:Bounds x="780" y="96" width="100" height="80" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_1trufij_di" bpmnElement="Event_1trufij">
         <dc:Bounds x="922" y="118" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1683rwy_di" bpmnElement="Activity_16i73bo">
+        <dc:Bounds x="270" y="96" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1pl4k8t_di" bpmnElement="Activity_1pnq1wu">
+        <dc:Bounds x="422" y="220" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_17mtjf7_di" bpmnElement="Activity_0c713ei">
+        <dc:Bounds x="562" y="220" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0xggmo8_di" bpmnElement="Activity_0cyvzt6">
+        <dc:Bounds x="780" y="96" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_15ce5it_di" bpmnElement="Flow_15ce5it">
         <di:waypoint x="370" y="136" />
