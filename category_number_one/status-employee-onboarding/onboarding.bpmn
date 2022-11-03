@@ -14,6 +14,7 @@
       <bpmn:lane id="Lane_1hdzlbn" name="admin">
         <bpmn:flowNodeRef>Activity_1pnq1wu</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_0c713ei</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_090f7jd</bpmn:flowNodeRef>
       </bpmn:lane>
     </bpmn:laneSet>
     <bpmn:sequenceFlow id="Flow_15ce5it" sourceRef="Activity_16i73bo" targetRef="Activity_1pnq1wu" />
@@ -23,7 +24,6 @@
     </bpmn:startEvent>
     <bpmn:sequenceFlow id="Flow_13vk83w" sourceRef="Activity_1pnq1wu" targetRef="Activity_0c713ei" />
     <bpmn:sequenceFlow id="Flow_0a3x6nr" sourceRef="Activity_0cyvzt6" targetRef="Event_1trufij" />
-    <bpmn:sequenceFlow id="Flow_0oesocz" sourceRef="Activity_0c713ei" targetRef="Activity_0cyvzt6" />
     <bpmn:endEvent id="Event_1trufij">
       <bpmn:incoming>Flow_0a3x6nr</bpmn:incoming>
     </bpmn:endEvent>
@@ -35,13 +35,19 @@
       <bpmn:incoming>Flow_15ce5it</bpmn:incoming>
       <bpmn:outgoing>Flow_13vk83w</bpmn:outgoing>
     </bpmn:manualTask>
-    <bpmn:manualTask id="Activity_0c713ei" name="Submit Pull Request to add to Spiff config file">
+    <bpmn:manualTask id="Activity_0c713ei" name="Post Pull Request to add to Spiff config file">
       <bpmn:incoming>Flow_13vk83w</bpmn:incoming>
-      <bpmn:outgoing>Flow_0oesocz</bpmn:outgoing>
+      <bpmn:outgoing>Flow_1c4e0ex</bpmn:outgoing>
     </bpmn:manualTask>
     <bpmn:manualTask id="Activity_0cyvzt6" name="Add to Xero Accounting">
-      <bpmn:incoming>Flow_0oesocz</bpmn:incoming>
+      <bpmn:incoming>Flow_052ydyl</bpmn:incoming>
       <bpmn:outgoing>Flow_0a3x6nr</bpmn:outgoing>
+    </bpmn:manualTask>
+    <bpmn:sequenceFlow id="Flow_1c4e0ex" sourceRef="Activity_0c713ei" targetRef="Activity_090f7jd" />
+    <bpmn:sequenceFlow id="Flow_052ydyl" sourceRef="Activity_090f7jd" targetRef="Activity_0cyvzt6" />
+    <bpmn:manualTask id="Activity_090f7jd" name="Add to Discord chat">
+      <bpmn:incoming>Flow_1c4e0ex</bpmn:incoming>
+      <bpmn:outgoing>Flow_052ydyl</bpmn:outgoing>
     </bpmn:manualTask>
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
@@ -72,9 +78,14 @@
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_17mtjf7_di" bpmnElement="Activity_0c713ei">
         <dc:Bounds x="562" y="220" width="100" height="80" />
+        <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0xggmo8_di" bpmnElement="Activity_0cyvzt6">
         <dc:Bounds x="780" y="96" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0fucvpe_di" bpmnElement="Activity_090f7jd">
+        <dc:Bounds x="694" y="220" width="100" height="80" />
+        <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_15ce5it_di" bpmnElement="Flow_15ce5it">
         <di:waypoint x="370" y="136" />
@@ -94,11 +105,14 @@
         <di:waypoint x="880" y="136" />
         <di:waypoint x="922" y="136" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0oesocz_di" bpmnElement="Flow_0oesocz">
+      <bpmndi:BPMNEdge id="Flow_1c4e0ex_di" bpmnElement="Flow_1c4e0ex">
         <di:waypoint x="662" y="260" />
-        <di:waypoint x="700" y="260" />
-        <di:waypoint x="700" y="136" />
-        <di:waypoint x="780" y="136" />
+        <di:waypoint x="694" y="260" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_052ydyl_di" bpmnElement="Flow_052ydyl">
+        <di:waypoint x="794" y="260" />
+        <di:waypoint x="830" y="260" />
+        <di:waypoint x="830" y="176" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
