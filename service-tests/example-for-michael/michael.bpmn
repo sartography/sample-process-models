@@ -6,9 +6,9 @@
     </bpmn:startEvent>
     <bpmn:sequenceFlow id="Flow_05vxe68" sourceRef="StartEvent_1" targetRef="Activity_1nxo4yd" />
     <bpmn:endEvent id="Event_1d47bjb">
-      <bpmn:incoming>Flow_0se0cv1</bpmn:incoming>
+      <bpmn:incoming>Flow_1l1a3iv</bpmn:incoming>
     </bpmn:endEvent>
-    <bpmn:sequenceFlow id="Flow_0se0cv1" sourceRef="Activity_1nxo4yd" targetRef="Event_1d47bjb" />
+    <bpmn:sequenceFlow id="Flow_0se0cv1" sourceRef="Activity_1nxo4yd" targetRef="Activity_1a7v1zi" />
     <bpmn:userTask id="Activity_1nxo4yd" name="Complete Form">
       <bpmn:extensionElements>
         <spiffworkflow:properties>
@@ -19,6 +19,14 @@
       <bpmn:incoming>Flow_05vxe68</bpmn:incoming>
       <bpmn:outgoing>Flow_0se0cv1</bpmn:outgoing>
     </bpmn:userTask>
+    <bpmn:sequenceFlow id="Flow_1l1a3iv" sourceRef="Activity_1a7v1zi" targetRef="Event_1d47bjb" />
+    <bpmn:businessRuleTask id="Activity_1a7v1zi" name="Based on last name, set awesomeness">
+      <bpmn:extensionElements>
+        <spiffworkflow:calledDecisionId>awesome</spiffworkflow:calledDecisionId>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0se0cv1</bpmn:incoming>
+      <bpmn:outgoing>Flow_1l1a3iv</bpmn:outgoing>
+    </bpmn:businessRuleTask>
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Proccess_k1cmu31">
@@ -32,12 +40,20 @@
         <dc:Bounds x="280" y="180" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_07ajb3h_di" bpmnElement="Activity_1a7v1zi">
+        <dc:Bounds x="500" y="180" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_05vxe68_di" bpmnElement="Flow_05vxe68">
         <di:waypoint x="228" y="220" />
         <di:waypoint x="280" y="220" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0se0cv1_di" bpmnElement="Flow_0se0cv1">
         <di:waypoint x="380" y="220" />
+        <di:waypoint x="500" y="220" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1l1a3iv_di" bpmnElement="Flow_1l1a3iv">
+        <di:waypoint x="600" y="220" />
         <di:waypoint x="772" y="220" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
