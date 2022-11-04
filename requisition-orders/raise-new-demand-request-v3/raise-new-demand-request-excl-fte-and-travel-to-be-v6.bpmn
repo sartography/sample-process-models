@@ -59,7 +59,6 @@ Process Description - WIP</bpmn:documentation>
         <bpmn:flowNodeRef>Activity_1bdbap9</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_0yr9x4y</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_0dmmikp</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Event_1fsb3by</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_1ki9wd7" name="PeopleOps">
         <bpmn:flowNodeRef>Gateway_0nujbwj</bpmn:flowNodeRef>
@@ -68,6 +67,7 @@ Process Description - WIP</bpmn:documentation>
         <bpmn:flowNodeRef>Event_1sbi4xu</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_0ksckov</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_1dvd0d3</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Event_1fsb3by</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_1huwda6" name="Legal">
         <bpmn:flowNodeRef>Event_18vknb2</bpmn:flowNodeRef>
@@ -118,7 +118,6 @@ Process Description - WIP</bpmn:documentation>
       </bpmn:dataInputAssociation>
     </bpmn:userTask>
     <bpmn:dataObjectReference id="DataObjectReference_070iy0o" name="New Demand Request" dataObjectRef="DataObject_00z4q1e" />
-    <bpmn:dataObject id="DataObject_00z4q1e" />
     <bpmn:callActivity id="Activity_0tt12kf" name="Define Approval strategy" calledElement="define-approval-strategy">
       <bpmn:incoming>Flow_1ipb2ul</bpmn:incoming>
       <bpmn:outgoing>Flow_02ucizl</bpmn:outgoing>
@@ -251,10 +250,6 @@ Process Description - WIP</bpmn:documentation>
     </bpmn:endEvent>
     <bpmn:sequenceFlow id="Flow_1ybgp1f" name="&#60;&#62;Software &#38;Licences" sourceRef="Gateway_0nujbwj" targetRef="Activity_0ksckov" />
     <bpmn:sequenceFlow id="Flow_1fhy0i6" sourceRef="Activity_0ksckov" targetRef="Activity_0rhqmwe" />
-    <bpmn:endEvent id="Event_1fsb3by" name="The Request has been Approved">
-      <bpmn:incoming>Flow_1bs0buf</bpmn:incoming>
-      <bpmn:messageEventDefinition id="MessageEventDefinition_1yrdvwz" />
-    </bpmn:endEvent>
     <bpmn:sequenceFlow id="Flow_1bs0buf" sourceRef="Activity_1dvd0d3" targetRef="Event_1fsb3by" />
     <bpmn:intermediateThrowEvent id="Event_0gukndb" name="Notification to the CC has been sent">
       <bpmn:incoming>Flow_0vd0n7h</bpmn:incoming>
@@ -285,12 +280,10 @@ Process Description - WIP</bpmn:documentation>
       <bpmn:incoming>Flow_1fhy0i6</bpmn:incoming>
       <bpmn:outgoing>Flow_1kcfinc</bpmn:outgoing>
       <bpmn:property id="Property_086ar5g" name="__targetRef_placeholder" />
-      <bpmn:dataOutputAssociation id="DataOutputAssociation_0ki4dhk">
-        <bpmn:targetRef>DataObjectReference_0tcpksr</bpmn:targetRef>
+      <bpmn:dataOutputAssociation id="DataOutputAssociation_04itf36">
+        <bpmn:targetRef>DataObjectReference_0jyn7o6</bpmn:targetRef>
       </bpmn:dataOutputAssociation>
     </bpmn:userTask>
-    <bpmn:dataObjectReference id="DataObjectReference_0tcpksr" name="New Demand Request" dataObjectRef="DataObject_1nxcx6w" />
-    <bpmn:dataObject id="DataObject_1nxcx6w" />
     <bpmn:exclusiveGateway id="Gateway_1je3z9i">
       <bpmn:incoming>Flow_1kcfinc</bpmn:incoming>
       <bpmn:outgoing>Flow_09acpla</bpmn:outgoing>
@@ -438,6 +431,11 @@ Process Description - WIP</bpmn:documentation>
       <bpmn:incoming>Flow_0a5yhak</bpmn:incoming>
       <bpmn:outgoing>Flow_1bs0buf</bpmn:outgoing>
     </bpmn:serviceTask>
+    <bpmn:dataObjectReference id="DataObjectReference_0jyn7o6" name="New Demand Request" dataObjectRef="DataObject_00z4q1e" />
+    <bpmn:dataObject id="DataObject_00z4q1e" />
+    <bpmn:endEvent id="Event_1fsb3by" name="The Request has been Approved">
+      <bpmn:incoming>Flow_1bs0buf</bpmn:incoming>
+    </bpmn:endEvent>
     <bpmn:textAnnotation id="TextAnnotation_0zy71k9">
       <bpmn:text>Orgdata from BBHR, Categories from a DB, Currencies from Xero</bpmn:text>
     </bpmn:textAnnotation>
@@ -588,12 +586,6 @@ Process Description - WIP</bpmn:documentation>
           <dc:Bounds x="1948" y="546" width="84" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_0yet5qu_di" bpmnElement="Event_1fsb3by">
-        <dc:Bounds x="2662" y="962" width="36" height="36" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="2578" y="966" width="84" height="27" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="BPMNShape_1px0dm6" bpmnElement="Event_0gukndb">
         <dc:Bounds x="1102" y="2012" width="36" height="36" />
         <bpmndi:BPMNLabel>
@@ -623,12 +615,6 @@ Process Description - WIP</bpmn:documentation>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="BPMNShape_1p92uvl" bpmnElement="Activity_0rhqmwe">
         <dc:Bounds x="2490" y="1470" width="100" height="80" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="BPMNShape_066ad65" bpmnElement="DataObjectReference_0tcpksr">
-        <dc:Bounds x="2522" y="1365" width="36" height="50" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="2506" y="1218" width="67" height="27" />
-        </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Gateway_1je3z9i_di" bpmnElement="Gateway_1je3z9i" isMarkerVisible="true">
         <dc:Bounds x="2655" y="1485" width="50" height="50" />
@@ -797,6 +783,12 @@ Process Description - WIP</bpmn:documentation>
       <bpmndi:BPMNShape id="TextAnnotation_0an1rej_di" bpmnElement="TextAnnotation_0an1rej">
         <dc:Bounds x="2130" y="1400" width="70" height="30" />
         <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0n3006w_di" bpmnElement="Event_1fsb3by">
+        <dc:Bounds x="2662" y="1242" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2718" y="1246" width="84" height="27" />
+        </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_0mbb848_di" bpmnElement="Flow_0mbb848">
         <di:waypoint x="708" y="500" />
@@ -1106,7 +1098,7 @@ Process Description - WIP</bpmn:documentation>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1bs0buf_di" bpmnElement="Flow_1bs0buf">
         <di:waypoint x="2680" y="1340" />
-        <di:waypoint x="2680" y="998" />
+        <di:waypoint x="2680" y="1278" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Association_13u0dtl_di" bpmnElement="Association_13u0dtl">
         <di:waypoint x="818" y="460" />
@@ -1136,6 +1128,12 @@ Process Description - WIP</bpmn:documentation>
         <di:waypoint x="2186" y="1470" />
         <di:waypoint x="2182" y="1430" />
       </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="DataObjectReference_0jyn7o6_di" bpmnElement="DataObjectReference_0jyn7o6">
+        <dc:Bounds x="2522" y="1390" width="36" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2506" y="1353" width="67" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Participant_18da42x_di" bpmnElement="Participant_0bhe4r6" isHorizontal="true">
         <dc:Bounds x="582" y="80" width="2578" height="60" />
       </bpmndi:BPMNShape>
@@ -1158,10 +1156,6 @@ Process Description - WIP</bpmn:documentation>
       <bpmndi:BPMNEdge id="DataInputAssociation_190nkzq_di" bpmnElement="DataInputAssociation_190nkzq">
         <di:waypoint x="1188" y="895" />
         <di:waypoint x="1220" y="895" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="DataOutputAssociation_0ki4dhk_di" bpmnElement="DataOutputAssociation_0ki4dhk">
-        <di:waypoint x="2539" y="1470" />
-        <di:waypoint x="2538" y="1415" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="DataInputAssociation_00o94u6_di" bpmnElement="DataInputAssociation_00o94u6">
         <di:waypoint x="1948" y="1810" />
@@ -1240,6 +1234,10 @@ Process Description - WIP</bpmn:documentation>
       <bpmndi:BPMNEdge id="Flow_1m7pmyu_di" bpmnElement="Flow_1m7pmyu">
         <di:waypoint x="1120" y="3412" />
         <di:waypoint x="1120" y="140" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DataOutputAssociation_04itf36_di" bpmnElement="DataOutputAssociation_04itf36">
+        <di:waypoint x="2539" y="1470" />
+        <di:waypoint x="2539" y="1440" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
