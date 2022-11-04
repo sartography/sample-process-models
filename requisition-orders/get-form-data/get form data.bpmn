@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_96f6665" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.0.0-dev">
+  <bpmn:process id="Proccess_q5hfmoj" name="Get form data" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>Flow_16gpvu2</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_16gpvu2" sourceRef="StartEvent_1" targetRef="Activity_1kgoj91" />
+    <bpmn:sequenceFlow id="Flow_1abgc0q" sourceRef="Activity_1kgoj91" targetRef="Activity_14cne11" />
+    <bpmn:sequenceFlow id="Flow_1f0v241" sourceRef="Activity_14cne11" targetRef="Activity_0w7xrmo" />
+    <bpmn:endEvent id="Event_105nl74">
+      <bpmn:incoming>Flow_0uugxbb</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_0uugxbb" sourceRef="Activity_0w7xrmo" targetRef="Event_105nl74" />
+    <bpmn:scriptTask id="Activity_1kgoj91" name="Get Orgdata from BBHR">
+      <bpmn:incoming>Flow_16gpvu2</bpmn:incoming>
+      <bpmn:outgoing>Flow_1abgc0q</bpmn:outgoing>
+    </bpmn:scriptTask>
+    <bpmn:scriptTask id="Activity_14cne11" name="Get Categories from a DB">
+      <bpmn:incoming>Flow_1abgc0q</bpmn:incoming>
+      <bpmn:outgoing>Flow_1f0v241</bpmn:outgoing>
+    </bpmn:scriptTask>
+    <bpmn:scriptTask id="Activity_0w7xrmo" name="Get Currencies from Xero">
+      <bpmn:incoming>Flow_1f0v241</bpmn:incoming>
+      <bpmn:outgoing>Flow_0uugxbb</bpmn:outgoing>
+    </bpmn:scriptTask>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Proccess_q5hfmoj">
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="179" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_105nl74_di" bpmnElement="Event_105nl74">
+        <dc:Bounds x="762" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1w87egv_di" bpmnElement="Activity_1kgoj91">
+        <dc:Bounds x="270" y="137" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1mewfj4_di" bpmnElement="Activity_14cne11">
+        <dc:Bounds x="430" y="137" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0nuexey_di" bpmnElement="Activity_0w7xrmo">
+        <dc:Bounds x="600" y="137" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_16gpvu2_di" bpmnElement="Flow_16gpvu2">
+        <di:waypoint x="215" y="177" />
+        <di:waypoint x="270" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1abgc0q_di" bpmnElement="Flow_1abgc0q">
+        <di:waypoint x="370" y="177" />
+        <di:waypoint x="430" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1f0v241_di" bpmnElement="Flow_1f0v241">
+        <di:waypoint x="530" y="177" />
+        <di:waypoint x="600" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0uugxbb_di" bpmnElement="Flow_0uugxbb">
+        <di:waypoint x="700" y="177" />
+        <di:waypoint x="762" y="177" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
