@@ -23,7 +23,7 @@ addNew = True</spiffworkflow:preScript>
       <bpmn:incoming>Flow_1nenbjs</bpmn:incoming>
       <bpmn:outgoing>Flow_1vvnsbc</bpmn:outgoing>
     </bpmn:callActivity>
-    <bpmn:userTask id="Activity_0bvdyir" name="Which Enumeration">
+    <bpmn:userTask id="Which_Enumeration" name="Which Enumeration">
       <bpmn:extensionElements>
         <spiffworkflow:properties>
           <spiffworkflow:property name="formJsonSchemaFilename" value="which_enumeration-JSONSchema.json" />
@@ -44,7 +44,7 @@ addNew = True</spiffworkflow:preScript>
       <bpmn:incoming>Flow_06nsc7t</bpmn:incoming>
       <bpmn:outgoing>Flow_0i6hbp9</bpmn:outgoing>
     </bpmn:userTask>
-    <bpmn:scriptTask id="Activity_1ifnmsg" name="Set Subject" scriptFormat="python">
+    <bpmn:scriptTask id="Set_Subject" name="Set Subject" scriptFormat="python">
       <bpmn:incoming>Flow_0i6hbp9</bpmn:incoming>
       <bpmn:outgoing>Flow_1xbvsd3</bpmn:outgoing>
       <bpmn:script>if whichEnum == "add":
@@ -53,7 +53,7 @@ else:
     matched = [ d for d in enumerations_list if d.get('value') == whichEnum ]
     addSubject = matched[0]['label'] if matched else None</bpmn:script>
     </bpmn:scriptTask>
-    <bpmn:sequenceFlow id="Flow_0d8570g" sourceRef="Activity_0bvdyir" targetRef="enumeration_user_task" />
+    <bpmn:sequenceFlow id="Flow_0d8570g" sourceRef="Which_Enumeration" targetRef="enumeration_user_task" />
     <bpmn:serviceTask id="Activity_1ad6wc2" name="Get Enumeration List">
       <bpmn:extensionElements>
         <spiffworkflow:serviceTaskOperator id="aws/QueryDynamoTable">
@@ -68,8 +68,8 @@ else:
     <bpmn:endEvent id="Event_0d2gsze">
       <bpmn:incoming>Flow_1w2k8v1</bpmn:incoming>
     </bpmn:endEvent>
-    <bpmn:sequenceFlow id="Flow_0i6hbp9" sourceRef="enumeration_user_task" targetRef="Activity_1ifnmsg" />
-    <bpmn:userTask id="Activity_0exwh7c" name="Check Add Another?">
+    <bpmn:sequenceFlow id="Flow_0i6hbp9" sourceRef="enumeration_user_task" targetRef="Set_Subject" />
+    <bpmn:userTask id="Check_Add_Another" name="Check Add Another?">
       <bpmn:extensionElements>
         <spiffworkflow:properties>
           <spiffworkflow:property name="formJsonSchemaFilename" value="what_next-JSONSchema.json" />
@@ -84,7 +84,7 @@ else:
       <bpmn:outgoing>Flow_07a2oxo</bpmn:outgoing>
     </bpmn:startEvent>
     <bpmn:sequenceFlow id="Flow_07a2oxo" sourceRef="Event_00b9bxo" targetRef="Call_Shared_Build_Enum_List_from_AWS" />
-    <bpmn:sequenceFlow id="Flow_17i0vic" sourceRef="Activity_0exwh7c" targetRef="Gateway_04hnj5e" />
+    <bpmn:sequenceFlow id="Flow_17i0vic" sourceRef="Check_Add_Another" targetRef="Gateway_04hnj5e" />
     <bpmn:exclusiveGateway id="Gateway_1clgwgu" name="Add another enum for the same subject" default="Flow_1u6l44m">
       <bpmn:incoming>Flow_1yld5u8</bpmn:incoming>
       <bpmn:outgoing>Flow_06nsc7t</bpmn:outgoing>
@@ -98,7 +98,7 @@ else:
     <bpmn:sequenceFlow id="Flow_1w2k8v1" sourceRef="Gateway_04hnj5e" targetRef="Event_0d2gsze">
       <bpmn:conditionExpression>whatNext == "Exit"</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
-    <bpmn:sequenceFlow id="Flow_1euuoyf" sourceRef="Gateway_04hnj5e" targetRef="Activity_0h7n179" />
+    <bpmn:sequenceFlow id="Flow_1euuoyf" sourceRef="Gateway_04hnj5e" targetRef="Reset_Value_and_Label_Variables" />
     <bpmn:sequenceFlow id="Flow_06nsc7t" name="Add another enum for the same subject" sourceRef="Gateway_1clgwgu" targetRef="enumeration_user_task">
       <bpmn:conditionExpression>whatNext == "Add another enum for the same subject"</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
@@ -107,26 +107,26 @@ else:
       <bpmn:outgoing>Flow_0otubfa</bpmn:outgoing>
       <bpmn:outgoing>Flow_1nenbjs</bpmn:outgoing>
     </bpmn:exclusiveGateway>
-    <bpmn:sequenceFlow id="Flow_1u6l44m" sourceRef="Gateway_1clgwgu" targetRef="Activity_1bh7c4z" />
-    <bpmn:sequenceFlow id="Flow_0otubfa" name="Add an enum for another subject" sourceRef="Gateway_1wd2vi1" targetRef="Activity_0bvdyir">
+    <bpmn:sequenceFlow id="Flow_1u6l44m" sourceRef="Gateway_1clgwgu" targetRef="Reset_Subject_Variable" />
+    <bpmn:sequenceFlow id="Flow_0otubfa" name="Add an enum for another subject" sourceRef="Gateway_1wd2vi1" targetRef="Which_Enumeration">
       <bpmn:conditionExpression>whatNext == "Add an enum for another subject"</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="Flow_1nenbjs" sourceRef="Gateway_1wd2vi1" targetRef="Call_Shared_Build_Enum_List_from_AWS" />
-    <bpmn:sequenceFlow id="Flow_1vvnsbc" sourceRef="Call_Shared_Build_Enum_List_from_AWS" targetRef="Activity_0bvdyir" />
-    <bpmn:sequenceFlow id="Flow_1yld5u8" sourceRef="Activity_0h7n179" targetRef="Gateway_1clgwgu" />
-    <bpmn:scriptTask id="Activity_0h7n179" name="Reset Value &#38; Label Variables">
+    <bpmn:sequenceFlow id="Flow_1vvnsbc" sourceRef="Call_Shared_Build_Enum_List_from_AWS" targetRef="Which_Enumeration" />
+    <bpmn:sequenceFlow id="Flow_1yld5u8" sourceRef="Reset_Value_and_Label_Variables" targetRef="Gateway_1clgwgu" />
+    <bpmn:scriptTask id="Reset_Value_and_Label_Variables" name="Reset Value &#38; Label Variables">
       <bpmn:incoming>Flow_1euuoyf</bpmn:incoming>
       <bpmn:outgoing>Flow_1yld5u8</bpmn:outgoing>
       <bpmn:script>addValue = ""
 addLabel = ""</bpmn:script>
     </bpmn:scriptTask>
-    <bpmn:sequenceFlow id="Flow_137swmd" sourceRef="Activity_1bh7c4z" targetRef="Gateway_1wd2vi1" />
-    <bpmn:scriptTask id="Activity_1bh7c4z" name="Reset Subject Variable">
+    <bpmn:sequenceFlow id="Flow_137swmd" sourceRef="Reset_Subject_Variable" targetRef="Gateway_1wd2vi1" />
+    <bpmn:scriptTask id="Reset_Subject_Variable" name="Reset Subject Variable">
       <bpmn:incoming>Flow_1u6l44m</bpmn:incoming>
       <bpmn:outgoing>Flow_137swmd</bpmn:outgoing>
       <bpmn:script>addSubject = ""</bpmn:script>
     </bpmn:scriptTask>
-    <bpmn:serviceTask id="Activity_09grhpn" name="Add Record">
+    <bpmn:serviceTask id="Add_Record" name="Add Record">
       <bpmn:extensionElements>
         <spiffworkflow:serviceTaskOperator id="aws/AddDynamoItem" resultVariable="resp_addEnumeration">
           <spiffworkflow:parameters>
@@ -138,8 +138,8 @@ addLabel = ""</bpmn:script>
       <bpmn:incoming>Flow_1xbvsd3</bpmn:incoming>
       <bpmn:outgoing>Flow_0lpik93</bpmn:outgoing>
     </bpmn:serviceTask>
-    <bpmn:sequenceFlow id="Flow_1xbvsd3" sourceRef="Activity_1ifnmsg" targetRef="Activity_09grhpn" />
-    <bpmn:sequenceFlow id="Flow_0lpik93" sourceRef="Activity_09grhpn" targetRef="Activity_0exwh7c" />
+    <bpmn:sequenceFlow id="Flow_1xbvsd3" sourceRef="Set_Subject" targetRef="Add_Record" />
+    <bpmn:sequenceFlow id="Flow_0lpik93" sourceRef="Add_Record" targetRef="Check_Add_Another" />
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Sharred_Enumeration_Table">
@@ -150,13 +150,13 @@ addLabel = ""</bpmn:script>
         <dc:Bounds x="-10" y="137" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_05qgorp_di" bpmnElement="Activity_0bvdyir">
+      <bpmndi:BPMNShape id="Activity_05qgorp_di" bpmnElement="Which_Enumeration">
         <dc:Bounds x="170" y="137" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_10fjqyn_di" bpmnElement="enumeration_user_task">
         <dc:Bounds x="440" y="137" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1xmj9ir_di" bpmnElement="Activity_1ifnmsg">
+      <bpmndi:BPMNShape id="Activity_1xmj9ir_di" bpmnElement="Set_Subject">
         <dc:Bounds x="610" y="137" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1oz9lvi_di" bpmnElement="Activity_1ad6wc2">
@@ -165,7 +165,7 @@ addLabel = ""</bpmn:script>
       <bpmndi:BPMNShape id="Event_0d2gsze_di" bpmnElement="Event_0d2gsze">
         <dc:Bounds x="1462" y="159" width="36" height="36" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_112vjvq_di" bpmnElement="Activity_0exwh7c">
+      <bpmndi:BPMNShape id="Activity_112vjvq_di" bpmnElement="Check_Add_Another">
         <dc:Bounds x="960" y="137" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_00b9bxo_di" bpmnElement="Event_00b9bxo">
@@ -183,14 +183,14 @@ addLabel = ""</bpmn:script>
       <bpmndi:BPMNShape id="Gateway_1wd2vi1_di" bpmnElement="Gateway_1wd2vi1" isMarkerVisible="true">
         <dc:Bounds x="195" y="335" width="50" height="50" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_15i1l61_di" bpmnElement="Activity_0h7n179">
+      <bpmndi:BPMNShape id="Activity_15i1l61_di" bpmnElement="Reset_Value_and_Label_Variables">
         <dc:Bounds x="790" y="320" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1nc8ues_di" bpmnElement="Activity_1bh7c4z">
+      <bpmndi:BPMNShape id="Activity_1nc8ues_di" bpmnElement="Reset_Subject_Variable">
         <dc:Bounds x="310" y="320" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0wrg2tu_di" bpmnElement="Activity_09grhpn">
+      <bpmndi:BPMNShape id="Activity_0wrg2tu_di" bpmnElement="Add_Record">
         <dc:Bounds x="790" y="137" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_0d8570g_di" bpmnElement="Flow_0d8570g">
