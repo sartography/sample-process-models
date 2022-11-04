@@ -1,0 +1,42 @@
+{
+	"definitions": {
+		"currencyEnum": {
+			"title": "Currency",
+			"type": "string",
+			"anyOf": [
+				"options_from_task_data_var:enumerations_list"
+			]
+		}
+	},
+	"title": "Submit Invoice",
+	"description": "Information for submitting an invoice.",
+	"type": "object",
+	"required": [
+		"filesAccept"
+	],
+	"properties": {
+		"invoice": {
+			"type": "object",
+			"required": [
+				"contributorName",
+				"contributorId",
+				"invoiceId",
+				"invoiceAmount",
+				"invoiceCurrency",
+				"dueDate"
+			],
+			"title": "",
+			"properties": {
+				"invoiceCurrency": {
+					"$ref": "#/definitions/currencyEnum",
+					"title": "Select Currency"
+				}
+			}
+		},
+		"filesAccept": {
+			"type": "string",
+			"format": "data-url",
+			"title": "Upload Invoice PDF"
+		}
+	}
+}
