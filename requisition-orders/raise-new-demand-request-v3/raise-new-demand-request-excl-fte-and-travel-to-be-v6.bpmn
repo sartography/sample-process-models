@@ -68,6 +68,7 @@ Process Description - WIP</bpmn:documentation>
         <bpmn:flowNodeRef>Event_1fsb3by</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_0bwf6jk</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_1sbi4xu</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_1nt5dov</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_0txefzi" name="PPG BA">
         <bpmn:flowNodeRef>Event_0gukndb</bpmn:flowNodeRef>
@@ -182,6 +183,7 @@ Process Description - WIP</bpmn:documentation>
       <bpmn:incoming>Flow_0cvct5a</bpmn:incoming>
       <bpmn:incoming>Flow_1okna4c</bpmn:incoming>
       <bpmn:incoming>Flow_1em9sfb</bpmn:incoming>
+      <bpmn:incoming>Flow_0w65951</bpmn:incoming>
       <bpmn:outgoing>Flow_10ja4ik</bpmn:outgoing>
     </bpmn:exclusiveGateway>
     <bpmn:exclusiveGateway id="Gateway_05470yw">
@@ -268,6 +270,7 @@ Process Description - WIP</bpmn:documentation>
       <bpmn:incoming>Flow_1kcfinc</bpmn:incoming>
       <bpmn:outgoing>Flow_09acpla</bpmn:outgoing>
       <bpmn:outgoing>Flow_0a5yhak</bpmn:outgoing>
+      <bpmn:outgoing>Flow_1s97f2y</bpmn:outgoing>
     </bpmn:exclusiveGateway>
     <bpmn:serviceTask id="Activity_0ksckov" name="Send notification to PeopleOps">
       <bpmn:incoming>Flow_1ybgp1f</bpmn:incoming>
@@ -440,6 +443,12 @@ Process Description - WIP</bpmn:documentation>
       <bpmn:incoming>Flow_1iyosbm</bpmn:incoming>
       <bpmn:outgoing>Flow_1pa3da4</bpmn:outgoing>
     </bpmn:manualTask>
+    <bpmn:sequenceFlow id="Flow_1s97f2y" sourceRef="Gateway_1je3z9i" targetRef="Activity_1nt5dov" />
+    <bpmn:sequenceFlow id="Flow_0w65951" sourceRef="Activity_1nt5dov" targetRef="Gateway_1nz85ol" />
+    <bpmn:serviceTask id="Activity_1nt5dov" name="Send notification to CC">
+      <bpmn:incoming>Flow_1s97f2y</bpmn:incoming>
+      <bpmn:outgoing>Flow_0w65951</bpmn:outgoing>
+    </bpmn:serviceTask>
     <bpmn:textAnnotation id="TextAnnotation_0zy71k9">
       <bpmn:text>Orgdata from BBHR, Categories from a DB, Currencies from Xero</bpmn:text>
     </bpmn:textAnnotation>
@@ -476,6 +485,10 @@ Process Description - WIP</bpmn:documentation>
       <bpmn:text>T&amp;C review</bpmn:text>
     </bpmn:textAnnotation>
     <bpmn:association id="Association_1778mrp" sourceRef="Activity_08xl52p" targetRef="TextAnnotation_0qq1kr8" />
+    <bpmn:textAnnotation id="TextAnnotation_0e0cyzz">
+      <bpmn:text>Waku</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:association id="Association_0ami0i9" sourceRef="Activity_1nt5dov" targetRef="TextAnnotation_0e0cyzz" />
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_11kan0p">
@@ -521,6 +534,10 @@ Process Description - WIP</bpmn:documentation>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="TextAnnotation_0qq1kr8_di" bpmnElement="TextAnnotation_0qq1kr8">
         <dc:Bounds x="2180" y="3440" width="100" height="30" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="TextAnnotation_0e0cyzz_di" bpmnElement="TextAnnotation_0e0cyzz">
+        <dc:Bounds x="2620" y="1700" width="99.9844784768212" height="29.982408940397352" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
@@ -820,6 +837,9 @@ Process Description - WIP</bpmn:documentation>
         <dc:Bounds x="2010" y="3040" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1ssrcb5_di" bpmnElement="Activity_1nt5dov">
+        <dc:Bounds x="2490" y="1630" width="100" height="80" />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Association_1kb6c8w_di" bpmnElement="Association_1kb6c8w">
         <di:waypoint x="2730" y="1378" />
         <di:waypoint x="2750" y="1377" />
@@ -831,6 +851,10 @@ Process Description - WIP</bpmn:documentation>
       <bpmndi:BPMNEdge id="Association_1778mrp_di" bpmnElement="Association_1778mrp">
         <di:waypoint x="2110" y="3459" />
         <di:waypoint x="2180" y="3456" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Association_0ami0i9_di" bpmnElement="Association_0ami0i9">
+        <di:waypoint x="2590" y="1687" />
+        <di:waypoint x="2627" y="1700" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0mbb848_di" bpmnElement="Flow_0mbb848">
         <di:waypoint x="708" y="500" />
@@ -1169,6 +1193,16 @@ Process Description - WIP</bpmn:documentation>
       <bpmndi:BPMNEdge id="Flow_1um9fe1_di" bpmnElement="Flow_1um9fe1">
         <di:waypoint x="2880" y="1510" />
         <di:waypoint x="2972" y="1510" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1s97f2y_di" bpmnElement="Flow_1s97f2y">
+        <di:waypoint x="2680" y="1535" />
+        <di:waypoint x="2680" y="1670" />
+        <di:waypoint x="2590" y="1670" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0w65951_di" bpmnElement="Flow_0w65951">
+        <di:waypoint x="2490" y="1670" />
+        <di:waypoint x="1010" y="1670" />
+        <di:waypoint x="1010" y="675" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="Participant_18da42x_di" bpmnElement="Participant_0bhe4r6" isHorizontal="true">
         <dc:Bounds x="582" y="80" width="2578" height="60" />
