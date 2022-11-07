@@ -239,7 +239,7 @@ del decimal</bpmn:script>
     </bpmn:parallelGateway>
     <bpmn:serviceTask id="Activity_0p88elm" name="2d. Upload Invoice PDF document" scriptFormat="python" script="invoice_name = invoice.contributorName + &#34;_&#34; + invoice.invoiceId">
       <bpmn:extensionElements>
-        <spiffworkflow:preScript>invoice_file_name = invoice.contributorName + "_" + str(invoice.invoiceId) + ".pdf"</spiffworkflow:preScript>
+        <spiffworkflow:preScript />
         <spiffworkflow:postScript />
         <spiffworkflow:serviceTaskOperator id="aws/UploadFileData" resultVariable="resp_awsUploadFileData">
           <spiffworkflow:parameters>
@@ -249,7 +249,7 @@ del decimal</bpmn:script>
           </spiffworkflow:parameters>
         </spiffworkflow:serviceTaskOperator>
       </bpmn:extensionElements>
-      <bpmn:incoming>Flow_1s2as7o</bpmn:incoming>
+      <bpmn:incoming>Flow_0hyvwku</bpmn:incoming>
       <bpmn:outgoing>Flow_0o94g4u</bpmn:outgoing>
     </bpmn:serviceTask>
     <bpmn:scriptTask id="Activity_109lq0m" name="Set Invoice Status to Awaiting Approval" scriptFormat="python">
@@ -973,10 +973,13 @@ invoice["invoiceCurrency"] = "AUD"</bpmn:script>
       <bpmn:sequenceFlow id="Flow_1hebd4s" sourceRef="Activity_0rww1ya" targetRef="Event_0kmx0m7" />
     </bpmn:subProcess>
     <bpmn:sequenceFlow id="Flow_1sswx15" sourceRef="Activity_1colhao" targetRef="Gateway_0wk5se9" />
+    <bpmn:sequenceFlow id="Flow_1s2as7o" sourceRef="Gateway_05ov5p5" targetRef="Activity_104xpp8" />
     <bpmn:scriptTask id="Activity_104xpp8" name="Set Invoice PDF Name" scriptFormat="python">
+      <bpmn:incoming>Flow_1s2as7o</bpmn:incoming>
+      <bpmn:outgoing>Flow_0hyvwku</bpmn:outgoing>
       <bpmn:script>invoice_file_name = invoice.contributorName + "_" + str(invoice.invoiceId) + ".pdf"</bpmn:script>
     </bpmn:scriptTask>
-    <bpmn:sequenceFlow id="Flow_1s2as7o" sourceRef="Gateway_05ov5p5" targetRef="Activity_0p88elm" />
+    <bpmn:sequenceFlow id="Flow_0hyvwku" sourceRef="Activity_104xpp8" targetRef="Activity_0p88elm" />
   </bpmn:process>
   <bpmn:process id="Process_cc_invoice_approval_process_v2_c" isExecutable="false" />
   <bpmn:process id="Process_cc_invoice_approval_process_v2_d" isExecutable="false" />
@@ -1027,6 +1030,10 @@ invoice["invoiceCurrency"] = "AUD"</bpmn:script>
         <bpmndi:BPMNLabel>
           <dc:Bounds x="1520" y="557" width="60" height="14" />
         </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0bgyf4i_di" bpmnElement="Activity_104xpp8">
+        <dc:Bounds x="1870" y="560" width="100" height="80" />
+        <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0z13hw3_di" bpmnElement="SubProcess_Data_validation_rules">
         <dc:Bounds x="1350" y="482" width="100" height="80" />
@@ -1210,10 +1217,6 @@ invoice["invoiceCurrency"] = "AUD"</bpmn:script>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0l6st3d_di" bpmnElement="Activity_1864qj2">
         <dc:Bounds x="860" y="640" width="100" height="80" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0bgyf4i_di" bpmnElement="Activity_104xpp8">
-        <dc:Bounds x="1760" y="690" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_08bsj2m_di" bpmnElement="Event_09q0ym0">
@@ -1426,6 +1429,10 @@ invoice["invoiceCurrency"] = "AUD"</bpmn:script>
       <bpmndi:BPMNEdge id="Flow_1s2as7o_di" bpmnElement="Flow_1s2as7o">
         <di:waypoint x="1810" y="547" />
         <di:waypoint x="1810" y="600" />
+        <di:waypoint x="1870" y="600" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0hyvwku_di" bpmnElement="Flow_0hyvwku">
+        <di:waypoint x="1970" y="600" />
         <di:waypoint x="2060" y="600" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="Participant_0a8arrz_di" bpmnElement="Participant_0a8arrz" isHorizontal="true">
