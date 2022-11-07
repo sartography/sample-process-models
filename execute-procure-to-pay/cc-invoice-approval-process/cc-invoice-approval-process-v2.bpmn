@@ -36,7 +36,6 @@
         <bpmn:flowNodeRef>Event_invoice_validation_failed</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Gateway_05ov5p5</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_0p88elm</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Activity_104xpp8</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_109lq0m</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_10p5t0r</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Gateway_1717c0p</bpmn:flowNodeRef>
@@ -58,6 +57,7 @@
         <bpmn:flowNodeRef>Activity_0rae8g6</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_1kgaqpf</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_1864qj2</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_104xpp8</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_1so23vf" name="Finance Team">
         <bpmn:flowNodeRef>Activity_0cdgqi0</bpmn:flowNodeRef>
@@ -92,7 +92,6 @@
     <bpmn:sequenceFlow id="Flow_1ck27i7" sourceRef="SubProcess_Data_validation_rules" targetRef="Gateway_validation_successful_question_mark" />
     <bpmn:sequenceFlow id="Flow_1v8dszb" sourceRef="Event_09q0ym0" targetRef="Activity_1t8wi0r" />
     <bpmn:sequenceFlow id="Flow_0yvmfqu" sourceRef="Activity_06b32ar" targetRef="Gateway_06i3we9" />
-    <bpmn:sequenceFlow id="Flow_12cqm3u" sourceRef="Gateway_05ov5p5" targetRef="Activity_104xpp8" />
     <bpmn:sequenceFlow id="Flow_0hev3yn" sourceRef="Gateway_05ov5p5" targetRef="Activity_175j3o7" />
     <bpmn:sequenceFlow id="Flow_02o270g" sourceRef="Activity_175j3o7" targetRef="Gateway_1717c0p" />
     <bpmn:sequenceFlow id="Flow_0o94g4u" sourceRef="Activity_0p88elm" targetRef="Gateway_1717c0p" />
@@ -108,7 +107,6 @@
     </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="Flow_0h96w9j" name="Yes" sourceRef="Gateway_1ytq6m7" targetRef="Activity_0fq1nb4" />
     <bpmn:sequenceFlow id="Flow_053ca95" sourceRef="Activity_0fq1nb4" targetRef="Activity_1b6tead" />
-    <bpmn:sequenceFlow id="Flow_0p6vvu0" sourceRef="Activity_104xpp8" targetRef="Activity_0p88elm" />
     <bpmn:sequenceFlow id="Flow_0u5z1vc" sourceRef="Activity_109lq0m" targetRef="Gateway_05ov5p5" />
     <bpmn:sequenceFlow id="Flow_0a9w301" sourceRef="Gateway_1717c0p" targetRef="Activity_10p5t0r" />
     <bpmn:sequenceFlow id="Flow_0h1x7y6" sourceRef="Activity_10p5t0r" targetRef="Activity_0gkpa9s" />
@@ -236,12 +234,12 @@ del decimal</bpmn:script>
     </bpmn:intermediateThrowEvent>
     <bpmn:parallelGateway id="Gateway_05ov5p5">
       <bpmn:incoming>Flow_0u5z1vc</bpmn:incoming>
-      <bpmn:outgoing>Flow_12cqm3u</bpmn:outgoing>
       <bpmn:outgoing>Flow_0hev3yn</bpmn:outgoing>
+      <bpmn:outgoing>Flow_1s2as7o</bpmn:outgoing>
     </bpmn:parallelGateway>
     <bpmn:serviceTask id="Activity_0p88elm" name="2d. Upload Invoice PDF document" scriptFormat="python" script="invoice_name = invoice.contributorName + &#34;_&#34; + invoice.invoiceId">
       <bpmn:extensionElements>
-        <spiffworkflow:preScript />
+        <spiffworkflow:preScript>invoice_file_name = invoice.contributorName + "_" + str(invoice.invoiceId) + ".pdf"</spiffworkflow:preScript>
         <spiffworkflow:postScript />
         <spiffworkflow:serviceTaskOperator id="aws/UploadFileData">
           <spiffworkflow:parameters>
@@ -251,14 +249,9 @@ del decimal</bpmn:script>
           </spiffworkflow:parameters>
         </spiffworkflow:serviceTaskOperator>
       </bpmn:extensionElements>
-      <bpmn:incoming>Flow_0p6vvu0</bpmn:incoming>
+      <bpmn:incoming>Flow_1s2as7o</bpmn:incoming>
       <bpmn:outgoing>Flow_0o94g4u</bpmn:outgoing>
     </bpmn:serviceTask>
-    <bpmn:scriptTask id="Activity_104xpp8" name="Set Invoice PDF Name" scriptFormat="python">
-      <bpmn:incoming>Flow_12cqm3u</bpmn:incoming>
-      <bpmn:outgoing>Flow_0p6vvu0</bpmn:outgoing>
-      <bpmn:script>invoice_file_name = invoice.contributorName + "_" + str(invoice.invoiceId) + ".pdf"</bpmn:script>
-    </bpmn:scriptTask>
     <bpmn:scriptTask id="Activity_109lq0m" name="Set Invoice Status to Awaiting Approval" scriptFormat="python">
       <bpmn:incoming>Flow_1x4rtop</bpmn:incoming>
       <bpmn:outgoing>Flow_0u5z1vc</bpmn:outgoing>
@@ -980,6 +973,10 @@ invoice["invoiceCurrency"] = "AUD"</bpmn:script>
       <bpmn:sequenceFlow id="Flow_1hebd4s" sourceRef="Activity_0rww1ya" targetRef="Event_0kmx0m7" />
     </bpmn:subProcess>
     <bpmn:sequenceFlow id="Flow_1sswx15" sourceRef="Activity_1colhao" targetRef="Gateway_0wk5se9" />
+    <bpmn:scriptTask id="Activity_104xpp8" name="Set Invoice PDF Name" scriptFormat="python">
+      <bpmn:script>invoice_file_name = invoice.contributorName + "_" + str(invoice.invoiceId) + ".pdf"</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:sequenceFlow id="Flow_1s2as7o" sourceRef="Gateway_05ov5p5" targetRef="Activity_0p88elm" />
   </bpmn:process>
   <bpmn:process id="Process_cc_invoice_approval_process_v2_c" isExecutable="false" />
   <bpmn:process id="Process_cc_invoice_approval_process_v2_d" isExecutable="false" />
@@ -1031,6 +1028,10 @@ invoice["invoiceCurrency"] = "AUD"</bpmn:script>
           <dc:Bounds x="1520" y="557" width="60" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0bgyf4i_di" bpmnElement="Activity_104xpp8">
+        <dc:Bounds x="1760" y="690" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0z13hw3_di" bpmnElement="SubProcess_Data_validation_rules">
         <dc:Bounds x="1350" y="482" width="100" height="80" />
         <bpmndi:BPMNLabel />
@@ -1046,10 +1047,6 @@ invoice["invoiceCurrency"] = "AUD"</bpmn:script>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0zssftc_di" bpmnElement="Activity_0p88elm">
         <dc:Bounds x="2060" y="560" width="100" height="80" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0bgyf4i_di" bpmnElement="Activity_104xpp8">
-        <dc:Bounds x="1850" y="560" width="100" height="80" />
-        <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_08ykqm8_di" bpmnElement="Activity_109lq0m">
         <dc:Bounds x="1630" y="482" width="100" height="80" />
@@ -1307,11 +1304,6 @@ invoice["invoiceCurrency"] = "AUD"</bpmn:script>
         <di:waypoint x="3150" y="860" />
         <di:waypoint x="3395" y="860" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_12cqm3u_di" bpmnElement="Flow_12cqm3u">
-        <di:waypoint x="1810" y="547" />
-        <di:waypoint x="1810" y="600" />
-        <di:waypoint x="1850" y="600" />
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0hev3yn_di" bpmnElement="Flow_0hev3yn">
         <di:waypoint x="1810" y="497" />
         <di:waypoint x="1810" y="412" />
@@ -1376,10 +1368,6 @@ invoice["invoiceCurrency"] = "AUD"</bpmn:script>
         <di:waypoint x="4180" y="600" />
         <di:waypoint x="4250" y="600" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0p6vvu0_di" bpmnElement="Flow_0p6vvu0">
-        <di:waypoint x="1950" y="600" />
-        <di:waypoint x="2060" y="600" />
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0u5z1vc_di" bpmnElement="Flow_0u5z1vc">
         <di:waypoint x="1730" y="522" />
         <di:waypoint x="1785" y="522" />
@@ -1435,14 +1423,19 @@ invoice["invoiceCurrency"] = "AUD"</bpmn:script>
         <di:waypoint x="790" y="522" />
         <di:waypoint x="1045" y="522" />
       </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1s2as7o_di" bpmnElement="Flow_1s2as7o">
+        <di:waypoint x="1810" y="547" />
+        <di:waypoint x="1810" y="600" />
+        <di:waypoint x="2060" y="600" />
+      </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="Participant_0a8arrz_di" bpmnElement="Participant_0a8arrz" isHorizontal="true">
         <dc:Bounds x="1660" y="1180" width="370" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Participant_1qabwrg_di" bpmnElement="Participant_1qabwrg" isHorizontal="true">
-        <dc:Bounds x="2070" y="1180" width="629" height="80" />
+        <dc:Bounds x="2070" y="1180" width="300" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Participant_0b27sri_di" bpmnElement="Participant_0b27sri" isHorizontal="true">
-        <dc:Bounds x="3405" y="1160" width="747" height="80" />
+        <dc:Bounds x="3979" y="1160" width="302" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="TextAnnotation_1uaw1w7_di" bpmnElement="TextAnnotation_1uaw1w7">
         <dc:Bounds x="640" y="-170" width="760" height="30" />
@@ -1574,6 +1567,10 @@ invoice["invoiceCurrency"] = "AUD"</bpmn:script>
       <bpmndi:BPMNShape id="Activity_0mxxp3b_di" bpmnElement="Call_Waku_Messages_Message-Notify_Proejct_Lead">
         <dc:Bounds x="510" y="380" width="100" height="80" />
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_02v8rpk_di" bpmnElement="Activity_1jtcvfx">
+        <dc:Bounds x="330" y="380" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0iy0fil_di" bpmnElement="Activity_1982sk7">
         <dc:Bounds x="-170" y="380" width="100" height="80" />
       </bpmndi:BPMNShape>
@@ -1583,10 +1580,6 @@ invoice["invoiceCurrency"] = "AUD"</bpmn:script>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1lm44ee_di" bpmnElement="Activity_1r3o0bm">
         <dc:Bounds x="0" y="380" width="100" height="80" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_02v8rpk_di" bpmnElement="Activity_1jtcvfx">
-        <dc:Bounds x="330" y="380" width="100" height="80" />
-        <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_0re50gq_di" bpmnElement="Flow_0re50gq">
         <di:waypoint x="610" y="420" />
