@@ -230,7 +230,10 @@ del decimal</bpmn:script>
         <bpmn:incoming>Flow_0tzjowk</bpmn:incoming>
         <bpmn:outgoing>Flow_04odmtl</bpmn:outgoing>
         <bpmn:script># Set Invoice Status
-invoice["invoiceStatus"] = "Awaiting approval"</bpmn:script>
+if svc_is_invoice_submit_pass:
+    invoice["invoiceStatus"] = "Awaiting approval"
+else:
+    invoice["invoiceStatus"] = "Invoice validation failed"</bpmn:script>
       </bpmn:scriptTask>
       <bpmn:sequenceFlow id="Flow_04odmtl" sourceRef="Activity_1j8k6mb" targetRef="Event_015l7j8" />
     </bpmn:subProcess>
@@ -1655,11 +1658,11 @@ invoice["invoiceCurrency"] = "AUD"</bpmn:script>
         <dc:Bounds x="670" y="170" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_015l7j8_di" bpmnElement="Event_015l7j8">
-        <dc:Bounds x="1452" y="192" width="36" height="36" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0u1e062_di" bpmnElement="Activity_1j8k6mb">
-        <dc:Bounds x="1250" y="170" width="100" height="80" />
+        <dc:Bounds x="1200" y="170" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_015l7j8_di" bpmnElement="Event_015l7j8">
+        <dc:Bounds x="1362" y="192" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_1avkxpe_di" bpmnElement="Flow_1avkxpe">
         <di:waypoint x="268" y="210" />
@@ -1667,7 +1670,7 @@ invoice["invoiceCurrency"] = "AUD"</bpmn:script>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0tzjowk_di" bpmnElement="Flow_0tzjowk">
         <di:waypoint x="1120" y="210" />
-        <di:waypoint x="1250" y="210" />
+        <di:waypoint x="1200" y="210" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_18i6dlo_di" bpmnElement="Flow_18i6dlo">
         <di:waypoint x="770" y="210" />
@@ -1686,8 +1689,8 @@ invoice["invoiceCurrency"] = "AUD"</bpmn:script>
         <di:waypoint x="670" y="210" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_04odmtl_di" bpmnElement="Flow_04odmtl">
-        <di:waypoint x="1350" y="210" />
-        <di:waypoint x="1452" y="210" />
+        <di:waypoint x="1300" y="210" />
+        <di:waypoint x="1362" y="210" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
