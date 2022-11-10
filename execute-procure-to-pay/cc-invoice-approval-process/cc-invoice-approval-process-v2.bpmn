@@ -41,7 +41,6 @@
         <bpmn:flowNodeRef>Event_15y55nw</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Gateway_1l4tz4i</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Delete_File</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Event_1vi3um1</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_0fq1nb4</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_1usbnt0</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_0lhkxwc</bpmn:flowNodeRef>
@@ -65,6 +64,7 @@
         <bpmn:flowNodeRef>Waku_Message_Pending_Payment</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Gateway_0dqj39f</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_169on0z</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Event_1vi3um1</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_1b7abal" name="Project Lead">
         <bpmn:flowNodeRef>Activity_06b32ar</bpmn:flowNodeRef>
@@ -511,13 +511,6 @@ isApprovalTimer = True</bpmn:script>
     </bpmn:scriptTask>
     <bpmn:dataObjectReference id="DataObjectReference_1wclgyx" name="wr_invoiceRejected" dataObjectRef="wr_invoiceRejected" />
     <bpmn:dataObject id="wr_invoiceRejected" />
-    <bpmn:intermediateCatchEvent id="Event_1vi3um1" name="Jon&#39;s Test">
-      <bpmn:incoming>Flow_1xvt99y</bpmn:incoming>
-      <bpmn:outgoing>Flow_0dhpy0v</bpmn:outgoing>
-      <bpmn:timerEventDefinition id="TimerEventDefinition_1wiimzf">
-        <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">timedelta(seconds=1)</bpmn:timeDuration>
-      </bpmn:timerEventDefinition>
-    </bpmn:intermediateCatchEvent>
     <bpmn:serviceTask id="Activity_0fq1nb4" name="5. Create Invoice in Xero">
       <bpmn:extensionElements>
         <spiffworkflow:serviceTaskOperator id="xero/CreateInvoice" resultVariable="resp_xeroCreateInvoice">
@@ -1051,6 +1044,13 @@ isSetMessage = True</bpmn:script>
       </bpmn:timerEventDefinition>
     </bpmn:boundaryEvent>
     <bpmn:sequenceFlow id="Flow_06mfxze" sourceRef="Event_169on0z" targetRef="Gateway_0dqj39f" />
+    <bpmn:intermediateCatchEvent id="Event_1vi3um1" name="Jon&#39;s Test">
+      <bpmn:incoming>Flow_1xvt99y</bpmn:incoming>
+      <bpmn:outgoing>Flow_0dhpy0v</bpmn:outgoing>
+      <bpmn:timerEventDefinition id="TimerEventDefinition_1wiimzf">
+        <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">timedelta(seconds=1)</bpmn:timeDuration>
+      </bpmn:timerEventDefinition>
+    </bpmn:intermediateCatchEvent>
   </bpmn:process>
   <bpmn:process id="Process_cc_invoice_approval_process_v2_c" isExecutable="false" />
   <bpmn:process id="Process_cc_invoice_approval_process_v2_d" isExecutable="false" />
@@ -1190,12 +1190,6 @@ isSetMessage = True</bpmn:script>
           <dc:Bounds x="3888" y="281" width="84" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_0tb3bpb_di" bpmnElement="Event_1vi3um1">
-        <dc:Bounds x="1942" y="514" width="36" height="36" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="1936" y="557" width="49" height="14" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0ejn04g_di" bpmnElement="Activity_0fq1nb4">
         <dc:Bounds x="4690" y="570" width="100" height="80" />
       </bpmndi:BPMNShape>
@@ -1260,6 +1254,12 @@ isSetMessage = True</bpmn:script>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Gateway_0dqj39f_di" bpmnElement="Gateway_0dqj39f" isMarkerVisible="true">
         <dc:Bounds x="1805" y="507" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0tb3bpb_di" bpmnElement="Event_1vi3um1">
+        <dc:Bounds x="1922" y="514" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1916" y="557" width="49" height="14" />
+        </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0z13hw3_di" bpmnElement="SubProcess_Data_validation_rules">
         <dc:Bounds x="1350" y="492" width="100" height="80" />
@@ -1537,7 +1537,7 @@ isSetMessage = True</bpmn:script>
         <di:waypoint x="2830" y="530" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0dhpy0v_di" bpmnElement="Flow_0dhpy0v">
-        <di:waypoint x="1978" y="532" />
+        <di:waypoint x="1958" y="532" />
         <di:waypoint x="2032" y="532" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1x00zm0_di" bpmnElement="Flow_1x00zm0">
@@ -1566,7 +1566,7 @@ isSetMessage = True</bpmn:script>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1xvt99y_di" bpmnElement="Flow_1xvt99y">
         <di:waypoint x="1855" y="532" />
-        <di:waypoint x="1942" y="532" />
+        <di:waypoint x="1922" y="532" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_06mfxze_di" bpmnElement="Flow_06mfxze">
         <di:waypoint x="1710" y="590" />
