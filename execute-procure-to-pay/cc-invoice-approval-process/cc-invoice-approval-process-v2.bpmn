@@ -51,7 +51,7 @@
         <bpmn:flowNodeRef>Event_0m3ri6v</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_15y55nw</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Gateway_1l4tz4i</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Activity_0b07c9b</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Delete_File</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_0rae8g6</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_0gkpa9s</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_0gkejaj</bpmn:flowNodeRef>
@@ -110,7 +110,7 @@
     </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="Flow_0h96w9j" name="Yes" sourceRef="Gateway_1ytq6m7" targetRef="Activity_0fq1nb4" />
     <bpmn:sequenceFlow id="Flow_053ca95" sourceRef="Activity_0fq1nb4" targetRef="Event_0lhkxwc" />
-    <bpmn:sequenceFlow id="Flow_0a9w301" sourceRef="Gateway_1717c0p" targetRef="Activity_0b07c9b" />
+    <bpmn:sequenceFlow id="Flow_0a9w301" sourceRef="Gateway_1717c0p" targetRef="Delete_File" />
     <bpmn:sequenceFlow id="Flow_0h1x7y6" sourceRef="Activity_10p5t0r" targetRef="Activity_0gkpa9s" />
     <bpmn:sequenceFlow id="Flow_15pzvrr" sourceRef="Activity_0faln91" targetRef="Gateway_1l4tz4i" />
     <bpmn:sequenceFlow id="Flow_02v6lr2" sourceRef="Activity_11stdua" targetRef="Event_1lh7308" />
@@ -125,7 +125,7 @@
     <bpmn:sequenceFlow id="Flow_0hyvwku" sourceRef="Activity_104xpp8" targetRef="Activity_0p88elm" />
     <bpmn:sequenceFlow id="Flow_1fvtcqt" sourceRef="Event_0lhkxwc" targetRef="Waku_Message_Pending_Payment" />
     <bpmn:sequenceFlow id="Flow_14glsqd" sourceRef="Event_176ch98" targetRef="Gateway_05ov5p5" />
-    <bpmn:sequenceFlow id="Flow_0e4l30m" sourceRef="Activity_0b07c9b" targetRef="Activity_10p5t0r" />
+    <bpmn:sequenceFlow id="Flow_0e4l30m" sourceRef="Delete_File" targetRef="Activity_10p5t0r" />
     <bpmn:dataObjectReference id="DataObjectReference_05liqvr" name="resp_BambooUserInfo" dataObjectRef="resp_BambooUserInfo" />
     <bpmn:dataObject id="resp_BambooUserInfo" />
     <bpmn:userTask id="Submit_the_invoice" name="2. Submit the invoice" scriptFormat="python" script="SdgsdGsdhgwsDEHhww">
@@ -485,7 +485,7 @@ isApprovalTimer = True</bpmn:script>
       <bpmn:incoming>Flow_09r1s5r</bpmn:incoming>
       <bpmn:outgoing>Flow_1qf14hx</bpmn:outgoing>
     </bpmn:exclusiveGateway>
-    <bpmn:scriptTask id="Activity_0b07c9b" name="Delete File">
+    <bpmn:scriptTask id="Delete_File" name="Delete File">
       <bpmn:incoming>Flow_0a9w301</bpmn:incoming>
       <bpmn:outgoing>Flow_0e4l30m</bpmn:outgoing>
       <bpmn:script>del(filesAccept)</bpmn:script>
@@ -1075,26 +1075,6 @@ else:
           <dc:Bounds x="1520" y="567" width="60" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1vzea12_di" bpmnElement="Activity_0faln91">
-        <dc:Bounds x="3590" y="492" width="100" height="80" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_09tmh4n_di" bpmnElement="Event_0rwxlca">
-        <dc:Bounds x="3622" y="682" width="36" height="36" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="3554" y="693" width="58" height="14" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1j1zo4f_di" bpmnElement="Activity_11stdua">
-        <dc:Bounds x="3890" y="1040" width="100" height="80" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_00k7m91_di" bpmnElement="Event_1lh7308">
-        <dc:Bounds x="4032" y="1062" width="36" height="36" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="4022" y="1105" width="58" height="14" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0z13hw3_di" bpmnElement="SubProcess_Data_validation_rules">
         <dc:Bounds x="1350" y="492" width="100" height="80" />
         <bpmndi:BPMNLabel />
@@ -1211,7 +1191,7 @@ else:
       <bpmndi:BPMNShape id="Gateway_06i3we9_di" bpmnElement="Gateway_06i3we9" isMarkerVisible="true">
         <dc:Bounds x="3615" y="845" width="50" height="50" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0nqyv3k_di" bpmnElement="Activity_0b07c9b">
+      <bpmndi:BPMNShape id="Activity_0nqyv3k_di" bpmnElement="Delete_File">
         <dc:Bounds x="2360" y="490" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0n0ue58_di" bpmnElement="Activity_0rae8g6">
@@ -1286,6 +1266,26 @@ else:
         <dc:Bounds x="3922" y="282" width="36" height="36" />
         <bpmndi:BPMNLabel>
           <dc:Bounds x="3916" y="325" width="54" height="40" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1vzea12_di" bpmnElement="Activity_0faln91">
+        <dc:Bounds x="3590" y="492" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_09tmh4n_di" bpmnElement="Event_0rwxlca">
+        <dc:Bounds x="3622" y="682" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="3554" y="693" width="58" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1j1zo4f_di" bpmnElement="Activity_11stdua">
+        <dc:Bounds x="3890" y="1040" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_00k7m91_di" bpmnElement="Event_1lh7308">
+        <dc:Bounds x="4032" y="1062" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="4022" y="1105" width="58" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_08bsj2m_di" bpmnElement="Event_09q0ym0">
