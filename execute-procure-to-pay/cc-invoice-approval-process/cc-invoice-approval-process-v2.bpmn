@@ -312,7 +312,18 @@ isCurrentUser = True</spiffworkflow:preScript>
     <bpmn:sequenceFlow id="Flow_0z51hpb" sourceRef="Activity_07oyzdx" targetRef="Gateway_0dqj39f" />
     <bpmn:manualTask id="Activity_07oyzdx" name="Show What&#39;s Next">
       <bpmn:extensionElements>
-        <spiffworkflow:instructionsForEndUser>Thank you for your invoice submission.  Please click Submit below to return to your Home page. UIdates on the progress of your submission will.be sent to you in your Status app.</spiffworkflow:instructionsForEndUser>
+        <spiffworkflow:instructionsForEndUser>_**Submitted by:**_ {{ invoice.contributorName }}   
+_**Submiiter Id:**_ {{ invoice.contributorId }}   
+_**Invoice Id:**_ {{ invoice.invoiceId }}   
+_**Amount:**_ {{ invoice.invoiceAmount_str }}   
+_**Submitted on:**_ {{ invoiceDate }}	
+_**Due Date:**_ {{ invoice.dueDate}}   
+   
+   
+Thank you for your invoice submission.  Please click Submit below to return to your Home page. UIdates on the progress of your submission will.be sent to you in your Status app.
+   
+   
+   </spiffworkflow:instructionsForEndUser>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_1x4rtop</bpmn:incoming>
       <bpmn:outgoing>Flow_0z51hpb</bpmn:outgoing>
