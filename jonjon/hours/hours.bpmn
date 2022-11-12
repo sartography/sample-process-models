@@ -4,16 +4,44 @@
     <bpmn:startEvent id="StartEvent_1">
       <bpmn:outgoing>Flow_1yre3ir</bpmn:outgoing>
     </bpmn:startEvent>
-    <bpmn:sequenceFlow id="Flow_1yre3ir" sourceRef="StartEvent_1" targetRef="Activity_0wmo9j3" />
-    <bpmn:userTask id="Activity_0wmo9j3">
+    <bpmn:sequenceFlow id="Flow_1yre3ir" sourceRef="StartEvent_1" targetRef="Activity_0op1e6d" />
+    <bpmn:userTask id="Activity_0wmo9j3" name="Finalize time entry">
       <bpmn:extensionElements>
         <spiffworkflow:properties>
           <spiffworkflow:property name="formJsonSchemaFilename" value="entry_schema.json" />
           <spiffworkflow:property name="formUiSchemaFilename" value="entry_ui.json" />
         </spiffworkflow:properties>
       </bpmn:extensionElements>
-      <bpmn:incoming>Flow_1yre3ir</bpmn:incoming>
+      <bpmn:incoming>Flow_13uuyu7</bpmn:incoming>
+      <bpmn:outgoing>Flow_10ga3mm</bpmn:outgoing>
     </bpmn:userTask>
+    <bpmn:scriptTask id="Activity_0op1e6d" name="Record Start Time">
+      <bpmn:incoming>Flow_1yre3ir</bpmn:incoming>
+      <bpmn:outgoing>Flow_0qbs6a6</bpmn:outgoing>
+      <bpmn:script>start_time_in_seconds = round(time.time())
+startDateTime = datetime.utcfromtimestamp(start_time_in_seconds).strftime("%Y-%m-%dT%H:%MZ")</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:endEvent id="Event_172y2zl">
+      <bpmn:incoming>Flow_10ga3mm</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_10ga3mm" sourceRef="Activity_0wmo9j3" targetRef="Event_172y2zl" />
+    <bpmn:sequenceFlow id="Flow_0qbs6a6" sourceRef="Activity_0op1e6d" targetRef="Activity_0phf19r" />
+    <bpmn:manualTask id="Activity_0phf19r" name="Proceed to end time">
+      <bpmn:extensionElements>
+        <spiffworkflow:instructionsForEndUser>The start time on your time entry was automatically set to {{startDateTime}}. You can change it later. Submit this form to indicate the end of this entry and you can 1) select the project and 2) update the start and end times and if needed.</spiffworkflow:instructionsForEndUser>
+        <spiffworkflow:postScript />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0qbs6a6</bpmn:incoming>
+      <bpmn:outgoing>Flow_0p00m2r</bpmn:outgoing>
+    </bpmn:manualTask>
+    <bpmn:sequenceFlow id="Flow_0p00m2r" sourceRef="Activity_0phf19r" targetRef="Activity_0sptasj" />
+    <bpmn:scriptTask id="Activity_0sptasj" name="Record end Time">
+      <bpmn:incoming>Flow_0p00m2r</bpmn:incoming>
+      <bpmn:outgoing>Flow_13uuyu7</bpmn:outgoing>
+      <bpmn:script>end_time_in_seconds = round(time.time())
+endDateTime = datetime.utcfromtimestamp(end_time_in_seconds).strftime("%Y-%m-%dT%H:%MZ")</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:sequenceFlow id="Flow_13uuyu7" sourceRef="Activity_0sptasj" targetRef="Activity_0wmo9j3" />
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Proccess_qo5vgsf">
@@ -21,11 +49,42 @@
         <dc:Bounds x="179" y="159" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_12keswg_di" bpmnElement="Activity_0wmo9j3">
-        <dc:Bounds x="270" y="137" width="100" height="80" />
+        <dc:Bounds x="800" y="137" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1rbf1ou_di" bpmnElement="Activity_0op1e6d">
+        <dc:Bounds x="250" y="137" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_172y2zl_di" bpmnElement="Event_172y2zl">
+        <dc:Bounds x="952" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0gvktx3_di" bpmnElement="Activity_0phf19r">
+        <dc:Bounds x="430" y="137" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_0u084xr" bpmnElement="Activity_0sptasj">
+        <dc:Bounds x="610" y="137" width="100" height="80" />
+        <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_1yre3ir_di" bpmnElement="Flow_1yre3ir">
         <di:waypoint x="215" y="177" />
-        <di:waypoint x="270" y="177" />
+        <di:waypoint x="250" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_10ga3mm_di" bpmnElement="Flow_10ga3mm">
+        <di:waypoint x="900" y="177" />
+        <di:waypoint x="952" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0qbs6a6_di" bpmnElement="Flow_0qbs6a6">
+        <di:waypoint x="350" y="177" />
+        <di:waypoint x="430" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0p00m2r_di" bpmnElement="Flow_0p00m2r">
+        <di:waypoint x="530" y="177" />
+        <di:waypoint x="610" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_13uuyu7_di" bpmnElement="Flow_13uuyu7">
+        <di:waypoint x="710" y="177" />
+        <di:waypoint x="800" y="177" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
