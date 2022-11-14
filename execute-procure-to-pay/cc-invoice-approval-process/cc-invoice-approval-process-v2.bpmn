@@ -897,7 +897,10 @@ invoice.invoiceStatus = "Approved and Pending Payment"</spiffworkflow:preScript>
       </bpmn:startEvent>
       <bpmn:callActivity id="Get_Waku_Messages_Message" name="Get Waku Messages: Message" calledElement="Waku_Messages_Message">
         <bpmn:extensionElements>
-          <spiffworkflow:preScript>if isMatch:
+          <spiffworkflow:preScript># Check if there are Project Lead and/or Finance comments
+len_project_lead_comments = len(invoice[""])
+
+if isMatch:
     task_id = "waku_payment_pending_ismatch"
 else:
     task_id = "waku_payment_pending_not_ismatch"
