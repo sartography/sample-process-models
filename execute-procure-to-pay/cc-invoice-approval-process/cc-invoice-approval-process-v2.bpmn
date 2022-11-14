@@ -1047,9 +1047,13 @@ annual_salary = float(annual_salary_str)</bpmn:script>
         <bpmn:outgoing>Flow_02g4qn2</bpmn:outgoing>
       </bpmn:serviceTask>
       <bpmn:sequenceFlow id="Flow_0qdib9s" sourceRef="Activity_1dbn2ot" targetRef="Event_0cmri19" />
-      <bpmn:scriptTask id="Activity_1dbn2ot" name="Set Approvers">
+      <bpmn:scriptTask id="Activity_1dbn2ot" name="Set Project Lead Approval">
         <bpmn:incoming>Flow_04do8x7</bpmn:incoming>
         <bpmn:outgoing>Flow_0qdib9s</bpmn:outgoing>
+        <bpmn:script>if isMatch:
+    invoice["isProjectLeadApprove"] = False
+else:
+    invoice["isProjectLeadApprove"] = True</bpmn:script>
       </bpmn:scriptTask>
     </bpmn:subProcess>
     <bpmn:boundaryEvent id="Event_169on0z" attachedToRef="Activity_07oyzdx">
@@ -1694,6 +1698,7 @@ isCurTest = False</spiffworkflow:preScript>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_155zrqk_di" bpmnElement="Activity_1dbn2ot">
         <dc:Bounds x="840" y="350" width="100" height="80" />
+        <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_1sc1v4y_di" bpmnElement="Flow_1sc1v4y">
         <di:waypoint x="-12" y="390" />
