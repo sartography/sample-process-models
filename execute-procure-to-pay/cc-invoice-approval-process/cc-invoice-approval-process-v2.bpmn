@@ -654,17 +654,11 @@ __________________________________________________________________________
       <bpmn:scriptTask id="Activity_04kw0jc" name="Set Which Message" scriptFormat="python">
         <bpmn:incoming>Flow_14x1v12</bpmn:incoming>
         <bpmn:outgoing>Flow_0umhf4u</bpmn:outgoing>
-        <bpmn:script># Set who rejected
-if isMatch:
-    task_id = "waku_invoice_rejected-Finance"
+        <bpmn:script># Set which message
+if isApprovalTimer:
+    task_id = "waku_no_team_lead_response"
 else:
-    if not(invoice["isProjectLeadApprove"]):
-        if isApprovalTimer:
-            task_id = "waku_no_team_lead_response"
-        else:
-            task_id = "waku_invoice_rejected-Project_Lead"
-    else:
-        task_id = "waku_invoice_rejected-Finance"
+    task_id = "waku_invoice_rejected"
 
 # Set Message should not be set
 isSetMessage = True
