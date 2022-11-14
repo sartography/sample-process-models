@@ -656,10 +656,13 @@ __________________________________________________________________________
         <bpmn:incoming>Flow_14x1v12</bpmn:incoming>
         <bpmn:outgoing>Flow_0umhf4u</bpmn:outgoing>
         <bpmn:script># Set who rejected
-if not(invoice.isProjectLeadApprove):
-    task_id = "waku_invoice_rejected-Project_Lead"
-else:
+if isMatch:
     task_id = "waku_invoice_rejected-Finance"
+else:
+    if not(invoice.isProjectLeadApprove):
+        task_id = "waku_invoice_rejected-Project_Lead"
+    else:
+        task_id = "waku_invoice_rejected-Finance"
 
 # Set Message should not be set
 isSetMessage = False
