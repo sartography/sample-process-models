@@ -1016,9 +1016,9 @@ annual_salary = float(annual_salary_str)</bpmn:script>
       <bpmn:sequenceFlow id="Flow_1sc1v4y" sourceRef="Event_0w5o6hr" targetRef="Activity_0mcykih" />
       <bpmn:sequenceFlow id="Flow_1m8uxeg" sourceRef="Activity_0b87ocm" targetRef="Activity_1yhwhps" />
       <bpmn:endEvent id="Event_0cmri19">
-        <bpmn:incoming>Flow_04do8x7</bpmn:incoming>
+        <bpmn:incoming>Flow_0qdib9s</bpmn:incoming>
       </bpmn:endEvent>
-      <bpmn:sequenceFlow id="Flow_04do8x7" sourceRef="Activity_1yhwhps" targetRef="Event_0cmri19" />
+      <bpmn:sequenceFlow id="Flow_04do8x7" sourceRef="Activity_1yhwhps" targetRef="Activity_1dbn2ot" />
       <bpmn:serviceTask id="Activity_1k25w3x" name="Query Invoice Details">
         <bpmn:extensionElements>
           <spiffworkflow:serviceTaskOperator id="aws/QueryDynamoTable" resultVariable="resp_QuertInvoiceDetails">
@@ -1046,6 +1046,11 @@ annual_salary = float(annual_salary_str)</bpmn:script>
         <bpmn:incoming>Flow_1sc1v4y</bpmn:incoming>
         <bpmn:outgoing>Flow_02g4qn2</bpmn:outgoing>
       </bpmn:serviceTask>
+      <bpmn:sequenceFlow id="Flow_0qdib9s" sourceRef="Activity_1dbn2ot" targetRef="Event_0cmri19" />
+      <bpmn:scriptTask id="Activity_1dbn2ot" name="Set Approvers">
+        <bpmn:incoming>Flow_04do8x7</bpmn:incoming>
+        <bpmn:outgoing>Flow_0qdib9s</bpmn:outgoing>
+      </bpmn:scriptTask>
     </bpmn:subProcess>
     <bpmn:boundaryEvent id="Event_169on0z" attachedToRef="Activity_07oyzdx">
       <bpmn:outgoing>Flow_06mfxze</bpmn:outgoing>
@@ -1677,15 +1682,18 @@ isCurTest = False</spiffworkflow:preScript>
       <bpmndi:BPMNShape id="Activity_1f5dpwy_di" bpmnElement="Activity_0b87ocm">
         <dc:Bounds x="520" y="350" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_0cmri19_di" bpmnElement="Event_0cmri19">
-        <dc:Bounds x="842" y="372" width="36" height="36" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0x1ak9n_di" bpmnElement="Activity_1k25w3x">
         <dc:Bounds x="360" y="350" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0emlo6d_di" bpmnElement="Activity_0mcykih">
         <dc:Bounds x="50" y="350" width="100" height="80" />
         <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0cmri19_di" bpmnElement="Event_0cmri19">
+        <dc:Bounds x="1012" y="372" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_155zrqk_di" bpmnElement="Activity_1dbn2ot">
+        <dc:Bounds x="840" y="350" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_1sc1v4y_di" bpmnElement="Flow_1sc1v4y">
         <di:waypoint x="-12" y="390" />
@@ -1697,7 +1705,7 @@ isCurTest = False</spiffworkflow:preScript>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_04do8x7_di" bpmnElement="Flow_04do8x7">
         <di:waypoint x="780" y="390" />
-        <di:waypoint x="842" y="390" />
+        <di:waypoint x="840" y="390" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0nxzc38_di" bpmnElement="Flow_0nxzc38">
         <di:waypoint x="310" y="390" />
@@ -1710,6 +1718,10 @@ isCurTest = False</spiffworkflow:preScript>
       <bpmndi:BPMNEdge id="Flow_02g4qn2_di" bpmnElement="Flow_02g4qn2">
         <di:waypoint x="150" y="390" />
         <di:waypoint x="210" y="390" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0qdib9s_di" bpmnElement="Flow_0qdib9s">
+        <di:waypoint x="940" y="390" />
+        <di:waypoint x="1012" y="390" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
