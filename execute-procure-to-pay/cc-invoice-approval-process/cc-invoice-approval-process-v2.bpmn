@@ -654,7 +654,11 @@ __________________________________________________________________________
       <bpmn:scriptTask id="Activity_04kw0jc" name="Set Which Message" scriptFormat="python">
         <bpmn:incoming>Flow_14x1v12</bpmn:incoming>
         <bpmn:outgoing>Flow_0umhf4u</bpmn:outgoing>
-        <bpmn:script># Set which message
+        <bpmn:script># Check if there are Project Lead and/or Finance comments
+len_project_lead_comments = len(invoice["commentsProjectLead"].strip())
+len_finance_comments = len(invoice["commentsFinance"].strip())
+
+# Set which message
 if isApprovalTimer:
     task_id = "waku_no_team_lead_response"
 else:
