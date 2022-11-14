@@ -488,7 +488,7 @@ isApprovalTimer = True</bpmn:script>
     <bpmn:endEvent id="Event_1b58a3z" name="Invoice is rejected by Approver">
       <bpmn:incoming>Flow_0c0c9mw</bpmn:incoming>
     </bpmn:endEvent>
-    <bpmn:scriptTask id="Activity_0faln91" name="Set Message" scriptFormat="python">
+    <bpmn:scriptTask id="Activity_0faln91" name="Set Message Info" scriptFormat="python">
       <bpmn:incoming>Flow_1x00zm0</bpmn:incoming>
       <bpmn:outgoing>Flow_15pzvrr</bpmn:outgoing>
       <bpmn:script># Store Team Lead comments elsewhere and clear form comments
@@ -660,7 +660,10 @@ if isMatch:
     task_id = "waku_invoice_rejected-Finance"
 else:
     if not(invoice["isProjectLeadApprove"]):
-        task_id = "waku_invoice_rejected-Project_Lead"
+        if isApprovalTimer:
+            task_id = ""
+        else:
+            task_id = "waku_invoice_rejected-Project_Lead"
     else:
         task_id = "waku_invoice_rejected-Finance"
 
