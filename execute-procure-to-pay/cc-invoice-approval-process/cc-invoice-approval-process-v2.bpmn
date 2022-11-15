@@ -21,7 +21,7 @@
       <bpmn:correlationPropertyRef>CorrelationProperty_Submit_Invoice</bpmn:correlationPropertyRef>
     </bpmn:correlationKey>
   </bpmn:collaboration>
-  <bpmn:process id="Process_cc_invoice_approval_process_v2_b" isExecutable="true" />
+  <bpmn:process id="Process_cc_invoice_approval_process_v2_b" isExecutable="false" />
   <bpmn:process id="Process_cc_invoice_approval_process_v2_a" isExecutable="true">
     <bpmn:laneSet id="LaneSet_0txkzqg">
       <bpmn:lane id="Lane_1a0qu8e" name="Process Initiator">
@@ -52,10 +52,9 @@
         <bpmn:flowNodeRef>Event_invoice_validation_failed</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Gateway_0wk5se9</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_show_errors</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Activity_0twki30</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_1colhao</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_1u89kok</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Event_1r3yh2k</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Event_1r3yh2kx</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_1864qj2</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_0rae8g6</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_1ucvkk4</bpmn:flowNodeRef>
@@ -65,6 +64,7 @@
         <bpmn:flowNodeRef>Activity_0gkejaj</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_169on0z</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_10p5t0r</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_0twki30</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_1b7abal" name="Project Lead">
         <bpmn:flowNodeRef>Activity_06b32ar</bpmn:flowNodeRef>
@@ -102,7 +102,7 @@
     <bpmn:sequenceFlow id="Flow_0hev3yn" sourceRef="Gateway_05ov5p5" targetRef="Activity_175j3o7" />
     <bpmn:sequenceFlow id="Flow_02o270g" sourceRef="Activity_175j3o7" targetRef="Gateway_1717c0p" />
     <bpmn:sequenceFlow id="Flow_0o94g4u" sourceRef="Activity_0p88elm" targetRef="Gateway_1717c0p" />
-    <bpmn:sequenceFlow id="Flow_1vxagrf" sourceRef="Event_1r3yh2k" targetRef="Activity_1u89kok" />
+    <bpmn:sequenceFlow id="Flow_1vxagrf" sourceRef="Event_1r3yh2kx" targetRef="Activity_1u89kok" />
     <bpmn:sequenceFlow id="Flow_0bipj9q" sourceRef="Activity_1u89kok" targetRef="Activity_1colhao" />
     <bpmn:sequenceFlow id="Flow_04ccp12" sourceRef="Event_0m3ri6v" targetRef="Activity_1kgaqpf" />
     <bpmn:sequenceFlow id="Flow_0kngdw4" sourceRef="Event_0x83ruk" targetRef="Activity_1ucvkk4" />
@@ -126,8 +126,6 @@
     <bpmn:sequenceFlow id="Flow_0hyvwku" sourceRef="Activity_104xpp8" targetRef="Activity_0p88elm" />
     <bpmn:sequenceFlow id="Flow_1fvtcqt" sourceRef="Event_0lhkxwc" targetRef="Waku_Message_Pending_Payment" />
     <bpmn:sequenceFlow id="Flow_14glsqd" sourceRef="Event_176ch98" targetRef="Gateway_05ov5p5" />
-    <bpmn:dataObjectReference id="DataObjectReference_05liqvr" name="resp_BambooUserInfo" dataObjectRef="resp_BambooUserInfo" />
-    <bpmn:dataObject id="resp_BambooUserInfo" />
     <bpmn:userTask id="Submit_the_invoice" name="2. Submit the invoice" scriptFormat="python" script="SdgsdGsdhgwsDEHhww">
       <bpmn:extensionElements>
         <spiffworkflow:properties>
@@ -265,21 +263,6 @@ else:
       <bpmn:incoming>Flow_13ng1f4</bpmn:incoming>
       <bpmn:outgoing>Flow_18cic3h</bpmn:outgoing>
     </bpmn:manualTask>
-    <bpmn:scriptTask id="Activity_0twki30" name="Clear Field(s) That Failed Validation">
-      <bpmn:incoming>Flow_18cic3h</bpmn:incoming>
-      <bpmn:outgoing>Flow_1pefcgv</bpmn:outgoing>
-      <bpmn:script># CLear Contributor Name if contains number
-if svc_is_num_in_name:
-    invoice["contributorName"] = None
-
-# Clear Invoice Anount if more than 2 decimals
-if svc_decimal_cnt &gt; 2:
-    invoice["invoiceAmount"] = None
-
-# Clear Invocie Due Date if before Today's Date
-if not(svc_is_due_date_after):
-    invoice["dueDate"] = None</bpmn:script>
-    </bpmn:scriptTask>
     <bpmn:callActivity id="Activity_1colhao" name="Call Shared: Build Enum List from AWS" calledElement="Shared_Build_Enum_List_from_AWS">
       <bpmn:extensionElements>
         <spiffworkflow:preScript>whichSubject = "Currency"
@@ -299,7 +282,7 @@ isCurrentUser = True</spiffworkflow:preScript>
         <bpmn:targetRef>DataObjectReference_05liqvr</bpmn:targetRef>
       </bpmn:dataOutputAssociation>
     </bpmn:callActivity>
-    <bpmn:startEvent id="Event_1r3yh2k">
+    <bpmn:startEvent id="Event_1r3yh2kx">
       <bpmn:outgoing>Flow_1vxagrf</bpmn:outgoing>
     </bpmn:startEvent>
     <bpmn:sequenceFlow id="Flow_0dhpy0v" sourceRef="Event_1vi3um1" targetRef="Event_176ch98" />
@@ -1056,6 +1039,23 @@ isCurTest = False</spiffworkflow:preScript>
       <bpmn:incoming>Flow_1x4rtop</bpmn:incoming>
       <bpmn:outgoing>Flow_06amgv2</bpmn:outgoing>
     </bpmn:callActivity>
+    <bpmn:dataObjectReference id="DataObjectReference_05liqvr" name="resp_BambooUserInfo" dataObjectRef="resp_BambooUserInfo" />
+    <bpmn:dataObject id="resp_BambooUserInfo" />
+    <bpmn:scriptTask id="Activity_0twki30" name="Clear Field(s) That Failed Validation">
+      <bpmn:incoming>Flow_18cic3h</bpmn:incoming>
+      <bpmn:outgoing>Flow_1pefcgv</bpmn:outgoing>
+      <bpmn:script># CLear Contributor Name if contains number
+if svc_is_num_in_name:
+    invoice["contributorName"] = None
+
+# Clear Invoice Anount if more than 2 decimals
+if svc_decimal_cnt &gt; 2:
+    invoice["invoiceAmount"] = None
+
+# Clear Invocie Due Date if before Today's Date
+if not(svc_is_due_date_after):
+    invoice["dueDate"] = None</bpmn:script>
+    </bpmn:scriptTask>
   </bpmn:process>
   <bpmn:process id="Process_cc_invoice_approval_process_v2_c" isExecutable="false" />
   <bpmn:process id="Process_cc_invoice_approval_process_v2_d" isExecutable="false" />
@@ -1092,12 +1092,6 @@ isCurTest = False</spiffworkflow:preScript>
         <dc:Bounds x="310" y="210" width="5050" height="600" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="DataObjectReference_05liqvr_di" bpmnElement="DataObjectReference_05liqvr">
-        <dc:Bounds x="592" y="355" width="36" height="50" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="566" y="408" width="89" height="27" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1h7igan_di" bpmnElement="Submit_the_invoice">
         <dc:Bounds x="1165" y="492" width="100" height="80" />
       </bpmndi:BPMNShape>
@@ -1106,6 +1100,9 @@ isCurTest = False</spiffworkflow:preScript>
         <bpmndi:BPMNLabel>
           <dc:Bounds x="1520" y="567" width="60" height="14" />
         </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_14mudmu_di" bpmnElement="Activity_0twki30">
+        <dc:Bounds x="1190" y="330" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0z13hw3_di" bpmnElement="SubProcess_Data_validation_rules">
         <dc:Bounds x="1350" y="492" width="100" height="80" />
@@ -1129,9 +1126,6 @@ isCurTest = False</spiffworkflow:preScript>
       <bpmndi:BPMNShape id="Activity_0qtkhpi_di" bpmnElement="Activity_show_errors">
         <dc:Bounds x="1350" y="330" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_14mudmu_di" bpmnElement="Activity_0twki30">
-        <dc:Bounds x="1165" y="330" width="100" height="80" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_13dc2qg_di" bpmnElement="Activity_1colhao">
         <dc:Bounds x="690" y="492" width="100" height="80" />
         <bpmndi:BPMNLabel />
@@ -1140,8 +1134,11 @@ isCurTest = False</spiffworkflow:preScript>
         <dc:Bounds x="510" y="490" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_1r3yh2k_di" bpmnElement="Event_1r3yh2k">
+      <bpmndi:BPMNShape id="Event_1r3yh2k_di" bpmnElement="Event_1r3yh2kx">
         <dc:Bounds x="402" y="512" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="410" y="555" width="22" height="14" />
+        </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0l6st3d_di" bpmnElement="Activity_1864qj2">
         <dc:Bounds x="870" y="600" width="100" height="80" />
@@ -1326,6 +1323,12 @@ isCurTest = False</spiffworkflow:preScript>
         <dc:Bounds x="1660" y="492" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DataObjectReference_05liqvr_di" bpmnElement="DataObjectReference_05liqvr">
+        <dc:Bounds x="622" y="345" width="36" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="596" y="398" width="89" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_08bsj2m_di" bpmnElement="Event_09q0ym0">
         <dc:Bounds x="3692" y="892" width="36" height="36" />
         <bpmndi:BPMNLabel>
@@ -1398,7 +1401,7 @@ isCurTest = False</spiffworkflow:preScript>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_18cic3h_di" bpmnElement="Flow_18cic3h">
         <di:waypoint x="1350" y="370" />
-        <di:waypoint x="1265" y="370" />
+        <di:waypoint x="1290" y="370" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_02moyg7_di" bpmnElement="Flow_02moyg7">
         <di:waypoint x="1265" y="532" />
@@ -1508,7 +1511,7 @@ isCurTest = False</spiffworkflow:preScript>
         <di:waypoint x="1165" y="532" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1pefcgv_di" bpmnElement="Flow_1pefcgv">
-        <di:waypoint x="1165" y="370" />
+        <di:waypoint x="1190" y="370" />
         <di:waypoint x="1070" y="370" />
         <di:waypoint x="1070" y="507" />
       </bpmndi:BPMNEdge>
@@ -1592,8 +1595,8 @@ isCurTest = False</spiffworkflow:preScript>
         <di:waypoint x="1441" y="655" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="DataOutputAssociation_0buh48w_di" bpmnElement="DataOutputAssociation_0buh48w">
-        <di:waypoint x="573" y="490" />
-        <di:waypoint x="600" y="405" />
+        <di:waypoint x="580" y="490" />
+        <di:waypoint x="626" y="395" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="DataOutputAssociation_076hmxy_di" bpmnElement="DataOutputAssociation_076hmxy">
         <di:waypoint x="4821" y="570" />
