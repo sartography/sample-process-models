@@ -14,7 +14,7 @@
       <bpmn:lane id="finance_team" name="Finance Team">
         <bpmn:flowNodeRef>finance_approval_one</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>finance_approval_two</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Activity_1s1855p</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>remove_approver</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="bigwig" name="Bigwig">
         <bpmn:flowNodeRef>Event_0nsh6vv</bpmn:flowNodeRef>
@@ -76,9 +76,9 @@
       <bpmn:incoming>Flow_1ivhu7x</bpmn:incoming>
       <bpmn:outgoing>Flow_1aluose</bpmn:outgoing>
     </bpmn:manualTask>
-    <bpmn:sequenceFlow id="Flow_0bgkfue" sourceRef="finance_approval_one" targetRef="Activity_1s1855p" />
-    <bpmn:sequenceFlow id="Flow_1ivhu7x" sourceRef="Activity_1s1855p" targetRef="finance_approval_two" />
-    <bpmn:scriptTask id="Activity_1s1855p" scriptFormat="python">
+    <bpmn:sequenceFlow id="Flow_0bgkfue" sourceRef="finance_approval_one" targetRef="remove_approver" />
+    <bpmn:sequenceFlow id="Flow_1ivhu7x" sourceRef="remove_approver" targetRef="finance_approval_two" />
+    <bpmn:scriptTask id="remove_approver" name="Remove Approver" scriptFormat="python">
       <bpmn:incoming>Flow_0bgkfue</bpmn:incoming>
       <bpmn:outgoing>Flow_1ivhu7x</bpmn:outgoing>
       <bpmn:script>approver = get_user()
@@ -131,8 +131,9 @@ lane_owners["Finance Team"].remove(approver)</bpmn:script>
       <bpmndi:BPMNShape id="Activity_1rq1fsj_di" bpmnElement="finance_approval_two">
         <dc:Bounds x="600" y="320" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0g8uv6m_di" bpmnElement="Activity_1s1855p">
+      <bpmndi:BPMNShape id="Activity_0g8uv6m_di" bpmnElement="remove_approver">
         <dc:Bounds x="470" y="320" width="100" height="80" />
+        <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_1tbyols_di" bpmnElement="Flow_1tbyols">
         <di:waypoint x="215" y="177" />
