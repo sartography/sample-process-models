@@ -106,7 +106,9 @@ annual_salary = float(annual_salary_str)</bpmn:script>
     <bpmn:sequenceFlow id="Flow_0am2zl6" name="No" sourceRef="Gateway_0eaocp0" targetRef="Event_1x4b5bx">
       <bpmn:conditionExpression>not(isMatch)</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
-    <bpmn:sequenceFlow id="Flow_0bfsldt" name="Yes" sourceRef="Gateway_0eaocp0" targetRef="Activity_1d3xl48" />
+    <bpmn:sequenceFlow id="Flow_0bfsldt" name="Yes" sourceRef="Gateway_0eaocp0" targetRef="Activity_1d3xl48">
+      <bpmn:conditionExpression>isTrue</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="Flow_0w45gin" sourceRef="Event_049kpe7" targetRef="Activity_0jewccr" />
     <bpmn:endEvent id="Event_03qfuyf">
       <bpmn:incoming>Flow_0a7bzy1</bpmn:incoming>
@@ -135,12 +137,16 @@ annual_salary = float(annual_salary_str)</bpmn:script>
       <bpmn:outgoing>Flow_15po8b6</bpmn:outgoing>
       <bpmn:outgoing>Flow_1n259k2</bpmn:outgoing>
     </bpmn:exclusiveGateway>
-    <bpmn:sequenceFlow id="Flow_15po8b6" name="Yes" sourceRef="Gateway_1x62lwb" targetRef="Event_049kpe7" />
+    <bpmn:sequenceFlow id="Flow_15po8b6" name="Yes" sourceRef="Gateway_1x62lwb" targetRef="Event_049kpe7">
+      <bpmn:conditionExpression>isTrue</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="Flow_0a7bzy1" sourceRef="Activity_0jewccr" targetRef="Event_03qfuyf" />
     <bpmn:endEvent id="Event_1dggzfv">
       <bpmn:incoming>Flow_1bvgiwf</bpmn:incoming>
     </bpmn:endEvent>
-    <bpmn:sequenceFlow id="Flow_1n259k2" sourceRef="Gateway_1x62lwb" targetRef="Event_1r9nmyo" />
+    <bpmn:sequenceFlow id="Flow_1n259k2" name="No" sourceRef="Gateway_1x62lwb" targetRef="Event_1r9nmyo">
+      <bpmn:conditionExpression>not(isMatch)</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
     <bpmn:intermediateThrowEvent id="Event_1r9nmyo" name="Invoice Rejection by Finiance">
       <bpmn:incoming>Flow_1n259k2</bpmn:incoming>
       <bpmn:outgoing>Flow_1bvgiwf</bpmn:outgoing>
@@ -280,6 +286,9 @@ annual_salary = float(annual_salary_str)</bpmn:script>
       <bpmndi:BPMNEdge id="Flow_1n259k2_di" bpmnElement="Flow_1n259k2">
         <di:waypoint x="1270" y="285" />
         <di:waypoint x="1270" y="332" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1278" y="306" width="15" height="14" />
+        </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1bvgiwf_di" bpmnElement="Flow_1bvgiwf">
         <di:waypoint x="1270" y="368" />
