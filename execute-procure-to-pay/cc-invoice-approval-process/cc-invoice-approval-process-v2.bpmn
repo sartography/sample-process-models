@@ -55,7 +55,6 @@
         <bpmn:flowNodeRef>Activity_1colhao</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_1u89kok</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_1r3yh2kx</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Activity_1864qj2</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_0rae8g6</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_1ucvkk4</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_1kgaqpf</bpmn:flowNodeRef>
@@ -65,6 +64,7 @@
         <bpmn:flowNodeRef>Event_169on0z</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_10p5t0r</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_0twki30</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_1864qj2</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_1b7abal" name="Project Lead">
         <bpmn:flowNodeRef>Activity_06b32ar</bpmn:flowNodeRef>
@@ -251,7 +251,7 @@ else:
     <bpmn:dataObject id="enumerations_list" />
     <bpmn:exclusiveGateway id="Gateway_0wk5se9">
       <bpmn:incoming>Flow_1pefcgv</bpmn:incoming>
-      <bpmn:incoming>Flow_1wfxajw</bpmn:incoming>
+      <bpmn:incoming>Flow_1strwr5</bpmn:incoming>
       <bpmn:outgoing>Flow_17vkjgc</bpmn:outgoing>
     </bpmn:exclusiveGateway>
     <bpmn:manualTask id="Activity_show_errors" name="Show Error(s)">
@@ -293,62 +293,7 @@ isCurrentUser = True</spiffworkflow:preScript>
     <bpmn:sequenceFlow id="Flow_0z51hpb" sourceRef="Activity_07oyzdx" targetRef="Gateway_0dqj39f" />
     <bpmn:sequenceFlow id="Flow_1xvt99y" sourceRef="Gateway_0dqj39f" targetRef="Event_1vi3um1" />
     <bpmn:sequenceFlow id="Flow_06mfxze" sourceRef="Event_169on0z" targetRef="Gateway_0dqj39f" />
-    <bpmn:subProcess id="Activity_1864qj2" name="MVP Demo Preload">
-      <bpmn:startEvent id="Event_1qh3xrh">
-        <bpmn:outgoing>Flow_0pwvb62</bpmn:outgoing>
-      </bpmn:startEvent>
-      <bpmn:sequenceFlow id="Flow_0pwvb62" sourceRef="Event_1qh3xrh" targetRef="Activity_0xrsduh" />
-      <bpmn:userTask id="Activity_0xrsduh" name="Select Configuration">
-        <bpmn:extensionElements>
-          <spiffworkflow:properties>
-            <spiffworkflow:property name="formUiSchemaFilename" value="demo-preload_UISchema.json" />
-            <spiffworkflow:property name="formJsonSchemaFilename" value="demo-preload_JSONSchema.json" />
-          </spiffworkflow:properties>
-        </bpmn:extensionElements>
-        <bpmn:incoming>Flow_0pwvb62</bpmn:incoming>
-        <bpmn:outgoing>Flow_0z8ory2</bpmn:outgoing>
-      </bpmn:userTask>
-      <bpmn:sequenceFlow id="Flow_0z8ory2" sourceRef="Activity_0xrsduh" targetRef="Activity_0rww1ya" />
-      <bpmn:scriptTask id="Activity_0rww1ya" name="Set Form Data">
-        <bpmn:incoming>Flow_0z8ory2</bpmn:incoming>
-        <bpmn:outgoing>Flow_1hebd4s</bpmn:outgoing>
-        <bpmn:script>invoice = {}
-
-# no numbers in contributor name validation
-if "  Number in contributor name" in ValidationChoices:
-    invoice["contributorName"] = "Harmee5 Singh"
-else:
-    invoice["contributorName"] = "Harmeet Singh"
-
-# Invoice amount number of decimals validation
-if "  Too many decimals in invoice amount" in ValidationChoices:
-    if scenarioChoices == "Correct invoice amount":
-        invoice["invoiceAmount"] = 10000.001
-    else:
-        invoice["invoiceAmount"] = 10001.001
-else:
-    if scenarioChoices == "Correct invoice amount":
-        invoice["invoiceAmount"] = 10000.00
-    else:
-        invoice["invoiceAmount"] = 10001.00
-
-# Due date validation
-if "  Due date before today's date" in ValidationChoices:
-    invoice["dueDate"] = "2021-12-12"
-else:
-    invoice["dueDate"] = "2022-12-12"
-
-# Set remainder of form fields
-invoice["contributorId"] = 12
-invoice["invoiceId"] = 1234
-invoice["invoiceCurrency"] = "AUD"</bpmn:script>
-      </bpmn:scriptTask>
-      <bpmn:endEvent id="Event_0kmx0m7">
-        <bpmn:incoming>Flow_1hebd4s</bpmn:incoming>
-      </bpmn:endEvent>
-      <bpmn:sequenceFlow id="Flow_1hebd4s" sourceRef="Activity_0rww1ya" targetRef="Event_0kmx0m7" />
-    </bpmn:subProcess>
-    <bpmn:sequenceFlow id="Flow_1wfxajw" sourceRef="Activity_1colhao" targetRef="Gateway_0wk5se9" />
+    <bpmn:sequenceFlow id="Flow_1wfxajw" sourceRef="Activity_1colhao" targetRef="Activity_1864qj2" />
     <bpmn:sequenceFlow id="Flow_0cj1m0h" sourceRef="Delete_File" targetRef="Activity_0gkpa9s" />
     <bpmn:intermediateThrowEvent id="Event_15y55nw" name="Invoice is submitted">
       <bpmn:documentation>Process milestone should update the process metadata field “milestone reached”</bpmn:documentation>
@@ -1057,6 +1002,64 @@ if not(svc_is_due_date_after):
     </bpmn:scriptTask>
     <bpmn:dataObjectReference id="DataObjectReference_05liqvr" name="resp_BambooUserInfo" dataObjectRef="resp_BambooUserInfo" />
     <bpmn:dataObject id="resp_BambooUserInfo" />
+    <bpmn:subProcess id="Activity_1864qj2" name="MVP Demo Preload">
+      <bpmn:incoming>Flow_1wfxajw</bpmn:incoming>
+      <bpmn:outgoing>Flow_1strwr5</bpmn:outgoing>
+      <bpmn:startEvent id="Event_1qh3xrh">
+        <bpmn:outgoing>Flow_0pwvb62</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:sequenceFlow id="Flow_0pwvb62" sourceRef="Event_1qh3xrh" targetRef="Activity_0xrsduh" />
+      <bpmn:userTask id="Activity_0xrsduh" name="Select Configuration">
+        <bpmn:extensionElements>
+          <spiffworkflow:properties>
+            <spiffworkflow:property name="formUiSchemaFilename" value="demo-preload_UISchema.json" />
+            <spiffworkflow:property name="formJsonSchemaFilename" value="demo-preload_JSONSchema.json" />
+          </spiffworkflow:properties>
+        </bpmn:extensionElements>
+        <bpmn:incoming>Flow_0pwvb62</bpmn:incoming>
+        <bpmn:outgoing>Flow_0z8ory2</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:sequenceFlow id="Flow_0z8ory2" sourceRef="Activity_0xrsduh" targetRef="Activity_0rww1ya" />
+      <bpmn:scriptTask id="Activity_0rww1ya" name="Set Form Data">
+        <bpmn:incoming>Flow_0z8ory2</bpmn:incoming>
+        <bpmn:outgoing>Flow_1hebd4s</bpmn:outgoing>
+        <bpmn:script>invoice = {}
+
+# no numbers in contributor name validation
+if "  Number in contributor name" in ValidationChoices:
+    invoice["contributorName"] = "Harmee5 Singh"
+else:
+    invoice["contributorName"] = "Harmeet Singh"
+
+# Invoice amount number of decimals validation
+if "  Too many decimals in invoice amount" in ValidationChoices:
+    if scenarioChoices == "Correct invoice amount":
+        invoice["invoiceAmount"] = 10000.001
+    else:
+        invoice["invoiceAmount"] = 10001.001
+else:
+    if scenarioChoices == "Correct invoice amount":
+        invoice["invoiceAmount"] = 10000.00
+    else:
+        invoice["invoiceAmount"] = 10001.00
+
+# Due date validation
+if "  Due date before today's date" in ValidationChoices:
+    invoice["dueDate"] = "2021-12-12"
+else:
+    invoice["dueDate"] = "2022-12-12"
+
+# Set remainder of form fields
+invoice["contributorId"] = 12
+invoice["invoiceId"] = 1234
+invoice["invoiceCurrency"] = "AUD"</bpmn:script>
+      </bpmn:scriptTask>
+      <bpmn:endEvent id="Event_0kmx0m7">
+        <bpmn:incoming>Flow_1hebd4s</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:sequenceFlow id="Flow_1hebd4s" sourceRef="Activity_0rww1ya" targetRef="Event_0kmx0m7" />
+    </bpmn:subProcess>
+    <bpmn:sequenceFlow id="Flow_1strwr5" sourceRef="Activity_1864qj2" targetRef="Gateway_0wk5se9" />
   </bpmn:process>
   <bpmn:process id="Process_cc_invoice_approval_process_v2_c" isExecutable="false" />
   <bpmn:process id="Process_cc_invoice_approval_process_v2_d" isExecutable="false" />
@@ -1137,10 +1140,6 @@ if not(svc_is_due_date_after):
         <bpmndi:BPMNLabel>
           <dc:Bounds x="410" y="555" width="22" height="14" />
         </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0l6st3d_di" bpmnElement="Activity_1864qj2">
-        <dc:Bounds x="870" y="600" width="100" height="80" />
-        <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_15y55nw_di" bpmnElement="Event_15y55nw">
         <dc:Bounds x="3192" y="512" width="36" height="36" />
@@ -1329,6 +1328,10 @@ if not(svc_is_due_date_after):
         <bpmndi:BPMNLabel>
           <dc:Bounds x="586" y="418" width="89" height="27" />
         </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0l6st3d_di" bpmnElement="Activity_1864qj2">
+        <dc:Bounds x="870" y="490" width="100" height="80" />
+        <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_08bsj2m_di" bpmnElement="Event_09q0ym0">
         <dc:Bounds x="3692" y="892" width="36" height="36" />
@@ -1569,7 +1572,9 @@ if not(svc_is_due_date_after):
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1wfxajw_di" bpmnElement="Flow_1wfxajw">
         <di:waypoint x="790" y="532" />
-        <di:waypoint x="1045" y="532" />
+        <di:waypoint x="830" y="532" />
+        <di:waypoint x="830" y="530" />
+        <di:waypoint x="870" y="530" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0cj1m0h_di" bpmnElement="Flow_0cj1m0h">
         <di:waypoint x="2960" y="530" />
@@ -1578,6 +1583,10 @@ if not(svc_is_due_date_after):
       <bpmndi:BPMNEdge id="Flow_06amgv2_di" bpmnElement="Flow_06amgv2">
         <di:waypoint x="1760" y="532" />
         <di:waypoint x="1840" y="532" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1strwr5_di" bpmnElement="Flow_1strwr5">
+        <di:waypoint x="970" y="531" />
+        <di:waypoint x="1045" y="532" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="Participant_0a8arrz_di" bpmnElement="Participant_0a8arrz" isHorizontal="true">
         <dc:Bounds x="2540" y="1290" width="830" height="80" />
