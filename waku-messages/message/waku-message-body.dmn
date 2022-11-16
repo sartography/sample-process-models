@@ -12,6 +12,16 @@
           <text>task_id</text>
         </inputExpression>
       </input>
+      <input id="InputClause_1ehumxj" label="PL Comments?" biodi:width="150">
+        <inputExpression id="LiteralExpression_0f6zpyb" typeRef="boolean">
+          <text>len_project_lead_comments &gt; 0</text>
+        </inputExpression>
+      </input>
+      <input id="InputClause_0vbjfl3" label="Finance Comments?" biodi:width="174">
+        <inputExpression id="LiteralExpression_16asvyu" typeRef="boolean">
+          <text>len_finance_comments &gt; 0</text>
+        </inputExpression>
+      </input>
       <output id="output_1" label="Message Body" name="waku_message_body" typeRef="string" biodi:width="532" />
       <rule id="DecisionRule_05kyeu8">
         <inputEntry id="UnaryTests_1bdf6i0">
@@ -19,6 +29,12 @@
         </inputEntry>
         <inputEntry id="UnaryTests_1w8fhi9">
           <text>"waku_invoice_submitted"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1wlj0dq">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_143z5xs">
+          <text></text>
         </inputEntry>
         <outputEntry id="LiteralExpression_1h5ezs8">
           <text>"Thanks for submitting your invoice " + current_user_extras["first_name"] + ".  We will keep you updated on the next steps."</text>
@@ -31,6 +47,12 @@
         <inputEntry id="UnaryTests_09sdx7c">
           <text>"waku_payment_pending_ismatch"</text>
         </inputEntry>
+        <inputEntry id="UnaryTests_1oj9srs">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0tcjf42">
+          <text></text>
+        </inputEntry>
         <outputEntry id="LiteralExpression_1v5nnup">
           <text>"Hi " + current_user_extras["first_name"] + ", your invoice has been approved by Finance. It will be paid in the next pay run."</text>
         </outputEntry>
@@ -42,6 +64,12 @@
         <inputEntry id="UnaryTests_1m5ktce">
           <text>"waku_payment_pending_not_ismatch"</text>
         </inputEntry>
+        <inputEntry id="UnaryTests_04rpal7">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1myyfff">
+          <text></text>
+        </inputEntry>
         <outputEntry id="LiteralExpression_1yus5ql">
           <text>"Hi " + current_user_extras["first_name"] + ", your invoice has been approved by your Project Lead and Finance. It will be paid in the next pay run."</text>
         </outputEntry>
@@ -51,7 +79,13 @@
           <text>"execute-procure-to-pay/cc-invoice-approval-process"</text>
         </inputEntry>
         <inputEntry id="UnaryTests_0br4fie">
-          <text>"waku_invoice_rejected-Project_Lead"</text>
+          <text>"waku_invoice_rejected"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1rqyjru">
+          <text>True</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0b1859y">
+          <text></text>
         </inputEntry>
         <outputEntry id="LiteralExpression_19448fp">
           <text>"Hi " + current_user_extras["first_name"] + ", your invoice has been rejected by your Project Lead. The reason specified for the rejection is: " + invoice.commentsProjectLead</text>
@@ -62,7 +96,13 @@
           <text>"execute-procure-to-pay/cc-invoice-approval-process"</text>
         </inputEntry>
         <inputEntry id="UnaryTests_1hnyfo7">
-          <text>"waku_invoice_rejected-Finance"</text>
+          <text>"waku_invoice_rejected"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1xqwyfp">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0zpo3f1">
+          <text>True</text>
         </inputEntry>
         <outputEntry id="LiteralExpression_0eqnx58">
           <text>"Hi " + current_user_extras["first_name"] + ", your invoice has been rejected by Finance. The reason specified for the rejection is: " + invoice.commentsFinance</text>
@@ -75,6 +115,12 @@
         <inputEntry id="UnaryTests_0f4sig0">
           <text>"waku_notify_finance"</text>
         </inputEntry>
+        <inputEntry id="UnaryTests_0pnbqhi">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0inxcbr">
+          <text></text>
+        </inputEntry>
         <outputEntry id="LiteralExpression_0ogytc4">
           <text>"Finance, an invoice has been submitted and awaits your approval.\nSubmitted by: " + current_user_extras["full_name"]</text>
         </outputEntry>
@@ -85,6 +131,12 @@
         </inputEntry>
         <inputEntry id="UnaryTests_1ddqyad">
           <text>"waku_notify_project_lead"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1czuxkj">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1xnft2a">
+          <text></text>
         </inputEntry>
         <outputEntry id="LiteralExpression_0cm3da4">
           <text>"Project Lead, an invoice has been submitted and awaits your approval.\nSubmitted by: " + current_user_extras["full_name"]</text>
@@ -97,6 +149,12 @@
         <inputEntry id="UnaryTests_0kn31ob">
           <text>"waku_no_team_lead_response"</text>
         </inputEntry>
+        <inputEntry id="UnaryTests_0tqysdv">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0z9ts30">
+          <text></text>
+        </inputEntry>
         <outputEntry id="LiteralExpression_0y4rab0">
           <text>"Hi " + current_user_extras["first_name"] + ", your invoice has been rejected. The reason specified for the rejection is: [" + invoice.commentsProjectLead + "]. Please get in touch with your Project Lead to discuss this further."</text>
         </outputEntry>
@@ -108,6 +166,12 @@
         <inputEntry id="UnaryTests_0j8l83a">
           <text></text>
         </inputEntry>
+        <inputEntry id="UnaryTests_1j4007c">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0z3ugao">
+          <text></text>
+        </inputEntry>
         <outputEntry id="LiteralExpression_0pqtgnn">
           <text>"Something is wrong with the Message Body text.  Contact Support"</text>
         </outputEntry>
@@ -117,6 +181,12 @@
           <text></text>
         </inputEntry>
         <inputEntry id="UnaryTests_1a9kee1">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0hkiqwh">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_175nxak">
           <text></text>
         </inputEntry>
         <outputEntry id="LiteralExpression_1qrzv1j">
