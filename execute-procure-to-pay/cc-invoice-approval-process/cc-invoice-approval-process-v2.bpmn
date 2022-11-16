@@ -544,6 +544,21 @@ __________________________________________________________________________
       </bpmn:timerEventDefinition>
     </bpmn:intermediateCatchEvent>
     <bpmn:subProcess id="Activity_0rae8g6" name="Waku Message: Invoice Rejected">
+      <bpmn:extensionElements>
+        <spiffworkflow:preScript># Check if there are Project Lead and/or Finance comments
+is isMatch:
+    len_finance_comments = len(invoice["commentsFinance"].strip())
+    len_project_lead_comments = 0
+else:
+    len_finance_comments = len(invoice["commentsFinance"].strip())
+    len_project_lead_comments = len(invoice["commentsProjectLead"].strip())
+
+# Set which message
+if isApprovalTimer:
+    task_id = "waku_no_team_lead_response"
+else:
+    task_id = "waku_invoice_rejected"</spiffworkflow:preScript>
+      </bpmn:extensionElements>
       <bpmn:incoming>Flow_0bfs2xe</bpmn:incoming>
       <bpmn:outgoing>Flow_0c0c9mw</bpmn:outgoing>
       <bpmn:dataOutputAssociation id="DataOutputAssociation_0b96bb7">
