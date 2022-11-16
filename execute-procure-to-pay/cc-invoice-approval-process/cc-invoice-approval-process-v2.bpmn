@@ -559,35 +559,9 @@ __________________________________________________________________________
       </bpmn:startEvent>
       <bpmn:callActivity id="Activity_0eh4so1" name="Call Waku Messages: Message" calledElement="Waku_Messages_Message">
         <bpmn:extensionElements>
-          <spiffworkflow:preScript># Check if there are Project Lead and/or Finance comments
-if isMatch:
-    len_finance_comments = len(invoice["commentsFinance"].strip())
-    len_project_lead_comments = 0
-else:
-    len_finance_comments = len(invoice["commentsFinance"].strip())
-    len_project_lead_comments = len(invoice["commentsProjectLead"].strip())
-
-# Set which message
-if isApprovalTimer:
-    task_id = "waku_no_team_lead_response"
-else:
-    task_id = "waku_invoice_rejected"
-
-# Set Message should not be set
-isSetMessage = True
-
-# Set Time Zone
-time_zone = current_user_extras["time_zone"]
-
-# Set Time Format
-time_format = current_user_extras["time_format"]
-
-# Set Date Format
-date_format = current_user_extras["date_format"]
-
-test = process_info["process_model_identifier"]</spiffworkflow:preScript>
+          <spiffworkflow:preScript></spiffworkflow:preScript>
         </bpmn:extensionElements>
-        <bpmn:incoming>Flow_14x1v12</bpmn:incoming>
+        <bpmn:incoming>Flow_0k8m0l1</bpmn:incoming>
         <bpmn:outgoing>Flow_1bnxkd6</bpmn:outgoing>
       </bpmn:callActivity>
       <bpmn:endEvent id="Event_0ihhn4w">
@@ -606,9 +580,45 @@ test = process_info["process_model_identifier"]</spiffworkflow:preScript>
         <bpmn:incoming>Flow_1bnxkd6</bpmn:incoming>
         <bpmn:outgoing>Flow_01i59kw</bpmn:outgoing>
       </bpmn:serviceTask>
-      <bpmn:sequenceFlow id="Flow_14x1v12" sourceRef="Event_0ialhor" targetRef="Activity_0eh4so1" />
+      <bpmn:sequenceFlow id="Flow_14x1v12" sourceRef="Event_0ialhor" targetRef="Activity_1g94qqg" />
       <bpmn:sequenceFlow id="Flow_01i59kw" sourceRef="waku_invoice_rejected" targetRef="Event_0ihhn4w" />
       <bpmn:sequenceFlow id="Flow_1bnxkd6" sourceRef="Activity_0eh4so1" targetRef="waku_invoice_rejected" />
+      <bpmn:sequenceFlow id="Flow_0k8m0l1" sourceRef="Activity_1g94qqg" targetRef="Activity_0eh4so1" />
+      <bpmn:scriptTask id="Activity_1g94qqg" name="Set Message Variables">
+        <bpmn:incoming>Flow_14x1v12</bpmn:incoming>
+        <bpmn:outgoing>Flow_0k8m0l1</bpmn:outgoing>
+        <bpmn:script># Check if there are Project Lead and/or Finance comments
+if isMatch:
+    len_finance_comments = len(invoice["commentsFinance"].strip())
+    len_project_lead_comments = 0
+else:
+    len_finance_comments = len(invoice["commentsFinance"].strip())
+    len_project_lead_comments = len(invoice["commentsProjectLead"].strip())
+
+# Set which message
+if isApprovalTimer:
+    task_id = "waku_no_team_lead_response"
+else:
+    if isMatch:
+        task_id = "waku_invoice_rejected_ismatch"
+    else:
+        if invoice["isProjectLeadApprove"]:
+            task_id = "waku_invoice_rejected_not_ismatch_pl_approve"
+        else:
+            task_id = "waku_invoice_rejected_not_ismatch_not_pl_approve"
+
+# Set Message should not be set
+isSetMessage = True
+
+# Set Time Zone
+time_zone = current_user_extras["time_zone"]
+
+# Set Time Format
+time_format = current_user_extras["time_format"]
+
+# Set Date Format
+date_format = current_user_extras["date_format"]</bpmn:script>
+      </bpmn:scriptTask>
     </bpmn:subProcess>
     <bpmn:subProcess id="Activity_1ucvkk4" name="Waku Message: Notify Project Lead">
       <bpmn:incoming>Flow_0kngdw4</bpmn:incoming>
@@ -1899,9 +1909,6 @@ invoice["invoiceCurrency"] = "AUD"</bpmn:script>
   </bpmndi:BPMNDiagram>
   <bpmndi:BPMNDiagram id="BPMNDiagram_0pf7nxs">
     <bpmndi:BPMNPlane id="BPMNPlane_0obk4d1" bpmnElement="Activity_0rae8g6">
-      <bpmndi:BPMNShape id="BPMNShape_0md80al" bpmnElement="Event_0ialhor">
-        <dc:Bounds x="132" y="202" width="36" height="36" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="BPMNShape_0u0hy9z" bpmnElement="Activity_0eh4so1">
         <dc:Bounds x="250" y="180" width="100" height="80" />
         <bpmndi:BPMNLabel />
@@ -1913,9 +1920,15 @@ invoice["invoiceCurrency"] = "AUD"</bpmn:script>
         <dc:Bounds x="430" y="180" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_0md80al" bpmnElement="Event_0ialhor">
+        <dc:Bounds x="-28" y="202" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0sjw2dv_di" bpmnElement="Activity_1g94qqg">
+        <dc:Bounds x="70" y="180" width="100" height="80" />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="BPMNEdge_04mzj46" bpmnElement="Flow_14x1v12">
-        <di:waypoint x="168" y="220" />
-        <di:waypoint x="250" y="220" />
+        <di:waypoint x="8" y="220" />
+        <di:waypoint x="70" y="220" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="BPMNEdge_16ht4ok" bpmnElement="Flow_01i59kw">
         <di:waypoint x="530" y="220" />
@@ -1924,6 +1937,10 @@ invoice["invoiceCurrency"] = "AUD"</bpmn:script>
       <bpmndi:BPMNEdge id="Flow_1bnxkd6_di" bpmnElement="Flow_1bnxkd6">
         <di:waypoint x="350" y="220" />
         <di:waypoint x="430" y="220" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0k8m0l1_di" bpmnElement="Flow_0k8m0l1">
+        <di:waypoint x="170" y="220" />
+        <di:waypoint x="250" y="220" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
