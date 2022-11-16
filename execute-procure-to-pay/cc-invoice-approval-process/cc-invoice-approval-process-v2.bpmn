@@ -556,8 +556,12 @@ __________________________________________________________________________
       <bpmn:callActivity id="Activity_0eh4so1" name="Call Waku Messages: Message" calledElement="Waku_Messages_Message">
         <bpmn:extensionElements>
           <spiffworkflow:preScript># Check if there are Project Lead and/or Finance comments
-len_project_lead_comments = len(invoice["commentsProjectLead"].strip())
-len_finance_comments = len(invoice["commentsFinance"].strip())
+is isMatch:
+    len_finance_comments = len(invoice["commentsFinance"].strip())
+    len_project_lead_comments = 0
+else:
+    len_finance_comments = len(invoice["commentsFinance"].strip())
+    len_project_lead_comments = len(invoice["commentsProjectLead"].strip())
 
 # Set which message
 if isApprovalTimer:
