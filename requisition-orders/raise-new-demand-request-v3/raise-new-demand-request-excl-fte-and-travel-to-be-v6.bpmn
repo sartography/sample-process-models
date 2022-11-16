@@ -87,7 +87,7 @@ Process Description - WIP</bpmn:documentation>
     </bpmn:startEvent>
     <bpmn:userTask id="Activity_05le46k" name="Submit a New Demand request">
       <bpmn:extensionElements>
-        <spiffworkflow:instructionsForEndUser></spiffworkflow:instructionsForEndUser>
+        <spiffworkflow:instructionsForEndUser />
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_1eob721</bpmn:incoming>
       <bpmn:incoming>Flow_13rln55</bpmn:incoming>
@@ -200,7 +200,6 @@ Process Description - WIP</bpmn:documentation>
         <bpmn:targetRef>Property_1v0bm2h</bpmn:targetRef>
       </bpmn:dataInputAssociation>
     </bpmn:userTask>
-    <bpmn:dataObjectReference id="DataObjectReference_0x2nl9m" name="New_demand_request" dataObjectRef="New_demand_request" />
     <bpmn:exclusiveGateway id="Gateway_14xgyev" name="SMEs review required?">
       <bpmn:incoming>Flow_01oqxz7</bpmn:incoming>
       <bpmn:outgoing>Flow_0p6nx7g</bpmn:outgoing>
@@ -292,7 +291,6 @@ Process Description - WIP</bpmn:documentation>
       <bpmn:outgoing>Flow_1bs0buf</bpmn:outgoing>
     </bpmn:serviceTask>
     <bpmn:dataObjectReference id="DataObjectReference_0jyn7o6" name="New_demand_request" dataObjectRef="New_demand_request" />
-    <bpmn:dataObject id="New_demand_request" />
     <bpmn:endEvent id="Event_1fsb3by" name="The Request has been Approved">
       <bpmn:incoming>Flow_1bs0buf</bpmn:incoming>
     </bpmn:endEvent>
@@ -502,6 +500,8 @@ Process Description - WIP</bpmn:documentation>
     <bpmn:endEvent id="Event_1twdgnx" name="The Request has been Rejected">
       <bpmn:incoming>Flow_0xnqptz</bpmn:incoming>
     </bpmn:endEvent>
+    <bpmn:dataObjectReference id="DataObjectReference_0x2nl9m" name="New_demand_request" dataObjectRef="New_demand_request" />
+    <bpmn:dataObject id="New_demand_request" />
     <bpmn:textAnnotation id="TextAnnotation_0zy71k9">
       <bpmn:text>Orgdata from BBHR, Categories from a DB, Currencies from Xero</bpmn:text>
     </bpmn:textAnnotation>
@@ -542,6 +542,10 @@ Process Description - WIP</bpmn:documentation>
     </bpmn:textAnnotation>
     <bpmn:association id="Association_1778mrp" sourceRef="Activity_08xl52p" targetRef="TextAnnotation_0qq1kr8" />
     <bpmn:association id="Association_1m8ms1t" sourceRef="Activity_1oul44i" targetRef="TextAnnotation_004z4vr" />
+    <bpmn:textAnnotation id="TextAnnotation_0871329">
+      <bpmn:text>Request Additional Budget if required</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:association id="Association_1n2z306" sourceRef="Activity_0gpea7r" targetRef="TextAnnotation_0871329" />
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_11kan0p">
@@ -575,6 +579,10 @@ Process Description - WIP</bpmn:documentation>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Lane_1mrq305_di" bpmnElement="Lane_1mrq305" isHorizontal="true">
         <dc:Bounds x="612" y="310" width="2548" height="560" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="TextAnnotation_0871329_di" bpmnElement="TextAnnotation_0871329">
+        <dc:Bounds x="1590" y="1080" width="120" height="40" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
@@ -616,12 +624,6 @@ Process Description - WIP</bpmn:documentation>
       <bpmndi:BPMNShape id="Activity_1dg2cxw_di" bpmnElement="Activity_14fif5h">
         <dc:Bounds x="1220" y="1165" width="100" height="80" />
         <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="BPMNShape_16p08w5" bpmnElement="DataObjectReference_0x2nl9m">
-        <dc:Bounds x="1152" y="1180" width="36" height="50" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="1127" y="1147" width="90" height="27" />
-        </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Gateway_14xgyev_di" bpmnElement="Gateway_14xgyev" isMarkerVisible="true">
         <dc:Bounds x="2035" y="1180" width="50" height="50" />
@@ -850,6 +852,16 @@ Process Description - WIP</bpmn:documentation>
         <dc:Bounds x="2140" y="2020" width="100" height="30" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_16p08w5" bpmnElement="DataObjectReference_0x2nl9m">
+        <dc:Bounds x="1132" y="1180" width="36" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1107" y="1147" width="90" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Association_1n2z306_di" bpmnElement="Association_1n2z306">
+        <di:waypoint x="1602" y="1165" />
+        <di:waypoint x="1626" y="1120" />
+      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0mbb848_di" bpmnElement="Flow_0mbb848">
         <di:waypoint x="708" y="500" />
         <di:waypoint x="780" y="500" />
@@ -881,7 +893,7 @@ Process Description - WIP</bpmn:documentation>
         <di:waypoint x="1445" y="1205" />
         <di:waypoint x="1530" y="1205" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="1434" y="1178" width="48" height="14" />
+          <dc:Bounds x="1456" y="1183" width="48" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_01oqxz7_di" bpmnElement="Flow_01oqxz7">
@@ -1208,7 +1220,7 @@ Process Description - WIP</bpmn:documentation>
         <di:waypoint x="1010" y="460" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="DataInputAssociation_190nkzq_di" bpmnElement="DataInputAssociation_190nkzq">
-        <di:waypoint x="1188" y="1205" />
+        <di:waypoint x="1168" y="1205" />
         <di:waypoint x="1220" y="1205" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="DataOutputAssociation_04itf36_di" bpmnElement="DataOutputAssociation_04itf36">
