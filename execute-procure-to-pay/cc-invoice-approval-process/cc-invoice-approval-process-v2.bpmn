@@ -565,22 +565,18 @@ __________________________________________________________________________
       <bpmn:scriptTask id="Activity_1g94qqg" name="Set Message Variables">
         <bpmn:incoming>Flow_14x1v12</bpmn:incoming>
         <bpmn:outgoing>Flow_0k8m0l1</bpmn:outgoing>
-        <bpmn:script># Check if there are Project Lead and/or Finance comments
-if isMatch:
-    len_finance_comments = len(invoice["commentsFinance"].strip())
-    len_project_lead_comments = 0
-else:
-    len_finance_comments = len(invoice["commentsFinance"].strip())
-    len_project_lead_comments = len(invoice["commentsProjectLead"].strip())
-
-# Set which message
+        <bpmn:script># Set which message and check if there are Project Lead and/or Finance comments
 if isApprovalTimer:
     task_id = "waku_no_team_lead_response"
 else:
     if isMatch:
+        len_finance_comments = len(invoice["commentsFinance"].strip())
+        len_project_lead_comments = 0
         task_id = "waku_invoice_rejected_ismatch"
     else:
+        len_project_lead_comments = len(invoice["commentsProjectLead"].strip())
         if invoice["isProjectLeadApprove"]:
+            len_finance_comments = len(invoice["commentsFinance"].strip())
             task_id = "waku_invoice_rejected_not_ismatch_pl_approve"
         else:
             task_id = "waku_invoice_rejected_not_ismatch_not_pl_approve"
@@ -1123,15 +1119,6 @@ invoice["invoiceCurrency"] = "AUD"</bpmn:script>
           <dc:Bounds x="1520" y="567" width="60" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0ejn04g_di" bpmnElement="Activity_0fq1nb4">
-        <dc:Bounds x="4750" y="650" width="100" height="80" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="DataObjectReference_1g4gzsx_di" bpmnElement="DataObjectReference_1g4gzsx">
-        <dc:Bounds x="4902" y="705" width="36" height="50" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="4877" y="751" width="85" height="27" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0z13hw3_di" bpmnElement="SubProcess_Data_validation_rules">
         <dc:Bounds x="1350" y="492" width="100" height="80" />
         <bpmndi:BPMNLabel />
@@ -1350,6 +1337,15 @@ invoice["invoiceCurrency"] = "AUD"</bpmn:script>
       <bpmndi:BPMNShape id="Activity_0l6st3d_di" bpmnElement="Activity_1864qj2">
         <dc:Bounds x="870" y="620" width="100" height="80" />
         <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0ejn04g_di" bpmnElement="Activity_0fq1nb4">
+        <dc:Bounds x="4750" y="650" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DataObjectReference_1g4gzsx_di" bpmnElement="DataObjectReference_1g4gzsx">
+        <dc:Bounds x="4902" y="705" width="36" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="4877" y="751" width="85" height="27" />
+        </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_08bsj2m_di" bpmnElement="Event_09q0ym0">
         <dc:Bounds x="3692" y="892" width="36" height="36" />
@@ -1616,10 +1612,6 @@ invoice["invoiceCurrency"] = "AUD"</bpmn:script>
         <di:waypoint x="580" y="490" />
         <di:waypoint x="615" y="415" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="DataOutputAssociation_076hmxy_di" bpmnElement="DataOutputAssociation_076hmxy">
-        <di:waypoint x="4850" y="707" />
-        <di:waypoint x="4902" y="725" />
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="DataOutputAssociation_0b96bb7_di" bpmnElement="DataOutputAssociation_0b96bb7">
         <di:waypoint x="4090" y="285" />
         <di:waypoint x="4008" y="261" />
@@ -1635,6 +1627,10 @@ invoice["invoiceCurrency"] = "AUD"</bpmn:script>
       <bpmndi:BPMNEdge id="DataOutputAssociation_04ohdyt_di" bpmnElement="DataOutputAssociation_04ohdyt">
         <di:waypoint x="3118" y="490" />
         <di:waypoint x="3188" y="395" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DataOutputAssociation_076hmxy_di" bpmnElement="DataOutputAssociation_076hmxy">
+        <di:waypoint x="4850" y="707" />
+        <di:waypoint x="4902" y="725" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Association_1eygti7_di" bpmnElement="Association_1eygti7">
         <di:waypoint x="1086" y="-70" />
