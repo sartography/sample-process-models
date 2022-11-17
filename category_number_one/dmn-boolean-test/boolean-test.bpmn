@@ -22,24 +22,22 @@ b = 1</bpmn:script>
     <bpmn:sequenceFlow id="Flow_1fddirq" sourceRef="Activity_15gcg70" targetRef="Activity_0g7tg9d" />
     <bpmn:manualTask id="Activity_1pldlic" name="Show Result">
       <bpmn:extensionElements>
-        <spiffworkflow:instructionsForEndUser>**Input Column Expressions**  
-*Col1:* a == 0  
-*Col2:* a &gt; 0  
-*Col3:* a &lt; 0  
-*Col2:* a != 0 
- 
-**Rules**  
-| Rule | a == 0 | a &gt; 0 | a &lt; 0 | a != 0 |
+        <spiffworkflow:instructionsForEndUser>**Table Rules**  
+| Table - Rule | a == 0 | a &gt; 0 | a &lt; 0 | a != 0 |
 |------|-------|-------|-------|------|
 | 1 - a equals zero | True | False | False | False |
 | 2 - a is greater than zero | False | True | False | True |
-| 3 - a is less than zero | False | True | False | True |
-| 4 - nothing matches | - | - | - | - |
+| 3 - a is less than zero | False | False | True | True |
+| 4 - a does not equal zero | False | True | True | True |
 
-**Input Data**  
+**Input**  
 a = {{ a }}  
 
-{{ result }}</spiffworkflow:instructionsForEndUser>
+**Output**  
+*Table 1:* {{ result_table_1 }}  
+*Table 2:* {{ result_table_2 }}  
+*Table 3:* {{ result_table_3 }}  
+*Table 4:* {{ result_table_4 }}  </spiffworkflow:instructionsForEndUser>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_1srt3sj</bpmn:incoming>
       <bpmn:outgoing>Flow_14fc4g0</bpmn:outgoing>
@@ -85,6 +83,12 @@ a = {{ a }}
       <bpmndi:BPMNShape id="Activity_0r9f4b9_di" bpmnElement="Activity_00rqhb1">
         <dc:Bounds x="280" y="137" width="100" height="80" />
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0dvyu8t_di" bpmnElement="Activity_1pldlic">
+        <dc:Bounds x="1150" y="137" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0k1k0cq_di" bpmnElement="Event_0k1k0cq">
+        <dc:Bounds x="1332" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="BPMNShape_057ddmy" bpmnElement="Activity_0g7tg9d">
         <dc:Bounds x="620" y="137" width="100" height="80" />
         <bpmndi:BPMNLabel />
@@ -96,12 +100,6 @@ a = {{ a }}
       <bpmndi:BPMNShape id="BPMNShape_0b9y2n4" bpmnElement="Activity_0ha05ne">
         <dc:Bounds x="970" y="137" width="100" height="80" />
         <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0dvyu8t_di" bpmnElement="Activity_1pldlic">
-        <dc:Bounds x="1150" y="137" width="100" height="80" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_0k1k0cq_di" bpmnElement="Event_0k1k0cq">
-        <dc:Bounds x="1332" y="159" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_0n9fche_di" bpmnElement="Flow_0n9fche">
         <di:waypoint x="215" y="177" />
