@@ -610,10 +610,36 @@ date_format = current_user_extras["date_format"]</bpmn:script>
           <spiffworkflow:preScript># Set who for find
 find_user = userKeycloak
 isCurrentUser = False</spiffworkflow:preScript>
-          <spiffworkflow:postScript />
+          <spiffworkflow:postScript># Set Project Lead Info
+project_lead_info = {}
+project_lead_info["full_name"] = userFullName
+project_lead_info["first_name"] = userFirstName
+project_lead_info["email"] = userEmail
+project_lead_info["time_zone"] = userTimeZone
+project_lead_info["time_format"] = userTimeFormat
+project_lead_info["date_format"] = userDateFormat
+project_lead_info["status_key"] = userStatusKey
+
+# Move to pre-script of Waku Message 
+# Set Time Zone
+time_zone = project_lead_info["time_zone"]
+
+# Set Time Format
+time_format = project_lead_info["time_format"]
+
+# Set Date Format
+time_format = project_lead_info["date_format"]
+
+del(userFullName)
+del(userFirstName)
+del(userEmail)
+del(userTimeZone)
+del(userTimeFormat)
+del(userDateFormat)
+del(userStatusKey)</spiffworkflow:postScript>
         </bpmn:extensionElements>
         <bpmn:incoming>Flow_0bv17h4</bpmn:incoming>
-        <bpmn:outgoing>Flow_1jor3kc</bpmn:outgoing>
+        <bpmn:outgoing>Flow_18vy7ev</bpmn:outgoing>
       </bpmn:callActivity>
       <bpmn:serviceTask id="Activity_1ve0iqu" name="Waku Message: Notify Proejct Lead">
         <bpmn:extensionElements>
@@ -634,12 +660,10 @@ isCurrentUser = False</spiffworkflow:preScript>
 task_id = "waku_notify_project_lead"
 isSetMessage = True</spiffworkflow:preScript>
         </bpmn:extensionElements>
-        <bpmn:incoming>Flow_0cl4jmz</bpmn:incoming>
+        <bpmn:incoming>Flow_18vy7ev</bpmn:incoming>
         <bpmn:outgoing>Flow_0re50gq</bpmn:outgoing>
       </bpmn:callActivity>
       <bpmn:scriptTask id="Activity_1jtcvfx" name="Temp Post Script" scriptFormat="python">
-        <bpmn:incoming>Flow_1jor3kc</bpmn:incoming>
-        <bpmn:outgoing>Flow_0cl4jmz</bpmn:outgoing>
         <bpmn:script># Set Project Lead Info
 project_lead_info = {}
 project_lead_info["full_name"] = userFullName
@@ -687,8 +711,7 @@ isCurrentUser = False</bpmn:script>
       </bpmn:callActivity>
       <bpmn:sequenceFlow id="Flow_01ki4jt" sourceRef="Activity_1982sk7" targetRef="Activity_1r3o0bm" />
       <bpmn:sequenceFlow id="Flow_0bv17h4" sourceRef="Activity_1r3o0bm" targetRef="Activity_00b66gy" />
-      <bpmn:sequenceFlow id="Flow_1jor3kc" sourceRef="Activity_00b66gy" targetRef="Activity_1jtcvfx" />
-      <bpmn:sequenceFlow id="Flow_0cl4jmz" sourceRef="Activity_1jtcvfx" targetRef="Call_Waku_Messages_Message-Notify_Proejct_Lead" />
+      <bpmn:sequenceFlow id="Flow_18vy7ev" sourceRef="Activity_00b66gy" targetRef="Call_Waku_Messages_Message-Notify_Proejct_Lead" />
     </bpmn:subProcess>
     <bpmn:subProcess id="Activity_1kgaqpf" name="Waku Message: Notify Finance">
       <bpmn:incoming>Flow_18xvx8w</bpmn:incoming>
@@ -1744,10 +1767,6 @@ else:
       <bpmndi:BPMNShape id="Activity_0mxxp3b_di" bpmnElement="Call_Waku_Messages_Message-Notify_Proejct_Lead">
         <dc:Bounds x="510" y="380" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_02v8rpk_di" bpmnElement="Activity_1jtcvfx">
-        <dc:Bounds x="330" y="380" width="100" height="80" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0iy0fil_di" bpmnElement="Activity_1982sk7">
         <dc:Bounds x="-170" y="380" width="100" height="80" />
       </bpmndi:BPMNShape>
@@ -1757,6 +1776,10 @@ else:
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1lm44ee_di" bpmnElement="Activity_1r3o0bm">
         <dc:Bounds x="0" y="380" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_02v8rpk_di" bpmnElement="Activity_1jtcvfx">
+        <dc:Bounds x="330" y="500" width="100" height="80" />
+        <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_0re50gq_di" bpmnElement="Flow_0re50gq">
         <di:waypoint x="610" y="420" />
@@ -1778,12 +1801,8 @@ else:
         <di:waypoint x="100" y="420" />
         <di:waypoint x="160" y="420" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_1jor3kc_di" bpmnElement="Flow_1jor3kc">
+      <bpmndi:BPMNEdge id="Flow_18vy7ev_di" bpmnElement="Flow_18vy7ev">
         <di:waypoint x="260" y="420" />
-        <di:waypoint x="330" y="420" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0cl4jmz_di" bpmnElement="Flow_0cl4jmz">
-        <di:waypoint x="430" y="420" />
         <di:waypoint x="510" y="420" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
