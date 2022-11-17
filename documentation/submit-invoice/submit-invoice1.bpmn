@@ -8,7 +8,7 @@
           <spiffworkflow:property name="formJsonSchemaFilename" value="Submit-the-invoice_JSONSchema.json" />
         </spiffworkflow:properties>
       </bpmn:extensionElements>
-      <bpmn:incoming>Flow_1mlodba</bpmn:incoming>
+      <bpmn:incoming>Flow_1nktb7x</bpmn:incoming>
       <bpmn:outgoing>Flow_07p0ofh</bpmn:outgoing>
     </bpmn:userTask>
     <bpmn:serviceTask id="Activity_1hdxh4e" name="Save Invoice Date to DyamoDB">
@@ -27,7 +27,7 @@
       <bpmn:incoming>Flow_18gjso9</bpmn:incoming>
       <bpmn:outgoing>Flow_1c0gxtj</bpmn:outgoing>
     </bpmn:intermediateThrowEvent>
-    <bpmn:subProcess id="Activity_1p94uz7" name="Compare Submitted with Bamboo Salary">
+    <bpmn:subProcess id="Activity_1p94uz7" name="Compare Submitted with Annual Salary">
       <bpmn:incoming>Flow_1c0gxtj</bpmn:incoming>
       <bpmn:outgoing>Flow_1dsayaa</bpmn:outgoing>
       <bpmn:serviceTask id="Activity_0vjn1x3" name="Get Annual Salary">
@@ -111,7 +111,7 @@ annual_salary = float(annual_salary_str)</bpmn:script>
     <bpmn:startEvent id="Event_08s3g0c">
       <bpmn:outgoing>Flow_1nktb7x</bpmn:outgoing>
     </bpmn:startEvent>
-    <bpmn:sequenceFlow id="Flow_1nktb7x" sourceRef="Event_08s3g0c" targetRef="Gateway_0r4645z" />
+    <bpmn:sequenceFlow id="Flow_1nktb7x" sourceRef="Event_08s3g0c" targetRef="Activity_0yes9h3" />
     <bpmn:sequenceFlow id="Flow_1dsayaa" sourceRef="Activity_1p94uz7" targetRef="Gateway_0eaocp0" />
     <bpmn:sequenceFlow id="Flow_07p0ofh" sourceRef="Activity_0yes9h3" targetRef="Activity_1hdxh4e" />
     <bpmn:sequenceFlow id="Flow_060ixxf" sourceRef="Activity_1d3xl48" targetRef="Gateway_1x62lwb" />
@@ -125,11 +125,6 @@ annual_salary = float(annual_salary_str)</bpmn:script>
       <bpmn:incoming>Flow_0bfsldt</bpmn:incoming>
       <bpmn:outgoing>Flow_060ixxf</bpmn:outgoing>
     </bpmn:userTask>
-    <bpmn:exclusiveGateway id="Gateway_0r4645z">
-      <bpmn:incoming>Flow_1nktb7x</bpmn:incoming>
-      <bpmn:outgoing>Flow_1mlodba</bpmn:outgoing>
-    </bpmn:exclusiveGateway>
-    <bpmn:sequenceFlow id="Flow_1mlodba" sourceRef="Gateway_0r4645z" targetRef="Activity_0yes9h3" />
     <bpmn:exclusiveGateway id="Gateway_1x62lwb" name="Approved?" default="Flow_15po8b6">
       <bpmn:incoming>Flow_060ixxf</bpmn:incoming>
       <bpmn:outgoing>Flow_15po8b6</bpmn:outgoing>
@@ -169,17 +164,12 @@ annual_salary = float(annual_salary_str)</bpmn:script>
           <dc:Bounds x="676" y="285" width="88" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_1r9nmyo_di" bpmnElement="Event_1r9nmyo">
-        <dc:Bounds x="1252" y="352" width="36" height="36" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="1158" y="360" width="82" height="27" />
-        </bpmndi:BPMNLabel>
+      <bpmndi:BPMNShape id="Activity_051lqwz_di" bpmnElement="Activity_0jewccr">
+        <dc:Bounds x="1570" y="30" width="100" height="80" />
+        <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_1dggzfv_di" bpmnElement="Event_1dggzfv">
-        <dc:Bounds x="1362" y="352" width="36" height="36" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_0mf9je8_di" bpmnElement="Event_0mf9je8">
-        <dc:Bounds x="1062" y="352" width="36" height="36" />
+      <bpmndi:BPMNShape id="Event_08s3g0c_di" bpmnElement="Event_08s3g0c">
+        <dc:Bounds x="292" y="242" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0kd0p6j_di" bpmnElement="Activity_1p94uz7">
         <dc:Bounds x="780" y="220" width="100" height="80" />
@@ -197,10 +187,6 @@ annual_salary = float(annual_salary_str)</bpmn:script>
           <dc:Bounds x="1338" y="285" width="85" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_051lqwz_di" bpmnElement="Activity_0jewccr">
-        <dc:Bounds x="1430" y="110" width="100" height="80" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Gateway_0eaocp0_di" bpmnElement="Gateway_0eaocp0" isMarkerVisible="true">
         <dc:Bounds x="945" y="235" width="50" height="50" />
         <bpmndi:BPMNLabel>
@@ -210,20 +196,26 @@ annual_salary = float(annual_salary_str)</bpmn:script>
       <bpmndi:BPMNShape id="Event_03qfuyf_di" bpmnElement="Event_03qfuyf">
         <dc:Bounds x="1462" y="242" width="36" height="36" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_08s3g0c_di" bpmnElement="Event_08s3g0c">
-        <dc:Bounds x="152" y="242" width="36" height="36" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0j0s0xr_di" bpmnElement="Activity_1d3xl48">
         <dc:Bounds x="1080" y="220" width="100" height="80" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Gateway_0r4645z_di" bpmnElement="Gateway_0r4645z" isMarkerVisible="true">
-        <dc:Bounds x="255" y="235" width="50" height="50" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Gateway_1x62lwb_di" bpmnElement="Gateway_1x62lwb" isMarkerVisible="true">
         <dc:Bounds x="1245" y="235" width="50" height="50" />
         <bpmndi:BPMNLabel>
           <dc:Bounds x="1243" y="211" width="54" height="14" />
         </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1dggzfv_di" bpmnElement="Event_1dggzfv">
+        <dc:Bounds x="1332" y="342" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1r9nmyo_di" bpmnElement="Event_1r9nmyo">
+        <dc:Bounds x="1252" y="342" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1158" y="350" width="82" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0mf9je8_di" bpmnElement="Event_0mf9je8">
+        <dc:Bounds x="1042" y="352" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_18gjso9_di" bpmnElement="Flow_18gjso9">
         <di:waypoint x="650" y="260" />
@@ -248,8 +240,8 @@ annual_salary = float(annual_salary_str)</bpmn:script>
         <di:waypoint x="780" y="260" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1nktb7x_di" bpmnElement="Flow_1nktb7x">
-        <di:waypoint x="188" y="260" />
-        <di:waypoint x="255" y="260" />
+        <di:waypoint x="328" y="260" />
+        <di:waypoint x="390" y="260" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1dsayaa_di" bpmnElement="Flow_1dsayaa">
         <di:waypoint x="880" y="260" />
@@ -263,10 +255,6 @@ annual_salary = float(annual_salary_str)</bpmn:script>
         <di:waypoint x="1180" y="260" />
         <di:waypoint x="1245" y="260" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_1mlodba_di" bpmnElement="Flow_1mlodba">
-        <di:waypoint x="305" y="260" />
-        <di:waypoint x="390" y="260" />
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_15po8b6_di" bpmnElement="Flow_15po8b6">
         <di:waypoint x="1295" y="260" />
         <di:waypoint x="1362" y="260" />
@@ -276,14 +264,14 @@ annual_salary = float(annual_salary_str)</bpmn:script>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1n259k2_di" bpmnElement="Flow_1n259k2">
         <di:waypoint x="1270" y="285" />
-        <di:waypoint x="1270" y="352" />
+        <di:waypoint x="1270" y="342" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="1278" y="318" width="15" height="14" />
+          <dc:Bounds x="1278" y="312" width="15" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1bvgiwf_di" bpmnElement="Flow_1bvgiwf">
-        <di:waypoint x="1288" y="370" />
-        <di:waypoint x="1362" y="370" />
+        <di:waypoint x="1288" y="360" />
+        <di:waypoint x="1332" y="360" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0373kgo_di" bpmnElement="Flow_0373kgo">
         <di:waypoint x="1398" y="260" />
@@ -291,7 +279,7 @@ annual_salary = float(annual_salary_str)</bpmn:script>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1b9tu4z_di" bpmnElement="Flow_1b9tu4z">
         <di:waypoint x="988" y="370" />
-        <di:waypoint x="1062" y="370" />
+        <di:waypoint x="1042" y="370" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
