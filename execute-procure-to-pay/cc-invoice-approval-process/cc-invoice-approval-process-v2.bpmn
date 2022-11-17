@@ -663,44 +663,15 @@ isSetMessage = True</spiffworkflow:preScript>
         <bpmn:incoming>Flow_0gplgyz</bpmn:incoming>
         <bpmn:outgoing>Flow_0re50gq</bpmn:outgoing>
       </bpmn:callActivity>
-      <bpmn:scriptTask id="Activity_1jtcvfx" name="Set Project Lead Info" scriptFormat="python">
-        <bpmn:script># Set Project Lead Info
-project_lead_info = {}
-project_lead_info["full_name"] = userFullName
-project_lead_info["first_name"] = userFirstName
-project_lead_info["email"] = userEmail
-project_lead_info["time_zone"] = userTimeZone
-project_lead_info["time_format"] = userTimeFormat
-project_lead_info["date_format"] = userDateFormat
-project_lead_info["status_key"] = userStatusKey
-
-# Move to pre-script of Waku Message 
-# Set Time Zone
-time_zone = project_lead_info["time_zone"]
-
-# Set Time Format
-time_format = project_lead_info["time_format"]
-
-# Set Date Format
-time_format = project_lead_info["date_format"]
-
-del(userFullName)
-del(userFirstName)
-del(userEmail)
-del(userTimeZone)
-del(userTimeFormat)
-del(userDateFormat)
-del(userStatusKey)</bpmn:script>
-      </bpmn:scriptTask>
       <bpmn:sequenceFlow id="Flow_0re50gq" sourceRef="Call_Waku_Messages_Message-Notify_Proejct_Lead" targetRef="Activity_1ve0iqu" />
       <bpmn:sequenceFlow id="Flow_0y37dgj" sourceRef="Activity_1ve0iqu" targetRef="Event_1nkaxn4" />
-      <bpmn:scriptTask id="Activity_1982sk7" name="Get Project Lead" scriptFormat="python">
+      <bpmn:scriptTask id="Activity_1982sk7" name="Get Project Lead From Bamboo" scriptFormat="python">
         <bpmn:incoming>Flow_0dvboik</bpmn:incoming>
         <bpmn:outgoing>Flow_01ki4jt</bpmn:outgoing>
         <bpmn:script>userBambooId_str = current_user_extras["bamboo_supervisor_api_id"]</bpmn:script>
       </bpmn:scriptTask>
       <bpmn:sequenceFlow id="Flow_0dvboik" sourceRef="Event_00px1yx" targetRef="Activity_1982sk7" />
-      <bpmn:callActivity id="Activity_1r3o0bm" name="Get Keycloak Username" calledElement="Bamboo_Conversion">
+      <bpmn:callActivity id="Activity_1r3o0bm" name="Get PL Keycloak Username" calledElement="Bamboo_Conversion">
         <bpmn:incoming>Flow_01ki4jt</bpmn:incoming>
         <bpmn:outgoing>Flow_0bv17h4</bpmn:outgoing>
       </bpmn:callActivity>
@@ -1749,37 +1720,35 @@ else:
       <bpmndi:BPMNShape id="Event_00px1yx_di" bpmnElement="Event_00px1yx">
         <dc:Bounds x="-278" y="402" width="36" height="36" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_1nkaxn4_di" bpmnElement="Event_1nkaxn4">
-        <dc:Bounds x="852" y="402" width="36" height="36" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1gex892_di" bpmnElement="Activity_00b66gy">
         <dc:Bounds x="170" y="380" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0s32al0_di" bpmnElement="Activity_1ve0iqu">
-        <dc:Bounds x="680" y="380" width="100" height="80" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0mxxp3b_di" bpmnElement="Call_Waku_Messages_Message-Notify_Proejct_Lead">
-        <dc:Bounds x="510" y="380" width="100" height="80" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_02v8rpk_di" bpmnElement="Activity_1jtcvfx">
-        <dc:Bounds x="340" y="480" width="100" height="80" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0iy0fil_di" bpmnElement="Activity_1982sk7">
         <dc:Bounds x="-170" y="380" width="100" height="80" />
+        <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1lm44ee_di" bpmnElement="Activity_1r3o0bm">
         <dc:Bounds x="0" y="380" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1nkaxn4_di" bpmnElement="Event_1nkaxn4">
+        <dc:Bounds x="692" y="402" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0s32al0_di" bpmnElement="Activity_1ve0iqu">
+        <dc:Bounds x="520" y="380" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0mxxp3b_di" bpmnElement="Call_Waku_Messages_Message-Notify_Proejct_Lead">
+        <dc:Bounds x="350" y="380" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_0re50gq_di" bpmnElement="Flow_0re50gq">
-        <di:waypoint x="610" y="420" />
-        <di:waypoint x="680" y="420" />
+        <di:waypoint x="450" y="420" />
+        <di:waypoint x="520" y="420" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0y37dgj_di" bpmnElement="Flow_0y37dgj">
-        <di:waypoint x="780" y="420" />
-        <di:waypoint x="852" y="420" />
+        <di:waypoint x="620" y="420" />
+        <di:waypoint x="692" y="420" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0dvboik_di" bpmnElement="Flow_0dvboik">
         <di:waypoint x="-242" y="420" />
@@ -1795,7 +1764,7 @@ else:
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0gplgyz_di" bpmnElement="Flow_0gplgyz">
         <di:waypoint x="270" y="420" />
-        <di:waypoint x="510" y="420" />
+        <di:waypoint x="350" y="420" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
