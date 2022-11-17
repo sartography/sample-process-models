@@ -71,11 +71,11 @@
         <bpmn:flowNodeRef>Activity_1t8wi0r</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Gateway_06i3we9</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_09q0ym0</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_11stdua</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_1so23vf" name="Finance Team">
         <bpmn:flowNodeRef>Activity_0cdgqi0</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Gateway_1ytq6m7</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Activity_11stdua</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_1lh7308</bpmn:flowNodeRef>
       </bpmn:lane>
     </bpmn:laneSet>
@@ -114,7 +114,6 @@
     <bpmn:sequenceFlow id="Flow_0h96w9j" name="Yes" sourceRef="Gateway_1ytq6m7" targetRef="Event_0lhkxwc" />
     <bpmn:sequenceFlow id="Flow_0a9w301" sourceRef="Gateway_1717c0p" targetRef="Delete_File" />
     <bpmn:sequenceFlow id="Flow_15pzvrr" sourceRef="Activity_0faln91" targetRef="Gateway_1l4tz4i" />
-    <bpmn:sequenceFlow id="Flow_02v6lr2" sourceRef="Activity_11stdua" targetRef="Event_1lh7308" />
     <bpmn:sequenceFlow id="Flow_04fl87d" sourceRef="Activity_0gkpa9s" targetRef="Event_15y55nw" />
     <bpmn:sequenceFlow id="Flow_1jfb24q" sourceRef="Waku_Message_Pending_Payment" targetRef="Event_1usbnt0" />
     <bpmn:sequenceFlow id="Flow_1qf14hx" sourceRef="Gateway_06i3we9" targetRef="Event_0rwxlca" />
@@ -287,7 +286,6 @@ isCurrentUser = True</spiffworkflow:preScript>
     <bpmn:sequenceFlow id="Flow_0dhpy0v" sourceRef="Event_1vi3um1" targetRef="Event_176ch98" />
     <bpmn:sequenceFlow id="Flow_1x00zm0" sourceRef="Event_0rwxlca" targetRef="Activity_0faln91" />
     <bpmn:sequenceFlow id="Flow_09r1s5r" sourceRef="Activity_06b32ar" targetRef="Gateway_06i3we9" />
-    <bpmn:sequenceFlow id="Flow_1whkgq0" sourceRef="Activity_0cdgqi0" targetRef="Activity_11stdua" />
     <bpmn:sequenceFlow id="Flow_1l74eab" sourceRef="Event_1lh7308" targetRef="Gateway_1ytq6m7" />
     <bpmn:sequenceFlow id="Flow_0z51hpb" sourceRef="Activity_07oyzdx" targetRef="Gateway_0dqj39f" />
     <bpmn:sequenceFlow id="Flow_1xvt99y" sourceRef="Gateway_0dqj39f" targetRef="Event_1vi3um1" />
@@ -351,7 +349,15 @@ ___
           <spiffworkflow:property name="formJsonSchemaFilename" value="invoice-approval_JSONSchema.json" />
           <spiffworkflow:property name="formUiSchemaFilename" value="invoice-approval_UISchema.json" />
         </spiffworkflow:properties>
-        <spiffworkflow:postScript />
+        <spiffworkflow:postScript>invoice.commentsFinance = approvalComment
+approvalComment = ""
+# Set Invoice Status
+if isInvoiceApproved:
+    invoice["invoiceStatus"] = "Approved by Finance Team"
+    invoice["isFinanceApprove"] = True
+else:
+    invoice["invoiceStatus"] = "Rejected by Finance Team"
+    invoice["isFinanceApprove"] = False</spiffworkflow:postScript>
         <spiffworkflow:instructionsForEndUser>___
 | **Field** | **Input** |
 | ---:   | :--- |
@@ -364,7 +370,7 @@ ___
 ___</spiffworkflow:instructionsForEndUser>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_1ds4s8o</bpmn:incoming>
-      <bpmn:outgoing>Flow_1whkgq0</bpmn:outgoing>
+      <bpmn:outgoing>Flow_070r5mq</bpmn:outgoing>
     </bpmn:userTask>
     <bpmn:scriptTask id="Activity_1t8wi0r" name="Waku Message: No Project Lead Response" scriptFormat="python">
       <bpmn:incoming>Flow_1v8dszb</bpmn:incoming>
@@ -423,21 +429,8 @@ else:
         <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">timedelta(seconds=1)</bpmn:timeDuration>
       </bpmn:timerEventDefinition>
     </bpmn:intermediateCatchEvent>
-    <bpmn:scriptTask id="Activity_11stdua" name="Temp Post Script" scriptFormat="python">
-      <bpmn:incoming>Flow_1whkgq0</bpmn:incoming>
-      <bpmn:outgoing>Flow_02v6lr2</bpmn:outgoing>
-      <bpmn:script>invoice.commentsFinance = approvalComment
-approvalComment = ""
-# Set Invoice Status
-if isInvoiceApproved:
-    invoice["invoiceStatus"] = "Approved by Finance Team"
-    invoice["isFinanceApprove"] = True
-else:
-    invoice["invoiceStatus"] = "Rejected by Finance Team"
-    invoice["isFinanceApprove"] = False</bpmn:script>
-    </bpmn:scriptTask>
     <bpmn:intermediateCatchEvent id="Event_1lh7308" name="Jon&#39;s Test 3">
-      <bpmn:incoming>Flow_02v6lr2</bpmn:incoming>
+      <bpmn:incoming>Flow_070r5mq</bpmn:incoming>
       <bpmn:outgoing>Flow_1l74eab</bpmn:outgoing>
       <bpmn:timerEventDefinition id="TimerEventDefinition_12fxlgt">
         <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">timedelta(seconds=1)</bpmn:timeDuration>
@@ -1082,6 +1075,18 @@ invoice["invoiceCurrency"] = "AUD"</bpmn:script>
     </bpmn:serviceTask>
     <bpmn:dataObjectReference id="DataObjectReference_1g4gzsx" name="resp_xeroCreateInvoice" dataObjectRef="resp_xeroCreateInvoice" />
     <bpmn:dataObject id="resp_xeroCreateInvoice" />
+    <bpmn:scriptTask id="Activity_11stdua" name="Temp Post Script" scriptFormat="python">
+      <bpmn:script>invoice.commentsFinance = approvalComment
+approvalComment = ""
+# Set Invoice Status
+if isInvoiceApproved:
+    invoice["invoiceStatus"] = "Approved by Finance Team"
+    invoice["isFinanceApprove"] = True
+else:
+    invoice["invoiceStatus"] = "Rejected by Finance Team"
+    invoice["isFinanceApprove"] = False</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:sequenceFlow id="Flow_070r5mq" sourceRef="Activity_0cdgqi0" targetRef="Event_1lh7308" />
   </bpmn:process>
   <bpmn:process id="Process_cc_invoice_approval_process_v2_c" isExecutable="false" />
   <bpmn:process id="Process_cc_invoice_approval_process_v2_d" isExecutable="false" />
@@ -1126,6 +1131,10 @@ invoice["invoiceCurrency"] = "AUD"</bpmn:script>
         <bpmndi:BPMNLabel>
           <dc:Bounds x="1520" y="567" width="60" height="14" />
         </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1j1zo4f_di" bpmnElement="Activity_11stdua">
+        <dc:Bounds x="4250" y="930" width="100" height="80" />
+        <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0z13hw3_di" bpmnElement="SubProcess_Data_validation_rules">
         <dc:Bounds x="1350" y="492" width="100" height="80" />
@@ -1261,10 +1270,6 @@ invoice["invoiceCurrency"] = "AUD"</bpmn:script>
         <bpmndi:BPMNLabel>
           <dc:Bounds x="3914" y="693" width="58" height="14" />
         </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1j1zo4f_di" bpmnElement="Activity_11stdua">
-        <dc:Bounds x="4250" y="1040" width="100" height="80" />
-        <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_00k7m91_di" bpmnElement="Event_1lh7308">
         <dc:Bounds x="4392" y="1062" width="36" height="36" />
@@ -1507,10 +1512,6 @@ invoice["invoiceCurrency"] = "AUD"</bpmn:script>
         <di:waypoint x="4000" y="422" />
         <di:waypoint x="4115" y="422" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_02v6lr2_di" bpmnElement="Flow_02v6lr2">
-        <di:waypoint x="4350" y="1080" />
-        <di:waypoint x="4392" y="1080" />
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_04fl87d_di" bpmnElement="Flow_04fl87d">
         <di:waypoint x="3140" y="530" />
         <di:waypoint x="3192" y="530" />
@@ -1566,10 +1567,6 @@ invoice["invoiceCurrency"] = "AUD"</bpmn:script>
         <di:waypoint x="3730" y="870" />
         <di:waypoint x="3975" y="870" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_1whkgq0_di" bpmnElement="Flow_1whkgq0">
-        <di:waypoint x="4190" y="1080" />
-        <di:waypoint x="4250" y="1080" />
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1l74eab_di" bpmnElement="Flow_1l74eab">
         <di:waypoint x="4428" y="1080" />
         <di:waypoint x="4465" y="1080" />
@@ -1599,6 +1596,10 @@ invoice["invoiceCurrency"] = "AUD"</bpmn:script>
       <bpmndi:BPMNEdge id="Flow_061sv6t_di" bpmnElement="Flow_061sv6t">
         <di:waypoint x="790" y="532" />
         <di:waypoint x="1045" y="532" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_070r5mq_di" bpmnElement="Flow_070r5mq">
+        <di:waypoint x="4190" y="1080" />
+        <di:waypoint x="4392" y="1080" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="Participant_0a8arrz_di" bpmnElement="Participant_0a8arrz" isHorizontal="true">
         <dc:Bounds x="2540" y="1290" width="830" height="80" />
