@@ -65,6 +65,7 @@
         <bpmn:flowNodeRef>Activity_1864qj2</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Waku_Message_Pending_Payment</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_169on0z</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_0c6npz7</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_1b7abal" name="Project Lead">
         <bpmn:flowNodeRef>Activity_06b32ar</bpmn:flowNodeRef>
@@ -854,10 +855,10 @@ monthly_salary = annual_salary/12</bpmn:script>
             </spiffworkflow:parameters>
           </spiffworkflow:serviceTaskOperator>
         </bpmn:extensionElements>
-        <bpmn:incoming>Flow_0nxzc38</bpmn:incoming>
+        <bpmn:incoming>Flow_18i75ep</bpmn:incoming>
         <bpmn:outgoing>Flow_0xtzqkg</bpmn:outgoing>
       </bpmn:serviceTask>
-      <bpmn:sequenceFlow id="Flow_0nxzc38" sourceRef="Activity_02go8ec" targetRef="Activity_1k25w3x" />
+      <bpmn:sequenceFlow id="Flow_0nxzc38" sourceRef="Activity_02go8ec" targetRef="Activity_0cytlh1" />
       <bpmn:sequenceFlow id="Flow_0xtzqkg" sourceRef="Activity_1k25w3x" targetRef="Activity_0b87ocm" />
       <bpmn:sequenceFlow id="Flow_02g4qn2" sourceRef="Activity_0mcykih" targetRef="Activity_02go8ec" />
       <bpmn:serviceTask id="Activity_0mcykih" name="Get Annual Salary from Bamboo">
@@ -871,6 +872,17 @@ monthly_salary = annual_salary/12</bpmn:script>
         <bpmn:incoming>Flow_1sc1v4y</bpmn:incoming>
         <bpmn:outgoing>Flow_02g4qn2</bpmn:outgoing>
       </bpmn:serviceTask>
+      <bpmn:callActivity id="Activity_0cytlh1" name="Call Shared: Currency Format" calledElement="Shared_Currency_Format">
+        <bpmn:extensionElements>
+          <spiffworkflow:preScript>curCode = invoice.invoiceCurrency
+curAmount = monthly_salary
+isCurTest = False</spiffworkflow:preScript>
+          <spiffworkflow:postScript>monthly_salary_str = curAmount_str</spiffworkflow:postScript>
+        </bpmn:extensionElements>
+        <bpmn:incoming>Flow_0nxzc38</bpmn:incoming>
+        <bpmn:outgoing>Flow_18i75ep</bpmn:outgoing>
+      </bpmn:callActivity>
+      <bpmn:sequenceFlow id="Flow_18i75ep" sourceRef="Activity_0cytlh1" targetRef="Activity_1k25w3x" />
     </bpmn:subProcess>
     <bpmn:boundaryEvent id="Event_169on0z" attachedToRef="Activity_07oyzdx">
       <bpmn:outgoing>Flow_06mfxze</bpmn:outgoing>
@@ -1065,6 +1077,14 @@ timezone = current_user_extras["time_zone"]</spiffworkflow:preScript>
     </bpmn:serviceTask>
     <bpmn:dataObjectReference id="DataObjectReference_1g4gzsx" name="resp_xeroCreateInvoice" dataObjectRef="resp_xeroCreateInvoice" />
     <bpmn:dataObject id="resp_xeroCreateInvoice" />
+    <bpmn:callActivity id="Activity_0c6npz7" name="Call Shared: Currency Format" calledElement="Shared_Currency_Format">
+      <bpmn:extensionElements>
+        <spiffworkflow:preScript>curCode = invoice.invoiceCurrency
+curAmount = invoice.invoiceAmount
+isCurTest = False</spiffworkflow:preScript>
+        <spiffworkflow:postScript>invoice.invoiceAmount_str = curAmount_str</spiffworkflow:postScript>
+      </bpmn:extensionElements>
+    </bpmn:callActivity>
   </bpmn:process>
   <bpmn:process id="Process_cc_invoice_approval_process_v2_c" isExecutable="false" />
   <bpmn:process id="Process_cc_invoice_approval_process_v2_d" isExecutable="false" />
@@ -1110,6 +1130,10 @@ timezone = current_user_extras["time_zone"]</spiffworkflow:preScript>
         <bpmndi:BPMNLabel>
           <dc:Bounds x="1520" y="567" width="60" height="14" />
         </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_1wrxalf" bpmnElement="Activity_0c6npz7">
+        <dc:Bounds x="3050" y="660" width="100" height="80" />
+        <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0z13hw3_di" bpmnElement="SubProcess_Data_validation_rules">
         <dc:Bounds x="1350" y="492" width="100" height="80" />
@@ -1655,24 +1679,28 @@ timezone = current_user_extras["time_zone"]</spiffworkflow:preScript>
       <bpmndi:BPMNShape id="Event_0w5o6hr_di" bpmnElement="Event_0w5o6hr">
         <dc:Bounds x="-48" y="372" width="36" height="36" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_08gpeul_di" bpmnElement="Activity_1yhwhps">
-        <dc:Bounds x="680" y="350" width="100" height="80" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0fzlb0w_di" bpmnElement="Activity_02go8ec">
         <dc:Bounds x="210" y="350" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1f5dpwy_di" bpmnElement="Activity_0b87ocm">
-        <dc:Bounds x="520" y="350" width="100" height="80" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_0cmri19_di" bpmnElement="Event_0cmri19">
-        <dc:Bounds x="842" y="372" width="36" height="36" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0x1ak9n_di" bpmnElement="Activity_1k25w3x">
-        <dc:Bounds x="360" y="350" width="100" height="80" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0emlo6d_di" bpmnElement="Activity_0mcykih">
         <dc:Bounds x="50" y="350" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_08gpeul_di" bpmnElement="Activity_1yhwhps">
+        <dc:Bounds x="850" y="350" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1f5dpwy_di" bpmnElement="Activity_0b87ocm">
+        <dc:Bounds x="690" y="350" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0cmri19_di" bpmnElement="Event_0cmri19">
+        <dc:Bounds x="1012" y="372" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0x1ak9n_di" bpmnElement="Activity_1k25w3x">
+        <dc:Bounds x="530" y="350" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_1chom2i" bpmnElement="Activity_0cytlh1">
+        <dc:Bounds x="370" y="350" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_1sc1v4y_di" bpmnElement="Flow_1sc1v4y">
@@ -1680,24 +1708,28 @@ timezone = current_user_extras["time_zone"]</spiffworkflow:preScript>
         <di:waypoint x="50" y="390" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1m8uxeg_di" bpmnElement="Flow_1m8uxeg">
-        <di:waypoint x="620" y="390" />
-        <di:waypoint x="680" y="390" />
+        <di:waypoint x="790" y="390" />
+        <di:waypoint x="850" y="390" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_04do8x7_di" bpmnElement="Flow_04do8x7">
-        <di:waypoint x="780" y="390" />
-        <di:waypoint x="842" y="390" />
+        <di:waypoint x="950" y="390" />
+        <di:waypoint x="1012" y="390" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0nxzc38_di" bpmnElement="Flow_0nxzc38">
         <di:waypoint x="310" y="390" />
-        <di:waypoint x="360" y="390" />
+        <di:waypoint x="370" y="390" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0xtzqkg_di" bpmnElement="Flow_0xtzqkg">
-        <di:waypoint x="460" y="390" />
-        <di:waypoint x="520" y="390" />
+        <di:waypoint x="630" y="390" />
+        <di:waypoint x="690" y="390" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_02g4qn2_di" bpmnElement="Flow_02g4qn2">
         <di:waypoint x="150" y="390" />
         <di:waypoint x="210" y="390" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_18i75ep_di" bpmnElement="Flow_18i75ep">
+        <di:waypoint x="470" y="390" />
+        <di:waypoint x="530" y="390" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
