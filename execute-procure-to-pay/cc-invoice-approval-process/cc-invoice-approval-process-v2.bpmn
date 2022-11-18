@@ -67,9 +67,9 @@
         <bpmn:flowNodeRef>Event_169on0z</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_1b7abal" name="Project Lead">
-        <bpmn:flowNodeRef>Activity_06b32ar</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_1t8wi0r</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Gateway_06i3we9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_06b32ar</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_09q0ym0</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_1so23vf" name="Finance Team">
@@ -316,32 +316,6 @@ isCurrentUser = True</spiffworkflow:preScript>
       <bpmn:outgoing>Flow_18xvx8w</bpmn:outgoing>
       <bpmn:outgoing>Flow_0bfs2xe</bpmn:outgoing>
     </bpmn:exclusiveGateway>
-    <bpmn:userTask id="Activity_06b32ar" name="Approve Invoice - Project Lead">
-      <bpmn:extensionElements>
-        <spiffworkflow:properties>
-          <spiffworkflow:property name="formJsonSchemaFilename" value="invoice-approval_JSONSchema.json" />
-          <spiffworkflow:property name="formUiSchemaFilename" value="invoice-approval_UISchema.json" />
-        </spiffworkflow:properties>
-        <spiffworkflow:postScript />
-        <spiffworkflow:preScript># Set Timer Check 
-isApprovalTimer = False</spiffworkflow:preScript>
-        <spiffworkflow:instructionsForEndUser>___
-| **Field** | **Input** |
-| ---:   | :--- |
-|_Submitted by:_  | {{ invoice.contributorName }} |
-|_Submitter Id:_ | {{ invoice.contributorId }} |
-|_Invoice Id:_ | {{ invoice.invoiceId }} |
-|_Amount:_  | {{ invoice.invoiceAmount_str }} |
-|_Submitted on:_ | {{ invoice.invoiceDate }} |
-|_Due Date:_  | {{ invoice.dueDate}} |
-___
-
-   
-   </spiffworkflow:instructionsForEndUser>
-      </bpmn:extensionElements>
-      <bpmn:incoming>Flow_0lfqk0y</bpmn:incoming>
-      <bpmn:outgoing>Flow_09r1s5r</bpmn:outgoing>
-    </bpmn:userTask>
     <bpmn:userTask id="Activity_0cdgqi0" name="Approve Invoice - Finance">
       <bpmn:extensionElements>
         <spiffworkflow:properties>
@@ -895,12 +869,6 @@ isCurTest = False</bpmn:script>
         <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">timedelta(seconds=1000)</bpmn:timeDuration>
       </bpmn:timerEventDefinition>
     </bpmn:boundaryEvent>
-    <bpmn:boundaryEvent id="Event_09q0ym0" name="3 days" attachedToRef="Activity_06b32ar">
-      <bpmn:outgoing>Flow_1v8dszb</bpmn:outgoing>
-      <bpmn:timerEventDefinition id="TimerEventDefinition_0cpj4z0">
-        <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">timedelta(minutes=3)</bpmn:timeDuration>
-      </bpmn:timerEventDefinition>
-    </bpmn:boundaryEvent>
     <bpmn:sequenceFlow id="Flow_06amgv2" sourceRef="Activity_10p5t0r" targetRef="Activity_07oyzdx" />
     <bpmn:callActivity id="Activity_10p5t0r" name="Call Shared: Currency Format" calledElement="Shared_Currency_Format">
       <bpmn:extensionElements>
@@ -1082,6 +1050,40 @@ timezone = current_user_extras["time_zone"]</spiffworkflow:preScript>
     </bpmn:serviceTask>
     <bpmn:dataObjectReference id="DataObjectReference_1g4gzsx" name="resp_xeroCreateInvoice" dataObjectRef="resp_xeroCreateInvoice" />
     <bpmn:dataObject id="resp_xeroCreateInvoice" />
+    <bpmn:userTask id="Activity_06b32ar" name="Approve Invoice - Project Lead">
+      <bpmn:extensionElements>
+        <spiffworkflow:properties>
+          <spiffworkflow:property name="formJsonSchemaFilename" value="invoice-approval_JSONSchema.json" />
+          <spiffworkflow:property name="formUiSchemaFilename" value="invoice-approval_UISchema.json" />
+        </spiffworkflow:properties>
+        <spiffworkflow:postScript></spiffworkflow:postScript>
+        <spiffworkflow:preScript># Set Timer Check 
+isApprovalTimer = False</spiffworkflow:preScript>
+        <spiffworkflow:instructionsForEndUser>___
+| **Field** | **Input** |
+| ---:   | :--- |
+|_Submitted by:_  | {{ invoice.contributorName }} |
+|_Submitter Id:_ | {{ invoice.contributorId }} |
+|_Invoice Id:_ | {{ invoice.invoiceId }} |
+|_Amount:_  | {{ invoice.invoiceAmount_str }} |
+|_Submitted on:_ | {{ invoice.invoiceDate }} |
+|_Due Date:_  | {{ invoice.dueDate}} |
+___
+*Bamboo Monthly Salary Amount:* {{ monthly_salary_str  }}  
+
+___
+   
+   </spiffworkflow:instructionsForEndUser>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0lfqk0y</bpmn:incoming>
+      <bpmn:outgoing>Flow_09r1s5r</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:boundaryEvent id="Event_09q0ym0" name="3 days" attachedToRef="Activity_06b32ar">
+      <bpmn:outgoing>Flow_1v8dszb</bpmn:outgoing>
+      <bpmn:timerEventDefinition id="TimerEventDefinition_0cpj4z0">
+        <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">timedelta(minutes=3)</bpmn:timeDuration>
+      </bpmn:timerEventDefinition>
+    </bpmn:boundaryEvent>
   </bpmn:process>
   <bpmn:process id="Process_cc_invoice_approval_process_v2_c" isExecutable="false" />
   <bpmn:process id="Process_cc_invoice_approval_process_v2_d" isExecutable="false" />
@@ -1127,6 +1129,10 @@ timezone = current_user_extras["time_zone"]</spiffworkflow:preScript>
         <bpmndi:BPMNLabel>
           <dc:Bounds x="1520" y="567" width="60" height="14" />
         </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_05nao2p_di" bpmnElement="Activity_06b32ar">
+        <dc:Bounds x="3631" y="830" width="100" height="80" />
+        <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0z13hw3_di" bpmnElement="SubProcess_Data_validation_rules">
         <dc:Bounds x="1350" y="492" width="100" height="80" />
@@ -1199,10 +1205,6 @@ timezone = current_user_extras["time_zone"]</spiffworkflow:preScript>
         <bpmndi:BPMNLabel>
           <dc:Bounds x="4063" y="393" width="54" height="14" />
         </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_05nao2p_di" bpmnElement="Activity_06b32ar">
-        <dc:Bounds x="3630" y="830" width="100" height="80" />
-        <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0xwniza_di" bpmnElement="Activity_0cdgqi0">
         <dc:Bounds x="4090" y="1040" width="100" height="80" />
@@ -1352,14 +1354,14 @@ timezone = current_user_extras["time_zone"]</spiffworkflow:preScript>
           <dc:Bounds x="4747" y="751" width="85" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_08bsj2m_di" bpmnElement="Event_09q0ym0">
-        <dc:Bounds x="3692" y="892" width="36" height="36" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="3663" y="923" width="33" height="14" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_1c8bu8s_di" bpmnElement="Event_169on0z">
         <dc:Bounds x="1892" y="554" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_08bsj2m_di" bpmnElement="Event_09q0ym0">
+        <dc:Bounds x="3693" y="892" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="3664" y="923" width="33" height="14" />
+        </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_1x4rtop_di" bpmnElement="Flow_1x4rtop">
         <di:waypoint x="1575" y="532" />
@@ -1435,8 +1437,8 @@ timezone = current_user_extras["time_zone"]</spiffworkflow:preScript>
         <di:waypoint x="1525" y="532" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1v8dszb_di" bpmnElement="Flow_1v8dszb">
-        <di:waypoint x="3710" y="928" />
-        <di:waypoint x="3710" y="948" />
+        <di:waypoint x="3711" y="928" />
+        <di:waypoint x="3711" y="948" />
         <di:waypoint x="3800" y="948" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0hev3yn_di" bpmnElement="Flow_0hev3yn">
@@ -1472,7 +1474,9 @@ timezone = current_user_extras["time_zone"]</spiffworkflow:preScript>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0lfqk0y_di" bpmnElement="Flow_0lfqk0y">
         <di:waypoint x="3680" y="462" />
-        <di:waypoint x="3680" y="830" />
+        <di:waypoint x="3680" y="646" />
+        <di:waypoint x="3681" y="646" />
+        <di:waypoint x="3681" y="830" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1ds4s8o_di" bpmnElement="Flow_1ds4s8o">
         <di:waypoint x="4140" y="650" />
@@ -1556,7 +1560,7 @@ timezone = current_user_extras["time_zone"]</spiffworkflow:preScript>
         <di:waypoint x="4000" y="572" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_09r1s5r_di" bpmnElement="Flow_09r1s5r">
-        <di:waypoint x="3730" y="870" />
+        <di:waypoint x="3731" y="870" />
         <di:waypoint x="3975" y="870" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1l74eab_di" bpmnElement="Flow_1l74eab">
