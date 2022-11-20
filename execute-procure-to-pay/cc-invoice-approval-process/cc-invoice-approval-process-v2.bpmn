@@ -331,18 +331,17 @@ if isInvoiceApproved:
 else:
     invoice["invoiceStatus"] = "Rejected by Finance Team"
     invoice["isFinanceApprove"] = False</spiffworkflow:postScript>
-        <spiffworkflow:instructionsForEndUser>___
+        <spiffworkflow:instructionsForEndUser>**Invoice Id:** {{ invoice.invoiceId }}   
+___
 | **Field** | **Input** | **Field** | **Input** |
 | ---:   | :--- | ---:   | :--- |
 |_Submitted by:_  | {{ invoice.contributorName }} | _Submitted on:_ | {{ invoice.invoiceDate }} |
 |_Submitter Id:_ | {{ invoice.contributorId }} | _Due Date:_  | {{ invoice.dueDate}} |
-|_Invoice Id:_ | {{ invoice.invoiceId }} |
 ___
-| **Field** | **Input** |
+| **Source** | **Amount** |
 | ---:   | :--- |
-| _Amount Requested:_  | {{ invoice.invoiceAmount_str }} |
-| _Bamboo Monthly Salary Amount:_ | {{ monthly_salary_str  }} |
-
+| _Requested:_  | {{ invoice.invoiceAmount_str }} |
+| _Bamboo Monthly Salary:_ | {{ monthly_salary_str  }} |
 ___</spiffworkflow:instructionsForEndUser>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_1ds4s8o</bpmn:incoming>
