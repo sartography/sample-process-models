@@ -332,16 +332,16 @@ else:
     invoice["invoiceStatus"] = "Rejected by Finance Team"
     invoice["isFinanceApprove"] = False</spiffworkflow:postScript>
         <spiffworkflow:instructionsForEndUser>___
+| **Field** | **Input** | **Field** | **Input** |
+| ---:   | :--- | ---:   | :--- |
+|_Submitted by:_  | {{ invoice.contributorName }} | _Submitted on:_ | {{ invoice.invoiceDate }} |
+|_Submitter Id:_ | {{ invoice.contributorId }} | _Due Date:_  | {{ invoice.dueDate}} |
+|_Invoice Id:_ | {{ invoice.invoiceId }} |
+___
 | **Field** | **Input** |
 | ---:   | :--- |
-|_Submitted by:_  | {{ invoice.contributorName }} |
-|_Submitter Id:_ | {{ invoice.contributorId }} |
-|_Invoice Id:_ | {{ invoice.invoiceId }} |
-|_Amount:_  | {{ invoice.invoiceAmount_str }} |
-|_Submitted on:_ | {{ invoice.invoiceDate }} |
-|_Due Date:_  | {{ invoice.dueDate}} |
-___
-*Bamboo Monthly Salary Amount:* {{ monthly_salary_str  }}  
+| _Amount Requested:_  | {{ invoice.invoiceAmount_str }} |
+| _Bamboo Monthly Salary Amount:_ | {{ monthly_salary_str  }} |
 
 ___</spiffworkflow:instructionsForEndUser>
       </bpmn:extensionElements>
@@ -1059,7 +1059,7 @@ timezone = current_user_extras["time_zone"]</spiffworkflow:preScript>
           <spiffworkflow:property name="formJsonSchemaFilename" value="invoice-approval_JSONSchema.json" />
           <spiffworkflow:property name="formUiSchemaFilename" value="invoice-approval_UISchema.json" />
         </spiffworkflow:properties>
-        <spiffworkflow:postScript></spiffworkflow:postScript>
+        <spiffworkflow:postScript />
         <spiffworkflow:preScript># Set Timer Check 
 isApprovalTimer = False</spiffworkflow:preScript>
         <spiffworkflow:instructionsForEndUser>___
@@ -1132,10 +1132,6 @@ ___
         <bpmndi:BPMNLabel>
           <dc:Bounds x="1520" y="567" width="60" height="14" />
         </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_05nao2p_di" bpmnElement="Activity_06b32ar">
-        <dc:Bounds x="3631" y="830" width="100" height="80" />
-        <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0z13hw3_di" bpmnElement="SubProcess_Data_validation_rules">
         <dc:Bounds x="1350" y="492" width="100" height="80" />
@@ -1357,14 +1353,18 @@ ___
           <dc:Bounds x="4747" y="751" width="85" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_1c8bu8s_di" bpmnElement="Event_169on0z">
-        <dc:Bounds x="1892" y="554" width="36" height="36" />
+      <bpmndi:BPMNShape id="Activity_05nao2p_di" bpmnElement="Activity_06b32ar">
+        <dc:Bounds x="3631" y="830" width="100" height="80" />
+        <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_08bsj2m_di" bpmnElement="Event_09q0ym0">
         <dc:Bounds x="3693" y="892" width="36" height="36" />
         <bpmndi:BPMNLabel>
           <dc:Bounds x="3664" y="923" width="33" height="14" />
         </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1c8bu8s_di" bpmnElement="Event_169on0z">
+        <dc:Bounds x="1892" y="554" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_1x4rtop_di" bpmnElement="Flow_1x4rtop">
         <di:waypoint x="1575" y="532" />
