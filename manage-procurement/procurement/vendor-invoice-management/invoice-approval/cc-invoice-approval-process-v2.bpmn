@@ -74,7 +74,6 @@
       </bpmn:lane>
       <bpmn:lane id="Lane_1so23vf" name="Finance Team">
         <bpmn:flowNodeRef>Gateway_1ytq6m7</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Event_1lh7308</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_0cdgqi0</bpmn:flowNodeRef>
       </bpmn:lane>
     </bpmn:laneSet>
@@ -285,7 +284,6 @@ isCurrentUser = True</spiffworkflow:preScript>
     <bpmn:sequenceFlow id="Flow_0dhpy0v" sourceRef="Event_1vi3um1" targetRef="Event_176ch98" />
     <bpmn:sequenceFlow id="Flow_1x00zm0" sourceRef="Event_0rwxlca" targetRef="Activity_0faln91" />
     <bpmn:sequenceFlow id="Flow_09r1s5r" sourceRef="Activity_06b32ar" targetRef="Gateway_06i3we9" />
-    <bpmn:sequenceFlow id="Flow_1l74eab" sourceRef="Event_1lh7308" targetRef="Gateway_1ytq6m7" />
     <bpmn:sequenceFlow id="Flow_0z51hpb" sourceRef="Activity_07oyzdx" targetRef="Gateway_0dqj39f" />
     <bpmn:sequenceFlow id="Flow_1xvt99y" sourceRef="Gateway_0dqj39f" targetRef="Event_1vi3um1" />
     <bpmn:sequenceFlow id="Flow_06mfxze" sourceRef="Event_169on0z" targetRef="Gateway_0dqj39f" />
@@ -951,9 +949,9 @@ invoice["invoiceCurrency"] = "AUD"</bpmn:script>
       <bpmn:sequenceFlow id="Flow_1hebd4s" sourceRef="Activity_0rww1ya" targetRef="Event_0kmx0m7" />
     </bpmn:subProcess>
     <bpmn:sequenceFlow id="Flow_061sv6t" sourceRef="Activity_1colhao" targetRef="Gateway_0wk5se9" />
-    <bpmn:sequenceFlow id="Flow_070r5mq" sourceRef="Activity_0cdgqi0" targetRef="Event_1lh7308" />
+    <bpmn:sequenceFlow id="Flow_070r5mq" sourceRef="Activity_0cdgqi0" targetRef="Gateway_1ytq6m7" />
     <bpmn:exclusiveGateway id="Gateway_1ytq6m7" name="Approved?" default="Flow_0h96w9j">
-      <bpmn:incoming>Flow_1l74eab</bpmn:incoming>
+      <bpmn:incoming>Flow_070r5mq</bpmn:incoming>
       <bpmn:outgoing>Flow_00kky3k</bpmn:outgoing>
       <bpmn:outgoing>Flow_0h96w9j</bpmn:outgoing>
     </bpmn:exclusiveGateway>
@@ -966,13 +964,6 @@ invoice["invoiceCurrency"] = "AUD"</bpmn:script>
       <bpmn:incoming>Flow_1cwebky</bpmn:incoming>
       <bpmn:outgoing>Flow_1fvtcqt</bpmn:outgoing>
     </bpmn:intermediateThrowEvent>
-    <bpmn:intermediateCatchEvent id="Event_1lh7308" name="Temp Fix">
-      <bpmn:incoming>Flow_070r5mq</bpmn:incoming>
-      <bpmn:outgoing>Flow_1l74eab</bpmn:outgoing>
-      <bpmn:timerEventDefinition id="TimerEventDefinition_12fxlgt">
-        <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">timedelta(seconds=1)</bpmn:timeDuration>
-      </bpmn:timerEventDefinition>
-    </bpmn:intermediateCatchEvent>
     <bpmn:subProcess id="Waku_Message_Pending_Payment" name="Waku Message: Pending Payment">
       <bpmn:extensionElements>
         <spiffworkflow:preScript># Set Invoice Status to Approved and Pending Payment
@@ -1325,12 +1316,6 @@ ___
           <dc:Bounds x="4786" y="635" width="88" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_00k7m91_di" bpmnElement="Event_1lh7308">
-        <dc:Bounds x="4262" y="1062" width="36" height="36" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="4259" y="1105" width="45" height="14" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1tlgf7q_di" bpmnElement="Waku_Message_Pending_Payment">
         <dc:Bounds x="4960" y="570" width="100" height="80" />
         <bpmndi:BPMNLabel />
@@ -1557,10 +1542,6 @@ ___
         <di:waypoint x="3731" y="870" />
         <di:waypoint x="3975" y="870" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_1l74eab_di" bpmnElement="Flow_1l74eab">
-        <di:waypoint x="4298" y="1080" />
-        <di:waypoint x="4335" y="1080" />
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0z51hpb_di" bpmnElement="Flow_0z51hpb">
         <di:waypoint x="1940" y="532" />
         <di:waypoint x="2005" y="532" />
@@ -1589,7 +1570,7 @@ ___
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_070r5mq_di" bpmnElement="Flow_070r5mq">
         <di:waypoint x="4190" y="1080" />
-        <di:waypoint x="4262" y="1080" />
+        <di:waypoint x="4335" y="1080" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1cwebky_di" bpmnElement="Flow_1cwebky">
         <di:waypoint x="4720" y="610" />
