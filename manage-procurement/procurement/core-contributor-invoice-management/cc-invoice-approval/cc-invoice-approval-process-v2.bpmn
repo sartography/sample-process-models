@@ -129,7 +129,7 @@
           <spiffworkflow:property name="formJsonSchemaFilename" value="Submit-the-invoice_JSONSchema.json" />
           <spiffworkflow:property name="formUiSchemaFilename" value="Submit-the-invoice_UISchema.json" />
         </spiffworkflow:properties>
-        <spiffworkflow:postScript>len_invoice_comments = len(invoice["commentSubmitter"].strip())</spiffworkflow:postScript>
+        <spiffworkflow:postScript></spiffworkflow:postScript>
         <spiffworkflow:preScript />
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_17vkjgc</bpmn:incoming>
@@ -246,7 +246,10 @@ else:
 try:
   invoice["commentSubmitter"]
 except NameError:
-  invoice["commentSubmitter"] = ""</bpmn:script>
+  invoice["commentSubmitter"] = ""
+
+# Determine length of Submitter's comments
+len_submitter_comments = len(invoice["commentSubmitter"].strip())</bpmn:script>
       </bpmn:scriptTask>
     </bpmn:subProcess>
     <bpmn:intermediateThrowEvent id="Event_invoice_validation_failed" name="Invoice validation failed">
