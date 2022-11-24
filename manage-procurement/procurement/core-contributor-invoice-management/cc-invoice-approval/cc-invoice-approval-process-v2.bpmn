@@ -53,7 +53,6 @@
         <bpmn:flowNodeRef>Event_176ch98</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Delete_File</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Gateway_0dqj39f</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Event_1vi3um1</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_0rae8g6</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_1ucvkk4</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_1kgaqpf</bpmn:flowNodeRef>
@@ -65,6 +64,7 @@
         <bpmn:flowNodeRef>Waku_Message_Pending_Payment</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_169on0z</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_0fq1nb4</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Event_1vi3um1</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_1b7abal" name="Project Lead">
         <bpmn:flowNodeRef>Activity_1t8wi0r</bpmn:flowNodeRef>
@@ -281,11 +281,10 @@ isCurrentUser = True</spiffworkflow:preScript>
     <bpmn:startEvent id="Event_1r3yh2kx">
       <bpmn:outgoing>Flow_1vxagrf</bpmn:outgoing>
     </bpmn:startEvent>
-    <bpmn:sequenceFlow id="Flow_0dhpy0v" sourceRef="Event_1vi3um1" targetRef="Event_176ch98" />
     <bpmn:sequenceFlow id="Flow_1x00zm0" sourceRef="Event_0rwxlca" targetRef="Activity_0faln91" />
     <bpmn:sequenceFlow id="Flow_09r1s5r" sourceRef="Activity_06b32ar" targetRef="Gateway_06i3we9" />
     <bpmn:sequenceFlow id="Flow_0z51hpb" sourceRef="Activity_07oyzdx" targetRef="Gateway_0dqj39f" />
-    <bpmn:sequenceFlow id="Flow_1xvt99y" sourceRef="Gateway_0dqj39f" targetRef="Event_1vi3um1" />
+    <bpmn:sequenceFlow id="Flow_1xvt99y" sourceRef="Gateway_0dqj39f" targetRef="Event_176ch98" />
     <bpmn:sequenceFlow id="Flow_06mfxze" sourceRef="Event_169on0z" targetRef="Gateway_0dqj39f" />
     <bpmn:sequenceFlow id="Flow_0cj1m0h" sourceRef="Delete_File" targetRef="Activity_0gkpa9s" />
     <bpmn:intermediateThrowEvent id="Event_15y55nw" name="Invoice is submitted">
@@ -451,7 +450,7 @@ __________________________________________________________________________
       <bpmn:outgoing>Flow_02o270g</bpmn:outgoing>
     </bpmn:serviceTask>
     <bpmn:intermediateThrowEvent id="Event_176ch98" name="Invoice awaiting approval">
-      <bpmn:incoming>Flow_0dhpy0v</bpmn:incoming>
+      <bpmn:incoming>Flow_1xvt99y</bpmn:incoming>
       <bpmn:outgoing>Flow_14glsqd</bpmn:outgoing>
     </bpmn:intermediateThrowEvent>
     <bpmn:scriptTask id="Delete_File" name="Delete File">
@@ -464,13 +463,6 @@ __________________________________________________________________________
       <bpmn:incoming>Flow_06mfxze</bpmn:incoming>
       <bpmn:outgoing>Flow_1xvt99y</bpmn:outgoing>
     </bpmn:exclusiveGateway>
-    <bpmn:intermediateCatchEvent id="Event_1vi3um1" name="Temp Fix">
-      <bpmn:incoming>Flow_1xvt99y</bpmn:incoming>
-      <bpmn:outgoing>Flow_0dhpy0v</bpmn:outgoing>
-      <bpmn:timerEventDefinition id="TimerEventDefinition_1wiimzf">
-        <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">timedelta(seconds=1)</bpmn:timeDuration>
-      </bpmn:timerEventDefinition>
-    </bpmn:intermediateCatchEvent>
     <bpmn:subProcess id="Activity_0rae8g6" name="Waku Message: Invoice Rejected">
       <bpmn:extensionElements>
         <spiffworkflow:preScript />
@@ -1072,6 +1064,11 @@ ___
       </bpmn:dataOutputAssociation>
     </bpmn:serviceTask>
     <bpmn:sequenceFlow id="Flow_1cwebky" sourceRef="Activity_0fq1nb4" targetRef="Event_0lhkxwc" />
+    <bpmn:intermediateCatchEvent id="Event_1vi3um1" name="Temp Fix">
+      <bpmn:timerEventDefinition id="TimerEventDefinition_1wiimzf">
+        <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">timedelta(seconds=1)</bpmn:timeDuration>
+      </bpmn:timerEventDefinition>
+    </bpmn:intermediateCatchEvent>
   </bpmn:process>
   <bpmn:process id="Process_cc_invoice_approval_process_v2_c" isExecutable="false" />
   <bpmn:process id="Process_cc_invoice_approval_process_v2_d" isExecutable="false" />
@@ -1116,6 +1113,12 @@ ___
         <dc:Bounds x="1525" y="507" width="50" height="50" />
         <bpmndi:BPMNLabel>
           <dc:Bounds x="1520" y="567" width="60" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0tb3bpb_di" bpmnElement="Event_1vi3um1">
+        <dc:Bounds x="2122" y="572" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2119" y="615" width="45" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0z13hw3_di" bpmnElement="SubProcess_Data_validation_rules">
@@ -1258,12 +1261,6 @@ ___
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Gateway_0dqj39f_di" bpmnElement="Gateway_0dqj39f" isMarkerVisible="true">
         <dc:Bounds x="2005" y="507" width="50" height="50" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_0tb3bpb_di" bpmnElement="Event_1vi3um1">
-        <dc:Bounds x="2122" y="514" width="36" height="36" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="2119" y="557" width="45" height="14" />
-        </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0n0ue58_di" bpmnElement="Activity_0rae8g6">
         <dc:Bounds x="4090" y="260" width="100" height="80" />
@@ -1533,10 +1530,6 @@ ___
         <di:waypoint x="2268" y="532" />
         <di:waypoint x="2355" y="532" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0dhpy0v_di" bpmnElement="Flow_0dhpy0v">
-        <di:waypoint x="2158" y="532" />
-        <di:waypoint x="2232" y="532" />
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1x00zm0_di" bpmnElement="Flow_1x00zm0">
         <di:waypoint x="4000" y="682" />
         <di:waypoint x="4000" y="572" />
@@ -1551,7 +1544,7 @@ ___
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1xvt99y_di" bpmnElement="Flow_1xvt99y">
         <di:waypoint x="2055" y="532" />
-        <di:waypoint x="2122" y="532" />
+        <di:waypoint x="2232" y="532" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_06mfxze_di" bpmnElement="Flow_06mfxze">
         <di:waypoint x="1910" y="590" />
@@ -1615,6 +1608,10 @@ ___
         <di:waypoint x="4985" y="650" />
         <di:waypoint x="4944" y="715" />
       </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DataOutputAssociation_033uumo_di" bpmnElement="DataOutputAssociation_033uumo">
+        <di:waypoint x="4712" y="649" />
+        <di:waypoint x="4772" y="706" />
+      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Association_1eygti7_di" bpmnElement="Association_1eygti7">
         <di:waypoint x="1086" y="-70" />
         <di:waypoint x="1153" y="-140" />
@@ -1646,10 +1643,6 @@ ___
       <bpmndi:BPMNEdge id="Flow_14gw1v6_di" bpmnElement="Flow_14gw1v6">
         <di:waypoint x="3329" y="1290" />
         <di:waypoint x="3329" y="570" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="DataOutputAssociation_033uumo_di" bpmnElement="DataOutputAssociation_033uumo">
-        <di:waypoint x="4712" y="649" />
-        <di:waypoint x="4772" y="706" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
