@@ -533,17 +533,17 @@ if isApprovalTimer:
     task_id = "waku_no_team_lead_response"
 else:
     if isMatch:
-        len_finance_comments = len(invoice["commentsFinance"].strip())
-        len_project_lead_comments = 0
+        len_finance_comment = len(invoice["commentFinance"].strip())
+        len_project_lead_comment = 0
         task_id = "waku_invoice_rejected_ismatch"
     else:
-        len_project_lead_comments = len(invoice["commentsProjectLead"].strip())
+        len_project_lead_comment = len(invoice["commentProjectLead"].strip())
         if invoice["isProjectLeadApprove"]:
-            len_finance_comments = len(invoice["commentsFinance"].strip())
+            len_finance_comment = len(invoice["commentFinance"].strip())
             task_id = "waku_invoice_rejected_not_ismatch_pl_approve"
         else:
             task_id = "waku_invoice_rejected_not_ismatch_not_pl_approve"
-            len_finance_comments = 0
+            len_finance_comment = 0
 
 # Set Message should not be set
 isSetMessage = True
