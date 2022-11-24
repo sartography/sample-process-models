@@ -129,7 +129,12 @@
           <spiffworkflow:property name="formJsonSchemaFilename" value="Submit-the-invoice_JSONSchema.json" />
           <spiffworkflow:property name="formUiSchemaFilename" value="Submit-the-invoice_UISchema.json" />
         </spiffworkflow:properties>
-        <spiffworkflow:postScript />
+        <spiffworkflow:postScript># Check if commenet field was initialized
+if 'commentSubmitter' not in invoice:
+    invoice['commentSubmitter'] = ''
+
+# Determine length of Submitter's comments
+len_submitter_comments = len(invoice["commentSubmitter"].strip())</spiffworkflow:postScript>
         <spiffworkflow:preScript />
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_17vkjgc</bpmn:incoming>
