@@ -75,6 +75,7 @@
       <bpmn:lane id="Lane_1so23vf" name="Finance Team">
         <bpmn:flowNodeRef>Gateway_1ytq6m7</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_0cdgqi0</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Event_1simh9k</bpmn:flowNodeRef>
       </bpmn:lane>
     </bpmn:laneSet>
     <bpmn:sequenceFlow id="Flow_1x4rtop" name="Yes" sourceRef="Gateway_validation_successful_question_mark" targetRef="Activity_10p5t0r" />
@@ -114,7 +115,7 @@
     <bpmn:sequenceFlow id="Flow_15pzvrr" sourceRef="Activity_0faln91" targetRef="Gateway_1l4tz4i" />
     <bpmn:sequenceFlow id="Flow_04fl87d" sourceRef="Activity_0gkpa9s" targetRef="Event_15y55nw" />
     <bpmn:sequenceFlow id="Flow_1jfb24q" sourceRef="Waku_Message_Pending_Payment" targetRef="Event_1usbnt0" />
-    <bpmn:sequenceFlow id="Flow_1qf14hx" sourceRef="Gateway_06i3we9" targetRef="Activity_0faln91" />
+    <bpmn:sequenceFlow id="Flow_1qf14hx" sourceRef="Gateway_06i3we9" targetRef="Event_0rwxlca" />
     <bpmn:sequenceFlow id="Flow_1w4cqkv" sourceRef="Activity_1t8wi0r" targetRef="Gateway_06i3we9" />
     <bpmn:sequenceFlow id="Flow_17vkjgc" sourceRef="Gateway_0wk5se9" targetRef="Submit_the_invoice" />
     <bpmn:sequenceFlow id="Flow_1pefcgv" sourceRef="Activity_0twki30" targetRef="Gateway_0wk5se9" />
@@ -283,7 +284,7 @@ isCurrentUser = True</spiffworkflow:preScript>
     </bpmn:startEvent>
     <bpmn:sequenceFlow id="Flow_09r1s5r" sourceRef="Activity_06b32ar" targetRef="Gateway_06i3we9" />
     <bpmn:sequenceFlow id="Flow_0z51hpb" sourceRef="Activity_07oyzdx" targetRef="Gateway_0dqj39f" />
-    <bpmn:sequenceFlow id="Flow_1xvt99y" sourceRef="Gateway_0dqj39f" targetRef="Event_176ch98" />
+    <bpmn:sequenceFlow id="Flow_1xvt99y" sourceRef="Gateway_0dqj39f" targetRef="Event_1vi3um1" />
     <bpmn:sequenceFlow id="Flow_06mfxze" sourceRef="Event_169on0z" targetRef="Gateway_0dqj39f" />
     <bpmn:sequenceFlow id="Flow_0cj1m0h" sourceRef="Delete_File" targetRef="Activity_0gkpa9s" />
     <bpmn:intermediateThrowEvent id="Event_15y55nw" name="Invoice is submitted">
@@ -358,7 +359,7 @@ isApprovalTimer = True</bpmn:script>
       <bpmn:incoming>Flow_0c0c9mw</bpmn:incoming>
     </bpmn:endEvent>
     <bpmn:scriptTask id="Activity_0faln91" name="Set Message Info" scriptFormat="python">
-      <bpmn:incoming>Flow_1qf14hx</bpmn:incoming>
+      <bpmn:incoming>Flow_1xo0lvm</bpmn:incoming>
       <bpmn:outgoing>Flow_15pzvrr</bpmn:outgoing>
       <bpmn:script># Store Team Lead comments elsewhere and clear form comments
 if isApprovalTimer:
@@ -442,7 +443,7 @@ __________________________________________________________________________
       <bpmn:outgoing>Flow_02o270g</bpmn:outgoing>
     </bpmn:serviceTask>
     <bpmn:intermediateThrowEvent id="Event_176ch98" name="Invoice awaiting approval">
-      <bpmn:incoming>Flow_1xvt99y</bpmn:incoming>
+      <bpmn:incoming>Flow_0hrln7l</bpmn:incoming>
       <bpmn:outgoing>Flow_14glsqd</bpmn:outgoing>
     </bpmn:intermediateThrowEvent>
     <bpmn:scriptTask id="Delete_File" name="Delete File">
@@ -933,9 +934,9 @@ invoice["invoiceCurrency"] = "AUD"</bpmn:script>
       <bpmn:sequenceFlow id="Flow_1hebd4s" sourceRef="Activity_0rww1ya" targetRef="Event_0kmx0m7" />
     </bpmn:subProcess>
     <bpmn:sequenceFlow id="Flow_061sv6t" sourceRef="Activity_1colhao" targetRef="Gateway_0wk5se9" />
-    <bpmn:sequenceFlow id="Flow_070r5mq" sourceRef="Activity_0cdgqi0" targetRef="Gateway_1ytq6m7" />
+    <bpmn:sequenceFlow id="Flow_070r5mq" sourceRef="Activity_0cdgqi0" targetRef="Event_1simh9k" />
     <bpmn:exclusiveGateway id="Gateway_1ytq6m7" name="Approved?" default="Flow_0h96w9j">
-      <bpmn:incoming>Flow_070r5mq</bpmn:incoming>
+      <bpmn:incoming>Flow_0dg1klx</bpmn:incoming>
       <bpmn:outgoing>Flow_00kky3k</bpmn:outgoing>
       <bpmn:outgoing>Flow_0h96w9j</bpmn:outgoing>
     </bpmn:exclusiveGateway>
@@ -1057,12 +1058,26 @@ ___
     </bpmn:serviceTask>
     <bpmn:sequenceFlow id="Flow_1cwebky" sourceRef="Activity_0fq1nb4" targetRef="Event_0lhkxwc" />
     <bpmn:intermediateCatchEvent id="Event_1vi3um1" name="Temp Fix">
+      <bpmn:incoming>Flow_1xvt99y</bpmn:incoming>
+      <bpmn:outgoing>Flow_0hrln7l</bpmn:outgoing>
       <bpmn:timerEventDefinition id="TimerEventDefinition_1wiimzf">
         <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">timedelta(seconds=1)</bpmn:timeDuration>
       </bpmn:timerEventDefinition>
     </bpmn:intermediateCatchEvent>
+    <bpmn:sequenceFlow id="Flow_0hrln7l" sourceRef="Event_1vi3um1" targetRef="Event_176ch98" />
     <bpmn:intermediateCatchEvent id="Event_0rwxlca" name="Temp Fix">
+      <bpmn:incoming>Flow_1qf14hx</bpmn:incoming>
+      <bpmn:outgoing>Flow_1xo0lvm</bpmn:outgoing>
       <bpmn:timerEventDefinition id="TimerEventDefinition_1jblyi5">
+        <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">timedelta(seconds=1)</bpmn:timeDuration>
+      </bpmn:timerEventDefinition>
+    </bpmn:intermediateCatchEvent>
+    <bpmn:sequenceFlow id="Flow_1xo0lvm" sourceRef="Event_0rwxlca" targetRef="Activity_0faln91" />
+    <bpmn:sequenceFlow id="Flow_0dg1klx" sourceRef="Event_1simh9k" targetRef="Gateway_1ytq6m7" />
+    <bpmn:intermediateCatchEvent id="Event_1simh9k">
+      <bpmn:incoming>Flow_070r5mq</bpmn:incoming>
+      <bpmn:outgoing>Flow_0dg1klx</bpmn:outgoing>
+      <bpmn:timerEventDefinition id="TimerEventDefinition_0ggkf0e">
         <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">timedelta(seconds=1)</bpmn:timeDuration>
       </bpmn:timerEventDefinition>
     </bpmn:intermediateCatchEvent>
@@ -1113,16 +1128,19 @@ ___
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_0tb3bpb_di" bpmnElement="Event_1vi3um1">
-        <dc:Bounds x="2122" y="572" width="36" height="36" />
+        <dc:Bounds x="2122" y="514" width="36" height="36" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="2119" y="615" width="45" height="14" />
+          <dc:Bounds x="2119" y="557" width="45" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_09tmh4n_di" bpmnElement="Event_0rwxlca">
-        <dc:Bounds x="3922" y="682" width="36" height="36" />
+        <dc:Bounds x="3982" y="682" width="36" height="36" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="3861" y="693" width="45" height="14" />
+          <dc:Bounds x="3921" y="693" width="45" height="14" />
         </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_00w2hg5_di" bpmnElement="Event_1simh9k">
+        <dc:Bounds x="4242" y="1062" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0z13hw3_di" bpmnElement="SubProcess_Data_validation_rules">
         <dc:Bounds x="1350" y="492" width="100" height="80" />
@@ -1494,7 +1512,7 @@ ___
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1qf14hx_di" bpmnElement="Flow_1qf14hx">
         <di:waypoint x="4000" y="845" />
-        <di:waypoint x="4000" y="572" />
+        <di:waypoint x="4000" y="718" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1w4cqkv_di" bpmnElement="Flow_1w4cqkv">
         <di:waypoint x="3900" y="948" />
@@ -1537,7 +1555,7 @@ ___
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1xvt99y_di" bpmnElement="Flow_1xvt99y">
         <di:waypoint x="2055" y="532" />
-        <di:waypoint x="2232" y="532" />
+        <di:waypoint x="2122" y="532" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_06mfxze_di" bpmnElement="Flow_06mfxze">
         <di:waypoint x="1910" y="590" />
@@ -1559,11 +1577,23 @@ ___
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_070r5mq_di" bpmnElement="Flow_070r5mq">
         <di:waypoint x="4190" y="1080" />
-        <di:waypoint x="4335" y="1080" />
+        <di:waypoint x="4242" y="1080" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1cwebky_di" bpmnElement="Flow_1cwebky">
         <di:waypoint x="4720" y="610" />
         <di:waypoint x="4812" y="610" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0hrln7l_di" bpmnElement="Flow_0hrln7l">
+        <di:waypoint x="2158" y="532" />
+        <di:waypoint x="2232" y="532" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1xo0lvm_di" bpmnElement="Flow_1xo0lvm">
+        <di:waypoint x="4000" y="682" />
+        <di:waypoint x="4000" y="572" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0dg1klx_di" bpmnElement="Flow_0dg1klx">
+        <di:waypoint x="4278" y="1080" />
+        <di:waypoint x="4335" y="1080" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="Participant_0a8arrz_di" bpmnElement="Participant_0a8arrz" isHorizontal="true">
         <dc:Bounds x="2540" y="1290" width="830" height="80" />
