@@ -345,7 +345,12 @@ ___
 | ---:   | :--- | ---:   | :--- | ---:   | :--- |
 |_Submitted by:_  | {{ invoice.contributorName }} | _Submitted on:_ | {{ invoice.invoiceDate }} | _Requested:_  | {{ invoice.invoiceAmount_str }} |
 |_Submitter Id:_ | {{ invoice.contributorId }} | _Due Date:_  | {{ invoice.dueDate}} | _Bamboo Monthly Salary:_ | {{ monthly_salary_str  }} |
-___</spiffworkflow:instructionsForEndUser>
+___
+{% if len_submitter_comments &gt; 0 %}
+*Submitter comments: *   
+{{ invoice["commentSubmitter"] }}
+___    
+{% endif %}</spiffworkflow:instructionsForEndUser>
         <spiffworkflow:preScript>approvalComment = ""</spiffworkflow:preScript>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_1ds4s8o</bpmn:incoming>
