@@ -934,9 +934,9 @@ invoice["invoiceCurrency"] = "AUD"</bpmn:script>
       <bpmn:sequenceFlow id="Flow_1hebd4s" sourceRef="Activity_0rww1ya" targetRef="Event_0kmx0m7" />
     </bpmn:subProcess>
     <bpmn:sequenceFlow id="Flow_061sv6t" sourceRef="Activity_1colhao" targetRef="Gateway_0wk5se9" />
-    <bpmn:sequenceFlow id="Flow_070r5mq" sourceRef="Activity_0cdgqi0" targetRef="Gateway_1ytq6m7" />
+    <bpmn:sequenceFlow id="Flow_070r5mq" sourceRef="Activity_0cdgqi0" targetRef="Event_1simh9k" />
     <bpmn:exclusiveGateway id="Gateway_1ytq6m7" name="Approved?" default="Flow_0h96w9j">
-      <bpmn:incoming>Flow_070r5mq</bpmn:incoming>
+      <bpmn:incoming>Flow_0eqkrc3</bpmn:incoming>
       <bpmn:outgoing>Flow_00kky3k</bpmn:outgoing>
       <bpmn:outgoing>Flow_0h96w9j</bpmn:outgoing>
     </bpmn:exclusiveGateway>
@@ -1074,10 +1074,13 @@ ___
     </bpmn:intermediateCatchEvent>
     <bpmn:sequenceFlow id="Flow_1xo0lvm" sourceRef="Event_0rwxlca" targetRef="Activity_0faln91" />
     <bpmn:intermediateCatchEvent id="Event_1simh9k">
+      <bpmn:incoming>Flow_070r5mq</bpmn:incoming>
+      <bpmn:outgoing>Flow_0eqkrc3</bpmn:outgoing>
       <bpmn:timerEventDefinition id="TimerEventDefinition_0ggkf0e">
         <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">timedelta(seconds=1)</bpmn:timeDuration>
       </bpmn:timerEventDefinition>
     </bpmn:intermediateCatchEvent>
+    <bpmn:sequenceFlow id="Flow_0eqkrc3" sourceRef="Event_1simh9k" targetRef="Gateway_1ytq6m7" />
   </bpmn:process>
   <bpmn:process id="Process_cc_invoice_approval_process_v2_c" isExecutable="false" />
   <bpmn:process id="Process_cc_invoice_approval_process_v2_d" isExecutable="false" />
@@ -1125,7 +1128,7 @@ ___
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_00w2hg5_di" bpmnElement="Event_1simh9k">
-        <dc:Bounds x="4242" y="1092" width="36" height="36" />
+        <dc:Bounds x="4242" y="1062" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0z13hw3_di" bpmnElement="SubProcess_Data_validation_rules">
         <dc:Bounds x="1350" y="492" width="100" height="80" />
@@ -1574,7 +1577,7 @@ ___
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_070r5mq_di" bpmnElement="Flow_070r5mq">
         <di:waypoint x="4190" y="1080" />
-        <di:waypoint x="4335" y="1080" />
+        <di:waypoint x="4242" y="1080" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1cwebky_di" bpmnElement="Flow_1cwebky">
         <di:waypoint x="4720" y="610" />
@@ -1587,6 +1590,10 @@ ___
       <bpmndi:BPMNEdge id="Flow_1xo0lvm_di" bpmnElement="Flow_1xo0lvm">
         <di:waypoint x="4000" y="682" />
         <di:waypoint x="4000" y="572" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0eqkrc3_di" bpmnElement="Flow_0eqkrc3">
+        <di:waypoint x="4278" y="1080" />
+        <di:waypoint x="4335" y="1080" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="Participant_0a8arrz_di" bpmnElement="Participant_0a8arrz" isHorizontal="true">
         <dc:Bounds x="2540" y="1290" width="830" height="80" />
