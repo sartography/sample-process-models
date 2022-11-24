@@ -324,8 +324,13 @@ isCurrentUser = True</spiffworkflow:preScript>
           <spiffworkflow:property name="formJsonSchemaFilename" value="invoice-approval_JSONSchema.json" />
           <spiffworkflow:property name="formUiSchemaFilename" value="invoice-approval_UISchema.json" />
         </spiffworkflow:properties>
-        <spiffworkflow:postScript>invoice.commentsFinance = approvalComment
+        <spiffworkflow:postScript># Set Finance comments
+invoice["commentsFinance"] = approvalComment
 approvalComment = ""
+
+# Check for Finance comments
+len_finance_comments = len(invoice["commentsFinance"].strip())
+
 # Set Invoice Status
 if isInvoiceApproved:
     invoice["invoiceStatus"] = "Approved by Finance Team"
