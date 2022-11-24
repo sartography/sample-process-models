@@ -173,7 +173,7 @@ del datetime</bpmn:script>
       <bpmn:endEvent id="Event_015l7j8">
         <bpmn:incoming>Flow_04odmtl</bpmn:incoming>
       </bpmn:endEvent>
-      <bpmn:sequenceFlow id="Flow_1avkxpe" sourceRef="Event_1qkuk5g" targetRef="Activity_1sixbqq" />
+      <bpmn:sequenceFlow id="Flow_1avkxpe" sourceRef="Event_1qkuk5g" targetRef="Activity_check_contributor_name" />
       <bpmn:scriptTask id="Activity_check_contributor_name" name="Check Contributor Name" scriptFormat="python">
         <bpmn:extensionElements>
           <spiffworkflow:unitTests>
@@ -186,7 +186,7 @@ del datetime</bpmn:script>
             </spiffworkflow:unitTest>
           </spiffworkflow:unitTests>
         </bpmn:extensionElements>
-        <bpmn:incoming>Flow_0daehm5</bpmn:incoming>
+        <bpmn:incoming>Flow_1avkxpe</bpmn:incoming>
         <bpmn:outgoing>Flow_0mvmd06</bpmn:outgoing>
         <bpmn:script>svc_is_num_in_name = False
 for c in invoice.contributorName:
@@ -238,10 +238,7 @@ else:
     invoice["invoiceStatus"] = "Invoice validation failed"</bpmn:script>
       </bpmn:scriptTask>
       <bpmn:sequenceFlow id="Flow_04odmtl" sourceRef="Activity_1j8k6mb" targetRef="Event_015l7j8" />
-      <bpmn:sequenceFlow id="Flow_0daehm5" sourceRef="Activity_1sixbqq" targetRef="Activity_check_contributor_name" />
       <bpmn:scriptTask id="Activity_1sixbqq" name="Check Submitter Comment">
-        <bpmn:incoming>Flow_1avkxpe</bpmn:incoming>
-        <bpmn:outgoing>Flow_0daehm5</bpmn:outgoing>
         <bpmn:script># Check if commenet field was initialized
 if 'commentSubmitter' not in invoice:
     invoice['commentSubmitter'] = ''
@@ -1839,11 +1836,11 @@ ___
         <dc:Bounds x="1200" y="170" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0r298mg_di" bpmnElement="Activity_1sixbqq">
-        <dc:Bounds x="150" y="170" width="100" height="80" />
+        <dc:Bounds x="150" y="260" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_1avkxpe_di" bpmnElement="Flow_1avkxpe">
         <di:waypoint x="78" y="210" />
-        <di:waypoint x="150" y="210" />
+        <di:waypoint x="340" y="210" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0tzjowk_di" bpmnElement="Flow_0tzjowk">
         <di:waypoint x="1120" y="210" />
@@ -1868,10 +1865,6 @@ ___
       <bpmndi:BPMNEdge id="Flow_04odmtl_di" bpmnElement="Flow_04odmtl">
         <di:waypoint x="1300" y="210" />
         <di:waypoint x="1362" y="210" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0daehm5_di" bpmnElement="Flow_0daehm5">
-        <di:waypoint x="250" y="210" />
-        <di:waypoint x="340" y="210" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
