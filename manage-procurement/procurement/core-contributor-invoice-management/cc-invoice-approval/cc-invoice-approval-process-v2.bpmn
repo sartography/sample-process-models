@@ -33,7 +33,6 @@
         <bpmn:flowNodeRef>Event_invoice_validation_failed</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Gateway_0wk5se9</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_show_errors</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Activity_07oyzdx</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_10p5t0r</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_0twki30</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_15y55nw</bpmn:flowNodeRef>
@@ -63,6 +62,7 @@
         <bpmn:flowNodeRef>Activity_0gkpa9s</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_0gkejaj</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Waku_Message_Pending_Payment</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_07oyzdx</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_169on0z</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_1b7abal" name="Project Lead">
@@ -300,36 +300,6 @@ else:
       <bpmn:incoming>Flow_13ng1f4</bpmn:incoming>
       <bpmn:outgoing>Flow_18cic3h</bpmn:outgoing>
     </bpmn:manualTask>
-    <bpmn:manualTask id="Activity_07oyzdx" name="Show What&#39;s Next">
-      <bpmn:extensionElements>
-        <spiffworkflow:instructionsForEndUser>___
-| **Field** | **Input** |
-| ---:   | :--- |
-|_Submitted by:_  | {{ invoice.contributorName }} |
-|_Submitter Id:_ | {{ invoice.contributorId }} |
-|_Invoice Id:_ | {{ invoice.invoiceId }} |
-|_Amount:_  | {{ invoice.invoiceAmount_str }} |
-|_Submitted on:_ | {{ invoice.invoiceDate }} |
-|_Due Date:_  | {{ invoice.dueDate}} |
-___
-{% if len_submitter_comment &gt; 0 %}
-*Submitter comments:*   
-{{ invoice["commentSubmitter"] }}
-___    
-{% endif %}
-Thank you for your invoice submission.  
-Updates on the progress of your submission will be sent to you on the Status app.  
-   
-Please click Submit below to return to the Home page.  
-   
-__________________________________________________________________________   
-   </spiffworkflow:instructionsForEndUser>
-        <spiffworkflow:preScript># Set Submit to True
-isSubmit = True</spiffworkflow:preScript>
-      </bpmn:extensionElements>
-      <bpmn:incoming>Flow_06amgv2</bpmn:incoming>
-      <bpmn:outgoing>Flow_0z51hpb</bpmn:outgoing>
-    </bpmn:manualTask>
     <bpmn:callActivity id="Activity_10p5t0r" name="Call Shared: Currency Format" calledElement="Shared_Currency_Format">
       <bpmn:extensionElements>
         <spiffworkflow:preScript>curCode = invoice.invoiceCurrency
@@ -355,12 +325,6 @@ if svc_decimal_cnt &gt; 2:
 if not(svc_is_due_date_after):
     invoice["dueDate"] = None</bpmn:script>
     </bpmn:scriptTask>
-    <bpmn:boundaryEvent id="Event_169on0z" attachedToRef="Activity_07oyzdx">
-      <bpmn:outgoing>Flow_06mfxze</bpmn:outgoing>
-      <bpmn:timerEventDefinition id="TimerEventDefinition_1x8m85i">
-        <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">timedelta(seconds=1000)</bpmn:timeDuration>
-      </bpmn:timerEventDefinition>
-    </bpmn:boundaryEvent>
     <bpmn:boundaryEvent id="Event_09q0ym0" name="5 days" attachedToRef="Activity_06b32ar">
       <bpmn:outgoing>Flow_1v8dszb</bpmn:outgoing>
       <bpmn:timerEventDefinition id="TimerEventDefinition_0cpj4z0">
@@ -1061,6 +1025,46 @@ ___
       <bpmn:incoming>Flow_04fl87d</bpmn:incoming>
       <bpmn:outgoing>Flow_1ex5hfx</bpmn:outgoing>
     </bpmn:intermediateThrowEvent>
+    <bpmn:userTask id="Activity_07oyzdx" name="Show What&#39;s Next">
+      <bpmn:extensionElements>
+        <spiffworkflow:instructionsForEndUser>___
+| **Field** | **Input** |
+| ---:   | :--- |
+|_Submitted by:_  | {{ invoice.contributorName }} |
+|_Submitter Id:_ | {{ invoice.contributorId }} |
+|_Invoice Id:_ | {{ invoice.invoiceId }} |
+|_Amount:_  | {{ invoice.invoiceAmount_str }} |
+|_Submitted on:_ | {{ invoice.invoiceDate }} |
+|_Due Date:_  | {{ invoice.dueDate}} |
+___
+{% if len_submitter_comment &gt; 0 %}
+*Submitter comments:*   
+{{ invoice["commentSubmitter"] }}
+___    
+{% endif %}
+Thank you for your invoice submission.  
+Updates on the progress of your submission will be sent to you on the Status app.  
+   
+Please click Submit below to return to the Home page.  
+   
+__________________________________________________________________________   
+   </spiffworkflow:instructionsForEndUser>
+        <spiffworkflow:preScript># Set Submit to True
+isSubmit = True</spiffworkflow:preScript>
+        <spiffworkflow:properties>
+          <spiffworkflow:property name="formJsonSchemaFilename" value="what-next_JSONSchema.json" />
+          <spiffworkflow:property name="formUiSchemaFilename" value="what-next_UISchema.json" />
+        </spiffworkflow:properties>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_06amgv2</bpmn:incoming>
+      <bpmn:outgoing>Flow_0z51hpb</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:boundaryEvent id="Event_169on0z" attachedToRef="Activity_07oyzdx">
+      <bpmn:outgoing>Flow_06mfxze</bpmn:outgoing>
+      <bpmn:timerEventDefinition id="TimerEventDefinition_1x8m85i">
+        <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">timedelta(seconds=1000)</bpmn:timeDuration>
+      </bpmn:timerEventDefinition>
+    </bpmn:boundaryEvent>
   </bpmn:process>
   <bpmn:process id="Process_cc_invoice_approval_process_v2_c" isExecutable="false" />
   <bpmn:process id="Process_cc_invoice_approval_process_v2_d" isExecutable="false" />
@@ -1207,9 +1211,6 @@ ___
         <dc:Bounds x="3760" y="492" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0eo1xsv_di" bpmnElement="Activity_07oyzdx">
-        <dc:Bounds x="1650" y="492" width="100" height="80" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Gateway_10gbs8m_di" bpmnElement="Gateway_05ov5p5">
         <dc:Bounds x="2165" y="507" width="50" height="50" />
       </bpmndi:BPMNShape>
@@ -1302,6 +1303,9 @@ ___
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_00w2hg5_di" bpmnElement="Event_1simh9k">
         <dc:Bounds x="4052" y="1062" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_15k19wf_di" bpmnElement="Activity_07oyzdx">
+        <dc:Bounds x="1650" y="492" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0z13hw3_di" bpmnElement="SubProcess_Data_validation_rules">
         <dc:Bounds x="1160" y="492" width="100" height="80" />
