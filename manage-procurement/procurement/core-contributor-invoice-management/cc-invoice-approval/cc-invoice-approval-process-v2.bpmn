@@ -60,11 +60,11 @@
         <bpmn:flowNodeRef>Activity_10p5t0r</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_0twki30</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_1864qj2</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Waku_Message_Pending_Payment</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_169on0z</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_0fq1nb4</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_1vi3um1</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_0rwxlca</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Waku_Message_Pending_Payment</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_1b7abal" name="Project Lead">
         <bpmn:flowNodeRef>Activity_1t8wi0r</bpmn:flowNodeRef>
@@ -114,14 +114,13 @@
     <bpmn:sequenceFlow id="Flow_0a9w301" sourceRef="Gateway_1717c0p" targetRef="Delete_File" />
     <bpmn:sequenceFlow id="Flow_15pzvrr" sourceRef="Activity_0faln91" targetRef="Gateway_1l4tz4i" />
     <bpmn:sequenceFlow id="Flow_04fl87d" sourceRef="Activity_0gkpa9s" targetRef="Event_15y55nw" />
-    <bpmn:sequenceFlow id="Flow_1jfb24q" sourceRef="Waku_Message_Pending_Payment" targetRef="Event_1usbnt0" />
     <bpmn:sequenceFlow id="Flow_1qf14hx" sourceRef="Gateway_06i3we9" targetRef="Event_0rwxlca" />
     <bpmn:sequenceFlow id="Flow_1w4cqkv" sourceRef="Activity_1t8wi0r" targetRef="Gateway_06i3we9" />
     <bpmn:sequenceFlow id="Flow_17vkjgc" sourceRef="Gateway_0wk5se9" targetRef="Submit_the_invoice" />
     <bpmn:sequenceFlow id="Flow_1pefcgv" sourceRef="Activity_0twki30" targetRef="Gateway_0wk5se9" />
     <bpmn:sequenceFlow id="Flow_1s2as7o" sourceRef="Gateway_05ov5p5" targetRef="Activity_104xpp8" />
     <bpmn:sequenceFlow id="Flow_0hyvwku" sourceRef="Activity_104xpp8" targetRef="Activity_0p88elm" />
-    <bpmn:sequenceFlow id="Flow_1fvtcqt" sourceRef="Event_0lhkxwc" targetRef="Waku_Message_Pending_Payment" />
+    <bpmn:sequenceFlow id="Flow_1fvtcqt" sourceRef="Event_0lhkxwc" targetRef="Event_1usbnt0" />
     <bpmn:sequenceFlow id="Flow_14glsqd" sourceRef="Event_176ch98" targetRef="Gateway_05ov5p5" />
     <bpmn:userTask id="Submit_the_invoice" name="Submit Invoice" scriptFormat="python" script="SdgsdGsdhgwsDEHhww">
       <bpmn:extensionElements>
@@ -965,7 +964,7 @@ invoice["invoiceCurrency"] = "AUD"</bpmn:script>
       <bpmn:outgoing>Flow_0h96w9j</bpmn:outgoing>
     </bpmn:exclusiveGateway>
     <bpmn:endEvent id="Event_1usbnt0">
-      <bpmn:incoming>Flow_1jfb24q</bpmn:incoming>
+      <bpmn:incoming>Flow_1fvtcqt</bpmn:incoming>
     </bpmn:endEvent>
     <bpmn:dataObjectReference id="DataObjectReference_0br9o6c" name="wr_invoicePayPend" dataObjectRef="wr_invoicePayPend" />
     <bpmn:dataObject id="wr_invoicePayPend" />
@@ -973,59 +972,6 @@ invoice["invoiceCurrency"] = "AUD"</bpmn:script>
       <bpmn:incoming>Flow_1cwebky</bpmn:incoming>
       <bpmn:outgoing>Flow_1fvtcqt</bpmn:outgoing>
     </bpmn:intermediateThrowEvent>
-    <bpmn:subProcess id="Waku_Message_Pending_Payment" name="Waku Message: Pending Payment">
-      <bpmn:extensionElements>
-        <spiffworkflow:preScript># Set Invoice Status to Approved and Pending Payment
-invoice["invoiceStatus"] = "Approved and Pending Payment"</spiffworkflow:preScript>
-      </bpmn:extensionElements>
-      <bpmn:incoming>Flow_1fvtcqt</bpmn:incoming>
-      <bpmn:outgoing>Flow_1jfb24q</bpmn:outgoing>
-      <bpmn:dataOutputAssociation id="DataOutputAssociation_0lf2wuo">
-        <bpmn:targetRef>DataObjectReference_0br9o6c</bpmn:targetRef>
-      </bpmn:dataOutputAssociation>
-      <bpmn:startEvent id="Event_13cibxi">
-        <bpmn:outgoing>Flow_1j5eznh</bpmn:outgoing>
-      </bpmn:startEvent>
-      <bpmn:callActivity id="Get_Waku_Messages_Message" name="Get Waku Messages: Message" calledElement="Waku_Messages_Message">
-        <bpmn:extensionElements>
-          <spiffworkflow:preScript># Set Task Id and Project Lead comments length
-if isMatch:
-    task_id = "waku_payment_pending_ismatch"
-    len_project_lead_comments = 0
-else:
-    task_id = "waku_payment_pending_not_ismatch"
-    len_project_lead_comments = len(invoice["commentsProjectLead"].strip())
-
-# Set Message in Call Activity
-isSetMessage = True
-
-# Set Time Zone
-timezone = current_user_extras["time_zone"]</spiffworkflow:preScript>
-        </bpmn:extensionElements>
-        <bpmn:incoming>Flow_1j5eznh</bpmn:incoming>
-        <bpmn:outgoing>Flow_1w7kqay</bpmn:outgoing>
-      </bpmn:callActivity>
-      <bpmn:sequenceFlow id="Flow_1w7kqay" sourceRef="Get_Waku_Messages_Message" targetRef="waku_payment_pending" />
-      <bpmn:endEvent id="Event_0fbz176">
-        <bpmn:incoming>Flow_1buk0a2</bpmn:incoming>
-      </bpmn:endEvent>
-      <bpmn:serviceTask id="waku_payment_pending" name="Waku Message: Notify CC Payment Pending">
-        <bpmn:extensionElements>
-          <spiffworkflow:serviceTaskOperator id="waku/SendMessage" resultVariable="wr_invoicePayPend">
-            <spiffworkflow:parameters>
-              <spiffworkflow:parameter id="message" type="str" value="waku_message" />
-              <spiffworkflow:parameter id="message_type" type="str" value="&#34;wakuext_sendOneToOneMessage&#34;" />
-              <spiffworkflow:parameter id="recipient" type="str" value="current_user_extras[&#34;status_key&#34;]" />
-            </spiffworkflow:parameters>
-          </spiffworkflow:serviceTaskOperator>
-          <spiffworkflow:preScript />
-        </bpmn:extensionElements>
-        <bpmn:incoming>Flow_1w7kqay</bpmn:incoming>
-        <bpmn:outgoing>Flow_1buk0a2</bpmn:outgoing>
-      </bpmn:serviceTask>
-      <bpmn:sequenceFlow id="Flow_1buk0a2" sourceRef="waku_payment_pending" targetRef="Event_0fbz176" />
-      <bpmn:sequenceFlow id="Flow_1j5eznh" sourceRef="Event_13cibxi" targetRef="Get_Waku_Messages_Message" />
-    </bpmn:subProcess>
     <bpmn:dataObjectReference id="DataObjectReference_1g4gzsx" name="resp_xeroCreateInvoice" dataObjectRef="resp_xeroCreateInvoice" />
     <bpmn:dataObject id="resp_xeroCreateInvoice" />
     <bpmn:userTask id="Activity_06b32ar" name="Approve Invoice - Project Lead">
@@ -1107,6 +1053,57 @@ ___
       </bpmn:timerEventDefinition>
     </bpmn:intermediateCatchEvent>
     <bpmn:sequenceFlow id="Flow_0eqkrc3" sourceRef="Event_1simh9k" targetRef="Gateway_1ytq6m7" />
+    <bpmn:subProcess id="Waku_Message_Pending_Payment" name="Waku Message: Pending Payment">
+      <bpmn:extensionElements>
+        <spiffworkflow:preScript># Set Invoice Status to Approved and Pending Payment
+invoice["invoiceStatus"] = "Approved and Pending Payment"</spiffworkflow:preScript>
+      </bpmn:extensionElements>
+      <bpmn:dataOutputAssociation id="DataOutputAssociation_0lf2wuo">
+        <bpmn:targetRef>DataObjectReference_0br9o6c</bpmn:targetRef>
+      </bpmn:dataOutputAssociation>
+      <bpmn:startEvent id="Event_13cibxi">
+        <bpmn:outgoing>Flow_1j5eznh</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:callActivity id="Get_Waku_Messages_Message" name="Get Waku Messages: Message" calledElement="Waku_Messages_Message">
+        <bpmn:extensionElements>
+          <spiffworkflow:preScript># Set Task Id and Project Lead comments length
+if isMatch:
+    task_id = "waku_payment_pending_ismatch"
+    len_project_lead_comments = 0
+else:
+    task_id = "waku_payment_pending_not_ismatch"
+    len_project_lead_comments = len(invoice["commentsProjectLead"].strip())
+
+# Set Message in Call Activity
+isSetMessage = True
+
+# Set Time Zone
+timezone = current_user_extras["time_zone"]</spiffworkflow:preScript>
+        </bpmn:extensionElements>
+        <bpmn:incoming>Flow_1j5eznh</bpmn:incoming>
+        <bpmn:outgoing>Flow_1w7kqay</bpmn:outgoing>
+      </bpmn:callActivity>
+      <bpmn:sequenceFlow id="Flow_1w7kqay" sourceRef="Get_Waku_Messages_Message" targetRef="waku_payment_pending" />
+      <bpmn:endEvent id="Event_0fbz176">
+        <bpmn:incoming>Flow_1buk0a2</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:serviceTask id="waku_payment_pending" name="Waku Message: Notify CC Payment Pending">
+        <bpmn:extensionElements>
+          <spiffworkflow:serviceTaskOperator id="waku/SendMessage" resultVariable="wr_invoicePayPend">
+            <spiffworkflow:parameters>
+              <spiffworkflow:parameter id="message" type="str" value="waku_message" />
+              <spiffworkflow:parameter id="message_type" type="str" value="&#34;wakuext_sendOneToOneMessage&#34;" />
+              <spiffworkflow:parameter id="recipient" type="str" value="current_user_extras[&#34;status_key&#34;]" />
+            </spiffworkflow:parameters>
+          </spiffworkflow:serviceTaskOperator>
+          <spiffworkflow:preScript />
+        </bpmn:extensionElements>
+        <bpmn:incoming>Flow_1w7kqay</bpmn:incoming>
+        <bpmn:outgoing>Flow_1buk0a2</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:sequenceFlow id="Flow_1buk0a2" sourceRef="waku_payment_pending" targetRef="Event_0fbz176" />
+      <bpmn:sequenceFlow id="Flow_1j5eznh" sourceRef="Event_13cibxi" targetRef="Get_Waku_Messages_Message" />
+    </bpmn:subProcess>
   </bpmn:process>
   <bpmn:process id="Process_cc_invoice_approval_process_v2_c" isExecutable="false" />
   <bpmn:process id="Process_cc_invoice_approval_process_v2_d" isExecutable="false" />
@@ -1342,10 +1339,6 @@ ___
           <dc:Bounds x="4786" y="635" width="88" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1tlgf7q_di" bpmnElement="Waku_Message_Pending_Payment">
-        <dc:Bounds x="4960" y="570" width="100" height="80" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="DataObjectReference_1g4gzsx_di" bpmnElement="DataObjectReference_1g4gzsx">
         <dc:Bounds x="4772" y="705" width="36" height="50" />
         <bpmndi:BPMNLabel>
@@ -1373,6 +1366,10 @@ ___
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_00w2hg5_di" bpmnElement="Event_1simh9k">
         <dc:Bounds x="4242" y="1062" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1tlgf7q_di" bpmnElement="Waku_Message_Pending_Payment">
+        <dc:Bounds x="5000" y="630" width="100" height="80" />
+        <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_08bsj2m_di" bpmnElement="Event_09q0ym0">
         <dc:Bounds x="3693" y="892" width="36" height="36" />
@@ -1532,10 +1529,6 @@ ___
         <di:waypoint x="3140" y="530" />
         <di:waypoint x="3192" y="530" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_1jfb24q_di" bpmnElement="Flow_1jfb24q">
-        <di:waypoint x="5060" y="610" />
-        <di:waypoint x="5122" y="610" />
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1qf14hx_di" bpmnElement="Flow_1qf14hx">
         <di:waypoint x="4000" y="845" />
         <di:waypoint x="4000" y="718" />
@@ -1565,7 +1558,7 @@ ___
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1fvtcqt_di" bpmnElement="Flow_1fvtcqt">
         <di:waypoint x="4848" y="610" />
-        <di:waypoint x="4960" y="610" />
+        <di:waypoint x="5122" y="610" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_14glsqd_di" bpmnElement="Flow_14glsqd">
         <di:waypoint x="2268" y="532" />
@@ -1654,8 +1647,8 @@ ___
         <di:waypoint x="3188" y="395" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="DataOutputAssociation_0lf2wuo_di" bpmnElement="DataOutputAssociation_0lf2wuo">
-        <di:waypoint x="4985" y="650" />
-        <di:waypoint x="4944" y="715" />
+        <di:waypoint x="5000" y="699" />
+        <di:waypoint x="4948" y="729" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="DataOutputAssociation_033uumo_di" bpmnElement="DataOutputAssociation_033uumo">
         <di:waypoint x="4712" y="649" />
@@ -1686,8 +1679,8 @@ ___
         <di:waypoint x="4140" y="150" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1dgkwzr_di" bpmnElement="Flow_1dgkwzr">
-        <di:waypoint x="5010" y="570" />
-        <di:waypoint x="5010" y="150" />
+        <di:waypoint x="5050" y="630" />
+        <di:waypoint x="5050" y="150" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_14gw1v6_di" bpmnElement="Flow_14gw1v6">
         <di:waypoint x="3329" y="1290" />
