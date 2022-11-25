@@ -324,11 +324,8 @@ isCurrentUser = True</spiffworkflow:preScript>
           <spiffworkflow:property name="formJsonSchemaFilename" value="invoice-approval_JSONSchema.json" />
           <spiffworkflow:property name="formUiSchemaFilename" value="invoice-approval_UISchema.json" />
         </spiffworkflow:properties>
-        <spiffworkflow:postScript># Check if commenet field was initialized
-if 'commentFinance' not in invoice:
-    invoice['commentFinance'] = ''
-else:
-    invoice["commentFinance"] = approvalComment
+        <spiffworkflow:postScript># Check Finance Comment
+invoice['commentFinance'] = approvalComment
 
 # Reset Approval Comment
 approvalComment = ""
