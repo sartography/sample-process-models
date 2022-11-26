@@ -295,8 +295,8 @@ if val_list_cnt == 1:
         single_validation_title = "Invoice Amount"
         single_validation_value = invoiceAmount_str
 	elif is_due_date_after:
-		single_validation = "The invoice due date must be after today's date"
-        single_validation_title = 
+		single_validation_error = "The invoice due date must be after today's date"
+        single_validation_title = "Due Date"
         single_validation_value = invoice["dueDate"]
 
 # Set Invoice Status
@@ -324,8 +324,8 @@ else:
       <bpmn:extensionElements>
         <spiffworkflow:instructionsForEndUser>{{ submitInvoiceValidationMessage }}  
 {% if val_list_cnt == 1 %}
-{{ single_validation }}
-{{ single_value }}
+{{ single_validation_error }}
+{{ single_validation_title }}: {{ single_validation_value }}
 {% else %}
 {{ val_list_cnt_str }} of your entries was not properly formatted       
 {% if is_num_in_name %}
