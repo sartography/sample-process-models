@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_96f6665" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.0.0-dev">
+  <bpmn:process id="Process_puxk39c" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>Flow_1wvtd9f</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_1wvtd9f" sourceRef="StartEvent_1" targetRef="Activity_0wihyaa" />
+    <bpmn:scriptTask id="Activity_0wihyaa" name="Set Validation Variables">
+      <bpmn:incoming>Flow_1wvtd9f</bpmn:incoming>
+      <bpmn:outgoing>Flow_0e4vc4s</bpmn:outgoing>
+      <bpmn:script>is_num_in_name = True
+is_decimal_cnt = False
+is_due_date_after = False
+
+val_list = [is_num_in_name, is_decimal_cnt, is_due_date_after]
+
+val_list_cnt = val_list.count(True)</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:sequenceFlow id="Flow_0e4vc4s" sourceRef="Activity_0wihyaa" targetRef="Activity_0qkcxy7" />
+    <bpmn:manualTask id="Activity_0qkcxy7" name="Show Validation Text">
+      <bpmn:incoming>Flow_0e4vc4s</bpmn:incoming>
+      <bpmn:outgoing>Flow_1g2gsjj</bpmn:outgoing>
+    </bpmn:manualTask>
+    <bpmn:endEvent id="Event_1wckt3w">
+      <bpmn:incoming>Flow_1g2gsjj</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_1g2gsjj" sourceRef="Activity_0qkcxy7" targetRef="Event_1wckt3w" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_puxk39c">
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="179" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1lbwwms_di" bpmnElement="Activity_0wihyaa">
+        <dc:Bounds x="270" y="137" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1e7l1pj_di" bpmnElement="Activity_0qkcxy7">
+        <dc:Bounds x="430" y="137" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1wckt3w_di" bpmnElement="Event_1wckt3w">
+        <dc:Bounds x="592" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_1wvtd9f_di" bpmnElement="Flow_1wvtd9f">
+        <di:waypoint x="215" y="177" />
+        <di:waypoint x="270" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0e4vc4s_di" bpmnElement="Flow_0e4vc4s">
+        <di:waypoint x="370" y="177" />
+        <di:waypoint x="430" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1g2gsjj_di" bpmnElement="Flow_1g2gsjj">
+        <di:waypoint x="530" y="177" />
+        <di:waypoint x="592" y="177" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
