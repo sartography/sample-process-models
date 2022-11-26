@@ -63,7 +63,6 @@
         <bpmn:flowNodeRef>Activity_0gkpa9s</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_0gkejaj</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Waku_Message_Pending_Payment</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Event_169on0z</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_1b7abal" name="Project Lead">
         <bpmn:flowNodeRef>Activity_1t8wi0r</bpmn:flowNodeRef>
@@ -146,7 +145,6 @@ isCurrentUser = True</spiffworkflow:preScript>
     <bpmn:sequenceFlow id="Flow_09r1s5r" sourceRef="Activity_06b32ar" targetRef="Gateway_06i3we9" />
     <bpmn:sequenceFlow id="Flow_0z51hpb" sourceRef="Activity_07oyzdx" targetRef="Gateway_0dqj39f" />
     <bpmn:sequenceFlow id="Flow_1xvt99y" name="Yes" sourceRef="Gateway_0dqj39f" targetRef="Event_1vi3um1" />
-    <bpmn:sequenceFlow id="Flow_06mfxze" sourceRef="Event_169on0z" targetRef="Gateway_0dqj39f" />
     <bpmn:sequenceFlow id="Flow_0cj1m0h" sourceRef="Delete_File" targetRef="Activity_0gkpa9s" />
     <bpmn:sequenceFlow id="Flow_06amgv2" sourceRef="Activity_10p5t0r" targetRef="Activity_07oyzdx" />
     <bpmn:dataObjectReference id="DataObjectReference_05liqvr" name="resp_BambooUserInfo" dataObjectRef="resp_BambooUserInfo" />
@@ -336,7 +334,6 @@ if not(svc_is_due_date_after):
     </bpmn:scriptTask>
     <bpmn:exclusiveGateway id="Gateway_0dqj39f" name="Submit?" default="Flow_1xvt99y">
       <bpmn:incoming>Flow_0z51hpb</bpmn:incoming>
-      <bpmn:incoming>Flow_06mfxze</bpmn:incoming>
       <bpmn:outgoing>Flow_1xvt99y</bpmn:outgoing>
       <bpmn:outgoing>Flow_0adpna9</bpmn:outgoing>
     </bpmn:exclusiveGateway>
@@ -374,12 +371,6 @@ isProceed = True</spiffworkflow:preScript>
       <bpmn:incoming>Flow_06amgv2</bpmn:incoming>
       <bpmn:outgoing>Flow_0z51hpb</bpmn:outgoing>
     </bpmn:userTask>
-    <bpmn:boundaryEvent id="Event_169on0z" attachedToRef="Activity_07oyzdx">
-      <bpmn:outgoing>Flow_06mfxze</bpmn:outgoing>
-      <bpmn:timerEventDefinition id="TimerEventDefinition_1x8m85i">
-        <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">timedelta(seconds=1000)</bpmn:timeDuration>
-      </bpmn:timerEventDefinition>
-    </bpmn:boundaryEvent>
     <bpmn:sequenceFlow id="Flow_0adpna9" name="No" sourceRef="Gateway_0dqj39f" targetRef="Gateway_0wk5se9">
       <bpmn:conditionExpression>not(isProceed)</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
@@ -1342,9 +1333,6 @@ timezone = current_user_extras["time_zone"]</spiffworkflow:preScript>
           <dc:Bounds x="3504" y="923" width="33" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_1c8bu8s_di" bpmnElement="Event_169on0z">
-        <dc:Bounds x="1702" y="554" width="36" height="36" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_1x4rtop_di" bpmnElement="Flow_1x4rtop">
         <di:waypoint x="1385" y="532" />
         <di:waypoint x="1470" y="532" />
@@ -1544,12 +1532,6 @@ timezone = current_user_extras["time_zone"]</spiffworkflow:preScript>
           <dc:Bounds x="1905" y="514" width="18" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_06mfxze_di" bpmnElement="Flow_06mfxze">
-        <di:waypoint x="1720" y="590" />
-        <di:waypoint x="1720" y="610" />
-        <di:waypoint x="1840" y="610" />
-        <di:waypoint x="1840" y="557" />
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0cj1m0h_di" bpmnElement="Flow_0cj1m0h">
         <di:waypoint x="2800" y="530" />
         <di:waypoint x="2880" y="530" />
@@ -1607,6 +1589,10 @@ timezone = current_user_extras["time_zone"]</spiffworkflow:preScript>
       <bpmndi:BPMNShape id="TextAnnotation_1uaw1w7_di" bpmnElement="TextAnnotation_1uaw1w7">
         <dc:Bounds x="640" y="-170" width="570" height="30" />
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="DataOutputAssociation_13yusbb_di" bpmnElement="DataOutputAssociation_13yusbb">
+        <di:waypoint x="581" y="490" />
+        <di:waypoint x="619" y="415" />
+      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="DataOutputAssociation_1topzui_di" bpmnElement="DataOutputAssociation_1topzui">
         <di:waypoint x="1223" y="572" />
         <di:waypoint x="1251" y="655" />
@@ -1662,10 +1648,6 @@ timezone = current_user_extras["time_zone"]</spiffworkflow:preScript>
       <bpmndi:BPMNEdge id="Flow_14gw1v6_di" bpmnElement="Flow_14gw1v6">
         <di:waypoint x="3169" y="1290" />
         <di:waypoint x="3169" y="570" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="DataOutputAssociation_13yusbb_di" bpmnElement="DataOutputAssociation_13yusbb">
-        <di:waypoint x="581" y="490" />
-        <di:waypoint x="619" y="415" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
