@@ -315,7 +315,22 @@ else:
     <bpmn:manualTask id="Activity_show_errors" name="Show Error(s)">
       <bpmn:extensionElements>
         <spiffworkflow:instructionsForEndUser>{{ submitInvoiceValidationMessage }}  
-   
+{% if val_list_cnt == 1 %}
+{{ single_validation }}
+{{ single_value }}
+{% else %}
+{{ val_list_cnt_str }} of your entries was not properly formatted       
+{% if is_num_in_name %}
+ - Numbers are not allowed in the Submitter's Name
+{% endif %}
+{% if is_decimal_cnt %}
+ - The involce amount must not have more than two decimal places
+{% endif %}
+{% if is_due_date_after %}
+ - The invoice due date must be after today's date.
+{% endif %}
+{% endif %}
+
 **Please fix when resubmitting.**  </spiffworkflow:instructionsForEndUser>
         <spiffworkflow:preScript />
       </bpmn:extensionElements>
