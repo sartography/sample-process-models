@@ -242,7 +242,7 @@ for c in invoice.contributorName:
 
 del c</bpmn:script>
       </bpmn:scriptTask>
-      <bpmn:scriptTask id="Activity_check_invoice_amount" name="Check Invoice Amount" scriptFormat="python">
+      <bpmn:scriptTask id="Activity_check_invoice_amount" name="Check Invoice Amount Decimals" scriptFormat="python">
         <bpmn:incoming>Flow_0mvmd06</bpmn:incoming>
         <bpmn:outgoing>Flow_0wp2mcf</bpmn:outgoing>
         <bpmn:script># Check if there are more than two decimal places
@@ -292,8 +292,8 @@ if val_list_cnt == 1:
         single_validation_value = invoice["contributorName"]
 	elif is_decimal_cnt:
 		single_validation_error = "The involce amount must not have more than two decimal places"
-        single_validation_title = 
-        single_validation_value = 
+        single_validation_title = "Invoice Amount"
+        single_validation_value = invoiceAmount_str
 	elif is_due_date_after:
 		single_validation = "The invoice due date must be after today's date"
         single_validation_title = 
@@ -1823,6 +1823,7 @@ timezone = current_user_extras["time_zone"]</spiffworkflow:preScript>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_07pdvk2_di" bpmnElement="Activity_check_invoice_amount">
         <dc:Bounds x="510" y="170" width="100" height="80" />
+        <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1l7rl3o_di" bpmnElement="Activity_check_validation_rules">
         <dc:Bounds x="1020" y="170" width="100" height="80" />
