@@ -277,7 +277,29 @@ del decimal</bpmn:script>
       <bpmn:scriptTask id="Activity_1j8k6mb" name="Set Invoice Status">
         <bpmn:incoming>Flow_0tzjowk</bpmn:incoming>
         <bpmn:outgoing>Flow_04odmtl</bpmn:outgoing>
-        <bpmn:script># Set Invoice Status
+        <bpmn:script>is_num_in_name = True
+is_decimal_cnt = False
+is_due_date_after = True
+
+val_list = [is_num_in_name, is_decimal_cnt, is_due_date_after]
+
+val_list_cnt = val_list.count(True)
+
+if val_list_cnt == 2:
+	val_list_cnt_str = "Two"
+if val_list_cnt == 3:
+	val_list_cnt_str = "Three"
+
+if val_list_cnt == 1:
+	if is_num_in_name:
+		single_validation = "Numbers are not allowed in the Submitter's Name"
+	elif is_decimal_cnt:
+		single_validation = "The involce amount must not have more than two decimal places"
+	elif is_due_date_after:
+		single_validation = "The invoice due date must be after today's date"
+
+
+# Set Invoice Status
 if svc_is_invoice_submit_pass:
     invoice["invoiceStatus"] = "Awaiting approval"
 else:
@@ -303,26 +325,7 @@ else:
         <spiffworkflow:instructionsForEndUser>{{ submitInvoiceValidationMessage }}  
    
 **Please fix when resubmitting.**  </spiffworkflow:instructionsForEndUser>
-        <spiffworkflow:preScript>is_num_in_name = True
-is_decimal_cnt = False
-is_due_date_after = True
-
-val_list = [is_num_in_name, is_decimal_cnt, is_due_date_after]
-
-val_list_cnt = val_list.count(True)
-
-if val_list_cnt == 2:
-	val_list_cnt_str = "Two"
-if val_list_cnt == 3:
-	val_list_cnt_str = "Three"
-
-if val_list_cnt == 1:
-	if is_num_in_name:
-		single_validation = "Numbers are not allowed in the Submitter's Name"
-	elif is_decimal_cnt:
-		single_validation = "The involce amount must not have more than two decimal places"
-	elif is_due_date_after:
-		single_validation = "The invoice due date must be after today's date"</spiffworkflow:preScript>
+        <spiffworkflow:preScript></spiffworkflow:preScript>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_13ng1f4</bpmn:incoming>
       <bpmn:outgoing>Flow_18cic3h</bpmn:outgoing>
