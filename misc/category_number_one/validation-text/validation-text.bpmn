@@ -14,7 +14,15 @@ is_due_date_after = False
 
 val_list = [is_num_in_name, is_decimal_cnt, is_due_date_after]
 
-val_list_cnt = val_list.count(True)</bpmn:script>
+val_list_cnt = val_list.count(True)
+
+if val_list_cnt == 1:
+	if is_num_in_name:
+		single_validation = "Numbers are not allowed in the Submitter's Name"
+	elif is_decimal_cnt:
+		single_validation = "The involce amount must not have more than two decimal places"
+	elif is_due_date_after:
+		single_validation = "The invoice due date must be after today's date"</bpmn:script>
     </bpmn:scriptTask>
     <bpmn:sequenceFlow id="Flow_0e4vc4s" sourceRef="Activity_0wihyaa" targetRef="Activity_0qkcxy7" />
     <bpmn:manualTask id="Activity_0qkcxy7" name="Show Validation Text">
