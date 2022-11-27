@@ -149,7 +149,6 @@ isCurrentUser = True</spiffworkflow:preScript>
     <bpmn:sequenceFlow id="Flow_0cj1m0h" sourceRef="Delete_File" targetRef="Activity_0gkpa9s" />
     <bpmn:sequenceFlow id="Flow_06amgv2" sourceRef="Activity_10p5t0r" targetRef="Activity_07oyzdx" />
     <bpmn:dataObjectReference id="DataObjectReference_05liqvr" name="resp_BambooUserInfo" dataObjectRef="resp_BambooUserInfo" />
-    <bpmn:dataObject id="resp_BambooUserInfo" />
     <bpmn:sequenceFlow id="Flow_061sv6t" sourceRef="Activity_1colhao" targetRef="Activity_1cur208" />
     <bpmn:sequenceFlow id="Flow_070r5mq" sourceRef="Activity_0cdgqi0" targetRef="Event_1simh9k" />
     <bpmn:sequenceFlow id="Flow_1cwebky" sourceRef="Activity_0fq1nb4" targetRef="Event_0lhkxwc" />
@@ -739,6 +738,9 @@ date_format = current_user_extras["date_format"]</bpmn:script>
     <bpmn:subProcess id="Activity_1ucvkk4" name="Waku Message: Notify Project Lead">
       <bpmn:incoming>Flow_0kngdw4</bpmn:incoming>
       <bpmn:outgoing>Flow_0lfqk0y</bpmn:outgoing>
+      <bpmn:dataOutputAssociation id="DataOutputAssociation_1hmxic8">
+        <bpmn:targetRef>DataObjectReference_0t859ic</bpmn:targetRef>
+      </bpmn:dataOutputAssociation>
       <bpmn:dataObjectReference id="DataObjectReference_0frvqwx" />
       <bpmn:startEvent id="Event_00px1yx">
         <bpmn:outgoing>Flow_0dvboik</bpmn:outgoing>
@@ -1108,6 +1110,9 @@ timezone = current_user_extras["time_zone"]</spiffworkflow:preScript>
         <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">timedelta(minutes=5)</bpmn:timeDuration>
       </bpmn:timerEventDefinition>
     </bpmn:boundaryEvent>
+    <bpmn:dataObject id="respNotifyTeamLead" />
+    <bpmn:dataObjectReference id="DataObjectReference_0t859ic" name="Resp Notify Team Lead" dataObjectRef="respNotifyTeamLead" />
+    <bpmn:dataObject id="resp_BambooUserInfo" />
   </bpmn:process>
   <bpmn:process id="Process_cc_invoice_approval_process_v2_c" isExecutable="false" />
   <bpmn:process id="Process_cc_invoice_approval_process_v2_d" isExecutable="false" />
@@ -1632,6 +1637,12 @@ timezone = current_user_extras["time_zone"]</spiffworkflow:preScript>
         <di:waypoint x="960" y="532" />
         <di:waypoint x="1045" y="532" />
       </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="DataObjectReference_0t859ic_di" bpmnElement="DataObjectReference_0t859ic">
+        <dc:Bounds x="3782" y="275" width="36" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="3757" y="332" width="87" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Participant_0a8arrz_di" bpmnElement="Participant_0a8arrz" isHorizontal="true">
         <dc:Bounds x="2570" y="1290" width="830" height="80" />
       </bpmndi:BPMNShape>
@@ -1699,6 +1710,10 @@ timezone = current_user_extras["time_zone"]</spiffworkflow:preScript>
       <bpmndi:BPMNEdge id="Flow_14gw1v6_di" bpmnElement="Flow_14gw1v6">
         <di:waypoint x="3359" y="1290" />
         <di:waypoint x="3359" y="570" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DataOutputAssociation_1hmxic8_di" bpmnElement="DataOutputAssociation_1hmxic8">
+        <di:waypoint x="3740" y="382" />
+        <di:waypoint x="3783" y="325" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
