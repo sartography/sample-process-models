@@ -1065,9 +1065,19 @@ invoice["invoiceStatus"] = "Approved and Pending Payment"</spiffworkflow:preScri
       </bpmn:startEvent>
       <bpmn:callActivity id="Get_Waku_Messages_Message" name="Get Waku Messages: Message" calledElement="Waku_Messages_Message">
         <bpmn:extensionElements>
-          <spiffworkflow:preScript></spiffworkflow:preScript>
+          <spiffworkflow:preScript># Set Task Id
+if isMatch:
+    task_id = "waku_payment_pending_ismatch"
+else:
+    task_id = "waku_payment_pending_not_ismatch"
+
+# Set Message in Call Activity
+isSetMessage = True
+
+# Set Time Zone
+timezone = current_user_extras["time_zone"]</spiffworkflow:preScript>
         </bpmn:extensionElements>
-        <bpmn:incoming>Flow_0781nlm</bpmn:incoming>
+        <bpmn:incoming>Flow_1j5eznh</bpmn:incoming>
         <bpmn:outgoing>Flow_1w7kqay</bpmn:outgoing>
       </bpmn:callActivity>
       <bpmn:sequenceFlow id="Flow_1w7kqay" sourceRef="Get_Waku_Messages_Message" targetRef="waku_payment_pending" />
@@ -1089,24 +1099,7 @@ invoice["invoiceStatus"] = "Approved and Pending Payment"</spiffworkflow:preScri
         <bpmn:outgoing>Flow_1buk0a2</bpmn:outgoing>
       </bpmn:serviceTask>
       <bpmn:sequenceFlow id="Flow_1buk0a2" sourceRef="waku_payment_pending" targetRef="Waku_Message_Pending_Payment_End_Event" />
-      <bpmn:sequenceFlow id="Flow_1j5eznh" sourceRef="Waku_Message_Pending_Payment_Start_Event" targetRef="Activity_1oid3pq" />
-      <bpmn:sequenceFlow id="Flow_0781nlm" sourceRef="Activity_1oid3pq" targetRef="Get_Waku_Messages_Message" />
-      <bpmn:scriptTask id="Activity_1oid3pq" name="Temp Pre-Script">
-        <bpmn:incoming>Flow_1j5eznh</bpmn:incoming>
-        <bpmn:outgoing>Flow_0781nlm</bpmn:outgoing>
-        <bpmn:script># Set Task Id and Project Lead comments length
-if isMatch:
-    task_id = "waku_payment_pending_ismatch"
-else:
-    task_id = "waku_payment_pending_not_ismatch"
-    len_project_lead_comments = len(invoice["commentsProjectLead"].strip())
-
-# Set Message in Call Activity
-isSetMessage = True
-
-# Set Time Zone
-timezone = current_user_extras["time_zone"]</bpmn:script>
-      </bpmn:scriptTask>
+      <bpmn:sequenceFlow id="Flow_1j5eznh" sourceRef="Waku_Message_Pending_Payment_Start_Event" targetRef="Get_Waku_Messages_Message" />
     </bpmn:subProcess>
     <bpmn:boundaryEvent id="Event_09q0ym0" name="5 days" attachedToRef="Activity_06b32ar">
       <bpmn:outgoing>Flow_1v8dszb</bpmn:outgoing>
@@ -1942,10 +1935,7 @@ timezone = current_user_extras["time_zone"]</bpmn:script>
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_13cibxi_di" bpmnElement="Waku_Message_Pending_Payment_Start_Event">
-        <dc:Bounds x="62" y="162" width="36" height="36" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_06tlyk8_di" bpmnElement="Activity_1oid3pq">
-        <dc:Bounds x="160" y="140" width="100" height="80" />
+        <dc:Bounds x="212" y="162" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_1w7kqay_di" bpmnElement="Flow_1w7kqay">
         <di:waypoint x="440" y="180" />
@@ -1956,11 +1946,7 @@ timezone = current_user_extras["time_zone"]</bpmn:script>
         <di:waypoint x="702" y="180" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1j5eznh_di" bpmnElement="Flow_1j5eznh">
-        <di:waypoint x="98" y="180" />
-        <di:waypoint x="160" y="180" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0781nlm_di" bpmnElement="Flow_0781nlm">
-        <di:waypoint x="260" y="180" />
+        <di:waypoint x="248" y="180" />
         <di:waypoint x="340" y="180" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
