@@ -780,7 +780,7 @@ time_format = project_lead_info["date_format"]
 # del(userDateFormat)
 # del(userStatusKey)</spiffworkflow:postScript>
         </bpmn:extensionElements>
-        <bpmn:incoming>Flow_0bv17h4</bpmn:incoming>
+        <bpmn:incoming>Flow_1bpva7u</bpmn:incoming>
         <bpmn:outgoing>Flow_0gplgyz</bpmn:outgoing>
       </bpmn:callActivity>
       <bpmn:serviceTask id="Activity_1ve0iqu" name="Waku Message: Notify Proejct Lead">
@@ -818,8 +818,17 @@ project_lead_keycloak_name = userKeycloak</spiffworkflow:postScript>
         <bpmn:incoming>Flow_0dvboik</bpmn:incoming>
         <bpmn:outgoing>Flow_0bv17h4</bpmn:outgoing>
       </bpmn:callActivity>
-      <bpmn:sequenceFlow id="Flow_0bv17h4" sourceRef="Activity_1r3o0bm" targetRef="Activity_00b66gy" />
+      <bpmn:sequenceFlow id="Flow_0bv17h4" sourceRef="Activity_1r3o0bm" targetRef="Activity_0mnf9hu" />
       <bpmn:sequenceFlow id="Flow_0gplgyz" sourceRef="Activity_00b66gy" targetRef="Call_Waku_Messages_Message-Notify_Proejct_Lead" />
+      <bpmn:sequenceFlow id="Flow_1bpva7u" sourceRef="Activity_0mnf9hu" targetRef="Activity_00b66gy" />
+      <bpmn:scriptTask id="Activity_0mnf9hu" name="Set Project Lead Lane Permission">
+        <bpmn:incoming>Flow_0bv17h4</bpmn:incoming>
+        <bpmn:outgoing>Flow_1bpva7u</bpmn:outgoing>
+        <bpmn:script># Set Project Lead Lane Permission
+lane_owners = {
+    "Finance Team": ['testuser3', 'testuser4', 'kb', 'jon', 'fin', 'fin1']
+}</bpmn:script>
+      </bpmn:scriptTask>
     </bpmn:subProcess>
     <bpmn:subProcess id="Activity_1kgaqpf" name="Waku Message: Notify Finance">
       <bpmn:incoming>Flow_18xvx8w</bpmn:incoming>
@@ -1777,20 +1786,6 @@ timezone = current_user_extras["time_zone"]</spiffworkflow:preScript>
   </bpmndi:BPMNDiagram>
   <bpmndi:BPMNDiagram>
     <bpmndi:BPMNPlane bpmnElement="Activity_1ucvkk4">
-      <bpmndi:BPMNShape id="Event_1nkaxn4_di" bpmnElement="Event_1nkaxn4">
-        <dc:Bounds x="692" y="402" width="36" height="36" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1gex892_di" bpmnElement="Activity_00b66gy">
-        <dc:Bounds x="170" y="380" width="100" height="80" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0s32al0_di" bpmnElement="Activity_1ve0iqu">
-        <dc:Bounds x="520" y="380" width="100" height="80" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0mxxp3b_di" bpmnElement="Call_Waku_Messages_Message-Notify_Proejct_Lead">
-        <dc:Bounds x="350" y="380" width="100" height="80" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1lm44ee_di" bpmnElement="Activity_1r3o0bm">
         <dc:Bounds x="0" y="380" width="100" height="80" />
         <bpmndi:BPMNLabel />
@@ -1798,13 +1793,30 @@ timezone = current_user_extras["time_zone"]</spiffworkflow:preScript>
       <bpmndi:BPMNShape id="Event_00px1yx_di" bpmnElement="Event_00px1yx">
         <dc:Bounds x="-108" y="402" width="36" height="36" />
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1nkaxn4_di" bpmnElement="Event_1nkaxn4">
+        <dc:Bounds x="872" y="402" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1gex892_di" bpmnElement="Activity_00b66gy">
+        <dc:Bounds x="350" y="380" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0s32al0_di" bpmnElement="Activity_1ve0iqu">
+        <dc:Bounds x="700" y="380" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0mxxp3b_di" bpmnElement="Call_Waku_Messages_Message-Notify_Proejct_Lead">
+        <dc:Bounds x="530" y="380" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0j598ta_di" bpmnElement="Activity_0mnf9hu">
+        <dc:Bounds x="180" y="380" width="100" height="80" />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_0re50gq_di" bpmnElement="Flow_0re50gq">
-        <di:waypoint x="450" y="420" />
-        <di:waypoint x="520" y="420" />
+        <di:waypoint x="630" y="420" />
+        <di:waypoint x="700" y="420" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0y37dgj_di" bpmnElement="Flow_0y37dgj">
-        <di:waypoint x="620" y="420" />
-        <di:waypoint x="692" y="420" />
+        <di:waypoint x="800" y="420" />
+        <di:waypoint x="872" y="420" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0dvboik_di" bpmnElement="Flow_0dvboik">
         <di:waypoint x="-72" y="420" />
@@ -1812,10 +1824,14 @@ timezone = current_user_extras["time_zone"]</spiffworkflow:preScript>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0bv17h4_di" bpmnElement="Flow_0bv17h4">
         <di:waypoint x="100" y="420" />
-        <di:waypoint x="170" y="420" />
+        <di:waypoint x="180" y="420" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0gplgyz_di" bpmnElement="Flow_0gplgyz">
-        <di:waypoint x="270" y="420" />
+        <di:waypoint x="450" y="420" />
+        <di:waypoint x="530" y="420" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1bpva7u_di" bpmnElement="Flow_1bpva7u">
+        <di:waypoint x="280" y="420" />
         <di:waypoint x="350" y="420" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
