@@ -750,7 +750,7 @@ date_format = current_user_extras["date_format"]</bpmn:script>
       <bpmn:callActivity id="Activity_00b66gy" name="Call Shared: User Info" calledElement="Shared_User_Info">
         <bpmn:extensionElements>
           <spiffworkflow:preScript># Set who for find
-find_user = userKeycloak
+find_user = project_lead_keycloak_name
 isCurrentUser = False</spiffworkflow:preScript>
           <spiffworkflow:postScript># Set Project Lead Info
 project_lead_info = {}
@@ -807,18 +807,17 @@ isSetMessage = True</spiffworkflow:preScript>
       </bpmn:callActivity>
       <bpmn:sequenceFlow id="Flow_0re50gq" sourceRef="Call_Waku_Messages_Message-Notify_Proejct_Lead" targetRef="Activity_1ve0iqu" />
       <bpmn:sequenceFlow id="Flow_0y37dgj" sourceRef="Activity_1ve0iqu" targetRef="Event_1nkaxn4" />
-      <bpmn:scriptTask id="Activity_1982sk7" name="Get Project Lead From Bamboo" scriptFormat="python">
-        <bpmn:incoming>Flow_0dvboik</bpmn:incoming>
-        <bpmn:outgoing>Flow_01ki4jt</bpmn:outgoing>
-        <bpmn:script># Get Current User's Bamboo Supervisor
-userBambooId_str = current_user_extras["bamboo_supervisor_api_id"]</bpmn:script>
-      </bpmn:scriptTask>
-      <bpmn:sequenceFlow id="Flow_0dvboik" sourceRef="Event_00px1yx" targetRef="Activity_1982sk7" />
+      <bpmn:sequenceFlow id="Flow_0dvboik" sourceRef="Event_00px1yx" targetRef="Activity_1r3o0bm" />
       <bpmn:callActivity id="Activity_1r3o0bm" name="Get PL Keycloak Username" calledElement="Bamboo_Conversion">
-        <bpmn:incoming>Flow_01ki4jt</bpmn:incoming>
+        <bpmn:extensionElements>
+          <spiffworkflow:preScript># Set Current User's Bamboo Supervisor's ID
+userBambooId_str = current_user_extras["bamboo_supervisor_api_id"]</spiffworkflow:preScript>
+          <spiffworkflow:postScript># Set Project Lead's Keycloak name
+project_lead_keycloak_name = userKeycloak</spiffworkflow:postScript>
+        </bpmn:extensionElements>
+        <bpmn:incoming>Flow_0dvboik</bpmn:incoming>
         <bpmn:outgoing>Flow_0bv17h4</bpmn:outgoing>
       </bpmn:callActivity>
-      <bpmn:sequenceFlow id="Flow_01ki4jt" sourceRef="Activity_1982sk7" targetRef="Activity_1r3o0bm" />
       <bpmn:sequenceFlow id="Flow_0bv17h4" sourceRef="Activity_1r3o0bm" targetRef="Activity_00b66gy" />
       <bpmn:sequenceFlow id="Flow_0gplgyz" sourceRef="Activity_00b66gy" targetRef="Call_Waku_Messages_Message-Notify_Proejct_Lead" />
     </bpmn:subProcess>
@@ -1778,9 +1777,6 @@ timezone = current_user_extras["time_zone"]</spiffworkflow:preScript>
   </bpmndi:BPMNDiagram>
   <bpmndi:BPMNDiagram>
     <bpmndi:BPMNPlane bpmnElement="Activity_1ucvkk4">
-      <bpmndi:BPMNShape id="Event_00px1yx_di" bpmnElement="Event_00px1yx">
-        <dc:Bounds x="-278" y="402" width="36" height="36" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_1nkaxn4_di" bpmnElement="Event_1nkaxn4">
         <dc:Bounds x="692" y="402" width="36" height="36" />
       </bpmndi:BPMNShape>
@@ -1795,13 +1791,12 @@ timezone = current_user_extras["time_zone"]</spiffworkflow:preScript>
       <bpmndi:BPMNShape id="Activity_0mxxp3b_di" bpmnElement="Call_Waku_Messages_Message-Notify_Proejct_Lead">
         <dc:Bounds x="350" y="380" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0iy0fil_di" bpmnElement="Activity_1982sk7">
-        <dc:Bounds x="-170" y="380" width="100" height="80" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1lm44ee_di" bpmnElement="Activity_1r3o0bm">
         <dc:Bounds x="0" y="380" width="100" height="80" />
         <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_00px1yx_di" bpmnElement="Event_00px1yx">
+        <dc:Bounds x="-108" y="402" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_0re50gq_di" bpmnElement="Flow_0re50gq">
         <di:waypoint x="450" y="420" />
@@ -1812,11 +1807,7 @@ timezone = current_user_extras["time_zone"]</spiffworkflow:preScript>
         <di:waypoint x="692" y="420" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0dvboik_di" bpmnElement="Flow_0dvboik">
-        <di:waypoint x="-242" y="420" />
-        <di:waypoint x="-170" y="420" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_01ki4jt_di" bpmnElement="Flow_01ki4jt">
-        <di:waypoint x="-70" y="420" />
+        <di:waypoint x="-72" y="420" />
         <di:waypoint x="0" y="420" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0bv17h4_di" bpmnElement="Flow_0bv17h4">
