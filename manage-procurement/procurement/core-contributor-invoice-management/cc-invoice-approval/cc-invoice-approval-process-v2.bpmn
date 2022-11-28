@@ -35,6 +35,7 @@
         <bpmn:flowNodeRef>Gateway_0wk5se9</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_show_errors</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_10p5t0r</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_0twki30</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Gateway_0dqj39f</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_07oyzdx</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_15y55nw</bpmn:flowNodeRef>
@@ -63,7 +64,6 @@
         <bpmn:flowNodeRef>Activity_0gkpa9s</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_0gkejaj</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Waku_Message_Pending_Payment</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Activity_0twki30</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_1b7abal" name="Project Lead">
         <bpmn:flowNodeRef>Activity_1t8wi0r</bpmn:flowNodeRef>
@@ -119,6 +119,7 @@
     <bpmn:sequenceFlow id="Flow_1pefcgv" sourceRef="Activity_0twki30" targetRef="Gateway_0wk5se9" />
     <bpmn:sequenceFlow id="Flow_1s2as7o" sourceRef="Gateway_05ov5p5" targetRef="Activity_104xpp8" />
     <bpmn:sequenceFlow id="Flow_0hyvwku" sourceRef="Activity_104xpp8" targetRef="Activity_0p88elm" />
+    <bpmn:sequenceFlow id="Flow_1fvtcqt" sourceRef="Event_0lhkxwc" targetRef="Waku_Message_Pending_Payment" />
     <bpmn:sequenceFlow id="Flow_14glsqd" sourceRef="Event_176ch98" targetRef="Gateway_05ov5p5" />
     <bpmn:callActivity id="Activity_1colhao" name="Call Shared: Build Enum List from AWS" calledElement="Shared_Build_Enum_List_from_AWS">
       <bpmn:extensionElements>
@@ -246,6 +247,21 @@ isCurTest = False</spiffworkflow:preScript>
       <bpmn:incoming>Flow_1x4rtop</bpmn:incoming>
       <bpmn:outgoing>Flow_06amgv2</bpmn:outgoing>
     </bpmn:callActivity>
+    <bpmn:scriptTask id="Activity_0twki30" name="Clear Field(s) That Failed Validation">
+      <bpmn:incoming>Flow_18cic3h</bpmn:incoming>
+      <bpmn:outgoing>Flow_1pefcgv</bpmn:outgoing>
+      <bpmn:script># CLear Contributor Name if contains number
+if svc_is_num_in_name:
+    invoice["contributorName"] = None
+
+# Clear Invoice Anount if more than 2 decimals
+if svc_decimal_cnt &gt; 2:
+    invoice["invoiceAmount"] = None
+
+# Clear Invocie Due Date if before Today's Date
+if not(svc_is_due_date_after):
+    invoice["dueDate"] = None</bpmn:script>
+    </bpmn:scriptTask>
     <bpmn:exclusiveGateway id="Gateway_0dqj39f" name="Submit?" default="Flow_1xvt99y">
       <bpmn:incoming>Flow_0z51hpb</bpmn:incoming>
       <bpmn:outgoing>Flow_1xvt99y</bpmn:outgoing>
@@ -437,7 +453,7 @@ else:
       <bpmn:incoming>Flow_0hrln7l</bpmn:incoming>
       <bpmn:outgoing>Flow_14glsqd</bpmn:outgoing>
     </bpmn:intermediateThrowEvent>
-    <bpmn:scriptTask id="Delete_File" name="Delete File from memory">
+    <bpmn:scriptTask id="Delete_File" name="Delete File">
       <bpmn:incoming>Flow_0a9w301</bpmn:incoming>
       <bpmn:outgoing>Flow_0cj1m0h</bpmn:outgoing>
       <bpmn:script>del(filesAccept)</bpmn:script>
@@ -449,11 +465,12 @@ else:
     </bpmn:exclusiveGateway>
     <bpmn:endEvent id="Event_1usbnt0">
       <bpmn:incoming>Flow_0hws1pe</bpmn:incoming>
-      <bpmn:incoming>Flow_0n6znyl</bpmn:incoming>
     </bpmn:endEvent>
+    <bpmn:dataObjectReference id="DataObjectReference_0br9o6c" name="wr_invoicePayPend" dataObjectRef="wr_invoicePayPend" />
+    <bpmn:dataObject id="wr_invoicePayPend" />
     <bpmn:intermediateThrowEvent id="Event_0lhkxwc" name="Approved and Awaiting Payment">
       <bpmn:incoming>Flow_1cwebky</bpmn:incoming>
-      <bpmn:outgoing>Flow_0n6znyl</bpmn:outgoing>
+      <bpmn:outgoing>Flow_1fvtcqt</bpmn:outgoing>
     </bpmn:intermediateThrowEvent>
     <bpmn:dataObjectReference id="DataObjectReference_1g4gzsx" name="resp_xeroCreateInvoice" dataObjectRef="resp_xeroCreateInvoice" />
     <bpmn:dataObject id="resp_xeroCreateInvoice" />
@@ -505,14 +522,14 @@ ___
         <bpmn:targetRef>DataObjectReference_1g4gzsx</bpmn:targetRef>
       </bpmn:dataOutputAssociation>
     </bpmn:serviceTask>
-    <bpmn:intermediateCatchEvent id="Event_1vi3um1" name="Redirect">
+    <bpmn:intermediateCatchEvent id="Event_1vi3um1" name="Temp Fix">
       <bpmn:incoming>Flow_1xvt99y</bpmn:incoming>
       <bpmn:outgoing>Flow_0hrln7l</bpmn:outgoing>
       <bpmn:timerEventDefinition id="TimerEventDefinition_1wiimzf">
         <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">timedelta(seconds=1)</bpmn:timeDuration>
       </bpmn:timerEventDefinition>
     </bpmn:intermediateCatchEvent>
-    <bpmn:intermediateCatchEvent id="Event_0rwxlca" name="Redirect">
+    <bpmn:intermediateCatchEvent id="Event_0rwxlca" name="Temp Fix">
       <bpmn:incoming>Flow_1qf14hx</bpmn:incoming>
       <bpmn:outgoing>Flow_1xo0lvm</bpmn:outgoing>
       <bpmn:timerEventDefinition id="TimerEventDefinition_1jblyi5">
@@ -1036,48 +1053,21 @@ isCurTest = False</bpmn:script>
         <bpmn:outgoing>Flow_18i75ep</bpmn:outgoing>
       </bpmn:callActivity>
     </bpmn:subProcess>
-    <bpmn:boundaryEvent id="Event_09q0ym0" name="5 days" attachedToRef="Activity_06b32ar">
-      <bpmn:outgoing>Flow_1v8dszb</bpmn:outgoing>
-      <bpmn:timerEventDefinition id="TimerEventDefinition_0cpj4z0">
-        <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">timedelta(minutes=5)</bpmn:timeDuration>
-      </bpmn:timerEventDefinition>
-    </bpmn:boundaryEvent>
-    <bpmn:dataObject id="resp_BambooUserInfo" />
-    <bpmn:dataObject id="wr_NotifyTeamLead" />
-    <bpmn:dataObjectReference id="DataObjectReference_0x24nt7" name="Wr Notify Team Lead" dataObjectRef="wr_NotifyTeamLead" />
-    <bpmn:dataObject id="enumerations_list" />
-    <bpmn:sequenceFlow id="Flow_0n6znyl" sourceRef="Event_0lhkxwc" targetRef="Event_1usbnt0" />
     <bpmn:subProcess id="Waku_Message_Pending_Payment" name="Waku Message: Pending Payment">
       <bpmn:extensionElements>
         <spiffworkflow:preScript># Set Invoice Status to Approved and Pending Payment
 invoice["invoiceStatus"] = "Approved and Pending Payment"</spiffworkflow:preScript>
       </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1fvtcqt</bpmn:incoming>
       <bpmn:outgoing>Flow_0hws1pe</bpmn:outgoing>
-      <bpmn:property id="Property_1hsvamz" name="__targetRef_placeholder" />
-      <bpmn:dataInputAssociation id="DataInputAssociation_0grqn1l">
-        <bpmn:sourceRef>DataObjectReference_0br9o6c</bpmn:sourceRef>
-        <bpmn:targetRef>Property_1hsvamz</bpmn:targetRef>
-      </bpmn:dataInputAssociation>
       <bpmn:startEvent id="Waku_Message_Pending_Payment_Start_Event">
         <bpmn:outgoing>Flow_1j5eznh</bpmn:outgoing>
       </bpmn:startEvent>
       <bpmn:callActivity id="Get_Waku_Messages_Message" name="Get Waku Messages: Message" calledElement="Waku_Messages_Message">
         <bpmn:extensionElements>
-          <spiffworkflow:preScript># Set Task Id and Project Lead comments length
-if isMatch:
-    task_id = "waku_payment_pending_ismatch"
-    len_project_lead_comments = 0
-else:
-    task_id = "waku_payment_pending_not_ismatch"
-    len_project_lead_comments = len(invoice["commentsProjectLead"].strip())
-
-# Set Message in Call Activity
-isSetMessage = True
-
-# Set Time Zone
-timezone = current_user_extras["time_zone"]</spiffworkflow:preScript>
+          <spiffworkflow:preScript></spiffworkflow:preScript>
         </bpmn:extensionElements>
-        <bpmn:incoming>Flow_1j5eznh</bpmn:incoming>
+        <bpmn:incoming>Flow_0781nlm</bpmn:incoming>
         <bpmn:outgoing>Flow_1w7kqay</bpmn:outgoing>
       </bpmn:callActivity>
       <bpmn:sequenceFlow id="Flow_1w7kqay" sourceRef="Get_Waku_Messages_Message" targetRef="waku_payment_pending" />
@@ -1099,25 +1089,35 @@ timezone = current_user_extras["time_zone"]</spiffworkflow:preScript>
         <bpmn:outgoing>Flow_1buk0a2</bpmn:outgoing>
       </bpmn:serviceTask>
       <bpmn:sequenceFlow id="Flow_1buk0a2" sourceRef="waku_payment_pending" targetRef="Waku_Message_Pending_Payment_End_Event" />
-      <bpmn:sequenceFlow id="Flow_1j5eznh" sourceRef="Waku_Message_Pending_Payment_Start_Event" targetRef="Get_Waku_Messages_Message" />
+      <bpmn:sequenceFlow id="Flow_1j5eznh" sourceRef="Waku_Message_Pending_Payment_Start_Event" targetRef="Activity_1oid3pq" />
+      <bpmn:sequenceFlow id="Flow_0781nlm" sourceRef="Activity_1oid3pq" targetRef="Get_Waku_Messages_Message" />
+      <bpmn:scriptTask id="Activity_1oid3pq" name="Temp Pre-Script">
+        <bpmn:incoming>Flow_1j5eznh</bpmn:incoming>
+        <bpmn:outgoing>Flow_0781nlm</bpmn:outgoing>
+        <bpmn:script># Set Task Id and Project Lead comments length
+if isMatch:
+    task_id = "waku_payment_pending_ismatch"
+else:
+    task_id = "waku_payment_pending_not_ismatch"
+    len_project_lead_comments = len(invoice["commentsProjectLead"].strip())
+
+# Set Message in Call Activity
+isSetMessage = True
+
+# Set Time Zone
+timezone = current_user_extras["time_zone"]</bpmn:script>
+      </bpmn:scriptTask>
     </bpmn:subProcess>
-    <bpmn:scriptTask id="Activity_0twki30" name="Clear Field(s) That Failed Validation">
-      <bpmn:incoming>Flow_18cic3h</bpmn:incoming>
-      <bpmn:outgoing>Flow_1pefcgv</bpmn:outgoing>
-      <bpmn:script># CLear Contributor Name if contains number
-if svc_is_num_in_name:
-    invoice["contributorName"] = None
-
-# Clear Invoice Anount if more than 2 decimals
-if svc_decimal_cnt &gt; 2:
-    invoice["invoiceAmount"] = None
-
-# Clear Invocie Due Date if before Today's Date
-if not(svc_is_due_date_after):
-    invoice["dueDate"] = None</bpmn:script>
-    </bpmn:scriptTask>
-    <bpmn:dataObjectReference id="DataObjectReference_0br9o6c" name="wr_invoicePayPend" dataObjectRef="wr_invoicePayPend" />
-    <bpmn:dataObject id="wr_invoicePayPend" />
+    <bpmn:boundaryEvent id="Event_09q0ym0" name="5 days" attachedToRef="Activity_06b32ar">
+      <bpmn:outgoing>Flow_1v8dszb</bpmn:outgoing>
+      <bpmn:timerEventDefinition id="TimerEventDefinition_0cpj4z0">
+        <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">timedelta(minutes=5)</bpmn:timeDuration>
+      </bpmn:timerEventDefinition>
+    </bpmn:boundaryEvent>
+    <bpmn:dataObject id="resp_BambooUserInfo" />
+    <bpmn:dataObject id="wr_NotifyTeamLead" />
+    <bpmn:dataObjectReference id="DataObjectReference_0x24nt7" name="Wr Notify Team Lead" dataObjectRef="wr_NotifyTeamLead" />
+    <bpmn:dataObject id="enumerations_list" />
   </bpmn:process>
   <bpmn:process id="Process_cc_invoice_approval_process_v2_c" isExecutable="false" />
   <bpmn:process id="Process_cc_invoice_approval_process_v2_d" isExecutable="false" />
@@ -1209,6 +1209,9 @@ if not(svc_is_due_date_after):
       <bpmndi:BPMNShape id="Activity_1xg4kby_di" bpmnElement="Activity_10p5t0r">
         <dc:Bounds x="1660" y="492" width="100" height="80" />
         <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_14mudmu_di" bpmnElement="Activity_0twki30">
+        <dc:Bounds x="1190" y="330" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Gateway_0dqj39f_di" bpmnElement="Gateway_0dqj39f" isMarkerVisible="true">
         <dc:Bounds x="2005" y="507" width="50" height="50" />
@@ -1306,12 +1309,11 @@ if not(svc_is_due_date_after):
       <bpmndi:BPMNShape id="Event_176ch98_di" bpmnElement="Event_176ch98">
         <dc:Bounds x="2262" y="514" width="36" height="36" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="2240" y="557" width="79" height="27" />
+          <dc:Bounds x="2250" y="557" width="79" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0nqyv3k_di" bpmnElement="Delete_File">
         <dc:Bounds x="2890" y="490" width="100" height="80" />
-        <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Gateway_1ytq6m7_di" bpmnElement="Gateway_1ytq6m7" isMarkerVisible="true">
         <dc:Bounds x="4365" y="1055" width="50" height="50" />
@@ -1321,6 +1323,12 @@ if not(svc_is_due_date_after):
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_1usbnt0_di" bpmnElement="Event_1usbnt0">
         <dc:Bounds x="5152" y="592" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DataObjectReference_0br9o6c_di" bpmnElement="DataObjectReference_0br9o6c">
+        <dc:Bounds x="4942" y="715" width="36" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="4918" y="761" width="85" height="27" />
+        </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_0lhkxwc_di" bpmnElement="Event_0lhkxwc">
         <dc:Bounds x="4842" y="592" width="36" height="36" />
@@ -1344,26 +1352,17 @@ if not(svc_is_due_date_after):
       <bpmndi:BPMNShape id="Event_0tb3bpb_di" bpmnElement="Event_1vi3um1">
         <dc:Bounds x="2152" y="514" width="36" height="36" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="2151" y="557" width="41" height="14" />
+          <dc:Bounds x="2149" y="557" width="45" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_09tmh4n_di" bpmnElement="Event_0rwxlca">
         <dc:Bounds x="4012" y="682" width="36" height="36" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="3959" y="693" width="41" height="14" />
+          <dc:Bounds x="3951" y="693" width="45" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_00w2hg5_di" bpmnElement="Event_1simh9k">
         <dc:Bounds x="4272" y="1062" width="36" height="36" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_14mudmu_di" bpmnElement="Activity_0twki30">
-        <dc:Bounds x="1165" y="330" width="100" height="80" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="DataObjectReference_0br9o6c_di" bpmnElement="DataObjectReference_0br9o6c">
-        <dc:Bounds x="4862" y="495" width="36" height="50" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="4838" y="541" width="85" height="27" />
-        </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0z13hw3_di" bpmnElement="SubProcess_Data_validation_rules">
         <dc:Bounds x="1350" y="492" width="100" height="80" />
@@ -1385,15 +1384,15 @@ if not(svc_is_due_date_after):
       <bpmndi:BPMNShape id="Activity_1rn2mgi_di" bpmnElement="Activity_0gkejaj">
         <dc:Bounds x="3309" y="490" width="100" height="80" />
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1tlgf7q_di" bpmnElement="Waku_Message_Pending_Payment">
+        <dc:Bounds x="4970" y="570" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="DataObjectReference_0x24nt7_di" bpmnElement="DataObjectReference_0x24nt7">
         <dc:Bounds x="3792" y="295" width="36" height="50" />
         <bpmndi:BPMNLabel>
           <dc:Bounds x="3773" y="352" width="75" height="27" />
         </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1tlgf7q_di" bpmnElement="Waku_Message_Pending_Payment">
-        <dc:Bounds x="4970" y="480" width="100" height="80" />
-        <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_08bsj2m_di" bpmnElement="Event_09q0ym0">
         <dc:Bounds x="3723" y="892" width="36" height="36" />
@@ -1464,7 +1463,7 @@ if not(svc_is_due_date_after):
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_18cic3h_di" bpmnElement="Flow_18cic3h">
         <di:waypoint x="1350" y="370" />
-        <di:waypoint x="1265" y="370" />
+        <di:waypoint x="1290" y="370" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_02moyg7_di" bpmnElement="Flow_02moyg7">
         <di:waypoint x="1265" y="532" />
@@ -1564,7 +1563,7 @@ if not(svc_is_due_date_after):
         <di:waypoint x="1165" y="532" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1pefcgv_di" bpmnElement="Flow_1pefcgv">
-        <di:waypoint x="1165" y="370" />
+        <di:waypoint x="1190" y="370" />
         <di:waypoint x="1070" y="370" />
         <di:waypoint x="1070" y="507" />
       </bpmndi:BPMNEdge>
@@ -1576,6 +1575,10 @@ if not(svc_is_due_date_after):
       <bpmndi:BPMNEdge id="Flow_0hyvwku_di" bpmnElement="Flow_0hyvwku">
         <di:waypoint x="2570" y="610" />
         <di:waypoint x="2660" y="610" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1fvtcqt_di" bpmnElement="Flow_1fvtcqt">
+        <di:waypoint x="4878" y="610" />
+        <di:waypoint x="4970" y="610" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_14glsqd_di" bpmnElement="Flow_14glsqd">
         <di:waypoint x="2298" y="532" />
@@ -1629,9 +1632,7 @@ if not(svc_is_due_date_after):
         <di:waypoint x="4365" y="1080" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0hws1pe_di" bpmnElement="Flow_0hws1pe">
-        <di:waypoint x="5070" y="520" />
-        <di:waypoint x="5111" y="520" />
-        <di:waypoint x="5111" y="610" />
+        <di:waypoint x="5070" y="610" />
         <di:waypoint x="5152" y="610" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0adpna9_di" bpmnElement="Flow_0adpna9">
@@ -1646,10 +1647,6 @@ if not(svc_is_due_date_after):
       <bpmndi:BPMNEdge id="Flow_0cb4tyl_di" bpmnElement="Flow_0cb4tyl">
         <di:waypoint x="960" y="532" />
         <di:waypoint x="1045" y="532" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0n6znyl_di" bpmnElement="Flow_0n6znyl">
-        <di:waypoint x="4878" y="610" />
-        <di:waypoint x="5152" y="610" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="Participant_0a8arrz_di" bpmnElement="Participant_0a8arrz" isHorizontal="true">
         <dc:Bounds x="2570" y="1290" width="830" height="80" />
@@ -1716,16 +1713,12 @@ if not(svc_is_due_date_after):
         <di:waypoint x="4170" y="150" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1dgkwzr_di" bpmnElement="Flow_1dgkwzr">
-        <di:waypoint x="5020" y="480" />
+        <di:waypoint x="5020" y="570" />
         <di:waypoint x="5020" y="150" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_14gw1v6_di" bpmnElement="Flow_14gw1v6">
         <di:waypoint x="3359" y="1290" />
         <di:waypoint x="3359" y="570" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="DataInputAssociation_0grqn1l_di" bpmnElement="DataInputAssociation_0grqn1l">
-        <di:waypoint x="4898" y="520" />
-        <di:waypoint x="4970" y="520" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
@@ -1937,9 +1930,6 @@ if not(svc_is_due_date_after):
   </bpmndi:BPMNDiagram>
   <bpmndi:BPMNDiagram id="BPMNDiagram_03yq39k">
     <bpmndi:BPMNPlane id="BPMNPlane_19vekoo" bpmnElement="Waku_Message_Pending_Payment">
-      <bpmndi:BPMNShape id="Event_13cibxi_di" bpmnElement="Waku_Message_Pending_Payment_Start_Event">
-        <dc:Bounds x="242" y="162" width="36" height="36" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0848qfu_di" bpmnElement="Get_Waku_Messages_Message">
         <dc:Bounds x="340" y="140" width="100" height="80" />
         <bpmndi:BPMNLabel />
@@ -1951,6 +1941,12 @@ if not(svc_is_due_date_after):
         <dc:Bounds x="530" y="140" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_13cibxi_di" bpmnElement="Waku_Message_Pending_Payment_Start_Event">
+        <dc:Bounds x="62" y="162" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_06tlyk8_di" bpmnElement="Activity_1oid3pq">
+        <dc:Bounds x="160" y="140" width="100" height="80" />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_1w7kqay_di" bpmnElement="Flow_1w7kqay">
         <di:waypoint x="440" y="180" />
         <di:waypoint x="530" y="180" />
@@ -1960,7 +1956,11 @@ if not(svc_is_due_date_after):
         <di:waypoint x="702" y="180" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1j5eznh_di" bpmnElement="Flow_1j5eznh">
-        <di:waypoint x="278" y="180" />
+        <di:waypoint x="98" y="180" />
+        <di:waypoint x="160" y="180" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0781nlm_di" bpmnElement="Flow_0781nlm">
+        <di:waypoint x="260" y="180" />
         <di:waypoint x="340" y="180" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
