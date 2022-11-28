@@ -119,7 +119,6 @@
     <bpmn:sequenceFlow id="Flow_1pefcgv" sourceRef="Activity_0twki30" targetRef="Gateway_0wk5se9" />
     <bpmn:sequenceFlow id="Flow_1s2as7o" sourceRef="Gateway_05ov5p5" targetRef="Activity_104xpp8" />
     <bpmn:sequenceFlow id="Flow_0hyvwku" sourceRef="Activity_104xpp8" targetRef="Activity_0p88elm" />
-    <bpmn:sequenceFlow id="Flow_1fvtcqt" sourceRef="Event_0lhkxwc" targetRef="Waku_Message_Pending_Payment" />
     <bpmn:sequenceFlow id="Flow_14glsqd" sourceRef="Event_176ch98" targetRef="Gateway_05ov5p5" />
     <bpmn:callActivity id="Activity_1colhao" name="Call Shared: Build Enum List from AWS" calledElement="Shared_Build_Enum_List_from_AWS">
       <bpmn:extensionElements>
@@ -465,12 +464,13 @@ else:
     </bpmn:exclusiveGateway>
     <bpmn:endEvent id="Event_1usbnt0">
       <bpmn:incoming>Flow_0hws1pe</bpmn:incoming>
+      <bpmn:incoming>Flow_0n6znyl</bpmn:incoming>
     </bpmn:endEvent>
     <bpmn:dataObjectReference id="DataObjectReference_0br9o6c" name="wr_invoicePayPend" dataObjectRef="wr_invoicePayPend" />
     <bpmn:dataObject id="wr_invoicePayPend" />
     <bpmn:intermediateThrowEvent id="Event_0lhkxwc" name="Approved and Awaiting Payment">
       <bpmn:incoming>Flow_1cwebky</bpmn:incoming>
-      <bpmn:outgoing>Flow_1fvtcqt</bpmn:outgoing>
+      <bpmn:outgoing>Flow_0n6znyl</bpmn:outgoing>
     </bpmn:intermediateThrowEvent>
     <bpmn:dataObjectReference id="DataObjectReference_1g4gzsx" name="resp_xeroCreateInvoice" dataObjectRef="resp_xeroCreateInvoice" />
     <bpmn:dataObject id="resp_xeroCreateInvoice" />
@@ -1053,12 +1053,22 @@ isCurTest = False</bpmn:script>
         <bpmn:outgoing>Flow_18i75ep</bpmn:outgoing>
       </bpmn:callActivity>
     </bpmn:subProcess>
+    <bpmn:boundaryEvent id="Event_09q0ym0" name="5 days" attachedToRef="Activity_06b32ar">
+      <bpmn:outgoing>Flow_1v8dszb</bpmn:outgoing>
+      <bpmn:timerEventDefinition id="TimerEventDefinition_0cpj4z0">
+        <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">timedelta(minutes=5)</bpmn:timeDuration>
+      </bpmn:timerEventDefinition>
+    </bpmn:boundaryEvent>
+    <bpmn:dataObject id="resp_BambooUserInfo" />
+    <bpmn:dataObject id="wr_NotifyTeamLead" />
+    <bpmn:dataObjectReference id="DataObjectReference_0x24nt7" name="Wr Notify Team Lead" dataObjectRef="wr_NotifyTeamLead" />
+    <bpmn:dataObject id="enumerations_list" />
+    <bpmn:sequenceFlow id="Flow_0n6znyl" sourceRef="Event_0lhkxwc" targetRef="Event_1usbnt0" />
     <bpmn:subProcess id="Waku_Message_Pending_Payment" name="Waku Message: Pending Payment">
       <bpmn:extensionElements>
         <spiffworkflow:preScript># Set Invoice Status to Approved and Pending Payment
 invoice["invoiceStatus"] = "Approved and Pending Payment"</spiffworkflow:preScript>
       </bpmn:extensionElements>
-      <bpmn:incoming>Flow_1fvtcqt</bpmn:incoming>
       <bpmn:outgoing>Flow_0hws1pe</bpmn:outgoing>
       <bpmn:startEvent id="Waku_Message_Pending_Payment_Start_Event">
         <bpmn:outgoing>Flow_1j5eznh</bpmn:outgoing>
@@ -1103,16 +1113,6 @@ timezone = current_user_extras["time_zone"]</spiffworkflow:preScript>
       <bpmn:sequenceFlow id="Flow_1buk0a2" sourceRef="waku_payment_pending" targetRef="Waku_Message_Pending_Payment_End_Event" />
       <bpmn:sequenceFlow id="Flow_1j5eznh" sourceRef="Waku_Message_Pending_Payment_Start_Event" targetRef="Get_Waku_Messages_Message" />
     </bpmn:subProcess>
-    <bpmn:boundaryEvent id="Event_09q0ym0" name="5 days" attachedToRef="Activity_06b32ar">
-      <bpmn:outgoing>Flow_1v8dszb</bpmn:outgoing>
-      <bpmn:timerEventDefinition id="TimerEventDefinition_0cpj4z0">
-        <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">timedelta(minutes=5)</bpmn:timeDuration>
-      </bpmn:timerEventDefinition>
-    </bpmn:boundaryEvent>
-    <bpmn:dataObject id="resp_BambooUserInfo" />
-    <bpmn:dataObject id="wr_NotifyTeamLead" />
-    <bpmn:dataObjectReference id="DataObjectReference_0x24nt7" name="Wr Notify Team Lead" dataObjectRef="wr_NotifyTeamLead" />
-    <bpmn:dataObject id="enumerations_list" />
   </bpmn:process>
   <bpmn:process id="Process_cc_invoice_approval_process_v2_c" isExecutable="false" />
   <bpmn:process id="Process_cc_invoice_approval_process_v2_d" isExecutable="false" />
@@ -1379,15 +1379,15 @@ timezone = current_user_extras["time_zone"]</spiffworkflow:preScript>
       <bpmndi:BPMNShape id="Activity_1rn2mgi_di" bpmnElement="Activity_0gkejaj">
         <dc:Bounds x="3309" y="490" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1tlgf7q_di" bpmnElement="Waku_Message_Pending_Payment">
-        <dc:Bounds x="4970" y="570" width="100" height="80" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="DataObjectReference_0x24nt7_di" bpmnElement="DataObjectReference_0x24nt7">
         <dc:Bounds x="3792" y="295" width="36" height="50" />
         <bpmndi:BPMNLabel>
           <dc:Bounds x="3773" y="352" width="75" height="27" />
         </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1tlgf7q_di" bpmnElement="Waku_Message_Pending_Payment">
+        <dc:Bounds x="4970" y="480" width="100" height="80" />
+        <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_08bsj2m_di" bpmnElement="Event_09q0ym0">
         <dc:Bounds x="3723" y="892" width="36" height="36" />
@@ -1571,10 +1571,6 @@ timezone = current_user_extras["time_zone"]</spiffworkflow:preScript>
         <di:waypoint x="2570" y="610" />
         <di:waypoint x="2660" y="610" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_1fvtcqt_di" bpmnElement="Flow_1fvtcqt">
-        <di:waypoint x="4878" y="610" />
-        <di:waypoint x="4970" y="610" />
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_14glsqd_di" bpmnElement="Flow_14glsqd">
         <di:waypoint x="2298" y="532" />
         <di:waypoint x="2385" y="532" />
@@ -1627,7 +1623,9 @@ timezone = current_user_extras["time_zone"]</spiffworkflow:preScript>
         <di:waypoint x="4365" y="1080" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0hws1pe_di" bpmnElement="Flow_0hws1pe">
-        <di:waypoint x="5070" y="610" />
+        <di:waypoint x="5070" y="520" />
+        <di:waypoint x="5111" y="520" />
+        <di:waypoint x="5111" y="610" />
         <di:waypoint x="5152" y="610" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0adpna9_di" bpmnElement="Flow_0adpna9">
@@ -1642,6 +1640,10 @@ timezone = current_user_extras["time_zone"]</spiffworkflow:preScript>
       <bpmndi:BPMNEdge id="Flow_0cb4tyl_di" bpmnElement="Flow_0cb4tyl">
         <di:waypoint x="960" y="532" />
         <di:waypoint x="1045" y="532" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0n6znyl_di" bpmnElement="Flow_0n6znyl">
+        <di:waypoint x="4878" y="610" />
+        <di:waypoint x="5152" y="610" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="Participant_0a8arrz_di" bpmnElement="Participant_0a8arrz" isHorizontal="true">
         <dc:Bounds x="2570" y="1290" width="830" height="80" />
@@ -1708,7 +1710,7 @@ timezone = current_user_extras["time_zone"]</spiffworkflow:preScript>
         <di:waypoint x="4170" y="150" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1dgkwzr_di" bpmnElement="Flow_1dgkwzr">
-        <di:waypoint x="5020" y="570" />
+        <di:waypoint x="5020" y="480" />
         <di:waypoint x="5020" y="150" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_14gw1v6_di" bpmnElement="Flow_14gw1v6">
