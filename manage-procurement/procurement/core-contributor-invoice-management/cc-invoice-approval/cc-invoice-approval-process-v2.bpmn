@@ -1060,6 +1060,11 @@ invoice["invoiceStatus"] = "Approved and Pending Payment"</spiffworkflow:preScri
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_1fvtcqt</bpmn:incoming>
       <bpmn:outgoing>Flow_0hws1pe</bpmn:outgoing>
+      <bpmn:property id="Property_0qyo4d9" name="__targetRef_placeholder" />
+      <bpmn:dataInputAssociation id="DataInputAssociation_0lyfkgl">
+        <bpmn:sourceRef>DataObjectReference_0br9o6c</bpmn:sourceRef>
+        <bpmn:targetRef>Property_0qyo4d9</bpmn:targetRef>
+      </bpmn:dataInputAssociation>
       <bpmn:startEvent id="Waku_Message_Pending_Payment_Start_Event">
         <bpmn:outgoing>Flow_1j5eznh</bpmn:outgoing>
       </bpmn:startEvent>
@@ -1070,6 +1075,7 @@ if isMatch:
     task_id = "waku_payment_pending_ismatch"
 else:
     task_id = "waku_payment_pending_not_ismatch"
+    len_project_lead_comment = len(approvalComment.strip())
 
 # Set Message in Call Activity
 isSetMessage = True
@@ -1713,6 +1719,10 @@ timezone = current_user_extras["time_zone"]</spiffworkflow:preScript>
         <di:waypoint x="3359" y="1290" />
         <di:waypoint x="3359" y="570" />
       </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DataInputAssociation_0lyfkgl_di" bpmnElement="DataInputAssociation_0lyfkgl">
+        <di:waypoint x="4974" y="715" />
+        <di:waypoint x="5009" y="650" />
+      </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
   <bpmndi:BPMNDiagram>
@@ -1923,6 +1933,9 @@ timezone = current_user_extras["time_zone"]</spiffworkflow:preScript>
   </bpmndi:BPMNDiagram>
   <bpmndi:BPMNDiagram id="BPMNDiagram_03yq39k">
     <bpmndi:BPMNPlane id="BPMNPlane_19vekoo" bpmnElement="Waku_Message_Pending_Payment">
+      <bpmndi:BPMNShape id="Event_13cibxi_di" bpmnElement="Waku_Message_Pending_Payment_Start_Event">
+        <dc:Bounds x="212" y="162" width="36" height="36" />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0848qfu_di" bpmnElement="Get_Waku_Messages_Message">
         <dc:Bounds x="340" y="140" width="100" height="80" />
         <bpmndi:BPMNLabel />
@@ -1933,9 +1946,6 @@ timezone = current_user_extras["time_zone"]</spiffworkflow:preScript>
       <bpmndi:BPMNShape id="BPMNShape_0h6o7ep" bpmnElement="waku_payment_pending">
         <dc:Bounds x="530" y="140" width="100" height="80" />
         <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_13cibxi_di" bpmnElement="Waku_Message_Pending_Payment_Start_Event">
-        <dc:Bounds x="212" y="162" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_1w7kqay_di" bpmnElement="Flow_1w7kqay">
         <di:waypoint x="440" y="180" />
