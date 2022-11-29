@@ -142,8 +142,7 @@
     </bpmn:sendTask>
     <bpmn:sequenceFlow id="Flow_0pxe4tq" sourceRef="Activity_090jdg2" targetRef="Event_1xua48y" />
     <bpmn:sequenceFlow id="Flow_07kocgo" name="T&#38;C reviewed" sourceRef="Gateway_0db4fvw" targetRef="Activity_090jdg2" />
-    <bpmn:dataObjectReference id="DataObjectReference_0a1iy5x" name="Data Object Z Q E" dataObjectRef="DataObject_00z4q1e" />
-    <bpmn:dataObjectReference id="DataObjectReference_0x2nl9m" name="Data Object Z Q E" dataObjectRef="DataObject_00z4q1e" />
+    <bpmn:dataObjectReference id="DataObjectReference_0x2nl9m" name="New Demand Request" dataObjectRef="DataObject_00z4q1e" />
     <bpmn:endEvent id="Event_1sbi4xu" name="The Request has been Rejected">
       <bpmn:incoming>Flow_09acpla</bpmn:incoming>
       <bpmn:messageEventDefinition id="MessageEventDefinition_11ivqvq" />
@@ -231,7 +230,7 @@
         <bpmn:targetRef>Property_0207fet</bpmn:targetRef>
       </bpmn:dataInputAssociation>
     </bpmn:userTask>
-    <bpmn:dataObjectReference id="DataObjectReference_0hqgpr1" name="Data Object Z Q E" dataObjectRef="DataObject_00z4q1e" />
+    <bpmn:dataObjectReference id="DataObjectReference_0hqgpr1" name="New Demand Request" dataObjectRef="DataObject_00z4q1e" />
     <bpmn:callActivity id="Activity_0rhqmwe" name="Review the Request">
       <bpmn:incoming>Flow_18vlkye</bpmn:incoming>
       <bpmn:outgoing>Flow_1kcfinc</bpmn:outgoing>
@@ -374,13 +373,12 @@
       <bpmn:messageEventDefinition id="MessageEventDefinition_078mluc" />
     </bpmn:intermediateThrowEvent>
     <bpmn:sequenceFlow id="Flow_0jxiatt" sourceRef="Event_1s7mkb4" targetRef="Activity_14fif5h" />
-    <bpmn:callActivity id="Activity_0tt12kf" name="Call Shared: Define Approval strategy">
+    <bpmn:callActivity id="Activity_0tt12kf" name="Call Shared: Define Approval strategy" calledElement="Define_Approval_Strategy">
       <bpmn:incoming>Flow_1ipb2ul</bpmn:incoming>
       <bpmn:outgoing>Flow_0vw379z</bpmn:outgoing>
     </bpmn:callActivity>
     <bpmn:sequenceFlow id="Flow_0vw379z" sourceRef="Activity_0tt12kf" targetRef="Event_1s7mkb4" />
     <bpmn:dataObjectReference id="DataObjectReference_070iy0o" name="New Demand Request" dataObjectRef="DataObject_00z4q1e" />
-    <bpmn:dataObject id="DataObject_00z4q1e" />
     <bpmn:userTask id="Activity_05le46k" name="Submit a New Demand request">
       <bpmn:documentation>**Figma - New Demand request (Procurement) - SUBMIT**, https://www.figma.com/file/9NP2BUoLuwHUCGStvDMgOw/Form?node-id=0%3A1&amp;t=BABeo58RkNviJr4N-0
 
@@ -407,6 +405,8 @@
       <bpmn:outgoing>Flow_0mbb848</bpmn:outgoing>
     </bpmn:startEvent>
     <bpmn:sequenceFlow id="Flow_0mbb848" sourceRef="StartEvent_1" targetRef="Activity_000swbl" />
+    <bpmn:dataObjectReference id="DataObjectReference_0a1iy5x" name="New Demand Request" dataObjectRef="DataObject_00z4q1e" />
+    <bpmn:dataObject id="DataObject_00z4q1e" />
     <bpmn:textAnnotation id="TextAnnotation_0qq1kr8">
       <bpmn:text>T&amp;C review</bpmn:text>
     </bpmn:textAnnotation>
@@ -520,16 +520,10 @@
         <dc:Bounds x="3600" y="2470" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="BPMNShape_1042grb" bpmnElement="DataObjectReference_0a1iy5x">
-        <dc:Bounds x="3452" y="2495" width="36" height="50" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="3426" y="2446" width="90" height="14" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="BPMNShape_16p08w5" bpmnElement="DataObjectReference_0x2nl9m">
         <dc:Bounds x="1152" y="915" width="36" height="50" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="1126" y="882" width="90" height="14" />
+          <dc:Bounds x="1138" y="882" width="67" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_1yp24q5_di" bpmnElement="Event_1sbi4xu">
@@ -591,7 +585,7 @@
       <bpmndi:BPMNShape id="BPMNShape_0gm4461" bpmnElement="DataObjectReference_0hqgpr1">
         <dc:Bounds x="2292" y="1445" width="36" height="50" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="2266" y="1406" width="90" height="14" />
+          <dc:Bounds x="2278" y="1406" width="67" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0przn8u_di" bpmnElement="Activity_0rhqmwe">
@@ -740,6 +734,12 @@
       <bpmndi:BPMNShape id="TextAnnotation_0zy71k9_di" bpmnElement="TextAnnotation_0zy71k9">
         <dc:Bounds x="740" y="354" width="130" height="60" />
         <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_1042grb" bpmnElement="DataObjectReference_0a1iy5x">
+        <dc:Bounds x="3452" y="2515" width="36" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="3438" y="2466" width="67" height="27" />
+        </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_0rzfa3f_di" bpmnElement="Flow_0rzfa3f">
         <di:waypoint x="4000" y="2670" />
@@ -1073,7 +1073,7 @@
         <di:waypoint x="804" y="414" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="DataInputAssociation_1o5clx3_di" bpmnElement="DataInputAssociation_1o5clx3">
-        <di:waypoint x="3470" y="2545" />
+        <di:waypoint x="3470" y="2565" />
         <di:waypoint x="3470" y="2630" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="DataInputAssociation_00o94u6_di" bpmnElement="DataInputAssociation_00o94u6">
