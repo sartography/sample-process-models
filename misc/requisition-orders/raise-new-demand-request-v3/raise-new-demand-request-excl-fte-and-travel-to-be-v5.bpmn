@@ -45,7 +45,6 @@
         <bpmn:flowNodeRef>Activity_0tt12kf</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_1s7mkb4</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_1selxrn</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Gateway_1nz85ol</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_1tozxks" name="Budget Owner">
         <bpmn:flowNodeRef>Gateway_14xgyev</bpmn:flowNodeRef>
@@ -356,17 +355,12 @@
     <bpmn:sequenceFlow id="Flow_034ez5t" name="NO" sourceRef="Gateway_14xgyev" targetRef="Event_0436zos" />
     <bpmn:sequenceFlow id="Flow_0p6nx7g" name="YES" sourceRef="Gateway_14xgyev" targetRef="Gateway_0nujbwj" />
     <bpmn:sequenceFlow id="Flow_1jdyoqm" sourceRef="Gateway_05470yw" targetRef="Gateway_14xgyev" />
-    <bpmn:exclusiveGateway id="Gateway_1nz85ol">
-      <bpmn:incoming>Flow_0kp20kp</bpmn:incoming>
-      <bpmn:outgoing>Flow_10ja4ik</bpmn:outgoing>
-    </bpmn:exclusiveGateway>
-    <bpmn:sequenceFlow id="Flow_0kp20kp" sourceRef="Gateway_1gcwukc" targetRef="Gateway_1nz85ol" />
+    <bpmn:sequenceFlow id="Flow_0kp20kp" sourceRef="Gateway_1gcwukc" targetRef="Event_1selxrn" />
     <bpmn:intermediateThrowEvent id="Event_1selxrn" name="Notification to the CC has been sent">
-      <bpmn:incoming>Flow_10ja4ik</bpmn:incoming>
+      <bpmn:incoming>Flow_0kp20kp</bpmn:incoming>
       <bpmn:outgoing>Flow_0ma9hub</bpmn:outgoing>
       <bpmn:messageEventDefinition id="MessageEventDefinition_0fk2nz8" />
     </bpmn:intermediateThrowEvent>
-    <bpmn:sequenceFlow id="Flow_10ja4ik" sourceRef="Gateway_1nz85ol" targetRef="Event_1selxrn" />
     <bpmn:intermediateThrowEvent id="Event_1s7mkb4" name="Notification to an Approver has been sent">
       <bpmn:incoming>Flow_0vw379z</bpmn:incoming>
       <bpmn:outgoing>Flow_0jxiatt</bpmn:outgoing>
@@ -671,9 +665,6 @@
         <bpmndi:BPMNLabel>
           <dc:Bounds x="2015" y="976" width="65" height="27" />
         </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Gateway_1nz85ol_di" bpmnElement="Gateway_1nz85ol" isMarkerVisible="true">
-        <dc:Bounds x="965" y="665" width="50" height="50" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="BPMNShape_08irqaw" bpmnElement="Event_1selxrn">
         <dc:Bounds x="972" y="582" width="36" height="36" />
@@ -1018,10 +1009,6 @@
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0kp20kp_di" bpmnElement="Flow_0kp20kp">
         <di:waypoint x="990" y="1015" />
-        <di:waypoint x="990" y="715" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_10ja4ik_di" bpmnElement="Flow_10ja4ik">
-        <di:waypoint x="990" y="665" />
         <di:waypoint x="990" y="618" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0jxiatt_di" bpmnElement="Flow_0jxiatt">
