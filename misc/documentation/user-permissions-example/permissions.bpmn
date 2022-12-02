@@ -5,7 +5,6 @@
       <bpmn:outgoing>Flow_04t49zv</bpmn:outgoing>
     </bpmn:startEvent>
     <bpmn:sequenceFlow id="Flow_04t49zv" sourceRef="StartEvent_1" targetRef="Activity_0wflw9z" />
-    <bpmn:sequenceFlow id="Flow_04n01i6" sourceRef="Activity_0wflw9z" targetRef="Activity_0fqwhd1" />
     <bpmn:userTask id="Activity_0wflw9z" name="Select User To Test">
       <bpmn:extensionElements>
         <spiffworkflow:properties>
@@ -13,26 +12,24 @@
         </spiffworkflow:properties>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_04t49zv</bpmn:incoming>
-      <bpmn:outgoing>Flow_04n01i6</bpmn:outgoing>
+      <bpmn:outgoing>Flow_1by81ac</bpmn:outgoing>
     </bpmn:userTask>
-    <bpmn:sequenceFlow id="Flow_0rwqep7" sourceRef="Activity_0fqwhd1" targetRef="Activity_0iom85m" />
-    <bpmn:sequenceFlow id="Flow_17ta0ym" sourceRef="Activity_0iom85m" targetRef="Activity_0pdrn26" />
     <bpmn:endEvent id="Event_0yjnug4">
       <bpmn:incoming>Flow_0q5cs4y</bpmn:incoming>
     </bpmn:endEvent>
     <bpmn:sequenceFlow id="Flow_0q5cs4y" sourceRef="Activity_0pdrn26" targetRef="Event_0yjnug4" />
-    <bpmn:businessRuleTask id="Activity_0fqwhd1" name="Determine Users Group">
-      <bpmn:incoming>Flow_04n01i6</bpmn:incoming>
-      <bpmn:outgoing>Flow_0rwqep7</bpmn:outgoing>
-    </bpmn:businessRuleTask>
-    <bpmn:businessRuleTask id="Activity_0iom85m" name="Determine Permissions">
-      <bpmn:incoming>Flow_0rwqep7</bpmn:incoming>
-      <bpmn:outgoing>Flow_17ta0ym</bpmn:outgoing>
-    </bpmn:businessRuleTask>
+    <bpmn:businessRuleTask id="Activity_0fqwhd1" name="Determine Users Group" />
+    <bpmn:businessRuleTask id="Activity_0iom85m" name="Determine Permissions" />
     <bpmn:manualTask id="Activity_0pdrn26" name="Display Permissions">
-      <bpmn:incoming>Flow_17ta0ym</bpmn:incoming>
+      <bpmn:extensionElements>
+        <spiffworkflow:instructionsForEndUser># Permissions for {{name}}
+If this were a real system, and you logged in as {{name}}, you would have the following permissions based on the current business rules:
+</spiffworkflow:instructionsForEndUser>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1by81ac</bpmn:incoming>
       <bpmn:outgoing>Flow_0q5cs4y</bpmn:outgoing>
     </bpmn:manualTask>
+    <bpmn:sequenceFlow id="Flow_1by81ac" sourceRef="Activity_0wflw9z" targetRef="Activity_0pdrn26" />
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_81k3gh6">
@@ -45,34 +42,26 @@
       <bpmndi:BPMNShape id="Event_0yjnug4_di" bpmnElement="Event_0yjnug4">
         <dc:Bounds x="912" y="159" width="36" height="36" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1afo4x3_di" bpmnElement="Activity_0fqwhd1">
-        <dc:Bounds x="430" y="137" width="100" height="80" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0e33fg2_di" bpmnElement="Activity_0iom85m">
-        <dc:Bounds x="590" y="137" width="100" height="80" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_16w91n5_di" bpmnElement="Activity_0pdrn26">
         <dc:Bounds x="750" y="137" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1afo4x3_di" bpmnElement="Activity_0fqwhd1">
+        <dc:Bounds x="460" y="300" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0e33fg2_di" bpmnElement="Activity_0iom85m">
+        <dc:Bounds x="590" y="300" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_04t49zv_di" bpmnElement="Flow_04t49zv">
         <di:waypoint x="215" y="177" />
         <di:waypoint x="270" y="177" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_04n01i6_di" bpmnElement="Flow_04n01i6">
-        <di:waypoint x="370" y="177" />
-        <di:waypoint x="430" y="177" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0rwqep7_di" bpmnElement="Flow_0rwqep7">
-        <di:waypoint x="530" y="177" />
-        <di:waypoint x="590" y="177" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_17ta0ym_di" bpmnElement="Flow_17ta0ym">
-        <di:waypoint x="690" y="177" />
-        <di:waypoint x="750" y="177" />
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0q5cs4y_di" bpmnElement="Flow_0q5cs4y">
         <di:waypoint x="850" y="177" />
         <di:waypoint x="912" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1by81ac_di" bpmnElement="Flow_1by81ac">
+        <di:waypoint x="370" y="177" />
+        <di:waypoint x="750" y="177" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
