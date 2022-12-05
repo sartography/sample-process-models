@@ -193,7 +193,7 @@
       <bpmn:incoming>Flow_1mrn6j1</bpmn:incoming>
       <bpmn:outgoing>Flow_1sg9w10</bpmn:outgoing>
     </bpmn:scriptTask>
-    <bpmn:dataObjectReference id="DataObjectReference_070iy0o" name="New Demand Request" dataObjectRef="DataObject_00z4q1e">
+    <bpmn:dataObjectReference id="DataObjectReference_070iy0o" name="New Demand Request" dataObjectRef="New_Demand_Request">
       <bpmn:documentation>Data Object metadata - tbd</bpmn:documentation>
     </bpmn:dataObjectReference>
     <bpmn:userTask id="Activity_10nldyr" name="Show the summary">
@@ -213,12 +213,15 @@
       <bpmn:documentation>To send message through Waku. Message - https://www.notion.so/Processes-WIP-bf288f19f8ff454699e2f1cc83ad7abe?p=9891dc90f4424a0ebd3407db1991c203&amp;pm=s</bpmn:documentation>
       <bpmn:incoming>Flow_0vw379z</bpmn:incoming>
       <bpmn:outgoing>Flow_1n2v5zg</bpmn:outgoing>
+      <bpmn:dataOutputAssociation id="DataOutputAssociation_0zonmrk">
+        <bpmn:targetRef>DataObjectReference_1aq4lbg</bpmn:targetRef>
+      </bpmn:dataOutputAssociation>
     </bpmn:serviceTask>
     <bpmn:serviceTask id="Activity_18am0at" name="Additional info - Send Waku message to CC">
       <bpmn:incoming>Flow_0kp20kp</bpmn:incoming>
       <bpmn:outgoing>Flow_1as6b7v</bpmn:outgoing>
     </bpmn:serviceTask>
-    <bpmn:dataObjectReference id="DataObjectReference_0x2nl9m" name="New Demand Request" dataObjectRef="DataObject_00z4q1e" />
+    <bpmn:dataObjectReference id="DataObjectReference_0x2nl9m" name="New Demand Request" dataObjectRef="New_Demand_Request" />
     <bpmn:userTask id="Activity_14fif5h" name="Review the request">
       <bpmn:documentation>**Figma - New Demand request (Procurement) - SUBMIT**, https://www.figma.com/file/9NP2BUoLuwHUCGStvDMgOw/Form?node-id=0%3A1&amp;t=BABeo58RkNviJr4N-0
 
@@ -245,6 +248,11 @@
       <bpmn:documentation>Message - https://www.notion.so/Processes-WIP-bf288f19f8ff454699e2f1cc83ad7abe?p=9891dc90f4424a0ebd3407db1991c203&amp;pm=s</bpmn:documentation>
       <bpmn:incoming>Flow_12bnhp1</bpmn:incoming>
       <bpmn:outgoing>Flow_03j2gbu</bpmn:outgoing>
+      <bpmn:property id="Property_0p9e1ga" name="__targetRef_placeholder" />
+      <bpmn:dataInputAssociation id="DataInputAssociation_1xmh7j5">
+        <bpmn:sourceRef>DataObjectReference_0sb6bga</bpmn:sourceRef>
+        <bpmn:targetRef>Property_0p9e1ga</bpmn:targetRef>
+      </bpmn:dataInputAssociation>
     </bpmn:serviceTask>
     <bpmn:endEvent id="Event_12tt6fj" name="The Request has been Rejected">
       <bpmn:incoming>Flow_03j2gbu</bpmn:incoming>
@@ -259,6 +267,9 @@
       <bpmn:documentation>Message - https://www.notion.so/Processes-WIP-bf288f19f8ff454699e2f1cc83ad7abe?p=9891dc90f4424a0ebd3407db1991c203&amp;pm=s</bpmn:documentation>
       <bpmn:incoming>Flow_034ez5t</bpmn:incoming>
       <bpmn:outgoing>Flow_0en7ium</bpmn:outgoing>
+      <bpmn:dataOutputAssociation id="DataOutputAssociation_0898r38">
+        <bpmn:targetRef>DataObjectReference_1taxigb</bpmn:targetRef>
+      </bpmn:dataOutputAssociation>
     </bpmn:serviceTask>
     <bpmn:endEvent id="Event_0436zos" name="The Request has been Approved">
       <bpmn:incoming>Flow_0en7ium</bpmn:incoming>
@@ -293,7 +304,7 @@
         <bpmn:targetRef>Property_0207fet</bpmn:targetRef>
       </bpmn:dataInputAssociation>
     </bpmn:userTask>
-    <bpmn:dataObjectReference id="DataObjectReference_0hqgpr1" name="New Demand Request" dataObjectRef="DataObject_00z4q1e" />
+    <bpmn:dataObjectReference id="DataObjectReference_0hqgpr1" name="New Demand Request" dataObjectRef="New_Demand_Request" />
     <bpmn:callActivity id="Activity_0rhqmwe" name="Review the Request" calledElement="Review_Request">
       <bpmn:incoming>Flow_1hwl8ai</bpmn:incoming>
       <bpmn:outgoing>Flow_1kcfinc</bpmn:outgoing>
@@ -393,8 +404,7 @@
       <bpmn:outgoing>Flow_03jbh71</bpmn:outgoing>
       <bpmn:outgoing>Flow_0330dfz</bpmn:outgoing>
     </bpmn:exclusiveGateway>
-    <bpmn:dataObjectReference id="DataObjectReference_0a1iy5x" name="New Demand Request" dataObjectRef="DataObject_00z4q1e" />
-    <bpmn:dataObject id="DataObject_00z4q1e" />
+    <bpmn:dataObjectReference id="DataObjectReference_0a1iy5x" name="New Demand Request" dataObjectRef="New_Demand_Request" />
     <bpmn:exclusiveGateway id="Gateway_0dj673n">
       <bpmn:incoming>Flow_0de6bzm</bpmn:incoming>
       <bpmn:incoming>Flow_13jmp2u</bpmn:incoming>
@@ -531,6 +541,16 @@
       </bpmn:textAnnotation>
       <bpmn:association id="Association_1ye3e63" sourceRef="Activity_1abofjd" targetRef="TextAnnotation_145zu6s" />
     </bpmn:subProcess>
+    <bpmn:dataObjectReference id="DataObjectReference_1aq4lbg" name="Message Request Approval" dataObjectRef="message_Request_Approval" />
+    <bpmn:dataObject id="message_Request_Approval" />
+    <bpmn:dataObject id="message_Additional_info" />
+    <bpmn:dataObject id="message_Request_Rejected" />
+    <bpmn:dataObject id="message_Request_Approved" />
+    <bpmn:dataObject id="message_Request_SME" />
+    <bpmn:dataObjectReference id="DataObjectReference_0sb6bga" name="Message Request Rejected" dataObjectRef="message_Request_Rejected" />
+    <bpmn:dataObject id="New_Demand_Request" />
+    <bpmn:dataObjectReference id="DataObjectReference_1taxigb" name="Message Request Approved" dataObjectRef="message_Request_Approved" />
+    <bpmn:dataObject id="message_Request_Approval" />
     <bpmn:textAnnotation id="TextAnnotation_0zy71k9">
       <bpmn:text>Orgdata from BBHR, Categories from a DB, Currencies from Xero</bpmn:text>
     </bpmn:textAnnotation>
@@ -631,7 +651,7 @@
       <bpmndi:BPMNShape id="DataObjectReference_070iy0o_di" bpmnElement="DataObjectReference_070iy0o">
         <dc:Bounds x="1102" y="550" width="36" height="50" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="1087" y="517" width="67" height="27" />
+          <dc:Bounds x="1088" y="517" width="67" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1rjn370_di" bpmnElement="Activity_10nldyr">
@@ -657,7 +677,7 @@
       <bpmndi:BPMNShape id="BPMNShape_16p08w5" bpmnElement="DataObjectReference_0x2nl9m">
         <dc:Bounds x="1942" y="1165" width="36" height="50" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="1928" y="1132" width="67" height="27" />
+          <dc:Bounds x="1929" y="1132" width="67" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1dg2cxw_di" bpmnElement="Activity_14fif5h">
@@ -723,7 +743,7 @@
       <bpmndi:BPMNShape id="BPMNShape_0gm4461" bpmnElement="DataObjectReference_0hqgpr1">
         <dc:Bounds x="2882" y="1925" width="36" height="50" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="2868" y="1886" width="67" height="27" />
+          <dc:Bounds x="2869" y="1886" width="67" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0przn8u_di" bpmnElement="Activity_0rhqmwe">
@@ -788,7 +808,7 @@
       <bpmndi:BPMNShape id="BPMNShape_1042grb" bpmnElement="DataObjectReference_0a1iy5x">
         <dc:Bounds x="4042" y="3135" width="36" height="50" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="4028" y="3086" width="67" height="27" />
+          <dc:Bounds x="4029" y="3086" width="67" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Gateway_0dj673n_di" bpmnElement="Gateway_0dj673n" isMarkerVisible="true">
@@ -837,6 +857,12 @@
         <dc:Bounds x="4552" y="3272" width="36" height="36" />
         <bpmndi:BPMNLabel>
           <dc:Bounds x="4525" y="3315" width="90" height="53" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DataObjectReference_0sb6bga_di" bpmnElement="DataObjectReference_0sb6bga">
+        <dc:Bounds x="2252" y="955" width="36" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2226" y="1012" width="89" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1nyt2o4_di" bpmnElement="Activity_1d0b6bl">
@@ -1248,6 +1274,18 @@
         <di:waypoint x="1310" y="630" />
         <di:waypoint x="1310" y="610" />
       </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="DataObjectReference_1aq4lbg_di" bpmnElement="DataObjectReference_1aq4lbg">
+        <dc:Bounds x="2052" y="529" width="36" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2027" y="505" width="89" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DataObjectReference_1taxigb_di" bpmnElement="DataObjectReference_1taxigb">
+        <dc:Bounds x="2682" y="1015" width="36" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2656" y="1072" width="89" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="DataInputAssociation_1phyahz_di" bpmnElement="DataInputAssociation_1phyahz">
         <di:waypoint x="1125" y="600" />
         <di:waypoint x="1132" y="630" />
@@ -1263,6 +1301,18 @@
       <bpmndi:BPMNEdge id="DataInputAssociation_1o5clx3_di" bpmnElement="DataInputAssociation_1o5clx3">
         <di:waypoint x="4060" y="3185" />
         <di:waypoint x="4060" y="3250" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DataOutputAssociation_0zonmrk_di" bpmnElement="DataOutputAssociation_0zonmrk">
+        <di:waypoint x="2069" y="630" />
+        <di:waypoint x="2068" y="579" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DataInputAssociation_1xmh7j5_di" bpmnElement="DataInputAssociation_1xmh7j5">
+        <di:waypoint x="2288" y="993" />
+        <di:waypoint x="2321" y="1016" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DataOutputAssociation_0898r38_di" bpmnElement="DataOutputAssociation_0898r38">
+        <di:waypoint x="2640" y="1048" />
+        <di:waypoint x="2682" y="1046" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
