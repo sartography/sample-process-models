@@ -64,8 +64,6 @@
       <bpmn:lane id="Lane_1huwda6" name="Legal">
         <bpmn:flowNodeRef>Gateway_0db4fvw</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_08xl52p</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Event_1xua48y</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Activity_01xe0tf</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_1jpqpoa</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_0jmnbvc</bpmn:flowNodeRef>
       </bpmn:lane>
@@ -156,8 +154,6 @@
     <bpmn:sequenceFlow id="Flow_0330dfz" sourceRef="Gateway_0zvodob" targetRef="Activity_1o9jqsv" />
     <bpmn:sequenceFlow id="Flow_10eey19" sourceRef="Gateway_0qbf3s9" targetRef="Activity_1s89fmw" />
     <bpmn:sequenceFlow id="Flow_03lmij7" sourceRef="Activity_1s89fmw" targetRef="Activity_08xl52p" />
-    <bpmn:sequenceFlow id="Flow_05btfp2" sourceRef="Gateway_0db4fvw" targetRef="Activity_01xe0tf" />
-    <bpmn:sequenceFlow id="Flow_0esnal1" sourceRef="Activity_01xe0tf" targetRef="Event_1xua48y" />
     <bpmn:sequenceFlow id="Flow_0k897q2" name="Contract negotiation is required" sourceRef="Gateway_0db4fvw" targetRef="Activity_1jpqpoa" />
     <bpmn:sequenceFlow id="Flow_0boeaof" sourceRef="Activity_1jpqpoa" targetRef="Event_0jmnbvc" />
     <bpmn:sequenceFlow id="Flow_177clpe" sourceRef="Activity_000swbl" targetRef="Gateway_17sf14l" />
@@ -283,11 +279,17 @@
       <bpmn:documentation>Message - https://www.notion.so/Processes-WIP-bf288f19f8ff454699e2f1cc83ad7abe?p=9891dc90f4424a0ebd3407db1991c203&amp;pm=s</bpmn:documentation>
       <bpmn:incoming>Flow_1m2ww6f</bpmn:incoming>
       <bpmn:outgoing>Flow_0xb76li</bpmn:outgoing>
+      <bpmn:dataOutputAssociation id="DataOutputAssociation_10aqq31">
+        <bpmn:targetRef>DataObjectReference_1kr8dbu</bpmn:targetRef>
+      </bpmn:dataOutputAssociation>
     </bpmn:serviceTask>
     <bpmn:serviceTask id="Activity_0bghij1" name="Send Waku message to PeopleOps">
       <bpmn:documentation>Message - https://www.notion.so/Processes-WIP-bf288f19f8ff454699e2f1cc83ad7abe?p=9891dc90f4424a0ebd3407db1991c203&amp;pm=s</bpmn:documentation>
       <bpmn:incoming>Flow_0ivtxme</bpmn:incoming>
       <bpmn:outgoing>Flow_1hwl8ai</bpmn:outgoing>
+      <bpmn:dataOutputAssociation id="DataOutputAssociation_1wiw4o6">
+        <bpmn:targetRef>DataObjectReference_1ufw9hg</bpmn:targetRef>
+      </bpmn:dataOutputAssociation>
     </bpmn:serviceTask>
     <bpmn:endEvent id="Event_1fsb3by" name="The Request has been Approved">
       <bpmn:incoming>Flow_1naganq</bpmn:incoming>
@@ -320,11 +322,17 @@
       <bpmn:documentation>Message - https://www.notion.so/Processes-WIP-bf288f19f8ff454699e2f1cc83ad7abe?p=9891dc90f4424a0ebd3407db1991c203&amp;pm=s</bpmn:documentation>
       <bpmn:incoming>Flow_0a5yhak</bpmn:incoming>
       <bpmn:outgoing>Flow_1naganq</bpmn:outgoing>
+      <bpmn:dataOutputAssociation id="DataOutputAssociation_1u3484a">
+        <bpmn:targetRef>DataObjectReference_0njly5v</bpmn:targetRef>
+      </bpmn:dataOutputAssociation>
     </bpmn:serviceTask>
     <bpmn:serviceTask id="Activity_16i7dp7" name="Rejected - Send Waku message to CC">
       <bpmn:documentation>Message - https://www.notion.so/Processes-WIP-bf288f19f8ff454699e2f1cc83ad7abe?p=9891dc90f4424a0ebd3407db1991c203&amp;pm=s</bpmn:documentation>
       <bpmn:incoming>Flow_09acpla</bpmn:incoming>
       <bpmn:outgoing>Flow_1v5wz1m</bpmn:outgoing>
+      <bpmn:dataOutputAssociation id="DataOutputAssociation_0f7i6in">
+        <bpmn:targetRef>DataObjectReference_1ry26yk</bpmn:targetRef>
+      </bpmn:dataOutputAssociation>
     </bpmn:serviceTask>
     <bpmn:endEvent id="Event_1sbi4xu" name="The Request has been Rejected">
       <bpmn:incoming>Flow_1v5wz1m</bpmn:incoming>
@@ -354,7 +362,6 @@
     <bpmn:exclusiveGateway id="Gateway_0db4fvw">
       <bpmn:incoming>Flow_03bcido</bpmn:incoming>
       <bpmn:outgoing>Flow_13jmp2u</bpmn:outgoing>
-      <bpmn:outgoing>Flow_05btfp2</bpmn:outgoing>
       <bpmn:outgoing>Flow_0k897q2</bpmn:outgoing>
     </bpmn:exclusiveGateway>
     <bpmn:userTask id="Activity_08xl52p" name="Review the Request">
@@ -415,10 +422,13 @@
       <bpmn:incoming>Flow_090tycz</bpmn:incoming>
       <bpmn:outgoing>Flow_12883no</bpmn:outgoing>
     </bpmn:exclusiveGateway>
-    <bpmn:serviceTask id="Activity_1a6qnty" name="Approved - Send Waku message to Security">
+    <bpmn:serviceTask id="Activity_1a6qnty" name="Send Waku message to Security">
       <bpmn:documentation>Message - https://www.notion.so/Processes-WIP-bf288f19f8ff454699e2f1cc83ad7abe?p=9891dc90f4424a0ebd3407db1991c203&amp;pm=s</bpmn:documentation>
       <bpmn:incoming>Flow_01bm90f</bpmn:incoming>
       <bpmn:outgoing>Flow_1lb55um</bpmn:outgoing>
+      <bpmn:dataOutputAssociation id="DataOutputAssociation_19tp9sp">
+        <bpmn:targetRef>DataObjectReference_18h2v8d</bpmn:targetRef>
+      </bpmn:dataOutputAssociation>
     </bpmn:serviceTask>
     <bpmn:endEvent id="Event_0ikppnh" name="The Request has been Rejected">
       <bpmn:incoming>Flow_0703ixn</bpmn:incoming>
@@ -427,35 +437,38 @@
       <bpmn:documentation>Message - https://www.notion.so/Processes-WIP-bf288f19f8ff454699e2f1cc83ad7abe?p=9891dc90f4424a0ebd3407db1991c203&amp;pm=s</bpmn:documentation>
       <bpmn:incoming>Flow_0hz6t2a</bpmn:incoming>
       <bpmn:outgoing>Flow_0703ixn</bpmn:outgoing>
+      <bpmn:property id="Property_00kshvo" name="__targetRef_placeholder" />
+      <bpmn:dataInputAssociation id="DataInputAssociation_07xmgir">
+        <bpmn:sourceRef>DataObjectReference_1rmnnq1</bpmn:sourceRef>
+        <bpmn:targetRef>Property_00kshvo</bpmn:targetRef>
+      </bpmn:dataInputAssociation>
     </bpmn:serviceTask>
-    <bpmn:serviceTask id="Activity_1o9jqsv" name="Approved - Send Waku message to Infra">
+    <bpmn:serviceTask id="Activity_1o9jqsv" name="Send Waku message to Infra">
       <bpmn:documentation>Message - https://www.notion.so/Processes-WIP-bf288f19f8ff454699e2f1cc83ad7abe?p=9891dc90f4424a0ebd3407db1991c203&amp;pm=s</bpmn:documentation>
       <bpmn:incoming>Flow_0330dfz</bpmn:incoming>
       <bpmn:outgoing>Flow_08m2qn8</bpmn:outgoing>
+      <bpmn:property id="Property_1tvje2y" name="__targetRef_placeholder" />
+      <bpmn:dataInputAssociation id="DataInputAssociation_0hloboz">
+        <bpmn:sourceRef>DataObjectReference_00agpt8</bpmn:sourceRef>
+        <bpmn:targetRef>Property_1tvje2y</bpmn:targetRef>
+      </bpmn:dataInputAssociation>
     </bpmn:serviceTask>
-    <bpmn:serviceTask id="Activity_1s89fmw" name="Approved - Send Waku message to Legal">
+    <bpmn:serviceTask id="Activity_1s89fmw" name="Send Waku message to Legal">
       <bpmn:documentation>Message - https://www.notion.so/Processes-WIP-bf288f19f8ff454699e2f1cc83ad7abe?p=9891dc90f4424a0ebd3407db1991c203&amp;pm=s</bpmn:documentation>
       <bpmn:incoming>Flow_10eey19</bpmn:incoming>
       <bpmn:outgoing>Flow_03lmij7</bpmn:outgoing>
-    </bpmn:serviceTask>
-    <bpmn:endEvent id="Event_1xua48y" name="Vendor MD process should be started OR if this is an existing Vendor -&#62; PO">
-      <bpmn:incoming>Flow_0esnal1</bpmn:incoming>
-      <bpmn:signalEventDefinition id="SignalEventDefinition_1skhmoh" />
-    </bpmn:endEvent>
-    <bpmn:serviceTask id="Activity_01xe0tf" name="Approved - Send Waku message to CC">
-      <bpmn:documentation>Message - https://www.notion.so/Processes-WIP-bf288f19f8ff454699e2f1cc83ad7abe?p=9891dc90f4424a0ebd3407db1991c203&amp;pm=s</bpmn:documentation>
-      <bpmn:incoming>Flow_05btfp2</bpmn:incoming>
-      <bpmn:outgoing>Flow_0esnal1</bpmn:outgoing>
+      <bpmn:dataOutputAssociation id="DataOutputAssociation_1p2i0k7">
+        <bpmn:targetRef>DataObjectReference_036sqbp</bpmn:targetRef>
+      </bpmn:dataOutputAssociation>
     </bpmn:serviceTask>
     <bpmn:serviceTask id="Activity_1jpqpoa" name="Approved - Send Waku message to CC">
       <bpmn:documentation>Message - https://www.notion.so/Processes-WIP-bf288f19f8ff454699e2f1cc83ad7abe?p=9891dc90f4424a0ebd3407db1991c203&amp;pm=s</bpmn:documentation>
       <bpmn:incoming>Flow_0k897q2</bpmn:incoming>
       <bpmn:outgoing>Flow_0boeaof</bpmn:outgoing>
+      <bpmn:dataOutputAssociation id="DataOutputAssociation_11lwwuc">
+        <bpmn:targetRef>DataObjectReference_10yrt4u</bpmn:targetRef>
+      </bpmn:dataOutputAssociation>
     </bpmn:serviceTask>
-    <bpmn:endEvent id="Event_0jmnbvc" name="Contract Negotiation process should be started">
-      <bpmn:incoming>Flow_0boeaof</bpmn:incoming>
-      <bpmn:signalEventDefinition id="SignalEventDefinition_1a7t73r" />
-    </bpmn:endEvent>
     <bpmn:subProcess id="Activity_1d0b6bl" name="Validate Data">
       <bpmn:incoming>Flow_1ipb2ul</bpmn:incoming>
       <bpmn:outgoing>Flow_0pp3u64</bpmn:outgoing>
@@ -542,22 +555,35 @@
       <bpmn:association id="Association_1ye3e63" sourceRef="Activity_1abofjd" targetRef="TextAnnotation_145zu6s" />
     </bpmn:subProcess>
     <bpmn:dataObjectReference id="DataObjectReference_1aq4lbg" name="Message Request Approval" dataObjectRef="message_Request_Approval" />
-    <bpmn:dataObject id="message_Request_Approval" />
-    <bpmn:dataObject id="message_Additional_info" />
-    <bpmn:dataObject id="message_Request_Rejected" />
-    <bpmn:dataObject id="message_Request_Approved" />
-    <bpmn:dataObject id="message_Request_SME" />
     <bpmn:dataObjectReference id="DataObjectReference_0sb6bga" name="Message Request Rejected" dataObjectRef="message_Request_Rejected" />
-    <bpmn:dataObject id="New_Demand_Request" />
     <bpmn:dataObjectReference id="DataObjectReference_1taxigb" name="Message Request Approved" dataObjectRef="message_Request_Approved" />
     <bpmn:dataObject id="message_Request_Approval" />
+    <bpmn:dataObjectReference id="DataObjectReference_1ufw9hg" name="Message Request S M E" dataObjectRef="message_Request_SME" />
+    <bpmn:dataObject id="message_Request_Approval" />
+    <bpmn:dataObjectReference id="DataObjectReference_1kr8dbu" name="Message Request S M E" dataObjectRef="message_Request_SME" />
+    <bpmn:dataObject id="message_Additional_info" />
+    <bpmn:dataObjectReference id="DataObjectReference_0njly5v" name="Message Request Approved" dataObjectRef="message_Request_Approved" />
+    <bpmn:dataObject id="message_Additional_info" />
+    <bpmn:dataObjectReference id="DataObjectReference_1ry26yk" name="Message Request Rejected" dataObjectRef="message_Request_Rejected" />
+    <bpmn:dataObject id="message_Request_Rejected" />
+    <bpmn:dataObjectReference id="DataObjectReference_18h2v8d" name="Message Request S M E" dataObjectRef="message_Request_SME" />
+    <bpmn:dataObject id="message_Request_Rejected" />
+    <bpmn:dataObjectReference id="DataObjectReference_00agpt8" name="Message Request S M E" dataObjectRef="message_Request_SME" />
+    <bpmn:dataObjectReference id="DataObjectReference_1rmnnq1" name="Message Request Rejected" dataObjectRef="message_Request_Rejected" />
+    <bpmn:dataObject id="message_Request_SME" />
+    <bpmn:dataObjectReference id="DataObjectReference_036sqbp" name="Message Request S M E" dataObjectRef="message_Request_SME" />
+    <bpmn:dataObject id="message_Request_SME" />
+    <bpmn:dataObject id="New_Demand_Request" />
+    <bpmn:dataObject id="message_Request_Approved" />
+    <bpmn:dataObjectReference id="DataObjectReference_10yrt4u" name="Message Request Approved" dataObjectRef="message_Request_Approved" />
+    <bpmn:dataObject id="message_Request_Approved" />
+    <bpmn:endEvent id="Event_0jmnbvc" name="Contract Negotiation OR Vendor onboarding  process should be started">
+      <bpmn:incoming>Flow_0boeaof</bpmn:incoming>
+    </bpmn:endEvent>
     <bpmn:textAnnotation id="TextAnnotation_0zy71k9">
       <bpmn:text>Orgdata from BBHR, Categories from a DB, Currencies from Xero</bpmn:text>
     </bpmn:textAnnotation>
     <bpmn:association id="Association_13u0dtl" sourceRef="Activity_000swbl" targetRef="TextAnnotation_0zy71k9" />
-    <bpmn:textAnnotation id="TextAnnotation_0pl2twy">
-      <bpmn:text>Mention in the notification "Legal review if required"</bpmn:text>
-    </bpmn:textAnnotation>
     <bpmn:textAnnotation id="TextAnnotation_0bqrxlm">
       <bpmn:text>+ Currency conversion</bpmn:text>
     </bpmn:textAnnotation>
@@ -567,18 +593,17 @@
     <bpmn:textAnnotation id="TextAnnotation_12tjd1d">
       <bpmn:text>TypeForm</bpmn:text>
     </bpmn:textAnnotation>
-    <bpmn:textAnnotation id="TextAnnotation_0qq1kr8">
-      <bpmn:text>T&amp;C review</bpmn:text>
-    </bpmn:textAnnotation>
     <bpmn:association id="Association_1mgme24" sourceRef="Activity_10nldyr" targetRef="TextAnnotation_1ofkj5f" />
     <bpmn:association id="Association_012q0h5" sourceRef="Activity_0uhfy9l" targetRef="TextAnnotation_12tjd1d" />
-    <bpmn:association id="Association_0uclvn6" sourceRef="Activity_05nr3wb" targetRef="TextAnnotation_0pl2twy" />
-    <bpmn:association id="Association_1778mrp" sourceRef="Activity_08xl52p" targetRef="TextAnnotation_0qq1kr8" />
     <bpmn:association id="Association_1ori2qv" sourceRef="Activity_1d0b6bl" targetRef="TextAnnotation_0bqrxlm" />
     <bpmn:textAnnotation id="TextAnnotation_0k4fn7g">
       <bpmn:text>TO be designed</bpmn:text>
     </bpmn:textAnnotation>
     <bpmn:association id="Association_089aqsx" sourceRef="Activity_10nldyr" targetRef="TextAnnotation_0k4fn7g" />
+    <bpmn:textAnnotation id="TextAnnotation_0qq1kr8">
+      <bpmn:text>T&amp;C review</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:association id="Association_1778mrp" sourceRef="Activity_08xl52p" targetRef="TextAnnotation_0qq1kr8" />
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_11kan0p">
@@ -616,6 +641,10 @@
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="TextAnnotation_0k4fn7g_di" bpmnElement="TextAnnotation_0k4fn7g">
         <dc:Bounds x="1570" y="740" width="100" height="30" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="TextAnnotation_0qq1kr8_di" bpmnElement="TextAnnotation_0qq1kr8">
+        <dc:Bounds x="4100" y="3200" width="100" height="30" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0migtub_di" bpmnElement="Activity_000swbl">
@@ -839,30 +868,44 @@
         <dc:Bounds x="3880" y="2920" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_0f8vdn2_di" bpmnElement="Event_1xua48y">
-        <dc:Bounds x="4222" y="3062" width="36" height="36" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="4265" y="3066" width="90" height="66" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="BPMNShape_19lubg9" bpmnElement="Activity_01xe0tf">
-        <dc:Bounds x="4190" y="3140" width="100" height="80" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="BPMNShape_1xvmroq" bpmnElement="Activity_1jpqpoa">
         <dc:Bounds x="4390" y="3250" width="100" height="80" />
         <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_12ru5x3_di" bpmnElement="Event_0jmnbvc">
-        <dc:Bounds x="4552" y="3272" width="36" height="36" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="4525" y="3315" width="90" height="53" />
-        </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="DataObjectReference_0sb6bga_di" bpmnElement="DataObjectReference_0sb6bga">
         <dc:Bounds x="2252" y="955" width="36" height="50" />
         <bpmndi:BPMNLabel>
           <dc:Bounds x="2226" y="1012" width="89" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DataObjectReference_1ufw9hg_di" bpmnElement="DataObjectReference_1ufw9hg">
+        <dc:Bounds x="2992" y="1160" width="36" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2966" y="1217" width="89" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DataObjectReference_0njly5v_di" bpmnElement="DataObjectReference_0njly5v">
+        <dc:Bounds x="3122" y="1560" width="36" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="3096" y="1617" width="89" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DataObjectReference_036sqbp_di" bpmnElement="DataObjectReference_036sqbp">
+        <dc:Bounds x="4022" y="2935" width="36" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="3996" y="2992" width="89" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DataObjectReference_10yrt4u_di" bpmnElement="DataObjectReference_10yrt4u">
+        <dc:Bounds x="4422" y="3155" width="36" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="4395" y="3117.5" width="89" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_01kslom_di" bpmnElement="Event_0jmnbvc">
+        <dc:Bounds x="4582" y="3272" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="4555" y="3315" width="90" height="80" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1nyt2o4_di" bpmnElement="Activity_1d0b6bl">
@@ -871,10 +914,6 @@
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="TextAnnotation_0zy71k9_di" bpmnElement="TextAnnotation_0zy71k9">
         <dc:Bounds x="740" y="524" width="130" height="60" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="TextAnnotation_0pl2twy_di" bpmnElement="TextAnnotation_0pl2twy">
-        <dc:Bounds x="3130" y="1540" width="120" height="55" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="TextAnnotation_0bqrxlm_di" bpmnElement="TextAnnotation_0bqrxlm">
@@ -889,13 +928,13 @@
         <dc:Bounds x="2215" y="1090" width="70" height="30" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="TextAnnotation_0qq1kr8_di" bpmnElement="TextAnnotation_0qq1kr8">
-        <dc:Bounds x="3980" y="3360" width="100" height="30" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Association_089aqsx_di" bpmnElement="Association_089aqsx">
         <di:waypoint x="1620" y="710" />
         <di:waypoint x="1620" y="740" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Association_1778mrp_di" bpmnElement="Association_1778mrp">
+        <di:waypoint x="4106" y="3252" />
+        <di:waypoint x="4132" y="3230" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_03bcido_di" bpmnElement="Flow_03bcido">
         <di:waypoint x="4110" y="3290" />
@@ -1227,24 +1266,16 @@
         <di:waypoint x="3930" y="3290" />
         <di:waypoint x="4010" y="3290" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_05btfp2_di" bpmnElement="Flow_05btfp2">
-        <di:waypoint x="4240" y="3265" />
-        <di:waypoint x="4240" y="3220" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0esnal1_di" bpmnElement="Flow_0esnal1">
-        <di:waypoint x="4240" y="3140" />
-        <di:waypoint x="4240" y="3098" />
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0k897q2_di" bpmnElement="Flow_0k897q2">
         <di:waypoint x="4265" y="3290" />
         <di:waypoint x="4390" y="3290" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="4296" y="3250" width="65" height="40" />
+          <dc:Bounds x="4277" y="3240" width="65" height="40" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0boeaof_di" bpmnElement="Flow_0boeaof">
         <di:waypoint x="4490" y="3290" />
-        <di:waypoint x="4552" y="3290" />
+        <di:waypoint x="4582" y="3290" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_177clpe_di" bpmnElement="Flow_177clpe">
         <di:waypoint x="880" y="670" />
@@ -1262,14 +1293,6 @@
         <di:waypoint x="2250" y="1150" />
         <di:waypoint x="2250" y="1120" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Association_0uclvn6_di" bpmnElement="Association_0uclvn6">
-        <di:waypoint x="3080" y="1578" />
-        <di:waypoint x="3130" y="1565" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Association_1778mrp_di" bpmnElement="Association_1778mrp">
-        <di:waypoint x="4046" y="3330" />
-        <di:waypoint x="4035" y="3360" />
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Association_1ori2qv_di" bpmnElement="Association_1ori2qv">
         <di:waypoint x="1310" y="630" />
         <di:waypoint x="1310" y="610" />
@@ -1284,6 +1307,36 @@
         <dc:Bounds x="2682" y="1015" width="36" height="50" />
         <bpmndi:BPMNLabel>
           <dc:Bounds x="2656" y="1072" width="89" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DataObjectReference_1kr8dbu_di" bpmnElement="DataObjectReference_1kr8dbu">
+        <dc:Bounds x="2602" y="1315" width="36" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2576" y="1372" width="89" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DataObjectReference_1ry26yk_di" bpmnElement="DataObjectReference_1ry26yk">
+        <dc:Bounds x="3222" y="1585" width="36" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="3195" y="1547.5" width="89" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DataObjectReference_18h2v8d_di" bpmnElement="DataObjectReference_18h2v8d">
+        <dc:Bounds x="3122" y="2285" width="36" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="3096" y="2342" width="89" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DataObjectReference_00agpt8_di" bpmnElement="DataObjectReference_00agpt8">
+        <dc:Bounds x="3542" y="2615" width="36" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="3516" y="2672" width="89" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DataObjectReference_1rmnnq1_di" bpmnElement="DataObjectReference_1rmnnq1">
+        <dc:Bounds x="3742" y="2545" width="36" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="3716" y="2602" width="89" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="DataInputAssociation_1phyahz_di" bpmnElement="DataInputAssociation_1phyahz">
@@ -1313,6 +1366,42 @@
       <bpmndi:BPMNEdge id="DataOutputAssociation_0898r38_di" bpmnElement="DataOutputAssociation_0898r38">
         <di:waypoint x="2640" y="1048" />
         <di:waypoint x="2682" y="1046" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DataOutputAssociation_1wiw4o6_di" bpmnElement="DataOutputAssociation_1wiw4o6">
+        <di:waypoint x="2950" y="1190" />
+        <di:waypoint x="2992" y="1190" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DataOutputAssociation_10aqq31_di" bpmnElement="DataOutputAssociation_10aqq31">
+        <di:waypoint x="2680" y="1342" />
+        <di:waypoint x="2638" y="1344" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DataOutputAssociation_1u3484a_di" bpmnElement="DataOutputAssociation_1u3484a">
+        <di:waypoint x="3080" y="1590" />
+        <di:waypoint x="3122" y="1590" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DataOutputAssociation_0f7i6in_di" bpmnElement="DataOutputAssociation_0f7i6in">
+        <di:waypoint x="3239" y="1680" />
+        <di:waypoint x="3238" y="1635" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DataOutputAssociation_19tp9sp_di" bpmnElement="DataOutputAssociation_19tp9sp">
+        <di:waypoint x="3080" y="2310" />
+        <di:waypoint x="3122" y="2310" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DataInputAssociation_0hloboz_di" bpmnElement="DataInputAssociation_0hloboz">
+        <di:waypoint x="3542" y="2616" />
+        <di:waypoint x="3530" y="2600" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DataInputAssociation_07xmgir_di" bpmnElement="DataInputAssociation_07xmgir">
+        <di:waypoint x="3760" y="2545" />
+        <di:waypoint x="3760" y="2510" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DataOutputAssociation_1p2i0k7_di" bpmnElement="DataOutputAssociation_1p2i0k7">
+        <di:waypoint x="3980" y="2962" />
+        <di:waypoint x="4022" y="2964" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DataOutputAssociation_11lwwuc_di" bpmnElement="DataOutputAssociation_11lwwuc">
+        <di:waypoint x="4439" y="3250" />
+        <di:waypoint x="4438" y="3205" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
