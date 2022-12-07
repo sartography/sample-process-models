@@ -1,16 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/" xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/" xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/" xmlns:biodi="http://bpmn.io/schema/dmn/biodi/2.0" xmlns:di="http://www.omg.org/spec/DMN/20180521/DI/" id="Definitions_76910d7" name="DRD" namespace="http://camunda.org/schema/1.0/dmn">
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/" xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/" xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/" xmlns:biodi="http://bpmn.io/schema/dmn/biodi/2.0" id="Definitions_76910d7" name="DRD" namespace="http://camunda.org/schema/1.0/dmn">
   <decision id="groups_to_permissions" name="Groups to Processes">
-    <informationRequirement id="InformationRequirement_0yj9j46">
-      <requiredInput href="#InputData_0pr5j5m" />
-    </informationRequirement>
     <decisionTable id="decisionTable_1" hitPolicy="COLLECT">
       <input id="input_1">
         <inputExpression id="inputExpression_1" typeRef="string">
           <text>groups</text>
         </inputExpression>
       </input>
-      <output id="output_1" name="permissions" typeRef="string" biodi:width="390.991455078125" />
+      <output id="output_1" name="permissions" typeRef="string" biodi:width="390" />
       <rule id="DecisionRule_13uhk78">
         <inputEntry id="UnaryTests_1yb5tu4">
           <text>"admin" in ?</text>
@@ -85,32 +82,11 @@
       </rule>
     </decisionTable>
   </decision>
-  <inputData id="InputData_0pr5j5m" name="List of Possible Permissions" />
-  <knowledgeSource id="KnowledgeSource_0vvlv5x">
-    <authorityRequirement id="AuthorityRequirement_0k6nw7i">
-      <requiredDecision href="#groups_to_permissions" />
-    </authorityRequirement>
-  </knowledgeSource>
   <dmndi:DMNDI>
     <dmndi:DMNDiagram id="DMNDiagram_1cykosu">
       <dmndi:DMNShape id="DMNShape_1dhfq2s" dmnElementRef="groups_to_permissions">
         <dc:Bounds height="80" width="180" x="157" y="151" />
       </dmndi:DMNShape>
-      <dmndi:DMNShape id="DMNShape_0p7hace" dmnElementRef="InputData_0pr5j5m">
-        <dc:Bounds height="45" width="125" x="184" y="297" />
-      </dmndi:DMNShape>
-      <dmndi:DMNShape id="DMNShape_0lwj7i7" dmnElementRef="KnowledgeSource_0vvlv5x">
-        <dc:Bounds height="63" width="100" x="340" y="279" />
-      </dmndi:DMNShape>
-      <dmndi:DMNEdge id="DMNEdge_0ics31i" dmnElementRef="AuthorityRequirement_0k6nw7i">
-        <di:waypoint x="288" y="231" />
-        <di:waypoint x="340" y="281" />
-      </dmndi:DMNEdge>
-      <dmndi:DMNEdge id="DMNEdge_0ljwxsk" dmnElementRef="InformationRequirement_0yj9j46">
-        <di:waypoint x="247" y="297" />
-        <di:waypoint x="247" y="251" />
-        <di:waypoint x="247" y="231" />
-      </dmndi:DMNEdge>
     </dmndi:DMNDiagram>
   </dmndi:DMNDI>
 </definitions>
