@@ -110,7 +110,7 @@ Systems/Environment - Spiff, BBHR, StatusApp, GSheets?</bpmn:documentation>
         <bpmn:targetRef>DataObjectReference_070iy0o</bpmn:targetRef>
       </bpmn:dataOutputAssociation>
     </bpmn:userTask>
-    <bpmn:dataObjectReference id="DataObjectReference_070iy0o" name="New Demand Request" dataObjectRef="DataObject_00z4q1e" />
+    <bpmn:dataObjectReference id="DataObjectReference_070iy0o" name="New Travel Request" dataObjectRef="New_Travel_Request" />
     <bpmn:inclusiveGateway id="Gateway_0iwcrxf" name="Sub-categories selected">
       <bpmn:incoming>Flow_1ipb2ul</bpmn:incoming>
       <bpmn:outgoing>Flow_0hpzx53</bpmn:outgoing>
@@ -155,6 +155,9 @@ Systems/Environment - Spiff, BBHR, StatusApp, GSheets?</bpmn:documentation>
     <bpmn:scriptTask id="Activity_1v4rxu0" name="Group info">
       <bpmn:incoming>Flow_1qb7cb6</bpmn:incoming>
       <bpmn:outgoing>Flow_0cznde0</bpmn:outgoing>
+      <bpmn:dataOutputAssociation id="DataOutputAssociation_1v4h8k8">
+        <bpmn:targetRef>DataObjectReference_1fmxy5c</bpmn:targetRef>
+      </bpmn:dataOutputAssociation>
     </bpmn:scriptTask>
     <bpmn:sequenceFlow id="Flow_0irl5s5" sourceRef="Event_0scax7o" targetRef="Activity_14fif5h" />
     <bpmn:callActivity id="Activity_0tt12kf" name="Call Shared: Define Approval strategy">
@@ -172,7 +175,7 @@ Systems/Environment - Spiff, BBHR, StatusApp, GSheets?</bpmn:documentation>
       <bpmn:incoming>Flow_0jxiatt</bpmn:incoming>
       <bpmn:outgoing>Flow_0irl5s5</bpmn:outgoing>
     </bpmn:intermediateThrowEvent>
-    <bpmn:dataObjectReference id="DataObjectReference_0leto91" name="Message Request Approval" dataObjectRef="DataObject_00z4q1e" />
+    <bpmn:dataObjectReference id="DataObjectReference_0leto91" name="Message Request Approval" dataObjectRef="message_Request_Approval" />
     <bpmn:userTask id="Activity_14fif5h" name="Review the request">
       <bpmn:incoming>Flow_0irl5s5</bpmn:incoming>
       <bpmn:outgoing>Flow_0u9k2wx</bpmn:outgoing>
@@ -202,7 +205,7 @@ Systems/Environment - Spiff, BBHR, StatusApp, GSheets?</bpmn:documentation>
     <bpmn:endEvent id="Event_12tt6fj" name="The Request has been Rejected">
       <bpmn:incoming>Flow_07lq3en</bpmn:incoming>
     </bpmn:endEvent>
-    <bpmn:dataObjectReference id="DataObjectReference_12gd7nc" name="Message Request Rejected" dataObjectRef="DataObject_1xdloek" />
+    <bpmn:dataObjectReference id="DataObjectReference_12gd7nc" name="Message Request Rejected" dataObjectRef="message_Request_Rejected" />
     <bpmn:sequenceFlow id="Flow_1j54ncr" name="Approved" sourceRef="Gateway_05470yw" targetRef="Activity_057tit8" />
     <bpmn:intermediateThrowEvent id="Event_1a63r3x" name="PeopleOps review">
       <bpmn:incoming>Flow_0wnumhn</bpmn:incoming>
@@ -215,11 +218,11 @@ Systems/Environment - Spiff, BBHR, StatusApp, GSheets?</bpmn:documentation>
         <bpmn:targetRef>DataObjectReference_11lhxd6</bpmn:targetRef>
       </bpmn:dataOutputAssociation>
     </bpmn:serviceTask>
-    <bpmn:dataObjectReference id="DataObjectReference_11lhxd6" name="Message Request PeopleOps" dataObjectRef="DataObject_00z4q1e" />
+    <bpmn:dataObjectReference id="DataObjectReference_11lhxd6" name="Message Request P Ops" dataObjectRef="message_Request_POps" />
     <bpmn:sequenceFlow id="Flow_0wnumhn" sourceRef="Activity_057tit8" targetRef="Event_1a63r3x" />
     <bpmn:sequenceFlow id="Flow_10nexen" sourceRef="Event_1a63r3x" targetRef="Activity_0zszjko" />
     <bpmn:sequenceFlow id="Flow_0mjxdwu" sourceRef="Activity_0q98cm9" targetRef="Event_1t6m3yh" />
-    <bpmn:dataObjectReference id="DataObjectReference_0rdxajs" name="New Demand Request" dataObjectRef="DataObject_1f4i3me" />
+    <bpmn:dataObjectReference id="DataObjectReference_0rdxajs" name="New Travel Request" dataObjectRef="New_Travel_Request" />
     <bpmn:userTask id="Activity_0zszjko" name="Review the Request">
       <bpmn:incoming>Flow_10nexen</bpmn:incoming>
       <bpmn:outgoing>Flow_0hkgrae</bpmn:outgoing>
@@ -251,9 +254,8 @@ Systems/Environment - Spiff, BBHR, StatusApp, GSheets?</bpmn:documentation>
         <bpmn:targetRef>DataObjectReference_1pw850e</bpmn:targetRef>
       </bpmn:dataOutputAssociation>
     </bpmn:serviceTask>
-    <bpmn:dataObjectReference id="DataObjectReference_1xbeykt" name="Message Request Approved" dataObjectRef="DataObject_1xdloek" />
-    <bpmn:dataObjectReference id="DataObjectReference_1pw850e" name="Message Request Rejected" dataObjectRef="DataObject_00z4q1e" />
-    <bpmn:dataObject id="DataObject_00z4q1e" />
+    <bpmn:dataObjectReference id="DataObjectReference_1xbeykt" name="Message Request Approved" dataObjectRef="message_Request_Approved" />
+    <bpmn:dataObjectReference id="DataObjectReference_1pw850e" name="Message Request Rejected" dataObjectRef="message_Request_Rejected" />
     <bpmn:endEvent id="Event_1s3p42s" name="The Request has been Rejected">
       <bpmn:incoming>Flow_0evmlil</bpmn:incoming>
     </bpmn:endEvent>
@@ -266,10 +268,15 @@ Systems/Environment - Spiff, BBHR, StatusApp, GSheets?</bpmn:documentation>
         <bpmn:targetRef>DataObjectReference_08v14vn</bpmn:targetRef>
       </bpmn:dataOutputAssociation>
     </bpmn:serviceTask>
-    <bpmn:dataObjectReference id="DataObjectReference_08v14vn" name="Data Object F I Me" dataObjectRef="DataObject_1f4i3me" />
-    <bpmn:dataObject id="DataObject_1f4i3me" />
-    <bpmn:dataObjectReference id="DataObjectReference_0pe0se7" name="New Demand Request" dataObjectRef="DataObject_1xdloek" />
-    <bpmn:dataObject id="DataObject_1xdloek" />
+    <bpmn:dataObjectReference id="DataObjectReference_08v14vn" name="Message Additional Info" dataObjectRef="message_Additional_info" />
+    <bpmn:dataObject id="message_Request_Approval" />
+    <bpmn:dataObjectReference id="DataObjectReference_0pe0se7" name="New Travel Request" dataObjectRef="New_Travel_Request" />
+    <bpmn:dataObject id="message_Additional_info" />
+    <bpmn:dataObject id="message_Request_Approved" />
+    <bpmn:dataObject id="message_Request_Rejected" />
+    <bpmn:dataObject id="message_Request_POps" />
+    <bpmn:dataObjectReference id="DataObjectReference_1fmxy5c" name="New Travel Request" dataObjectRef="New_Travel_Request" />
+    <bpmn:dataObject id="New_Travel_Request" />
     <bpmn:textAnnotation id="TextAnnotation_0ygggal">
       <bpmn:text>Orgdata from BBHR, Categories from a DB, Currencies from Xero</bpmn:text>
     </bpmn:textAnnotation>
@@ -341,7 +348,7 @@ Systems/Environment - Spiff, BBHR, StatusApp, GSheets?</bpmn:documentation>
       <bpmndi:BPMNShape id="DataObjectReference_070iy0o_di" bpmnElement="DataObjectReference_070iy0o">
         <dc:Bounds x="642" y="519" width="36" height="50" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="627" y="486" width="67" height="27" />
+          <dc:Bounds x="635" y="486" width="56" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Gateway_1a9iuj5_di" bpmnElement="Gateway_0iwcrxf">
@@ -397,7 +404,7 @@ Systems/Environment - Spiff, BBHR, StatusApp, GSheets?</bpmn:documentation>
       <bpmndi:BPMNShape id="DataObjectReference_0leto91_di" bpmnElement="DataObjectReference_0leto91">
         <dc:Bounds x="1622" y="525" width="36" height="50" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="1596" y="486" width="89" height="27" />
+          <dc:Bounds x="1599" y="486" width="89" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1dg2cxw_di" bpmnElement="Activity_14fif5h">
@@ -441,7 +448,7 @@ Systems/Environment - Spiff, BBHR, StatusApp, GSheets?</bpmn:documentation>
       <bpmndi:BPMNShape id="DataObjectReference_12gd7nc_di" bpmnElement="DataObjectReference_12gd7nc">
         <dc:Bounds x="2042" y="1055" width="36" height="50" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="2016" y="1112" width="89" height="27" />
+          <dc:Bounds x="2017" y="1112" width="89" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_1a63r3x_di" bpmnElement="Event_1a63r3x">
@@ -457,13 +464,13 @@ Systems/Environment - Spiff, BBHR, StatusApp, GSheets?</bpmn:documentation>
       <bpmndi:BPMNShape id="DataObjectReference_11lhxd6_di" bpmnElement="DataObjectReference_11lhxd6">
         <dc:Bounds x="2152" y="1135" width="36" height="50" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="2126" y="1096" width="89" height="27" />
+          <dc:Bounds x="2129" y="1096" width="89" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="BPMNShape_0bbtyxi" bpmnElement="DataObjectReference_0rdxajs">
         <dc:Bounds x="2172" y="1655" width="36" height="50" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="2157" y="1616" width="67" height="27" />
+          <dc:Bounds x="2163" y="1616" width="56" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1f62h9q_di" bpmnElement="Activity_0zszjko">
@@ -489,13 +496,13 @@ Systems/Environment - Spiff, BBHR, StatusApp, GSheets?</bpmn:documentation>
       <bpmndi:BPMNShape id="DataObjectReference_1xbeykt_di" bpmnElement="DataObjectReference_1xbeykt">
         <dc:Bounds x="2512" y="1585" width="36" height="50" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="2486" y="1642" width="89" height="27" />
+          <dc:Bounds x="2487" y="1642" width="89" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="DataObjectReference_1pw850e_di" bpmnElement="DataObjectReference_1pw850e">
         <dc:Bounds x="2642" y="1625" width="36" height="50" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="2616" y="1682" width="89" height="27" />
+          <dc:Bounds x="2619" y="1682" width="89" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_0xt1l6a_di" bpmnElement="Event_1s3p42s">
@@ -510,7 +517,13 @@ Systems/Environment - Spiff, BBHR, StatusApp, GSheets?</bpmn:documentation>
       <bpmndi:BPMNShape id="BPMNShape_0n1b3jh" bpmnElement="DataObjectReference_0pe0se7">
         <dc:Bounds x="1552" y="1135" width="36" height="50" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="1538" y="1101" width="67" height="27" />
+          <dc:Bounds x="1544" y="1101" width="56" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DataObjectReference_1fmxy5c_di" bpmnElement="DataObjectReference_1fmxy5c">
+        <dc:Bounds x="1282" y="525" width="36" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1272" y="487.5" width="56" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Association_0smlglp_di" bpmnElement="Association_0smlglp">
@@ -724,7 +737,7 @@ Systems/Environment - Spiff, BBHR, StatusApp, GSheets?</bpmn:documentation>
       <bpmndi:BPMNShape id="DataObjectReference_08v14vn_di" bpmnElement="DataObjectReference_08v14vn">
         <dc:Bounds x="532" y="825" width="36" height="50" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="513" y="882" width="74" height="27" />
+          <dc:Bounds x="516" y="882" width="70" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="DataOutputAssociation_0tvpg45_di" bpmnElement="DataOutputAssociation_0tvpg45">
@@ -762,6 +775,10 @@ Systems/Environment - Spiff, BBHR, StatusApp, GSheets?</bpmn:documentation>
       <bpmndi:BPMNEdge id="DataOutputAssociation_0gg28mj_di" bpmnElement="DataOutputAssociation_0gg28mj">
         <di:waypoint x="2246" y="1731" />
         <di:waypoint x="2208" y="1698" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DataOutputAssociation_1v4h8k8_di" bpmnElement="DataOutputAssociation_1v4h8k8">
+        <di:waypoint x="1299" y="620" />
+        <di:waypoint x="1298" y="575" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
