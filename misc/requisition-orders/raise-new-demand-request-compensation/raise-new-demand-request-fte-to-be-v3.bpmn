@@ -19,7 +19,6 @@ Systems/Environment - Discord, Gmail, GSheets</bpmn:documentation>
     <bpmn:messageFlow id="Flow_1gxjsqa" sourceRef="Event_0nsgsrg" targetRef="Participant_1hr1dbc" />
     <bpmn:messageFlow id="Flow_0f60fmz" sourceRef="Event_0rdiba5" targetRef="Participant_03iqsxg" />
     <bpmn:messageFlow id="Flow_0z4l1qz" sourceRef="Activity_0wixni2" targetRef="Participant_0ph9vc1" />
-    <bpmn:messageFlow id="Flow_176stt3" sourceRef="Activity_1p2lpzp" targetRef="Participant_0bhe4r6" />
     <bpmn:messageFlow id="Flow_16xya3u" sourceRef="Event_0oq9zql" targetRef="Participant_0ph9vc1" />
   </bpmn:collaboration>
   <bpmn:process id="New_Role_Request" isExecutable="true">
@@ -60,13 +59,13 @@ Systems/Environment - Discord, Gmail, GSheets</bpmn:documentation>
         <bpmn:flowNodeRef>Gateway_05470yw</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Gateway_1fwx97f</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Gateway_0hinb32</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Activity_1p2lpzp</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_0ergkw1</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Gateway_00jqg2l</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_0wixni2</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Gateway_0cc1hv7</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_14fif5h</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_1ev8jqe</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_1p2lpzp</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_1posnpf" name="PeopleOps (Talent)">
         <bpmn:flowNodeRef>Activity_19l3gvc</bpmn:flowNodeRef>
@@ -259,11 +258,6 @@ Systems/Environment - Discord, Gmail, GSheets</bpmn:documentation>
       <bpmn:outgoing>Flow_02cfnmj</bpmn:outgoing>
     </bpmn:exclusiveGateway>
     <bpmn:dataObjectReference id="DataObjectReference_0xcmasa" name="New Demand Request" dataObjectRef="DataObject_1h6mozi" />
-    <bpmn:dataObject id="DataObject_1h6mozi" />
-    <bpmn:sendTask id="Activity_1p2lpzp" name="Send message &#34;The Request has been Approved&#34;">
-      <bpmn:incoming>Flow_13f8ymo</bpmn:incoming>
-      <bpmn:outgoing>Flow_0itxg12</bpmn:outgoing>
-    </bpmn:sendTask>
     <bpmn:exclusiveGateway id="Gateway_13qrb2t">
       <bpmn:incoming>Flow_12bnhp1</bpmn:incoming>
       <bpmn:incoming>Flow_1lwl38s</bpmn:incoming>
@@ -297,7 +291,6 @@ Systems/Environment - Discord, Gmail, GSheets</bpmn:documentation>
       </bpmn:dataInputAssociation>
     </bpmn:userTask>
     <bpmn:dataObjectReference id="DataObjectReference_1exack9" name="New Demand Request" dataObjectRef="DataObject_02rdmm9" />
-    <bpmn:dataObject id="DataObject_02rdmm9" />
     <bpmn:dataObjectReference id="DataObjectReference_01nw8vg" name="New Demand Request" dataObjectRef="DataObject_12n3t58" />
     <bpmn:dataObject id="DataObject_12n3t58" />
     <bpmn:intermediateThrowEvent id="Event_0nsgsrg" name="Notification to an SME has been sent">
@@ -411,11 +404,25 @@ Process Description - WIP
     <bpmn:serviceTask id="Activity_0k9a0ig" name="Rejected - Send Waku message to Program/Service Units Lead">
       <bpmn:incoming>Flow_1gh4783</bpmn:incoming>
       <bpmn:outgoing>Flow_1fo2dlv</bpmn:outgoing>
+      <bpmn:dataOutputAssociation id="DataOutputAssociation_04bg58o">
+        <bpmn:targetRef>DataObjectReference_1axp1q5</bpmn:targetRef>
+      </bpmn:dataOutputAssociation>
     </bpmn:serviceTask>
     <bpmn:serviceTask id="Activity_0ccreb4" name="Rejected - Send Waku message to Project/Team Lead">
       <bpmn:incoming>Flow_07pgdrb</bpmn:incoming>
       <bpmn:outgoing>Flow_11drtok</bpmn:outgoing>
+      <bpmn:dataOutputAssociation id="DataOutputAssociation_0ysoaer">
+        <bpmn:targetRef>DataObjectReference_0dpk9qx</bpmn:targetRef>
+      </bpmn:dataOutputAssociation>
     </bpmn:serviceTask>
+    <bpmn:serviceTask id="Activity_1p2lpzp" name="Approved - Send Waku message to Project/Team Lead">
+      <bpmn:incoming>Flow_13f8ymo</bpmn:incoming>
+      <bpmn:outgoing>Flow_0itxg12</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:dataObjectReference id="DataObjectReference_1axp1q5" name="Data Object H Mozi" dataObjectRef="DataObject_1h6mozi" />
+    <bpmn:dataObject id="DataObject_1h6mozi" />
+    <bpmn:dataObjectReference id="DataObjectReference_0dpk9qx" name="Data Object Rdmm" dataObjectRef="DataObject_02rdmm9" />
+    <bpmn:dataObject id="DataObject_02rdmm9" />
     <bpmn:textAnnotation id="TextAnnotation_07j4hsg">
       <bpmn:text>Orgdata from BBHR, Categories from a DB</bpmn:text>
     </bpmn:textAnnotation>
@@ -555,10 +562,6 @@ Process Description - WIP
           <dc:Bounds x="2157" y="1397" width="67" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0nq1pwb_di" bpmnElement="Activity_1p2lpzp">
-        <dc:Bounds x="3150" y="1410" width="100" height="80" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Gateway_13qrb2t_di" bpmnElement="Gateway_13qrb2t" isMarkerVisible="true">
         <dc:Bounds x="2815" y="1015" width="50" height="50" />
       </bpmndi:BPMNShape>
@@ -684,6 +687,15 @@ Process Description - WIP
       <bpmndi:BPMNShape id="Activity_06wzhqg_di" bpmnElement="Activity_0ccreb4">
         <dc:Bounds x="2930" y="800" width="100" height="80" />
         <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0fxy3yz_di" bpmnElement="Activity_1p2lpzp">
+        <dc:Bounds x="3150" y="1410" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DataObjectReference_1axp1q5_di" bpmnElement="DataObjectReference_1axp1q5">
+        <dc:Bounds x="2822" y="555" width="36" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2805" y="517.5" width="70" height="27" />
+        </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0tqt3l5_di" bpmnElement="Activity_1s8cqyx">
         <dc:Bounds x="1290" y="640" width="100" height="80" />
@@ -1018,6 +1030,12 @@ Process Description - WIP
         <di:waypoint x="2340" y="1258" />
         <di:waypoint x="2340" y="1410" />
       </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="DataObjectReference_0dpk9qx_di" bpmnElement="DataObjectReference_0dpk9qx">
+        <dc:Bounds x="3062" y="815" width="36" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="3051" y="872" width="59" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Participant_1jmloa5_di" bpmnElement="Participant_0bhe4r6" isHorizontal="true">
         <dc:Bounds x="1210" y="80" width="2070" height="60" />
       </bpmndi:BPMNShape>
@@ -1069,10 +1087,6 @@ Process Description - WIP
         <di:waypoint x="2930" y="1720" />
         <di:waypoint x="580" y="1720" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_176stt3_di" bpmnElement="Flow_176stt3">
-        <di:waypoint x="3200" y="1410" />
-        <di:waypoint x="3200" y="140" />
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_16xya3u_di" bpmnElement="Flow_16xya3u">
         <di:waypoint x="3860" y="2438" />
         <di:waypoint x="3860" y="2510" />
@@ -1090,6 +1104,14 @@ Process Description - WIP
       <bpmndi:BPMNEdge id="DataOutputAssociation_12zsm0p_di" bpmnElement="DataOutputAssociation_12zsm0p">
         <di:waypoint x="1120" y="830" />
         <di:waypoint x="1068" y="830" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DataOutputAssociation_04bg58o_di" bpmnElement="DataOutputAssociation_04bg58o">
+        <di:waypoint x="2839" y="640" />
+        <di:waypoint x="2839" y="605" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DataOutputAssociation_0ysoaer_di" bpmnElement="DataOutputAssociation_0ysoaer">
+        <di:waypoint x="3030" y="843" />
+        <di:waypoint x="3062" y="844" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
