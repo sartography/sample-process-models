@@ -70,10 +70,10 @@ Systems/Environment - Spiff, BBHR, StatusApp, GSheets?</bpmn:documentation>
         <bpmn:flowNodeRef>Gateway_1j55qwu</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_0zszjko</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_1s3p42s</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Activity_0r84cpb</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_1w5tu4w</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_1b4cvmw</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_05wvlyg</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_0r84cpb</bpmn:flowNodeRef>
       </bpmn:lane>
     </bpmn:laneSet>
     <bpmn:startEvent id="StartEvent_1" name="CC&#39;s travel need for Status has been identified">
@@ -270,8 +270,6 @@ Systems/Environment - Spiff, BBHR, StatusApp, GSheets?</bpmn:documentation>
     </bpmn:exclusiveGateway>
     <bpmn:sequenceFlow id="Flow_0xqd7t2" sourceRef="Gateway_1g0fyse" targetRef="Activity_1i8r1i2" />
     <bpmn:sequenceFlow id="Flow_16bq3s4" sourceRef="Event_1oyx0u3" targetRef="Gateway_1g0fyse" />
-    <bpmn:dataObjectReference id="DataObjectReference_1xbeykt" name="Message Request Approved" dataObjectRef="message_Request_Approved" />
-    <bpmn:dataObject id="message_Request_Approved" />
     <bpmn:endEvent id="Event_1t6m3yh" name="The Request has been Approved">
       <bpmn:incoming>Flow_0mjxdwu</bpmn:incoming>
     </bpmn:endEvent>
@@ -311,19 +309,9 @@ Systems/Environment - Spiff, BBHR, StatusApp, GSheets?</bpmn:documentation>
         <bpmn:targetRef>DataObjectReference_0rdxajs</bpmn:targetRef>
       </bpmn:dataOutputAssociation>
     </bpmn:userTask>
-    <bpmn:dataObjectReference id="DataObjectReference_1pw850e" name="Message Request Rejected" dataObjectRef="message_Request_Rejected" />
-    <bpmn:dataObject id="message_Request_Rejected" />
     <bpmn:endEvent id="Event_1s3p42s" name="The Request has been Rejected">
       <bpmn:incoming>Flow_0evmlil</bpmn:incoming>
     </bpmn:endEvent>
-    <bpmn:serviceTask id="Activity_0r84cpb" name="Rejected - Send Waku message to CC">
-      <bpmn:documentation>check messages section here - https://www.notion.so/Raise-New-Demand-Request-Travel-06db3450784e4320adb425688d8dbe3f</bpmn:documentation>
-      <bpmn:incoming>Flow_13dojnu</bpmn:incoming>
-      <bpmn:outgoing>Flow_0evmlil</bpmn:outgoing>
-      <bpmn:dataOutputAssociation id="DataOutputAssociation_1b01zok">
-        <bpmn:targetRef>DataObjectReference_1pw850e</bpmn:targetRef>
-      </bpmn:dataOutputAssociation>
-    </bpmn:serviceTask>
     <bpmn:intermediateThrowEvent id="Event_1w5tu4w" name="Approved by PeopleOps partner">
       <bpmn:incoming>Flow_0j8pv5q</bpmn:incoming>
       <bpmn:outgoing>Flow_0wa76lf</bpmn:outgoing>
@@ -347,6 +335,18 @@ Systems/Environment - Spiff, BBHR, StatusApp, GSheets?</bpmn:documentation>
       <bpmn:timerEventDefinition id="TimerEventDefinition_1m3lmrg" />
     </bpmn:boundaryEvent>
     <bpmn:sequenceFlow id="Flow_0qjvcfe" sourceRef="Event_05wvlyg" targetRef="Gateway_1d1z27s" />
+    <bpmn:serviceTask id="Activity_0r84cpb" name="Rejected - Send Waku message to CC">
+      <bpmn:documentation>check messages section here - https://www.notion.so/Raise-New-Demand-Request-Travel-06db3450784e4320adb425688d8dbe3f</bpmn:documentation>
+      <bpmn:incoming>Flow_13dojnu</bpmn:incoming>
+      <bpmn:outgoing>Flow_0evmlil</bpmn:outgoing>
+      <bpmn:dataOutputAssociation id="DataOutputAssociation_1b01zok">
+        <bpmn:targetRef>DataObjectReference_1pw850e</bpmn:targetRef>
+      </bpmn:dataOutputAssociation>
+    </bpmn:serviceTask>
+    <bpmn:dataObjectReference id="DataObjectReference_1pw850e" name="Message Request Rejected" dataObjectRef="message_Request_Rejected" />
+    <bpmn:dataObject id="message_Request_Rejected" />
+    <bpmn:dataObjectReference id="DataObjectReference_1xbeykt" name="Message Request Approved" dataObjectRef="message_Request_Approved" />
+    <bpmn:dataObject id="message_Request_Approved" />
     <bpmn:textAnnotation id="TextAnnotation_0ygggal">
       <bpmn:text>Orgdata from BBHR, Categories from a DB, Currencies from Xero</bpmn:text>
     </bpmn:textAnnotation>
@@ -525,12 +525,6 @@ Systems/Environment - Spiff, BBHR, StatusApp, GSheets?</bpmn:documentation>
       <bpmndi:BPMNShape id="Gateway_1g0fyse_di" bpmnElement="Gateway_1g0fyse" isMarkerVisible="true">
         <dc:Bounds x="1665" y="635" width="50" height="50" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="DataObjectReference_1xbeykt_di" bpmnElement="DataObjectReference_1xbeykt">
-        <dc:Bounds x="2782" y="1655" width="36" height="50" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="2757" y="1712" width="89" height="27" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_0xzmep7_di" bpmnElement="Event_1t6m3yh">
         <dc:Bounds x="2682" y="1592" width="36" height="36" />
         <bpmndi:BPMNLabel>
@@ -563,21 +557,11 @@ Systems/Environment - Spiff, BBHR, StatusApp, GSheets?</bpmn:documentation>
       <bpmndi:BPMNShape id="Activity_1f62h9q_di" bpmnElement="Activity_0zszjko">
         <dc:Bounds x="2510" y="1840" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="DataObjectReference_1pw850e_di" bpmnElement="DataObjectReference_1pw850e">
-        <dc:Bounds x="2932" y="1695" width="36" height="50" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="2909" y="1752" width="89" height="27" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_0xt1l6a_di" bpmnElement="Event_1s3p42s">
         <dc:Bounds x="3062" y="1862" width="36" height="36" />
         <bpmndi:BPMNLabel>
           <dc:Bounds x="3098" y="1846" width="84" height="27" />
         </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0nu0j5u_di" bpmnElement="Activity_0r84cpb">
-        <dc:Bounds x="2860" y="1840" width="100" height="80" />
-        <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_1w5tu4w_di" bpmnElement="Event_1w5tu4w">
         <dc:Bounds x="2682" y="1792" width="36" height="36" />
@@ -605,6 +589,22 @@ Systems/Environment - Spiff, BBHR, StatusApp, GSheets?</bpmn:documentation>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Gateway_1d1z27s_di" bpmnElement="Gateway_1d1z27s" isMarkerVisible="true">
         <dc:Bounds x="2305" y="1305" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0nu0j5u_di" bpmnElement="Activity_0r84cpb">
+        <dc:Bounds x="2900" y="1840" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DataObjectReference_1pw850e_di" bpmnElement="DataObjectReference_1pw850e">
+        <dc:Bounds x="2932" y="1745" width="36" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2905" y="1707.5" width="89" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DataObjectReference_1xbeykt_di" bpmnElement="DataObjectReference_1xbeykt">
+        <dc:Bounds x="2792" y="1689" width="36" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2767" y="1746" width="89" height="27" />
+        </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_1om0837_di" bpmnElement="Event_1oyx0u3">
         <dc:Bounds x="1842" y="1352" width="36" height="36" />
@@ -791,7 +791,7 @@ Systems/Environment - Spiff, BBHR, StatusApp, GSheets?</bpmn:documentation>
         <di:waypoint x="2700" y="1628" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0evmlil_di" bpmnElement="Flow_0evmlil">
-        <di:waypoint x="2960" y="1880" />
+        <di:waypoint x="3000" y="1880" />
         <di:waypoint x="3062" y="1880" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1svl4e2_di" bpmnElement="Flow_1svl4e2">
@@ -820,7 +820,7 @@ Systems/Environment - Spiff, BBHR, StatusApp, GSheets?</bpmn:documentation>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_13dojnu_di" bpmnElement="Flow_13dojnu">
         <di:waypoint x="2828" y="1880" />
-        <di:waypoint x="2860" y="1880" />
+        <di:waypoint x="2900" y="1880" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Association_1aqc55e_di" bpmnElement="Association_1aqc55e">
         <di:waypoint x="368" y="620" />
@@ -867,8 +867,8 @@ Systems/Environment - Spiff, BBHR, StatusApp, GSheets?</bpmn:documentation>
         <di:waypoint x="1828" y="575" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="DataOutputAssociation_0vhtb7x_di" bpmnElement="DataOutputAssociation_0vhtb7x">
-        <di:waypoint x="2750" y="1702" />
-        <di:waypoint x="2782" y="1691" />
+        <di:waypoint x="2750" y="1719" />
+        <di:waypoint x="2792" y="1719" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="DataOutputAssociation_0rzdmkt_di" bpmnElement="DataOutputAssociation_0rzdmkt">
         <di:waypoint x="2441" y="1290" />
@@ -879,8 +879,8 @@ Systems/Environment - Spiff, BBHR, StatusApp, GSheets?</bpmn:documentation>
         <di:waypoint x="2521" y="1795" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="DataOutputAssociation_1b01zok_di" bpmnElement="DataOutputAssociation_1b01zok">
-        <di:waypoint x="2920" y="1840" />
-        <di:waypoint x="2942" y="1745" />
+        <di:waypoint x="2950" y="1840" />
+        <di:waypoint x="2949" y="1795" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="DataOutputAssociation_1clug1u_di" bpmnElement="DataOutputAssociation_1clug1u">
         <di:waypoint x="1812" y="1290" />
