@@ -36,8 +36,8 @@ Systems/Environment - Discord, Gmail, GSheets</bpmn:documentation>
         <bpmn:flowNodeRef>Gateway_0tbhhcu</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_03auxy3</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Gateway_0p1je1q</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Activity_0tt12kf</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_1jq51j0</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_07ex51s</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_0b8w9ck" name="Program/Service Units Lead">
         <bpmn:flowNodeRef>Event_0mxq9bj</bpmn:flowNodeRef>
@@ -95,7 +95,6 @@ Systems/Environment - Discord, Gmail, GSheets</bpmn:documentation>
     <bpmn:sequenceFlow id="Flow_1xzon4n" sourceRef="Activity_01q5dpz" targetRef="Gateway_0vx8ert" />
     <bpmn:sequenceFlow id="Flow_0zuq97m" sourceRef="Gateway_0p1je1q" targetRef="Activity_03auxy3" />
     <bpmn:sequenceFlow id="Flow_1ipb2ul" sourceRef="Activity_05le46k" targetRef="Activity_1s8cqyx" />
-    <bpmn:sequenceFlow id="Flow_0vw379z" sourceRef="Activity_0tt12kf" targetRef="Gateway_0r7ia4e" />
     <bpmn:sequenceFlow id="Flow_1vlcgag" sourceRef="Activity_04vn7fi" targetRef="Gateway_048v9pt" />
     <bpmn:sequenceFlow id="Flow_1lwl38s" name="Rejected" sourceRef="Gateway_048v9pt" targetRef="Event_0mxq9bj" />
     <bpmn:sequenceFlow id="Flow_15nd9jo" name="Approved" sourceRef="Gateway_048v9pt" targetRef="Event_0gvthsr" />
@@ -211,15 +210,10 @@ Systems/Environment - Discord, Gmail, GSheets</bpmn:documentation>
     <bpmn:sequenceFlow id="Flow_1r6a9sy" sourceRef="Activity_1u3pyax" targetRef="Event_17dor61" />
     <bpmn:dataObject id="message_Additional_info" />
     <bpmn:sequenceFlow id="Flow_1lspe33" sourceRef="Activity_10zurir" targetRef="Event_0oq9zql" />
-    <bpmn:callActivity id="Activity_0tt12kf" name="Call Shared: Define Approval strategy - PPG">
-      <bpmn:incoming>Flow_0lwky04</bpmn:incoming>
-      <bpmn:outgoing>Flow_0vw379z</bpmn:outgoing>
-    </bpmn:callActivity>
     <bpmn:intermediateThrowEvent id="Event_1jq51j0" name="New Demand Request is submitted">
       <bpmn:incoming>Flow_0qo0ea7</bpmn:incoming>
-      <bpmn:outgoing>Flow_0lwky04</bpmn:outgoing>
+      <bpmn:outgoing>Flow_1r3cs53</bpmn:outgoing>
     </bpmn:intermediateThrowEvent>
-    <bpmn:sequenceFlow id="Flow_0lwky04" sourceRef="Event_1jq51j0" targetRef="Activity_0tt12kf" />
     <bpmn:sequenceFlow id="Flow_0u35ksa" sourceRef="Event_0mxq9bj" targetRef="Gateway_13qrb2t" />
     <bpmn:sequenceFlow id="Flow_19v93vl" sourceRef="Event_0gvthsr" targetRef="Gateway_1uhqlf9" />
     <bpmn:sequenceFlow id="Flow_09zlo5u" sourceRef="Event_09nuki6" targetRef="Gateway_13qrb2t" />
@@ -247,8 +241,8 @@ Systems/Environment - Discord, Gmail, GSheets</bpmn:documentation>
     </bpmn:intermediateThrowEvent>
     <bpmn:dataObjectReference id="DataObjectReference_121t04r" name="New Demand Request" dataObjectRef="New_Demand_Request" />
     <bpmn:exclusiveGateway id="Gateway_0r7ia4e">
-      <bpmn:incoming>Flow_0vw379z</bpmn:incoming>
       <bpmn:incoming>Flow_0kx4869</bpmn:incoming>
+      <bpmn:incoming>Flow_06t8py2</bpmn:incoming>
       <bpmn:outgoing>Flow_015q4t8</bpmn:outgoing>
     </bpmn:exclusiveGateway>
     <bpmn:sequenceFlow id="Flow_015q4t8" sourceRef="Gateway_0r7ia4e" targetRef="Activity_0od3flw" />
@@ -533,6 +527,12 @@ Systems/Environment - Discord, Gmail, GSheets</bpmn:documentation>
       <bpmn:timerEventDefinition id="TimerEventDefinition_1oyf8cf" />
     </bpmn:boundaryEvent>
     <bpmn:sequenceFlow id="Flow_1l9pdoe" sourceRef="Event_0damvmu" targetRef="Gateway_0fjymjf" />
+    <bpmn:sequenceFlow id="Flow_1r3cs53" sourceRef="Event_1jq51j0" targetRef="Activity_07ex51s" />
+    <bpmn:sequenceFlow id="Flow_06t8py2" sourceRef="Activity_07ex51s" targetRef="Gateway_0r7ia4e" />
+    <bpmn:scriptTask id="Activity_07ex51s" name="Get Program/Service Unit Lead  details">
+      <bpmn:incoming>Flow_1r3cs53</bpmn:incoming>
+      <bpmn:outgoing>Flow_06t8py2</bpmn:outgoing>
+    </bpmn:scriptTask>
     <bpmn:textAnnotation id="TextAnnotation_07j4hsg">
       <bpmn:text>Orgdata from BBHR, Categories from a DB</bpmn:text>
     </bpmn:textAnnotation>
@@ -545,14 +545,14 @@ Systems/Environment - Discord, Gmail, GSheets</bpmn:documentation>
       <bpmn:text>TBD</bpmn:text>
     </bpmn:textAnnotation>
     <bpmn:association id="Association_0wycr68" sourceRef="Activity_1s8cqyx" targetRef="TextAnnotation_1cvdmmj" />
-    <bpmn:textAnnotation id="TextAnnotation_1314ff5">
-      <bpmn:text>TBD - to be changed</bpmn:text>
-    </bpmn:textAnnotation>
-    <bpmn:association id="Association_091suap" sourceRef="Activity_0tt12kf" targetRef="TextAnnotation_1314ff5" />
     <bpmn:association id="Association_1m8byuj" sourceRef="Activity_0r6vrbj" targetRef="TextAnnotation_1q5bto1" />
     <bpmn:textAnnotation id="TextAnnotation_1q5bto1">
       <bpmn:text>Compensation rate range</bpmn:text>
     </bpmn:textAnnotation>
+    <bpmn:textAnnotation id="TextAnnotation_0p4hvtj">
+      <bpmn:text>BBHR</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:association id="Association_0unwjzn" sourceRef="Activity_07ex51s" targetRef="TextAnnotation_0p4hvtj" />
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_11kan0p">
@@ -584,6 +584,10 @@ Systems/Environment - Discord, Gmail, GSheets</bpmn:documentation>
         <dc:Bounds x="682" y="310" width="3828" height="670" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="TextAnnotation_0p4hvtj_di" bpmnElement="TextAnnotation_0p4hvtj">
+        <dc:Bounds x="1910" y="565" width="100" height="30" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
         <dc:Bounds x="742" y="662" width="36" height="36" />
         <bpmndi:BPMNLabel>
@@ -606,6 +610,10 @@ Systems/Environment - Discord, Gmail, GSheets</bpmn:documentation>
         <bpmndi:BPMNLabel>
           <dc:Bounds x="1440" y="712" width="60" height="14" />
         </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0adwgn7_di" bpmnElement="Activity_07ex51s">
+        <dc:Bounds x="1910" y="640" width="100" height="80" />
+        <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0tqt3l5_di" bpmnElement="Activity_1s8cqyx">
         <dc:Bounds x="1290" y="640" width="100" height="80" />
@@ -644,10 +652,6 @@ Systems/Environment - Discord, Gmail, GSheets</bpmn:documentation>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Gateway_0p1je1q_di" bpmnElement="Gateway_0p1je1q" isMarkerVisible="true">
         <dc:Bounds x="1145" y="905" width="50" height="50" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1trh55u_di" bpmnElement="Activity_0tt12kf">
-        <dc:Bounds x="1920" y="640" width="100" height="80" />
-        <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_1jq51j0_di" bpmnElement="Event_1jq51j0">
         <dc:Bounds x="1822" y="662" width="36" height="36" />
@@ -936,14 +940,14 @@ Systems/Environment - Discord, Gmail, GSheets</bpmn:documentation>
         <dc:Bounds x="1320" y="740" width="100" height="30" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="TextAnnotation_1314ff5_di" bpmnElement="TextAnnotation_1314ff5">
-        <dc:Bounds x="1910" y="750" width="99.99715391621127" height="40.072859744990886" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="TextAnnotation_1q5bto1_di" bpmnElement="TextAnnotation_1q5bto1">
         <dc:Bounds x="3480" y="2270" width="100" height="41" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Association_0unwjzn_di" bpmnElement="Association_0unwjzn">
+        <di:waypoint x="1960" y="640" />
+        <di:waypoint x="1960" y="595" />
+      </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="Event_0vtekpi_di" bpmnElement="Event_0damvmu">
         <dc:Bounds x="3932" y="2732" width="36" height="36" />
         <bpmndi:BPMNLabel>
@@ -983,10 +987,6 @@ Systems/Environment - Discord, Gmail, GSheets</bpmn:documentation>
       <bpmndi:BPMNEdge id="Flow_1ipb2ul_di" bpmnElement="Flow_1ipb2ul">
         <di:waypoint x="1220" y="680" />
         <di:waypoint x="1290" y="680" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0vw379z_di" bpmnElement="Flow_0vw379z">
-        <di:waypoint x="2020" y="680" />
-        <di:waypoint x="2075" y="680" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1vlcgag_di" bpmnElement="Flow_1vlcgag">
         <di:waypoint x="2280" y="1140" />
@@ -1233,10 +1233,6 @@ Systems/Environment - Discord, Gmail, GSheets</bpmn:documentation>
         <di:waypoint x="4310" y="2710" />
         <di:waypoint x="4392" y="2710" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0lwky04_di" bpmnElement="Flow_0lwky04">
-        <di:waypoint x="1858" y="680" />
-        <di:waypoint x="1920" y="680" />
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0u35ksa_di" bpmnElement="Flow_0u35ksa">
         <di:waypoint x="2478" y="1030" />
         <di:waypoint x="3035" y="1030" />
@@ -1322,13 +1318,17 @@ Systems/Environment - Discord, Gmail, GSheets</bpmn:documentation>
         <di:waypoint x="1356" y="720" />
         <di:waypoint x="1364" y="740" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Association_091suap_di" bpmnElement="Association_091suap">
-        <di:waypoint x="1965" y="720" />
-        <di:waypoint x="1962" y="750" />
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Association_1m8byuj_di" bpmnElement="Association_1m8byuj">
         <di:waypoint x="3477" y="2333" />
         <di:waypoint x="3503" y="2311" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1r3cs53_di" bpmnElement="Flow_1r3cs53">
+        <di:waypoint x="1858" y="680" />
+        <di:waypoint x="1910" y="680" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_06t8py2_di" bpmnElement="Flow_06t8py2">
+        <di:waypoint x="2010" y="680" />
+        <di:waypoint x="2075" y="680" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="DataInputAssociation_1phyahz_di" bpmnElement="DataInputAssociation_1phyahz">
         <di:waypoint x="1170" y="605" />
