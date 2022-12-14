@@ -1,67 +1,45 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/" xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/" xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/" xmlns:biodi="http://bpmn.io/schema/dmn/biodi/2.0" id="Definitions_76910d7" name="DRD" namespace="http://camunda.org/schema/1.0/dmn">
-  <decision id="groups_to_permissions" name="Groups to Permissions">
+  <decision id="groups_to_permissions" name="Groups to Processes">
     <decisionTable id="decisionTable_1" hitPolicy="COLLECT">
       <input id="input_1">
         <inputExpression id="inputExpression_1" typeRef="string">
           <text>groups</text>
         </inputExpression>
       </input>
-      <output id="output_1" name="permissions" typeRef="string" biodi:width="279" />
+      <output id="output_1" name="permissions" typeRef="string" biodi:width="390" />
+      <output id="OutputClause_0kchhlj" name="uri" typeRef="string" />
       <rule id="DecisionRule_13uhk78">
         <inputEntry id="UnaryTests_1yb5tu4">
           <text>"admin" in ?</text>
         </inputEntry>
         <outputEntry id="LiteralExpression_1drtsn8">
-          <text>"all:all"</text>
+          <text>["create", "read", "update", "delete"]</text>
         </outputEntry>
-      </rule>
-      <rule id="DecisionRule_0k9f1qb">
-        <inputEntry id="UnaryTests_05yo5vc">
-          <text>"education" in ?</text>
-        </inputEntry>
-        <outputEntry id="LiteralExpression_1op7mul">
-          <text>"school_admission_process:all"</text>
-        </outputEntry>
-      </rule>
-      <rule id="DecisionRule_0vhwss9">
-        <inputEntry id="UnaryTests_1g3woxl">
-          <text>"transportation" in ?</text>
-        </inputEntry>
-        <outputEntry id="LiteralExpression_0uovxy5">
-          <text>"bus_entry_process:all"</text>
-        </outputEntry>
-      </rule>
-      <rule id="DecisionRule_1cq1j3b">
-        <inputEntry id="UnaryTests_1n564ft">
-          <text>"leadership" in ?</text>
-        </inputEntry>
-        <outputEntry id="LiteralExpression_0bl35nc">
-          <text>"all:run"</text>
+        <outputEntry id="LiteralExpression_0eliyyz">
+          <text>"/*"</text>
         </outputEntry>
       </rule>
       <rule id="DecisionRule_1rpt9bl">
         <inputEntry id="UnaryTests_1aa5gdv">
-          <text>"leadership" in ?</text>
+          <text>"Education" in ?</text>
         </inputEntry>
         <outputEntry id="LiteralExpression_1jei2e7">
-          <text>"all:view"</text>
+          <text>["create", "read", "update", "delete"]</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1cgcvfu">
+          <text>"*"</text>
         </outputEntry>
       </rule>
-      <rule id="DecisionRule_0ehfhlz">
-        <inputEntry id="UnaryTests_12f0uu3">
+      <rule id="DecisionRule_1c22zub">
+        <inputEntry id="UnaryTests_0jqmerq">
           <text></text>
         </inputEntry>
-        <outputEntry id="LiteralExpression_01s3loo">
-          <text>"school_admission_process:execute"</text>
+        <outputEntry id="LiteralExpression_14kqhj8">
+          <text></text>
         </outputEntry>
-      </rule>
-      <rule id="DecisionRule_0bmlem2">
-        <inputEntry id="UnaryTests_0ul2079">
+        <outputEntry id="LiteralExpression_0qb4na8">
           <text></text>
-        </inputEntry>
-        <outputEntry id="LiteralExpression_17cli1h">
-          <text>"bus_entry_process:execute"</text>
         </outputEntry>
       </rule>
     </decisionTable>
