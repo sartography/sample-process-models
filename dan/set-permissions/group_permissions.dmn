@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/" xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/" xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/" xmlns:biodi="http://bpmn.io/schema/dmn/biodi/2.0" id="Definitions_76910d7" name="DRD" namespace="http://camunda.org/schema/1.0/dmn">
+  <decision id="groups_to_permissions" name="Groups to Permissions">
+    <decisionTable id="decisionTable_1" hitPolicy="COLLECT">
+      <input id="input_1" biodi:width="150">
+        <inputExpression id="inputExpression_1" typeRef="string">
+          <text>"*"</text>
+        </inputExpression>
+      </input>
+      <output id="OutputClause_14rq1xp" name="permission_groups" typeRef="string" />
+      <output id="output_1" name="permissions" typeRef="string" biodi:width="279" />
+      <output id="OutputClause_1d0f70s" name="permission_uris" typeRef="string" biodi:width="254" />
+      <rule id="DecisionRule_13uhk78">
+        <description>Admins have access to everything.</description>
+        <inputEntry id="UnaryTests_1yb5tu4">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_00aw971">
+          <text>"admin"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1drtsn8">
+          <text>["create", "read", "update", "delete"]</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_13n9min">
+          <text>"/*"
+</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1p3ja8s">
+        <description>Everybody can participate in tasks assigned to them.</description>
+        <inputEntry id="UnaryTests_1caf9gr">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0o539xo">
+          <text>"everyone"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1t1q088">
+          <text>["create", "read", "update", "delete"]</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_03yyzzb">
+          <text>"/v1.0/tasks/*"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_011nhuj">
+        <description>Everybody can start any process</description>
+        <inputEntry id="UnaryTests_0bk33z9">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0favwyg">
+          <text>"everyone"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_0xkcga9">
+          <text>["read", "create"]</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_0dduq04">
+          <text>"/v1.0/processes"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1d1y93n">
+        <inputEntry id="UnaryTests_0pyfbgs">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1nn1cm7">
+          <text>"everyone"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_19gxawg">
+          <text>["read"]</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_0ead5kn">
+          <text>"/v1.0/process-groups/*"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_00orvbh">
+        <inputEntry id="UnaryTests_1qkh4o9">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0akr57l">
+          <text>"everyone"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_0fasac2">
+          <text>["read"]</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_04330nx">
+          <text>"/v1.0/process-models/*"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0hlqewx">
+        <inputEntry id="UnaryTests_06logw4">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_05586xp">
+          <text>"everyone"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_04srdlz">
+          <text>["read"]</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_0lvpbey">
+          <text>"/v1.0/process-instances/*"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1gvn0at">
+        <inputEntry id="UnaryTests_1djl10a">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1qgsa8y">
+          <text>"everyone"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_0l6pcm5">
+          <text>["read"]</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1mlgjd8">
+          <text>"/v1.0/process-instances/reports/*"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1ush1di">
+        <inputEntry id="UnaryTests_0ajhuce">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0w3207v">
+          <text>"education"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_0mhnzp3">
+          <text>["create", "read", "update", "delete"]</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_0t37e9p">
+          <text>"/v1.0/process-groups/education:*"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0kcffrp">
+        <inputEntry id="UnaryTests_10ga6h2">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0ujmqk1">
+          <text>"organization"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_09f42eh">
+          <text>["create", "read", "update", "delete"]</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_0edy3e8">
+          <text>"/v1.0/process-groups/education:*"</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <dmndi:DMNDI>
+    <dmndi:DMNDiagram id="DMNDiagram_1cykosu">
+      <dmndi:DMNShape id="DMNShape_1dhfq2s" dmnElementRef="groups_to_permissions">
+        <dc:Bounds height="80" width="180" x="157" y="151" />
+      </dmndi:DMNShape>
+    </dmndi:DMNDiagram>
+  </dmndi:DMNDI>
+</definitions>
