@@ -16,16 +16,18 @@
       <bpmn:incoming>Flow_0ed5hag</bpmn:incoming>
     </bpmn:endEvent>
     <bpmn:sequenceFlow id="Flow_0gmwrim" sourceRef="Activity_0elwnuk" targetRef="Activity_0rz4emr" />
-    <bpmn:task id="Activity_0whqoqp" name="Set Timestamp">
-      <bpmn:incoming>Flow_1y9wdf2</bpmn:incoming>
-      <bpmn:outgoing>Flow_0ed5hag</bpmn:outgoing>
-    </bpmn:task>
     <bpmn:sequenceFlow id="Flow_0ed5hag" sourceRef="Activity_0whqoqp" targetRef="Event_1l5lalr" />
     <bpmn:sequenceFlow id="Flow_1y9wdf2" sourceRef="Activity_0rz4emr" targetRef="Activity_0whqoqp" />
     <bpmn:callActivity id="Activity_0rz4emr" name="Call Shared: Local Date Time">
       <bpmn:incoming>Flow_0gmwrim</bpmn:incoming>
       <bpmn:outgoing>Flow_1y9wdf2</bpmn:outgoing>
     </bpmn:callActivity>
+    <bpmn:scriptTask id="Activity_0whqoqp" name="Set Timestamp">
+      <bpmn:incoming>Flow_1y9wdf2</bpmn:incoming>
+      <bpmn:outgoing>Flow_0ed5hag</bpmn:outgoing>
+      <bpmn:script># Set Waku Message Timestamp
+waku_message_timestamp = "\n- - - - - - - - - - - - - - - - - - - - - - -" + "\nSent: " + local_date_str + " @ " + local_time_str + "\n- - - - - - - - - - - - - - - - - - - - - - -"</bpmn:script>
+    </bpmn:scriptTask>
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Shared_Waku_Messages_Global">
@@ -41,9 +43,8 @@
       <bpmndi:BPMNShape id="Activity_12atk39_di" bpmnElement="Activity_0rz4emr">
         <dc:Bounds x="450" y="137" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0whqoqp_di" bpmnElement="Activity_0whqoqp">
+      <bpmndi:BPMNShape id="Activity_0bhutm8_di" bpmnElement="Activity_0whqoqp">
         <dc:Bounds x="630" y="137" width="100" height="80" />
-        <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_0mhmqog_di" bpmnElement="Flow_0mhmqog">
         <di:waypoint x="215" y="177" />
