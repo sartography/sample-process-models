@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:bioc="http://bpmn.io/schema/bpmn/biocolor/1.0" xmlns:color="http://www.omg.org/spec/BPMN/non-normative/color/1.0" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" id="Definitions_1" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.6.0" camunda:diagramRelationId="e2ca1956-ba04-4aae-a05b-5712b18fb9da">
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:bioc="http://bpmn.io/schema/bpmn/biocolor/1.0" xmlns:color="http://www.omg.org/spec/BPMN/non-normative/color/1.0" xmlns:spiffworkflow="http://spiffworkflow.org/bpmn/schema/1.0/core" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" id="Definitions_1" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.6.0" camunda:diagramRelationId="e2ca1956-ba04-4aae-a05b-5712b18fb9da">
   <bpmn:collaboration id="Collaboration_11kan0p">
     <bpmn:participant id="New_Demand_Request-Compensation_Pool" name="New Demand Request-Compensation Pool" processRef="New_Demand_Request-Compensation">
       <bpmn:documentation>Name of the process - Raise New Demand Request for a new role
@@ -90,6 +90,7 @@ Systems/Environment - Discord, Gmail, GSheets</bpmn:documentation>
         <bpmn:flowNodeRef>Activity_07ex51s</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_1s8cqyx</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_1pearld</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_0bbq0rl</bpmn:flowNodeRef>
       </bpmn:lane>
     </bpmn:laneSet>
     <bpmn:startEvent id="StartEvent_1" name="A need for an FTE has been identified">
@@ -464,7 +465,7 @@ Systems/Environment - Discord, Gmail, GSheets</bpmn:documentation>
       <bpmn:outgoing>Flow_0kx4869</bpmn:outgoing>
       <bpmn:timerEventDefinition id="TimerEventDefinition_12no8s5" />
     </bpmn:boundaryEvent>
-    <bpmn:sequenceFlow id="Flow_0mbb848" sourceRef="StartEvent_1" targetRef="Event_1pearld" />
+    <bpmn:sequenceFlow id="Flow_0mbb848" sourceRef="StartEvent_1" targetRef="Activity_0bbq0rl" />
     <bpmn:sequenceFlow id="Flow_1xzon4n" sourceRef="Activity_01q5dpz" targetRef="Gateway_0vx8ert" />
     <bpmn:sequenceFlow id="Flow_063e64y" sourceRef="Gateway_0vx8ert" targetRef="Activity_05le46k" />
     <bpmn:sequenceFlow id="Flow_05diu63" sourceRef="Activity_03auxy3" targetRef="Activity_05le46k" />
@@ -535,8 +536,16 @@ Systems/Environment - Discord, Gmail, GSheets</bpmn:documentation>
     <bpmn:sequenceFlow id="Flow_1lspe33" sourceRef="Activity_10zurir" targetRef="Event_0oq9zql" />
     <bpmn:sequenceFlow id="Flow_1l9pdoe" sourceRef="Event_0damvmu" targetRef="Gateway_0fjymjf" />
     <bpmn:endEvent id="Event_1pearld">
-      <bpmn:incoming>Flow_0mbb848</bpmn:incoming>
+      <bpmn:incoming>Flow_00jh774</bpmn:incoming>
     </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_00jh774" sourceRef="Activity_0bbq0rl" targetRef="Event_1pearld" />
+    <bpmn:manualTask id="Activity_0bbq0rl" name="Show Compensation">
+      <bpmn:extensionElements>
+        <spiffworkflow:instructionsForEndUser>Compensation</spiffworkflow:instructionsForEndUser>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0mbb848</bpmn:incoming>
+      <bpmn:outgoing>Flow_00jh774</bpmn:outgoing>
+    </bpmn:manualTask>
     <bpmn:textAnnotation id="TextAnnotation_07j4hsg">
       <bpmn:text>Orgdata from BBHR, Categories from a DB</bpmn:text>
     </bpmn:textAnnotation>
@@ -612,7 +621,10 @@ Systems/Environment - Discord, Gmail, GSheets</bpmn:documentation>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_1pearld_di" bpmnElement="Event_1pearld">
-        <dc:Bounds x="242" y="542" width="36" height="36" />
+        <dc:Bounds x="242" y="672" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1f39w6l_di" bpmnElement="Activity_0bbq0rl">
+        <dc:Bounds x="210" y="520" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0tqt3l5_di" bpmnElement="Activity_1s8cqyx">
         <dc:Bounds x="790" y="410" width="100" height="80" />
@@ -977,7 +989,7 @@ Systems/Environment - Discord, Gmail, GSheets</bpmn:documentation>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_0mbb848_di" bpmnElement="Flow_0mbb848">
         <di:waypoint x="260" y="468" />
-        <di:waypoint x="260" y="542" />
+        <di:waypoint x="260" y="520" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1xzon4n_di" bpmnElement="Flow_1xzon4n">
         <di:waypoint x="440" y="450" />
@@ -1336,6 +1348,10 @@ Systems/Environment - Discord, Gmail, GSheets</bpmn:documentation>
       <bpmndi:BPMNEdge id="Association_0unwjzn_di" bpmnElement="Association_0unwjzn">
         <di:waypoint x="1460" y="410" />
         <di:waypoint x="1460" y="365" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_00jh774_di" bpmnElement="Flow_00jh774">
+        <di:waypoint x="260" y="600" />
+        <di:waypoint x="260" y="672" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="DataInputAssociation_1phyahz_di" bpmnElement="DataInputAssociation_1phyahz">
         <di:waypoint x="670" y="375" />
