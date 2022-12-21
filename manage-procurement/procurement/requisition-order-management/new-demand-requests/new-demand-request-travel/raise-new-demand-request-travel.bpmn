@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" id="Definitions_1" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.6.0" camunda:diagramRelationId="e2ca1956-ba04-4aae-a05b-5712b18fb9da">
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:spiffworkflow="http://spiffworkflow.org/bpmn/schema/1.0/core" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" id="Definitions_1" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.6.0" camunda:diagramRelationId="e2ca1956-ba04-4aae-a05b-5712b18fb9da">
   <bpmn:collaboration id="Collaboration_11kan0p">
     <bpmn:documentation>Name of the process - Raise New Demand Request
 
@@ -63,6 +63,7 @@ Systems/Environment - Spiff, BBHR, StatusApp, GSheets?</bpmn:documentation>
         <bpmn:flowNodeRef>Gateway_1g0fyse</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Gateway_1xs01k4</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_14t9kgu</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_0sanoz6</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_1tozxks" name="Budget Owner">
         <bpmn:flowNodeRef>Gateway_1k61xs7</bpmn:flowNodeRef>
@@ -315,7 +316,7 @@ Systems/Environment - Spiff, BBHR, StatusApp, GSheets?</bpmn:documentation>
       <bpmn:outgoing>Flow_0qjvcfe</bpmn:outgoing>
       <bpmn:timerEventDefinition id="TimerEventDefinition_1m3lmrg" />
     </bpmn:boundaryEvent>
-    <bpmn:sequenceFlow id="Flow_0mbb848" sourceRef="StartEvent_1" targetRef="Event_14t9kgu" />
+    <bpmn:sequenceFlow id="Flow_0mbb848" sourceRef="StartEvent_1" targetRef="Activity_0sanoz6" />
     <bpmn:sequenceFlow id="Flow_0v7se5y" sourceRef="Activity_0rfep3p" targetRef="Gateway_14j5ul9" />
     <bpmn:sequenceFlow id="Flow_17tshyf" sourceRef="Gateway_14j5ul9" targetRef="Activity_05le46k" />
     <bpmn:sequenceFlow id="Flow_02l4yqt" sourceRef="Activity_0yi6n6n" targetRef="Activity_05le46k" />
@@ -363,8 +364,16 @@ Systems/Environment - Spiff, BBHR, StatusApp, GSheets?</bpmn:documentation>
     <bpmn:sequenceFlow id="Flow_13dojnu" sourceRef="Event_1b4cvmw" targetRef="Activity_0r84cpb" />
     <bpmn:sequenceFlow id="Flow_0qjvcfe" sourceRef="Event_05wvlyg" targetRef="Gateway_1d1z27s" />
     <bpmn:endEvent id="Event_14t9kgu">
-      <bpmn:incoming>Flow_0mbb848</bpmn:incoming>
+      <bpmn:incoming>Flow_0bv6plv</bpmn:incoming>
     </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_0bv6plv" sourceRef="Activity_0sanoz6" targetRef="Event_14t9kgu" />
+    <bpmn:manualTask id="Activity_0sanoz6" name="Show Travel">
+      <bpmn:extensionElements>
+        <spiffworkflow:instructionsForEndUser>Travel</spiffworkflow:instructionsForEndUser>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0mbb848</bpmn:incoming>
+      <bpmn:outgoing>Flow_0bv6plv</bpmn:outgoing>
+    </bpmn:manualTask>
     <bpmn:textAnnotation id="TextAnnotation_0ygggal">
       <bpmn:text>Orgdata from BBHR, Categories from a DB, Currencies from Xero</bpmn:text>
     </bpmn:textAnnotation>
@@ -634,7 +643,10 @@ Systems/Environment - Spiff, BBHR, StatusApp, GSheets?</bpmn:documentation>
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_14t9kgu_di" bpmnElement="Event_14t9kgu">
-        <dc:Bounds x="242" y="582" width="36" height="36" />
+        <dc:Bounds x="242" y="742" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0c7imy0_di" bpmnElement="Activity_0sanoz6">
+        <dc:Bounds x="210" y="580" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_1ax7tqn_di" bpmnElement="Event_05wvlyg">
         <dc:Bounds x="2892" y="1722" width="36" height="36" />
@@ -650,7 +662,7 @@ Systems/Environment - Spiff, BBHR, StatusApp, GSheets?</bpmn:documentation>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_0mbb848_di" bpmnElement="Flow_0mbb848">
         <di:waypoint x="260" y="498" />
-        <di:waypoint x="260" y="582" />
+        <di:waypoint x="260" y="580" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0v7se5y_di" bpmnElement="Flow_0v7se5y">
         <di:waypoint x="430" y="480" />
@@ -896,6 +908,10 @@ Systems/Environment - Spiff, BBHR, StatusApp, GSheets?</bpmn:documentation>
       <bpmndi:BPMNEdge id="Association_0smlglp_di" bpmnElement="Association_0smlglp">
         <di:waypoint x="2321" y="1110" />
         <di:waypoint x="2320" y="1080" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0bv6plv_di" bpmnElement="Flow_0bv6plv">
+        <di:waypoint x="260" y="660" />
+        <di:waypoint x="260" y="742" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="DataOutputAssociation_0itfogn_di" bpmnElement="DataOutputAssociation_0itfogn">
         <di:waypoint x="625" y="440" />
