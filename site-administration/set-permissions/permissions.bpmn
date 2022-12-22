@@ -53,15 +53,7 @@ When you select continue, the following permissions will be written to the datab
     <bpmn:scriptTask id="Activity_1jexxm1" name="Set Permissions">
       <bpmn:incoming>Flow_0q5cs4y</bpmn:incoming>
       <bpmn:outgoing>Flow_132k5th</bpmn:outgoing>
-      <bpmn:script># clear_permissions()  ## Clears all groups and permissions from the system. EXCEPT ...
-
-for group in group_info:
-    for user in group['users']:
-        add_user_to_group(user, group['name'])
-    for permission in group['permissions']:
-        for crud_op in permission['actions']:
-            add_permission(crud_op, permission['uri'], group['name'])
-
+      <bpmn:script>refresh_permissions(group_info)
 all_permissions = get_all_permissions()</bpmn:script>
     </bpmn:scriptTask>
     <bpmn:manualTask id="Activity_0ino532" name="Show Actual Permissions">
