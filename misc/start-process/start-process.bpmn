@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_96f6665" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.6.0">
+  <bpmn:process id="SR-Start_Process" name="Shared Resources: Start Process" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>Flow_1u7dtsr</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_1u7dtsr" sourceRef="StartEvent_1" targetRef="Activity_0i59o4c" />
+    <bpmn:scriptTask id="Activity_0i59o4c" name="Get Process Info" scriptFormat="python">
+      <bpmn:documentation>Returns dictionary like:
+  "process_info": {
+    "process_instance_id": 96,
+    "process_model_identifier": "execute-procure-to-pay/cc-invoice-approval-process"
+  },</bpmn:documentation>
+      <bpmn:incoming>Flow_1u7dtsr</bpmn:incoming>
+      <bpmn:outgoing>Flow_1m5aamy</bpmn:outgoing>
+      <bpmn:script># Get Process Info
+process_info = get_process_info()
+
+# Set User Instruction Text
+which_user_task = "invoice-approval"</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:endEvent id="Event_1ghzw9d">
+      <bpmn:incoming>Flow_00fd8n9</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_1m5aamy" sourceRef="Activity_0i59o4c" targetRef="Activity_0yoy91y" />
+    <bpmn:sequenceFlow id="Flow_00fd8n9" sourceRef="Activity_0yoy91y" targetRef="Event_1ghzw9d" />
+    <bpmn:callActivity id="Activity_0yoy91y" name="Call Shared: User Info" calledElement="Shared_User_Info">
+      <bpmn:incoming>Flow_1m5aamy</bpmn:incoming>
+      <bpmn:outgoing>Flow_00fd8n9</bpmn:outgoing>
+    </bpmn:callActivity>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="SR-Start_Process">
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="179" y="99" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1f0swho_di" bpmnElement="Activity_0i59o4c">
+        <dc:Bounds x="270" y="77" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1ghzw9d_di" bpmnElement="Event_1ghzw9d">
+        <dc:Bounds x="632" y="99" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_18fbf94_di" bpmnElement="Activity_0yoy91y">
+        <dc:Bounds x="440" y="77" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_1u7dtsr_di" bpmnElement="Flow_1u7dtsr">
+        <di:waypoint x="215" y="117" />
+        <di:waypoint x="270" y="117" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1m5aamy_di" bpmnElement="Flow_1m5aamy">
+        <di:waypoint x="370" y="117" />
+        <di:waypoint x="440" y="117" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_00fd8n9_di" bpmnElement="Flow_00fd8n9">
+        <di:waypoint x="540" y="117" />
+        <di:waypoint x="632" y="117" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
