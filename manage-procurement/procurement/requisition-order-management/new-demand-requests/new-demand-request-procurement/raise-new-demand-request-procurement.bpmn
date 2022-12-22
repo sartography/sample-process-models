@@ -118,6 +118,7 @@
         <bpmn:flowNodeRef>Activity_1fz0bsz</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_18x1o1c</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_0xklgk1</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_0j02is0</bpmn:flowNodeRef>
       </bpmn:lane>
     </bpmn:laneSet>
     <bpmn:startEvent id="StartEvent_1" name="Purchase need has been identified">
@@ -126,8 +127,8 @@
     </bpmn:startEvent>
     <bpmn:exclusiveGateway id="Gateway_17sf14l">
       <bpmn:incoming>Flow_0l3u381</bpmn:incoming>
-      <bpmn:incoming>Flow_0mbb848</bpmn:incoming>
       <bpmn:incoming>Flow_1a7xig3</bpmn:incoming>
+      <bpmn:incoming>Flow_0d39lby</bpmn:incoming>
       <bpmn:outgoing>Flow_1lfn8yz</bpmn:outgoing>
     </bpmn:exclusiveGateway>
     <bpmn:dataObjectReference id="DataObjectReference_070iy0o" dataObjectRef="New_Demand_Request">
@@ -170,7 +171,7 @@
       <bpmn:incoming>Flow_1c8vykc</bpmn:incoming>
       <bpmn:outgoing>Flow_0xnbnkt</bpmn:outgoing>
     </bpmn:exclusiveGateway>
-    <bpmn:sequenceFlow id="Flow_0mbb848" sourceRef="StartEvent_1" targetRef="Gateway_17sf14l" />
+    <bpmn:sequenceFlow id="Flow_0mbb848" sourceRef="StartEvent_1" targetRef="Activity_0j02is0" />
     <bpmn:sequenceFlow id="Flow_1lfn8yz" sourceRef="Gateway_17sf14l" targetRef="Activity_18a4ocw" />
     <bpmn:sequenceFlow id="Flow_0pp3u64" sourceRef="Submit_Validate_New_Demand_Request-Sub_Process" targetRef="Gateway_078fn3y" />
     <bpmn:sequenceFlow id="Flow_0n4fh0y" name="Yes" sourceRef="Gateway_078fn3y" targetRef="Activity_10nldyr" />
@@ -841,6 +842,11 @@ Please ensure that you have enough budget for the demand, and if needed, submit 
     <bpmn:endEvent id="Event_0xklgk1">
       <bpmn:incoming>Flow_1n2v5zg</bpmn:incoming>
     </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_0d39lby" sourceRef="Activity_0j02is0" targetRef="Gateway_17sf14l" />
+    <bpmn:callActivity id="Activity_0j02is0" name="Call SR: Start Process" calledElement="SR-Start_Process">
+      <bpmn:incoming>Flow_0mbb848</bpmn:incoming>
+      <bpmn:outgoing>Flow_0d39lby</bpmn:outgoing>
+    </bpmn:callActivity>
     <bpmn:textAnnotation id="TextAnnotation_0zy71k9">
       <bpmn:text>Orgdata from BBHR, Categories from a DB, Currencies from Xero</bpmn:text>
     </bpmn:textAnnotation>
@@ -950,8 +956,8 @@ Please ensure that you have enough budget for the demand, and if needed, submit 
       <bpmndi:BPMNShape id="Activity_0vhbxuw_di" bpmnElement="Activity_1itequ5">
         <dc:Bounds x="760" y="400" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_0xklgk1_di" bpmnElement="Event_0xklgk1">
-        <dc:Bounds x="1992" y="572" width="36" height="36" />
+      <bpmndi:BPMNShape id="Activity_05jxd1v_di" bpmnElement="Activity_0j02is0">
+        <dc:Bounds x="350" y="400" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1nyt2o4_di" bpmnElement="Submit_Validate_New_Demand_Request-Sub_Process">
         <dc:Bounds x="1070" y="400" width="100" height="80" />
@@ -1376,6 +1382,9 @@ Please ensure that you have enough budget for the demand, and if needed, submit 
       <bpmndi:BPMNShape id="Activity_1liv0cq_di" bpmnElement="Activity_18x1o1c">
         <dc:Bounds x="910" y="400" width="100" height="80" />
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0xklgk1_di" bpmnElement="Event_0xklgk1">
+        <dc:Bounds x="1992" y="572" width="36" height="36" />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="TextAnnotation_0zy71k9_di" bpmnElement="TextAnnotation_0zy71k9">
         <dc:Bounds x="310" y="180" width="130" height="60" />
         <bpmndi:BPMNLabel />
@@ -1438,7 +1447,7 @@ Please ensure that you have enough budget for the demand, and if needed, submit 
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_0mbb848_di" bpmnElement="Flow_0mbb848">
         <di:waypoint x="278" y="440" />
-        <di:waypoint x="525" y="440" />
+        <di:waypoint x="350" y="440" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1lfn8yz_di" bpmnElement="Flow_1lfn8yz">
         <di:waypoint x="575" y="440" />
@@ -1947,6 +1956,10 @@ Please ensure that you have enough budget for the demand, and if needed, submit 
       <bpmndi:BPMNEdge id="Association_012q0h5_di" bpmnElement="Association_012q0h5">
         <di:waypoint x="2187" y="970" />
         <di:waypoint x="2185" y="940" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0d39lby_di" bpmnElement="Flow_0d39lby">
+        <di:waypoint x="450" y="440" />
+        <di:waypoint x="525" y="440" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="DataOutputAssociation_1yn62s3_di" bpmnElement="DataOutputAssociation_1yn62s3">
         <di:waypoint x="500" y="578" />
