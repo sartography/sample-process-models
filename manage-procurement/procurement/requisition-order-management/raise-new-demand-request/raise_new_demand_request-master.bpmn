@@ -23,33 +23,21 @@
     <bpmn:sequenceFlow id="Flow_0498fqn" sourceRef="Gateway_1m8umui" targetRef="Event_1l2htbr" />
     <bpmn:sequenceFlow id="Flow_0z8y9x8" sourceRef="StartEvent_1" targetRef="Activity_054mhim" />
     <bpmn:sequenceFlow id="Flow_1k3j31g" sourceRef="Activity_1qcx18z" targetRef="Activity_1dhb10w" />
-    <bpmn:exclusiveGateway id="Gateway_19omysq" name="Category?">
-      <bpmn:incoming>Flow_0v2e2ml</bpmn:incoming>
-      <bpmn:outgoing>Flow_1mm6uz2</bpmn:outgoing>
-      <bpmn:outgoing>Flow_0s5jvgp</bpmn:outgoing>
-      <bpmn:outgoing>Flow_08x110e</bpmn:outgoing>
-    </bpmn:exclusiveGateway>
-    <bpmn:callActivity id="Activity_1vs8nu6" name="Raise New Demand Request (Compensation)" calledElement="New_Demand_Request-Compensation">
-      <bpmn:incoming>Flow_08x110e</bpmn:incoming>
-      <bpmn:outgoing>Flow_1etakrx</bpmn:outgoing>
+    <bpmn:sequenceFlow id="Flow_090lxfa" sourceRef="Activity_054mhim" targetRef="Activity_1qcx18z" />
+    <bpmn:callActivity id="Activity_054mhim" name="Call SR: Start Process" calledElement="SR-Start_Process">
+      <bpmn:incoming>Flow_0z8y9x8</bpmn:incoming>
+      <bpmn:outgoing>Flow_090lxfa</bpmn:outgoing>
     </bpmn:callActivity>
-    <bpmn:callActivity id="Activity_1ew2127" name="Raise New Demand Request (Procurement)" calledElement="New_Demand_Request-Procurement">
-      <bpmn:incoming>Flow_1mm6uz2</bpmn:incoming>
-      <bpmn:outgoing>Flow_1n2v07t</bpmn:outgoing>
-    </bpmn:callActivity>
-    <bpmn:callActivity id="Activity_0uj2dxm" name="Raise New Demand Request (Travel)" calledElement="New_Demand_Request-Travel">
-      <bpmn:incoming>Flow_0s5jvgp</bpmn:incoming>
-      <bpmn:outgoing>Flow_1cxxkmt</bpmn:outgoing>
-    </bpmn:callActivity>
-    <bpmn:endEvent id="Event_1l2htbr">
-      <bpmn:incoming>Flow_0498fqn</bpmn:incoming>
-    </bpmn:endEvent>
-    <bpmn:exclusiveGateway id="Gateway_1m8umui">
-      <bpmn:incoming>Flow_1etakrx</bpmn:incoming>
-      <bpmn:incoming>Flow_1n2v07t</bpmn:incoming>
-      <bpmn:incoming>Flow_1cxxkmt</bpmn:incoming>
-      <bpmn:outgoing>Flow_0498fqn</bpmn:outgoing>
-    </bpmn:exclusiveGateway>
+    <bpmn:userTask id="Activity_1dhb10w" name="Select Category">
+      <bpmn:extensionElements>
+        <spiffworkflow:properties>
+          <spiffworkflow:property name="formJsonSchemaFilename" value="select-category-schema.json" />
+          <spiffworkflow:property name="formUiSchemaFilename" value="select-category-uischema.json" />
+        </spiffworkflow:properties>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1k3j31g</bpmn:incoming>
+      <bpmn:outgoing>Flow_0v2e2ml</bpmn:outgoing>
+    </bpmn:userTask>
     <bpmn:scriptTask id="Activity_1qcx18z" name="Set Categories">
       <bpmn:incoming>Flow_090lxfa</bpmn:incoming>
       <bpmn:outgoing>Flow_1k3j31g</bpmn:outgoing>
@@ -70,21 +58,33 @@ which_categories_list = [
     }
 ]</bpmn:script>
     </bpmn:scriptTask>
-    <bpmn:userTask id="Activity_1dhb10w" name="Select Category">
-      <bpmn:extensionElements>
-        <spiffworkflow:properties>
-          <spiffworkflow:property name="formJsonSchemaFilename" value="select-category-schema.json" />
-          <spiffworkflow:property name="formUiSchemaFilename" value="select-category-uischema.json" />
-        </spiffworkflow:properties>
-      </bpmn:extensionElements>
-      <bpmn:incoming>Flow_1k3j31g</bpmn:incoming>
-      <bpmn:outgoing>Flow_0v2e2ml</bpmn:outgoing>
-    </bpmn:userTask>
-    <bpmn:sequenceFlow id="Flow_090lxfa" sourceRef="Activity_054mhim" targetRef="Activity_1qcx18z" />
-    <bpmn:callActivity id="Activity_054mhim" name="Call SR: Start Process" calledElement="SR-Start_Process">
-      <bpmn:incoming>Flow_0z8y9x8</bpmn:incoming>
-      <bpmn:outgoing>Flow_090lxfa</bpmn:outgoing>
+    <bpmn:exclusiveGateway id="Gateway_1m8umui">
+      <bpmn:incoming>Flow_1etakrx</bpmn:incoming>
+      <bpmn:incoming>Flow_1n2v07t</bpmn:incoming>
+      <bpmn:incoming>Flow_1cxxkmt</bpmn:incoming>
+      <bpmn:outgoing>Flow_0498fqn</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:endEvent id="Event_1l2htbr">
+      <bpmn:incoming>Flow_0498fqn</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:callActivity id="Activity_0uj2dxm" name="Raise New Demand Request (Travel)" calledElement="New_Demand_Request-Travel">
+      <bpmn:incoming>Flow_0s5jvgp</bpmn:incoming>
+      <bpmn:outgoing>Flow_1cxxkmt</bpmn:outgoing>
     </bpmn:callActivity>
+    <bpmn:callActivity id="Activity_1ew2127" name="Raise New Demand Request (Procurement)" calledElement="New_Demand_Request-Procurement">
+      <bpmn:incoming>Flow_1mm6uz2</bpmn:incoming>
+      <bpmn:outgoing>Flow_1n2v07t</bpmn:outgoing>
+    </bpmn:callActivity>
+    <bpmn:callActivity id="Activity_1vs8nu6" name="Raise New Demand Request (Compensation)" calledElement="New_Demand_Request-Compensation">
+      <bpmn:incoming>Flow_08x110e</bpmn:incoming>
+      <bpmn:outgoing>Flow_1etakrx</bpmn:outgoing>
+    </bpmn:callActivity>
+    <bpmn:exclusiveGateway id="Gateway_19omysq" name="Category?">
+      <bpmn:incoming>Flow_0v2e2ml</bpmn:incoming>
+      <bpmn:outgoing>Flow_1mm6uz2</bpmn:outgoing>
+      <bpmn:outgoing>Flow_0s5jvgp</bpmn:outgoing>
+      <bpmn:outgoing>Flow_08x110e</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_1bu6kw8">
