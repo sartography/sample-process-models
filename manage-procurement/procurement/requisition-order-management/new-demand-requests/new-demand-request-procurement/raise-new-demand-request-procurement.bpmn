@@ -173,7 +173,9 @@
     <bpmn:sequenceFlow id="Flow_1lfn8yz" sourceRef="Gateway_17sf14l" targetRef="Activity_1d0b6bl" />
     <bpmn:sequenceFlow id="Flow_0pp3u64" sourceRef="Activity_1d0b6bl" targetRef="Gateway_078fn3y" />
     <bpmn:sequenceFlow id="Flow_0n4fh0y" name="Yes" sourceRef="Gateway_078fn3y" targetRef="Activity_10nldyr" />
-    <bpmn:sequenceFlow id="Flow_1spwsg1" name="No" sourceRef="Gateway_078fn3y" targetRef="Activity_1fz0bsz" />
+    <bpmn:sequenceFlow id="Flow_1spwsg1" name="No" sourceRef="Gateway_078fn3y" targetRef="Activity_1fz0bsz">
+      <bpmn:conditionExpression>not(isReview)</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="Flow_0l3u381" name="No" sourceRef="Gateway_1btvqy5" targetRef="Gateway_17sf14l">
       <bpmn:conditionExpression>not(isProceed)</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
@@ -322,15 +324,14 @@
         <bpmn:incoming>Flow_045xngq</bpmn:incoming>
         <bpmn:outgoing>Flow_1fd34jl</bpmn:outgoing>
       </bpmn:scriptTask>
-      <bpmn:sequenceFlow id="Flow_12euec4" sourceRef="Activity_0mrmux3" targetRef="Activity_1hnknc2" />
       <bpmn:businessRuleTask id="Activity_0mrmux3" name="Check Validation Rules">
         <bpmn:incoming>Flow_1fd34jl</bpmn:incoming>
-        <bpmn:outgoing>Flow_12euec4</bpmn:outgoing>
       </bpmn:businessRuleTask>
       <bpmn:sequenceFlow id="Flow_0t362kd" sourceRef="Activity_1hnknc2" targetRef="Event_1q26y2e" />
       <bpmn:scriptTask id="Activity_1hnknc2" name="Set the Validation result">
-        <bpmn:incoming>Flow_12euec4</bpmn:incoming>
+        <bpmn:incoming>Flow_07gw03w</bpmn:incoming>
         <bpmn:outgoing>Flow_0t362kd</bpmn:outgoing>
+        <bpmn:script>isReview = True</bpmn:script>
       </bpmn:scriptTask>
       <bpmn:userTask id="Activity_0f441lx" name="Submit a New Demand request">
         <bpmn:documentation>**Figma - New Demand request (Procurement) - SUBMIT**, https://www.figma.com/file/9NP2BUoLuwHUCGStvDMgOw/Form?node-id=0%3A1&amp;t=BABeo58RkNviJr4N-0
@@ -343,13 +344,10 @@
           </spiffworkflow:properties>
         </bpmn:extensionElements>
         <bpmn:incoming>Flow_0xxd19p</bpmn:incoming>
-        <bpmn:outgoing>Flow_04z22c8</bpmn:outgoing>
+        <bpmn:outgoing>Flow_07gw03w</bpmn:outgoing>
       </bpmn:userTask>
-      <bpmn:sequenceFlow id="Flow_04z22c8" sourceRef="Activity_0f441lx" targetRef="Event_1x2pig9" />
       <bpmn:sequenceFlow id="Flow_1oy9au5" sourceRef="Activity_1htntsw" targetRef="Gateway_1850i43" />
-      <bpmn:endEvent id="Event_1x2pig9">
-        <bpmn:incoming>Flow_04z22c8</bpmn:incoming>
-      </bpmn:endEvent>
+      <bpmn:sequenceFlow id="Flow_07gw03w" sourceRef="Activity_0f441lx" targetRef="Activity_1hnknc2" />
       <bpmn:textAnnotation id="TextAnnotation_00ra9ov">
         <bpmn:text>For every item</bpmn:text>
       </bpmn:textAnnotation>
@@ -2029,9 +2027,6 @@ Please ensure that you have enough budget for the demand, and if needed, submit 
         <dc:Bounds x="-150" y="220" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_1x2pig9_di" bpmnElement="Event_1x2pig9">
-        <dc:Bounds x="162" y="242" width="36" height="36" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="TextAnnotation_00ra9ov_di" bpmnElement="TextAnnotation_00ra9ov">
         <dc:Bounds x="280" y="160" width="100" height="30" />
         <bpmndi:BPMNLabel />
@@ -2090,17 +2085,9 @@ Please ensure that you have enough budget for the demand, and if needed, submit 
         <di:waypoint x="1200" y="260" />
         <di:waypoint x="1260" y="260" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_12euec4_di" bpmnElement="Flow_12euec4">
-        <di:waypoint x="1360" y="260" />
-        <di:waypoint x="1410" y="260" />
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0t362kd_di" bpmnElement="Flow_0t362kd">
         <di:waypoint x="1510" y="260" />
         <di:waypoint x="1552" y="260" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_04z22c8_di" bpmnElement="Flow_04z22c8">
-        <di:waypoint x="-50" y="260" />
-        <di:waypoint x="162" y="260" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1oy9au5_di" bpmnElement="Flow_1oy9au5">
         <di:waypoint x="510" y="260" />
@@ -2125,6 +2112,12 @@ Please ensure that you have enough budget for the demand, and if needed, submit 
       <bpmndi:BPMNEdge id="Association_1ye3e63_di" bpmnElement="Association_1ye3e63">
         <di:waypoint x="1150" y="220" />
         <di:waypoint x="1150" y="175" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_07gw03w_di" bpmnElement="Flow_07gw03w">
+        <di:waypoint x="-100" y="220" />
+        <di:waypoint x="-100" y="80" />
+        <di:waypoint x="1460" y="80" />
+        <di:waypoint x="1460" y="220" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
