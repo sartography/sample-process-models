@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:spiffworkflow="http://spiffworkflow.org/bpmn/schema/1.0/core" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" id="Definitions_1" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.6.0" camunda:diagramRelationId="90585b47-c41e-4414-8a35-65e0247fd456">
+  <bpmn:process id="RNDR-Define_Approval_Strategy" name="RNDR: Define Approval Strategy" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1" name="Input for Approval strategy has been gathered">
+      <bpmn:outgoing>Flow_0zfse3j</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:serviceTask id="Activity_1ux86r6" name="Get Team/Project_Lead Info">
+      <bpmn:extensionElements>
+        <spiffworkflow:serviceTaskOperator id="bamboohr/GetEmployeeInfo">
+          <spiffworkflow:parameters>
+            <spiffworkflow:parameter id="employee_id" type="str" value="111" />
+            <spiffworkflow:parameter id="fields" type="str" value="&#39;supervisorEmail,supervisorId,supervisorEid&#39;" />
+          </spiffworkflow:parameters>
+        </spiffworkflow:serviceTaskOperator>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0zfse3j</bpmn:incoming>
+      <bpmn:outgoing>Flow_093kc2f</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:endEvent id="Event_1aday4x" name="Approval strategy has been defined">
+      <bpmn:incoming>Flow_1v3yxjj</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_0zfse3j" sourceRef="StartEvent_1" targetRef="Activity_1ux86r6" />
+    <bpmn:sequenceFlow id="Flow_093kc2f" sourceRef="Activity_1ux86r6" targetRef="Activity_0qkcxjo" />
+    <bpmn:businessRuleTask id="Activity_0qkcxjo" name="Identify SMEs list">
+      <bpmn:extensionElements>
+        <spiffworkflow:calledDecisionId>RNDR-SME_List</spiffworkflow:calledDecisionId>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_093kc2f</bpmn:incoming>
+      <bpmn:outgoing>Flow_1v3yxjj</bpmn:outgoing>
+    </bpmn:businessRuleTask>
+    <bpmn:sequenceFlow id="Flow_1v3yxjj" sourceRef="Activity_0qkcxjo" targetRef="Event_1aday4x" />
+    <bpmn:textAnnotation id="TextAnnotation_1hsid93">
+      <bpmn:text>BBHR</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:association id="Association_0sekykw" sourceRef="Activity_1ux86r6" targetRef="TextAnnotation_1hsid93" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="RNDR-Define_Approval_Strategy">
+      <bpmndi:BPMNShape id="BPMNShape_0j8unwd" bpmnElement="StartEvent_1">
+        <dc:Bounds x="182" y="162" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="156" y="205" width="88" height="40" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_1p7ixj1" bpmnElement="Activity_1ux86r6">
+        <dc:Bounds x="290" y="140" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_183roy9" bpmnElement="Event_1aday4x">
+        <dc:Bounds x="622" y="162" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="598" y="205" width="86" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_13zacf3_di" bpmnElement="Activity_0qkcxjo">
+        <dc:Bounds x="460" y="140" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_0g7sm2j" bpmnElement="TextAnnotation_1hsid93">
+        <dc:Bounds x="290" y="80" width="100" height="30" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="BPMNEdge_08ukdn9" bpmnElement="Flow_0zfse3j">
+        <di:waypoint x="218" y="180" />
+        <di:waypoint x="290" y="180" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_1b03gbf" bpmnElement="Flow_093kc2f">
+        <di:waypoint x="390" y="180" />
+        <di:waypoint x="460" y="180" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1v3yxjj_di" bpmnElement="Flow_1v3yxjj">
+        <di:waypoint x="560" y="180" />
+        <di:waypoint x="622" y="180" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_18ob2wk" bpmnElement="Association_0sekykw">
+        <di:waypoint x="340" y="140" />
+        <di:waypoint x="340" y="110" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
