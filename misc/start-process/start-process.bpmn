@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_96f6665" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.6.0">
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:spiffworkflow="http://spiffworkflow.org/bpmn/schema/1.0/core" id="Definitions_96f6665" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.6.0">
   <bpmn:process id="SR-Start_Process" name="Shared Resources: Start Process" isExecutable="true">
     <bpmn:startEvent id="StartEvent_1">
       <bpmn:outgoing>Flow_1u7dtsr</bpmn:outgoing>
@@ -25,6 +25,9 @@ which_user_task = "invoice-approval"</bpmn:script>
     <bpmn:sequenceFlow id="Flow_1m5aamy" sourceRef="Activity_0i59o4c" targetRef="Activity_0yoy91y" />
     <bpmn:sequenceFlow id="Flow_00fd8n9" sourceRef="Activity_0yoy91y" targetRef="Event_1ghzw9d" />
     <bpmn:callActivity id="Activity_0yoy91y" name="Call Shared: User Info" calledElement="Shared_User_Info">
+      <bpmn:extensionElements>
+        <spiffworkflow:preScript>find_user = current_user["user_name"]</spiffworkflow:preScript>
+      </bpmn:extensionElements>
       <bpmn:incoming>Flow_1m5aamy</bpmn:incoming>
       <bpmn:outgoing>Flow_00fd8n9</bpmn:outgoing>
     </bpmn:callActivity>
