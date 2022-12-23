@@ -11,7 +11,7 @@
       <output id="output_1" name="permissions" typeRef="string" biodi:width="279" />
       <output id="OutputClause_1d0f70s" name="permission_uris" typeRef="string" biodi:width="254" />
       <rule id="DecisionRule_13uhk78">
-        <description>Admins have access to everything.</description>
+        <description>admin group has access to everything. The permissions create, read, update, and delete are the full set that is available, and "all" is a shortcut to include all permissions.</description>
         <inputEntry id="UnaryTests_1yb5tu4">
           <text></text>
         </inputEntry>
@@ -26,35 +26,53 @@
 </text>
         </outputEntry>
       </rule>
+      <rule id="DecisionRule_0vxd5xq">
+        <description>everybody group has basic access to the system.</description>
+        <inputEntry id="UnaryTests_18ra8iv">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_09upqcm">
+          <text>"everybody"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_0qu6sf0">
+          <text>["all"]</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_0mnqz8y">
+          <text>"BASIC"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0y6tpc1">
+        <description>everybody group can read all process groups and process models.</description>
+        <inputEntry id="UnaryTests_0idup89">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0jn02bx">
+          <text>"everybody"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_0qw2qs5">
+          <text>["read"]</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1671tcs">
+          <text>"PG:ALL"</text>
+        </outputEntry>
+      </rule>
       <rule id="DecisionRule_1ush1di">
+        <description>test group can read and even update task data for process instances within the test process group. If a permission_uri begins with a forward slash, this grants access to an API path directly. These can include asterisk wildcards at the end.</description>
         <inputEntry id="UnaryTests_0ajhuce">
           <text></text>
         </inputEntry>
         <outputEntry id="LiteralExpression_0w3207v">
-          <text>"education"</text>
+          <text>"test"</text>
         </outputEntry>
         <outputEntry id="LiteralExpression_0mhnzp3">
-          <text>["create", "read", "update", "delete"]</text>
+          <text>["read", "update"]</text>
         </outputEntry>
         <outputEntry id="LiteralExpression_0t37e9p">
-          <text>"/process-groups/education:*"</text>
-        </outputEntry>
-      </rule>
-      <rule id="DecisionRule_0kcffrp">
-        <inputEntry id="UnaryTests_10ga6h2">
-          <text></text>
-        </inputEntry>
-        <outputEntry id="LiteralExpression_0ujmqk1">
-          <text>"organization"</text>
-        </outputEntry>
-        <outputEntry id="LiteralExpression_09f42eh">
-          <text>["create", "read", "update", "delete"]</text>
-        </outputEntry>
-        <outputEntry id="LiteralExpression_0edy3e8">
-          <text>"/process-groups/education:*"</text>
+          <text>"/task-data/misc:test*"</text>
         </outputEntry>
       </rule>
       <rule id="DecisionRule_15ava6l">
+        <description>Finance Team group has full access to the procurement process group, including authoring child process groups and process models and administering its process instances.</description>
         <inputEntry id="UnaryTests_1d8q18o">
           <text></text>
         </inputEntry>
@@ -69,6 +87,7 @@
         </outputEntry>
       </rule>
       <rule id="DecisionRule_1ev5071">
+        <description>demo group can start the customer-contracts-trade-terms process model.</description>
         <inputEntry id="UnaryTests_0rmdeuf">
           <text></text>
         </inputEntry>
@@ -83,6 +102,7 @@
         </outputEntry>
       </rule>
       <rule id="DecisionRule_16waes0">
+        <description>demo group can start all process models under the core-contributor-invoice-management process group.</description>
         <inputEntry id="UnaryTests_1si0twd">
           <text></text>
         </inputEntry>
@@ -97,6 +117,7 @@
         </outputEntry>
       </rule>
       <rule id="DecisionRule_0ps58js">
+        <description>demo group can start all process models under the vendor-lifecycle-management process group.</description>
         <inputEntry id="UnaryTests_0mmu39q">
           <text></text>
         </inputEntry>
@@ -111,6 +132,7 @@
         </outputEntry>
       </rule>
       <rule id="DecisionRule_04wbkm7">
+        <description>test group can start all process models under the test process group.</description>
         <inputEntry id="UnaryTests_0rbr6bh">
           <text></text>
         </inputEntry>
@@ -122,34 +144,6 @@
         </outputEntry>
         <outputEntry id="LiteralExpression_1uyihda">
           <text>"PG:misc:test"</text>
-        </outputEntry>
-      </rule>
-      <rule id="DecisionRule_0y6tpc1">
-        <inputEntry id="UnaryTests_0idup89">
-          <text></text>
-        </inputEntry>
-        <outputEntry id="LiteralExpression_0jn02bx">
-          <text>"everybody"</text>
-        </outputEntry>
-        <outputEntry id="LiteralExpression_0qw2qs5">
-          <text>["read"]</text>
-        </outputEntry>
-        <outputEntry id="LiteralExpression_1671tcs">
-          <text>"PG:ALL"</text>
-        </outputEntry>
-      </rule>
-      <rule id="DecisionRule_0vxd5xq">
-        <inputEntry id="UnaryTests_18ra8iv">
-          <text></text>
-        </inputEntry>
-        <outputEntry id="LiteralExpression_09upqcm">
-          <text>"everybody"</text>
-        </outputEntry>
-        <outputEntry id="LiteralExpression_0qu6sf0">
-          <text>["all"]</text>
-        </outputEntry>
-        <outputEntry id="LiteralExpression_0mnqz8y">
-          <text>"BASIC"</text>
         </outputEntry>
       </rule>
     </decisionTable>
