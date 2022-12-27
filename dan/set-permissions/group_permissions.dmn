@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/" xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/" xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/" xmlns:biodi="http://bpmn.io/schema/dmn/biodi/2.0" id="Definitions_76910d7" name="DRD" namespace="http://camunda.org/schema/1.0/dmn">
+  <decision id="groups_to_permissions" name="Groups to Permissions">
+    <decisionTable id="decisionTable_1" hitPolicy="COLLECT">
+      <input id="input_1" biodi:width="150">
+        <inputExpression id="inputExpression_1" typeRef="string">
+          <text>"*"</text>
+        </inputExpression>
+      </input>
+      <output id="OutputClause_14rq1xp" name="permission_groups" typeRef="string" />
+      <output id="output_1" name="permissions" typeRef="string" biodi:width="279" />
+      <output id="OutputClause_1d0f70s" name="permission_uris" typeRef="string" biodi:width="254" />
+      <rule id="DecisionRule_13uhk78">
+        <description>Admins have access to everything.</description>
+        <inputEntry id="UnaryTests_1yb5tu4">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_00aw971">
+          <text>"admin"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1drtsn8">
+          <text>["all"]</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_13n9min">
+          <text>"ALL"
+</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1ush1di">
+        <inputEntry id="UnaryTests_0ajhuce">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0w3207v">
+          <text>"education"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_0mhnzp3">
+          <text>["create", "read", "update", "delete"]</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_0t37e9p">
+          <text>"/process-groups/education:*"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0kcffrp">
+        <inputEntry id="UnaryTests_10ga6h2">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0ujmqk1">
+          <text>"organization"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_09f42eh">
+          <text>["create", "read", "update", "delete"]</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_0edy3e8">
+          <text>"/process-groups/education:*"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_15ava6l">
+        <inputEntry id="UnaryTests_1d8q18o">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_143ih01">
+          <text>"Finance Team"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_0aaakd4">
+          <text>["all"]</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_031h3bx">
+          <text>"PG:manage-procurement:procurement"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1ev5071">
+        <inputEntry id="UnaryTests_0rmdeuf">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1db9u0f">
+          <text>"demo"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1tf5fq7">
+          <text>["start"]</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_19v58sy">
+          <text>"PM:manage-revenue-streams:product-revenue-streams:customer-contracts-trade-terms"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_16waes0">
+        <inputEntry id="UnaryTests_1si0twd">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_03bfkxs">
+          <text>"demo"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_0a2vmfc">
+          <text>["start"]</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1hiq5xs">
+          <text>"PG:manage-procurement:procurement:core-contributor-invoice-management"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0ps58js">
+        <inputEntry id="UnaryTests_0mmu39q">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1j2pibl">
+          <text>"demo"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_0f635r8">
+          <text>["start"]</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_18qbym6">
+          <text>"PG:manage-procurement:vendor-lifecycle-management"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_04wbkm7">
+        <inputEntry id="UnaryTests_0rbr6bh">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1ubfxe8">
+          <text>"test"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1f0vzm8">
+          <text>["start"]</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1uyihda">
+          <text>"PG:misc:test"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0y6tpc1">
+        <inputEntry id="UnaryTests_0idup89">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0jn02bx">
+          <text>"everybody"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_0qw2qs5">
+          <text>["read"]</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1671tcs">
+          <text>"PG:ALL"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0vxd5xq">
+        <inputEntry id="UnaryTests_18ra8iv">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_09upqcm">
+          <text>"everybody"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_0qu6sf0">
+          <text>["all"]</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_0mnqz8y">
+          <text>"BASIC"</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <dmndi:DMNDI>
+    <dmndi:DMNDiagram id="DMNDiagram_1cykosu">
+      <dmndi:DMNShape id="DMNShape_1dhfq2s" dmnElementRef="groups_to_permissions">
+        <dc:Bounds height="80" width="180" x="157" y="151" />
+      </dmndi:DMNShape>
+    </dmndi:DMNDiagram>
+  </dmndi:DMNDI>
+</definitions>

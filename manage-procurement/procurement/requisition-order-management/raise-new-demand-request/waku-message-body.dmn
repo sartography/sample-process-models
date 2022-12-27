@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/" xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/" xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/" xmlns:biodi="http://bpmn.io/schema/dmn/biodi/2.0" id="Definitions-Raise_New_Demand_Request" name="DRD" namespace="http://camunda.org/schema/1.0/dmn" exporter="Camunda Modeler" exporterVersion="5.6.0">
+  <decision id="Waku_Message_Body-Raise_New_Demand_Request" name="Waku Message Body - Raise New Demand Request">
+    <decisionTable id="decisionTable_1">
+      <input id="InputClause_1cqeh6g" label="Task Id" biodi:width="347">
+        <inputExpression id="LiteralExpression_0ioto2j" typeRef="string">
+          <text>task_id</text>
+        </inputExpression>
+      </input>
+      <output id="output_1" label="Message Body" name="waku_message_body" typeRef="string" biodi:width="819" />
+      <rule id="DecisionRule_05kyeu8">
+        <inputEntry id="UnaryTests_1w8fhi9">
+          <text>"waku_request_ppg_review"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1h5ezs8">
+          <text>"Hi &lt;PPG name&gt;, A new demand request &lt;process instance id&gt; &lt;date&gt; has been submitted for your review. You can find all the details about this New Demand Request by clicking on the link below. Please go through the new demand request form and confirm your review.."</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1tbh4zu">
+        <inputEntry id="UnaryTests_09sdx7c">
+          <text>"waku_notify_peopleops_talent_team"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1v5nnup">
+          <text>"Hi PeopleOps Talent team, A new demand request &lt;process instance id&gt; &lt;date&gt; for a new role has been approved. You can start working on the Job description with the Hiring manager &lt;Hiring manager&gt;. You can find all the details about this New Demand Request by clicking on the link below. Please go through the new demand request form and submit the Job description."</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1f99vwz">
+        <inputEntry id="UnaryTests_1m5ktce">
+          <text>"waku_notify_peopleops_partner_team"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1yus5ql">
+          <text>"Hi PeopleOps Partner, A new demand request &lt;process instance id&gt; &lt;date&gt; for a new role has been approved. You can find all the details about this New Demand Request by clicking on the link below. Please go through the new demand request form and submit the role's Level, Function, and Compensation rates."</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1o253qj">
+        <inputEntry id="UnaryTests_1w1fy1f">
+          <text>"waku_notify_finance_team"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0l1e3xh">
+          <text>"Hi Finance team, A new demand request &lt;process instance id&gt; &lt;date&gt; for a new role has been approved. You can find all the details about this New Demand Request by clicking on the link below. Please go through the new demand request form and confirm budget adjustments."</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_12npkto">
+        <inputEntry id="UnaryTests_01elx40">
+          <text>"waku_notify_peopleops_talent_team_publish_role"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_057w88m">
+          <text>"Hi PeopleOps Talent team, A new demand request &lt;process instance id&gt; &lt;date&gt; for a new role is ready for publishing. You can find all the details about this New Demand Request by clicking on the link below."</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1fsmo6y">
+        <inputEntry id="UnaryTests_0br4fie">
+          <text>"waku_request_approval"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_19448fp">
+          <text>"Hi &lt;budget owner name&gt;, A new demand request &lt;process instance id&gt; &lt;date&gt; has been submitted for your approval. You can find all the details about this New Demand Request by clicking on the link below. Please go through the new demand request form and confirm your approval."]</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1955f0y">
+        <inputEntry id="UnaryTests_1ll25at">
+          <text>"waku_additional_info_required"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_04zz3q5">
+          <text>"Hi " + current_user_extras["first_name"] + "Additional info ref new demand request &lt;process instance id&gt; &lt;date&gt; has been requested. You can find all the details about this New Demand Request by clicking on the link below. Please go through the new demand request form and submit the requested info."</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1sqor96">
+        <inputEntry id="UnaryTests_0kn31ob">
+          <text>"waku_request_rejected"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0y4rab0">
+          <text>"Hi " + current_user_extras["first_name"] + ", a new demand request &lt;process instance id&gt; &lt;date&gt; has been rejected. You can find all the details about this New Demand Request by clicking on the link below.."</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0zxv93p">
+        <inputEntry id="UnaryTests_0j8l83a">
+          <text>"waku_request_approved"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0pqtgnn">
+          <text>"Hi " + current_user_extras["first_name"] + "A new demand request &lt;process instance id&gt; &lt;date&gt; has been approved. You can find all the details about this New Demand Request by clicking on the link below.
+
+Please check with the Legal team if the contract negotiation stage needs to be initiated."</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0zyca5k">
+        <inputEntry id="UnaryTests_0ltfnfa">
+          <text>"waku_request_sme_review"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1kpxlhd">
+          <text>"A new demand request &lt;process instance id&gt; &lt;date&gt; has been submitted for your review. You can find all the details about this New Demand Request by clicking on the link below. Please go through the new demand request form and confirm your review."</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_06a0nz0">
+        <inputEntry id="UnaryTests_1a9kee1">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1qrzv1j">
+          <text>"Something is wrong with the Message Body text-2.  Contact Support"</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <dmndi:DMNDI>
+    <dmndi:DMNDiagram id="DMNDiagram_1cykosu">
+      <dmndi:DMNShape id="DMNShape_1dhfq2s" dmnElementRef="Waku_Message_Body-Raise_New_Demand_Request">
+        <dc:Bounds height="80" width="180" x="157" y="81" />
+      </dmndi:DMNShape>
+    </dmndi:DMNDiagram>
+  </dmndi:DMNDI>
+</definitions>

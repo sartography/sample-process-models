@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_96f6665" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.0.0-dev">
+  <bpmn:process id="Shared_Local_Date_Time" name="Shared: Local Date and Time" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>Flow_1al74ve</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_1al74ve" sourceRef="StartEvent_1" targetRef="Activity_Get_Local_Date_Time" />
+    <bpmn:scriptTask id="Activity_Get_Local_Date_Time" name="Get Local Date and Time" scriptFormat="python">
+      <bpmn:incoming>Flow_1al74ve</bpmn:incoming>
+      <bpmn:outgoing>Flow_1u0p2sw</bpmn:outgoing>
+      <bpmn:script>try:
+  is_format
+except NameError:
+  is_format = False
+
+try:
+  time_zone
+except NameError:
+  time_zone = "US/Eastern"
+
+try:
+  date_format
+except NameError:
+  date_format = "YMD"
+
+try:
+  time_format
+except NameError:
+  if is_format:
+    time_format = "24"
+  else:
+    time_format = "12"
+
+try:
+  is_waku_message_timestamp
+except NameError:
+  is_waku_message_timestamp = False
+
+utc_date_time_obj = datetime.utcnow()
+local_date_time_obj = get_localtime(utc_date_time_obj, time_zone)
+
+if date_format == "YMD":
+  local_date_str = local_date_time_obj.strftime('%Y-%m-%d')
+elif date_format == "MDY":
+  local_date_str = local_date_time_obj.strftime('%m-%d-%Y')
+else:
+  local_date_str = local_date_time_obj.strftime('%d-%m-%Y')
+
+# Set local time
+if time_format == "24":
+  local_time_str = local_date_time_obj.strftime('%H:%M')
+else:
+  local_time_str = local_date_time_obj.strftime('%I:%M %p')
+
+
+del(utc_date_time_obj)
+del(local_date_time_obj)</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:endEvent id="Event_1d6y8yr">
+      <bpmn:incoming>Flow_1u0p2sw</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_1u0p2sw" sourceRef="Activity_Get_Local_Date_Time" targetRef="Event_1d6y8yr" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Shared_Local_Date_Time">
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="179" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0pqfgjq_di" bpmnElement="Activity_Get_Local_Date_Time">
+        <dc:Bounds x="270" y="137" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1d6y8yr_di" bpmnElement="Event_1d6y8yr">
+        <dc:Bounds x="452" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_1al74ve_di" bpmnElement="Flow_1al74ve">
+        <di:waypoint x="215" y="177" />
+        <di:waypoint x="270" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1u0p2sw_di" bpmnElement="Flow_1u0p2sw">
+        <di:waypoint x="370" y="177" />
+        <di:waypoint x="452" y="177" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

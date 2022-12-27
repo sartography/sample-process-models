@@ -1,0 +1,279 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:spiffworkflow="http://spiffworkflow.org/bpmn/schema/1.0/core" id="Definitions_96f6665" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.0.0-dev">
+  <bpmn:process id="set_permissions_process" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>Flow_04t49zv</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_04t49zv" sourceRef="StartEvent_1" targetRef="Activity_0fqwhd1" />
+    <bpmn:sequenceFlow id="Flow_0q5cs4y" sourceRef="Activity_0pdrn26" targetRef="Activity_1jexxm1" />
+    <bpmn:businessRuleTask id="Activity_0fqwhd1" name="Determine Users Group">
+      <bpmn:extensionElements>
+        <spiffworkflow:calledDecisionId>users_to_groups_table</spiffworkflow:calledDecisionId>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_04t49zv</bpmn:incoming>
+      <bpmn:outgoing>Flow_194nkr6</bpmn:outgoing>
+    </bpmn:businessRuleTask>
+    <bpmn:businessRuleTask id="Activity_0iom85m" name="Determine Permissions">
+      <bpmn:extensionElements>
+        <spiffworkflow:calledDecisionId>groups_to_permissions_table</spiffworkflow:calledDecisionId>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_194nkr6</bpmn:incoming>
+      <bpmn:outgoing>Flow_0fhzucf</bpmn:outgoing>
+    </bpmn:businessRuleTask>
+    <bpmn:manualTask id="Activity_0pdrn26" name="Display Proposed Permissions">
+      <bpmn:extensionElements>
+        <spiffworkflow:instructionsForEndUser># Permission for each group
+When you select continue, the following permissions will be written to the database.
+
+{% for group in group_info %}
+
+---
+
+## Group: {{group['name']}}
+**Users in Group:**
+{% for user in group['users'] %}
+  * {{ user }}
+{% endfor %}
+
+**Permissions:** 
+| Path | Allowed Actions |
+| ---------------| -------|
+{% for permission in group['permissions'] %}
+| {{permission['uri']}} | {{ permission['actions'] |join(', ') }} |
+{% endfor %}
+{% endfor %}
+
+</spiffworkflow:instructionsForEndUser>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0f4klqg</bpmn:incoming>
+      <bpmn:outgoing>Flow_0q5cs4y</bpmn:outgoing>
+    </bpmn:manualTask>
+    <bpmn:sequenceFlow id="Flow_194nkr6" sourceRef="Activity_0fqwhd1" targetRef="Activity_0iom85m" />
+    <bpmn:sequenceFlow id="Flow_132k5th" sourceRef="Activity_1jexxm1" targetRef="Activity_0ino532" />
+    <bpmn:scriptTask id="Activity_1jexxm1" name="Set Permissions">
+      <bpmn:incoming>Flow_0q5cs4y</bpmn:incoming>
+      <bpmn:outgoing>Flow_132k5th</bpmn:outgoing>
+      <bpmn:script>refresh_permissions(group_info)
+all_permissions = get_all_permissions()</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:manualTask id="Activity_0ino532" name="Show Actual Permissions">
+      <bpmn:extensionElements>
+        <spiffworkflow:instructionsForEndUser>| Group | Path | Allowed Actions |
+| ---------------| -------| ------|
+{% for permission in all_permissions %}
+| {{permission['group_identifier']}} | {{permission['uri']}} | {{permission['permissions']}}
+{% endfor %}</spiffworkflow:instructionsForEndUser>
+        <spiffworkflow:postScript>del(all_permissions)</spiffworkflow:postScript>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_132k5th</bpmn:incoming>
+      <bpmn:outgoing>Flow_1ozuh1f</bpmn:outgoing>
+    </bpmn:manualTask>
+    <bpmn:sequenceFlow id="Flow_0f4klqg" sourceRef="Activity_0jt9kr1" targetRef="Activity_0pdrn26" />
+    <bpmn:scriptTask id="Activity_0jt9kr1" name="merge lists">
+      <bpmn:extensionElements>
+        <spiffworkflow:unitTests>
+          <spiffworkflow:unitTest id="Two Records Test">
+            <spiffworkflow:inputJson>{
+  "groups": [
+    "Administrators"
+  ],
+  "users": [      
+    "admin@spiffworkflow.org"
+  ],
+  "permission_groups": [
+    "Administrators"
+  ],
+  "permission_uris": [
+    "/*"
+  ],
+  "permissions": [
+    [
+      "create",
+      "read",
+      "update",
+      "delete"
+    ]
+  ]
+}</spiffworkflow:inputJson>
+            <spiffworkflow:expectedOutputJson>{
+ "group_info": [
+   {
+     "name":"Administrators",
+     "permissions": [
+       {"actions": [
+          "create","read","update","delete"
+       ],
+       "uri": "/*"
+       }
+     ],
+     "users": ["admin@spiffworkflow.org"]
+   }
+ ]
+}</spiffworkflow:expectedOutputJson>
+          </spiffworkflow:unitTest>
+          <spiffworkflow:unitTest id="Second Test">
+            <spiffworkflow:inputJson>{
+  "groups": [
+    "Administrators",
+    "Everyone"
+  ],
+  "users": [
+    "admin@spiffworkflow.org",
+    "*"
+  ],
+  "permission_groups": [
+    "Administrators",
+    "Everyone"
+  ],
+  "permission_uris": [
+    "/*",
+    "/*"
+  ],
+  "permissions": [
+    [
+      "create",
+      "read",
+      "update",
+      "delete"
+    ],
+    [
+      "read"
+    ]
+  ]
+}</spiffworkflow:inputJson>
+            <spiffworkflow:expectedOutputJson>{
+  "group_info": [
+    {
+      "name": "Administrators",
+      "permissions": [
+        {
+          "actions": [
+            "create",
+            "read",
+            "update",
+            "delete"
+          ],
+          "uri": "/*"
+        }
+      ],
+      "users": [
+        "admin@spiffworkflow.org"
+      ]
+    },
+    {
+      "name": "Everyone",
+      "permissions": [
+        {
+          "actions": [
+            "read"
+          ],
+          "uri": "/*"
+        }
+      ],
+      "users": [
+        "*"
+      ]
+    }
+  ]
+}</spiffworkflow:expectedOutputJson>
+          </spiffworkflow:unitTest>
+        </spiffworkflow:unitTests>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0fhzucf</bpmn:incoming>
+      <bpmn:outgoing>Flow_0f4klqg</bpmn:outgoing>
+      <bpmn:script>info_by_group = {}
+for i, group in enumerate(groups):
+    if not group in info_by_group:
+        info_by_group[group] = {"users":[], "permissions": []}
+    info_by_group[group]["users"].append(users[i])
+
+for i, group in enumerate(permission_groups):
+    if not group in info_by_group:
+        info_by_group[group] = {"users":[], "permissions": []}
+    info_by_group[group]["permissions"].append(
+        {"uri": permission_uris[i],
+         "actions": permissions[i]}
+    )
+group_info = []
+for group in info_by_group.keys():
+    group_info.append({
+        "name": group,
+        "users": info_by_group[group]['users'],
+        "permissions": info_by_group[group]['permissions']
+    })
+del(info_by_group)
+del(group)
+del(i)
+del(groups)
+del(permissions)
+del(permission_groups)
+del(permission_uris)
+del(users)</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:sequenceFlow id="Flow_0fhzucf" sourceRef="Activity_0iom85m" targetRef="Activity_0jt9kr1" />
+    <bpmn:sequenceFlow id="Flow_1ozuh1f" sourceRef="Activity_0ino532" targetRef="Event_0nbfjnu" />
+    <bpmn:endEvent id="Event_0nbfjnu">
+      <bpmn:incoming>Flow_1ozuh1f</bpmn:incoming>
+    </bpmn:endEvent>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="set_permissions_process">
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="179" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1afo4x3_di" bpmnElement="Activity_0fqwhd1">
+        <dc:Bounds x="280" y="137" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0e33fg2_di" bpmnElement="Activity_0iom85m">
+        <dc:Bounds x="440" y="137" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_16w91n5_di" bpmnElement="Activity_0pdrn26">
+        <dc:Bounds x="780" y="137" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0x17g2k_di" bpmnElement="Activity_1jexxm1">
+        <dc:Bounds x="940" y="137" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1h17v78_di" bpmnElement="Activity_0ino532">
+        <dc:Bounds x="1110" y="137" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0fj3k0v_di" bpmnElement="Activity_0jt9kr1">
+        <dc:Bounds x="610" y="137" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0nbfjnu_di" bpmnElement="Event_0nbfjnu">
+        <dc:Bounds x="1272" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_04t49zv_di" bpmnElement="Flow_04t49zv">
+        <di:waypoint x="215" y="177" />
+        <di:waypoint x="280" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0q5cs4y_di" bpmnElement="Flow_0q5cs4y">
+        <di:waypoint x="880" y="177" />
+        <di:waypoint x="940" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_194nkr6_di" bpmnElement="Flow_194nkr6">
+        <di:waypoint x="380" y="177" />
+        <di:waypoint x="440" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_132k5th_di" bpmnElement="Flow_132k5th">
+        <di:waypoint x="1040" y="177" />
+        <di:waypoint x="1110" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0f4klqg_di" bpmnElement="Flow_0f4klqg">
+        <di:waypoint x="710" y="177" />
+        <di:waypoint x="780" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0fhzucf_di" bpmnElement="Flow_0fhzucf">
+        <di:waypoint x="540" y="177" />
+        <di:waypoint x="610" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1ozuh1f_di" bpmnElement="Flow_1ozuh1f">
+        <di:waypoint x="1210" y="177" />
+        <di:waypoint x="1272" y="177" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

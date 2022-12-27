@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/" xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/" xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/" xmlns:biodi="http://bpmn.io/schema/dmn/biodi/2.0" id="Definitions_76910d7" name="DRD" namespace="http://camunda.org/schema/1.0/dmn">
+  <decision id="Waku_Messages_Message_Body" name="Waku Messages: Message Body">
+    <decisionTable id="decisionTable_1">
+      <input id="InputClause_1cqeh6g" label="Task Id" biodi:width="254">
+        <inputExpression id="LiteralExpression_0ioto2j" typeRef="string">
+          <text>task_id</text>
+        </inputExpression>
+      </input>
+      <input id="InputClause_179tcnk" label="Sub Comments?" biodi:width="150">
+        <inputExpression id="LiteralExpression_0czib4n" typeRef="boolean">
+          <text>len_submitter_comment &gt; 0</text>
+        </inputExpression>
+      </input>
+      <input id="InputClause_1ehumxj" label="PL Comments?" biodi:width="150">
+        <inputExpression id="LiteralExpression_0f6zpyb" typeRef="boolean">
+          <text>len_project_lead_comment &gt; 0</text>
+        </inputExpression>
+      </input>
+      <input id="InputClause_0vbjfl3" label="Finance Comments?" biodi:width="174">
+        <inputExpression id="LiteralExpression_16asvyu" typeRef="boolean">
+          <text>len_finance_comment &gt; 0</text>
+        </inputExpression>
+      </input>
+      <output id="output_1" label="Message Body" name="waku_message_body" typeRef="string" biodi:width="532" />
+      <rule id="DecisionRule_05kyeu8">
+        <inputEntry id="UnaryTests_1w8fhi9">
+          <text>"waku_invoice_submitted"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0tk01ys">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1wlj0dq">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_143z5xs">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1h5ezs8">
+          <text>"Thanks for submitting your invoice " + current_user_extras["first_name"] + ".  We will keep you updated on the next steps."</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1tbh4zu">
+        <inputEntry id="UnaryTests_09sdx7c">
+          <text>"waku_payment_pending_ismatch"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1ky2gnu">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1oj9srs">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0tcjf42">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1v5nnup">
+          <text>"Hi " + current_user_extras["first_name"] + ", your invoice has been approved by Finance. It will be paid in the next pay run."</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1f99vwz">
+        <inputEntry id="UnaryTests_1m5ktce">
+          <text>"waku_payment_pending_not_ismatch"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_15j338s">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_04rpal7">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1myyfff">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1yus5ql">
+          <text>"Hi " + current_user_extras["first_name"] + ", your invoice has been approved by your Project Lead and Finance. It will be paid in the next pay run."</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1o253qj">
+        <inputEntry id="UnaryTests_1w1fy1f">
+          <text>"waku_invoice_rejected_ismatch"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_08inh93">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1oiu30e">
+          <text>False</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1qhjo2q">
+          <text>True</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0l1e3xh">
+          <text>"Hi " + current_user_extras["first_name"] + ", your invoice has been rejected by Finance. The reason specified for the rejection is: " + invoice["commentFinance"]</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_12npkto">
+        <inputEntry id="UnaryTests_01elx40">
+          <text>"waku_invoice_rejected_ismatch"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_05wniyi">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1183w4d">
+          <text>False</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1a8casu">
+          <text>False</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_057w88m">
+          <text>"Hi " + current_user_extras["first_name"] + ", your invoice has been rejected by Finance."</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1fsmo6y">
+        <inputEntry id="UnaryTests_0br4fie">
+          <text>"waku_invoice_rejected_not_ismatch_not_pl_approve"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1u9e4rc">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1rqyjru">
+          <text>True</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0b1859y">
+          <text>False</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_19448fp">
+          <text>"Hi " + current_user_extras["first_name"] + ", your invoice has been rejected by your Project Lead. The reason specified for the rejection is: " + invoice["commentProjectLead"]</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1955f0y">
+        <inputEntry id="UnaryTests_1ll25at">
+          <text>"waku_invoice_rejected_not_ismatch_not_pl_approve"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0es0y23">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_15eku2z">
+          <text>False</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_00o5xzv">
+          <text>False</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_04zz3q5">
+          <text>"Hi " + current_user_extras["first_name"] + ", your invoice has been rejected by your Project Lead."</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1jbtx5i">
+        <inputEntry id="UnaryTests_1hnyfo7">
+          <text>"waku_invoice_rejected_not_ismatch_pl_approve"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1ejf79v">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1xqwyfp">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0zpo3f1">
+          <text>True</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0eqnx58">
+          <text>"Hi " + current_user_extras["first_name"] + ", your invoice has been rejected by Finance. The reason specified for the rejection is: " + invoice["commentFinance"]</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0lz9jzm">
+        <inputEntry id="UnaryTests_1euab6x">
+          <text>"waku_invoice_rejected_not_ismatch_pl_approve"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0gphjjm">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0hdqam5">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_19z295i">
+          <text>False</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1j8scli">
+          <text>"Hi " + current_user_extras["first_name"] + ", your invoice has been rejected by Finance."</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0jirsd8">
+        <inputEntry id="UnaryTests_0f4sig0">
+          <text>"waku_notify_finance"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0iazojl">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0pnbqhi">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0inxcbr">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0ogytc4">
+          <text>"Finance, an invoice has been submitted and awaits your approval.\nSubmitted by: " + current_user_extras["full_name"]</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1jw4h85">
+        <inputEntry id="UnaryTests_1ddqyad">
+          <text>"waku_notify_project_lead"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0pehfsx">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1czuxkj">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1xnft2a">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0cm3da4">
+          <text>"Hi " + project_lead_info["first_name"] + ", an invoice has been submitted and awaits your approval.\nSubmitted by: " + current_user_extras["full_name"]</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1sqor96">
+        <inputEntry id="UnaryTests_0kn31ob">
+          <text>"waku_no_team_lead_response"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1qu20at">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0tqysdv">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0z9ts30">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0y4rab0">
+          <text>"Hi " + current_user_extras["first_name"] + ", your invoice has been rejected. The reason specified for the rejection is: [" + invoice.commentProjectLead + "]. Please get in touch with your Project Lead to discuss this further."</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0zxv93p">
+        <inputEntry id="UnaryTests_0j8l83a">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0ilntbq">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1j4007c">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0z3ugao">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0pqtgnn">
+          <text>"Something is wrong with the Message Body text-1.  Contact Support"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_06a0nz0">
+        <inputEntry id="UnaryTests_1a9kee1">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_10norm3">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0hkiqwh">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_175nxak">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1qrzv1j">
+          <text>"Something is wrong with the Message Body text-2.  Contact Support"</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <dmndi:DMNDI>
+    <dmndi:DMNDiagram id="DMNDiagram_1cykosu">
+      <dmndi:DMNShape id="DMNShape_1dhfq2s" dmnElementRef="Waku_Messages_Message_Body">
+        <dc:Bounds height="80" width="180" x="157" y="151" />
+      </dmndi:DMNShape>
+    </dmndi:DMNDiagram>
+  </dmndi:DMNDI>
+</definitions>
