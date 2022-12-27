@@ -18,7 +18,7 @@
     <bpmn:sequenceFlow id="Flow_08nmyrt" sourceRef="Activity_0v13afu" targetRef="Gateway_19npvp5" />
     <bpmn:exclusiveGateway id="Gateway_0xlrnzx" name="Current User?" default="Flow_0i96b90">
       <bpmn:incoming>Flow_12fb3ir</bpmn:incoming>
-      <bpmn:incoming>Flow_110ob0t</bpmn:incoming>
+      <bpmn:incoming>Flow_1mplhly</bpmn:incoming>
       <bpmn:outgoing>Flow_0i96b90</bpmn:outgoing>
       <bpmn:outgoing>Flow_0d47w7r</bpmn:outgoing>
     </bpmn:exclusiveGateway>
@@ -97,26 +97,13 @@ is_status_email = (find_user[-9:] == "status.im")</bpmn:script>
     </bpmn:exclusiveGateway>
     <bpmn:sequenceFlow id="Flow_0sypyzb" name="Yes" sourceRef="Gateway_19npvp5" targetRef="Activity_1uw66e8" />
     <bpmn:sequenceFlow id="Flow_12fb3ir" sourceRef="Activity_1uw66e8" targetRef="Gateway_0xlrnzx" />
-    <bpmn:sequenceFlow id="Flow_1mplhly" name="No" sourceRef="Gateway_19npvp5" targetRef="Activity_1f6m1ur">
+    <bpmn:sequenceFlow id="Flow_0dg341m" sourceRef="Activity_1a9fimb" targetRef="Activity_1y04pbx" />
+    <bpmn:sequenceFlow id="Flow_1mplhly" name="No" sourceRef="Gateway_19npvp5" targetRef="Gateway_0xlrnzx">
       <bpmn:conditionExpression>not(is_status_email)</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
-    <bpmn:sequenceFlow id="Flow_0dg341m" sourceRef="Activity_1a9fimb" targetRef="Activity_1y04pbx" />
-    <bpmn:sequenceFlow id="Flow_110ob0t" sourceRef="Activity_1f6m1ur" targetRef="Gateway_0xlrnzx" />
-    <bpmn:scriptTask id="Activity_1f6m1ur" name="Get User Info from DMN Table">
-      <bpmn:incoming>Flow_1mplhly</bpmn:incoming>
-      <bpmn:outgoing>Flow_110ob0t</bpmn:outgoing>
-    </bpmn:scriptTask>
-    <bpmn:textAnnotation id="TextAnnotation_0ncepr6">
-      <bpmn:text>Another source for non-Status CCs?</bpmn:text>
-    </bpmn:textAnnotation>
-    <bpmn:association id="Association_1jjnxqb" sourceRef="Activity_1f6m1ur" targetRef="TextAnnotation_0ncepr6" />
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="SR-User_Info">
-      <bpmndi:BPMNShape id="TextAnnotation_0ncepr6_di" bpmnElement="TextAnnotation_0ncepr6">
-        <dc:Bounds x="410" y="470" width="100" height="55" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
         <dc:Bounds x="2" y="209" width="36" height="36" />
       </bpmndi:BPMNShape>
@@ -154,13 +141,6 @@ is_status_email = (find_user[-9:] == "status.im")</bpmn:script>
           <dc:Bounds x="437" y="172" width="68" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1m92seo_di" bpmnElement="Activity_1f6m1ur">
-        <dc:Bounds x="580" y="340" width="100" height="80" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge id="Association_1jjnxqb_di" bpmnElement="Association_1jjnxqb">
-        <di:waypoint x="580" y="411" />
-        <di:waypoint x="484" y="470" />
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1q8xtg6_di" bpmnElement="Flow_1q8xtg6">
         <di:waypoint x="38" y="227" />
         <di:waypoint x="100" y="227" />
@@ -210,20 +190,16 @@ is_status_email = (find_user[-9:] == "status.im")</bpmn:script>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1mplhly_di" bpmnElement="Flow_1mplhly">
         <di:waypoint x="470" y="252" />
-        <di:waypoint x="470" y="380" />
-        <di:waypoint x="580" y="380" />
+        <di:waypoint x="470" y="320" />
+        <di:waypoint x="790" y="320" />
+        <di:waypoint x="790" y="252" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="482" y="253" width="15" height="14" />
+          <dc:Bounds x="622" y="293" width="15" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0dg341m_di" bpmnElement="Flow_0dg341m">
         <di:waypoint x="1000" y="227" />
         <di:waypoint x="1070" y="227" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_110ob0t_di" bpmnElement="Flow_110ob0t">
-        <di:waypoint x="680" y="380" />
-        <di:waypoint x="790" y="380" />
-        <di:waypoint x="790" y="252" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
