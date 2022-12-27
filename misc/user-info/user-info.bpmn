@@ -58,7 +58,7 @@ del(userTimeFormat)</bpmn:script>
       <bpmn:extensionElements>
         <spiffworkflow:serviceTaskOperator id="bamboohr/GetEmployeeInfo" resultVariable="resp_BambooUserInfo">
           <spiffworkflow:parameters>
-            <spiffworkflow:parameter id="employee_id" type="str" value="current_user_extras[&#34;bamboo_api_id&#34;]" />
+            <spiffworkflow:parameter id="employee_id" type="str" value="userBambooId" />
             <spiffworkflow:parameter id="fields" type="str" value="&#39;supervisorEmail,supervisorId,supervisorEid&#39;" />
           </spiffworkflow:parameters>
         </spiffworkflow:serviceTaskOperator>
@@ -106,6 +106,9 @@ is_status_email = (find_user[-9:] == "status.im")</bpmn:script>
       <bpmndi:BPMNShape id="Activity_0hlcuhi_di" bpmnElement="Activity_0v13afu">
         <dc:Bounds x="270" y="187" width="100" height="80" />
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0fb034d_di" bpmnElement="Event_0fb034d">
+        <dc:Bounds x="1232" y="209" width="36" height="36" />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Gateway_0xlrnzx_di" bpmnElement="Gateway_0xlrnzx" isMarkerVisible="true">
         <dc:Bounds x="765" y="202" width="50" height="50" />
         <bpmndi:BPMNLabel>
@@ -119,6 +122,9 @@ is_status_email = (find_user[-9:] == "status.im")</bpmn:script>
       <bpmndi:BPMNShape id="Activity_0nftxgp_di" bpmnElement="Activity_1uw66e8">
         <dc:Bounds x="580" y="187" width="100" height="80" />
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_0byohhl_di" bpmnElement="Gateway_0byohhl" isMarkerVisible="true">
+        <dc:Bounds x="1085" y="202" width="50" height="50" />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1azbkzp_di" bpmnElement="Activity_1fkr6s9">
         <dc:Bounds x="100" y="187" width="100" height="80" />
       </bpmndi:BPMNShape>
@@ -127,12 +133,6 @@ is_status_email = (find_user[-9:] == "status.im")</bpmn:script>
         <bpmndi:BPMNLabel>
           <dc:Bounds x="437" y="172" width="68" height="14" />
         </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_0fb034d_di" bpmnElement="Event_0fb034d">
-        <dc:Bounds x="1232" y="209" width="36" height="36" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Gateway_0byohhl_di" bpmnElement="Gateway_0byohhl" isMarkerVisible="true">
-        <dc:Bounds x="1085" y="202" width="50" height="50" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_1q8xtg6_di" bpmnElement="Flow_1q8xtg6">
         <di:waypoint x="38" y="227" />
@@ -177,6 +177,10 @@ is_status_email = (find_user[-9:] == "status.im")</bpmn:script>
         <di:waypoint x="680" y="227" />
         <di:waypoint x="765" y="227" />
       </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0dg341m_di" bpmnElement="Flow_0dg341m">
+        <di:waypoint x="1000" y="227" />
+        <di:waypoint x="1085" y="227" />
+      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1mplhly_di" bpmnElement="Flow_1mplhly">
         <di:waypoint x="470" y="252" />
         <di:waypoint x="470" y="320" />
@@ -185,10 +189,6 @@ is_status_email = (find_user[-9:] == "status.im")</bpmn:script>
         <bpmndi:BPMNLabel>
           <dc:Bounds x="622" y="293" width="15" height="14" />
         </bpmndi:BPMNLabel>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0dg341m_di" bpmnElement="Flow_0dg341m">
-        <di:waypoint x="1000" y="227" />
-        <di:waypoint x="1085" y="227" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
