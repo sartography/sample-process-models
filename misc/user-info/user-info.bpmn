@@ -18,7 +18,7 @@
     <bpmn:sequenceFlow id="Flow_08nmyrt" sourceRef="Activity_0v13afu" targetRef="Gateway_19npvp5" />
     <bpmn:exclusiveGateway id="Gateway_0xlrnzx" name="Current User?" default="Flow_0i96b90">
       <bpmn:incoming>Flow_12fb3ir</bpmn:incoming>
-      <bpmn:incoming>Flow_1mplhly</bpmn:incoming>
+      <bpmn:incoming>Flow_110ob0t</bpmn:incoming>
       <bpmn:outgoing>Flow_0i96b90</bpmn:outgoing>
       <bpmn:outgoing>Flow_0d47w7r</bpmn:outgoing>
     </bpmn:exclusiveGateway>
@@ -97,10 +97,15 @@ is_status_email = (find_user[-9:] == "status.im")</bpmn:script>
     </bpmn:exclusiveGateway>
     <bpmn:sequenceFlow id="Flow_0sypyzb" name="Yes" sourceRef="Gateway_19npvp5" targetRef="Activity_1uw66e8" />
     <bpmn:sequenceFlow id="Flow_12fb3ir" sourceRef="Activity_1uw66e8" targetRef="Gateway_0xlrnzx" />
-    <bpmn:sequenceFlow id="Flow_1mplhly" name="No" sourceRef="Gateway_19npvp5" targetRef="Gateway_0xlrnzx">
+    <bpmn:sequenceFlow id="Flow_1mplhly" name="No" sourceRef="Gateway_19npvp5" targetRef="Activity_1f6m1ur">
       <bpmn:conditionExpression>not(is_status_email)</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="Flow_0dg341m" sourceRef="Activity_1a9fimb" targetRef="Activity_1y04pbx" />
+    <bpmn:sequenceFlow id="Flow_110ob0t" sourceRef="Activity_1f6m1ur" targetRef="Gateway_0xlrnzx" />
+    <bpmn:scriptTask id="Activity_1f6m1ur" name="Get User Info from DMN Table">
+      <bpmn:incoming>Flow_1mplhly</bpmn:incoming>
+      <bpmn:outgoing>Flow_110ob0t</bpmn:outgoing>
+    </bpmn:scriptTask>
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="SR-User_Info">
@@ -110,14 +115,8 @@ is_status_email = (find_user[-9:] == "status.im")</bpmn:script>
       <bpmndi:BPMNShape id="Activity_0hlcuhi_di" bpmnElement="Activity_0v13afu">
         <dc:Bounds x="270" y="187" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1azbkzp_di" bpmnElement="Activity_1fkr6s9">
-        <dc:Bounds x="100" y="187" width="100" height="80" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Gateway_19npvp5_di" bpmnElement="Gateway_19npvp5" isMarkerVisible="true">
-        <dc:Bounds x="445" y="202" width="50" height="50" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="437" y="172" width="68" height="14" />
-        </bpmndi:BPMNLabel>
+      <bpmndi:BPMNShape id="Event_0fb034d_di" bpmnElement="Event_0fb034d">
+        <dc:Bounds x="1392" y="209" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Gateway_0xlrnzx_di" bpmnElement="Gateway_0xlrnzx" isMarkerVisible="true">
         <dc:Bounds x="765" y="202" width="50" height="50" />
@@ -132,14 +131,23 @@ is_status_email = (find_user[-9:] == "status.im")</bpmn:script>
       <bpmndi:BPMNShape id="Activity_0nftxgp_di" bpmnElement="Activity_1uw66e8">
         <dc:Bounds x="580" y="187" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_0fb034d_di" bpmnElement="Event_0fb034d">
-        <dc:Bounds x="1392" y="209" width="36" height="36" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Gateway_0byohhl_di" bpmnElement="Gateway_0byohhl" isMarkerVisible="true">
         <dc:Bounds x="1245" y="202" width="50" height="50" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0xiz5vq_di" bpmnElement="Activity_1y04pbx">
         <dc:Bounds x="1070" y="187" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1azbkzp_di" bpmnElement="Activity_1fkr6s9">
+        <dc:Bounds x="100" y="187" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_19npvp5_di" bpmnElement="Gateway_19npvp5" isMarkerVisible="true">
+        <dc:Bounds x="445" y="202" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="437" y="172" width="68" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1m92seo_di" bpmnElement="Activity_1f6m1ur">
+        <dc:Bounds x="580" y="340" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_1q8xtg6_di" bpmnElement="Flow_1q8xtg6">
         <di:waypoint x="38" y="227" />
@@ -190,16 +198,20 @@ is_status_email = (find_user[-9:] == "status.im")</bpmn:script>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1mplhly_di" bpmnElement="Flow_1mplhly">
         <di:waypoint x="470" y="252" />
-        <di:waypoint x="470" y="320" />
-        <di:waypoint x="790" y="320" />
-        <di:waypoint x="790" y="252" />
+        <di:waypoint x="470" y="380" />
+        <di:waypoint x="580" y="380" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="623" y="302" width="15" height="14" />
+          <dc:Bounds x="482" y="253" width="15" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0dg341m_di" bpmnElement="Flow_0dg341m">
         <di:waypoint x="1000" y="227" />
         <di:waypoint x="1070" y="227" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_110ob0t_di" bpmnElement="Flow_110ob0t">
+        <di:waypoint x="680" y="380" />
+        <di:waypoint x="790" y="380" />
+        <di:waypoint x="790" y="252" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
