@@ -99,7 +99,6 @@
         <bpmn:flowNodeRef>Event_0daj31x</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_1si6b3g</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_06bnz9o</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Activity_0tt12kf</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_1mrq305">
         <bpmn:flowNodeRef>StartEvent_1</bpmn:flowNodeRef>
@@ -116,8 +115,9 @@
         <bpmn:flowNodeRef>Activity_1fz0bsz</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_18x1o1c</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Gateway_17sf14l</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Activity_108eq0l</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_0xklgk1</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_108eq0l</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_0tt12kf</bpmn:flowNodeRef>
       </bpmn:lane>
     </bpmn:laneSet>
     <bpmn:startEvent id="StartEvent_1" name="Purchase need has been identified">
@@ -416,7 +416,6 @@
     </bpmn:exclusiveGateway>
     <bpmn:intermediateThrowEvent id="Event_15dhedu" name="New Demand Request is submitted">
       <bpmn:incoming>Flow_0ledpg2</bpmn:incoming>
-      <bpmn:outgoing>Flow_1ca1pnj</bpmn:outgoing>
     </bpmn:intermediateThrowEvent>
     <bpmn:exclusiveGateway id="Gateway_0tlgsqb">
       <bpmn:incoming>Flow_0ja4xhr</bpmn:incoming>
@@ -822,17 +821,18 @@ Please ensure that you have enough budget for the demand, and if needed, submit 
       <bpmn:incoming>Flow_0mbb848</bpmn:incoming>
       <bpmn:outgoing>Flow_1lfn8yz</bpmn:outgoing>
     </bpmn:exclusiveGateway>
-    <bpmn:serviceTask id="Activity_108eq0l" name="Send Waku message  to Budget Owner">
+    <bpmn:endEvent id="Event_0xklgk1">
+      <bpmn:incoming>Flow_0hxerew</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:subProcess id="Activity_108eq0l" name="Send Waku message  to Budget Owner">
       <bpmn:documentation>To send message through Waku. Message - https://www.notion.so/Processes-WIP-bf288f19f8ff454699e2f1cc83ad7abe?p=9891dc90f4424a0ebd3407db1991c203&amp;pm=s</bpmn:documentation>
       <bpmn:incoming>Flow_1o4dqco</bpmn:incoming>
+      <bpmn:outgoing>Flow_0hxerew</bpmn:outgoing>
       <bpmn:dataOutputAssociation id="DataOutputAssociation_0zonmrk">
         <bpmn:targetRef>DataObjectReference_1aq4lbg</bpmn:targetRef>
       </bpmn:dataOutputAssociation>
-    </bpmn:serviceTask>
-    <bpmn:endEvent id="Event_0xklgk1">
-      <bpmn:incoming>Flow_1ca1pnj</bpmn:incoming>
-    </bpmn:endEvent>
-    <bpmn:sequenceFlow id="Flow_1ca1pnj" sourceRef="Event_15dhedu" targetRef="Event_0xklgk1" />
+    </bpmn:subProcess>
+    <bpmn:sequenceFlow id="Flow_0hxerew" sourceRef="Activity_108eq0l" targetRef="Event_0xklgk1" />
     <bpmn:callActivity id="Activity_0tt12kf" name="Call Shared: Define Approval strategy" calledElement="RNDR-Define_Approval_Strategy" />
     <bpmn:textAnnotation id="TextAnnotation_0zy71k9">
       <bpmn:text>Orgdata from BBHR, Categories from a DB, Currencies from Xero</bpmn:text>
@@ -939,6 +939,13 @@ Please ensure that you have enough budget for the demand, and if needed, submit 
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0vhbxuw_di" bpmnElement="Activity_1itequ5">
         <dc:Bounds x="760" y="400" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0xklgk1_di" bpmnElement="Event_0xklgk1">
+        <dc:Bounds x="1992" y="552" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1trh55u_di" bpmnElement="Activity_0tt12kf">
+        <dc:Bounds x="1720" y="400" width="100" height="80" />
+        <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1nyt2o4_di" bpmnElement="Submit_Validate_New_Demand_Request-Sub_Process">
         <dc:Bounds x="1070" y="400" width="100" height="80" />
@@ -1358,17 +1365,6 @@ Please ensure that you have enough budget for the demand, and if needed, submit 
       <bpmndi:BPMNShape id="Gateway_17sf14l_di" bpmnElement="Gateway_17sf14l" isMarkerVisible="true">
         <dc:Bounds x="505" y="415" width="50" height="50" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_00iwq4h_di" bpmnElement="Activity_108eq0l">
-        <dc:Bounds x="1960" y="400" width="100" height="80" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_0xklgk1_di" bpmnElement="Event_0xklgk1">
-        <dc:Bounds x="1742" y="422" width="36" height="36" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1trh55u_di" bpmnElement="Activity_0tt12kf">
-        <dc:Bounds x="1730" y="720" width="100" height="80" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="TextAnnotation_0zy71k9_di" bpmnElement="TextAnnotation_0zy71k9">
         <dc:Bounds x="310" y="180" width="130" height="60" />
         <bpmndi:BPMNLabel />
@@ -1392,6 +1388,9 @@ Please ensure that you have enough budget for the demand, and if needed, submit 
       <bpmndi:BPMNShape id="TextAnnotation_12tjd1d_di" bpmnElement="TextAnnotation_12tjd1d">
         <dc:Bounds x="2150" y="910" width="70" height="30" />
         <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1vchk6r_di" bpmnElement="Activity_108eq0l">
+        <dc:Bounds x="1960" y="400" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_095wlf3_di" bpmnElement="Event_06bnz9o">
         <dc:Bounds x="2022" y="1032" width="36" height="36" />
@@ -1905,10 +1904,6 @@ Please ensure that you have enough budget for the demand, and if needed, submit 
         <di:waypoint x="1010" y="440" />
         <di:waypoint x="1070" y="440" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_1ca1pnj_di" bpmnElement="Flow_1ca1pnj">
-        <di:waypoint x="1678" y="440" />
-        <di:waypoint x="1742" y="440" />
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Association_13u0dtl_di" bpmnElement="Association_13u0dtl">
         <di:waypoint x="384" y="260" />
         <di:waypoint x="377" y="240" />
@@ -1932,6 +1927,10 @@ Please ensure that you have enough budget for the demand, and if needed, submit 
       <bpmndi:BPMNEdge id="Association_012q0h5_di" bpmnElement="Association_012q0h5">
         <di:waypoint x="2187" y="970" />
         <di:waypoint x="2185" y="940" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0hxerew_di" bpmnElement="Flow_0hxerew">
+        <di:waypoint x="2010" y="480" />
+        <di:waypoint x="2010" y="552" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="DataOutputAssociation_1yn62s3_di" bpmnElement="DataOutputAssociation_1yn62s3">
         <di:waypoint x="500" y="578" />
@@ -2172,5 +2171,8 @@ Please ensure that you have enough budget for the demand, and if needed, submit 
         <di:waypoint x="600" y="270" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_18qwlit">
+    <bpmndi:BPMNPlane id="BPMNPlane_0w7s9uy" bpmnElement="Activity_108eq0l" />
   </bpmndi:BPMNDiagram>
 </bpmn:definitions>
