@@ -44,13 +44,11 @@
     <bpmn:scriptTask id="Activity_1qcx18z" name="Set Categories">
       <bpmn:incoming>Flow_0hflz9l</bpmn:incoming>
       <bpmn:outgoing>Flow_1k3j31g</bpmn:outgoing>
-      <bpmn:script># When available, need to determine if current user is a project lead
-# Only projec leads have access to Compensation
+      <bpmn:script># Determine if current user is a project lead
+is_lead = current_user["username"] in get_group_members("Leads")
+
+# Set Default Category List
 which_categories_list = [
-    {
-        "label": "Compensation",
-        "value": "compensation"
-    },
     {
         "label": "Procurement",
         "value": "procurement"
@@ -59,7 +57,15 @@ which_categories_list = [
         "label": "Travel",
         "value": "travel"
     }
-]</bpmn:script>
+]
+
+# Only project leads have access to Compensation
+if is_lead:
+    lead_only_category =    {
+        "label": "Compensation",
+        "value": "compensation"
+    }
+    which_categories_list.append(lead_only_category)</bpmn:script>
     </bpmn:scriptTask>
     <bpmn:exclusiveGateway id="Gateway_1m8umui">
       <bpmn:incoming>Flow_1etakrx</bpmn:incoming>
