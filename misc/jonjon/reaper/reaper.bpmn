@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:spiffworkflow="http://spiffworkflow.org/bpmn/schema/1.0/core" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="Definitions_96f6665" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.0.0-dev">
+  <bpmn:process id="Process_as2nejj" isExecutable="true">
+    <bpmn:endEvent id="Event_1sdap1v">
+      <bpmn:incoming>Flow_0pp3wm0</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:scriptTask id="Activity_1x7m0mq" name="reap tasks">
+      <bpmn:incoming>Flow_1x4kjsz</bpmn:incoming>
+      <bpmn:outgoing>Flow_01w3rxo</bpmn:outgoing>
+      <bpmn:script>count=count+1
+
+config = list(zip(process_model_name, process_model_status))
+
+#reap_current_process_instances(data_from_dmn)
+
+## optimization:
+## after delete, what is the next candidate for delete
+#next_delete_time_in_seconds = reap_current_process_instances(data_from_dmn)
+#next_delete_time_in_seconds *= 110% # padding to help with race conditions</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:businessRuleTask id="Activity_1mq6e0z" name="get process model ttls">
+      <bpmn:extensionElements>
+        <spiffworkflow:calledDecisionId>ProcessModelTTL</spiffworkflow:calledDecisionId>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0emb6j8</bpmn:incoming>
+      <bpmn:incoming>Flow_1y9xe99</bpmn:incoming>
+      <bpmn:outgoing>Flow_1x4kjsz</bpmn:outgoing>
+    </bpmn:businessRuleTask>
+    <bpmn:sequenceFlow id="Flow_1x4kjsz" sourceRef="Activity_1mq6e0z" targetRef="Activity_1x7m0mq" />
+    <bpmn:startEvent id="Event_06vtvef">
+      <bpmn:outgoing>Flow_18h0rzg</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_18h0rzg" sourceRef="Event_06vtvef" targetRef="Activity_0x3w9oc" />
+    <bpmn:exclusiveGateway id="Gateway_0e5ac7h" default="Flow_0mgnrik">
+      <bpmn:incoming>Flow_01w3rxo</bpmn:incoming>
+      <bpmn:outgoing>Flow_0pp3wm0</bpmn:outgoing>
+      <bpmn:outgoing>Flow_0mgnrik</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="Flow_0pp3wm0" sourceRef="Gateway_0e5ac7h" targetRef="Event_1sdap1v">
+      <bpmn:conditionExpression>False</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_01w3rxo" sourceRef="Activity_1x7m0mq" targetRef="Gateway_0e5ac7h" />
+    <bpmn:sequenceFlow id="Flow_0mgnrik" sourceRef="Gateway_0e5ac7h" targetRef="Event_0z9v7m2" />
+    <bpmn:intermediateCatchEvent id="Event_0z9v7m2">
+      <bpmn:incoming>Flow_0mgnrik</bpmn:incoming>
+      <bpmn:outgoing>Flow_0emb6j8</bpmn:outgoing>
+      <bpmn:timerEventDefinition id="TimerEventDefinition_0jmqj2i">
+        <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">timedelta(seconds=10)</bpmn:timeDuration>
+      </bpmn:timerEventDefinition>
+    </bpmn:intermediateCatchEvent>
+    <bpmn:sequenceFlow id="Flow_0emb6j8" sourceRef="Event_0z9v7m2" targetRef="Activity_1mq6e0z" />
+    <bpmn:sequenceFlow id="Flow_1y9xe99" sourceRef="Activity_0x3w9oc" targetRef="Activity_1mq6e0z" />
+    <bpmn:scriptTask id="Activity_0x3w9oc" name="start stats">
+      <bpmn:incoming>Flow_18h0rzg</bpmn:incoming>
+      <bpmn:outgoing>Flow_1y9xe99</bpmn:outgoing>
+      <bpmn:script>#started=now()
+count=0</bpmn:script>
+    </bpmn:scriptTask>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_as2nejj">
+      <bpmndi:BPMNShape id="Event_1sdap1v_di" bpmnElement="Event_1sdap1v">
+        <dc:Bounds x="852" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_04rq4hu_di" bpmnElement="Activity_1x7m0mq">
+        <dc:Bounds x="510" y="137" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0w0m204_di" bpmnElement="Activity_1mq6e0z">
+        <dc:Bounds x="330" y="137" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_06vtvef_di" bpmnElement="Event_06vtvef">
+        <dc:Bounds x="122" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_0e5ac7h_di" bpmnElement="Gateway_0e5ac7h" isMarkerVisible="true">
+        <dc:Bounds x="725" y="152" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0bccdbh_di" bpmnElement="Event_0z9v7m2">
+        <dc:Bounds x="542" y="272" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_04d8grx_di" bpmnElement="Activity_0x3w9oc">
+        <dc:Bounds x="190" y="137" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_1x4kjsz_di" bpmnElement="Flow_1x4kjsz">
+        <di:waypoint x="430" y="177" />
+        <di:waypoint x="510" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_18h0rzg_di" bpmnElement="Flow_18h0rzg">
+        <di:waypoint x="158" y="177" />
+        <di:waypoint x="190" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0pp3wm0_di" bpmnElement="Flow_0pp3wm0">
+        <di:waypoint x="775" y="177" />
+        <di:waypoint x="852" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_01w3rxo_di" bpmnElement="Flow_01w3rxo">
+        <di:waypoint x="610" y="177" />
+        <di:waypoint x="725" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0mgnrik_di" bpmnElement="Flow_0mgnrik">
+        <di:waypoint x="750" y="202" />
+        <di:waypoint x="750" y="290" />
+        <di:waypoint x="578" y="290" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0emb6j8_di" bpmnElement="Flow_0emb6j8">
+        <di:waypoint x="542" y="290" />
+        <di:waypoint x="380" y="290" />
+        <di:waypoint x="380" y="217" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1y9xe99_di" bpmnElement="Flow_1y9xe99">
+        <di:waypoint x="290" y="177" />
+        <di:waypoint x="330" y="177" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
