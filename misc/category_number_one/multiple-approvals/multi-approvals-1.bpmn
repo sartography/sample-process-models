@@ -73,12 +73,19 @@
       <bpmn:script>core_approval = True</bpmn:script>
     </bpmn:scriptTask>
     <bpmn:sequenceFlow id="Flow_11tuj8a" sourceRef="Activity_1j9ksd0" targetRef="Activity_0h7r2xf" />
-    <bpmn:scriptTask id="Activity_1j9ksd0" name="Set Variables">
+    <bpmn:scriptTask id="Activity_1j9ksd0" name="Set Variables &#38; Lanes">
       <bpmn:incoming>Flow_00a8mkg</bpmn:incoming>
       <bpmn:outgoing>Flow_11tuj8a</bpmn:outgoing>
       <bpmn:script>core_approval = False
 fin_approval = False
-lead_approval = False</bpmn:script>
+lead_approval = False
+
+# Set Project Lead Lane Permission
+lane_owners = {
+    "Core": ["core@status.im"],
+    "Fin": ["fin@status.im"],
+    "Lead": ["lead@status.im"]
+}</bpmn:script>
     </bpmn:scriptTask>
     <bpmn:sequenceFlow id="Flow_1ja7842" sourceRef="Activity_02y3rqp" targetRef="Gateway_16bj0wn" />
     <bpmn:scriptTask id="Activity_02y3rqp" name="Set Fin Approval">
@@ -112,20 +119,20 @@ Lead: {{ lead_approval }}</spiffworkflow:instructionsForEndUser>
       <bpmndi:BPMNShape id="Participant_0pgewn4_di" bpmnElement="Participant_0pgewn4" isHorizontal="true">
         <dc:Bounds x="15" y="30" width="1205" height="610" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Lane_0i6vm8x_di" bpmnElement="Lane_0i6vm8x" isHorizontal="true">
-        <dc:Bounds x="45" y="30" width="1175" height="250" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Lane_1rz5h3e_di" bpmnElement="Lane_1rz5h3e" isHorizontal="true">
-        <dc:Bounds x="45" y="280" width="1175" height="120" />
+      <bpmndi:BPMNShape id="Lane_1ct0nzy_di" bpmnElement="Lane_1ct0nzy" isHorizontal="true">
+        <dc:Bounds x="45" y="520" width="1175" height="120" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Lane_17f7tdl_di" bpmnElement="Lane_17f7tdl" isHorizontal="true">
         <dc:Bounds x="45" y="400" width="1175" height="120" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Lane_1ct0nzy_di" bpmnElement="Lane_1ct0nzy" isHorizontal="true">
-        <dc:Bounds x="45" y="520" width="1175" height="120" />
+      <bpmndi:BPMNShape id="Lane_1rz5h3e_di" bpmnElement="Lane_1rz5h3e" isHorizontal="true">
+        <dc:Bounds x="45" y="280" width="1175" height="120" />
         <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_0i6vm8x_di" bpmnElement="Lane_0i6vm8x" isHorizontal="true">
+        <dc:Bounds x="45" y="30" width="1175" height="250" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
         <dc:Bounds x="65" y="137" width="36" height="36" />
@@ -155,6 +162,7 @@ Lead: {{ lead_approval }}</spiffworkflow:instructionsForEndUser>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_07uda32_di" bpmnElement="Activity_1j9ksd0">
         <dc:Bounds x="140" y="115" width="100" height="80" />
+        <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0v1o7ol_di" bpmnElement="Activity_02y3rqp">
         <dc:Bounds x="700" y="410" width="100" height="80" />
