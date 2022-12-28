@@ -166,7 +166,9 @@ Lead: {{ lead_approval }}</spiffworkflow:instructionsForEndUser>
       <bpmn:sequenceFlow id="Flow_0xbuqka" name="Yes" sourceRef="Gateway_1f8ctyu" targetRef="Gateway_1c7cari">
         <bpmn:conditionExpression>approval_cnt == 2</bpmn:conditionExpression>
       </bpmn:sequenceFlow>
-      <bpmn:sequenceFlow id="Flow_18fglbu" sourceRef="Gateway_1c7cari" targetRef="Event_0vstfdm" />
+      <bpmn:sequenceFlow id="Flow_18fglbu" name="Approver-1" sourceRef="Gateway_1c7cari" targetRef="Event_0vstfdm">
+        <bpmn:conditionExpression>not(is_approver-1)</bpmn:conditionExpression>
+      </bpmn:sequenceFlow>
       <bpmn:intermediateThrowEvent id="Event_0vstfdm">
         <bpmn:incoming>Flow_18fglbu</bpmn:incoming>
         <bpmn:outgoing>Flow_1dswhyc</bpmn:outgoing>
@@ -422,6 +424,9 @@ Lead: {{ lead_approval }}</spiffworkflow:instructionsForEndUser>
         <di:waypoint x="600" y="215" />
         <di:waypoint x="600" y="130" />
         <di:waypoint x="732" y="130" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="632" y="113" width="55" height="14" />
+        </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_11ayewv_di" bpmnElement="Flow_11ayewv">
         <di:waypoint x="600" y="265" />
