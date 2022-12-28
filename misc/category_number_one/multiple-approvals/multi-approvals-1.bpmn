@@ -60,7 +60,7 @@ lane_owners = {
     "Approver-3": ["lead@status.im"]
 }</bpmn:script>
     </bpmn:scriptTask>
-    <bpmn:manualTask id="Activity_02qvs11" name="Do Core Approval">
+    <bpmn:manualTask id="Activity_02qvs11" name="Do Approver-1 Approval">
       <bpmn:incoming>Flow_065h60y</bpmn:incoming>
       <bpmn:outgoing>Flow_0lsgj5x</bpmn:outgoing>
     </bpmn:manualTask>
@@ -74,7 +74,8 @@ lane_owners = {
     <bpmn:scriptTask id="Activity_0np7jlr" name="Set Core Approval">
       <bpmn:incoming>Flow_0lsgj5x</bpmn:incoming>
       <bpmn:outgoing>Flow_0go3wsy</bpmn:outgoing>
-      <bpmn:script>core_approval = True</bpmn:script>
+      <bpmn:script>core_approval = True
+approval_cnt = approval_cnt + 1</bpmn:script>
     </bpmn:scriptTask>
     <bpmn:endEvent id="Event_1or7z59">
       <bpmn:incoming>Flow_1199vyt</bpmn:incoming>
@@ -102,7 +103,7 @@ Lead: {{ lead_approval }}</spiffworkflow:instructionsForEndUser>
     <bpmn:sequenceFlow id="Flow_1c9q1pe" sourceRef="Activity_0ht3rzf" targetRef="Gateway_16bj0wn" />
     <bpmn:sequenceFlow id="Flow_1l44yik" sourceRef="Gateway_16bj0wn" targetRef="Activity_0fxkugq" />
     <bpmn:sequenceFlow id="Flow_1199vyt" sourceRef="Activity_0fxkugq" targetRef="Event_1or7z59" />
-    <bpmn:manualTask id="Activity_1vdzcey" name="Do Lead Approval">
+    <bpmn:manualTask id="Activity_1vdzcey" name="Do Approver-3 Approval">
       <bpmn:incoming>Flow_12x4km2</bpmn:incoming>
       <bpmn:outgoing>Flow_069391w</bpmn:outgoing>
     </bpmn:manualTask>
@@ -111,7 +112,7 @@ Lead: {{ lead_approval }}</spiffworkflow:instructionsForEndUser>
       <bpmn:outgoing>Flow_1c9q1pe</bpmn:outgoing>
       <bpmn:script>lead_approval = True</bpmn:script>
     </bpmn:scriptTask>
-    <bpmn:manualTask id="Activity_0649vw3" name="Do Fin Approval">
+    <bpmn:manualTask id="Activity_0649vw3" name="Do Approver-2 Approval">
       <bpmn:incoming>Flow_14bzyyu</bpmn:incoming>
       <bpmn:outgoing>Flow_1ps311c</bpmn:outgoing>
     </bpmn:manualTask>
@@ -170,6 +171,7 @@ Lead: {{ lead_approval }}</spiffworkflow:instructionsForEndUser>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_090rnlx_di" bpmnElement="Activity_02qvs11">
         <dc:Bounds x="540" y="342" width="100" height="80" />
+        <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Gateway_16m9sys_di" bpmnElement="Gateway_16bj0wn">
         <dc:Bounds x="785" y="182" width="50" height="50" />
@@ -186,6 +188,7 @@ Lead: {{ lead_approval }}</spiffworkflow:instructionsForEndUser>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0dxx0cd_di" bpmnElement="Activity_1vdzcey">
         <dc:Bounds x="540" y="750" width="100" height="80" />
+        <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0k2oe3t_di" bpmnElement="Activity_0ht3rzf">
         <dc:Bounds x="670" y="750" width="100" height="80" />
