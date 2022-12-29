@@ -95,8 +95,15 @@ lane_owners = {
         <bpmn:sourceRef>DataObjectReference_10v9kb5</bpmn:sourceRef>
         <bpmn:targetRef>Property_0u2y5m5</bpmn:targetRef>
       </bpmn:dataInputAssociation>
+      <bpmn:dataInputAssociation id="DataInputAssociation_05os2ab">
+        <bpmn:sourceRef>DataObjectReference_1fwlns1</bpmn:sourceRef>
+        <bpmn:targetRef>Property_0u2y5m5</bpmn:targetRef>
+      </bpmn:dataInputAssociation>
       <bpmn:dataOutputAssociation id="DataOutputAssociation_17bvaeq">
         <bpmn:targetRef>DataObjectReference_10v9kb5</bpmn:targetRef>
+      </bpmn:dataOutputAssociation>
+      <bpmn:dataOutputAssociation id="DataOutputAssociation_1w4ee8t">
+        <bpmn:targetRef>DataObjectReference_1fwlns1</bpmn:targetRef>
       </bpmn:dataOutputAssociation>
       <bpmn:script># Increment approval count
 approval_cnt = approval_cnt + 1
@@ -105,7 +112,7 @@ approval_cnt = approval_cnt + 1
 gateway_approval_cnt = approval_cnt
 
 # Update approver state
-is_approver3_approval = True</bpmn:script>
+is_approval["approver3"] = True</bpmn:script>
     </bpmn:scriptTask>
     <bpmn:boundaryEvent id="Event_0t2z9gc" attachedToRef="Activity_1vdzcey">
       <bpmn:outgoing>Flow_1cmqfcg</bpmn:outgoing>
@@ -276,7 +283,6 @@ Approval Count: {{ approval_cnt }}
     <bpmn:sequenceFlow id="Flow_0h5nhqk" name="Yes" sourceRef="Gateway_1pmg5mn" targetRef="Event_0lq4h7d">
       <bpmn:conditionExpression>gateway_approval_cnt == 2</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
-    <bpmn:dataObjectReference id="DataObjectReference_10v9kb5" name="Approval Cnt" dataObjectRef="approval_cnt" />
     <bpmn:sequenceFlow id="Flow_12nx960" sourceRef="Event_0lq4h7d" targetRef="Gateway_1mqikfu" />
     <bpmn:intermediateThrowEvent id="Event_0lq4h7d">
       <bpmn:incoming>Flow_0h5nhqk</bpmn:incoming>
@@ -290,10 +296,12 @@ Approval Count: {{ approval_cnt }}
     <bpmn:dataObjectReference id="DataObjectReference_1194m91" name="Is Approval" dataObjectRef="is_approval" />
     <bpmn:dataObjectReference id="DataObjectReference_16tbebh" name="Approval Cnt" dataObjectRef="approval_cnt" />
     <bpmn:dataObjectReference id="DataObjectReference_0as5g1t" name="Is Approval" dataObjectRef="is_approval" />
-    <bpmn:dataObject id="is_approval" />
     <bpmn:dataObjectReference id="DataObjectReference_1r531et" name="Approval Cnt" dataObjectRef="approval_cnt" />
-    <bpmn:dataObject id="approval_cnt" />
     <bpmn:dataObjectReference id="DataObjectReference_0pcv4xh" name="Is Approval" dataObjectRef="is_approval" />
+    <bpmn:dataObject id="is_approval" />
+    <bpmn:dataObjectReference id="DataObjectReference_10v9kb5" name="Approval Cnt" dataObjectRef="approval_cnt" />
+    <bpmn:dataObject id="approval_cnt" />
+    <bpmn:dataObjectReference id="DataObjectReference_1fwlns1" name="Is Approval" dataObjectRef="is_approval" />
     <bpmn:dataObject id="is_approval" />
   </bpmn:process>
   <bpmn:signal id="Signal_352nsp4" name="Approver-1" />
@@ -398,12 +406,6 @@ Approval Count: {{ approval_cnt }}
           <dc:Bounds x="822" y="1222" width="78" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="DataObjectReference_10v9kb5_di" bpmnElement="DataObjectReference_10v9kb5">
-        <dc:Bounds x="702" y="1045" width="36" height="50" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="688" y="1021" width="64" height="14" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_0902wkh_di" bpmnElement="Event_0lq4h7d">
         <dc:Bounds x="952" y="1172" width="36" height="36" />
       </bpmndi:BPMNShape>
@@ -447,6 +449,12 @@ Approval Count: {{ approval_cnt }}
         <dc:Bounds x="752" y="745" width="36" height="50" />
         <bpmndi:BPMNLabel>
           <dc:Bounds x="742" y="721" width="55" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DataObjectReference_10v9kb5_di" bpmnElement="DataObjectReference_10v9kb5">
+        <dc:Bounds x="652" y="1045" width="36" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="638" y="1021" width="64" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_0ta91uv_di" bpmnElement="Event_0jup8rs">
@@ -610,17 +618,23 @@ Approval Count: {{ approval_cnt }}
         <di:waypoint x="1210" y="1190" />
         <di:waypoint x="1210" y="232" />
       </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="DataObjectReference_1fwlns1_di" bpmnElement="DataObjectReference_1fwlns1">
+        <dc:Bounds x="752" y="1045" width="36" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="743" y="1102" width="55" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="DataOutputAssociation_069vd52_di" bpmnElement="DataOutputAssociation_069vd52">
         <di:waypoint x="169" y="247" />
         <di:waypoint x="150" y="285" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="DataInputAssociation_1ujv32m_di" bpmnElement="DataInputAssociation_1ujv32m">
-        <di:waypoint x="713" y="1095" />
-        <di:waypoint x="696" y="1150" />
+        <di:waypoint x="674" y="1095" />
+        <di:waypoint x="680" y="1150" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="DataOutputAssociation_17bvaeq_di" bpmnElement="DataOutputAssociation_17bvaeq">
-        <di:waypoint x="740" y="1150" />
-        <di:waypoint x="726" y="1095" />
+        <di:waypoint x="710" y="1150" />
+        <di:waypoint x="683" y="1095" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="DataInputAssociation_1nl5d0v_di" bpmnElement="DataInputAssociation_1nl5d0v">
         <di:waypoint x="675" y="495" />
@@ -661,6 +675,14 @@ Approval Count: {{ approval_cnt }}
       <bpmndi:BPMNEdge id="DataOutputAssociation_0xqkeq4_di" bpmnElement="DataOutputAssociation_0xqkeq4">
         <di:waypoint x="768" y="840" />
         <di:waypoint x="768" y="795" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DataInputAssociation_05os2ab_di" bpmnElement="DataInputAssociation_05os2ab">
+        <di:waypoint x="756" y="1095" />
+        <di:waypoint x="726" y="1150" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DataOutputAssociation_1w4ee8t_di" bpmnElement="DataOutputAssociation_1w4ee8t">
+        <di:waypoint x="750" y="1150" />
+        <di:waypoint x="766" y="1095" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
