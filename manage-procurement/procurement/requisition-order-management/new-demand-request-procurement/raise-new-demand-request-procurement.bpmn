@@ -836,12 +836,12 @@ Please ensure that you have enough budget for the demand, and if needed, submit 
       <bpmn:startEvent id="Event_1l8ius3">
         <bpmn:outgoing>Flow_142yxm3</bpmn:outgoing>
       </bpmn:startEvent>
-      <bpmn:sequenceFlow id="Flow_142yxm3" sourceRef="Event_1l8ius3" targetRef="Activity_0s41d4f" />
+      <bpmn:sequenceFlow id="Flow_142yxm3" sourceRef="Event_1l8ius3" targetRef="Activity_089nxy7" />
       <bpmn:callActivity id="Activity_0s41d4f" name="Call Get Waku Message Info" calledElement="Waku_Messages_Message-Raise_New_Demand_Request">
         <bpmn:extensionElements>
           <spiffworkflow:preScript>task_id = "waku_request_approval"</spiffworkflow:preScript>
         </bpmn:extensionElements>
-        <bpmn:incoming>Flow_142yxm3</bpmn:incoming>
+        <bpmn:incoming>Flow_166ld2q</bpmn:incoming>
         <bpmn:outgoing>Flow_05dnngg</bpmn:outgoing>
       </bpmn:callActivity>
       <bpmn:sequenceFlow id="Flow_05dnngg" sourceRef="Activity_0s41d4f" targetRef="Activity_03jr51j" />
@@ -862,6 +862,11 @@ Please ensure that you have enough budget for the demand, and if needed, submit 
         <bpmn:incoming>Flow_18heilx</bpmn:incoming>
       </bpmn:endEvent>
       <bpmn:sequenceFlow id="Flow_18heilx" sourceRef="Activity_03jr51j" targetRef="Event_10mfoa3" />
+      <bpmn:sequenceFlow id="Flow_166ld2q" sourceRef="Activity_089nxy7" targetRef="Activity_0s41d4f" />
+      <bpmn:callActivity id="Activity_089nxy7" name="Call SR: User Info">
+        <bpmn:incoming>Flow_142yxm3</bpmn:incoming>
+        <bpmn:outgoing>Flow_166ld2q</bpmn:outgoing>
+      </bpmn:callActivity>
     </bpmn:subProcess>
     <bpmn:sequenceFlow id="Flow_0hxerew" sourceRef="Activity_108eq0l" targetRef="Event_0xklgk1" />
     <bpmn:callActivity id="Activity_0tt12kf" name="Call Shared: Define Approval strategy" calledElement="Approval_Strategy">
@@ -2218,9 +2223,6 @@ Please ensure that you have enough budget for the demand, and if needed, submit 
   </bpmndi:BPMNDiagram>
   <bpmndi:BPMNDiagram id="BPMNDiagram_18qwlit">
     <bpmndi:BPMNPlane id="BPMNPlane_0w7s9uy" bpmnElement="Activity_108eq0l">
-      <bpmndi:BPMNShape id="Event_1l8ius3_di" bpmnElement="Event_1l8ius3">
-        <dc:Bounds x="322" y="222" width="36" height="36" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1li5e19_di" bpmnElement="Activity_0s41d4f">
         <dc:Bounds x="410" y="200" width="100" height="80" />
       </bpmndi:BPMNShape>
@@ -2230,9 +2232,15 @@ Please ensure that you have enough budget for the demand, and if needed, submit 
       <bpmndi:BPMNShape id="Event_10mfoa3_di" bpmnElement="Event_10mfoa3">
         <dc:Bounds x="732" y="222" width="36" height="36" />
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1l8ius3_di" bpmnElement="Event_1l8ius3">
+        <dc:Bounds x="122" y="222" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1qm2hlt_di" bpmnElement="Activity_089nxy7">
+        <dc:Bounds x="220" y="200" width="100" height="80" />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_142yxm3_di" bpmnElement="Flow_142yxm3">
-        <di:waypoint x="358" y="240" />
-        <di:waypoint x="410" y="240" />
+        <di:waypoint x="158" y="240" />
+        <di:waypoint x="220" y="240" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_05dnngg_di" bpmnElement="Flow_05dnngg">
         <di:waypoint x="510" y="240" />
@@ -2241,6 +2249,10 @@ Please ensure that you have enough budget for the demand, and if needed, submit 
       <bpmndi:BPMNEdge id="Flow_18heilx_di" bpmnElement="Flow_18heilx">
         <di:waypoint x="670" y="240" />
         <di:waypoint x="732" y="240" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_166ld2q_di" bpmnElement="Flow_166ld2q">
+        <di:waypoint x="320" y="240" />
+        <di:waypoint x="410" y="240" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
