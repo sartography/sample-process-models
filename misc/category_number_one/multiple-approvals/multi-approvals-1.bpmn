@@ -207,7 +207,6 @@ Approval Count: {{ approval_cnt }}
 </spiffworkflow:instructionsForEndUser>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_1l44yik</bpmn:incoming>
-      <bpmn:incoming>Flow_1i0fpj6</bpmn:incoming>
       <bpmn:outgoing>Flow_1199vyt</bpmn:outgoing>
       <bpmn:property id="Property_02r2slo" name="__targetRef_placeholder" />
       <bpmn:dataInputAssociation id="DataInputAssociation_1ckscck">
@@ -218,6 +217,7 @@ Approval Count: {{ approval_cnt }}
     <bpmn:parallelGateway id="Gateway_16bj0wn">
       <bpmn:incoming>Flow_08ph8re</bpmn:incoming>
       <bpmn:incoming>Flow_0fb9qhu</bpmn:incoming>
+      <bpmn:incoming>Flow_058zuib</bpmn:incoming>
       <bpmn:outgoing>Flow_1l44yik</bpmn:outgoing>
     </bpmn:parallelGateway>
     <bpmn:sequenceFlow id="Flow_1199vyt" sourceRef="Activity_0fxkugq" targetRef="Event_1or7z59" />
@@ -249,7 +249,7 @@ Approval Count: {{ approval_cnt }}
       <bpmn:incoming>Flow_1cmqfcg</bpmn:incoming>
       <bpmn:incoming>Flow_12nx960</bpmn:incoming>
       <bpmn:incoming>Flow_1ibvb14</bpmn:incoming>
-      <bpmn:outgoing>Flow_1i0fpj6</bpmn:outgoing>
+      <bpmn:outgoing>Flow_058zuib</bpmn:outgoing>
     </bpmn:exclusiveGateway>
     <bpmn:exclusiveGateway id="Gateway_1pmg5mn" name="Two Approvals?" default="Flow_1ibvb14">
       <bpmn:incoming>Flow_00akfhi</bpmn:incoming>
@@ -269,9 +269,9 @@ Approval Count: {{ approval_cnt }}
       <bpmn:signalEventDefinition id="SignalEventDefinition_0wrivit" signalRef="Signal_0obospb" />
     </bpmn:intermediateThrowEvent>
     <bpmn:sequenceFlow id="Flow_1ibvb14" name="No" sourceRef="Gateway_1pmg5mn" targetRef="Gateway_1mqikfu" />
-    <bpmn:sequenceFlow id="Flow_1i0fpj6" sourceRef="Gateway_1mqikfu" targetRef="Activity_0fxkugq" />
     <bpmn:dataObjectReference id="DataObjectReference_1e9dqri" name="Approval Cnt" dataObjectRef="approval_cnt" />
     <bpmn:dataObject id="approval_cnt" />
+    <bpmn:sequenceFlow id="Flow_058zuib" sourceRef="Gateway_1mqikfu" targetRef="Gateway_16bj0wn" />
   </bpmn:process>
   <bpmn:signal id="Signal_352nsp4" name="Approver-1" />
   <bpmn:signal id="Signal_2uo4te4" name="Approver-2" />
@@ -564,11 +564,10 @@ Approval Count: {{ approval_cnt }}
           <dc:Bounds x="973" y="1102" width="15" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_1i0fpj6_di" bpmnElement="Flow_1i0fpj6">
+      <bpmndi:BPMNEdge id="Flow_058zuib_di" bpmnElement="Flow_058zuib">
         <di:waypoint x="1125" y="1190" />
         <di:waypoint x="1210" y="1190" />
-        <di:waypoint x="1210" y="207" />
-        <di:waypoint x="1290" y="207" />
+        <di:waypoint x="1210" y="232" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="DataOutputAssociation_069vd52_di" bpmnElement="DataOutputAssociation_069vd52">
         <di:waypoint x="189" y="247" />
@@ -582,10 +581,6 @@ Approval Count: {{ approval_cnt }}
         <di:waypoint x="740" y="1150" />
         <di:waypoint x="726" y="1095" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="DataInputAssociation_12lsybg_di" bpmnElement="DataInputAssociation_12lsybg">
-        <di:waypoint x="732" y="795" />
-        <di:waypoint x="717" y="840" />
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="DataInputAssociation_1nl5d0v_di" bpmnElement="DataInputAssociation_1nl5d0v">
         <di:waypoint x="715" y="495" />
         <di:waypoint x="704" y="550" />
@@ -594,13 +589,17 @@ Approval Count: {{ approval_cnt }}
         <di:waypoint x="740" y="550" />
         <di:waypoint x="726" y="495" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="DataInputAssociation_1ckscck_di" bpmnElement="DataInputAssociation_1ckscck">
-        <di:waypoint x="1349" y="295" />
-        <di:waypoint x="1366" y="247" />
+      <bpmndi:BPMNEdge id="DataInputAssociation_12lsybg_di" bpmnElement="DataInputAssociation_12lsybg">
+        <di:waypoint x="732" y="795" />
+        <di:waypoint x="717" y="840" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="DataOutputAssociation_0kkqybu_di" bpmnElement="DataOutputAssociation_0kkqybu">
         <di:waypoint x="739" y="840" />
         <di:waypoint x="738" y="795" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DataInputAssociation_1ckscck_di" bpmnElement="DataInputAssociation_1ckscck">
+        <di:waypoint x="1349" y="295" />
+        <di:waypoint x="1366" y="247" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
