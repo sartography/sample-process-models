@@ -37,6 +37,7 @@
         <bpmn:flowNodeRef>Event_0t2z9gc</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Gateway_1mqikfu</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Gateway_1pmg5mn</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Event_0lq4h7d</bpmn:flowNodeRef>
       </bpmn:lane>
     </bpmn:laneSet>
     <bpmn:startEvent id="StartEvent_1">
@@ -223,7 +224,7 @@ approval_cnt = approval_cnt + 1</bpmn:script>
       <bpmn:outgoing>Flow_1upwobg</bpmn:outgoing>
     </bpmn:exclusiveGateway>
     <bpmn:sequenceFlow id="Flow_14snynn" name="Yes" sourceRef="Gateway_1aisfqv" targetRef="Event_1a53lvz">
-      <bpmn:conditionExpression>approval_cnt =- 2</bpmn:conditionExpression>
+      <bpmn:conditionExpression>approval_cnt == 2</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:exclusiveGateway id="Gateway_0vza3va">
       <bpmn:incoming>Flow_1i7dm9k</bpmn:incoming>
@@ -282,17 +283,28 @@ Lead: {{ lead_approval }}</spiffworkflow:instructionsForEndUser>
     <bpmn:sequenceFlow id="Flow_0fb9qhu" sourceRef="Gateway_0cvlh16" targetRef="Gateway_16bj0wn" />
     <bpmn:exclusiveGateway id="Gateway_1mqikfu">
       <bpmn:incoming>Flow_1cmqfcg</bpmn:incoming>
-      <bpmn:incoming>Flow_0h5nhqk</bpmn:incoming>
+      <bpmn:incoming>Flow_12nx960</bpmn:incoming>
+      <bpmn:incoming>Flow_1ibvb14</bpmn:incoming>
     </bpmn:exclusiveGateway>
-    <bpmn:exclusiveGateway id="Gateway_1pmg5mn">
+    <bpmn:exclusiveGateway id="Gateway_1pmg5mn" default="Flow_1ibvb14">
       <bpmn:incoming>Flow_00akfhi</bpmn:incoming>
       <bpmn:outgoing>Flow_0h5nhqk</bpmn:outgoing>
+      <bpmn:outgoing>Flow_1ibvb14</bpmn:outgoing>
     </bpmn:exclusiveGateway>
-    <bpmn:sequenceFlow id="Flow_0h5nhqk" sourceRef="Gateway_1pmg5mn" targetRef="Gateway_1mqikfu" />
+    <bpmn:sequenceFlow id="Flow_0h5nhqk" name="Yes" sourceRef="Gateway_1pmg5mn" targetRef="Event_0lq4h7d">
+      <bpmn:conditionExpression>approval_cnt == 2</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
     <bpmn:dataObjectReference id="DataObjectReference_16tbebh" name="Approval Cnt" dataObjectRef="approval_cnt" />
     <bpmn:dataObjectReference id="DataObjectReference_1r531et" name="Approval Cnt" dataObjectRef="approval_cnt" />
     <bpmn:dataObjectReference id="DataObjectReference_10v9kb5" name="Approval Cnt" dataObjectRef="approval_cnt" />
     <bpmn:dataObject id="approval_cnt" />
+    <bpmn:sequenceFlow id="Flow_12nx960" sourceRef="Event_0lq4h7d" targetRef="Gateway_1mqikfu" />
+    <bpmn:intermediateThrowEvent id="Event_0lq4h7d">
+      <bpmn:incoming>Flow_0h5nhqk</bpmn:incoming>
+      <bpmn:outgoing>Flow_12nx960</bpmn:outgoing>
+      <bpmn:signalEventDefinition id="SignalEventDefinition_0wrivit" signalRef="Signal_0obospb" />
+    </bpmn:intermediateThrowEvent>
+    <bpmn:sequenceFlow id="Flow_1ibvb14" name="No" sourceRef="Gateway_1pmg5mn" targetRef="Gateway_1mqikfu" />
   </bpmn:process>
   <bpmn:signal id="Signal_352nsp4" name="Approver-1" />
   <bpmn:signal id="Signal_2uo4te4" name="Approver-2" />
@@ -348,6 +360,9 @@ Lead: {{ lead_approval }}</spiffworkflow:instructionsForEndUser>
         <bpmndi:BPMNLabel>
           <dc:Bounds x="688" y="1021" width="64" height="14" />
         </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0902wkh_di" bpmnElement="Event_0lq4h7d">
+        <dc:Bounds x="952" y="1172" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_13w11r6_di" bpmnElement="Activity_1lb5cfz">
         <dc:Bounds x="780" y="167" width="100" height="80" />
@@ -559,7 +574,23 @@ Lead: {{ lead_approval }}</spiffworkflow:instructionsForEndUser>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0h5nhqk_di" bpmnElement="Flow_0h5nhqk">
         <di:waypoint x="885" y="1190" />
+        <di:waypoint x="952" y="1190" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="910" y="1172" width="18" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_12nx960_di" bpmnElement="Flow_12nx960">
+        <di:waypoint x="988" y="1190" />
         <di:waypoint x="1075" y="1190" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1ibvb14_di" bpmnElement="Flow_1ibvb14">
+        <di:waypoint x="860" y="1165" />
+        <di:waypoint x="860" y="1120" />
+        <di:waypoint x="1100" y="1120" />
+        <di:waypoint x="1100" y="1165" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="973" y="1102" width="15" height="14" />
+        </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="DataOutputAssociation_069vd52_di" bpmnElement="DataOutputAssociation_069vd52">
         <di:waypoint x="189" y="247" />
