@@ -867,6 +867,34 @@ Please ensure that you have enough budget for the demand, and if needed, submit 
         <bpmn:extensionElements>
           <spiffworkflow:preScript>find_user = project_lead_email
 isCurrentUser = False</spiffworkflow:preScript>
+          <spiffworkflow:postScript># Update Budget Owner Extras
+budget_owner = {}
+
+# Add User Info DMN Table info
+budget_owner["bamboo_api_id"] = userBambooId
+budget_owner["time_zone"] = userTimeZone
+budget_owner["date_format"] = userDateFormat
+budget_owner["time_format"] = userTimeFormat
+
+# Add Bamboo Info to Extras
+budget_owner["first_name"] = resp_BambooUserInfo["firstName"]
+budget_owner["last_name"] = resp_BambooUserInfo["lastName"]
+budget_owner["preferred_name"] = resp_BambooUserInfo["preferredName"]
+if budget_owner["preferred_name"] is None:
+    budget_owner["full_name"] = budget_owner["first_name"] + " " + budget_owner["last_name"]
+else:
+    budget_owner["full_name"] = budget_owner["first_name"] + " (" + budget_owner["preferred_name"] + ") " + budget_owner["last_name"]
+budget_owner["status_key"] = resp_BambooUserInfo["customStatusChatKey"]
+budget_owner["bamboo_supervisor_api_id"] = resp_BambooUserInfo["supervisorEid"]
+budget_owner["bamboo_supervisor_status_id"] = resp_BambooUserInfo["supervisorId"]
+
+del(userFullName)
+del(userFirstName)
+del(userTimeZone)
+del(userStatusKey)
+del(userBambooId)
+del(userDateFormat)
+del(userTimeFormat)</spiffworkflow:postScript>
         </bpmn:extensionElements>
         <bpmn:incoming>Flow_142yxm3</bpmn:incoming>
         <bpmn:outgoing>Flow_166ld2q</bpmn:outgoing>
