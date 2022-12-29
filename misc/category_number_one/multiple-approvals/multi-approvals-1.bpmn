@@ -158,8 +158,11 @@ lane_owners = {
       <bpmn:dataOutputAssociation id="DataOutputAssociation_17bvaeq">
         <bpmn:targetRef>DataObjectReference_10v9kb5</bpmn:targetRef>
       </bpmn:dataOutputAssociation>
-      <bpmn:script>is_approver3_approval = True
-approval_cnt = approval_cnt + 1</bpmn:script>
+      <bpmn:script># Increment approval count
+approval_cnt = approval_cnt + 1
+
+# Set Exclusive Gateway variable
+gateway_approval_cnt = approval_cnt</bpmn:script>
     </bpmn:scriptTask>
     <bpmn:boundaryEvent id="Event_0t2z9gc" attachedToRef="Activity_1vdzcey">
       <bpmn:outgoing>Flow_1cmqfcg</bpmn:outgoing>
@@ -230,7 +233,7 @@ gateway_approval_cnt = approval_cnt</bpmn:script>
       <bpmn:outgoing>Flow_1upwobg</bpmn:outgoing>
     </bpmn:exclusiveGateway>
     <bpmn:sequenceFlow id="Flow_14snynn" name="Yes" sourceRef="Gateway_1aisfqv" targetRef="Event_1a53lvz">
-      <bpmn:conditionExpression>approval_cnt == 2</bpmn:conditionExpression>
+      <bpmn:conditionExpression>gateway_approval_cnt == 2</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:exclusiveGateway id="Gateway_0vza3va">
       <bpmn:incoming>Flow_1i7dm9k</bpmn:incoming>
@@ -278,7 +281,7 @@ Lead: {{ lead_approval }}</spiffworkflow:instructionsForEndUser>
       <bpmn:outgoing>Flow_0we4l20</bpmn:outgoing>
     </bpmn:exclusiveGateway>
     <bpmn:sequenceFlow id="Flow_064emnu" name="Yes" sourceRef="Gateway_1or3epy" targetRef="Event_1kjub5y">
-      <bpmn:conditionExpression>approval_cnt == 2</bpmn:conditionExpression>
+      <bpmn:conditionExpression>gateway_approval_cnt == 2</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="Flow_11jlqmr" sourceRef="Event_1kjub5y" targetRef="Gateway_0cvlh16" />
     <bpmn:intermediateThrowEvent id="Event_1kjub5y">
@@ -300,7 +303,7 @@ Lead: {{ lead_approval }}</spiffworkflow:instructionsForEndUser>
       <bpmn:outgoing>Flow_1ibvb14</bpmn:outgoing>
     </bpmn:exclusiveGateway>
     <bpmn:sequenceFlow id="Flow_0h5nhqk" name="Yes" sourceRef="Gateway_1pmg5mn" targetRef="Event_0lq4h7d">
-      <bpmn:conditionExpression>approval_cnt == 2</bpmn:conditionExpression>
+      <bpmn:conditionExpression>gateway_approval_cnt == 2</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:dataObjectReference id="DataObjectReference_16tbebh" name="Approval Cnt" dataObjectRef="approval_cnt" />
     <bpmn:dataObjectReference id="DataObjectReference_1r531et" name="Approval Cnt" dataObjectRef="approval_cnt" />
