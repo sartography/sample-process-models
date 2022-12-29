@@ -82,27 +82,75 @@ times_run = 0</bpmn:script>
     <bpmn:scriptTask id="Activity_0if567h" name="reap">
       <bpmn:incoming>Flow_0zkaxwb</bpmn:incoming>
       <bpmn:outgoing>Flow_1bwzp86</bpmn:outgoing>
-      <bpmn:script>True</bpmn:script>
-    </bpmn:scriptTask>
-    <bpmn:sequenceFlow id="Flow_0zkaxwb" sourceRef="Activity_1w4nafe" targetRef="Activity_0if567h" />
-    <bpmn:scriptTask id="Activity_1w4nafe" name="move config forming here">
-      <bpmn:incoming>Flow_01w3rxo</bpmn:incoming>
-      <bpmn:outgoing>Flow_0zkaxwb</bpmn:outgoing>
-      <bpmn:script>
-config = list(zip(process_model_name, 
-    process_model_status,
-    process_model_expires_in_seconds))
+      <bpmn:script>True
 
-del(process_model_name)
-del(process_model_status)
-del(process_model_expires_in_seconds)
-
-#reap_current_process_instances(data_from_dmn)
 
 ## optimization:
 ## after delete, what is the next candidate for delete
 #next_delete_time_in_seconds = reap_current_process_instances(data_from_dmn)
 #next_delete_time_in_seconds *= 110% # padding to help with race conditions ll</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:sequenceFlow id="Flow_0zkaxwb" sourceRef="Activity_1w4nafe" targetRef="Activity_0if567h" />
+    <bpmn:scriptTask id="Activity_1w4nafe" name="build process instance delete criteria">
+      <bpmn:extensionElements>
+        <spiffworkflow:unitTests>
+          <spiffworkflow:unitTest id="ScriptUnitTest_1qas2id">
+            <spiffworkflow:inputJson>{
+    "process_model_name": ["a", "b", "c"],
+    "process_model_status": [
+        ["complete"],
+        ["user_input_required", "faulted"],
+        ["complete", "error"]
+    ],
+    "process_model_expires_in_seconds": [1, 60, 300]
+}</spiffworkflow:inputJson>
+            <spiffworkflow:expectedOutputJson>{
+  "process_instance_delete_criteria": [
+    {
+      "last_updated_delta": 1,
+      "name": "a",
+      "status": [
+        "complete"
+      ]
+    },
+    {
+      "last_updated_delta": 60,
+      "name": "b",
+      "status": [
+        "user_input_required",
+        "faulted"
+      ]
+    },
+    {
+      "last_updated_delta": 300,
+      "name": "c",
+      "status": [
+        "complete",
+        "error"
+      ]
+    }
+  ]
+}</spiffworkflow:expectedOutputJson>
+          </spiffworkflow:unitTest>
+        </spiffworkflow:unitTests>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_01w3rxo</bpmn:incoming>
+      <bpmn:outgoing>Flow_0zkaxwb</bpmn:outgoing>
+      <bpmn:script>def to_delete_criteria(config):
+    return {
+        "name": config[0],
+        "status": config[1],
+        "last_updated_delta": config[2],
+    }
+
+process_instance_delete_criteria = list(map(to_delete_criteria, zip(process_model_name, 
+    process_model_status,
+    process_model_expires_in_seconds)))
+
+del(process_model_name)
+del(process_model_status)
+del(process_model_expires_in_seconds)
+</bpmn:script>
     </bpmn:scriptTask>
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
@@ -138,7 +186,7 @@ del(process_model_expires_in_seconds)
         <dc:Bounds x="850" y="137" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_00r0tzj_di" bpmnElement="Activity_1w4nafe">
-        <dc:Bounds x="730" y="137" width="100" height="80" />
+        <dc:Bounds x="580" y="137" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_1x4kjsz_di" bpmnElement="Flow_1x4kjsz">
@@ -155,7 +203,7 @@ del(process_model_expires_in_seconds)
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_01w3rxo_di" bpmnElement="Flow_01w3rxo">
         <di:waypoint x="550" y="177" />
-        <di:waypoint x="730" y="177" />
+        <di:waypoint x="580" y="177" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0mgnrik_di" bpmnElement="Flow_0mgnrik">
         <di:waypoint x="1240" y="202" />
@@ -180,7 +228,7 @@ del(process_model_expires_in_seconds)
         <di:waypoint x="1080" y="177" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0zkaxwb_di" bpmnElement="Flow_0zkaxwb">
-        <di:waypoint x="830" y="177" />
+        <di:waypoint x="680" y="177" />
         <di:waypoint x="850" y="177" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
