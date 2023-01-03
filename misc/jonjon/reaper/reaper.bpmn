@@ -70,19 +70,21 @@ del(process_model_time_unit)</bpmn:script>
       <bpmn:incoming>Flow_18h0rzg</bpmn:incoming>
       <bpmn:outgoing>Flow_1y9xe99</bpmn:outgoing>
       <bpmn:script>#started=now()
-times_run = 0</bpmn:script>
+times_run = 0
+total_instances_deleted = 0</bpmn:script>
     </bpmn:scriptTask>
     <bpmn:sequenceFlow id="Flow_0irycq7" sourceRef="Activity_0ndvxvv" targetRef="Gateway_0e5ac7h" />
     <bpmn:scriptTask id="Activity_0ndvxvv" name="update stats">
       <bpmn:incoming>Flow_1bwzp86</bpmn:incoming>
       <bpmn:outgoing>Flow_0irycq7</bpmn:outgoing>
-      <bpmn:script>times_run = times_run + 1</bpmn:script>
+      <bpmn:script>times_run = times_run + 1
+total_instances_deleted = total_instances_deleted + rows_affected</bpmn:script>
     </bpmn:scriptTask>
     <bpmn:sequenceFlow id="Flow_1bwzp86" sourceRef="Activity_0if567h" targetRef="Activity_0ndvxvv" />
     <bpmn:scriptTask id="Activity_0if567h" name="reap">
       <bpmn:incoming>Flow_0zkaxwb</bpmn:incoming>
       <bpmn:outgoing>Flow_1bwzp86</bpmn:outgoing>
-      <bpmn:script>True
+      <bpmn:script>rows_affected = delete_process_instances_with_criteria(process_instance_delete_criteria)
 
 
 ## optimization:
@@ -183,7 +185,7 @@ del(process_model_expires_in_seconds)
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0f69alq_di" bpmnElement="Activity_0if567h">
-        <dc:Bounds x="850" y="137" width="100" height="80" />
+        <dc:Bounds x="700" y="137" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_00r0tzj_di" bpmnElement="Activity_1w4nafe">
         <dc:Bounds x="580" y="137" width="100" height="80" />
@@ -224,12 +226,12 @@ del(process_model_expires_in_seconds)
         <di:waypoint x="1215" y="177" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1bwzp86_di" bpmnElement="Flow_1bwzp86">
-        <di:waypoint x="950" y="177" />
+        <di:waypoint x="800" y="177" />
         <di:waypoint x="1080" y="177" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0zkaxwb_di" bpmnElement="Flow_0zkaxwb">
         <di:waypoint x="680" y="177" />
-        <di:waypoint x="850" y="177" />
+        <di:waypoint x="700" y="177" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
