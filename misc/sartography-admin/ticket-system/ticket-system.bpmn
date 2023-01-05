@@ -13,12 +13,19 @@
         </spiffworkflow:properties>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_0gixxkm</bpmn:incoming>
-      <bpmn:outgoing>Flow_1oi9nsn</bpmn:outgoing>
+      <bpmn:outgoing>Flow_0iu60e3</bpmn:outgoing>
     </bpmn:userTask>
     <bpmn:endEvent id="Event_003bxs1">
-      <bpmn:incoming>Flow_1oi9nsn</bpmn:incoming>
+      <bpmn:incoming>Flow_0w0ku2l</bpmn:incoming>
     </bpmn:endEvent>
-    <bpmn:sequenceFlow id="Flow_1oi9nsn" sourceRef="present_form" targetRef="Event_003bxs1" />
+    <bpmn:exclusiveGateway id="Gateway_1w3asvh">
+      <bpmn:incoming>Flow_0iu60e3</bpmn:incoming>
+      <bpmn:outgoing>Flow_0w0ku2l</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="Flow_0iu60e3" sourceRef="present_form" targetRef="Gateway_1w3asvh" />
+    <bpmn:sequenceFlow id="Flow_0w0ku2l" sourceRef="Gateway_1w3asvh" targetRef="Event_003bxs1">
+      <bpmn:conditionExpression>status == "complete"</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="ticket-system_process">
@@ -30,15 +37,22 @@
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_003bxs1_di" bpmnElement="Event_003bxs1">
-        <dc:Bounds x="432" y="159" width="36" height="36" />
+        <dc:Bounds x="562" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_1w3asvh_di" bpmnElement="Gateway_1w3asvh" isMarkerVisible="true">
+        <dc:Bounds x="425" y="152" width="50" height="50" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_0gixxkm_di" bpmnElement="Flow_0gixxkm">
         <di:waypoint x="215" y="177" />
         <di:waypoint x="270" y="177" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_1oi9nsn_di" bpmnElement="Flow_1oi9nsn">
+      <bpmndi:BPMNEdge id="Flow_0iu60e3_di" bpmnElement="Flow_0iu60e3">
         <di:waypoint x="370" y="177" />
-        <di:waypoint x="432" y="177" />
+        <di:waypoint x="425" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0w0ku2l_di" bpmnElement="Flow_0w0ku2l">
+        <di:waypoint x="475" y="177" />
+        <di:waypoint x="562" y="177" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
