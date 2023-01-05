@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:spiffworkflow="http://spiffworkflow.org/bpmn/schema/1.0/core" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="Definitions_96f6665" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.0.0-dev">
+  <bpmn:process id="Process_as2nejj" isExecutable="true">
+    <bpmn:endEvent id="Event_1sdap1v">
+      <bpmn:incoming>Flow_0pp3wm0</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:scriptTask id="Activity_1x7m0mq" name="convert tll to seconds">
+      <bpmn:extensionElements>
+        <spiffworkflow:unitTests>
+          <spiffworkflow:unitTest id="ScriptUnitTest_0z38y7h">
+            <spiffworkflow:inputJson>{
+    "process_model_time_unit": ["seconds", "minutes"],
+    "process_model_time_elapsed": [1, 1]
+}</spiffworkflow:inputJson>
+            <spiffworkflow:expectedOutputJson>{
+  "process_model_expires_in_seconds": [
+    1,
+    60
+  ]
+}</spiffworkflow:expectedOutputJson>
+          </spiffworkflow:unitTest>
+        </spiffworkflow:unitTests>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1x4kjsz</bpmn:incoming>
+      <bpmn:outgoing>Flow_01w3rxo</bpmn:outgoing>
+      <bpmn:script>time_config = zip(process_model_time_unit, process_model_time_elapsed)
+
+def to_seconds(config):
+    return timedelta(**{config[0]: config[1]}).total_seconds()
+
+process_model_expires_in_seconds = list(map(to_seconds, time_config))
+
+del(time_config)
+del(process_model_time_elapsed)
+del(process_model_time_unit)</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:businessRuleTask id="Activity_1mq6e0z" name="get process model ttl config">
+      <bpmn:extensionElements>
+        <spiffworkflow:calledDecisionId>ProcessModelTTL</spiffworkflow:calledDecisionId>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0emb6j8</bpmn:incoming>
+      <bpmn:incoming>Flow_1y9xe99</bpmn:incoming>
+      <bpmn:outgoing>Flow_1x4kjsz</bpmn:outgoing>
+    </bpmn:businessRuleTask>
+    <bpmn:sequenceFlow id="Flow_1x4kjsz" sourceRef="Activity_1mq6e0z" targetRef="Activity_1x7m0mq" />
+    <bpmn:startEvent id="Event_06vtvef">
+      <bpmn:outgoing>Flow_18h0rzg</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_18h0rzg" sourceRef="Event_06vtvef" targetRef="Activity_0x3w9oc" />
+    <bpmn:exclusiveGateway id="Gateway_0e5ac7h" default="Flow_0mgnrik">
+      <bpmn:incoming>Flow_0irycq7</bpmn:incoming>
+      <bpmn:outgoing>Flow_0pp3wm0</bpmn:outgoing>
+      <bpmn:outgoing>Flow_0mgnrik</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="Flow_0pp3wm0" sourceRef="Gateway_0e5ac7h" targetRef="Event_1sdap1v">
+      <bpmn:conditionExpression>False</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_01w3rxo" sourceRef="Activity_1x7m0mq" targetRef="Activity_1w4nafe" />
+    <bpmn:sequenceFlow id="Flow_0mgnrik" sourceRef="Gateway_0e5ac7h" targetRef="Event_0z9v7m2" />
+    <bpmn:intermediateCatchEvent id="Event_0z9v7m2">
+      <bpmn:incoming>Flow_0mgnrik</bpmn:incoming>
+      <bpmn:outgoing>Flow_0emb6j8</bpmn:outgoing>
+      <bpmn:timerEventDefinition id="TimerEventDefinition_0jmqj2i">
+        <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">timedelta(minutes=10)</bpmn:timeDuration>
+      </bpmn:timerEventDefinition>
+    </bpmn:intermediateCatchEvent>
+    <bpmn:sequenceFlow id="Flow_0emb6j8" sourceRef="Event_0z9v7m2" targetRef="Activity_1mq6e0z" />
+    <bpmn:sequenceFlow id="Flow_1y9xe99" sourceRef="Activity_0x3w9oc" targetRef="Activity_1mq6e0z" />
+    <bpmn:scriptTask id="Activity_0x3w9oc" name="start stats">
+      <bpmn:incoming>Flow_18h0rzg</bpmn:incoming>
+      <bpmn:outgoing>Flow_1y9xe99</bpmn:outgoing>
+      <bpmn:script>#started=now()
+times_run = 0
+total_instances_deleted = 0</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:sequenceFlow id="Flow_0irycq7" sourceRef="Activity_0ndvxvv" targetRef="Gateway_0e5ac7h" />
+    <bpmn:scriptTask id="Activity_0ndvxvv" name="update stats">
+      <bpmn:incoming>Flow_1bwzp86</bpmn:incoming>
+      <bpmn:outgoing>Flow_0irycq7</bpmn:outgoing>
+      <bpmn:script>times_run = times_run + 1
+total_instances_deleted = total_instances_deleted + rows_affected
+
+del(rows_affected)
+del(process_instance_delete_criteria)</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:sequenceFlow id="Flow_1bwzp86" sourceRef="Activity_0if567h" targetRef="Activity_0ndvxvv" />
+    <bpmn:scriptTask id="Activity_0if567h" name="reap">
+      <bpmn:incoming>Flow_0zkaxwb</bpmn:incoming>
+      <bpmn:outgoing>Flow_1bwzp86</bpmn:outgoing>
+      <bpmn:script>rows_affected = delete_process_instances_with_criteria(process_instance_delete_criteria)
+
+
+## optimization:
+## after delete, what is the next candidate for delete
+#next_delete_time_in_seconds = reap_current_process_instances(data_from_dmn)
+#next_delete_time_in_seconds *= 110% # padding to help with race conditions ll</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:sequenceFlow id="Flow_0zkaxwb" sourceRef="Activity_1w4nafe" targetRef="Activity_0if567h" />
+    <bpmn:scriptTask id="Activity_1w4nafe" name="build process instance delete criteria">
+      <bpmn:extensionElements>
+        <spiffworkflow:unitTests>
+          <spiffworkflow:unitTest id="ScriptUnitTest_1qas2id">
+            <spiffworkflow:inputJson>{
+    "process_model_name": ["a", "b", "c"],
+    "process_model_status": [
+        ["complete"],
+        ["user_input_required", "faulted"],
+        ["complete", "error"]
+    ],
+    "process_model_expires_in_seconds": [1, 60, 300]
+}</spiffworkflow:inputJson>
+            <spiffworkflow:expectedOutputJson>{
+  "process_instance_delete_criteria": [
+    {
+      "last_updated_delta": 1,
+      "name": "a",
+      "status": [
+        "complete"
+      ]
+    },
+    {
+      "last_updated_delta": 60,
+      "name": "b",
+      "status": [
+        "user_input_required",
+        "faulted"
+      ]
+    },
+    {
+      "last_updated_delta": 300,
+      "name": "c",
+      "status": [
+        "complete",
+        "error"
+      ]
+    }
+  ]
+}</spiffworkflow:expectedOutputJson>
+          </spiffworkflow:unitTest>
+        </spiffworkflow:unitTests>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_01w3rxo</bpmn:incoming>
+      <bpmn:outgoing>Flow_0zkaxwb</bpmn:outgoing>
+      <bpmn:script>def to_delete_criteria(config):
+    return {
+        "name": config[0],
+        "status": config[1],
+        "last_updated_delta": config[2],
+    }
+
+process_instance_delete_criteria = list(map(to_delete_criteria, zip(process_model_name, 
+    process_model_status,
+    process_model_expires_in_seconds)))
+
+del(process_model_name)
+del(process_model_status)
+del(process_model_expires_in_seconds)
+</bpmn:script>
+    </bpmn:scriptTask>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_as2nejj">
+      <bpmndi:BPMNShape id="Activity_04rq4hu_di" bpmnElement="Activity_1x7m0mq">
+        <dc:Bounds x="450" y="137" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0w0m204_di" bpmnElement="Activity_1mq6e0z">
+        <dc:Bounds x="320" y="137" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_06vtvef_di" bpmnElement="Event_06vtvef">
+        <dc:Bounds x="122" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_04d8grx_di" bpmnElement="Activity_0x3w9oc">
+        <dc:Bounds x="190" y="137" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_00r0tzj_di" bpmnElement="Activity_1w4nafe">
+        <dc:Bounds x="580" y="137" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0f69alq_di" bpmnElement="Activity_0if567h">
+        <dc:Bounds x="710" y="137" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0wms2m2_di" bpmnElement="Activity_0ndvxvv">
+        <dc:Bounds x="840" y="137" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_0e5ac7h_di" bpmnElement="Gateway_0e5ac7h" isMarkerVisible="true">
+        <dc:Bounds x="965" y="152" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1sdap1v_di" bpmnElement="Event_1sdap1v">
+        <dc:Bounds x="1042" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0bccdbh_di" bpmnElement="Event_0z9v7m2">
+        <dc:Bounds x="662" y="272" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_1x4kjsz_di" bpmnElement="Flow_1x4kjsz">
+        <di:waypoint x="420" y="177" />
+        <di:waypoint x="450" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_18h0rzg_di" bpmnElement="Flow_18h0rzg">
+        <di:waypoint x="158" y="177" />
+        <di:waypoint x="190" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0pp3wm0_di" bpmnElement="Flow_0pp3wm0">
+        <di:waypoint x="1015" y="177" />
+        <di:waypoint x="1042" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_01w3rxo_di" bpmnElement="Flow_01w3rxo">
+        <di:waypoint x="550" y="177" />
+        <di:waypoint x="580" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0mgnrik_di" bpmnElement="Flow_0mgnrik">
+        <di:waypoint x="990" y="202" />
+        <di:waypoint x="990" y="290" />
+        <di:waypoint x="698" y="290" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0emb6j8_di" bpmnElement="Flow_0emb6j8">
+        <di:waypoint x="662" y="290" />
+        <di:waypoint x="370" y="290" />
+        <di:waypoint x="370" y="217" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1y9xe99_di" bpmnElement="Flow_1y9xe99">
+        <di:waypoint x="290" y="177" />
+        <di:waypoint x="320" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0irycq7_di" bpmnElement="Flow_0irycq7">
+        <di:waypoint x="940" y="177" />
+        <di:waypoint x="965" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1bwzp86_di" bpmnElement="Flow_1bwzp86">
+        <di:waypoint x="810" y="177" />
+        <di:waypoint x="840" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0zkaxwb_di" bpmnElement="Flow_0zkaxwb">
+        <di:waypoint x="680" y="177" />
+        <di:waypoint x="710" y="177" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
