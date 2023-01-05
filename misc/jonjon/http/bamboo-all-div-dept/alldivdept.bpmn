@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:spiffworkflow="http://spiffworkflow.org/bpmn/schema/1.0/core" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_96f6665" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.0.0-dev">
-  <bpmn:process id="Process_eh0mkrx" isExecutable="true">
+  <bpmn:process id="Bamboo-AllDivisionsAndDepartments" name="Bamboo All Divisions and Departments" isExecutable="true">
     <bpmn:startEvent id="StartEvent_1">
       <bpmn:outgoing>Flow_01ffhv6</bpmn:outgoing>
     </bpmn:startEvent>
@@ -25,38 +25,407 @@
     </bpmn:serviceTask>
     <bpmn:sequenceFlow id="Flow_110nxt9" sourceRef="Activity_0ygriuv" targetRef="Event_1bp88xe" />
     <bpmn:scriptTask id="Activity_0ygriuv" name="Extract Divisions and Departments">
+      <bpmn:extensionElements>
+        <spiffworkflow:unitTests>
+          <spiffworkflow:unitTest id="Multiple Departments and Divisions">
+            <spiffworkflow:inputJson>{
+  "list_metadata": [
+    {
+      "fieldId": 4,
+      "manageable": "yes",
+      "multiple": "no",
+      "name": "Department",
+      "options": [
+        {
+          "id": 18568,
+          "archived": "no",
+          "createdDate": "2022-12-21T18:21:08+00:00",
+          "archivedDate": null,
+          "name": "Accounts Payable"
+        },
+        {
+          "id": 18564,
+          "archived": "no",
+          "createdDate": "2022-12-21T18:14:59+00:00",
+          "archivedDate": null,
+          "name": "Infrastructure Management"
+        },
+        {
+          "id": 18562,
+          "archived": "no",
+          "createdDate": "2022-12-21T18:08:59+00:00",
+          "archivedDate": null,
+          "name": "IT"
+        }
+      ]
+    },
+    {
+    "fieldId": 1355,
+    "manageable": "yes",
+    "multiple": "no",
+    "name": "Division",
+    "options": [
+      {
+        "id": 18566,
+        "archived": "no",
+        "createdDate": "2022-12-21T18:19:08+00:00",
+        "archivedDate": null,
+        "name": "Europe"
+      },
+      {
+        "id": 18563,
+        "archived": "no",
+        "createdDate": "2022-12-21T18:12:57+00:00",
+        "archivedDate": null,
+        "name": "Infrastructure"
+      },
+      {
+        "id": 18570,
+        "archived": "no",
+        "createdDate": "2022-12-28T23:15:46+00:00",
+        "archivedDate": null,
+        "name": "Legal"
+      }
+    ]
+    }
+  ]
+}</spiffworkflow:inputJson>
+            <spiffworkflow:expectedOutputJson>{
+  "departments": [
+    {
+      "id": 18568,
+      "archived": "no",
+      "createdDate": "2022-12-21T18:21:08+00:00",
+      "archivedDate": null,
+      "name": "Accounts Payable"
+    },
+    {
+      "id": 18564,
+      "archived": "no",
+      "createdDate": "2022-12-21T18:14:59+00:00",
+      "archivedDate": null,
+      "name": "Infrastructure Management"
+    },
+    {
+      "id": 18562,
+      "archived": "no",
+      "createdDate": "2022-12-21T18:08:59+00:00",
+      "archivedDate": null,
+      "name": "IT"
+    }
+  ],
+  "divisions": [
+    {
+      "id": 18566,
+      "archived": "no",
+      "createdDate": "2022-12-21T18:19:08+00:00",
+      "archivedDate": null,
+      "name": "Europe"
+    },
+    {
+      "id": 18563,
+      "archived": "no",
+      "createdDate": "2022-12-21T18:12:57+00:00",
+      "archivedDate": null,
+      "name": "Infrastructure"
+    },
+    {
+      "id": 18570,
+      "archived": "no",
+      "createdDate": "2022-12-28T23:15:46+00:00",
+      "archivedDate": null,
+      "name": "Legal"
+    }
+  ]
+}</spiffworkflow:expectedOutputJson>
+          </spiffworkflow:unitTest>
+          <spiffworkflow:unitTest id="No Departments">
+            <spiffworkflow:inputJson>{
+  "list_metadata": [
+    {
+      "fieldId": 1355,
+      "manageable": "yes",
+      "multiple": "no",
+      "name": "Division",
+      "options": [
+        {
+          "id": 18566,
+          "archived": "no",
+          "createdDate": "2022-12-21T18:19:08+00:00",
+          "archivedDate": null,
+          "name": "Europe"
+        },
+        {
+          "id": 18563,
+          "archived": "no",
+          "createdDate": "2022-12-21T18:12:57+00:00",
+          "archivedDate": null,
+          "name": "Infrastructure"
+        },
+        {
+          "id": 18570,
+          "archived": "no",
+          "createdDate": "2022-12-28T23:15:46+00:00",
+          "archivedDate": null,
+          "name": "Legal"
+        }
+      ]
+    }
+  ]
+}</spiffworkflow:inputJson>
+            <spiffworkflow:expectedOutputJson>{
+  "departments": [
+    
+  ],
+  "divisions": [
+    {
+      "archived": "no",
+      "archivedDate": null,
+      "createdDate": "2022-12-21T18:19:08+00:00",
+      "id": 18566,
+      "name": "Europe"
+    },
+    {
+      "archived": "no",
+      "archivedDate": null,
+      "createdDate": "2022-12-21T18:12:57+00:00",
+      "id": 18563,
+      "name": "Infrastructure"
+    },
+    {
+      "archived": "no",
+      "archivedDate": null,
+      "createdDate": "2022-12-28T23:15:46+00:00",
+      "id": 18570,
+      "name": "Legal"
+    }
+  ]
+}</spiffworkflow:expectedOutputJson>
+          </spiffworkflow:unitTest>
+          <spiffworkflow:unitTest id="No Divisions">
+            <spiffworkflow:inputJson>{
+  "list_metadata": [
+    {
+      "fieldId": 4,
+      "manageable": "yes",
+      "multiple": "no",
+      "name": "Department",
+      "options": [
+        {
+          "id": 18568,
+          "archived": "no",
+          "createdDate": "2022-12-21T18:21:08+00:00",
+          "archivedDate": null,
+          "name": "Accounts Payable"
+        },
+        {
+          "id": 18564,
+          "archived": "no",
+          "createdDate": "2022-12-21T18:14:59+00:00",
+          "archivedDate": null,
+          "name": "Infrastructure Management"
+        },
+        {
+          "id": 18562,
+          "archived": "no",
+          "createdDate": "2022-12-21T18:08:59+00:00",
+          "archivedDate": null,
+          "name": "IT"
+        }
+      ]
+    }
+  ]
+}</spiffworkflow:inputJson>
+            <spiffworkflow:expectedOutputJson>{
+  "departments": [
+    {
+      "archived": "no",
+      "archivedDate": null,
+      "createdDate": "2022-12-21T18:21:08+00:00",
+      "id": 18568,
+      "name": "Accounts Payable"
+    },
+    {
+      "archived": "no",
+      "archivedDate": null,
+      "createdDate": "2022-12-21T18:14:59+00:00",
+      "id": 18564,
+      "name": "Infrastructure Management"
+    },
+    {
+      "archived": "no",
+      "archivedDate": null,
+      "createdDate": "2022-12-21T18:08:59+00:00",
+      "id": 18562,
+      "name": "IT"
+    }
+  ],
+  "divisions": []
+}</spiffworkflow:expectedOutputJson>
+          </spiffworkflow:unitTest>
+          <spiffworkflow:unitTest id="Ignores Other Fields">
+            <spiffworkflow:inputJson>{
+  "list_metadata": [
+    {
+      "fieldId": 4,
+      "manageable": "yes",
+      "multiple": "no",
+      "name": "OTHER FIELD",
+      "options": []
+    },
+    {
+      "fieldId": 4,
+      "manageable": "yes",
+      "multiple": "no",
+      "name": "Department",
+      "options": [
+        {
+          "id": 18568,
+          "archived": "no",
+          "createdDate": "2022-12-21T18:21:08+00:00",
+          "archivedDate": null,
+          "name": "Accounts Payable"
+        },
+        {
+          "id": 18564,
+          "archived": "no",
+          "createdDate": "2022-12-21T18:14:59+00:00",
+          "archivedDate": null,
+          "name": "Infrastructure Management"
+        },
+        {
+          "id": 18562,
+          "archived": "no",
+          "createdDate": "2022-12-21T18:08:59+00:00",
+          "archivedDate": null,
+          "name": "IT"
+        }
+      ]
+    },
+    {
+      "fieldId": 1355,
+      "manageable": "yes",
+      "multiple": "no",
+      "name": "Division",
+      "options": [
+        {
+          "id": 18566,
+          "archived": "no",
+          "createdDate": "2022-12-21T18:19:08+00:00",
+          "archivedDate": null,
+          "name": "Europe"
+        },
+        {
+          "id": 18563,
+          "archived": "no",
+          "createdDate": "2022-12-21T18:12:57+00:00",
+          "archivedDate": null,
+          "name": "Infrastructure"
+        },
+        {
+          "id": 18570,
+          "archived": "no",
+          "createdDate": "2022-12-28T23:15:46+00:00",
+          "archivedDate": null,
+          "name": "Legal"
+        }
+      ]
+    }
+  ]
+}</spiffworkflow:inputJson>
+            <spiffworkflow:expectedOutputJson>{
+  "departments": [
+    {
+      "archived": "no",
+      "archivedDate": null,
+      "createdDate": "2022-12-21T18:21:08+00:00",
+      "id": 18568,
+      "name": "Accounts Payable"
+    },
+    {
+      "archived": "no",
+      "archivedDate": null,
+      "createdDate": "2022-12-21T18:14:59+00:00",
+      "id": 18564,
+      "name": "Infrastructure Management"
+    },
+    {
+      "archived": "no",
+      "archivedDate": null,
+      "createdDate": "2022-12-21T18:08:59+00:00",
+      "id": 18562,
+      "name": "IT"
+    }
+  ],
+  "divisions": [
+    {
+      "archived": "no",
+      "archivedDate": null,
+      "createdDate": "2022-12-21T18:19:08+00:00",
+      "id": 18566,
+      "name": "Europe"
+    },
+    {
+      "archived": "no",
+      "archivedDate": null,
+      "createdDate": "2022-12-21T18:12:57+00:00",
+      "id": 18563,
+      "name": "Infrastructure"
+    },
+    {
+      "archived": "no",
+      "archivedDate": null,
+      "createdDate": "2022-12-28T23:15:46+00:00",
+      "id": 18570,
+      "name": "Legal"
+    }
+  ]
+}</spiffworkflow:expectedOutputJson>
+          </spiffworkflow:unitTest>
+        </spiffworkflow:unitTests>
+      </bpmn:extensionElements>
       <bpmn:incoming>Flow_1tyls8j</bpmn:incoming>
       <bpmn:outgoing>Flow_110nxt9</bpmn:outgoing>
-      <bpmn:script>True</bpmn:script>
+      <bpmn:script>departments_and_divisions = {
+    field["name"]: field["options"]
+    for field in list_metadata
+    if field["name"] in ["Department", "Division"]
+}
+
+departments = departments_and_divisions.get("Department", [])
+divisions = departments_and_divisions.get("Division", [])
+
+del(departments_and_divisions)
+del(list_metadata)</bpmn:script>
     </bpmn:scriptTask>
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
-    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_eh0mkrx">
-      <bpmndi:BPMNShape id="Event_1bp88xe_di" bpmnElement="Event_1bp88xe">
-        <dc:Bounds x="572" y="159" width="36" height="36" />
-      </bpmndi:BPMNShape>
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Bamboo-AllDivisionsAndDepartments">
       <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
         <dc:Bounds x="152" y="159" width="36" height="36" />
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1bp88xe_di" bpmnElement="Event_1bp88xe">
+        <dc:Bounds x="482" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1pfm1cc_di" bpmnElement="Activity_1sk86js">
-        <dc:Bounds x="210" y="137" width="100" height="80" />
+        <dc:Bounds x="220" y="137" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1xkuuvp_di" bpmnElement="Activity_0ygriuv">
-        <dc:Bounds x="330" y="137" width="100" height="80" />
+        <dc:Bounds x="350" y="137" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_01ffhv6_di" bpmnElement="Flow_01ffhv6">
         <di:waypoint x="188" y="177" />
-        <di:waypoint x="210" y="177" />
+        <di:waypoint x="220" y="177" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1tyls8j_di" bpmnElement="Flow_1tyls8j">
-        <di:waypoint x="310" y="177" />
-        <di:waypoint x="330" y="177" />
+        <di:waypoint x="320" y="177" />
+        <di:waypoint x="350" y="177" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_110nxt9_di" bpmnElement="Flow_110nxt9">
-        <di:waypoint x="430" y="177" />
-        <di:waypoint x="572" y="177" />
+        <di:waypoint x="450" y="177" />
+        <di:waypoint x="482" y="177" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
