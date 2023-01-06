@@ -81,7 +81,6 @@
         <bpmn:flowNodeRef>Event_12tt6fj</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_0436zos</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_1px9xcd</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Activity_14fif5h</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_0uhfy9l</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Gateway_05470yw</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Gateway_14xgyev</bpmn:flowNodeRef>
@@ -94,12 +93,13 @@
         <bpmn:flowNodeRef>Gateway_1qwn7ei</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_0daj31x</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_1si6b3g</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Event_06bnz9o</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_0xklgk1</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_1300gad</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Gateway_1gcwukc</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_1iohamu</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_1nfb31d</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_14fif5h</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Event_06bnz9o</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_1mrq305">
         <bpmn:flowNodeRef>StartEvent_1</bpmn:flowNodeRef>
@@ -175,7 +175,7 @@
     <bpmn:sequenceFlow id="Flow_0u9k2wx" sourceRef="Activity_14fif5h" targetRef="Activity_0uhfy9l" />
     <bpmn:sequenceFlow id="Flow_0rvr5e7" sourceRef="Activity_0uhfy9l" targetRef="Gateway_05470yw" />
     <bpmn:sequenceFlow id="Flow_12bnhp1" name="Rejected" sourceRef="Gateway_05470yw" targetRef="Event_1si6b3g">
-      <bpmn:conditionExpression>not(isRequestApproved)</bpmn:conditionExpression>
+      <bpmn:conditionExpression>not(is_budget_owner_approved)</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="Flow_1cnzdsg" name="Additional info is required" sourceRef="Gateway_05470yw" targetRef="Gateway_1gcwukc" />
     <bpmn:sequenceFlow id="Flow_0p6nx7g" name="YES" sourceRef="Gateway_14xgyev" targetRef="Event_0gxfpvb" />
@@ -421,19 +421,6 @@
       <bpmn:incoming>Flow_1jdyoqm</bpmn:incoming>
       <bpmn:outgoing>Flow_1b386ou</bpmn:outgoing>
     </bpmn:intermediateThrowEvent>
-    <bpmn:userTask id="Activity_14fif5h" name="Review the request">
-      <bpmn:documentation>**Figma - New Demand request (Procurement) - SUBMIT**, https://www.figma.com/file/9NP2BUoLuwHUCGStvDMgOw/Form?node-id=0%3A1&amp;t=BABeo58RkNviJr4N-0
-
-**Fields details** - https://docs.google.com/spreadsheets/d/19S85IJeNXffPa1oAe6kSkmTleMWE92A4kWJFFodCEZU/edit#gid=1736626389</bpmn:documentation>
-      <bpmn:extensionElements>
-        <spiffworkflow:properties>
-          <spiffworkflow:property name="formJsonSchemaFilename" value="request_approval_JSONSchema.json" />
-          <spiffworkflow:property name="formUiSchemaFilename" value="request_approval_UISchema.json" />
-        </spiffworkflow:properties>
-      </bpmn:extensionElements>
-      <bpmn:incoming>Flow_0h80bf3</bpmn:incoming>
-      <bpmn:outgoing>Flow_0u9k2wx</bpmn:outgoing>
-    </bpmn:userTask>
     <bpmn:manualTask id="Activity_0uhfy9l" name="Reminder: Request Additional Budget">
       <bpmn:extensionElements>
         <spiffworkflow:instructionsForEndUser>Thank you!
@@ -773,12 +760,6 @@ Please ensure that you have enough budget for the demand, and if needed, submit 
       <bpmn:outgoing>Flow_05fojyk</bpmn:outgoing>
       <bpmn:timerEventDefinition id="TimerEventDefinition_0t8cfpd" />
     </bpmn:boundaryEvent>
-    <bpmn:boundaryEvent id="Event_06bnz9o" name="1 day" attachedToRef="Activity_14fif5h">
-      <bpmn:outgoing>Flow_0ja4xhr</bpmn:outgoing>
-      <bpmn:timerEventDefinition id="TimerEventDefinition_1ruqb7m">
-        <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">P1D</bpmn:timeDuration>
-      </bpmn:timerEventDefinition>
-    </bpmn:boundaryEvent>
     <bpmn:sequenceFlow id="Flow_0jhh37r" sourceRef="Activity_18x1o1c" targetRef="Submit_Validate_New_Demand_Request-Sub_Process" />
     <bpmn:userTask id="Activity_18x1o1c" name="Provide Supporting Info and Files">
       <bpmn:extensionElements>
@@ -978,6 +959,31 @@ del(userTimeFormat)</spiffworkflow:postScript>
       <bpmn:sequenceFlow id="Flow_0sw2lja" sourceRef="Activity_1rm80z1" targetRef="Activity_09k488c" />
       <bpmn:sequenceFlow id="Flow_0f37ys4" sourceRef="Activity_09k488c" targetRef="Event_1qdzojf" />
     </bpmn:subProcess>
+    <bpmn:userTask id="Activity_14fif5h" name="Review the request">
+      <bpmn:documentation>**Figma - New Demand request (Procurement) - SUBMIT**, https://www.figma.com/file/9NP2BUoLuwHUCGStvDMgOw/Form?node-id=0%3A1&amp;t=BABeo58RkNviJr4N-0
+
+**Fields details** - https://docs.google.com/spreadsheets/d/19S85IJeNXffPa1oAe6kSkmTleMWE92A4kWJFFodCEZU/edit#gid=1736626389</bpmn:documentation>
+      <bpmn:extensionElements>
+        <spiffworkflow:properties>
+          <spiffworkflow:property name="formJsonSchemaFilename" value="request_approval_JSONSchema.json" />
+          <spiffworkflow:property name="formUiSchemaFilename" value="request_approval_UISchema.json" />
+        </spiffworkflow:properties>
+        <spiffworkflow:postScript># Set Budget Owner Review Outcome
+is_budget_owner_approved = isRequestApproved
+
+# Reset Form isRequestApproved
+isRequestApproved = None</spiffworkflow:postScript>
+        <spiffworkflow:preScript></spiffworkflow:preScript>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0h80bf3</bpmn:incoming>
+      <bpmn:outgoing>Flow_0u9k2wx</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:boundaryEvent id="Event_06bnz9o" name="1 day" attachedToRef="Activity_14fif5h">
+      <bpmn:outgoing>Flow_0ja4xhr</bpmn:outgoing>
+      <bpmn:timerEventDefinition id="TimerEventDefinition_1ruqb7m">
+        <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">P1D</bpmn:timeDuration>
+      </bpmn:timerEventDefinition>
+    </bpmn:boundaryEvent>
     <bpmn:textAnnotation id="TextAnnotation_0zy71k9">
       <bpmn:text>Orgdata from BBHR, Categories from a DB, Currencies from Xero</bpmn:text>
     </bpmn:textAnnotation>
@@ -1065,6 +1071,10 @@ del(userTimeFormat)</spiffworkflow:postScript>
       <bpmndi:BPMNShape id="Activity_0vhbxuw_di" bpmnElement="Activity_1itequ5">
         <dc:Bounds x="760" y="400" width="100" height="80" />
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1dg2cxw_di" bpmnElement="Activity_14fif5h">
+        <dc:Bounds x="1959" y="970" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1nyt2o4_di" bpmnElement="Submit_Validate_New_Demand_Request-Sub_Process">
         <dc:Bounds x="1070" y="400" width="100" height="80" />
         <bpmndi:BPMNLabel />
@@ -1125,10 +1135,6 @@ del(userTimeFormat)</spiffworkflow:postScript>
         <bpmndi:BPMNLabel>
           <dc:Bounds x="2398" y="1035" width="65" height="40" />
         </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1dg2cxw_di" bpmnElement="Activity_14fif5h">
-        <dc:Bounds x="1960" y="970" width="100" height="80" />
-        <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_16il73f_di" bpmnElement="Activity_0uhfy9l">
         <dc:Bounds x="2140" y="970" width="100" height="80" />
@@ -1528,12 +1534,6 @@ del(userTimeFormat)</spiffworkflow:postScript>
         <dc:Bounds x="2150" y="910" width="70" height="30" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_095wlf3_di" bpmnElement="Event_06bnz9o">
-        <dc:Bounds x="2022" y="1032" width="36" height="36" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="1998" y="1063" width="27" height="14" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_1a4rusd_di" bpmnElement="Event_0eu64qs">
         <dc:Bounds x="3002" y="1722" width="36" height="36" />
         <bpmndi:BPMNLabel>
@@ -1562,6 +1562,12 @@ del(userTimeFormat)</spiffworkflow:postScript>
         <dc:Bounds x="4282" y="3582" width="36" height="36" />
         <bpmndi:BPMNLabel>
           <dc:Bounds x="4259" y="3618" width="27" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_095wlf3_di" bpmnElement="Event_06bnz9o">
+        <dc:Bounds x="2021" y="1032" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1997" y="1063" width="27" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_0mbb848_di" bpmnElement="Flow_0mbb848">
@@ -1620,8 +1626,8 @@ del(userTimeFormat)</spiffworkflow:postScript>
         <di:waypoint x="530" y="808" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0ja4xhr_di" bpmnElement="Flow_0ja4xhr">
-        <di:waypoint x="2040" y="1068" />
-        <di:waypoint x="2040" y="1100" />
+        <di:waypoint x="2039" y="1068" />
+        <di:waypoint x="2039" y="1100" />
         <di:waypoint x="1900" y="1100" />
         <di:waypoint x="1900" y="465" />
       </bpmndi:BPMNEdge>
@@ -1661,10 +1667,12 @@ del(userTimeFormat)</spiffworkflow:postScript>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0h80bf3_di" bpmnElement="Flow_0h80bf3">
         <di:waypoint x="2010" y="808" />
-        <di:waypoint x="2010" y="970" />
+        <di:waypoint x="2010" y="889" />
+        <di:waypoint x="2009" y="889" />
+        <di:waypoint x="2009" y="970" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0u9k2wx_di" bpmnElement="Flow_0u9k2wx">
-        <di:waypoint x="2060" y="1010" />
+        <di:waypoint x="2059" y="1010" />
         <di:waypoint x="2140" y="1010" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0rvr5e7_di" bpmnElement="Flow_0rvr5e7">
