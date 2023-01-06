@@ -110,6 +110,14 @@ is_status_email = (find_user[-9:] == "status.im")</bpmn:script>
 del(isCurrentUser)
 del(find_user)</bpmn:script>
     </bpmn:scriptTask>
+    <bpmn:scriptTask id="Activity_0fk3lup" name="Check Response">
+      <bpmn:script># check the keys, let it raise an exception if they don't exist
+bamboo_get_employee["id"]
+bamboo_get_employee["supervisorEid"]
+bamboo_get_employee["supervisorEmail"]
+bamboo_get_employee["supervisorId"]</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:callActivity id="Activity_1eab90d" name="Call ST: Get Employee Bamboo Info" />
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="SR-User_Info">
@@ -149,6 +157,12 @@ del(find_user)</bpmn:script>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0qu8ajx_di" bpmnElement="Activity_0djyn08">
         <dc:Bounds x="1180" y="187" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0l9irdw_di" bpmnElement="Activity_0fk3lup">
+        <dc:Bounds x="600" y="20" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0ufz8x5_di" bpmnElement="Activity_1eab90d">
+        <dc:Bounds x="450" y="20" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_1q8xtg6_di" bpmnElement="Flow_1q8xtg6">
         <di:waypoint x="38" y="227" />
