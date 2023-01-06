@@ -9,10 +9,6 @@
       <bpmn:incoming>Flow_0lxpbmk</bpmn:incoming>
     </bpmn:endEvent>
     <bpmn:sequenceFlow id="Flow_1j7y5ql" sourceRef="Activity_111a8cq" targetRef="Activity_0yxfuoo" />
-    <bpmn:task id="Activity_0yxfuoo">
-      <bpmn:incoming>Flow_1j7y5ql</bpmn:incoming>
-      <bpmn:outgoing>Flow_0lxpbmk</bpmn:outgoing>
-    </bpmn:task>
     <bpmn:sequenceFlow id="Flow_0lxpbmk" sourceRef="Activity_0yxfuoo" targetRef="Event_0i41kk2" />
     <bpmn:callActivity id="Activity_111a8cq" name="Call Get Pay Rate" calledElement="Bamboo_GetEmployeePayRate">
       <bpmn:extensionElements>
@@ -21,6 +17,10 @@
       <bpmn:incoming>Flow_18ce2ty</bpmn:incoming>
       <bpmn:outgoing>Flow_1j7y5ql</bpmn:outgoing>
     </bpmn:callActivity>
+    <bpmn:scriptTask id="Activity_0yxfuoo" name="Check response">
+      <bpmn:incoming>Flow_1j7y5ql</bpmn:incoming>
+      <bpmn:outgoing>Flow_0lxpbmk</bpmn:outgoing>
+    </bpmn:scriptTask>
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_m78q7z1">
@@ -30,11 +30,12 @@
       <bpmndi:BPMNShape id="Event_0i41kk2_di" bpmnElement="Event_0i41kk2">
         <dc:Bounds x="522" y="159" width="36" height="36" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0yxfuoo_di" bpmnElement="Activity_0yxfuoo">
-        <dc:Bounds x="390" y="137" width="100" height="80" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1uh2c7w_di" bpmnElement="Activity_111a8cq">
         <dc:Bounds x="260" y="137" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_05dia8w_di" bpmnElement="Activity_0yxfuoo">
+        <dc:Bounds x="390" y="137" width="100" height="80" />
+        <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_18ce2ty_di" bpmnElement="Flow_18ce2ty">
         <di:waypoint x="215" y="177" />
