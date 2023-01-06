@@ -1,28 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:spiffworkflow="http://spiffworkflow.org/bpmn/schema/1.0/core" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_96f6665" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.0.0-dev">
-  <bpmn:process id="Jon_Bamboo-AllDivisionsAndDepartments" name="Bamboo All Divisions and Departments" isExecutable="true">
+  <bpmn:process id="Bamboo-AllDivisionsAndDepartments" name="Bamboo All Divisions and Departments" isExecutable="true">
     <bpmn:startEvent id="StartEvent_1">
       <bpmn:outgoing>Flow_01ffhv6</bpmn:outgoing>
     </bpmn:startEvent>
-    <bpmn:sequenceFlow id="Flow_01ffhv6" sourceRef="StartEvent_1" targetRef="Activity_1sk86js" />
+    <bpmn:sequenceFlow id="Flow_01ffhv6" sourceRef="StartEvent_1" targetRef="Activity_1smajdk" />
     <bpmn:endEvent id="Event_1bp88xe">
       <bpmn:incoming>Flow_110nxt9</bpmn:incoming>
     </bpmn:endEvent>
-    <bpmn:sequenceFlow id="Flow_1tyls8j" sourceRef="Activity_1sk86js" targetRef="Activity_0ygriuv" />
-    <bpmn:serviceTask id="Activity_1sk86js" name="Get List Metadata">
-      <bpmn:extensionElements>
-        <spiffworkflow:serviceTaskOperator id="http/GetRequest" resultVariable="list_metadata">
-          <spiffworkflow:parameters>
-            <spiffworkflow:parameter id="auth" type="any" value="(get_secret(&#34;BAMBOOHR_API_KEY&#34;), &#34;x&#34;)" />
-            <spiffworkflow:parameter id="headers" type="any" value="{&#34;Accept&#34;: &#34;application/json&#34;}" />
-            <spiffworkflow:parameter id="params" type="any" value="{}" />
-            <spiffworkflow:parameter id="url" type="str" value="&#34;https://api.bamboohr.com/api/gateway.php/statusresearchdemo/v1/meta/lists/&#34;" />
-          </spiffworkflow:parameters>
-        </spiffworkflow:serviceTaskOperator>
-      </bpmn:extensionElements>
-      <bpmn:incoming>Flow_01ffhv6</bpmn:incoming>
-      <bpmn:outgoing>Flow_1tyls8j</bpmn:outgoing>
-    </bpmn:serviceTask>
     <bpmn:sequenceFlow id="Flow_110nxt9" sourceRef="Activity_0ygriuv" targetRef="Event_1bp88xe" />
     <bpmn:scriptTask id="Activity_0ygriuv" name="Extract Divisions and Departments">
       <bpmn:extensionElements>
@@ -384,7 +369,7 @@
           </spiffworkflow:unitTest>
         </spiffworkflow:unitTests>
       </bpmn:extensionElements>
-      <bpmn:incoming>Flow_1tyls8j</bpmn:incoming>
+      <bpmn:incoming>Flow_1t1uc6u</bpmn:incoming>
       <bpmn:outgoing>Flow_110nxt9</bpmn:outgoing>
       <bpmn:script>departments_and_divisions = {
     field["name"]: field["options"]
@@ -398,34 +383,50 @@ divisions = departments_and_divisions.get("Division", [])
 del(departments_and_divisions)
 del(list_metadata)</bpmn:script>
     </bpmn:scriptTask>
+    <bpmn:sequenceFlow id="Flow_1t1uc6u" sourceRef="Activity_1smajdk" targetRef="Activity_0ygriuv" />
+    <bpmn:serviceTask id="Activity_1smajdk" name="Get List Metadata">
+      <bpmn:extensionElements>
+        <spiffworkflow:serviceTaskOperator id="http/GetRequest" resultVariable="list_metadata">
+          <spiffworkflow:parameters>
+            <spiffworkflow:parameter id="basic_auth_password" type="str" value="&#34;x&#34;" />
+            <spiffworkflow:parameter id="basic_auth_username" type="str" value="&#34;secret:BAMBOOHR_API_KEY&#34;" />
+            <spiffworkflow:parameter id="headers" type="any" value="{&#34;Accept&#34;: &#34;application/json&#34;}" />
+            <spiffworkflow:parameter id="params" type="any" value="{}" />
+            <spiffworkflow:parameter id="url" type="str" value="&#34;https://api.bamboohr.com/api/gateway.php/statusresearchdemo/v1/meta/lists/&#34;" />
+          </spiffworkflow:parameters>
+        </spiffworkflow:serviceTaskOperator>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_01ffhv6</bpmn:incoming>
+      <bpmn:outgoing>Flow_1t1uc6u</bpmn:outgoing>
+    </bpmn:serviceTask>
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
-    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Jon_Bamboo-AllDivisionsAndDepartments">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Bamboo-AllDivisionsAndDepartments">
       <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
         <dc:Bounds x="152" y="159" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_1bp88xe_di" bpmnElement="Event_1bp88xe">
-        <dc:Bounds x="482" y="159" width="36" height="36" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1pfm1cc_di" bpmnElement="Activity_1sk86js">
-        <dc:Bounds x="220" y="137" width="100" height="80" />
-        <bpmndi:BPMNLabel />
+        <dc:Bounds x="502" y="159" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1xkuuvp_di" bpmnElement="Activity_0ygriuv">
-        <dc:Bounds x="350" y="137" width="100" height="80" />
+        <dc:Bounds x="360" y="137" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0a464qx_di" bpmnElement="Activity_1smajdk">
+        <dc:Bounds x="230" y="137" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_01ffhv6_di" bpmnElement="Flow_01ffhv6">
         <di:waypoint x="188" y="177" />
-        <di:waypoint x="220" y="177" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_1tyls8j_di" bpmnElement="Flow_1tyls8j">
-        <di:waypoint x="320" y="177" />
-        <di:waypoint x="350" y="177" />
+        <di:waypoint x="230" y="177" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_110nxt9_di" bpmnElement="Flow_110nxt9">
-        <di:waypoint x="450" y="177" />
-        <di:waypoint x="482" y="177" />
+        <di:waypoint x="460" y="177" />
+        <di:waypoint x="502" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1t1uc6u_di" bpmnElement="Flow_1t1uc6u">
+        <di:waypoint x="330" y="177" />
+        <di:waypoint x="360" y="177" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
