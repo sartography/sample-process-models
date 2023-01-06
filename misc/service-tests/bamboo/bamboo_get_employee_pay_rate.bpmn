@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_96f6665" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.0.0-dev">
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:spiffworkflow="http://spiffworkflow.org/bpmn/schema/1.0/core" id="Definitions_96f6665" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.0.0-dev">
   <bpmn:process id="Bamboo_GetEmployeePayRate" name="Bamboo Get Employee Pay Rate" isExecutable="true">
     <bpmn:startEvent id="StartEvent_1">
       <bpmn:outgoing>Flow_1u462zb</bpmn:outgoing>
@@ -10,6 +10,10 @@
     </bpmn:endEvent>
     <bpmn:sequenceFlow id="Flow_0dwgc8n" sourceRef="Activity_1ss0zug" targetRef="Event_0yc149g" />
     <bpmn:callActivity id="Activity_1ss0zug" name="Call Get Employee" calledElement="Bamboo_GetEmployee">
+      <bpmn:extensionElements>
+        <spiffworkflow:preScript>get_employee_fields = "payRate"
+get_employee_only_current = True</spiffworkflow:preScript>
+      </bpmn:extensionElements>
       <bpmn:incoming>Flow_1u462zb</bpmn:incoming>
       <bpmn:outgoing>Flow_0dwgc8n</bpmn:outgoing>
     </bpmn:callActivity>
