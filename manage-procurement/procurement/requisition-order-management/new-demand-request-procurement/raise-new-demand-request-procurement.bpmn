@@ -79,7 +79,6 @@
       </bpmn:lane>
       <bpmn:lane id="Lane_1tozxks" name="Budget Owner">
         <bpmn:flowNodeRef>Event_12tt6fj</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Activity_1nfb31d</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_0436zos</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_1px9xcd</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_14fif5h</bpmn:flowNodeRef>
@@ -100,6 +99,7 @@
         <bpmn:flowNodeRef>Event_1300gad</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Gateway_1gcwukc</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_1iohamu</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_1nfb31d</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_1mrq305">
         <bpmn:flowNodeRef>StartEvent_1</bpmn:flowNodeRef>
@@ -412,14 +412,6 @@
     <bpmn:endEvent id="Event_12tt6fj" name="The Request has been Rejected">
       <bpmn:incoming>Flow_03j2gbu</bpmn:incoming>
     </bpmn:endEvent>
-    <bpmn:serviceTask id="Activity_1nfb31d" name="Approved - Send Waku message to CC">
-      <bpmn:documentation>Message - https://www.notion.so/Processes-WIP-bf288f19f8ff454699e2f1cc83ad7abe?p=9891dc90f4424a0ebd3407db1991c203&amp;pm=s</bpmn:documentation>
-      <bpmn:incoming>Flow_034ez5t</bpmn:incoming>
-      <bpmn:outgoing>Flow_0en7ium</bpmn:outgoing>
-      <bpmn:dataOutputAssociation id="DataOutputAssociation_0898r38">
-        <bpmn:targetRef>DataObjectReference_1taxigb</bpmn:targetRef>
-      </bpmn:dataOutputAssociation>
-    </bpmn:serviceTask>
     <bpmn:endEvent id="Event_0436zos" name="The Request has been Approved">
       <bpmn:incoming>Flow_0en7ium</bpmn:incoming>
     </bpmn:endEvent>
@@ -949,6 +941,43 @@ del(userTimeFormat)</spiffworkflow:postScript>
       <bpmn:sequenceFlow id="Flow_1x785w9" sourceRef="Activity_1p61fq7" targetRef="Activity_1tvq688" />
       <bpmn:sequenceFlow id="Flow_0z14xqm" sourceRef="Activity_1tvq688" targetRef="Event_08tj1az" />
     </bpmn:subProcess>
+    <bpmn:subProcess id="Activity_1nfb31d" name="Approved - Send Waku message to CC">
+      <bpmn:documentation>Message - https://www.notion.so/Processes-WIP-bf288f19f8ff454699e2f1cc83ad7abe?p=9891dc90f4424a0ebd3407db1991c203&amp;pm=s</bpmn:documentation>
+      <bpmn:incoming>Flow_034ez5t</bpmn:incoming>
+      <bpmn:outgoing>Flow_0en7ium</bpmn:outgoing>
+      <bpmn:dataOutputAssociation id="DataOutputAssociation_0898r38">
+        <bpmn:targetRef>DataObjectReference_1taxigb</bpmn:targetRef>
+      </bpmn:dataOutputAssociation>
+      <bpmn:startEvent id="Event_1ak3bj1">
+        <bpmn:outgoing>Flow_0cufcsz</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:callActivity id="Activity_1rm80z1" name="Call Get Waku Message Info" calledElement="Waku_Messages_Message-Raise_New_Demand_Request">
+        <bpmn:extensionElements>
+          <spiffworkflow:preScript>task_id = "waku_request_rejected"</spiffworkflow:preScript>
+        </bpmn:extensionElements>
+        <bpmn:incoming>Flow_0cufcsz</bpmn:incoming>
+        <bpmn:outgoing>Flow_0sw2lja</bpmn:outgoing>
+      </bpmn:callActivity>
+      <bpmn:serviceTask id="Activity_09k488c" name="Send Waku Message to Budget Owner">
+        <bpmn:extensionElements>
+          <spiffworkflow:serviceTaskOperator id="waku/SendMessage" resultVariable="message_Request_Approval">
+            <spiffworkflow:parameters>
+              <spiffworkflow:parameter id="message" type="str" value="waku_message" />
+              <spiffworkflow:parameter id="message_type" type="str" value="&#34;wakuext_sendOneToOneMessage&#34;" />
+              <spiffworkflow:parameter id="recipient" type="str" value="current_user_extras[&#34;status_key&#34;]" />
+            </spiffworkflow:parameters>
+          </spiffworkflow:serviceTaskOperator>
+        </bpmn:extensionElements>
+        <bpmn:incoming>Flow_0sw2lja</bpmn:incoming>
+        <bpmn:outgoing>Flow_0f37ys4</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:endEvent id="Event_1qdzojf">
+        <bpmn:incoming>Flow_0f37ys4</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:sequenceFlow id="Flow_0cufcsz" sourceRef="Event_1ak3bj1" targetRef="Activity_1rm80z1" />
+      <bpmn:sequenceFlow id="Flow_0sw2lja" sourceRef="Activity_1rm80z1" targetRef="Activity_09k488c" />
+      <bpmn:sequenceFlow id="Flow_0f37ys4" sourceRef="Activity_09k488c" targetRef="Event_1qdzojf" />
+    </bpmn:subProcess>
     <bpmn:textAnnotation id="TextAnnotation_0zy71k9">
       <bpmn:text>Orgdata from BBHR, Categories from a DB, Currencies from Xero</bpmn:text>
     </bpmn:textAnnotation>
@@ -1072,10 +1101,6 @@ del(userTimeFormat)</spiffworkflow:postScript>
         <bpmndi:BPMNLabel>
           <dc:Bounds x="2338" y="696" width="84" height="27" />
         </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="BPMNShape_04dkgii" bpmnElement="Activity_1nfb31d">
-        <dc:Bounds x="2480" y="780" width="100" height="80" />
-        <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_18xrm6o_di" bpmnElement="Event_0436zos">
         <dc:Bounds x="2512" y="692" width="36" height="36" />
@@ -1473,6 +1498,9 @@ del(userTimeFormat)</spiffworkflow:postScript>
       <bpmndi:BPMNShape id="Gateway_1gcwukc_di" bpmnElement="Gateway_1gcwukc" isMarkerVisible="true">
         <dc:Bounds x="505" y="1265" width="50" height="50" />
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0bwjeuv_di" bpmnElement="Activity_1iohamu">
+        <dc:Bounds x="2260" y="780" width="100" height="80" />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="TextAnnotation_0zy71k9_di" bpmnElement="TextAnnotation_0zy71k9">
         <dc:Bounds x="310" y="180" width="130" height="60" />
         <bpmndi:BPMNLabel />
@@ -1497,8 +1525,8 @@ del(userTimeFormat)</spiffworkflow:postScript>
         <dc:Bounds x="2150" y="910" width="70" height="30" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0bwjeuv_di" bpmnElement="Activity_1iohamu">
-        <dc:Bounds x="2260" y="780" width="100" height="80" />
+      <bpmndi:BPMNShape id="Activity_1qgx40w_di" bpmnElement="Activity_1nfb31d">
+        <dc:Bounds x="2480" y="780" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_095wlf3_di" bpmnElement="Event_06bnz9o">
         <dc:Bounds x="2022" y="1032" width="36" height="36" />
@@ -2026,6 +2054,10 @@ del(userTimeFormat)</spiffworkflow:postScript>
         <di:waypoint x="530" y="530" />
         <di:waypoint x="530" y="465" />
       </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1gwfy5j_di" bpmnElement="Flow_1gwfy5j">
+        <di:waypoint x="2010" y="480" />
+        <di:waypoint x="2010" y="772" />
+      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Association_13u0dtl_di" bpmnElement="Association_13u0dtl">
         <di:waypoint x="384" y="260" />
         <di:waypoint x="377" y="240" />
@@ -2049,14 +2081,6 @@ del(userTimeFormat)</spiffworkflow:postScript>
       <bpmndi:BPMNEdge id="Association_012q0h5_di" bpmnElement="Association_012q0h5">
         <di:waypoint x="2187" y="970" />
         <di:waypoint x="2185" y="940" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_1gwfy5j_di" bpmnElement="Flow_1gwfy5j">
-        <di:waypoint x="2010" y="480" />
-        <di:waypoint x="2010" y="772" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="DataOutputAssociation_11ud8qn_di" bpmnElement="DataOutputAssociation_11ud8qn">
-        <di:waypoint x="2261" y="785" />
-        <di:waypoint x="2228" y="761" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="DataOutputAssociation_0898r38_di" bpmnElement="DataOutputAssociation_0898r38">
         <di:waypoint x="2580" y="818" />
@@ -2125,6 +2149,10 @@ del(userTimeFormat)</spiffworkflow:postScript>
       <bpmndi:BPMNEdge id="DataOutputAssociation_1yn62s3_di" bpmnElement="DataOutputAssociation_1yn62s3">
         <di:waypoint x="480" y="575" />
         <di:waypoint x="368" y="588" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DataOutputAssociation_11ud8qn_di" bpmnElement="DataOutputAssociation_11ud8qn">
+        <di:waypoint x="2261" y="785" />
+        <di:waypoint x="2228" y="761" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
@@ -2327,6 +2355,9 @@ del(userTimeFormat)</spiffworkflow:postScript>
   </bpmndi:BPMNDiagram>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1dt3ckp">
     <bpmndi:BPMNPlane id="BPMNPlane_17sxu1s" bpmnElement="Activity_1iohamu">
+      <bpmndi:BPMNShape id="BPMNShape_1cvho4b" bpmnElement="Event_04q4xuj">
+        <dc:Bounds x="492" y="222" width="36" height="36" />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="BPMNShape_1ee0h4x" bpmnElement="Activity_1p61fq7">
         <dc:Bounds x="590" y="200" width="100" height="80" />
       </bpmndi:BPMNShape>
@@ -2335,9 +2366,6 @@ del(userTimeFormat)</spiffworkflow:postScript>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="BPMNShape_17b7oph" bpmnElement="Event_08tj1az">
         <dc:Bounds x="912" y="222" width="36" height="36" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="BPMNShape_1cvho4b" bpmnElement="Event_04q4xuj">
-        <dc:Bounds x="492" y="222" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="BPMNEdge_0mu19rw" bpmnElement="Flow_0hz2vph">
         <di:waypoint x="528" y="240" />
@@ -2350,6 +2378,34 @@ del(userTimeFormat)</spiffworkflow:postScript>
       <bpmndi:BPMNEdge id="BPMNEdge_0npenb2" bpmnElement="Flow_0z14xqm">
         <di:waypoint x="850" y="240" />
         <di:waypoint x="912" y="240" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_0rsyw0d">
+    <bpmndi:BPMNPlane id="BPMNPlane_02mp97b" bpmnElement="Activity_1nfb31d">
+      <bpmndi:BPMNShape id="BPMNShape_1gt87ry" bpmnElement="Event_1ak3bj1">
+        <dc:Bounds x="582" y="202" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_19ffh4j" bpmnElement="Activity_1rm80z1">
+        <dc:Bounds x="680" y="180" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_18clgi8" bpmnElement="Activity_09k488c">
+        <dc:Bounds x="840" y="180" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_0zsh8v5" bpmnElement="Event_1qdzojf">
+        <dc:Bounds x="1002" y="202" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="BPMNEdge_09msme4" bpmnElement="Flow_0cufcsz">
+        <di:waypoint x="618" y="220" />
+        <di:waypoint x="680" y="220" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_19tz3x3" bpmnElement="Flow_0sw2lja">
+        <di:waypoint x="780" y="220" />
+        <di:waypoint x="840" y="220" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_06erkmu" bpmnElement="Flow_0f37ys4">
+        <di:waypoint x="940" y="220" />
+        <di:waypoint x="1002" y="220" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
