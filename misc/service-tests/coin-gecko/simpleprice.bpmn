@@ -1,18 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_96f6665" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.0.0-dev">
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:spiffworkflow="http://spiffworkflow.org/bpmn/schema/1.0/core" id="Definitions_96f6665" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.0.0-dev">
   <bpmn:process id="Process_cdwlr8g" isExecutable="true">
     <bpmn:startEvent id="StartEvent_1">
       <bpmn:outgoing>Flow_14qwb99</bpmn:outgoing>
     </bpmn:startEvent>
-    <bpmn:task id="Activity_0yiulnf" name="Get Simple Price">
-      <bpmn:incoming>Flow_14qwb99</bpmn:incoming>
-      <bpmn:outgoing>Flow_0cgh5fo</bpmn:outgoing>
-    </bpmn:task>
     <bpmn:endEvent id="Event_1l7u1yq">
-      <bpmn:incoming>Flow_0cgh5fo</bpmn:incoming>
+      <bpmn:incoming>Flow_0uqnuak</bpmn:incoming>
     </bpmn:endEvent>
-    <bpmn:sequenceFlow id="Flow_0cgh5fo" sourceRef="Activity_0yiulnf" targetRef="Event_1l7u1yq" />
-    <bpmn:sequenceFlow id="Flow_14qwb99" sourceRef="StartEvent_1" targetRef="Activity_0yiulnf" />
+    <bpmn:sequenceFlow id="Flow_14qwb99" sourceRef="StartEvent_1" targetRef="Activity_1vymjud" />
+    <bpmn:sequenceFlow id="Flow_0uqnuak" sourceRef="Activity_1vymjud" targetRef="Event_1l7u1yq" />
+    <bpmn:serviceTask id="Activity_1vymjud" name="Get Simple Price">
+      <bpmn:extensionElements>
+        <spiffworkflow:serviceTaskOperator id="http/GetRequest">
+          <spiffworkflow:parameters>
+            <spiffworkflow:parameter id="basic_auth_password" type="str" value="None" />
+            <spiffworkflow:parameter id="basic_auth_username" type="str" value="None" />
+            <spiffworkflow:parameter id="headers" type="any" value="{&#34;Accept&#34;: &#34;application/json&#34;}" />
+            <spiffworkflow:parameter id="params" type="any" value="{&#34;ids&#34;: &#34;DAI&#34;, &#34;vs_currencies&#34;: &#34;USD,ETH&#34; }" />
+            <spiffworkflow:parameter id="url" type="str" value="&#34;https://api.coingecko.com/api/v3/simple/price&#34;" />
+          </spiffworkflow:parameters>
+        </spiffworkflow:serviceTaskOperator>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_14qwb99</bpmn:incoming>
+      <bpmn:outgoing>Flow_0uqnuak</bpmn:outgoing>
+    </bpmn:serviceTask>
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_cdwlr8g">
@@ -22,17 +33,16 @@
       <bpmndi:BPMNShape id="Event_1l7u1yq_di" bpmnElement="Event_1l7u1yq">
         <dc:Bounds x="392" y="159" width="36" height="36" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0yiulnf_di" bpmnElement="Activity_0yiulnf">
+      <bpmndi:BPMNShape id="Activity_1w690w2_di" bpmnElement="Activity_1vymjud">
         <dc:Bounds x="250" y="137" width="100" height="80" />
-        <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge id="Flow_0cgh5fo_di" bpmnElement="Flow_0cgh5fo">
-        <di:waypoint x="350" y="177" />
-        <di:waypoint x="392" y="177" />
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_14qwb99_di" bpmnElement="Flow_14qwb99">
         <di:waypoint x="215" y="177" />
         <di:waypoint x="250" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0uqnuak_di" bpmnElement="Flow_0uqnuak">
+        <di:waypoint x="350" y="177" />
+        <di:waypoint x="392" y="177" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
