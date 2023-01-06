@@ -23,8 +23,9 @@ get_employee_only_current = True</spiffworkflow:preScript>
       <bpmn:outgoing>Flow_1kx779w</bpmn:outgoing>
       <bpmn:script>if "payRate" in bamboo_get_employee:
     pay_rate_parts = bamboo_get_employee["payRate"].split(" ")
-    bamboo_get_employee["amount"] = pay_rate_parts[0]
-    bamboo_get_employee["currency"] = pay_rate_parts[1]
+    if len(pay_rate_parts) &gt; 1:
+        bamboo_get_employee["amount"] = pay_rate_parts[0]
+        bamboo_get_employee["currency"] = pay_rate_parts[1]
     del(pay_rate_parts)</bpmn:script>
     </bpmn:scriptTask>
   </bpmn:process>
