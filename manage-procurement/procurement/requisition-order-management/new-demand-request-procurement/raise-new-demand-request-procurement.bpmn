@@ -186,6 +186,7 @@
     <bpmn:sequenceFlow id="Flow_0p6nx7g" name="YES" sourceRef="Gateway_14xgyev" targetRef="Event_0gxfpvb" />
     <bpmn:sequenceFlow id="Flow_1m2ww6f" name="Software &#38;Licences" sourceRef="Gateway_0nujbwj" targetRef="Gateway_1qwn7ei">
       <bpmn:documentation>Category = Software &amp; Licences</bpmn:documentation>
+      <bpmn:conditionExpression>category == "Software &amp; Licences"</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="Flow_0ivtxme" name="&#60;&#62; Software &#38;Licences" sourceRef="Gateway_0nujbwj" targetRef="Gateway_02ug3cs">
       <bpmn:documentation>All requests where Category &lt;&gt; Software &amp; Licences, &lt;&gt; Travel, &lt;&gt; Compensation</bpmn:documentation>
@@ -438,14 +439,15 @@
       <bpmn:outgoing>Flow_034ez5t</bpmn:outgoing>
       <bpmn:outgoing>Flow_0p6nx7g</bpmn:outgoing>
     </bpmn:exclusiveGateway>
-    <bpmn:exclusiveGateway id="Gateway_0nujbwj">
+    <bpmn:exclusiveGateway id="Gateway_0nujbwj" default="Flow_0ivtxme">
+      <bpmn:incoming>Flow_0fepq7n</bpmn:incoming>
       <bpmn:outgoing>Flow_1m2ww6f</bpmn:outgoing>
       <bpmn:outgoing>Flow_0ivtxme</bpmn:outgoing>
     </bpmn:exclusiveGateway>
     <bpmn:intermediateThrowEvent id="Event_0gxfpvb" name="SMEs review is required">
       <bpmn:documentation>Milestone</bpmn:documentation>
       <bpmn:incoming>Flow_0p6nx7g</bpmn:incoming>
-      <bpmn:outgoing>Flow_19l6inq</bpmn:outgoing>
+      <bpmn:outgoing>Flow_0fepq7n</bpmn:outgoing>
     </bpmn:intermediateThrowEvent>
     <bpmn:dataObjectReference id="DataObjectReference_0x2nl9m" dataObjectRef="New_Demand_Request" />
     <bpmn:serviceTask id="Activity_0bghij1" name="Send Waku message to PeopleOps">
@@ -858,10 +860,7 @@ del(userTimeFormat)</spiffworkflow:postScript>
     <bpmn:sequenceFlow id="Flow_1ux0osl" sourceRef="Event_15dhedu" targetRef="Activity_0tt12kf" />
     <bpmn:sequenceFlow id="Flow_14l8agb" sourceRef="Activity_0tt12kf" targetRef="Gateway_0tlgsqb" />
     <bpmn:dataObjectReference id="DataObjectReference_0honlg0" name="Message Request Approval" dataObjectRef="message_Request_Approval" />
-    <bpmn:endEvent id="Event_0xklgk1">
-      <bpmn:incoming>Flow_19l6inq</bpmn:incoming>
-    </bpmn:endEvent>
-    <bpmn:sequenceFlow id="Flow_19l6inq" sourceRef="Event_0gxfpvb" targetRef="Event_0xklgk1" />
+    <bpmn:endEvent id="Event_0xklgk1" />
     <bpmn:dataObjectReference id="DataObjectReference_0hsw7aa" name="Message Additional Info" dataObjectRef="message_Additional_info" />
     <bpmn:dataObject id="message_Additional_info" />
     <bpmn:intermediateThrowEvent id="Event_1300gad" name="Additional info is required">
@@ -1028,6 +1027,7 @@ lane_owners = {
     "Budget Owner": [project_lead_email]
 }</bpmn:script>
     </bpmn:scriptTask>
+    <bpmn:sequenceFlow id="Flow_0fepq7n" sourceRef="Event_0gxfpvb" targetRef="Gateway_0nujbwj" />
     <bpmn:textAnnotation id="TextAnnotation_0zy71k9">
       <bpmn:text>Orgdata from BBHR, Categories from a DB, Currencies from Xero</bpmn:text>
     </bpmn:textAnnotation>
@@ -2101,10 +2101,6 @@ lane_owners = {
         <di:waypoint x="1820" y="440" />
         <di:waypoint x="1875" y="440" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_19l6inq_di" bpmnElement="Flow_19l6inq">
-        <di:waypoint x="2620" y="992" />
-        <di:waypoint x="2620" y="958" />
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1ful1og_di" bpmnElement="Flow_1ful1og">
         <di:waypoint x="530" y="530" />
         <di:waypoint x="530" y="465" />
@@ -2140,6 +2136,10 @@ lane_owners = {
       <bpmndi:BPMNEdge id="Association_012q0h5_di" bpmnElement="Association_012q0h5">
         <di:waypoint x="2171" y="970" />
         <di:waypoint x="2180" y="940" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0fepq7n_di" bpmnElement="Flow_0fepq7n">
+        <di:waypoint x="2638" y="1010" />
+        <di:waypoint x="2675" y="1010" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="DataOutputAssociation_1wiw4o6_di" bpmnElement="DataOutputAssociation_1wiw4o6">
         <di:waypoint x="3040" y="1010" />
