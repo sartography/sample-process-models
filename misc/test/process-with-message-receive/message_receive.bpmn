@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_96f6665" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.0.0-dev">
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:spiffworkflow="http://spiffworkflow.org/bpmn/schema/1.0/core" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_96f6665" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.0.0-dev">
   <bpmn:collaboration id="Collaboration_1huolfe">
-    <bpmn:participant id="Participant_1m0cjw8" processRef="Process_tf49nt7" />
+    <bpmn:participant id="Participant_1m0cjw8" name="Message Receiver" processRef="Process_tf49nt7" />
     <bpmn:participant id="Participant_0yn1po3" name="Message Sender" />
     <bpmn:messageFlow id="Flow_0x48jhc" sourceRef="Participant_0yn1po3" targetRef="Activity_0wnjfmb" />
   </bpmn:collaboration>
@@ -10,7 +10,7 @@
       <bpmn:outgoing>Flow_179pclg</bpmn:outgoing>
     </bpmn:startEvent>
     <bpmn:sequenceFlow id="Flow_179pclg" sourceRef="StartEvent_1" targetRef="Activity_0wnjfmb" />
-    <bpmn:receiveTask id="Activity_0wnjfmb">
+    <bpmn:receiveTask id="Activity_0wnjfmb" name="Receive Message" messageRef="Message_1eukdgf">
       <bpmn:incoming>Flow_179pclg</bpmn:incoming>
       <bpmn:outgoing>Flow_1r4xgfu</bpmn:outgoing>
     </bpmn:receiveTask>
@@ -19,16 +19,23 @@
     </bpmn:endEvent>
     <bpmn:sequenceFlow id="Flow_1r4xgfu" sourceRef="Activity_0wnjfmb" targetRef="Event_0wy21e3" />
   </bpmn:process>
+  <bpmn:message id="Message_1eukdgf" name="Message_1eukdgf">
+    <bpmn:extensionElements>
+      <spiffworkflow:messageVariable>my_variable_name</spiffworkflow:messageVariable>
+    </bpmn:extensionElements>
+  </bpmn:message>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_1huolfe">
       <bpmndi:BPMNShape id="Participant_1m0cjw8_di" bpmnElement="Participant_1m0cjw8" isHorizontal="true">
         <dc:Bounds x="129" y="52" width="600" height="250" />
+        <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
         <dc:Bounds x="179" y="159" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0smhcyt_di" bpmnElement="Activity_0wnjfmb">
         <dc:Bounds x="270" y="137" width="100" height="80" />
+        <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_0wy21e3_di" bpmnElement="Event_0wy21e3">
         <dc:Bounds x="432" y="159" width="36" height="36" />
