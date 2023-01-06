@@ -165,14 +165,18 @@
     <bpmn:sequenceFlow id="Flow_1o4dqco" sourceRef="Gateway_0tlgsqb" targetRef="Activity_108eq0l" />
     <bpmn:sequenceFlow id="Flow_147yu0h" sourceRef="Event_1si6b3g" targetRef="Activity_1iohamu" />
     <bpmn:sequenceFlow id="Flow_03j2gbu" sourceRef="Activity_1iohamu" targetRef="Event_12tt6fj" />
-    <bpmn:sequenceFlow id="Flow_034ez5t" name="NO" sourceRef="Gateway_14xgyev" targetRef="Activity_1nfb31d" />
+    <bpmn:sequenceFlow id="Flow_034ez5t" name="NO" sourceRef="Gateway_14xgyev" targetRef="Activity_1nfb31d">
+      <bpmn:conditionExpression>1 == 2</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="Flow_0en7ium" sourceRef="Activity_1nfb31d" targetRef="Event_0436zos" />
     <bpmn:sequenceFlow id="Flow_1jdyoqm" name="Approved" sourceRef="Gateway_05470yw" targetRef="Event_1px9xcd" />
     <bpmn:sequenceFlow id="Flow_1b386ou" sourceRef="Event_1px9xcd" targetRef="Gateway_14xgyev" />
     <bpmn:sequenceFlow id="Flow_0h80bf3" sourceRef="Event_0daj31x" targetRef="Activity_14fif5h" />
     <bpmn:sequenceFlow id="Flow_0u9k2wx" sourceRef="Activity_14fif5h" targetRef="Activity_0uhfy9l" />
     <bpmn:sequenceFlow id="Flow_0rvr5e7" sourceRef="Activity_0uhfy9l" targetRef="Gateway_05470yw" />
-    <bpmn:sequenceFlow id="Flow_12bnhp1" name="Rejected" sourceRef="Gateway_05470yw" targetRef="Event_1si6b3g" />
+    <bpmn:sequenceFlow id="Flow_12bnhp1" name="Rejected" sourceRef="Gateway_05470yw" targetRef="Event_1si6b3g">
+      <bpmn:conditionExpression>not(isRequestApproved)</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="Flow_1cnzdsg" name="Additional info is required" sourceRef="Gateway_05470yw" targetRef="Gateway_1gcwukc" />
     <bpmn:sequenceFlow id="Flow_0p6nx7g" name="YES" sourceRef="Gateway_14xgyev" targetRef="Event_0gxfpvb" />
     <bpmn:sequenceFlow id="Flow_1m2ww6f" name="Software &#38;Licences" sourceRef="Gateway_0nujbwj" targetRef="Gateway_1qwn7ei">
@@ -454,13 +458,13 @@ Please ensure that you have enough budget for the demand, and if needed, submit 
       <bpmn:incoming>Flow_0u9k2wx</bpmn:incoming>
       <bpmn:outgoing>Flow_0rvr5e7</bpmn:outgoing>
     </bpmn:manualTask>
-    <bpmn:exclusiveGateway id="Gateway_05470yw">
+    <bpmn:exclusiveGateway id="Gateway_05470yw" name="Review Outcome" default="Flow_1jdyoqm">
       <bpmn:incoming>Flow_0rvr5e7</bpmn:incoming>
       <bpmn:outgoing>Flow_12bnhp1</bpmn:outgoing>
       <bpmn:outgoing>Flow_1cnzdsg</bpmn:outgoing>
       <bpmn:outgoing>Flow_1jdyoqm</bpmn:outgoing>
     </bpmn:exclusiveGateway>
-    <bpmn:exclusiveGateway id="Gateway_14xgyev" name="SMEs review required?">
+    <bpmn:exclusiveGateway id="Gateway_14xgyev" name="SMEs review required?" default="Flow_0p6nx7g">
       <bpmn:documentation>Defined in the Call Activity - Define Approval strategy</bpmn:documentation>
       <bpmn:incoming>Flow_1b386ou</bpmn:incoming>
       <bpmn:outgoing>Flow_034ez5t</bpmn:outgoing>
@@ -998,28 +1002,6 @@ del(userTimeFormat)</spiffworkflow:postScript>
       <bpmndi:BPMNShape id="Activity_0vhbxuw_di" bpmnElement="Activity_1itequ5">
         <dc:Bounds x="760" y="400" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_0xklgk1_di" bpmnElement="Event_0xklgk1">
-        <dc:Bounds x="2602" y="922" width="36" height="36" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="DataObjectReference_0hsw7aa_di" bpmnElement="DataObjectReference_0hsw7aa">
-        <dc:Bounds x="332" y="555" width="36" height="50" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="316" y="612" width="70" height="27" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1xqi0q7_di" bpmnElement="Activity_18am0at">
-        <dc:Bounds x="480" y="530" width="100" height="80" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_1300gad_di" bpmnElement="Event_1300gad">
-        <dc:Bounds x="512" y="772" width="36" height="36" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="417" y="780" width="81" height="27" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Gateway_1gcwukc_di" bpmnElement="Gateway_1gcwukc" isMarkerVisible="true">
-        <dc:Bounds x="505" y="1265" width="50" height="50" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1nyt2o4_di" bpmnElement="Submit_Validate_New_Demand_Request-Sub_Process">
         <dc:Bounds x="1070" y="400" width="100" height="80" />
         <bpmndi:BPMNLabel />
@@ -1100,7 +1082,7 @@ del(userTimeFormat)</spiffworkflow:postScript>
       <bpmndi:BPMNShape id="Gateway_05470yw_di" bpmnElement="Gateway_05470yw" isMarkerVisible="true">
         <dc:Bounds x="2285" y="985" width="50" height="50" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="687.5" y="605" width="65" height="27" />
+          <dc:Bounds x="2258" y="1042" width="84" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Gateway_14xgyev_di" bpmnElement="Gateway_14xgyev" isMarkerVisible="true">
@@ -1432,6 +1414,34 @@ del(userTimeFormat)</spiffworkflow:postScript>
       <bpmndi:BPMNShape id="Activity_1trh55u_di" bpmnElement="Activity_0tt12kf">
         <dc:Bounds x="1720" y="400" width="100" height="80" />
         <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DataObjectReference_0honlg0_di" bpmnElement="DataObjectReference_0honlg0">
+        <dc:Bounds x="1992" y="275" width="36" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1965" y="237.5" width="89" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0xklgk1_di" bpmnElement="Event_0xklgk1">
+        <dc:Bounds x="2602" y="922" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DataObjectReference_0hsw7aa_di" bpmnElement="DataObjectReference_0hsw7aa">
+        <dc:Bounds x="332" y="555" width="36" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="316" y="612" width="70" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1xqi0q7_di" bpmnElement="Activity_18am0at">
+        <dc:Bounds x="480" y="530" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1300gad_di" bpmnElement="Event_1300gad">
+        <dc:Bounds x="512" y="772" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="417" y="780" width="81" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_1gcwukc_di" bpmnElement="Gateway_1gcwukc" isMarkerVisible="true">
+        <dc:Bounds x="505" y="1265" width="50" height="50" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="TextAnnotation_0zy71k9_di" bpmnElement="TextAnnotation_0zy71k9">
         <dc:Bounds x="310" y="180" width="130" height="60" />
@@ -1975,6 +1985,14 @@ del(userTimeFormat)</spiffworkflow:postScript>
         <di:waypoint x="1820" y="440" />
         <di:waypoint x="1875" y="440" />
       </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_19l6inq_di" bpmnElement="Flow_19l6inq">
+        <di:waypoint x="2620" y="992" />
+        <di:waypoint x="2620" y="958" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1ful1og_di" bpmnElement="Flow_1ful1og">
+        <di:waypoint x="530" y="530" />
+        <di:waypoint x="530" y="465" />
+      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Association_13u0dtl_di" bpmnElement="Association_13u0dtl">
         <di:waypoint x="384" y="260" />
         <di:waypoint x="377" y="240" />
@@ -1998,24 +2016,6 @@ del(userTimeFormat)</spiffworkflow:postScript>
       <bpmndi:BPMNEdge id="Association_012q0h5_di" bpmnElement="Association_012q0h5">
         <di:waypoint x="2187" y="970" />
         <di:waypoint x="2185" y="940" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="DataObjectReference_0honlg0_di" bpmnElement="DataObjectReference_0honlg0">
-        <dc:Bounds x="1992" y="275" width="36" height="50" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="1965" y="237.5" width="89" height="27" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge id="Flow_19l6inq_di" bpmnElement="Flow_19l6inq">
-        <di:waypoint x="2620" y="992" />
-        <di:waypoint x="2620" y="958" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_1ful1og_di" bpmnElement="Flow_1ful1og">
-        <di:waypoint x="530" y="530" />
-        <di:waypoint x="530" y="465" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="DataOutputAssociation_1yn62s3_di" bpmnElement="DataOutputAssociation_1yn62s3">
-        <di:waypoint x="480" y="575" />
-        <di:waypoint x="368" y="588" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="DataOutputAssociation_11ud8qn_di" bpmnElement="DataOutputAssociation_11ud8qn">
         <di:waypoint x="2261" y="785" />
@@ -2084,6 +2084,10 @@ del(userTimeFormat)</spiffworkflow:postScript>
       <bpmndi:BPMNEdge id="DataOutputAssociation_1seotft_di" bpmnElement="DataOutputAssociation_1seotft">
         <di:waypoint x="2009" y="400" />
         <di:waypoint x="2008" y="325" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DataOutputAssociation_1yn62s3_di" bpmnElement="DataOutputAssociation_1yn62s3">
+        <di:waypoint x="480" y="575" />
+        <di:waypoint x="368" y="588" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
