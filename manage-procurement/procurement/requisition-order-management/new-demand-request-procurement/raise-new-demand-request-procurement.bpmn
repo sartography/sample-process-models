@@ -987,6 +987,35 @@ Please ensure that you have enough budget for the demand, and if needed, submit 
       <bpmn:dataOutputAssociation id="DataOutputAssociation_1yn62s3">
         <bpmn:targetRef>DataObjectReference_0hsw7aa</bpmn:targetRef>
       </bpmn:dataOutputAssociation>
+      <bpmn:startEvent id="Event_1gietx2">
+        <bpmn:outgoing>Flow_0fz615w</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:callActivity id="Activity_0ra2pph" name="Call Get Waku Message Info" calledElement="Waku_Messages_Message-Raise_New_Demand_Request">
+        <bpmn:extensionElements>
+          <spiffworkflow:preScript>task_id = "waku_additional_info_required"</spiffworkflow:preScript>
+        </bpmn:extensionElements>
+        <bpmn:incoming>Flow_0fz615w</bpmn:incoming>
+        <bpmn:outgoing>Flow_0miwukw</bpmn:outgoing>
+      </bpmn:callActivity>
+      <bpmn:serviceTask id="Activity_0h849vr" name="Send Waku Message to Budget Owner">
+        <bpmn:extensionElements>
+          <spiffworkflow:serviceTaskOperator id="waku/SendMessage" resultVariable="message_Request_Approval">
+            <spiffworkflow:parameters>
+              <spiffworkflow:parameter id="message" type="str" value="waku_message" />
+              <spiffworkflow:parameter id="message_type" type="str" value="&#34;wakuext_sendOneToOneMessage&#34;" />
+              <spiffworkflow:parameter id="recipient" type="str" value="current_user_extras[&#34;status_key&#34;]" />
+            </spiffworkflow:parameters>
+          </spiffworkflow:serviceTaskOperator>
+        </bpmn:extensionElements>
+        <bpmn:incoming>Flow_0miwukw</bpmn:incoming>
+        <bpmn:outgoing>Flow_1kty7z5</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:endEvent id="Event_19q525t">
+        <bpmn:incoming>Flow_1kty7z5</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:sequenceFlow id="Flow_0fz615w" sourceRef="Event_1gietx2" targetRef="Activity_0ra2pph" />
+      <bpmn:sequenceFlow id="Flow_0miwukw" sourceRef="Activity_0ra2pph" targetRef="Activity_0h849vr" />
+      <bpmn:sequenceFlow id="Flow_1kty7z5" sourceRef="Activity_0h849vr" targetRef="Event_19q525t" />
     </bpmn:subProcess>
     <bpmn:textAnnotation id="TextAnnotation_0zy71k9">
       <bpmn:text>Orgdata from BBHR, Categories from a DB, Currencies from Xero</bpmn:text>
@@ -2421,6 +2450,31 @@ Please ensure that you have enough budget for the demand, and if needed, submit 
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1tehs9r">
-    <bpmndi:BPMNPlane id="BPMNPlane_1gdp3mb" bpmnElement="Activity_18am0at" />
+    <bpmndi:BPMNPlane id="BPMNPlane_1gdp3mb" bpmnElement="Activity_18am0at">
+      <bpmndi:BPMNShape id="BPMNShape_12vk049" bpmnElement="Event_1gietx2">
+        <dc:Bounds x="402" y="222" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_1pmadu4" bpmnElement="Activity_0ra2pph">
+        <dc:Bounds x="500" y="200" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_0tb99es" bpmnElement="Activity_0h849vr">
+        <dc:Bounds x="660" y="200" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_0wj218l" bpmnElement="Event_19q525t">
+        <dc:Bounds x="822" y="222" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="BPMNEdge_0tmxcyg" bpmnElement="Flow_0fz615w">
+        <di:waypoint x="438" y="240" />
+        <di:waypoint x="500" y="240" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_1yzmw83" bpmnElement="Flow_0miwukw">
+        <di:waypoint x="600" y="240" />
+        <di:waypoint x="660" y="240" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_09bcj7a" bpmnElement="Flow_1kty7z5">
+        <di:waypoint x="760" y="240" />
+        <di:waypoint x="822" y="240" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
 </bpmn:definitions>
