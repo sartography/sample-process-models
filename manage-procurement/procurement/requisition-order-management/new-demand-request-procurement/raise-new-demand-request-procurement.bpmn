@@ -81,7 +81,6 @@
         <bpmn:flowNodeRef>Event_12tt6fj</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_0436zos</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_1px9xcd</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Activity_0uhfy9l</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Gateway_05470yw</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Gateway_14xgyev</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Gateway_0nujbwj</bpmn:flowNodeRef>
@@ -100,6 +99,7 @@
         <bpmn:flowNodeRef>Activity_1nfb31d</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_14fif5h</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_06bnz9o</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_0uhfy9l</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_1mrq305">
         <bpmn:flowNodeRef>StartEvent_1</bpmn:flowNodeRef>
@@ -169,7 +169,9 @@
       <bpmn:conditionExpression>not(is_sme_review)</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="Flow_0en7ium" sourceRef="Activity_1nfb31d" targetRef="Event_0436zos" />
-    <bpmn:sequenceFlow id="Flow_1jdyoqm" name="Approved" sourceRef="Gateway_05470yw" targetRef="Event_1px9xcd" />
+    <bpmn:sequenceFlow id="Flow_1jdyoqm" name="Approved" sourceRef="Gateway_05470yw" targetRef="Event_1px9xcd">
+      <bpmn:conditionExpression>review_outcome == "Approved"</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="Flow_1b386ou" sourceRef="Event_1px9xcd" targetRef="Gateway_14xgyev" />
     <bpmn:sequenceFlow id="Flow_0h80bf3" sourceRef="Event_0daj31x" targetRef="Activity_14fif5h" />
     <bpmn:sequenceFlow id="Flow_0u9k2wx" sourceRef="Activity_14fif5h" targetRef="Activity_0uhfy9l" />
@@ -177,7 +179,9 @@
     <bpmn:sequenceFlow id="Flow_12bnhp1" name="Rejected" sourceRef="Gateway_05470yw" targetRef="Event_1si6b3g">
       <bpmn:conditionExpression>review_outcome == "Rejected"</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
-    <bpmn:sequenceFlow id="Flow_1cnzdsg" name="Additional info is required" sourceRef="Gateway_05470yw" targetRef="Gateway_1gcwukc" />
+    <bpmn:sequenceFlow id="Flow_1cnzdsg" name="Needs Additional Information" sourceRef="Gateway_05470yw" targetRef="Gateway_1gcwukc">
+      <bpmn:conditionExpression>review_outcome == "Needs Additional Information"</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="Flow_0p6nx7g" name="YES" sourceRef="Gateway_14xgyev" targetRef="Event_0gxfpvb" />
     <bpmn:sequenceFlow id="Flow_1m2ww6f" name="Software &#38;Licences" sourceRef="Gateway_0nujbwj" targetRef="Gateway_1qwn7ei">
       <bpmn:documentation>Category = Software &amp; Licences</bpmn:documentation>
@@ -421,15 +425,7 @@
       <bpmn:incoming>Flow_1jdyoqm</bpmn:incoming>
       <bpmn:outgoing>Flow_1b386ou</bpmn:outgoing>
     </bpmn:intermediateThrowEvent>
-    <bpmn:manualTask id="Activity_0uhfy9l" name="Reminder: Request Additional Budget">
-      <bpmn:extensionElements>
-        <spiffworkflow:instructionsForEndUser>Thank you!
-Please ensure that you have enough budget for the demand, and if needed, submit the **budget increase request** via **TypeForm** - https://34z6hn3eyj7.typeform.com/to/PujzmH6Z</spiffworkflow:instructionsForEndUser>
-      </bpmn:extensionElements>
-      <bpmn:incoming>Flow_0u9k2wx</bpmn:incoming>
-      <bpmn:outgoing>Flow_0rvr5e7</bpmn:outgoing>
-    </bpmn:manualTask>
-    <bpmn:exclusiveGateway id="Gateway_05470yw" name="Review Outcome" default="Flow_1jdyoqm">
+    <bpmn:exclusiveGateway id="Gateway_05470yw" name="Review Outcome">
       <bpmn:incoming>Flow_0rvr5e7</bpmn:incoming>
       <bpmn:outgoing>Flow_12bnhp1</bpmn:outgoing>
       <bpmn:outgoing>Flow_1cnzdsg</bpmn:outgoing>
@@ -984,6 +980,14 @@ isRequestApproved = None</spiffworkflow:postScript>
         <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">P1D</bpmn:timeDuration>
       </bpmn:timerEventDefinition>
     </bpmn:boundaryEvent>
+    <bpmn:manualTask id="Activity_0uhfy9l" name="Reminder: Request Additional Budget">
+      <bpmn:extensionElements>
+        <spiffworkflow:instructionsForEndUser>Thank you!
+Please ensure that you have enough budget for the demand, and if needed, submit the **budget increase request** via **TypeForm** - https://34z6hn3eyj7.typeform.com/to/PujzmH6Z</spiffworkflow:instructionsForEndUser>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0u9k2wx</bpmn:incoming>
+      <bpmn:outgoing>Flow_0rvr5e7</bpmn:outgoing>
+    </bpmn:manualTask>
     <bpmn:textAnnotation id="TextAnnotation_0zy71k9">
       <bpmn:text>Orgdata from BBHR, Categories from a DB, Currencies from Xero</bpmn:text>
     </bpmn:textAnnotation>
@@ -1071,6 +1075,10 @@ isRequestApproved = None</spiffworkflow:postScript>
       <bpmndi:BPMNShape id="Activity_0vhbxuw_di" bpmnElement="Activity_1itequ5">
         <dc:Bounds x="760" y="400" width="100" height="80" />
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_16il73f_di" bpmnElement="Activity_0uhfy9l">
+        <dc:Bounds x="2110" y="970" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1nyt2o4_di" bpmnElement="Submit_Validate_New_Demand_Request-Sub_Process">
         <dc:Bounds x="1070" y="400" width="100" height="80" />
         <bpmndi:BPMNLabel />
@@ -1132,14 +1140,10 @@ isRequestApproved = None</spiffworkflow:postScript>
           <dc:Bounds x="2398" y="1035" width="65" height="40" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_16il73f_di" bpmnElement="Activity_0uhfy9l">
-        <dc:Bounds x="2140" y="970" width="100" height="80" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Gateway_05470yw_di" bpmnElement="Gateway_05470yw" isMarkerVisible="true">
         <dc:Bounds x="2285" y="985" width="50" height="50" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="2258" y="1042" width="84" height="14" />
+          <dc:Bounds x="2218" y="1033" width="84" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Gateway_14xgyev_di" bpmnElement="Gateway_14xgyev" isMarkerVisible="true">
@@ -1534,6 +1538,10 @@ isRequestApproved = None</spiffworkflow:postScript>
         <dc:Bounds x="2150" y="910" width="70" height="30" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Association_012q0h5_di" bpmnElement="Association_012q0h5">
+        <di:waypoint x="2171" y="970" />
+        <di:waypoint x="2180" y="940" />
+      </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="Event_095wlf3_di" bpmnElement="Event_06bnz9o">
         <dc:Bounds x="2021" y="1032" width="36" height="36" />
         <bpmndi:BPMNLabel>
@@ -1673,10 +1681,10 @@ isRequestApproved = None</spiffworkflow:postScript>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0u9k2wx_di" bpmnElement="Flow_0u9k2wx">
         <di:waypoint x="2059" y="1010" />
-        <di:waypoint x="2140" y="1010" />
+        <di:waypoint x="2110" y="1010" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0rvr5e7_di" bpmnElement="Flow_0rvr5e7">
-        <di:waypoint x="2240" y="1010" />
+        <di:waypoint x="2210" y="1010" />
         <di:waypoint x="2285" y="1010" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_12bnhp1_di" bpmnElement="Flow_12bnhp1">
@@ -1691,7 +1699,7 @@ isRequestApproved = None</spiffworkflow:postScript>
         <di:waypoint x="2310" y="1290" />
         <di:waypoint x="555" y="1290" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="2208" y="1246" width="81" height="27" />
+          <dc:Bounds x="2318" y="1086" width="83" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0p6nx7g_di" bpmnElement="Flow_0p6nx7g">
@@ -2085,10 +2093,6 @@ isRequestApproved = None</spiffworkflow:postScript>
       <bpmndi:BPMNEdge id="Association_1778mrp_di" bpmnElement="Association_1778mrp">
         <di:waypoint x="4316" y="3522" />
         <di:waypoint x="4342" y="3500" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Association_012q0h5_di" bpmnElement="Association_012q0h5">
-        <di:waypoint x="2187" y="970" />
-        <di:waypoint x="2185" y="940" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="DataOutputAssociation_1wiw4o6_di" bpmnElement="DataOutputAssociation_1wiw4o6">
         <di:waypoint x="3040" y="1010" />
