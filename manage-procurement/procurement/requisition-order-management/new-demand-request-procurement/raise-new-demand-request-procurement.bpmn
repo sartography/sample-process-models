@@ -259,9 +259,15 @@
     <bpmn:sequenceFlow id="Flow_1pa3da4" sourceRef="Activity_0biwdi7" targetRef="Gateway_0qbf3s9" />
     <bpmn:sequenceFlow id="Flow_10eey19" sourceRef="Gateway_0qbf3s9" targetRef="Gateway_01hote2" />
     <bpmn:sequenceFlow id="Flow_0cmpmkk" sourceRef="Event_0shanpw" targetRef="Activity_0biwdi7" />
-    <bpmn:sequenceFlow id="Flow_1iyosbm" name="Approved" sourceRef="Gateway_01nq66f" targetRef="Event_0shanpw" />
-    <bpmn:sequenceFlow id="Flow_0de6bzm" name="Additional info is required" sourceRef="Gateway_01nq66f" targetRef="Gateway_0dj673n" />
-    <bpmn:sequenceFlow id="Flow_19miqjt" name="Rejected" sourceRef="Gateway_01nq66f" targetRef="Event_1yd9gir" />
+    <bpmn:sequenceFlow id="Flow_1iyosbm" name="Approved" sourceRef="Gateway_01nq66f" targetRef="Event_0shanpw">
+      <bpmn:conditionExpression>infra_outcome = "Approved"</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_0de6bzm" name="Additional info is required" sourceRef="Gateway_01nq66f" targetRef="Gateway_0dj673n">
+      <bpmn:conditionExpression>infra_outcome = "Additional Information Needed"</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_19miqjt" name="Rejected" sourceRef="Gateway_01nq66f" targetRef="Event_1yd9gir">
+      <bpmn:conditionExpression>infra_outcome = "Rejected"</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="Flow_0tes3fg" sourceRef="Gateway_01hote2" targetRef="Activity_1s89fmw" />
     <bpmn:sequenceFlow id="Flow_03lmij7" sourceRef="Activity_1s89fmw" targetRef="Event_1k7puc2" />
     <bpmn:sequenceFlow id="Flow_03bcido" sourceRef="Activity_08xl52p" targetRef="Gateway_0db4fvw" />
