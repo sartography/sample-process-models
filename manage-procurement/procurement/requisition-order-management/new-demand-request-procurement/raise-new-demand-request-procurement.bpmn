@@ -200,9 +200,15 @@
     <bpmn:sequenceFlow id="Flow_1kcfinc" sourceRef="Activity_0rhqmwe" targetRef="Gateway_1je3z9i" />
     <bpmn:sequenceFlow id="Flow_1naganq" sourceRef="Activity_05nr3wb" targetRef="Event_1fsb3by" />
     <bpmn:sequenceFlow id="Flow_1jp7aqy" sourceRef="Event_1k3zz2f" targetRef="Activity_05nr3wb" />
-    <bpmn:sequenceFlow id="Flow_01n63u0" name="Additional info is required" sourceRef="Gateway_1je3z9i" targetRef="Gateway_0vdntex" />
-    <bpmn:sequenceFlow id="Flow_0a5yhak" name="Approved" sourceRef="Gateway_1je3z9i" targetRef="Event_1k3zz2f" />
-    <bpmn:sequenceFlow id="Flow_09acpla" name="Rejected" sourceRef="Gateway_1je3z9i" targetRef="Event_0kh2b9q" />
+    <bpmn:sequenceFlow id="Flow_01n63u0" name="Additional info is required" sourceRef="Gateway_1je3z9i" targetRef="Gateway_0vdntex">
+      <bpmn:conditionExpression>people_ops_outcome == </bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_0a5yhak" name="Approved" sourceRef="Gateway_1je3z9i" targetRef="Event_1k3zz2f">
+      <bpmn:conditionExpression>people_ops_outcome == "Approved"</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_09acpla" name="Rejected" sourceRef="Gateway_1je3z9i" targetRef="Event_0kh2b9q">
+      <bpmn:conditionExpression>people_ops_outcome == "Rejected"</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="Flow_06c3yw6" sourceRef="Event_0kh2b9q" targetRef="Activity_16i7dp7" />
     <bpmn:sequenceFlow id="Flow_1v5wz1m" sourceRef="Activity_16i7dp7" targetRef="Event_1sbi4xu" />
     <bpmn:sequenceFlow id="Flow_0x3kydh" sourceRef="Event_16opsk7" targetRef="Activity_0zszjko" />
