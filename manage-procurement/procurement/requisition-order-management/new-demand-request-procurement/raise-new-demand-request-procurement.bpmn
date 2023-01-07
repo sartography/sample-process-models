@@ -213,10 +213,18 @@
     <bpmn:sequenceFlow id="Flow_1v5wz1m" sourceRef="Activity_16i7dp7" targetRef="Event_1sbi4xu" />
     <bpmn:sequenceFlow id="Flow_0x3kydh" sourceRef="Event_16opsk7" targetRef="Activity_0zszjko" />
     <bpmn:sequenceFlow id="Flow_06b6udn" sourceRef="Activity_0zszjko" targetRef="Gateway_1gweofr" />
-    <bpmn:sequenceFlow id="Flow_1c8vykc" name="Additional info is required" sourceRef="Gateway_1gweofr" targetRef="Gateway_0msst2a" />
-    <bpmn:sequenceFlow id="Flow_0piw09v" name="Rejected" sourceRef="Gateway_1gweofr" targetRef="Event_1vfzphm" />
-    <bpmn:sequenceFlow id="Flow_01bm90f" name="Approved" sourceRef="Gateway_1gweofr" targetRef="Event_0jdy2uk" />
-    <bpmn:sequenceFlow id="Flow_1usc8it" name="CP is approved" sourceRef="Gateway_1gweofr" targetRef="Event_1cr1eqa" />
+    <bpmn:sequenceFlow id="Flow_1c8vykc" name="Additional info is required" sourceRef="Gateway_1gweofr" targetRef="Gateway_0msst2a">
+      <bpmn:conditionExpression>ppg_ba_outcome == "Needs Additional Information"</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_0piw09v" name="Rejected" sourceRef="Gateway_1gweofr" targetRef="Event_1vfzphm">
+      <bpmn:conditionExpression>ppg_ba_outcome == "Rejected"</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_01bm90f" name="Approved" sourceRef="Gateway_1gweofr" targetRef="Event_0jdy2uk">
+      <bpmn:conditionExpression>ppg_ba_outcome == "Approved"</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_1usc8it" name="CP is approved" sourceRef="Gateway_1gweofr" targetRef="Event_1cr1eqa">
+      <bpmn:conditionExpression />
+    </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="Flow_1dfe7tm" sourceRef="Event_1cr1eqa" targetRef="Gateway_0qbf3s9" />
     <bpmn:sequenceFlow id="Flow_1vkub7h" sourceRef="Event_1vfzphm" targetRef="Gateway_11sgdfq" />
     <bpmn:sequenceFlow id="Flow_0xnbnkt" sourceRef="Gateway_0msst2a" targetRef="Gateway_0vdntex" />
@@ -545,6 +553,17 @@ review_outcome = None</spiffworkflow:postScript>
       <bpmn:documentation>**Figma - New Demand request (Procurement) - SUBMIT**, https://www.figma.com/file/9NP2BUoLuwHUCGStvDMgOw/Form?node-id=0%3A1&amp;t=BABeo58RkNviJr4N-0
 
 **Fields details** - https://docs.google.com/spreadsheets/d/19S85IJeNXffPa1oAe6kSkmTleMWE92A4kWJFFodCEZU/edit#gid=1736626389</bpmn:documentation>
+      <bpmn:extensionElements>
+        <spiffworkflow:postScript># Set PPG BA Review Outcome
+ppg_ba_outcome = review_outcome
+
+# Reset Form isRequestApproved
+review_outcome = None</spiffworkflow:postScript>
+        <spiffworkflow:properties>
+          <spiffworkflow:property name="formJsonSchemaFilename" value="review-request-schema.json" />
+          <spiffworkflow:property name="formUiSchemaFilename" value="review-request-uischema.json" />
+        </spiffworkflow:properties>
+      </bpmn:extensionElements>
       <bpmn:incoming>Flow_0x3kydh</bpmn:incoming>
       <bpmn:outgoing>Flow_06b6udn</bpmn:outgoing>
       <bpmn:dataOutputAssociation id="DataOutputAssociation_019xu31">
