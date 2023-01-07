@@ -473,6 +473,17 @@
     </bpmn:serviceTask>
     <bpmn:dataObjectReference id="DataObjectReference_1kr8dbu" name="Message Request S M E" dataObjectRef="message_Request_SME" />
     <bpmn:userTask id="Activity_0rhqmwe" name="Review the Request">
+      <bpmn:extensionElements>
+        <spiffworkflow:properties>
+          <spiffworkflow:property name="formJsonSchemaFilename" value="review-request-schema.json" />
+          <spiffworkflow:property name="formUiSchemaFilename" value="review-request-uischema.json" />
+        </spiffworkflow:properties>
+        <spiffworkflow:postScript># Set People Ops Review Outcome
+people_ops_outcome = review_outcome
+
+# Reset Form isRequestApproved
+review_outcome = None</spiffworkflow:postScript>
+      </bpmn:extensionElements>
       <bpmn:incoming>Flow_1tt575s</bpmn:incoming>
       <bpmn:outgoing>Flow_1kcfinc</bpmn:outgoing>
       <bpmn:property id="Property_1873471" name="__targetRef_placeholder" />
