@@ -100,6 +100,7 @@
         <bpmn:flowNodeRef>Activity_14fif5h</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_06bnz9o</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_0uhfy9l</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Event_0p19rx3</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_1mrq305">
         <bpmn:flowNodeRef>StartEvent_1</bpmn:flowNodeRef>
@@ -175,7 +176,6 @@
     <bpmn:sequenceFlow id="Flow_1b386ou" sourceRef="Event_1px9xcd" targetRef="Gateway_14xgyev" />
     <bpmn:sequenceFlow id="Flow_0h80bf3" sourceRef="Event_0daj31x" targetRef="Activity_14fif5h" />
     <bpmn:sequenceFlow id="Flow_0u9k2wx" sourceRef="Activity_14fif5h" targetRef="Activity_0uhfy9l" />
-    <bpmn:sequenceFlow id="Flow_0rvr5e7" sourceRef="Activity_0uhfy9l" targetRef="Gateway_05470yw" />
     <bpmn:sequenceFlow id="Flow_12bnhp1" name="Rejected" sourceRef="Gateway_05470yw" targetRef="Event_1si6b3g">
       <bpmn:conditionExpression>budget_owner_outcome == "Rejected"</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
@@ -455,7 +455,6 @@
       <bpmn:outgoing>Flow_1b386ou</bpmn:outgoing>
     </bpmn:intermediateThrowEvent>
     <bpmn:exclusiveGateway id="Gateway_05470yw" name="Review Outcome">
-      <bpmn:incoming>Flow_0rvr5e7</bpmn:incoming>
       <bpmn:outgoing>Flow_12bnhp1</bpmn:outgoing>
       <bpmn:outgoing>Flow_1cnzdsg</bpmn:outgoing>
       <bpmn:outgoing>Flow_1jdyoqm</bpmn:outgoing>
@@ -1057,7 +1056,7 @@ review_outcome = None</spiffworkflow:postScript>
 Please ensure that you have enough budget for the demand, and if needed, submit the **budget increase request** via **TypeForm** - https://34z6hn3eyj7.typeform.com/to/PujzmH6Z</spiffworkflow:instructionsForEndUser>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_0u9k2wx</bpmn:incoming>
-      <bpmn:outgoing>Flow_0rvr5e7</bpmn:outgoing>
+      <bpmn:outgoing>Flow_1wokni2</bpmn:outgoing>
     </bpmn:manualTask>
     <bpmn:subProcess id="Activity_18am0at" name="Additional info - Send Waku message to CC">
       <bpmn:incoming>Flow_1ygiuii</bpmn:incoming>
@@ -1105,6 +1104,10 @@ Please ensure that you have enough budget for the demand, and if needed, submit 
       <bpmn:incoming>Flow_03jbh71</bpmn:incoming>
       <bpmn:outgoing>Flow_1aru6o6</bpmn:outgoing>
     </bpmn:intermediateThrowEvent>
+    <bpmn:sequenceFlow id="Flow_1wokni2" sourceRef="Activity_0uhfy9l" targetRef="Event_0p19rx3" />
+    <bpmn:endEvent id="Event_0p19rx3">
+      <bpmn:incoming>Flow_1wokni2</bpmn:incoming>
+    </bpmn:endEvent>
     <bpmn:textAnnotation id="TextAnnotation_0zy71k9">
       <bpmn:text>Orgdata from BBHR, Categories from a DB, Currencies from Xero</bpmn:text>
     </bpmn:textAnnotation>
@@ -1191,6 +1194,9 @@ Please ensure that you have enough budget for the demand, and if needed, submit 
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0vhbxuw_di" bpmnElement="Activity_1itequ5">
         <dc:Bounds x="760" y="400" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0p19rx3_di" bpmnElement="Event_0p19rx3">
+        <dc:Bounds x="2142" y="1112" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1nyt2o4_di" bpmnElement="Submit_Validate_New_Demand_Request-Sub_Process">
         <dc:Bounds x="1070" y="400" width="100" height="80" />
@@ -1798,10 +1804,6 @@ Please ensure that you have enough budget for the demand, and if needed, submit 
         <di:waypoint x="2059" y="1010" />
         <di:waypoint x="2110" y="1010" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0rvr5e7_di" bpmnElement="Flow_0rvr5e7">
-        <di:waypoint x="2210" y="1010" />
-        <di:waypoint x="2285" y="1010" />
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_12bnhp1_di" bpmnElement="Flow_12bnhp1">
         <di:waypoint x="2310" y="985" />
         <di:waypoint x="2310" y="928" />
@@ -2212,6 +2214,10 @@ Please ensure that you have enough budget for the demand, and if needed, submit 
       <bpmndi:BPMNEdge id="Association_012q0h5_di" bpmnElement="Association_012q0h5">
         <di:waypoint x="2171" y="970" />
         <di:waypoint x="2180" y="940" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1wokni2_di" bpmnElement="Flow_1wokni2">
+        <di:waypoint x="2160" y="1050" />
+        <di:waypoint x="2160" y="1112" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="DataOutputAssociation_1wiw4o6_di" bpmnElement="DataOutputAssociation_1wiw4o6">
         <di:waypoint x="3040" y="1010" />
