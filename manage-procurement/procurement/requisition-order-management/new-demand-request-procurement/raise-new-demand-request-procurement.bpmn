@@ -87,7 +87,6 @@
         <bpmn:flowNodeRef>Event_0gxfpvb</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_0bghij1</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Gateway_02ug3cs</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Activity_0j7pkyk</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_1eos1zo</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Gateway_1qwn7ei</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_0daj31x</bpmn:flowNodeRef>
@@ -101,6 +100,7 @@
         <bpmn:flowNodeRef>Event_06bnz9o</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_0uhfy9l</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_0p19rx3</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_0j7pkyk</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_1mrq305">
         <bpmn:flowNodeRef>StartEvent_1</bpmn:flowNodeRef>
@@ -490,14 +490,6 @@
       <bpmn:incoming>Flow_05fojyk</bpmn:incoming>
       <bpmn:outgoing>Flow_0y86qqu</bpmn:outgoing>
     </bpmn:exclusiveGateway>
-    <bpmn:serviceTask id="Activity_0j7pkyk" name="Send Waku message to PPG BA">
-      <bpmn:documentation>Message - https://www.notion.so/Processes-WIP-bf288f19f8ff454699e2f1cc83ad7abe?p=9891dc90f4424a0ebd3407db1991c203&amp;pm=s</bpmn:documentation>
-      <bpmn:incoming>Flow_0xvqu1v</bpmn:incoming>
-      <bpmn:outgoing>Flow_0xb76li</bpmn:outgoing>
-      <bpmn:dataOutputAssociation id="DataOutputAssociation_10aqq31">
-        <bpmn:targetRef>DataObjectReference_1kr8dbu</bpmn:targetRef>
-      </bpmn:dataOutputAssociation>
-    </bpmn:serviceTask>
     <bpmn:dataObjectReference id="DataObjectReference_1kr8dbu" name="Message Request S M E" dataObjectRef="message_Request_SME" />
     <bpmn:userTask id="Activity_0rhqmwe" name="Review the Request">
       <bpmn:extensionElements>
@@ -1172,6 +1164,82 @@ Please ensure that you have enough budget for the demand, and if needed, submit 
     <bpmn:endEvent id="Event_0p19rx3">
       <bpmn:incoming>Flow_1wokni2</bpmn:incoming>
     </bpmn:endEvent>
+    <bpmn:subProcess id="Activity_0j7pkyk" name="Send Waku message to PPG BA">
+      <bpmn:documentation>Message - https://www.notion.so/Processes-WIP-bf288f19f8ff454699e2f1cc83ad7abe?p=9891dc90f4424a0ebd3407db1991c203&amp;pm=s</bpmn:documentation>
+      <bpmn:incoming>Flow_0xvqu1v</bpmn:incoming>
+      <bpmn:outgoing>Flow_0xb76li</bpmn:outgoing>
+      <bpmn:dataOutputAssociation id="DataOutputAssociation_10aqq31">
+        <bpmn:targetRef>DataObjectReference_1kr8dbu</bpmn:targetRef>
+      </bpmn:dataOutputAssociation>
+      <bpmn:startEvent id="Event_08w30zs">
+        <bpmn:outgoing>Flow_1nw8nmu</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:callActivity id="Activity_0moqpz9" name="Call Get Waku Message Info" calledElement="Waku_Messages_Message-Raise_New_Demand_Request">
+        <bpmn:extensionElements>
+          <spiffworkflow:preScript>task_id = "waku_request_approval"</spiffworkflow:preScript>
+        </bpmn:extensionElements>
+        <bpmn:incoming>Flow_1n69cbq</bpmn:incoming>
+        <bpmn:outgoing>Flow_1xr3t7d</bpmn:outgoing>
+      </bpmn:callActivity>
+      <bpmn:serviceTask id="Activity_07zv1q2" name="Send Waku Message to Budget Owner">
+        <bpmn:extensionElements>
+          <spiffworkflow:serviceTaskOperator id="waku/SendMessage" resultVariable="message_Request_Approval">
+            <spiffworkflow:parameters>
+              <spiffworkflow:parameter id="message" type="str" value="waku_message" />
+              <spiffworkflow:parameter id="message_type" type="str" value="&#34;wakuext_sendOneToOneMessage&#34;" />
+              <spiffworkflow:parameter id="recipient" type="str" value="budget_owner[&#34;status_key&#34;]" />
+            </spiffworkflow:parameters>
+          </spiffworkflow:serviceTaskOperator>
+        </bpmn:extensionElements>
+        <bpmn:incoming>Flow_1xr3t7d</bpmn:incoming>
+        <bpmn:outgoing>Flow_0ryiqzm</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:endEvent id="Event_0vmubqx">
+        <bpmn:incoming>Flow_0ryiqzm</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:callActivity id="Activity_0e5w5f3" name="Call SR: User Info" calledElement="SR-User_Info">
+        <bpmn:extensionElements>
+          <spiffworkflow:preScript>find_user = ppg_ba_email
+isCurrentUser = False
+
+call_test = True</spiffworkflow:preScript>
+          <spiffworkflow:postScript># Update Budget Owner Extras
+budget_owner = {}
+
+# Add User Info DMN Table info
+budget_owner["bamboo_api_id"] = userBambooId
+budget_owner["time_zone"] = userTimeZone
+budget_owner["date_format"] = userDateFormat
+budget_owner["time_format"] = userTimeFormat
+
+# Add Bamboo Info to Extras
+budget_owner["first_name"] = resp_BambooUserInfo["firstName"]
+budget_owner["last_name"] = resp_BambooUserInfo["lastName"]
+budget_owner["preferred_name"] = resp_BambooUserInfo["preferredName"]
+if budget_owner["preferred_name"] is None:
+    budget_owner["full_name"] = budget_owner["first_name"] + " " + budget_owner["last_name"]
+else:
+    budget_owner["full_name"] = budget_owner["first_name"] + " (" + budget_owner["preferred_name"] + ") " + budget_owner["last_name"]
+budget_owner["status_key"] = resp_BambooUserInfo["customStatusChatKey"]
+budget_owner["bamboo_supervisor_api_id"] = resp_BambooUserInfo["supervisorEid"]
+budget_owner["bamboo_supervisor_status_id"] = resp_BambooUserInfo["supervisorId"]
+
+del(userFullName)
+del(userFirstName)
+del(userTimeZone)
+del(userStatusKey)
+del(userBambooId)
+del(userDateFormat)
+del(userTimeFormat)</spiffworkflow:postScript>
+        </bpmn:extensionElements>
+        <bpmn:incoming>Flow_1nw8nmu</bpmn:incoming>
+        <bpmn:outgoing>Flow_1n69cbq</bpmn:outgoing>
+      </bpmn:callActivity>
+      <bpmn:sequenceFlow id="Flow_1nw8nmu" sourceRef="Event_08w30zs" targetRef="Activity_0e5w5f3" />
+      <bpmn:sequenceFlow id="Flow_1n69cbq" sourceRef="Activity_0e5w5f3" targetRef="Activity_0moqpz9" />
+      <bpmn:sequenceFlow id="Flow_1xr3t7d" sourceRef="Activity_0moqpz9" targetRef="Activity_07zv1q2" />
+      <bpmn:sequenceFlow id="Flow_0ryiqzm" sourceRef="Activity_07zv1q2" targetRef="Event_0vmubqx" />
+    </bpmn:subProcess>
     <bpmn:textAnnotation id="TextAnnotation_0zy71k9">
       <bpmn:text>Orgdata from BBHR, Categories from a DB, Currencies from Xero</bpmn:text>
     </bpmn:textAnnotation>
@@ -1356,10 +1424,6 @@ Please ensure that you have enough budget for the demand, and if needed, submit 
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Gateway_02ug3cs_di" bpmnElement="Gateway_02ug3cs" isMarkerVisible="true">
         <dc:Bounds x="2835" y="985" width="50" height="50" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="BPMNShape_1srog96" bpmnElement="Activity_0j7pkyk">
-        <dc:Bounds x="2650" y="1220" width="100" height="80" />
-        <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="DataObjectReference_1kr8dbu_di" bpmnElement="DataObjectReference_1kr8dbu">
         <dc:Bounds x="2572" y="1235" width="36" height="50" />
@@ -1714,6 +1778,9 @@ Please ensure that you have enough budget for the demand, and if needed, submit 
       <bpmndi:BPMNShape id="TextAnnotation_12tjd1d_di" bpmnElement="TextAnnotation_12tjd1d">
         <dc:Bounds x="2150" y="910" width="70" height="30" />
         <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1c9bc58_di" bpmnElement="Activity_0j7pkyk">
+        <dc:Bounds x="2650" y="1220" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_095wlf3_di" bpmnElement="Event_06bnz9o">
         <dc:Bounds x="2021" y="1032" width="36" height="36" />
@@ -2615,6 +2682,41 @@ Please ensure that you have enough budget for the demand, and if needed, submit 
       <bpmndi:BPMNEdge id="BPMNEdge_09bcj7a" bpmnElement="Flow_1kty7z5">
         <di:waypoint x="760" y="240" />
         <di:waypoint x="822" y="240" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1wxy6my">
+    <bpmndi:BPMNPlane id="BPMNPlane_02nvx1i" bpmnElement="Activity_0j7pkyk">
+      <bpmndi:BPMNShape id="BPMNShape_18izbu4" bpmnElement="Event_08w30zs">
+        <dc:Bounds x="642" y="362" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_15nn95y" bpmnElement="Activity_0moqpz9">
+        <dc:Bounds x="930" y="340" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_03lswie" bpmnElement="Activity_07zv1q2">
+        <dc:Bounds x="1090" y="340" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_05lvc4m" bpmnElement="Event_0vmubqx">
+        <dc:Bounds x="1252" y="362" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_1nx5zb7" bpmnElement="Activity_0e5w5f3">
+        <dc:Bounds x="740" y="340" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="BPMNEdge_0kns274" bpmnElement="Flow_1nw8nmu">
+        <di:waypoint x="678" y="380" />
+        <di:waypoint x="740" y="380" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_0tzw1w4" bpmnElement="Flow_1n69cbq">
+        <di:waypoint x="840" y="380" />
+        <di:waypoint x="930" y="380" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_0pusq4o" bpmnElement="Flow_1xr3t7d">
+        <di:waypoint x="1030" y="380" />
+        <di:waypoint x="1090" y="380" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_1yi8g2p" bpmnElement="Flow_0ryiqzm">
+        <di:waypoint x="1190" y="380" />
+        <di:waypoint x="1252" y="380" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
