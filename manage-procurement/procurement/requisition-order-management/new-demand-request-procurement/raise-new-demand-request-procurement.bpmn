@@ -659,6 +659,10 @@ review_outcome = None</spiffworkflow:postScript>
           <spiffworkflow:property name="formJsonSchemaFilename" value="review-request-schema.json" />
           <spiffworkflow:property name="formUiSchemaFilename" value="review-request-uischema.json" />
         </spiffworkflow:properties>
+        <spiffworkflow:preScript>{
+        "label": "Approved",
+        "value": "app"
+    },</spiffworkflow:preScript>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_0gkfwdb</bpmn:incoming>
       <bpmn:outgoing>Flow_01s6egz</bpmn:outgoing>
@@ -732,12 +736,13 @@ infra_outcome = review_outcome
 
 # Reset Form isRequestApproved
 review_outcome = None</spiffworkflow:postScript>
+        <spiffworkflow:preScript>{
+        "label": "Approved",
+        "value": "app"
+    },</spiffworkflow:preScript>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_0eky761</bpmn:incoming>
       <bpmn:outgoing>Flow_141l9mf</bpmn:outgoing>
-      <bpmn:dataOutputAssociation id="DataOutputAssociation_1u8comy">
-        <bpmn:targetRef>DataObjectReference_1d8wbw6</bpmn:targetRef>
-      </bpmn:dataOutputAssociation>
     </bpmn:userTask>
     <bpmn:exclusiveGateway id="Gateway_0qbf3s9">
       <bpmn:incoming>Flow_1pa3da4</bpmn:incoming>
@@ -762,7 +767,7 @@ review_outcome = None</spiffworkflow:postScript>
       <bpmn:incoming>Flow_19miqjt</bpmn:incoming>
       <bpmn:outgoing>Flow_0neybmy</bpmn:outgoing>
     </bpmn:intermediateThrowEvent>
-    <bpmn:dataObjectReference id="DataObjectReference_1d8wbw6" name="New Demand Request" dataObjectRef="New_Demand_Request" />
+    <bpmn:dataObjectReference id="DataObjectReference_1d8wbw6" dataObjectRef="New_Demand_Request" />
     <bpmn:serviceTask id="Activity_1s89fmw" name="Send Waku message to Legal">
       <bpmn:documentation>Message - https://www.notion.so/Processes-WIP-bf288f19f8ff454699e2f1cc83ad7abe?p=9891dc90f4424a0ebd3407db1991c203&amp;pm=s</bpmn:documentation>
       <bpmn:incoming>Flow_0tes3fg</bpmn:incoming>
@@ -787,6 +792,16 @@ review_outcome = None</spiffworkflow:postScript>
           <spiffworkflow:property name="formJsonSchemaFilename" value="legal-review-request-schema.json" />
           <spiffworkflow:property name="formUiSchemaFilename" value="legal-review-request-uischema.json" />
         </spiffworkflow:properties>
+        <spiffworkflow:preScript>review_options = [
+    {
+        "label": "Approved",
+        "value": "app"
+    },
+    {
+        "label": "Need Additional Information",
+        "value": "nai"
+    }
+]</spiffworkflow:preScript>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_11nhsst</bpmn:incoming>
       <bpmn:outgoing>Flow_03bcido</bpmn:outgoing>
@@ -1520,12 +1535,6 @@ Please ensure that you have enough budget for the demand, and if needed, submit 
         <dc:Bounds x="3822" y="2942" width="36" height="36" />
         <bpmndi:BPMNLabel>
           <dc:Bounds x="3868" y="2950" width="84" height="14" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="DataObjectReference_1d8wbw6_di" bpmnElement="DataObjectReference_1d8wbw6">
-        <dc:Bounds x="3652" y="2915" width="36" height="50" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="3637" y="2972" width="67" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="BPMNShape_1akpo6r" bpmnElement="Activity_1s89fmw">
@@ -2277,10 +2286,6 @@ Please ensure that you have enough budget for the demand, and if needed, submit 
       <bpmndi:BPMNEdge id="DataOutputAssociation_08eo2bq_di" bpmnElement="DataOutputAssociation_08eo2bq">
         <di:waypoint x="3746" y="2770" />
         <di:waypoint x="3772" y="2798" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="DataOutputAssociation_1u8comy_di" bpmnElement="DataOutputAssociation_1u8comy">
-        <di:waypoint x="3695" y="3020" />
-        <di:waypoint x="3675" y="2965" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="DataOutputAssociation_1p2i0k7_di" bpmnElement="DataOutputAssociation_1p2i0k7">
         <di:waypoint x="4190" y="3262" />
