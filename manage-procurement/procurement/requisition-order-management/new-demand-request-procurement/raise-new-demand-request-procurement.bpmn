@@ -918,16 +918,16 @@ budget_owner["date_format"] = userDateFormat
 budget_owner["time_format"] = userTimeFormat
 
 # Add Bamboo Info to Extras
-budget_owner["first_name"] = resp_BambooUserInfo["firstName"]
-budget_owner["last_name"] = resp_BambooUserInfo["lastName"]
-budget_owner["preferred_name"] = resp_BambooUserInfo["preferredName"]
+budget_owner["first_name"] = bamboo_get_employee["firstName"]
+budget_owner["last_name"] = bamboo_get_employee["lastName"]
+budget_owner["preferred_name"] = bamboo_get_employee["preferredName"]
 if budget_owner["preferred_name"] is None:
     budget_owner["full_name"] = budget_owner["first_name"] + " " + budget_owner["last_name"]
 else:
     budget_owner["full_name"] = budget_owner["first_name"] + " (" + budget_owner["preferred_name"] + ") " + budget_owner["last_name"]
-budget_owner["status_key"] = resp_BambooUserInfo["customStatusChatKey"]
-budget_owner["bamboo_supervisor_api_id"] = resp_BambooUserInfo["supervisorEid"]
-budget_owner["bamboo_supervisor_status_id"] = resp_BambooUserInfo["supervisorId"]
+budget_owner["status_key"] = bamboo_get_employee["customStatusChatKey"]
+budget_owner["bamboo_supervisor_api_id"] = bamboo_get_employee["supervisorEid"]
+budget_owner["bamboo_supervisor_status_id"] = bamboo_get_employee["supervisorId"]
 
 del(userFullName)
 del(userFirstName)
@@ -2020,6 +2020,12 @@ del(userTimeFormat)</spiffworkflow:postScript>
       <bpmndi:BPMNShape id="Activity_0302pma_di" bpmnElement="Activity_1a6qnty">
         <dc:Bounds x="3070" y="2450" width="100" height="80" />
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0onjlnk_di" bpmnElement="Activity_1o9jqsv">
+        <dc:Bounds x="3660" y="2690" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_18ohwsm_di" bpmnElement="Activity_1s89fmw">
+        <dc:Bounds x="4090" y="3220" width="100" height="80" />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="TextAnnotation_0zy71k9_di" bpmnElement="TextAnnotation_0zy71k9">
         <dc:Bounds x="310" y="180" width="130" height="60" />
         <bpmndi:BPMNLabel />
@@ -2043,12 +2049,6 @@ del(userTimeFormat)</spiffworkflow:postScript>
       <bpmndi:BPMNShape id="TextAnnotation_12tjd1d_di" bpmnElement="TextAnnotation_12tjd1d">
         <dc:Bounds x="2150" y="910" width="70" height="30" />
         <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0onjlnk_di" bpmnElement="Activity_1o9jqsv">
-        <dc:Bounds x="3660" y="2690" width="100" height="80" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_18ohwsm_di" bpmnElement="Activity_1s89fmw">
-        <dc:Bounds x="4090" y="3220" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_095wlf3_di" bpmnElement="Event_06bnz9o">
         <dc:Bounds x="2021" y="1032" width="36" height="36" />
@@ -2626,14 +2626,6 @@ del(userTimeFormat)</spiffworkflow:postScript>
         <di:waypoint x="3971" y="2680" />
         <di:waypoint x="3971" y="2715" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="DataOutputAssociation_08eo2bq_di" bpmnElement="DataOutputAssociation_08eo2bq">
-        <di:waypoint x="3746" y="2770" />
-        <di:waypoint x="3772" y="2798" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="DataOutputAssociation_1p2i0k7_di" bpmnElement="DataOutputAssociation_1p2i0k7">
-        <di:waypoint x="4190" y="3262" />
-        <di:waypoint x="4232" y="3264" />
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="DataOutputAssociation_06wtdyw_di" bpmnElement="DataOutputAssociation_06wtdyw">
         <di:waypoint x="4271" y="3520" />
         <di:waypoint x="4272" y="3455" />
@@ -2669,6 +2661,14 @@ del(userTimeFormat)</spiffworkflow:postScript>
       <bpmndi:BPMNEdge id="DataOutputAssociation_19tp9sp_di" bpmnElement="DataOutputAssociation_19tp9sp">
         <di:waypoint x="3170" y="2490" />
         <di:waypoint x="3212" y="2490" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DataOutputAssociation_08eo2bq_di" bpmnElement="DataOutputAssociation_08eo2bq">
+        <di:waypoint x="3746" y="2770" />
+        <di:waypoint x="3772" y="2798" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DataOutputAssociation_1p2i0k7_di" bpmnElement="DataOutputAssociation_1p2i0k7">
+        <di:waypoint x="4190" y="3262" />
+        <di:waypoint x="4232" y="3264" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
