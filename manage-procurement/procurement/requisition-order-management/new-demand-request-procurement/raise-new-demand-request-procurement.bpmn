@@ -98,7 +98,6 @@
         <bpmn:flowNodeRef>Activity_14fif5h</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_06bnz9o</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_0uhfy9l</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Event_0p19rx3</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_0j7pkyk</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_0bghij1</bpmn:flowNodeRef>
       </bpmn:lane>
@@ -201,29 +200,29 @@
     <bpmn:sequenceFlow id="Flow_1naganq" sourceRef="Activity_05nr3wb" targetRef="Event_1fsb3by" />
     <bpmn:sequenceFlow id="Flow_1jp7aqy" sourceRef="Event_1k3zz2f" targetRef="Activity_05nr3wb" />
     <bpmn:sequenceFlow id="Flow_01n63u0" name="Additional info is required" sourceRef="Gateway_1je3z9i" targetRef="Gateway_0vdntex">
-      <bpmn:conditionExpression>people_ops_outcome == "Needs Additional Information"</bpmn:conditionExpression>
+      <bpmn:conditionExpression>people_ops_outcome == "nai"</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="Flow_0a5yhak" name="Approved" sourceRef="Gateway_1je3z9i" targetRef="Event_1k3zz2f">
-      <bpmn:conditionExpression>people_ops_outcome == "Approved"</bpmn:conditionExpression>
+      <bpmn:conditionExpression>people_ops_outcome == "app"</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="Flow_09acpla" name="Rejected" sourceRef="Gateway_1je3z9i" targetRef="Event_0kh2b9q">
-      <bpmn:conditionExpression>people_ops_outcome == "Rejected"</bpmn:conditionExpression>
+      <bpmn:conditionExpression>people_ops_outcome == "rej"</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="Flow_06c3yw6" sourceRef="Event_0kh2b9q" targetRef="Activity_16i7dp7" />
     <bpmn:sequenceFlow id="Flow_1v5wz1m" sourceRef="Activity_16i7dp7" targetRef="Event_1sbi4xu" />
     <bpmn:sequenceFlow id="Flow_0x3kydh" sourceRef="Event_16opsk7" targetRef="Activity_0zszjko" />
     <bpmn:sequenceFlow id="Flow_06b6udn" sourceRef="Activity_0zszjko" targetRef="Gateway_1gweofr" />
     <bpmn:sequenceFlow id="Flow_1c8vykc" name="Additional info is required" sourceRef="Gateway_1gweofr" targetRef="Gateway_0msst2a">
-      <bpmn:conditionExpression>ppg_ba_outcome == "Needs Additional Information"</bpmn:conditionExpression>
+      <bpmn:conditionExpression>ppg_ba_outcome == "nai"</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="Flow_0piw09v" name="Rejected" sourceRef="Gateway_1gweofr" targetRef="Event_1vfzphm">
-      <bpmn:conditionExpression>ppg_ba_outcome == "Rejected"</bpmn:conditionExpression>
+      <bpmn:conditionExpression>ppg_ba_outcome == "rej"</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="Flow_01bm90f" name="Approved" sourceRef="Gateway_1gweofr" targetRef="Event_0jdy2uk">
-      <bpmn:conditionExpression>ppg_ba_outcome == "Approved"</bpmn:conditionExpression>
+      <bpmn:conditionExpression>ppg_ba_outcome == "app"</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="Flow_1usc8it" name="CP is approved" sourceRef="Gateway_1gweofr" targetRef="Event_1cr1eqa">
-      <bpmn:conditionExpression />
+      <bpmn:conditionExpression>ppg_ba_outcome == "cpa"</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="Flow_1dfe7tm" sourceRef="Event_1cr1eqa" targetRef="Gateway_0qbf3s9" />
     <bpmn:sequenceFlow id="Flow_1vkub7h" sourceRef="Event_1vfzphm" targetRef="Gateway_11sgdfq" />
@@ -455,6 +454,7 @@
       <bpmn:outgoing>Flow_1b386ou</bpmn:outgoing>
     </bpmn:intermediateThrowEvent>
     <bpmn:exclusiveGateway id="Gateway_05470yw" name="Review Outcome">
+      <bpmn:incoming>Flow_0bkcbvp</bpmn:incoming>
       <bpmn:outgoing>Flow_12bnhp1</bpmn:outgoing>
       <bpmn:outgoing>Flow_1cnzdsg</bpmn:outgoing>
       <bpmn:outgoing>Flow_1jdyoqm</bpmn:outgoing>
@@ -1080,7 +1080,7 @@ review_outcome = None</spiffworkflow:postScript>
 Please ensure that you have enough budget for the demand, and if needed, submit the **budget increase request** via **TypeForm** - https://34z6hn3eyj7.typeform.com/to/PujzmH6Z</spiffworkflow:instructionsForEndUser>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_0u9k2wx</bpmn:incoming>
-      <bpmn:outgoing>Flow_1wokni2</bpmn:outgoing>
+      <bpmn:outgoing>Flow_0bkcbvp</bpmn:outgoing>
     </bpmn:manualTask>
     <bpmn:subProcess id="Activity_18am0at" name="Additional info - Send Waku message to CC">
       <bpmn:incoming>Flow_1ygiuii</bpmn:incoming>
@@ -1128,10 +1128,6 @@ Please ensure that you have enough budget for the demand, and if needed, submit 
       <bpmn:incoming>Flow_03jbh71</bpmn:incoming>
       <bpmn:outgoing>Flow_1aru6o6</bpmn:outgoing>
     </bpmn:intermediateThrowEvent>
-    <bpmn:sequenceFlow id="Flow_1wokni2" sourceRef="Activity_0uhfy9l" targetRef="Event_0p19rx3" />
-    <bpmn:endEvent id="Event_0p19rx3">
-      <bpmn:incoming>Flow_1wokni2</bpmn:incoming>
-    </bpmn:endEvent>
     <bpmn:subProcess id="Activity_0j7pkyk" name="Send Waku message to PPG BA">
       <bpmn:documentation>Message - https://www.notion.so/Processes-WIP-bf288f19f8ff454699e2f1cc83ad7abe?p=9891dc90f4424a0ebd3407db1991c203&amp;pm=s</bpmn:documentation>
       <bpmn:incoming>Flow_0xvqu1v</bpmn:incoming>
@@ -1512,6 +1508,7 @@ del(userTimeFormat)</spiffworkflow:postScript>
       <bpmn:sequenceFlow id="Flow_1618vao" sourceRef="Activity_0t6tox3" targetRef="Activity_0s4hexr" />
       <bpmn:sequenceFlow id="Flow_1a1po5b" sourceRef="Activity_0s4hexr" targetRef="Event_1oyvg0i" />
     </bpmn:subProcess>
+    <bpmn:sequenceFlow id="Flow_0bkcbvp" sourceRef="Activity_0uhfy9l" targetRef="Gateway_05470yw" />
     <bpmn:textAnnotation id="TextAnnotation_0zy71k9">
       <bpmn:text>Orgdata from BBHR, Categories from a DB, Currencies from Xero</bpmn:text>
     </bpmn:textAnnotation>
@@ -2007,9 +2004,6 @@ del(userTimeFormat)</spiffworkflow:postScript>
         <bpmndi:BPMNLabel>
           <dc:Bounds x="3471" y="2586" width="59" height="27" />
         </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_0p19rx3_di" bpmnElement="Event_0p19rx3">
-        <dc:Bounds x="2142" y="1112" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1c9bc58_di" bpmnElement="Activity_0j7pkyk">
         <dc:Bounds x="2650" y="1220" width="100" height="80" />
@@ -2578,10 +2572,6 @@ del(userTimeFormat)</spiffworkflow:postScript>
         <di:waypoint x="2638" y="1010" />
         <di:waypoint x="2675" y="1010" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_1wokni2_di" bpmnElement="Flow_1wokni2">
-        <di:waypoint x="2160" y="1050" />
-        <di:waypoint x="2160" y="1112" />
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Association_13u0dtl_di" bpmnElement="Association_13u0dtl">
         <di:waypoint x="384" y="260" />
         <di:waypoint x="377" y="240" />
@@ -2605,6 +2595,10 @@ del(userTimeFormat)</spiffworkflow:postScript>
       <bpmndi:BPMNEdge id="Association_012q0h5_di" bpmnElement="Association_012q0h5">
         <di:waypoint x="2171" y="970" />
         <di:waypoint x="2180" y="940" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0bkcbvp_di" bpmnElement="Flow_0bkcbvp">
+        <di:waypoint x="2210" y="1010" />
+        <di:waypoint x="2285" y="1010" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="DataOutputAssociation_1u3484a_di" bpmnElement="DataOutputAssociation_1u3484a">
         <di:waypoint x="3170" y="1510" />
