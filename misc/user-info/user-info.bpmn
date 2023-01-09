@@ -4,7 +4,7 @@
     <bpmn:startEvent id="StartEvent_1">
       <bpmn:outgoing>Flow_1q8xtg6</bpmn:outgoing>
     </bpmn:startEvent>
-    <bpmn:sequenceFlow id="Flow_1q8xtg6" sourceRef="StartEvent_1" targetRef="Activity_1fkr6s9" />
+    <bpmn:sequenceFlow id="Flow_1q8xtg6" sourceRef="StartEvent_1" targetRef="SR-User_Info-Set_Defaults" />
     <bpmn:businessRuleTask id="Activity_0v13afu" name="Get User Info">
       <bpmn:extensionElements>
         <spiffworkflow:calledDecisionId>SR-User_Info</spiffworkflow:calledDecisionId>
@@ -22,11 +22,11 @@
       <bpmn:outgoing>Flow_0i96b90</bpmn:outgoing>
       <bpmn:outgoing>Flow_0d47w7r</bpmn:outgoing>
     </bpmn:exclusiveGateway>
-    <bpmn:sequenceFlow id="Flow_0i96b90" name="Yes" sourceRef="Gateway_0xlrnzx" targetRef="Activity_1a9fimb" />
+    <bpmn:sequenceFlow id="Flow_0i96b90" name="Yes" sourceRef="Gateway_0xlrnzx" targetRef="SR-User_Info-Update_Current_User_Extras" />
     <bpmn:sequenceFlow id="Flow_0d47w7r" name="No" sourceRef="Gateway_0xlrnzx" targetRef="Gateway_0byohhl">
       <bpmn:conditionExpression>not(isCurrentUser)</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
-    <bpmn:scriptTask id="Activity_1a9fimb" name="Update Current User Extras" scriptFormat="python">
+    <bpmn:scriptTask id="SR-User_Info-Update_Current_User_Extras" name="Update Current User Extras" scriptFormat="python">
       <bpmn:incoming>Flow_0i96b90</bpmn:incoming>
       <bpmn:outgoing>Flow_0dg341m</bpmn:outgoing>
       <bpmn:script># Update Current User Extras
@@ -74,9 +74,9 @@ del(userTimeFormat)</bpmn:script>
       <bpmn:incoming>Flow_0dg341m</bpmn:incoming>
       <bpmn:outgoing>Flow_1gd83n0</bpmn:outgoing>
     </bpmn:exclusiveGateway>
-    <bpmn:sequenceFlow id="Flow_1gd83n0" sourceRef="Gateway_0byohhl" targetRef="Activity_0djyn08" />
-    <bpmn:sequenceFlow id="Flow_05s4pvl" sourceRef="Activity_1fkr6s9" targetRef="Activity_0v13afu" />
-    <bpmn:scriptTask id="Activity_1fkr6s9" name="Set Defaults">
+    <bpmn:sequenceFlow id="Flow_1gd83n0" sourceRef="Gateway_0byohhl" targetRef="SR-User_Info-Delete_Unneeded_Variables" />
+    <bpmn:sequenceFlow id="Flow_05s4pvl" sourceRef="SR-User_Info-Set_Defaults" targetRef="Activity_0v13afu" />
+    <bpmn:scriptTask id="SR-User_Info-Set_Defaults" name="Set Defaults">
       <bpmn:incoming>Flow_1q8xtg6</bpmn:incoming>
       <bpmn:outgoing>Flow_05s4pvl</bpmn:outgoing>
       <bpmn:script># If not previously set, set find_user to current_user
@@ -95,12 +95,12 @@ is_status_email = (find_user[-9:] == "status.im")</bpmn:script>
       <bpmn:outgoing>Flow_1mplhly</bpmn:outgoing>
     </bpmn:exclusiveGateway>
     <bpmn:sequenceFlow id="Flow_0sypyzb" name="Yes" sourceRef="Gateway_19npvp5" targetRef="Activity_1eab90d" />
-    <bpmn:sequenceFlow id="Flow_0dg341m" sourceRef="Activity_1a9fimb" targetRef="Gateway_0byohhl" />
+    <bpmn:sequenceFlow id="Flow_0dg341m" sourceRef="SR-User_Info-Update_Current_User_Extras" targetRef="Gateway_0byohhl" />
     <bpmn:sequenceFlow id="Flow_1mplhly" name="No" sourceRef="Gateway_19npvp5" targetRef="Gateway_0xlrnzx">
       <bpmn:conditionExpression>not(is_status_email)</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
-    <bpmn:sequenceFlow id="Flow_0ltzuow" sourceRef="Activity_0djyn08" targetRef="Event_0fb034d" />
-    <bpmn:scriptTask id="Activity_0djyn08" name="Delete Unneeded Variables">
+    <bpmn:sequenceFlow id="Flow_0ltzuow" sourceRef="SR-User_Info-Delete_Unneeded_Variables" targetRef="Event_0fb034d" />
+    <bpmn:scriptTask id="SR-User_Info-Delete_Unneeded_Variables" name="Delete Unneeded Variables">
       <bpmn:incoming>Flow_1gd83n0</bpmn:incoming>
       <bpmn:outgoing>Flow_0ltzuow</bpmn:outgoing>
       <bpmn:script># Delete Variables that do not need to be used later
@@ -133,7 +133,7 @@ del(find_user)</bpmn:script>
           <dc:Bounds x="705" y="243" width="70" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0rvcg5l_di" bpmnElement="Activity_1a9fimb">
+      <bpmndi:BPMNShape id="Activity_0rvcg5l_di" bpmnElement="SR-User_Info-Update_Current_User_Extras">
         <dc:Bounds x="900" y="187" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
@@ -143,7 +143,7 @@ del(find_user)</bpmn:script>
       <bpmndi:BPMNShape id="Gateway_0byohhl_di" bpmnElement="Gateway_0byohhl" isMarkerVisible="true">
         <dc:Bounds x="1085" y="202" width="50" height="50" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1azbkzp_di" bpmnElement="Activity_1fkr6s9">
+      <bpmndi:BPMNShape id="Activity_1azbkzp_di" bpmnElement="SR-User_Info-Set_Defaults">
         <dc:Bounds x="100" y="187" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Gateway_19npvp5_di" bpmnElement="Gateway_19npvp5" isMarkerVisible="true">
@@ -152,7 +152,7 @@ del(find_user)</bpmn:script>
           <dc:Bounds x="386" y="243" width="68" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0qu8ajx_di" bpmnElement="Activity_0djyn08">
+      <bpmndi:BPMNShape id="Activity_0qu8ajx_di" bpmnElement="SR-User_Info-Delete_Unneeded_Variables">
         <dc:Bounds x="1180" y="187" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
