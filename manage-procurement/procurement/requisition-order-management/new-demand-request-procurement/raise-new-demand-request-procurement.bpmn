@@ -259,21 +259,23 @@
     <bpmn:sequenceFlow id="Flow_10eey19" sourceRef="Gateway_0qbf3s9" targetRef="Gateway_01hote2" />
     <bpmn:sequenceFlow id="Flow_0cmpmkk" sourceRef="Event_0shanpw" targetRef="Activity_0biwdi7" />
     <bpmn:sequenceFlow id="Flow_1iyosbm" name="Approved" sourceRef="Gateway_01nq66f" targetRef="Event_0shanpw">
-      <bpmn:conditionExpression>infra_outcome = "Approved"</bpmn:conditionExpression>
+      <bpmn:conditionExpression>infra_outcome = "app"</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="Flow_0de6bzm" name="Additional info is required" sourceRef="Gateway_01nq66f" targetRef="Gateway_0dj673n">
-      <bpmn:conditionExpression>infra_outcome = "Additional Information Needed"</bpmn:conditionExpression>
+      <bpmn:conditionExpression>infra_outcome = "nai"</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="Flow_19miqjt" name="Rejected" sourceRef="Gateway_01nq66f" targetRef="Event_1yd9gir">
-      <bpmn:conditionExpression>infra_outcome = "Rejected"</bpmn:conditionExpression>
+      <bpmn:conditionExpression>infra_outcome = "rej"</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="Flow_0tes3fg" sourceRef="Gateway_01hote2" targetRef="Activity_1s89fmw" />
     <bpmn:sequenceFlow id="Flow_03lmij7" sourceRef="Activity_1s89fmw" targetRef="Event_1k7puc2" />
     <bpmn:sequenceFlow id="Flow_03bcido" sourceRef="Activity_08xl52p" targetRef="Gateway_0db4fvw" />
     <bpmn:sequenceFlow id="Flow_13jmp2u" name="Additional info is required" sourceRef="Gateway_0db4fvw" targetRef="Gateway_0dj673n">
-      <bpmn:conditionExpression>legal_review_outcome == "Needs Additional Information"</bpmn:conditionExpression>
+      <bpmn:conditionExpression>legal_review_outcome == "nai"</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
-    <bpmn:sequenceFlow id="Flow_0k897q2" name="Approved" sourceRef="Gateway_0db4fvw" targetRef="Event_1nftgle" />
+    <bpmn:sequenceFlow id="Flow_0k897q2" name="Approved" sourceRef="Gateway_0db4fvw" targetRef="Event_1nftgle">
+      <bpmn:conditionExpression>legal_review_outcome = "app"</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="Flow_11nhsst" sourceRef="Event_1k7puc2" targetRef="Activity_08xl52p" />
     <bpmn:sequenceFlow id="Flow_0upm08q" sourceRef="Event_1nftgle" targetRef="Activity_1jpqpoa" />
     <bpmn:sequenceFlow id="Flow_0boeaof" sourceRef="Activity_1jpqpoa" targetRef="Event_0jmnbvc" />
@@ -758,7 +760,7 @@ review_outcome = None</spiffworkflow:postScript>
     <bpmn:dataObjectReference id="DataObjectReference_1d8wbw6" dataObjectRef="New_Demand_Request" />
     <bpmn:dataObjectReference id="DataObjectReference_036sqbp" name="Message Request S M E" dataObjectRef="message_Request_SME" />
     <bpmn:dataObject id="message_Request_SME" />
-    <bpmn:exclusiveGateway id="Gateway_0db4fvw" default="Flow_0k897q2">
+    <bpmn:exclusiveGateway id="Gateway_0db4fvw">
       <bpmn:incoming>Flow_03bcido</bpmn:incoming>
       <bpmn:outgoing>Flow_13jmp2u</bpmn:outgoing>
       <bpmn:outgoing>Flow_0k897q2</bpmn:outgoing>
