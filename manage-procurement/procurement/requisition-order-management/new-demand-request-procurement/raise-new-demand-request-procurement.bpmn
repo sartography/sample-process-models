@@ -25,7 +25,6 @@
         <bpmn:flowNodeRef>Event_1nftgle</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_0x47qrd</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_18gvov2</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Event_11h71ax</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_1yz1v0i" name="Infra">
         <bpmn:flowNodeRef>Gateway_0dj673n</bpmn:flowNodeRef>
@@ -780,7 +779,7 @@ review_outcome = None</spiffworkflow:postScript>
     </bpmn:intermediateThrowEvent>
     <bpmn:intermediateThrowEvent id="Event_1nftgle" name="Approved by Legal">
       <bpmn:incoming>Flow_0k897q2</bpmn:incoming>
-      <bpmn:outgoing>Flow_01rpcbf</bpmn:outgoing>
+      <bpmn:outgoing>Flow_15orf6k</bpmn:outgoing>
     </bpmn:intermediateThrowEvent>
     <bpmn:exclusiveGateway id="Gateway_01hote2">
       <bpmn:incoming>Flow_10eey19</bpmn:incoming>
@@ -1562,7 +1561,7 @@ del(userTimeFormat)</spiffworkflow:postScript>
       <bpmn:sequenceFlow id="Flow_10y98rz" sourceRef="Activity_1i8fqe0" targetRef="Activity_1io54rc" />
       <bpmn:sequenceFlow id="Flow_1oql80v" sourceRef="Activity_1io54rc" targetRef="Event_1qrzan1" />
     </bpmn:subProcess>
-    <bpmn:subProcess id="Activity_1np0do0" name="Rejected - Send Waku message to CC">
+    <bpmn:subProcess id="Activity_1np0do0" name="Rejected - Send Waku message to CC - 3">
       <bpmn:documentation>Message - https://www.notion.so/Processes-WIP-bf288f19f8ff454699e2f1cc83ad7abe?p=9891dc90f4424a0ebd3407db1991c203&amp;pm=s</bpmn:documentation>
       <bpmn:incoming>Flow_0hz6t2a</bpmn:incoming>
       <bpmn:outgoing>Flow_0703ixn</bpmn:outgoing>
@@ -1599,8 +1598,9 @@ del(userTimeFormat)</spiffworkflow:postScript>
       <bpmn:sequenceFlow id="Flow_1o7xde2" sourceRef="Activity_0ra6yz7y" targetRef="Activity_0zyrm0ey" />
       <bpmn:sequenceFlow id="Flow_0ll37vx" sourceRef="Activity_0zyrm0ey" targetRef="Event_0tthjzs" />
     </bpmn:subProcess>
-    <bpmn:subProcess id="Activity_18gvov2" name="Approved - Send Waku message to CC">
+    <bpmn:subProcess id="Activity_18gvov2" name="Approved - Send Waku message to CC - 3">
       <bpmn:documentation>Message - https://www.notion.so/Processes-WIP-bf288f19f8ff454699e2f1cc83ad7abe?p=9891dc90f4424a0ebd3407db1991c203&amp;pm=s</bpmn:documentation>
+      <bpmn:incoming>Flow_15orf6k</bpmn:incoming>
       <bpmn:outgoing>Flow_0cdby3k</bpmn:outgoing>
       <bpmn:dataOutputAssociation id="DataOutputAssociation_11lwwuc">
         <bpmn:targetRef>DataObjectReference_10yrt4u</bpmn:targetRef>
@@ -1639,10 +1639,7 @@ del(userTimeFormat)</spiffworkflow:postScript>
       <bpmn:sequenceFlow id="Flow_1oa7h1y" sourceRef="Activity_02kecvv" targetRef="Event_13bbx1k" />
     </bpmn:subProcess>
     <bpmn:sequenceFlow id="Flow_0cdby3k" sourceRef="Activity_18gvov2" targetRef="Event_0jmnbvc" />
-    <bpmn:endEvent id="Event_11h71ax">
-      <bpmn:incoming>Flow_01rpcbf</bpmn:incoming>
-    </bpmn:endEvent>
-    <bpmn:sequenceFlow id="Flow_01rpcbf" sourceRef="Event_1nftgle" targetRef="Event_11h71ax" />
+    <bpmn:sequenceFlow id="Flow_15orf6k" sourceRef="Event_1nftgle" targetRef="Activity_18gvov2" />
     <bpmn:textAnnotation id="TextAnnotation_0zy71k9">
       <bpmn:text>Orgdata from BBHR, Categories from a DB, Currencies from Xero</bpmn:text>
     </bpmn:textAnnotation>
@@ -2150,12 +2147,11 @@ del(userTimeFormat)</spiffworkflow:postScript>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_19ad9pr_di" bpmnElement="Activity_1np0do0">
         <dc:Bounds x="3920" y="2600" width="100" height="80" />
+        <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0ew9mt5_di" bpmnElement="Activity_18gvov2">
         <dc:Bounds x="4620" y="3520" width="100" height="80" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_11h71ax_di" bpmnElement="Event_11h71ax">
-        <dc:Bounds x="4532" y="3452" width="36" height="36" />
+        <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="TextAnnotation_0zy71k9_di" bpmnElement="TextAnnotation_0zy71k9">
         <dc:Bounds x="310" y="180" width="130" height="60" />
@@ -2709,10 +2705,6 @@ del(userTimeFormat)</spiffworkflow:postScript>
         <di:waypoint x="4720" y="3560" />
         <di:waypoint x="4792" y="3560" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_01rpcbf_di" bpmnElement="Flow_01rpcbf">
-        <di:waypoint x="4550" y="3542" />
-        <di:waypoint x="4550" y="3488" />
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Association_13u0dtl_di" bpmnElement="Association_13u0dtl">
         <di:waypoint x="384" y="260" />
         <di:waypoint x="377" y="240" />
@@ -2736,6 +2728,10 @@ del(userTimeFormat)</spiffworkflow:postScript>
       <bpmndi:BPMNEdge id="Association_012q0h5_di" bpmnElement="Association_012q0h5">
         <di:waypoint x="2171" y="970" />
         <di:waypoint x="2180" y="940" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_15orf6k_di" bpmnElement="Flow_15orf6k">
+        <di:waypoint x="4568" y="3560" />
+        <di:waypoint x="4620" y="3560" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="DataOutputAssociation_019xu31_di" bpmnElement="DataOutputAssociation_019xu31">
         <di:waypoint x="2991" y="2050" />
