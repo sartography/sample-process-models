@@ -25,6 +25,7 @@
         <bpmn:flowNodeRef>Event_1nftgle</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_0x47qrd</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_18gvov2</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Event_11h71ax</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_1yz1v0i" name="Infra">
         <bpmn:flowNodeRef>Gateway_0dj673n</bpmn:flowNodeRef>
@@ -277,7 +278,6 @@
       <bpmn:conditionExpression>legal_review_outcome = "app"</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="Flow_11nhsst" sourceRef="Event_1k7puc2" targetRef="Activity_08xl52p" />
-    <bpmn:sequenceFlow id="Flow_0upm08q" sourceRef="Event_1nftgle" targetRef="Activity_18gvov2" />
     <bpmn:sequenceFlow id="Flow_0m2l5ke" sourceRef="Event_0x47qrd" targetRef="Gateway_01hote2" />
     <bpmn:callActivity id="Activity_000swbl" name="Call Shared: Get Form Data" calledElement="Get_Form_Data">
       <bpmn:documentation>Get Form Data Call Activity is used for getting required data for User Tasks.</bpmn:documentation>
@@ -780,7 +780,7 @@ review_outcome = None</spiffworkflow:postScript>
     </bpmn:intermediateThrowEvent>
     <bpmn:intermediateThrowEvent id="Event_1nftgle" name="Approved by Legal">
       <bpmn:incoming>Flow_0k897q2</bpmn:incoming>
-      <bpmn:outgoing>Flow_0upm08q</bpmn:outgoing>
+      <bpmn:outgoing>Flow_01rpcbf</bpmn:outgoing>
     </bpmn:intermediateThrowEvent>
     <bpmn:exclusiveGateway id="Gateway_01hote2">
       <bpmn:incoming>Flow_10eey19</bpmn:incoming>
@@ -1601,7 +1601,6 @@ del(userTimeFormat)</spiffworkflow:postScript>
     </bpmn:subProcess>
     <bpmn:subProcess id="Activity_18gvov2" name="Approved - Send Waku message to CC">
       <bpmn:documentation>Message - https://www.notion.so/Processes-WIP-bf288f19f8ff454699e2f1cc83ad7abe?p=9891dc90f4424a0ebd3407db1991c203&amp;pm=s</bpmn:documentation>
-      <bpmn:incoming>Flow_0upm08q</bpmn:incoming>
       <bpmn:outgoing>Flow_0cdby3k</bpmn:outgoing>
       <bpmn:dataOutputAssociation id="DataOutputAssociation_11lwwuc">
         <bpmn:targetRef>DataObjectReference_10yrt4u</bpmn:targetRef>
@@ -1640,6 +1639,10 @@ del(userTimeFormat)</spiffworkflow:postScript>
       <bpmn:sequenceFlow id="Flow_1oa7h1y" sourceRef="Activity_02kecvv" targetRef="Event_13bbx1k" />
     </bpmn:subProcess>
     <bpmn:sequenceFlow id="Flow_0cdby3k" sourceRef="Activity_18gvov2" targetRef="Event_0jmnbvc" />
+    <bpmn:endEvent id="Event_11h71ax">
+      <bpmn:incoming>Flow_01rpcbf</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_01rpcbf" sourceRef="Event_1nftgle" targetRef="Event_11h71ax" />
     <bpmn:textAnnotation id="TextAnnotation_0zy71k9">
       <bpmn:text>Orgdata from BBHR, Categories from a DB, Currencies from Xero</bpmn:text>
     </bpmn:textAnnotation>
@@ -1726,6 +1729,9 @@ del(userTimeFormat)</spiffworkflow:postScript>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0vhbxuw_di" bpmnElement="Activity_1itequ5">
         <dc:Bounds x="760" y="400" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_11h71ax_di" bpmnElement="Event_11h71ax">
+        <dc:Bounds x="4532" y="3452" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1nyt2o4_di" bpmnElement="Submit_Validate_New_Demand_Request-Sub_Process">
         <dc:Bounds x="1070" y="400" width="100" height="80" />
@@ -2647,10 +2653,6 @@ del(userTimeFormat)</spiffworkflow:postScript>
         <di:waypoint x="4140" y="3560" />
         <di:waypoint x="4220" y="3560" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0upm08q_di" bpmnElement="Flow_0upm08q">
-        <di:waypoint x="4568" y="3560" />
-        <di:waypoint x="4620" y="3560" />
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0m2l5ke_di" bpmnElement="Flow_0m2l5ke">
         <di:waypoint x="4300" y="3618" />
         <di:waypoint x="4300" y="3638" />
@@ -2726,6 +2728,10 @@ del(userTimeFormat)</spiffworkflow:postScript>
       <bpmndi:BPMNEdge id="Association_012q0h5_di" bpmnElement="Association_012q0h5">
         <di:waypoint x="2171" y="970" />
         <di:waypoint x="2180" y="940" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_01rpcbf_di" bpmnElement="Flow_01rpcbf">
+        <di:waypoint x="4550" y="3542" />
+        <di:waypoint x="4550" y="3488" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="DataOutputAssociation_019xu31_di" bpmnElement="DataOutputAssociation_019xu31">
         <di:waypoint x="2991" y="2050" />
