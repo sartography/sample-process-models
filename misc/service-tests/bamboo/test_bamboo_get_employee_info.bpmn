@@ -6,20 +6,16 @@
     </bpmn:startEvent>
     <bpmn:sequenceFlow id="Flow_1fcrauy" sourceRef="StartEvent_1" targetRef="Activity_1spkarp" />
     <bpmn:endEvent id="Event_0jjee6a">
-      <bpmn:incoming>Flow_0h6yu05</bpmn:incoming>
+      <bpmn:incoming>Flow_0bf8xo5</bpmn:incoming>
     </bpmn:endEvent>
-    <bpmn:sequenceFlow id="Flow_0gims6i" sourceRef="Activity_1spkarp" targetRef="Activity_0a2rxmy" />
     <bpmn:callActivity id="Activity_1spkarp" name="Call Get Employee Info" calledElement="Bamboo_GetEmployeeInfo">
       <bpmn:extensionElements>
         <spiffworkflow:preScript>get_employee_id=109</spiffworkflow:preScript>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_1fcrauy</bpmn:incoming>
-      <bpmn:outgoing>Flow_0gims6i</bpmn:outgoing>
+      <bpmn:outgoing>Flow_0bf8xo5</bpmn:outgoing>
     </bpmn:callActivity>
-    <bpmn:sequenceFlow id="Flow_0h6yu05" sourceRef="Activity_0a2rxmy" targetRef="Event_0jjee6a" />
     <bpmn:scriptTask id="Activity_0a2rxmy" name="Check response">
-      <bpmn:incoming>Flow_0gims6i</bpmn:incoming>
-      <bpmn:outgoing>Flow_0h6yu05</bpmn:outgoing>
       <bpmn:script># check the keys, let it raise an exception if they don't exist
 
 bamboo_get_employee["id"]
@@ -27,32 +23,29 @@ bamboo_get_employee["supervisorEid"]
 bamboo_get_employee["supervisorEmail"]
 bamboo_get_employee["supervisorId"]</bpmn:script>
     </bpmn:scriptTask>
+    <bpmn:sequenceFlow id="Flow_0bf8xo5" sourceRef="Activity_1spkarp" targetRef="Event_0jjee6a" />
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_po30r58">
       <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
         <dc:Bounds x="179" y="159" width="36" height="36" />
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0jjee6a_di" bpmnElement="Event_0jjee6a">
+        <dc:Bounds x="522" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0v7z6q9_di" bpmnElement="Activity_1spkarp">
         <dc:Bounds x="270" y="137" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_0jjee6a_di" bpmnElement="Event_0jjee6a">
-        <dc:Bounds x="522" y="159" width="36" height="36" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0ynix2x_di" bpmnElement="Activity_0a2rxmy">
-        <dc:Bounds x="390" y="137" width="100" height="80" />
+        <dc:Bounds x="390" y="280" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_1fcrauy_di" bpmnElement="Flow_1fcrauy">
         <di:waypoint x="215" y="177" />
         <di:waypoint x="270" y="177" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0gims6i_di" bpmnElement="Flow_0gims6i">
+      <bpmndi:BPMNEdge id="Flow_0bf8xo5_di" bpmnElement="Flow_0bf8xo5">
         <di:waypoint x="370" y="177" />
-        <di:waypoint x="390" y="177" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0h6yu05_di" bpmnElement="Flow_0h6yu05">
-        <di:waypoint x="490" y="177" />
         <di:waypoint x="522" y="177" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
