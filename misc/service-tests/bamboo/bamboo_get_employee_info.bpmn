@@ -11,8 +11,7 @@
     <bpmn:sequenceFlow id="Flow_1kypizg" sourceRef="Activity_0soy4fw" targetRef="Event_162avot" />
     <bpmn:callActivity id="Activity_0soy4fw" name="Call Get Employee" calledElement="Bamboo_GetEmployee">
       <bpmn:extensionElements>
-        <spiffworkflow:preScript>get_employee_fields = "supervisorEmail,supervisorId,supervisorEid"
-get_employee_only_current = True</spiffworkflow:preScript>
+        <spiffworkflow:preScript />
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_07b1wih</bpmn:incoming>
       <bpmn:outgoing>Flow_1kypizg</bpmn:outgoing>
@@ -21,7 +20,10 @@ get_employee_only_current = True</spiffworkflow:preScript>
     <bpmn:scriptTask id="Activity_1h5wnlj" name="Set API Parameters">
       <bpmn:incoming>Flow_0a7iahd</bpmn:incoming>
       <bpmn:outgoing>Flow_07b1wih</bpmn:outgoing>
-      <bpmn:script>get_employee_fields = "supervisorEmail,supervisorId,supervisorEid"
+      <bpmn:script># Set which fields
+get_employee_fields = "supervisorEmail,supervisorId,supervisorEid"
+
+# Set if current state
 get_employee_only_current = True</bpmn:script>
     </bpmn:scriptTask>
   </bpmn:process>
