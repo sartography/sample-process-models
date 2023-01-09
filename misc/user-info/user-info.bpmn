@@ -40,16 +40,16 @@ current_user_extras["time_format"] = userTimeFormat
 
 # Add Bamboo Info to Extras if Status email
 if is_status_email:
-    current_user_extras["first_name"] = resp_BambooUserInfo["firstName"]
-    current_user_extras["last_name"] = resp_BambooUserInfo["lastName"]
-    current_user_extras["preferred_name"] = resp_BambooUserInfo["preferredName"]
+    current_user_extras["first_name"] = bamboo_get_employee["firstName"]
+    current_user_extras["last_name"] = bamboo_get_employee["lastName"]
+    current_user_extras["preferred_name"] = bamboo_get_employee["preferredName"]
     if current_user_extras["preferred_name"] is None:
         current_user_extras["full_name"] = current_user_extras["first_name"] + " " + current_user_extras["last_name"]
     else:
         current_user_extras["full_name"] = current_user_extras["first_name"] + " (" + current_user_extras["preferred_name"] + ") " + current_user_extras["last_name"]
-    current_user_extras["status_key"] = resp_BambooUserInfo["customStatusChatKey"]
-    current_user_extras["bamboo_supervisor_api_id"] = resp_BambooUserInfo["supervisorEid"]
-    current_user_extras["bamboo_supervisor_status_id"] = resp_BambooUserInfo["supervisorId"]
+    current_user_extras["status_key"] = bamboo_get_employee["customStatusChatKey"]
+    current_user_extras["bamboo_supervisor_api_id"] = bamboo_get_employee["supervisorEid"]
+    current_user_extras["bamboo_supervisor_status_id"] = bamboo_get_employee["supervisorId"]
 
 del(userFullName)
 del(userFirstName)
