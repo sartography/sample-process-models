@@ -46,12 +46,12 @@
         <bpmn:flowNodeRef>Gateway_126t0we</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Gateway_11sgdfq</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_0ikppnh</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Activity_1np0do0</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_0j50gfu</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_19mu5m7</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_13lh9kk</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_0k3nkra</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_1o9jqsv</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_1np0do0</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_0txefzi" name="PPG BA">
         <bpmn:flowNodeRef>Gateway_0msst2a</bpmn:flowNodeRef>
@@ -677,14 +677,6 @@ review_outcome = None</spiffworkflow:postScript>
     <bpmn:endEvent id="Event_0ikppnh" name="The Request has been Rejected">
       <bpmn:incoming>Flow_0703ixn</bpmn:incoming>
     </bpmn:endEvent>
-    <bpmn:serviceTask id="Activity_1np0do0" name="Rejected - Send Waku message to CC">
-      <bpmn:documentation>Message - https://www.notion.so/Processes-WIP-bf288f19f8ff454699e2f1cc83ad7abe?p=9891dc90f4424a0ebd3407db1991c203&amp;pm=s</bpmn:documentation>
-      <bpmn:incoming>Flow_0hz6t2a</bpmn:incoming>
-      <bpmn:outgoing>Flow_0703ixn</bpmn:outgoing>
-      <bpmn:dataOutputAssociation id="DataOutputAssociation_1nswla0">
-        <bpmn:targetRef>DataObjectReference_1rmnnq1</bpmn:targetRef>
-      </bpmn:dataOutputAssociation>
-    </bpmn:serviceTask>
     <bpmn:dataObjectReference id="DataObjectReference_1rmnnq1" name="Message Request Rejected" dataObjectRef="message_Request_Rejected" />
     <bpmn:dataObject id="message_Request_Rejected" />
     <bpmn:intermediateThrowEvent id="Event_0j50gfu" name="Infra review">
@@ -1550,6 +1542,43 @@ del(userTimeFormat)</spiffworkflow:postScript>
       <bpmn:sequenceFlow id="Flow_10y98rz" sourceRef="Activity_1i8fqe0" targetRef="Activity_1io54rc" />
       <bpmn:sequenceFlow id="Flow_1oql80v" sourceRef="Activity_1io54rc" targetRef="Event_1qrzan1" />
     </bpmn:subProcess>
+    <bpmn:subProcess id="Activity_1np0do0" name="Rejected - Send Waku message to CC">
+      <bpmn:documentation>Message - https://www.notion.so/Processes-WIP-bf288f19f8ff454699e2f1cc83ad7abe?p=9891dc90f4424a0ebd3407db1991c203&amp;pm=s</bpmn:documentation>
+      <bpmn:incoming>Flow_0hz6t2a</bpmn:incoming>
+      <bpmn:outgoing>Flow_0703ixn</bpmn:outgoing>
+      <bpmn:dataOutputAssociation id="DataOutputAssociation_1nswla0">
+        <bpmn:targetRef>DataObjectReference_1rmnnq1</bpmn:targetRef>
+      </bpmn:dataOutputAssociation>
+      <bpmn:startEvent id="Event_03wek1e">
+        <bpmn:outgoing>Flow_0jekscw</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:callActivity id="Activity_0ra6yz7" name="Call Get Waku Message Info" calledElement="Waku_Messages_Message-Raise_New_Demand_Request">
+        <bpmn:extensionElements>
+          <spiffworkflow:preScript>task_id = "waku_request_rejected"</spiffworkflow:preScript>
+        </bpmn:extensionElements>
+        <bpmn:incoming>Flow_0jekscw</bpmn:incoming>
+        <bpmn:outgoing>Flow_1o7xde2</bpmn:outgoing>
+      </bpmn:callActivity>
+      <bpmn:serviceTask id="Activity_0zyrm0e" name="Send Waku Message">
+        <bpmn:extensionElements>
+          <spiffworkflow:serviceTaskOperator id="waku/SendMessage" resultVariable="message_Request_Rejected">
+            <spiffworkflow:parameters>
+              <spiffworkflow:parameter id="message" type="str" value="waku_message" />
+              <spiffworkflow:parameter id="message_type" type="str" value="&#34;wakuext_sendOneToOneMessage&#34;" />
+              <spiffworkflow:parameter id="recipient" type="str" value="current_user_extras[&#34;status_key&#34;]" />
+            </spiffworkflow:parameters>
+          </spiffworkflow:serviceTaskOperator>
+        </bpmn:extensionElements>
+        <bpmn:incoming>Flow_1o7xde2</bpmn:incoming>
+        <bpmn:outgoing>Flow_0ll37vx</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:endEvent id="Event_0tthjzs">
+        <bpmn:incoming>Flow_0ll37vx</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:sequenceFlow id="Flow_0jekscw" sourceRef="Event_03wek1e" targetRef="Activity_0ra6yz7" />
+      <bpmn:sequenceFlow id="Flow_1o7xde2" sourceRef="Activity_0ra6yz7" targetRef="Activity_0zyrm0e" />
+      <bpmn:sequenceFlow id="Flow_0ll37vx" sourceRef="Activity_0zyrm0e" targetRef="Event_0tthjzs" />
+    </bpmn:subProcess>
     <bpmn:textAnnotation id="TextAnnotation_0zy71k9">
       <bpmn:text>Orgdata from BBHR, Categories from a DB, Currencies from Xero</bpmn:text>
     </bpmn:textAnnotation>
@@ -1864,10 +1893,6 @@ del(userTimeFormat)</spiffworkflow:postScript>
           <dc:Bounds x="4038" y="2665" width="84" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="BPMNShape_1t3pdrw" bpmnElement="Activity_1np0do0">
-        <dc:Bounds x="3920" y="2600" width="100" height="80" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="DataObjectReference_1rmnnq1_di" bpmnElement="DataObjectReference_1rmnnq1">
         <dc:Bounds x="3952" y="2715" width="36" height="50" />
         <bpmndi:BPMNLabel>
@@ -2082,6 +2107,9 @@ del(userTimeFormat)</spiffworkflow:postScript>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0m1doaa_di" bpmnElement="Activity_16i7dp7">
         <dc:Bounds x="3280" y="1660" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_19ad9pr_di" bpmnElement="Activity_1np0do0">
+        <dc:Bounds x="3920" y="2600" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_095wlf3_di" bpmnElement="Event_06bnz9o">
         <dc:Bounds x="2021" y="1032" width="36" height="36" />
@@ -3192,6 +3220,35 @@ del(userTimeFormat)</spiffworkflow:postScript>
       <bpmndi:BPMNEdge id="BPMNEdge_0ntahyb" bpmnElement="Flow_1oql80v">
         <di:waypoint x="790" y="280" />
         <di:waypoint x="852" y="280" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_0i42xdn">
+    <bpmndi:BPMNPlane id="BPMNPlane_1lzzsrd" bpmnElement="Activity_1np0do0">
+      <bpmndi:BPMNShape id="BPMNShape_08ftsp1" bpmnElement="Event_03wek1e">
+        <dc:Bounds x="402" y="222" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_1w4v33f" bpmnElement="Activity_0ra6yz7">
+        <dc:Bounds x="500" y="200" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_0wlsb9c" bpmnElement="Activity_0zyrm0e">
+        <dc:Bounds x="660" y="200" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_1o9it0m" bpmnElement="Event_0tthjzs">
+        <dc:Bounds x="822" y="222" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="BPMNEdge_0yjtckg" bpmnElement="Flow_0jekscw">
+        <di:waypoint x="438" y="240" />
+        <di:waypoint x="500" y="240" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_0bfzp62" bpmnElement="Flow_1o7xde2">
+        <di:waypoint x="600" y="240" />
+        <di:waypoint x="660" y="240" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_1heaym2" bpmnElement="Flow_0ll37vx">
+        <di:waypoint x="760" y="240" />
+        <di:waypoint x="822" y="240" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
