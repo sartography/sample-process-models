@@ -1504,6 +1504,35 @@ del(userTimeFormat)</spiffworkflow:postScript>
       <bpmn:dataOutputAssociation id="DataOutputAssociation_1u3484a">
         <bpmn:targetRef>DataObjectReference_0njly5v</bpmn:targetRef>
       </bpmn:dataOutputAssociation>
+      <bpmn:startEvent id="Event_0p8h8p6">
+        <bpmn:outgoing>Flow_1qmlj70</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:callActivity id="Activity_0klhdy9" name="Call Get Waku Message Info" calledElement="Waku_Messages_Message-Raise_New_Demand_Request">
+        <bpmn:extensionElements>
+          <spiffworkflow:preScript>task_id = "waku_request_rejected"</spiffworkflow:preScript>
+        </bpmn:extensionElements>
+        <bpmn:incoming>Flow_1qmlj70</bpmn:incoming>
+        <bpmn:outgoing>Flow_044a4sz</bpmn:outgoing>
+      </bpmn:callActivity>
+      <bpmn:serviceTask id="Activity_17nvej9" name="Send Waku Message">
+        <bpmn:extensionElements>
+          <spiffworkflow:serviceTaskOperator id="waku/SendMessage" resultVariable="message_Request_Approved">
+            <spiffworkflow:parameters>
+              <spiffworkflow:parameter id="message" type="str" value="waku_message" />
+              <spiffworkflow:parameter id="message_type" type="str" value="&#34;wakuext_sendOneToOneMessage&#34;" />
+              <spiffworkflow:parameter id="recipient" type="str" value="current_user_extras[&#34;status_key&#34;]" />
+            </spiffworkflow:parameters>
+          </spiffworkflow:serviceTaskOperator>
+        </bpmn:extensionElements>
+        <bpmn:incoming>Flow_044a4sz</bpmn:incoming>
+        <bpmn:outgoing>Flow_1xict7e</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:endEvent id="Event_1th8hw9">
+        <bpmn:incoming>Flow_1xict7e</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:sequenceFlow id="Flow_1qmlj70" sourceRef="Event_0p8h8p6" targetRef="Activity_0klhdy9" />
+      <bpmn:sequenceFlow id="Flow_044a4sz" sourceRef="Activity_0klhdy9" targetRef="Activity_17nvej9" />
+      <bpmn:sequenceFlow id="Flow_1xict7e" sourceRef="Activity_17nvej9" targetRef="Event_1th8hw9" />
     </bpmn:subProcess>
     <bpmn:subProcess id="Activity_16i7dp7" name="Rejected - Send Waku message to CC">
       <bpmn:documentation>Message - https://www.notion.so/Processes-WIP-bf288f19f8ff454699e2f1cc83ad7abe?p=9891dc90f4424a0ebd3407db1991c203&amp;pm=s</bpmn:documentation>
@@ -3192,7 +3221,33 @@ del(userTimeFormat)</spiffworkflow:postScript>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
   <bpmndi:BPMNDiagram id="BPMNDiagram_0euu743">
-    <bpmndi:BPMNPlane id="BPMNPlane_0fp7zsc" bpmnElement="Activity_05nr3wb" />
+    <bpmndi:BPMNPlane id="BPMNPlane_0fp7zsc" bpmnElement="Activity_05nr3wb">
+      <bpmndi:BPMNShape id="BPMNShape_1jvux8n" bpmnElement="Event_0p8h8p6">
+        <dc:Bounds x="432" y="222" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_1qs8ooh" bpmnElement="Activity_0klhdy9">
+        <dc:Bounds x="530" y="200" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_0dnga3m" bpmnElement="Activity_17nvej9">
+        <dc:Bounds x="690" y="200" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_0bv8lq9" bpmnElement="Event_1th8hw9">
+        <dc:Bounds x="852" y="222" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="BPMNEdge_02jj055" bpmnElement="Flow_1qmlj70">
+        <di:waypoint x="468" y="240" />
+        <di:waypoint x="530" y="240" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_0hrc193" bpmnElement="Flow_044a4sz">
+        <di:waypoint x="630" y="240" />
+        <di:waypoint x="690" y="240" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_02ktl06" bpmnElement="Flow_1xict7e">
+        <di:waypoint x="790" y="240" />
+        <di:waypoint x="852" y="240" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
   <bpmndi:BPMNDiagram id="BPMNDiagram_0hifmyb">
     <bpmndi:BPMNPlane id="BPMNPlane_0c1dzdk" bpmnElement="Activity_16i7dp7">
