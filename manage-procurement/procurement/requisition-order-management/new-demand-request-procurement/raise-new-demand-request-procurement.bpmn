@@ -24,7 +24,6 @@
         <bpmn:flowNodeRef>Event_1k7puc2</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_1nftgle</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_0x47qrd</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Activity_1jpqpoaqxx</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_18gvov2</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_1yz1v0i" name="Infra">
@@ -278,8 +277,7 @@
       <bpmn:conditionExpression>legal_review_outcome = "app"</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="Flow_11nhsst" sourceRef="Event_1k7puc2" targetRef="Activity_08xl52p" />
-    <bpmn:sequenceFlow id="Flow_0upm08q" sourceRef="Event_1nftgle" targetRef="Activity_1jpqpoaqxx" />
-    <bpmn:sequenceFlow id="Flow_0boeaof" sourceRef="Activity_1jpqpoaqxx" targetRef="Event_0jmnbvc" />
+    <bpmn:sequenceFlow id="Flow_0upm08q" sourceRef="Event_1nftgle" targetRef="Activity_18gvov2" />
     <bpmn:sequenceFlow id="Flow_0m2l5ke" sourceRef="Event_0x47qrd" targetRef="Gateway_01hote2" />
     <bpmn:callActivity id="Activity_000swbl" name="Call Shared: Get Form Data" calledElement="Get_Form_Data">
       <bpmn:documentation>Get Form Data Call Activity is used for getting required data for User Tasks.</bpmn:documentation>
@@ -773,7 +771,7 @@ review_outcome = None</spiffworkflow:postScript>
     <bpmn:dataObjectReference id="DataObjectReference_10yrt4u" name="Message Request Approved" dataObjectRef="message_Request_Approved" />
     <bpmn:dataObject id="message_Request_Approved" />
     <bpmn:endEvent id="Event_0jmnbvc" name="Contract Negotiation OR Vendor onboarding  process should be started">
-      <bpmn:incoming>Flow_0boeaof</bpmn:incoming>
+      <bpmn:incoming>Flow_0cdby3k</bpmn:incoming>
     </bpmn:endEvent>
     <bpmn:intermediateThrowEvent id="Event_1k7puc2" name="Legal review">
       <bpmn:documentation>Milestone</bpmn:documentation>
@@ -1601,44 +1599,13 @@ del(userTimeFormat)</spiffworkflow:postScript>
       <bpmn:sequenceFlow id="Flow_1o7xde2" sourceRef="Activity_0ra6yz7y" targetRef="Activity_0zyrm0ey" />
       <bpmn:sequenceFlow id="Flow_0ll37vx" sourceRef="Activity_0zyrm0ey" targetRef="Event_0tthjzs" />
     </bpmn:subProcess>
-    <bpmn:subProcess id="Activity_1jpqpoaqxx" name="Approved - Send Waku message to CC">
+    <bpmn:subProcess id="Activity_18gvov2" name="Approved - Send Waku message to CC">
       <bpmn:documentation>Message - https://www.notion.so/Processes-WIP-bf288f19f8ff454699e2f1cc83ad7abe?p=9891dc90f4424a0ebd3407db1991c203&amp;pm=s</bpmn:documentation>
       <bpmn:incoming>Flow_0upm08q</bpmn:incoming>
-      <bpmn:outgoing>Flow_0boeaof</bpmn:outgoing>
+      <bpmn:outgoing>Flow_0cdby3k</bpmn:outgoing>
       <bpmn:dataOutputAssociation id="DataOutputAssociation_11lwwuc">
         <bpmn:targetRef>DataObjectReference_10yrt4u</bpmn:targetRef>
       </bpmn:dataOutputAssociation>
-      <bpmn:startEvent id="Event_1uhwrf1">
-        <bpmn:outgoing>Flow_1w2cjgx</bpmn:outgoing>
-      </bpmn:startEvent>
-      <bpmn:callActivity id="Activity_030vme3zqxx" name="Call Get Waku Message Info" calledElement="Waku_Messages_Message-Raise_New_Demand_Request">
-        <bpmn:extensionElements>
-          <spiffworkflow:preScript>task_id = "waku_request_rejected"</spiffworkflow:preScript>
-        </bpmn:extensionElements>
-        <bpmn:incoming>Flow_1w2cjgx</bpmn:incoming>
-        <bpmn:outgoing>Flow_09yepty</bpmn:outgoing>
-      </bpmn:callActivity>
-      <bpmn:serviceTask id="Activity_189iyp7zqxx" name="Send Waku Message">
-        <bpmn:extensionElements>
-          <spiffworkflow:serviceTaskOperator id="waku/SendMessage" resultVariable="message_Request_Approved">
-            <spiffworkflow:parameters>
-              <spiffworkflow:parameter id="message" type="str" value="waku_message" />
-              <spiffworkflow:parameter id="message_type" type="str" value="&#34;wakuext_sendOneToOneMessage&#34;" />
-              <spiffworkflow:parameter id="recipient" type="str" value="current_user_extras[&#34;status_key&#34;]" />
-            </spiffworkflow:parameters>
-          </spiffworkflow:serviceTaskOperator>
-        </bpmn:extensionElements>
-        <bpmn:incoming>Flow_09yepty</bpmn:incoming>
-        <bpmn:outgoing>Flow_00ereei</bpmn:outgoing>
-      </bpmn:serviceTask>
-      <bpmn:endEvent id="Event_18ghlm1">
-        <bpmn:incoming>Flow_00ereei</bpmn:incoming>
-      </bpmn:endEvent>
-      <bpmn:sequenceFlow id="Flow_1w2cjgx" sourceRef="Event_1uhwrf1" targetRef="Activity_030vme3zqxx" />
-      <bpmn:sequenceFlow id="Flow_09yepty" sourceRef="Activity_030vme3zqxx" targetRef="Activity_189iyp7zqxx" />
-      <bpmn:sequenceFlow id="Flow_00ereei" sourceRef="Activity_189iyp7zqxx" targetRef="Event_18ghlm1" />
-    </bpmn:subProcess>
-    <bpmn:subProcess id="Activity_18gvov2" name="Approved - Send Waku message to CC">
       <bpmn:startEvent id="Event_0jeg5dy">
         <bpmn:outgoing>Flow_0x4u50j</bpmn:outgoing>
       </bpmn:startEvent>
@@ -1669,6 +1636,7 @@ del(userTimeFormat)</spiffworkflow:postScript>
       <bpmn:sequenceFlow id="Flow_0vpmprs" sourceRef="Activity_0wps7ns" targetRef="Activity_12z5uar" />
       <bpmn:sequenceFlow id="Flow_11u5vdm" sourceRef="Activity_12z5uar" targetRef="Event_13bbx1k" />
     </bpmn:subProcess>
+    <bpmn:sequenceFlow id="Flow_0cdby3k" sourceRef="Activity_18gvov2" targetRef="Event_0jmnbvc" />
     <bpmn:textAnnotation id="TextAnnotation_0zy71k9">
       <bpmn:text>Orgdata from BBHR, Categories from a DB, Currencies from Xero</bpmn:text>
     </bpmn:textAnnotation>
@@ -2173,12 +2141,6 @@ del(userTimeFormat)</spiffworkflow:postScript>
       <bpmndi:BPMNShape id="Activity_19ad9pr_di" bpmnElement="Activity_1np0do0">
         <dc:Bounds x="3920" y="2600" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1hqd4uk_di" bpmnElement="Activity_1jpqpoaqxx">
-        <dc:Bounds x="4600" y="3520" width="100" height="80" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0ew9mt5_di" bpmnElement="Activity_18gvov2">
-        <dc:Bounds x="4770" y="3410" width="100" height="80" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="TextAnnotation_0zy71k9_di" bpmnElement="TextAnnotation_0zy71k9">
         <dc:Bounds x="310" y="180" width="130" height="60" />
         <bpmndi:BPMNLabel />
@@ -2202,6 +2164,9 @@ del(userTimeFormat)</spiffworkflow:postScript>
       <bpmndi:BPMNShape id="TextAnnotation_12tjd1d_di" bpmnElement="TextAnnotation_12tjd1d">
         <dc:Bounds x="2150" y="910" width="70" height="30" />
         <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0ew9mt5_di" bpmnElement="Activity_18gvov2">
+        <dc:Bounds x="4620" y="3520" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_095wlf3_di" bpmnElement="Event_06bnz9o">
         <dc:Bounds x="2021" y="1032" width="36" height="36" />
@@ -2681,11 +2646,7 @@ del(userTimeFormat)</spiffworkflow:postScript>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0upm08q_di" bpmnElement="Flow_0upm08q">
         <di:waypoint x="4568" y="3560" />
-        <di:waypoint x="4600" y="3560" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0boeaof_di" bpmnElement="Flow_0boeaof">
-        <di:waypoint x="4700" y="3560" />
-        <di:waypoint x="4792" y="3560" />
+        <di:waypoint x="4620" y="3560" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0m2l5ke_di" bpmnElement="Flow_0m2l5ke">
         <di:waypoint x="4300" y="3618" />
@@ -2759,6 +2720,10 @@ del(userTimeFormat)</spiffworkflow:postScript>
         <di:waypoint x="2171" y="970" />
         <di:waypoint x="2180" y="940" />
       </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0cdby3k_di" bpmnElement="Flow_0cdby3k">
+        <di:waypoint x="4720" y="3560" />
+        <di:waypoint x="4792" y="3560" />
+      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="DataOutputAssociation_019xu31_di" bpmnElement="DataOutputAssociation_019xu31">
         <di:waypoint x="2991" y="2050" />
         <di:waypoint x="2992" y="2015" />
@@ -2820,8 +2785,8 @@ del(userTimeFormat)</spiffworkflow:postScript>
         <di:waypoint x="3971" y="2715" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="DataOutputAssociation_11lwwuc_di" bpmnElement="DataOutputAssociation_11lwwuc">
-        <di:waypoint x="4649" y="3520" />
-        <di:waypoint x="4648" y="3475" />
+        <di:waypoint x="4643" y="3520" />
+        <di:waypoint x="4645" y="3475" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
@@ -3367,35 +3332,6 @@ del(userTimeFormat)</spiffworkflow:postScript>
       <bpmndi:BPMNEdge id="BPMNEdge_1heaym2" bpmnElement="Flow_0ll37vx">
         <di:waypoint x="760" y="240" />
         <di:waypoint x="822" y="240" />
-      </bpmndi:BPMNEdge>
-    </bpmndi:BPMNPlane>
-  </bpmndi:BPMNDiagram>
-  <bpmndi:BPMNDiagram id="BPMNDiagram_14m8w6s">
-    <bpmndi:BPMNPlane id="BPMNPlane_0e0wy01" bpmnElement="Activity_1jpqpoaqxx">
-      <bpmndi:BPMNShape id="BPMNShape_0m4dj52" bpmnElement="Event_1uhwrf1">
-        <dc:Bounds x="512" y="192" width="36" height="36" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="BPMNShape_14g1i2c" bpmnElement="Activity_030vme3zqxx">
-        <dc:Bounds x="610" y="170" width="100" height="80" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="BPMNShape_0qg8pmw" bpmnElement="Activity_189iyp7zqxx">
-        <dc:Bounds x="770" y="170" width="100" height="80" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="BPMNShape_0yvckqj" bpmnElement="Event_18ghlm1">
-        <dc:Bounds x="932" y="192" width="36" height="36" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge id="BPMNEdge_1kvavna" bpmnElement="Flow_1w2cjgx">
-        <di:waypoint x="548" y="210" />
-        <di:waypoint x="610" y="210" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="BPMNEdge_1mg65dv" bpmnElement="Flow_09yepty">
-        <di:waypoint x="710" y="210" />
-        <di:waypoint x="770" y="210" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="BPMNEdge_0r77p9d" bpmnElement="Flow_00ereei">
-        <di:waypoint x="870" y="210" />
-        <di:waypoint x="932" y="210" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
