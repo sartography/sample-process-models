@@ -20,20 +20,77 @@
       "title": "Category",
       "enum": [
         "Software & Licences",
-        "Equipment",
-        "Consulting Fees",
-        "Other Fees"
+		"Learning & Development",
+        "Equipment"
       ]
     },
-    "sub-category": {
-      "type": "string",
-      "title": "Sub-Category",
-      "enum": [
-        "Licenses",
-        "Subscriptions",
-        "Bounties",
-        "Coworking"
-      ]
+    "dependencies": {
+      "category": {
+        "oneOf": [
+            {
+              "properties": {
+                "category": {
+                  "enum": [
+                    "Software & Licences"
+                  ]
+                },
+                "sub-category": {
+				  "title": "Sub Category",
+				  "type": "string",
+			      "enum": [
+			        "Licences",
+					"Subscriptions",
+			        "Open Source"
+			      ]
+                }
+              },
+              "required": [
+                "sub-category"
+              ]
+            },
+            {
+              "properties": {
+                "category": {
+                  "enum": [
+                    "Learning & Development"
+                  ]
+                },
+                "sub-category": {
+				  "title": "Sub Category",
+				  "type": "string",
+			      "enum": [
+			        "Books",
+					"Courses",
+			        "Online Conferences	"
+			      ]
+                }
+              },
+              "required": [
+                "sub-category"
+              ]
+            },
+            {
+              "properties": {
+                "category": {
+                  "enum": [
+                    "Equipment"
+                  ]
+                },
+                "sub-category": {
+				  "title": "Sub Category",
+				  "type": "string",
+			      "enum": [
+			        "Laptops",
+					"Ledgers",
+			        "Headset"
+			      ]
+                }
+              },
+              "required": [
+                "sub-category"
+              ]
+            },
+		]
     },
     "purpose": {
       "type": "string",
