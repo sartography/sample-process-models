@@ -1,29 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_96f6665" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.0.0-dev">
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:spiffworkflow="http://spiffworkflow.org/bpmn/schema/1.0/core" id="Definitions_96f6665" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.0.0-dev">
   <bpmn:process id="Get_External_Data" name="Get External Data" isExecutable="true">
     <bpmn:startEvent id="StartEvent_1">
       <bpmn:outgoing>Flow_18tepzx</bpmn:outgoing>
     </bpmn:startEvent>
     <bpmn:endEvent id="Event_136ralp">
-      <bpmn:incoming>Flow_1g3vxpd</bpmn:incoming>
+      <bpmn:incoming>Flow_053x0vr</bpmn:incoming>
     </bpmn:endEvent>
     <bpmn:sequenceFlow id="Flow_18tepzx" sourceRef="StartEvent_1" targetRef="Activity_1jo6sl9" />
-    <bpmn:sequenceFlow id="Flow_1g3vxpd" sourceRef="Activity_1jo6sl9" targetRef="Event_136ralp" />
+    <bpmn:sequenceFlow id="Flow_1g3vxpd" sourceRef="Activity_1jo6sl9" targetRef="Gateway_0o249zn" />
     <bpmn:businessRuleTask id="Activity_1jo6sl9" name="Set Which Data">
+      <bpmn:extensionElements>
+        <spiffworkflow:calledDecisionId>Which_External_Data</spiffworkflow:calledDecisionId>
+      </bpmn:extensionElements>
       <bpmn:incoming>Flow_18tepzx</bpmn:incoming>
       <bpmn:outgoing>Flow_1g3vxpd</bpmn:outgoing>
     </bpmn:businessRuleTask>
+    <bpmn:exclusiveGateway id="Gateway_0o249zn" name="Zero Currencies?">
+      <bpmn:incoming>Flow_1g3vxpd</bpmn:incoming>
+      <bpmn:outgoing>Flow_053x0vr</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="Flow_053x0vr" sourceRef="Gateway_0o249zn" targetRef="Event_136ralp" />
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Get_External_Data">
       <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
         <dc:Bounds x="179" y="159" width="36" height="36" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_136ralp_di" bpmnElement="Event_136ralp">
-        <dc:Bounds x="512" y="159" width="36" height="36" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0nnd7mr_di" bpmnElement="Activity_1jo6sl9">
         <dc:Bounds x="290" y="137" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_136ralp_di" bpmnElement="Event_136ralp">
+        <dc:Bounds x="852" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_0o249zn_di" bpmnElement="Gateway_0o249zn" isMarkerVisible="true">
+        <dc:Bounds x="475" y="152" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="459" y="209" width="85" height="14" />
+        </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_18tepzx_di" bpmnElement="Flow_18tepzx">
         <di:waypoint x="215" y="177" />
@@ -31,7 +45,11 @@
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1g3vxpd_di" bpmnElement="Flow_1g3vxpd">
         <di:waypoint x="390" y="177" />
-        <di:waypoint x="512" y="177" />
+        <di:waypoint x="475" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_053x0vr_di" bpmnElement="Flow_053x0vr">
+        <di:waypoint x="525" y="177" />
+        <di:waypoint x="852" y="177" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
