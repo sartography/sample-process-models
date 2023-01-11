@@ -24,7 +24,7 @@
     <bpmn:sequenceFlow id="Flow_053x0vr" name="Yes" sourceRef="Gateway_0o249zn" targetRef="Activity_08ufz28">
       <bpmn:conditionExpression>is_xero_currencies</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
-    <bpmn:sequenceFlow id="Flow_0jcgsio" sourceRef="Activity_08ufz28" targetRef="Gateway_1q5un0k" />
+    <bpmn:sequenceFlow id="Flow_0jcgsio" sourceRef="Activity_08ufz28" targetRef="Activity_0hlao5k" />
     <bpmn:serviceTask id="Activity_08ufz28" name="Get Xero Currencies">
       <bpmn:extensionElements>
         <spiffworkflow:serviceTaskOperator id="xero/GetCurrencies" resultVariable="resp_XeroCurrencies">
@@ -37,20 +37,61 @@
       <bpmn:outgoing>Flow_0jcgsio</bpmn:outgoing>
     </bpmn:serviceTask>
     <bpmn:exclusiveGateway id="Gateway_1q5un0k">
-      <bpmn:incoming>Flow_0jcgsio</bpmn:incoming>
       <bpmn:incoming>Flow_0o9eevo</bpmn:incoming>
+      <bpmn:incoming>Flow_04yq3ih</bpmn:incoming>
       <bpmn:outgoing>Flow_0fi046r</bpmn:outgoing>
     </bpmn:exclusiveGateway>
     <bpmn:sequenceFlow id="Flow_0fi046r" sourceRef="Gateway_1q5un0k" targetRef="Event_136ralp" />
     <bpmn:sequenceFlow id="Flow_0o9eevo" name="No" sourceRef="Gateway_0o249zn" targetRef="Gateway_1q5un0k" />
+    <bpmn:sequenceFlow id="Flow_04yq3ih" sourceRef="Activity_0hlao5k" targetRef="Gateway_1q5un0k" />
+    <bpmn:scriptTask id="Activity_0hlao5k" name="Set Currency Enum List">
+      <bpmn:incoming>Flow_0jcgsio</bpmn:incoming>
+      <bpmn:outgoing>Flow_04yq3ih</bpmn:outgoing>
+      <bpmn:script>currency_options = [
+    {
+        "label": "Australian Dollar (AUD)",
+        "value": "AUD"
+    },
+    {
+        "label": "Canadian Dollar (CAD)",
+        "value": "CAD"
+    },
+    {
+        "label": "Swiss Franc (CHF)",
+        "value": "CHF"
+    },
+    {
+        "label": "Euro (EUR)",
+        "value": "EUR"
+    },
+    {
+        "label": "British Pound (GBP)",
+        "value": "GBP"
+    },
+    {
+        "label": "Indian Rupee (INR)",
+        "value": "INR"
+    },
+    {
+        "label": "Japanese Yen (JPY)",
+        "value": "JPY"
+    },
+    {
+        "label": "New Zealand Dollar (NZD)",
+        "value": "NZD"
+    },
+    {
+        "label": "United States Dollar (USD)",
+        "value": "USD"
+    }
+]</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:dataObject id="resp_XeroCurrencies" />
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Get_External_Data">
       <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
         <dc:Bounds x="179" y="159" width="36" height="36" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_136ralp_di" bpmnElement="Event_136ralp">
-        <dc:Bounds x="852" y="159" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0nnd7mr_di" bpmnElement="Activity_1jo6sl9">
         <dc:Bounds x="290" y="137" width="100" height="80" />
@@ -64,8 +105,14 @@
       <bpmndi:BPMNShape id="Activity_0teo8c8_di" bpmnElement="Activity_08ufz28">
         <dc:Bounds x="580" y="137" width="100" height="80" />
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_136ralp_di" bpmnElement="Event_136ralp">
+        <dc:Bounds x="1052" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Gateway_1q5un0k_di" bpmnElement="Gateway_1q5un0k" isMarkerVisible="true">
-        <dc:Bounds x="745" y="152" width="50" height="50" />
+        <dc:Bounds x="905" y="152" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_035s802_di" bpmnElement="Activity_0hlao5k">
+        <dc:Bounds x="750" y="137" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_18tepzx_di" bpmnElement="Flow_18tepzx">
         <di:waypoint x="215" y="177" />
@@ -84,20 +131,24 @@
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0jcgsio_di" bpmnElement="Flow_0jcgsio">
         <di:waypoint x="680" y="177" />
-        <di:waypoint x="745" y="177" />
+        <di:waypoint x="750" y="177" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0fi046r_di" bpmnElement="Flow_0fi046r">
-        <di:waypoint x="795" y="177" />
-        <di:waypoint x="852" y="177" />
+        <di:waypoint x="955" y="177" />
+        <di:waypoint x="1052" y="177" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0o9eevo_di" bpmnElement="Flow_0o9eevo">
         <di:waypoint x="490" y="152" />
         <di:waypoint x="490" y="90" />
-        <di:waypoint x="770" y="90" />
-        <di:waypoint x="770" y="152" />
+        <di:waypoint x="930" y="90" />
+        <di:waypoint x="930" y="152" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="623" y="72" width="15" height="14" />
+          <dc:Bounds x="703" y="72" width="15" height="14" />
         </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_04yq3ih_di" bpmnElement="Flow_04yq3ih">
+        <di:waypoint x="850" y="177" />
+        <di:waypoint x="905" y="177" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
