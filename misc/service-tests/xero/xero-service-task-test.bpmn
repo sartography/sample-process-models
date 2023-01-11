@@ -21,10 +21,10 @@
       <bpmn:outgoing>Flow_1xov8zn</bpmn:outgoing>
     </bpmn:serviceTask>
     <bpmn:endEvent id="Event_1oekazn">
-      <bpmn:incoming>Flow_0jqts3n</bpmn:incoming>
+      <bpmn:incoming>Flow_0dhr0z6</bpmn:incoming>
     </bpmn:endEvent>
     <bpmn:sequenceFlow id="Flow_1xov8zn" sourceRef="Activity_0b0v4ze" targetRef="Activity_1ftqk6a" />
-    <bpmn:sequenceFlow id="Flow_0jqts3n" sourceRef="Activity_1ftqk6a" targetRef="Event_1oekazn" />
+    <bpmn:sequenceFlow id="Flow_0jqts3n" sourceRef="Activity_1ftqk6a" targetRef="Activity_1xmac92" />
     <bpmn:serviceTask id="Activity_1ftqk6a" name="Get Xero Currencies">
       <bpmn:extensionElements>
         <spiffworkflow:serviceTaskOperator id="xero/GetCurrencies" resultVariable="resp_XeroCurrencies">
@@ -36,6 +36,12 @@
       <bpmn:incoming>Flow_1xov8zn</bpmn:incoming>
       <bpmn:outgoing>Flow_0jqts3n</bpmn:outgoing>
     </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="Flow_0dhr0z6" sourceRef="Activity_1xmac92" targetRef="Event_1oekazn" />
+    <bpmn:scriptTask id="Activity_1xmac92" name="Build Enumeration">
+      <bpmn:incoming>Flow_0jqts3n</bpmn:incoming>
+      <bpmn:outgoing>Flow_0dhr0z6</bpmn:outgoing>
+      <bpmn:script>a=1</bpmn:script>
+    </bpmn:scriptTask>
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Proccess_6e855vt">
@@ -45,11 +51,14 @@
       <bpmndi:BPMNShape id="Activity_01fflkg_di" bpmnElement="Activity_0b0v4ze">
         <dc:Bounds x="230" y="137" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_1oekazn_di" bpmnElement="Event_1oekazn">
-        <dc:Bounds x="592" y="159" width="36" height="36" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1gt7pd1_di" bpmnElement="Activity_1ftqk6a">
         <dc:Bounds x="400" y="137" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1a4fixf_di" bpmnElement="Activity_1xmac92">
+        <dc:Bounds x="580" y="137" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1oekazn_di" bpmnElement="Event_1oekazn">
+        <dc:Bounds x="752" y="159" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_1lrs9sm_di" bpmnElement="Flow_1lrs9sm">
         <di:waypoint x="158" y="177" />
@@ -61,7 +70,11 @@
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0jqts3n_di" bpmnElement="Flow_0jqts3n">
         <di:waypoint x="500" y="177" />
-        <di:waypoint x="592" y="177" />
+        <di:waypoint x="580" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0dhr0z6_di" bpmnElement="Flow_0dhr0z6">
+        <di:waypoint x="680" y="177" />
+        <di:waypoint x="752" y="177" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
