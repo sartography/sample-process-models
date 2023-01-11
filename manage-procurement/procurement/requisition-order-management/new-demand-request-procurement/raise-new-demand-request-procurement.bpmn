@@ -19,7 +19,6 @@
     <bpmn:laneSet id="LaneSet_0suizaw">
       <bpmn:lane id="Lane_1mrq305">
         <bpmn:flowNodeRef>StartEvent_1</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Activity_000swbl</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_18a4ocw</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_1itequ5</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Gateway_078fn3y</bpmn:flowNodeRef>
@@ -34,6 +33,7 @@
         <bpmn:flowNodeRef>Activity_1fz0bsz</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_108eq0l</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_18am0at</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_000swbl</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_1tozxks" name="Budget Owner">
         <bpmn:flowNodeRef>Event_12tt6fj</bpmn:flowNodeRef>
@@ -150,9 +150,6 @@
       <bpmn:incoming>Flow_1c8vykc</bpmn:incoming>
       <bpmn:outgoing>Flow_0xnbnkt</bpmn:outgoing>
     </bpmn:exclusiveGateway>
-    <bpmn:callActivity id="Activity_000swbl" name="Call SR: Get Form Data" calledElement="Get_Form_Data">
-      <bpmn:documentation>Get Form Data Call Activity is used for getting required data for User Tasks.</bpmn:documentation>
-    </bpmn:callActivity>
     <bpmn:userTask id="Activity_18a4ocw" name="Submit a New Demand request">
       <bpmn:documentation>**Figma - New Demand request (Procurement) - SUBMIT**, https://www.figma.com/file/9NP2BUoLuwHUCGStvDMgOw/Form?node-id=0%3A1&amp;t=BABeo58RkNviJr4N-0
 
@@ -678,8 +675,8 @@ review_outcome = None</spiffworkflow:postScript>
     <bpmn:exclusiveGateway id="Gateway_17sf14l">
       <bpmn:incoming>Flow_0l3u381</bpmn:incoming>
       <bpmn:incoming>Flow_1a7xig3</bpmn:incoming>
-      <bpmn:incoming>Flow_0mbb848</bpmn:incoming>
       <bpmn:incoming>Flow_1ful1og</bpmn:incoming>
+      <bpmn:incoming>Flow_0qskaka</bpmn:incoming>
       <bpmn:outgoing>Flow_1lfn8yz</bpmn:outgoing>
     </bpmn:exclusiveGateway>
     <bpmn:subProcess id="Activity_108eq0l" name="Send Waku message  to Budget Owner">
@@ -1501,7 +1498,7 @@ del(userTimeFormat)</spiffworkflow:postScript>
         <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">timedelta(minutes=50)</bpmn:timeDuration>
       </bpmn:timerEventDefinition>
     </bpmn:boundaryEvent>
-    <bpmn:sequenceFlow id="Flow_0mbb848" sourceRef="StartEvent_1" targetRef="Gateway_17sf14l" />
+    <bpmn:sequenceFlow id="Flow_0mbb848" sourceRef="StartEvent_1" targetRef="Activity_000swbl" />
     <bpmn:sequenceFlow id="Flow_01n63u0" name="Additional info is required" sourceRef="Gateway_1je3z9i" targetRef="Gateway_0vdntex">
       <bpmn:conditionExpression>people_ops_outcome == "nai"</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
@@ -1644,6 +1641,16 @@ del(userTimeFormat)</spiffworkflow:postScript>
     <bpmn:sequenceFlow id="Flow_0kp20kp" sourceRef="Gateway_1gcwukc" targetRef="Event_1300gad" />
     <bpmn:sequenceFlow id="Flow_1ygiuii" sourceRef="Event_1300gad" targetRef="Activity_18am0at" />
     <bpmn:sequenceFlow id="Flow_0u9k2wx" sourceRef="Activity_14fif5h" targetRef="Activity_0uhfy9l" />
+    <bpmn:callActivity id="Activity_000swbl" name="Call ST: Get External Data" calledElement="Get_External_Data">
+      <bpmn:documentation>Get Form Data Call Activity is used for getting required data for User Tasks.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <spiffworkflow:preScript># Get Process Info
+process_info = get_process_info()</spiffworkflow:preScript>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0mbb848</bpmn:incoming>
+      <bpmn:outgoing>Flow_0qskaka</bpmn:outgoing>
+    </bpmn:callActivity>
+    <bpmn:sequenceFlow id="Flow_0qskaka" sourceRef="Activity_000swbl" targetRef="Gateway_17sf14l" />
     <bpmn:textAnnotation id="TextAnnotation_0zy71k9">
       <bpmn:text>Orgdata from BBHR, Categories from a DB, Currencies from Xero</bpmn:text>
     </bpmn:textAnnotation>
@@ -1662,12 +1669,12 @@ del(userTimeFormat)</spiffworkflow:postScript>
     <bpmn:textAnnotation id="TextAnnotation_12tjd1d">
       <bpmn:text>TypeForm</bpmn:text>
     </bpmn:textAnnotation>
-    <bpmn:association id="Association_13u0dtl" sourceRef="Activity_000swbl" targetRef="TextAnnotation_0zy71k9" />
     <bpmn:association id="Association_1ori2qv" sourceRef="Submit_Validate_New_Demand_Request-Sub_Process" targetRef="TextAnnotation_0bqrxlm" />
     <bpmn:association id="Association_1mgme24" sourceRef="Activity_10nldyr" targetRef="TextAnnotation_1ofkj5f" />
     <bpmn:association id="Association_089aqsx" sourceRef="Activity_10nldyr" targetRef="TextAnnotation_0k4fn7g" />
     <bpmn:association id="Association_1778mrp" sourceRef="Activity_08xl52p" targetRef="TextAnnotation_0qq1kr8" />
     <bpmn:association id="Association_012q0h5" sourceRef="Activity_0uhfy9l" targetRef="TextAnnotation_12tjd1d" />
+    <bpmn:association id="Association_13u0dtl" sourceRef="Activity_000swbl" targetRef="TextAnnotation_0zy71k9" />
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_11kan0p">
@@ -1720,16 +1727,16 @@ del(userTimeFormat)</spiffworkflow:postScript>
       <bpmndi:BPMNShape id="Gateway_0msst2a_di" bpmnElement="Gateway_0msst2a" isMarkerVisible="true">
         <dc:Bounds x="1069" y="2240" width="50" height="50" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0migtub_di" bpmnElement="Activity_000swbl">
-        <dc:Bounds x="894" y="285" width="100" height="80" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="BPMNShape_15zj0w3" bpmnElement="Activity_18a4ocw">
         <dc:Bounds x="1154" y="425" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0vhbxuw_di" bpmnElement="Activity_1itequ5">
         <dc:Bounds x="1304" y="425" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0migtub_di" bpmnElement="Activity_000swbl">
+        <dc:Bounds x="880" y="425" width="100" height="80" />
+        <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1nyt2o4_di" bpmnElement="Submit_Validate_New_Demand_Request-Sub_Process">
         <dc:Bounds x="1614" y="425" width="100" height="80" />
@@ -2181,6 +2188,10 @@ del(userTimeFormat)</spiffworkflow:postScript>
         <dc:Bounds x="2694" y="935" width="70" height="30" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Association_13u0dtl_di" bpmnElement="Association_13u0dtl">
+        <di:waypoint x="925" y="425" />
+        <di:waypoint x="913" y="265" />
+      </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="Event_0tuu728_di" bpmnElement="Event_0x47qrd">
         <dc:Bounds x="4826" y="3607" width="36" height="36" />
         <bpmndi:BPMNLabel>
@@ -2219,7 +2230,7 @@ del(userTimeFormat)</spiffworkflow:postScript>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_0mbb848_di" bpmnElement="Flow_0mbb848">
         <di:waypoint x="822" y="465" />
-        <di:waypoint x="1049" y="465" />
+        <di:waypoint x="880" y="465" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_01n63u0_di" bpmnElement="Flow_01n63u0">
         <di:waypoint x="3664" y="1750" />
@@ -2713,10 +2724,6 @@ del(userTimeFormat)</spiffworkflow:postScript>
         <di:waypoint x="2603" y="1035" />
         <di:waypoint x="2654" y="1035" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Association_13u0dtl_di" bpmnElement="Association_13u0dtl">
-        <di:waypoint x="928" y="285" />
-        <di:waypoint x="921" y="265" />
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Association_1ori2qv_di" bpmnElement="Association_1ori2qv">
         <di:waypoint x="1704" y="425" />
         <di:waypoint x="1724" y="405" />
@@ -2736,6 +2743,10 @@ del(userTimeFormat)</spiffworkflow:postScript>
       <bpmndi:BPMNEdge id="Association_012q0h5_di" bpmnElement="Association_012q0h5">
         <di:waypoint x="2715" y="995" />
         <di:waypoint x="2724" y="965" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0qskaka_di" bpmnElement="Flow_0qskaka">
+        <di:waypoint x="980" y="465" />
+        <di:waypoint x="1049" y="465" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="DataOutputAssociation_019xu31_di" bpmnElement="DataOutputAssociation_019xu31">
         <di:waypoint x="3535" y="2075" />
