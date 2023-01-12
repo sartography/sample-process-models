@@ -47,7 +47,10 @@
     <bpmn:scriptTask id="Activity_0hlao5k" name="Set Currency Enum List">
       <bpmn:incoming>Flow_0jcgsio</bpmn:incoming>
       <bpmn:outgoing>Flow_04yq3ih</bpmn:outgoing>
-      <bpmn:script>currency_enum_list = [
+      <bpmn:script>currency_enum_list = [{“label”: f”{x[‘Description’]} ({x[‘Code’]})“, “value”: x[“Code”]} for x in my_var[“resp_XeroCurrencies”][“Currencies”]]
+
+
+currency_enum_list_x = [
     {
         "label": "Australian Dollar (AUD)",
         "value": "AUD"
@@ -117,9 +120,6 @@
       <bpmndi:BPMNShape id="Gateway_1q5un0k_di" bpmnElement="Gateway_1q5un0k" isMarkerVisible="true">
         <dc:Bounds x="905" y="152" width="50" height="50" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_035s802_di" bpmnElement="Activity_0hlao5k">
-        <dc:Bounds x="750" y="137" width="100" height="80" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="DataObjectReference_1et46mv_di" bpmnElement="DataObjectReference_1et46mv">
         <dc:Bounds x="782" y="285" width="36" height="50" />
         <bpmndi:BPMNLabel>
@@ -128,6 +128,9 @@
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0dhmpkt_di" bpmnElement="Activity_1iqd7al">
         <dc:Bounds x="1040" y="137" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_035s802_di" bpmnElement="Activity_0hlao5k">
+        <dc:Bounds x="750" y="135" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_18tepzx_di" bpmnElement="Flow_18tepzx">
         <di:waypoint x="215" y="177" />
@@ -146,7 +149,9 @@
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0jcgsio_di" bpmnElement="Flow_0jcgsio">
         <di:waypoint x="680" y="177" />
-        <di:waypoint x="750" y="177" />
+        <di:waypoint x="715" y="177" />
+        <di:waypoint x="715" y="175" />
+        <di:waypoint x="750" y="175" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0fi046r_di" bpmnElement="Flow_0fi046r">
         <di:waypoint x="955" y="177" />
@@ -162,7 +167,9 @@
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_04yq3ih_di" bpmnElement="Flow_04yq3ih">
-        <di:waypoint x="850" y="177" />
+        <di:waypoint x="850" y="175" />
+        <di:waypoint x="878" y="175" />
+        <di:waypoint x="878" y="177" />
         <di:waypoint x="905" y="177" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0c0rtly_di" bpmnElement="Flow_0c0rtly">
