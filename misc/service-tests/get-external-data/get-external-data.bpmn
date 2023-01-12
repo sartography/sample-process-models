@@ -75,16 +75,21 @@ currency_enum_list = [{"label": f"{x['Description']} ({x['Code']})", "value": x[
     </bpmn:exclusiveGateway>
     <bpmn:sequenceFlow id="Flow_1oquwaz" sourceRef="Gateway_0hizx28" targetRef="Event_136ralp" />
     <bpmn:sequenceFlow id="Flow_0tsv7ot" name="No" sourceRef="Gateway_0lkar7l" targetRef="Gateway_0hizx28" />
-    <bpmn:exclusiveGateway id="Gateway_158rw2p" name="Department and/or Division?">
+    <bpmn:exclusiveGateway id="Gateway_158rw2p" name="Department and/or Division?" default="Flow_09ph5wv">
       <bpmn:incoming>Flow_0r8yabd</bpmn:incoming>
       <bpmn:outgoing>Flow_0itahfd</bpmn:outgoing>
+      <bpmn:outgoing>Flow_09ph5wv</bpmn:outgoing>
     </bpmn:exclusiveGateway>
-    <bpmn:sequenceFlow id="Flow_0itahfd" sourceRef="Gateway_158rw2p" targetRef="Activity_1iqd7al" />
+    <bpmn:sequenceFlow id="Flow_0itahfd" name="Yes" sourceRef="Gateway_158rw2p" targetRef="Activity_1iqd7al">
+      <bpmn:conditionExpression>is_bamboo_dept_list or is_bamboo_dept_enum_list or is_bamboo_div_list or is_bamboo_div_enum_list</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
     <bpmn:exclusiveGateway id="Gateway_1vmhro1">
       <bpmn:incoming>Flow_0c0rtly</bpmn:incoming>
+      <bpmn:incoming>Flow_09ph5wv</bpmn:incoming>
       <bpmn:outgoing>Flow_0q1yoc6</bpmn:outgoing>
     </bpmn:exclusiveGateway>
     <bpmn:sequenceFlow id="Flow_0q1yoc6" sourceRef="Gateway_1vmhro1" targetRef="Gateway_0hizx28" />
+    <bpmn:sequenceFlow id="Flow_09ph5wv" name="No" sourceRef="Gateway_158rw2p" targetRef="Gateway_1vmhro1" />
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Get_External_Data">
@@ -206,10 +211,22 @@ currency_enum_list = [{"label": f"{x['Description']} ({x['Code']})", "value": x[
       <bpmndi:BPMNEdge id="Flow_0itahfd_di" bpmnElement="Flow_0itahfd">
         <di:waypoint x="1215" y="177" />
         <di:waypoint x="1280" y="177" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1239" y="159" width="18" height="14" />
+        </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0q1yoc6_di" bpmnElement="Flow_0q1yoc6">
         <di:waypoint x="1485" y="177" />
         <di:waypoint x="1525" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_09ph5wv_di" bpmnElement="Flow_09ph5wv">
+        <di:waypoint x="1190" y="152" />
+        <di:waypoint x="1190" y="90" />
+        <di:waypoint x="1460" y="90" />
+        <di:waypoint x="1460" y="152" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1318" y="72" width="15" height="14" />
+        </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
