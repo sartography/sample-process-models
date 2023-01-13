@@ -46,16 +46,15 @@ if is_status_email:
         current_user_extras["last_name"] = bamboo_get_employee["lastName"]
     if is_bamboo_preferred_name:
         current_user_extras["preferred_name"] = bamboo_get_employee["preferredName"]
-    if is_bamboo_:
         if current_user_extras["preferred_name"] is None:
             current_user_extras["full_name"] = current_user_extras["first_name"] + " " + current_user_extras["last_name"]
         else:
             current_user_extras["full_name"] = current_user_extras["first_name"] + " (" + current_user_extras["preferred_name"] + ") " + current_user_extras["last_name"]
-    if is_bamboo_:
+    if is_bamboo_status_key:
         current_user_extras["status_key"] = bamboo_get_employee["customStatusChatKey"]
-    if is_bamboo_:
+    if is_bamboo_supervisor_eid:
         current_user_extras["bamboo_supervisor_api_id"] = bamboo_get_employee["supervisorEid"]
-    if is_bamboo_:
+    if is_bamboo_supervisor_id:
         current_user_extras["bamboo_supervisor_status_id"] = bamboo_get_employee["supervisorId"]
 
 del(userFullName)
@@ -131,10 +130,6 @@ external_data_task_name = "start_event"</spiffworkflow:preScript>
           <dc:Bounds x="705" y="243" width="70" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0rvcg5l_di" bpmnElement="SR-User_Info-Update_Current_User_Extras">
-        <dc:Bounds x="900" y="187" width="100" height="80" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Gateway_0byohhl_di" bpmnElement="Gateway_0byohhl" isMarkerVisible="true">
         <dc:Bounds x="1085" y="202" width="50" height="50" />
       </bpmndi:BPMNShape>
@@ -155,6 +150,10 @@ external_data_task_name = "start_event"</spiffworkflow:preScript>
         <dc:Bounds x="580" y="187" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0rvcg5l_di" bpmnElement="SR-User_Info-Update_Current_User_Extras">
+        <dc:Bounds x="900" y="184" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_1q8xtg6_di" bpmnElement="Flow_1q8xtg6">
         <di:waypoint x="38" y="227" />
         <di:waypoint x="100" y="227" />
@@ -165,9 +164,11 @@ external_data_task_name = "start_event"</spiffworkflow:preScript>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0i96b90_di" bpmnElement="Flow_0i96b90">
         <di:waypoint x="815" y="227" />
-        <di:waypoint x="900" y="227" />
+        <di:waypoint x="858" y="227" />
+        <di:waypoint x="858" y="224" />
+        <di:waypoint x="900" y="224" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="849" y="209" width="18" height="14" />
+          <dc:Bounds x="870" y="206" width="18" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0d47w7r_di" bpmnElement="Flow_0d47w7r">
@@ -195,7 +196,9 @@ external_data_task_name = "start_event"</spiffworkflow:preScript>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0dg341m_di" bpmnElement="Flow_0dg341m">
-        <di:waypoint x="1000" y="227" />
+        <di:waypoint x="1000" y="224" />
+        <di:waypoint x="1043" y="224" />
+        <di:waypoint x="1043" y="227" />
         <di:waypoint x="1085" y="227" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1mplhly_di" bpmnElement="Flow_1mplhly">
