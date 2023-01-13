@@ -40,16 +40,23 @@ current_user_extras["time_format"] = userTimeFormat
 
 # Add Bamboo Info to Extras if Status email
 if is_status_email:
-    current_user_extras["first_name"] = bamboo_get_employee["firstName"]
-    current_user_extras["last_name"] = bamboo_get_employee["lastName"]
-    current_user_extras["preferred_name"] = bamboo_get_employee["preferredName"]
-    if current_user_extras["preferred_name"] is None:
-        current_user_extras["full_name"] = current_user_extras["first_name"] + " " + current_user_extras["last_name"]
-    else:
-        current_user_extras["full_name"] = current_user_extras["first_name"] + " (" + current_user_extras["preferred_name"] + ") " + current_user_extras["last_name"]
-    current_user_extras["status_key"] = bamboo_get_employee["customStatusChatKey"]
-    current_user_extras["bamboo_supervisor_api_id"] = bamboo_get_employee["supervisorEid"]
-    current_user_extras["bamboo_supervisor_status_id"] = bamboo_get_employee["supervisorId"]
+    if is_bamboo_first_name:
+        current_user_extras["first_name"] = bamboo_get_employee["firstName"]
+    if is_bamboo_last_name:
+        current_user_extras["last_name"] = bamboo_get_employee["lastName"]
+    if is_bamboo_preferred_name:
+        current_user_extras["preferred_name"] = bamboo_get_employee["preferredName"]
+    if is_bamboo_:
+        if current_user_extras["preferred_name"] is None:
+            current_user_extras["full_name"] = current_user_extras["first_name"] + " " + current_user_extras["last_name"]
+        else:
+            current_user_extras["full_name"] = current_user_extras["first_name"] + " (" + current_user_extras["preferred_name"] + ") " + current_user_extras["last_name"]
+    if is_bamboo_:
+        current_user_extras["status_key"] = bamboo_get_employee["customStatusChatKey"]
+    if is_bamboo_:
+        current_user_extras["bamboo_supervisor_api_id"] = bamboo_get_employee["supervisorEid"]
+    if is_bamboo_:
+        current_user_extras["bamboo_supervisor_status_id"] = bamboo_get_employee["supervisorId"]
 
 del(userFullName)
 del(userFirstName)
