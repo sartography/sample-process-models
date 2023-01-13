@@ -381,25 +381,27 @@ departments_and_divisions = {
 # Separate Depoartment and Division lists, as needed
 if is_bamboo_dept_list or is_bamboo_dept_enum_list:
     departments = departments_and_divisions.get("Department", [])
-
-    if is_bamboo_dept_list:
-        dept_list = [{"id": x["id"], "name": x["name"]} for x in departments]
+    dept_list = [{"id": x["id"], "name": x["name"]} for x in departments]
 
     if is_bamboo_dept_enum_list:
         dept_enum_list = [{"label": y["name"], "value": str(y["id"])} for y in dept_list]
+    
+    if not(is_bamboo_dept_list):
+        del(dept_list)
     
     if not(is_bamboo_dept):
         del(departments)
 
 if is_bamboo_div_list or is_bamboo_div_enum_list:
     divisions = departments_and_divisions.get("Division", [])
-
-    if is_bamboo_div_list:
-        div_list = [{"id": x["id"], "name": x["name"]} for x in divisions]
+    div_list = [{"id": x["id"], "name": x["name"]} for x in divisions]
 
     if is_bamboo_div_enum_list:
         div_enum_list = [{"label": y["name"], "value": str(y["id"])} for y in div_list]
     
+    if not(is_bamboo_div_list):
+        del(div_list)
+
     if not(is_bamboo_div):
         del(divisions)
 
