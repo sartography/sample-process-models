@@ -59,16 +59,6 @@ del(userBambooId)
 del(userDateFormat)
 del(userTimeFormat)</bpmn:script>
     </bpmn:scriptTask>
-    <bpmn:serviceTask id="Activity_1uw66e8" name="Get User Info From Bamboo">
-      <bpmn:extensionElements>
-        <spiffworkflow:serviceTaskOperator id="bamboohr/GetEmployeeInfo" resultVariable="resp_BambooUserInfo">
-          <spiffworkflow:parameters>
-            <spiffworkflow:parameter id="employee_id" type="str" value="str(userBambooId)" />
-            <spiffworkflow:parameter id="fields" type="str" value="&#34;firstName,lastName,preferredName,customStatusChatKey,supervisorId,supervisorEid&#34;" />
-          </spiffworkflow:parameters>
-        </spiffworkflow:serviceTaskOperator>
-      </bpmn:extensionElements>
-    </bpmn:serviceTask>
     <bpmn:exclusiveGateway id="Gateway_0byohhl">
       <bpmn:incoming>Flow_0d47w7r</bpmn:incoming>
       <bpmn:incoming>Flow_0dg341m</bpmn:incoming>
@@ -107,9 +97,10 @@ is_status_email = (find_user[-9:] == "status.im")</bpmn:script>
 del(isCurrentUser)
 del(find_user)</bpmn:script>
     </bpmn:scriptTask>
-    <bpmn:callActivity id="Activity_1eab90d" name="Call ST: Get Employee Bamboo Info" calledElement="Bamboo_GetEmployee">
+    <bpmn:callActivity id="Activity_1eab90d" name="Call ST: Get External Data" calledElement="Get_External_Data">
       <bpmn:extensionElements>
-        <spiffworkflow:preScript>get_employee_id = userBambooId</spiffworkflow:preScript>
+        <spiffworkflow:preScript>get_employee_id = userBambooId
+get_external_task_name = "start_event"</spiffworkflow:preScript>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_0sypyzb</bpmn:incoming>
       <bpmn:outgoing>Flow_06rpl7o</bpmn:outgoing>
@@ -153,11 +144,9 @@ del(find_user)</bpmn:script>
         <dc:Bounds x="1180" y="187" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0nftxgp_di" bpmnElement="Activity_1uw66e8">
-        <dc:Bounds x="580" y="420" width="100" height="80" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0ufz8x5_di" bpmnElement="Activity_1eab90d">
         <dc:Bounds x="580" y="187" width="100" height="80" />
+        <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_1q8xtg6_di" bpmnElement="Flow_1q8xtg6">
         <di:waypoint x="38" y="227" />
