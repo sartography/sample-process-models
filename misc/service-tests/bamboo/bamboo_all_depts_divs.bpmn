@@ -381,7 +381,7 @@ departments_and_divisions = {
 # Separate Depoartment and Division lists, as needed
 if is_bamboo_dept_list or is_bamboo_dept_enum_list:
     departments = departments_and_divisions.get("Department", [])
-    dept_list = [{"id": x["id"], "name": x["name"]} for x in departments]
+    dept_list = [{"id": x["id"], "name": x["name"]} for x in departments if x["archived"] != "yes"]
 
     if is_bamboo_dept_enum_list:
         dept_enum_list = [{"label": y["name"], "value": str(y["id"])} for y in dept_list]
