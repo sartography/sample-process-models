@@ -22,13 +22,11 @@
       <bpmn:outgoing>Flow_0i96b90</bpmn:outgoing>
       <bpmn:outgoing>Flow_0d47w7r</bpmn:outgoing>
     </bpmn:exclusiveGateway>
-    <bpmn:sequenceFlow id="Flow_0i96b90" name="Yes" sourceRef="Gateway_0xlrnzx" targetRef="SR-User_Info-Update_Current_User_Extras" />
+    <bpmn:sequenceFlow id="Flow_0i96b90" name="Yes" sourceRef="Gateway_0xlrnzx" targetRef="Gateway_0byohhl" />
     <bpmn:sequenceFlow id="Flow_0d47w7r" name="No" sourceRef="Gateway_0xlrnzx" targetRef="Gateway_0byohhl">
       <bpmn:conditionExpression>not(isCurrentUser)</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:scriptTask id="SR-User_Info-Update_Current_User_Extras" name="Update Current User Extras" scriptFormat="python">
-      <bpmn:incoming>Flow_0i96b90</bpmn:incoming>
-      <bpmn:outgoing>Flow_0dg341m</bpmn:outgoing>
       <bpmn:script># Update Current User Extras
 current_user_extras = {}
 
@@ -67,7 +65,7 @@ del(userTimeFormat)</bpmn:script>
     </bpmn:scriptTask>
     <bpmn:exclusiveGateway id="Gateway_0byohhl">
       <bpmn:incoming>Flow_0d47w7r</bpmn:incoming>
-      <bpmn:incoming>Flow_0dg341m</bpmn:incoming>
+      <bpmn:incoming>Flow_0i96b90</bpmn:incoming>
       <bpmn:outgoing>Flow_1gd83n0</bpmn:outgoing>
     </bpmn:exclusiveGateway>
     <bpmn:sequenceFlow id="Flow_1gd83n0" sourceRef="Gateway_0byohhl" targetRef="SR-User_Info-Delete_Unneeded_Variables" />
@@ -91,7 +89,6 @@ is_status_email = (find_user[-9:] == "status.im")</bpmn:script>
       <bpmn:outgoing>Flow_1mplhly</bpmn:outgoing>
     </bpmn:exclusiveGateway>
     <bpmn:sequenceFlow id="Flow_0sypyzb" name="Yes" sourceRef="Gateway_19npvp5" targetRef="Activity_1eab90d" />
-    <bpmn:sequenceFlow id="Flow_0dg341m" sourceRef="SR-User_Info-Update_Current_User_Extras" targetRef="Gateway_0byohhl" />
     <bpmn:sequenceFlow id="Flow_1mplhly" name="No" sourceRef="Gateway_19npvp5" targetRef="Gateway_0xlrnzx">
       <bpmn:conditionExpression>not(is_status_email)</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
@@ -151,7 +148,7 @@ external_data_task_name = "start_event"</spiffworkflow:preScript>
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0rvcg5l_di" bpmnElement="SR-User_Info-Update_Current_User_Extras">
-        <dc:Bounds x="900" y="184" width="100" height="80" />
+        <dc:Bounds x="900" y="270" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_1q8xtg6_di" bpmnElement="Flow_1q8xtg6">
@@ -164,11 +161,9 @@ external_data_task_name = "start_event"</spiffworkflow:preScript>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0i96b90_di" bpmnElement="Flow_0i96b90">
         <di:waypoint x="815" y="227" />
-        <di:waypoint x="858" y="227" />
-        <di:waypoint x="858" y="224" />
-        <di:waypoint x="900" y="224" />
+        <di:waypoint x="1085" y="227" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="870" y="206" width="18" height="14" />
+          <dc:Bounds x="941" y="209" width="18" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0d47w7r_di" bpmnElement="Flow_0d47w7r">
@@ -194,12 +189,6 @@ external_data_task_name = "start_event"</spiffworkflow:preScript>
         <bpmndi:BPMNLabel>
           <dc:Bounds x="521" y="209" width="18" height="14" />
         </bpmndi:BPMNLabel>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0dg341m_di" bpmnElement="Flow_0dg341m">
-        <di:waypoint x="1000" y="224" />
-        <di:waypoint x="1043" y="224" />
-        <di:waypoint x="1043" y="227" />
-        <di:waypoint x="1085" y="227" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1mplhly_di" bpmnElement="Flow_1mplhly">
         <di:waypoint x="470" y="252" />
