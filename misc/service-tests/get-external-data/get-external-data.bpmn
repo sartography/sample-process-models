@@ -60,28 +60,28 @@ currency_enum_list = [{"label": f"{x['Description']} ({x['Code']})", "value": x[
       <bpmn:incoming>Flow_1ysolp8</bpmn:incoming>
       <bpmn:outgoing>Flow_0c0rtly</bpmn:outgoing>
     </bpmn:callActivity>
-    <bpmn:exclusiveGateway id="Gateway_0lkar7l" name="Bamboo Data?" default="Flow_0tsv7ot">
+    <bpmn:exclusiveGateway id="Gateway_0lkar7l" name="Bamboo Employee Info?" default="Flow_0tsv7ot">
       <bpmn:incoming>Flow_0fi046r</bpmn:incoming>
       <bpmn:outgoing>Flow_0r8yabd</bpmn:outgoing>
       <bpmn:outgoing>Flow_0tsv7ot</bpmn:outgoing>
     </bpmn:exclusiveGateway>
     <bpmn:sequenceFlow id="Flow_0r8yabd" name="Yes" sourceRef="Gateway_0lkar7l" targetRef="Activity_0dvuqv4">
-      <bpmn:conditionExpression>is_bamboo</bpmn:conditionExpression>
+      <bpmn:conditionExpression>is_bamboo_employee</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:exclusiveGateway id="Gateway_0hizx28">
-      <bpmn:incoming>Flow_0tsv7ot</bpmn:incoming>
       <bpmn:incoming>Flow_0q1yoc6</bpmn:incoming>
       <bpmn:outgoing>Flow_1oquwaz</bpmn:outgoing>
     </bpmn:exclusiveGateway>
     <bpmn:sequenceFlow id="Flow_1oquwaz" sourceRef="Gateway_0hizx28" targetRef="Event_136ralp" />
-    <bpmn:sequenceFlow id="Flow_0tsv7ot" name="No" sourceRef="Gateway_0lkar7l" targetRef="Gateway_0hizx28" />
+    <bpmn:sequenceFlow id="Flow_0tsv7ot" name="No" sourceRef="Gateway_0lkar7l" targetRef="Gateway_158rw2p" />
     <bpmn:exclusiveGateway id="Gateway_158rw2p" name="Department and/or Division?" default="Flow_09ph5wv">
       <bpmn:incoming>Flow_0xii3bc</bpmn:incoming>
+      <bpmn:incoming>Flow_0tsv7ot</bpmn:incoming>
       <bpmn:outgoing>Flow_0itahfd</bpmn:outgoing>
       <bpmn:outgoing>Flow_09ph5wv</bpmn:outgoing>
     </bpmn:exclusiveGateway>
     <bpmn:sequenceFlow id="Flow_0itahfd" name="Yes" sourceRef="Gateway_158rw2p" targetRef="Activity_0r8d0an">
-      <bpmn:conditionExpression>is_bamboo_dept_list or is_bamboo_dept_enum_list or is_bamboo_div_list or is_bamboo_div_enum_list</bpmn:conditionExpression>
+      <bpmn:conditionExpression>is_bamboo_dept_div</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:exclusiveGateway id="Gateway_1vmhro1">
       <bpmn:incoming>Flow_0c0rtly</bpmn:incoming>
@@ -144,7 +144,7 @@ currency_enum_list = [{"label": f"{x['Description']} ({x['Code']})", "value": x[
       <bpmndi:BPMNShape id="Gateway_0lkar7l_di" bpmnElement="Gateway_0lkar7l" isMarkerVisible="true">
         <dc:Bounds x="1005" y="152" width="50" height="50" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="994" y="209" width="74" height="14" />
+          <dc:Bounds x="994" y="209" width="77" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0992vgv_di" bpmnElement="Activity_0dvuqv4">
@@ -162,7 +162,7 @@ currency_enum_list = [{"label": f"{x['Description']} ({x['Code']})", "value": x[
       <bpmndi:BPMNShape id="Gateway_158rw2p_di" bpmnElement="Gateway_158rw2p" isMarkerVisible="true">
         <dc:Bounds x="1465" y="152" width="50" height="50" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="1453" y="209" width="79" height="27" />
+          <dc:Bounds x="1400" y="195.5" width="79" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Gateway_1vmhro1_di" bpmnElement="Gateway_1vmhro1" isMarkerVisible="true">
@@ -233,10 +233,10 @@ currency_enum_list = [{"label": f"{x['Description']} ({x['Code']})", "value": x[
       <bpmndi:BPMNEdge id="Flow_0tsv7ot_di" bpmnElement="Flow_0tsv7ot">
         <di:waypoint x="1030" y="152" />
         <di:waypoint x="1030" y="20" />
-        <di:waypoint x="2050" y="20" />
-        <di:waypoint x="2050" y="152" />
+        <di:waypoint x="1490" y="20" />
+        <di:waypoint x="1490" y="152" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="1753" y="2" width="15" height="14" />
+          <dc:Bounds x="1242" y="2" width="15" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0itahfd_di" bpmnElement="Flow_0itahfd">
@@ -251,12 +251,12 @@ currency_enum_list = [{"label": f"{x['Description']} ({x['Code']})", "value": x[
         <di:waypoint x="2025" y="177" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_09ph5wv_di" bpmnElement="Flow_09ph5wv">
-        <di:waypoint x="1490" y="152" />
-        <di:waypoint x="1490" y="90" />
-        <di:waypoint x="1940" y="90" />
-        <di:waypoint x="1940" y="152" />
+        <di:waypoint x="1490" y="202" />
+        <di:waypoint x="1490" y="280" />
+        <di:waypoint x="1940" y="280" />
+        <di:waypoint x="1940" y="202" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="1788" y="72" width="15" height="14" />
+          <dc:Bounds x="1712" y="262" width="15" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1ha0xdh_di" bpmnElement="Flow_1ha0xdh">
