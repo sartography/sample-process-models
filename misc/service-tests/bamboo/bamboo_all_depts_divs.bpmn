@@ -371,17 +371,32 @@
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_1960par</bpmn:incoming>
       <bpmn:outgoing>Flow_110nxt9</bpmn:outgoing>
-      <bpmn:script>departments_and_divisions = {
+      <bpmn:script># Extract Departments and Divisions from Bamboo Metadata
+departments_and_divisions = {
     field["name"]: field["options"]
     for field in bamboo_list_metadata
     if field["name"] in ["Department", "Division"]
 }
 
-departments = departments_and_divisions.get("Department", [])
+# Separate Depoartment and Division lists, as needed
+if is_bamboo_dept_list or is_bamboo_dept_enum_list:
+    departments = departments_and_divisions.get("Department", [])
+
+    is_bamboo_dept_list:
+        dept_list = [{"id": x["id"], "name": x["name"]} for x in departments]
+
+    if is_bamboo_dept_enum_list:
+        dept_enum_list = [{"label": y["name"], "value": str(y["id"])} for y in dept_list]
+
+
 divisions = departments_and_divisions.get("Division", [])
 
-dept_list = [{"id": x["id"], "name": x["name"]} for x in departments]
-dept_enum_list = [{"label": y["name"], "value": str(y["id"])} for y in dept_list]
+
+
+is_bamboo_div_list:
+
+
+is_bamboo_div_enum_list
 
 del(departments_and_divisions)
 del(bamboo_list_metadata)</bpmn:script>
