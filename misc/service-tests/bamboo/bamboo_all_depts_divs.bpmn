@@ -1,0 +1,447 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:spiffworkflow="http://spiffworkflow.org/bpmn/schema/1.0/core" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_96f6665" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.0.0-dev">
+  <bpmn:process id="Bamboo-AllDivisionsAndDepartments" name="Bamboo All Divisions and Departments" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>Flow_01ffhv6</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_01ffhv6" sourceRef="StartEvent_1" targetRef="Activity_1dcxzhp" />
+    <bpmn:endEvent id="Event_1bp88xe">
+      <bpmn:incoming>Flow_110nxt9</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_110nxt9" sourceRef="Activity_0ygriuv" targetRef="Event_1bp88xe" />
+    <bpmn:scriptTask id="Activity_0ygriuv" name="Extract Divisions and Departments">
+      <bpmn:extensionElements>
+        <spiffworkflow:unitTests>
+          <spiffworkflow:unitTest id="Multiple Departments and Divisions">
+            <spiffworkflow:inputJson>{
+  "bamboo_list_metadata": [
+    {
+      "fieldId": 4,
+      "manageable": "yes",
+      "multiple": "no",
+      "name": "Department",
+      "options": [
+        {
+          "id": 18568,
+          "archived": "no",
+          "createdDate": "2022-12-21T18:21:08+00:00",
+          "archivedDate": null,
+          "name": "Accounts Payable"
+        },
+        {
+          "id": 18564,
+          "archived": "no",
+          "createdDate": "2022-12-21T18:14:59+00:00",
+          "archivedDate": null,
+          "name": "Infrastructure Management"
+        },
+        {
+          "id": 18562,
+          "archived": "no",
+          "createdDate": "2022-12-21T18:08:59+00:00",
+          "archivedDate": null,
+          "name": "IT"
+        }
+      ]
+    },
+    {
+      "fieldId": 1355,
+      "manageable": "yes",
+      "multiple": "no",
+      "name": "Division",
+      "options": [
+        {
+          "id": 18566,
+          "archived": "no",
+          "createdDate": "2022-12-21T18:19:08+00:00",
+          "archivedDate": null,
+          "name": "Europe"
+        },
+        {
+          "id": 18563,
+          "archived": "no",
+          "createdDate": "2022-12-21T18:12:57+00:00",
+          "archivedDate": null,
+          "name": "Infrastructure"
+        },
+        {
+          "id": 18570,
+          "archived": "no",
+          "createdDate": "2022-12-28T23:15:46+00:00",
+          "archivedDate": null,
+          "name": "Legal"
+        }
+      ]
+    }
+  ]
+}</spiffworkflow:inputJson>
+            <spiffworkflow:expectedOutputJson>{
+  "departments": [
+    {
+      "id": 18568,
+      "archived": "no",
+      "createdDate": "2022-12-21T18:21:08+00:00",
+      "archivedDate": null,
+      "name": "Accounts Payable"
+    },
+    {
+      "id": 18564,
+      "archived": "no",
+      "createdDate": "2022-12-21T18:14:59+00:00",
+      "archivedDate": null,
+      "name": "Infrastructure Management"
+    },
+    {
+      "id": 18562,
+      "archived": "no",
+      "createdDate": "2022-12-21T18:08:59+00:00",
+      "archivedDate": null,
+      "name": "IT"
+    }
+  ],
+  "divisions": [
+    {
+      "id": 18566,
+      "archived": "no",
+      "createdDate": "2022-12-21T18:19:08+00:00",
+      "archivedDate": null,
+      "name": "Europe"
+    },
+    {
+      "id": 18563,
+      "archived": "no",
+      "createdDate": "2022-12-21T18:12:57+00:00",
+      "archivedDate": null,
+      "name": "Infrastructure"
+    },
+    {
+      "id": 18570,
+      "archived": "no",
+      "createdDate": "2022-12-28T23:15:46+00:00",
+      "archivedDate": null,
+      "name": "Legal"
+    }
+  ]
+}</spiffworkflow:expectedOutputJson>
+          </spiffworkflow:unitTest>
+          <spiffworkflow:unitTest id="No Departments">
+            <spiffworkflow:inputJson>{
+  "bamboo_list_metadata": [
+    {
+      "fieldId": 1355,
+      "manageable": "yes",
+      "multiple": "no",
+      "name": "Division",
+      "options": [
+        {
+          "id": 18566,
+          "archived": "no",
+          "createdDate": "2022-12-21T18:19:08+00:00",
+          "archivedDate": null,
+          "name": "Europe"
+        },
+        {
+          "id": 18563,
+          "archived": "no",
+          "createdDate": "2022-12-21T18:12:57+00:00",
+          "archivedDate": null,
+          "name": "Infrastructure"
+        },
+        {
+          "id": 18570,
+          "archived": "no",
+          "createdDate": "2022-12-28T23:15:46+00:00",
+          "archivedDate": null,
+          "name": "Legal"
+        }
+      ]
+    }
+  ]
+}</spiffworkflow:inputJson>
+            <spiffworkflow:expectedOutputJson>{
+  "departments": [
+    
+  ],
+  "divisions": [
+    {
+      "archived": "no",
+      "archivedDate": null,
+      "createdDate": "2022-12-21T18:19:08+00:00",
+      "id": 18566,
+      "name": "Europe"
+    },
+    {
+      "archived": "no",
+      "archivedDate": null,
+      "createdDate": "2022-12-21T18:12:57+00:00",
+      "id": 18563,
+      "name": "Infrastructure"
+    },
+    {
+      "archived": "no",
+      "archivedDate": null,
+      "createdDate": "2022-12-28T23:15:46+00:00",
+      "id": 18570,
+      "name": "Legal"
+    }
+  ]
+}</spiffworkflow:expectedOutputJson>
+          </spiffworkflow:unitTest>
+          <spiffworkflow:unitTest id="No Divisions">
+            <spiffworkflow:inputJson>{
+  "bamboo_list_metadata": [
+    {
+      "fieldId": 4,
+      "manageable": "yes",
+      "multiple": "no",
+      "name": "Department",
+      "options": [
+        {
+          "id": 18568,
+          "archived": "no",
+          "createdDate": "2022-12-21T18:21:08+00:00",
+          "archivedDate": null,
+          "name": "Accounts Payable"
+        },
+        {
+          "id": 18564,
+          "archived": "no",
+          "createdDate": "2022-12-21T18:14:59+00:00",
+          "archivedDate": null,
+          "name": "Infrastructure Management"
+        },
+        {
+          "id": 18562,
+          "archived": "no",
+          "createdDate": "2022-12-21T18:08:59+00:00",
+          "archivedDate": null,
+          "name": "IT"
+        }
+      ]
+    }
+  ]
+}</spiffworkflow:inputJson>
+            <spiffworkflow:expectedOutputJson>{
+  "departments": [
+    {
+      "archived": "no",
+      "archivedDate": null,
+      "createdDate": "2022-12-21T18:21:08+00:00",
+      "id": 18568,
+      "name": "Accounts Payable"
+    },
+    {
+      "archived": "no",
+      "archivedDate": null,
+      "createdDate": "2022-12-21T18:14:59+00:00",
+      "id": 18564,
+      "name": "Infrastructure Management"
+    },
+    {
+      "archived": "no",
+      "archivedDate": null,
+      "createdDate": "2022-12-21T18:08:59+00:00",
+      "id": 18562,
+      "name": "IT"
+    }
+  ],
+  "divisions": []
+}</spiffworkflow:expectedOutputJson>
+          </spiffworkflow:unitTest>
+          <spiffworkflow:unitTest id="Ignores Other Fields">
+            <spiffworkflow:inputJson>{
+  "bamboo_list_metadata": [
+    {
+      "fieldId": 4,
+      "manageable": "yes",
+      "multiple": "no",
+      "name": "OTHER FIELD",
+      "options": []
+    },
+    {
+      "fieldId": 4,
+      "manageable": "yes",
+      "multiple": "no",
+      "name": "Department",
+      "options": [
+        {
+          "id": 18568,
+          "archived": "no",
+          "createdDate": "2022-12-21T18:21:08+00:00",
+          "archivedDate": null,
+          "name": "Accounts Payable"
+        },
+        {
+          "id": 18564,
+          "archived": "no",
+          "createdDate": "2022-12-21T18:14:59+00:00",
+          "archivedDate": null,
+          "name": "Infrastructure Management"
+        },
+        {
+          "id": 18562,
+          "archived": "no",
+          "createdDate": "2022-12-21T18:08:59+00:00",
+          "archivedDate": null,
+          "name": "IT"
+        }
+      ]
+    },
+    {
+      "fieldId": 1355,
+      "manageable": "yes",
+      "multiple": "no",
+      "name": "Division",
+      "options": [
+        {
+          "id": 18566,
+          "archived": "no",
+          "createdDate": "2022-12-21T18:19:08+00:00",
+          "archivedDate": null,
+          "name": "Europe"
+        },
+        {
+          "id": 18563,
+          "archived": "no",
+          "createdDate": "2022-12-21T18:12:57+00:00",
+          "archivedDate": null,
+          "name": "Infrastructure"
+        },
+        {
+          "id": 18570,
+          "archived": "no",
+          "createdDate": "2022-12-28T23:15:46+00:00",
+          "archivedDate": null,
+          "name": "Legal"
+        }
+      ]
+    }
+  ]
+}</spiffworkflow:inputJson>
+            <spiffworkflow:expectedOutputJson>{
+  "departments": [
+    {
+      "archived": "no",
+      "archivedDate": null,
+      "createdDate": "2022-12-21T18:21:08+00:00",
+      "id": 18568,
+      "name": "Accounts Payable"
+    },
+    {
+      "archived": "no",
+      "archivedDate": null,
+      "createdDate": "2022-12-21T18:14:59+00:00",
+      "id": 18564,
+      "name": "Infrastructure Management"
+    },
+    {
+      "archived": "no",
+      "archivedDate": null,
+      "createdDate": "2022-12-21T18:08:59+00:00",
+      "id": 18562,
+      "name": "IT"
+    }
+  ],
+  "divisions": [
+    {
+      "archived": "no",
+      "archivedDate": null,
+      "createdDate": "2022-12-21T18:19:08+00:00",
+      "id": 18566,
+      "name": "Europe"
+    },
+    {
+      "archived": "no",
+      "archivedDate": null,
+      "createdDate": "2022-12-21T18:12:57+00:00",
+      "id": 18563,
+      "name": "Infrastructure"
+    },
+    {
+      "archived": "no",
+      "archivedDate": null,
+      "createdDate": "2022-12-28T23:15:46+00:00",
+      "id": 18570,
+      "name": "Legal"
+    }
+  ]
+}</spiffworkflow:expectedOutputJson>
+          </spiffworkflow:unitTest>
+        </spiffworkflow:unitTests>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1960par</bpmn:incoming>
+      <bpmn:outgoing>Flow_110nxt9</bpmn:outgoing>
+      <bpmn:script># Extract Departments and Divisions from Bamboo Metadata
+departments_and_divisions = {
+    field["name"]: field["options"]
+    for field in bamboo_list_metadata
+    if field["name"] in ["Department", "Division"]
+}
+
+# Separate Depoartment and Division lists, as needed
+if is_bamboo_dept_list or is_bamboo_dept_enum_list:
+    departments = departments_and_divisions.get("Department", [])
+    dept_list = [{"id": x["id"], "name": x["name"]} for x in departments]
+
+    if is_bamboo_dept_enum_list:
+        dept_enum_list = [{"label": y["name"], "value": str(y["id"])} for y in dept_list]
+    
+    if not(is_bamboo_dept_list):
+        del(dept_list)
+    
+    if not(is_bamboo_dept):
+        del(departments)
+
+if is_bamboo_div_list or is_bamboo_div_enum_list:
+    divisions = departments_and_divisions.get("Division", [])
+    div_list = [{"id": x["id"], "name": x["name"]} for x in divisions]
+
+    if is_bamboo_div_enum_list:
+        div_enum_list = [{"label": y["name"], "value": str(y["id"])} for y in div_list]
+    
+    if not(is_bamboo_div_list):
+        del(div_list)
+
+    if not(is_bamboo_div):
+        del(divisions)
+
+del(departments_and_divisions)
+del(bamboo_list_metadata)</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:sequenceFlow id="Flow_1960par" sourceRef="Activity_1dcxzhp" targetRef="Activity_0ygriuv" />
+    <bpmn:callActivity id="Activity_1dcxzhp" name="Call Get List Metadata" calledElement="bamboo-list_metadata">
+      <bpmn:incoming>Flow_01ffhv6</bpmn:incoming>
+      <bpmn:outgoing>Flow_1960par</bpmn:outgoing>
+    </bpmn:callActivity>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Bamboo-AllDivisionsAndDepartments">
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="152" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1bp88xe_di" bpmnElement="Event_1bp88xe">
+        <dc:Bounds x="502" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1xkuuvp_di" bpmnElement="Activity_0ygriuv">
+        <dc:Bounds x="360" y="137" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1f8gzh1_di" bpmnElement="Activity_1dcxzhp">
+        <dc:Bounds x="220" y="137" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_01ffhv6_di" bpmnElement="Flow_01ffhv6">
+        <di:waypoint x="188" y="177" />
+        <di:waypoint x="220" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_110nxt9_di" bpmnElement="Flow_110nxt9">
+        <di:waypoint x="460" y="177" />
+        <di:waypoint x="502" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1960par_di" bpmnElement="Flow_1960par">
+        <di:waypoint x="320" y="177" />
+        <di:waypoint x="360" y="177" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

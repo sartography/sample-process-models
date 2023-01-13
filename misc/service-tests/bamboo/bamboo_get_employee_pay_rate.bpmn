@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:spiffworkflow="http://spiffworkflow.org/bpmn/schema/1.0/core" id="Definitions_96f6665" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.0.0-dev">
+  <bpmn:process id="Bamboo_GetEmployeePayRate" name="Bamboo Get Employee Pay Rate" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>Flow_1u462zb</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_1u462zb" sourceRef="StartEvent_1" targetRef="Activity_1ss0zug" />
+    <bpmn:endEvent id="Event_0yc149g">
+      <bpmn:incoming>Flow_1kx779w</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_0dwgc8n" sourceRef="Activity_1ss0zug" targetRef="Activity_1n5lw7j" />
+    <bpmn:callActivity id="Activity_1ss0zug" name="Call Get Employee" calledElement="Bamboo_GetEmployee">
+      <bpmn:extensionElements>
+        <spiffworkflow:preScript>get_employee_fields = "payRate"
+get_employee_only_current = True</spiffworkflow:preScript>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1u462zb</bpmn:incoming>
+      <bpmn:outgoing>Flow_0dwgc8n</bpmn:outgoing>
+    </bpmn:callActivity>
+    <bpmn:sequenceFlow id="Flow_1kx779w" sourceRef="Activity_1n5lw7j" targetRef="Event_0yc149g" />
+    <bpmn:scriptTask id="Activity_1n5lw7j" name="Extract Amount and Currency">
+      <bpmn:incoming>Flow_0dwgc8n</bpmn:incoming>
+      <bpmn:outgoing>Flow_1kx779w</bpmn:outgoing>
+      <bpmn:script>if "payRate" in bamboo_get_employee:
+    pay_rate_parts = bamboo_get_employee["payRate"].split(" ")
+    if len(pay_rate_parts) &gt; 1:
+        bamboo_get_employee["amount"] = pay_rate_parts[0]
+        bamboo_get_employee["currency"] = pay_rate_parts[1]
+    del(pay_rate_parts)</bpmn:script>
+    </bpmn:scriptTask>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Bamboo_GetEmployeePayRate">
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="179" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0yc149g_di" bpmnElement="Event_0yc149g">
+        <dc:Bounds x="502" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1el3asv_di" bpmnElement="Activity_1ss0zug">
+        <dc:Bounds x="250" y="137" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_15jjhb0_di" bpmnElement="Activity_1n5lw7j">
+        <dc:Bounds x="380" y="137" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_1u462zb_di" bpmnElement="Flow_1u462zb">
+        <di:waypoint x="215" y="177" />
+        <di:waypoint x="250" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0dwgc8n_di" bpmnElement="Flow_0dwgc8n">
+        <di:waypoint x="350" y="177" />
+        <di:waypoint x="380" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1kx779w_di" bpmnElement="Flow_1kx779w">
+        <di:waypoint x="480" y="177" />
+        <di:waypoint x="502" y="177" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

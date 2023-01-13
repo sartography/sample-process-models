@@ -1,79 +1,143 @@
 {
-  "title": "Submit New Demand Request-Procurement",
-  "description": "Submit a new demand request for the procurement of needed items.  Does not include Travel or Compensation.",
-  "properties": {
-    "requestor": {
-      "type": "string",
-      "title": "Requestor"
-    },
-    "project": {
-      "type": "string",
-      "title": "Project",
-      "enum": [
-        "Project 1",
-        "Project 2",
-        "Project 3"
-      ]
-    },
-    "category": {
-      "type": "string",
-      "title": "Category",
-      "enum": [
-        " Software & Licences",
-        "Equipment",
-        "Consulting Fees",
-        "Other Fees"
-      ]
-    },
-    "sub-category": {
-      "type": "string",
-      "title": "Sub-Category",
-      "enum": [
-        "Licenses",
-        "Subscriptions",
-        "Bounties",
-        "Coworking"
-      ]
-    },
-    "purpose": {
-      "type": "string",
-      "title": "Purpose"
-    },
-    "criticality": {
-      "type": "string",
-      "title": " Criticality",
-      "enum": [
-        "High",
-        "Medium",
-        "Low"
-      ]
-    },
-    "vendor": {
-      "type": "string",
-      "title": "Vendor"
-    },
-    "period": {
-      "type": "string",
-      "title": "Period"
-    },
-    "payment-method": {
-      "type": "string",
-      "title": "Payment method",
-      "enum": [
-        "Bank transfer",
-        "Debit Card",
-        "Crypto transfer"
-      ]
-    },
-    "currency": {
-      "type": "string",
-      "title": "Currency",
-      "enum": [
-        "USD",
-        "Euro",
-        "AUD"
-      ]
-    }
-  },
-  "required": []
+	"definitions": {
+		"currency": {
+			"title": "Currency",
+			"type": "string",
+			"anyOf": [
+				"options_from_task_data_var:currency_enum_list"
+			]
+		},
+		"project": {
+			"title": "Project",
+			"type": "string",
+			"anyOf": [
+				"options_from_task_data_var:dept_enum_list"
+			]
+		}
+	},
+	"title": "Submit New Demand Request-Procurement",
+	"description": "Submit a new demand request for the procurement of needed items.  Does not include Travel or Compensation.",
+	"properties": {
+		"requestor": {
+			"type": "string",
+			"title": "Requestor"
+		},
+		"project": {
+			"$ref": "#/definitions/project",
+			"title": "Project"
+		},
+		"category": {
+			"type": "string",
+			"title": "Category",
+			"enum": [
+				"Software & Licences",
+				"Learning & Development",
+				"Equipment"
+			]
+		},
+		"purpose": {
+			"maxLength": 250,
+			"type": "string",
+			"title": "Purpose"
+		},
+		"criticality": {
+			"type": "string",
+			"title": " Criticality",
+			"enum": [
+				"High",
+				"Medium",
+				"Low"
+			]
+		},
+		"vendor": {
+			"type": "string",
+			"title": "Vendor"
+		},
+		"period": {
+			"type": "string",
+			"title": "Period"
+		},
+		"payment-method": {
+			"type": "string",
+			"title": "Payment method",
+			"enum": [
+				"Bank transfer",
+				"Debit Card",
+				"Crypto transfer"
+			]
+		},
+		"currency": {
+			"$ref": "#/definitions/currency",
+			"title": "Currency"
+		}
+	},
+	"dependencies": {
+			"category": {
+				"oneOf": [{
+						"properties": {
+							"category": {
+								"enum": [
+									"Software & Licences"
+								]
+							},
+							"sub-category": {
+								"title": "Sub Category",
+								"type": "string",
+								"enum": [
+									"Licences",
+									"Subscriptions",
+									"Open Source"
+								]
+							}
+						},
+						"required": [
+							"sub-category"
+						]
+					},
+					{
+						"properties": {
+							"category": {
+								"enum": [
+									"Learning & Development"
+								]
+							},
+							"sub-category": {
+								"title": "Sub Category",
+								"type": "string",
+								"enum": [
+									"Books",
+									"Courses",
+									"Online Conferences"
+								]
+							}
+						},
+						"required": [
+							"sub-category"
+						]
+					},
+					{
+						"properties": {
+							"category": {
+								"enum": [
+									"Equipment"
+								]
+							},
+							"sub-category": {
+								"title": "Sub Category",
+								"type": "string",
+								"enum": [
+									"Laptops",
+									"Ledgers",
+									"Headset"
+								]
+							}
+						},
+						"required": [
+							"sub-category"
+						]
+					}
+				]
+			}
+		},
+	"required": []
 }

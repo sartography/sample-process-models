@@ -4,7 +4,7 @@
     <bpmn:startEvent id="StartEvent_1">
       <bpmn:outgoing>Flow_1q8xtg6</bpmn:outgoing>
     </bpmn:startEvent>
-    <bpmn:sequenceFlow id="Flow_1q8xtg6" sourceRef="StartEvent_1" targetRef="Activity_1fkr6s9" />
+    <bpmn:sequenceFlow id="Flow_1q8xtg6" sourceRef="StartEvent_1" targetRef="SR-User_Info-Set_Defaults" />
     <bpmn:businessRuleTask id="Activity_0v13afu" name="Get User Info">
       <bpmn:extensionElements>
         <spiffworkflow:calledDecisionId>SR-User_Info</spiffworkflow:calledDecisionId>
@@ -17,16 +17,16 @@
     </bpmn:endEvent>
     <bpmn:sequenceFlow id="Flow_08nmyrt" sourceRef="Activity_0v13afu" targetRef="Gateway_19npvp5" />
     <bpmn:exclusiveGateway id="Gateway_0xlrnzx" name="Current User?" default="Flow_0i96b90">
-      <bpmn:incoming>Flow_12fb3ir</bpmn:incoming>
       <bpmn:incoming>Flow_1mplhly</bpmn:incoming>
+      <bpmn:incoming>Flow_06rpl7o</bpmn:incoming>
       <bpmn:outgoing>Flow_0i96b90</bpmn:outgoing>
       <bpmn:outgoing>Flow_0d47w7r</bpmn:outgoing>
     </bpmn:exclusiveGateway>
-    <bpmn:sequenceFlow id="Flow_0i96b90" name="Yes" sourceRef="Gateway_0xlrnzx" targetRef="Activity_1a9fimb" />
+    <bpmn:sequenceFlow id="Flow_0i96b90" name="Yes" sourceRef="Gateway_0xlrnzx" targetRef="SR-User_Info-Update_Current_User_Extras" />
     <bpmn:sequenceFlow id="Flow_0d47w7r" name="No" sourceRef="Gateway_0xlrnzx" targetRef="Gateway_0byohhl">
       <bpmn:conditionExpression>not(isCurrentUser)</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
-    <bpmn:scriptTask id="Activity_1a9fimb" name="Update Current User Extras" scriptFormat="python">
+    <bpmn:scriptTask id="SR-User_Info-Update_Current_User_Extras" name="Update Current User Extras" scriptFormat="python">
       <bpmn:incoming>Flow_0i96b90</bpmn:incoming>
       <bpmn:outgoing>Flow_0dg341m</bpmn:outgoing>
       <bpmn:script># Update Current User Extras
@@ -40,16 +40,22 @@ current_user_extras["time_format"] = userTimeFormat
 
 # Add Bamboo Info to Extras if Status email
 if is_status_email:
-    current_user_extras["first_name"] = resp_BambooUserInfo["firstName"]
-    current_user_extras["last_name"] = resp_BambooUserInfo["lastName"]
-    current_user_extras["preferred_name"] = resp_BambooUserInfo["preferredName"]
-    if current_user_extras["preferred_name"] is None:
-        current_user_extras["full_name"] = current_user_extras["first_name"] + " " + current_user_extras["last_name"]
-    else:
-        current_user_extras["full_name"] = current_user_extras["first_name"] + " (" + current_user_extras["preferred_name"] + ") " + current_user_extras["last_name"]
-    current_user_extras["status_key"] = resp_BambooUserInfo["customStatusChatKey"]
-    current_user_extras["bamboo_supervisor_api_id"] = resp_BambooUserInfo["supervisorEid"]
-    current_user_extras["bamboo_supervisor_status_id"] = resp_BambooUserInfo["supervisorId"]
+    if is_bamboo_first_name:
+        current_user_extras["first_name"] = bamboo_get_employee["firstName"]
+    if is_bamboo_last_name:
+        current_user_extras["last_name"] = bamboo_get_employee["lastName"]
+    if is_bamboo_preferred_name:
+        current_user_extras["preferred_name"] = bamboo_get_employee["preferredName"]
+        if current_user_extras["preferred_name"] is None:
+            current_user_extras["full_name"] = current_user_extras["first_name"] + " " + current_user_extras["last_name"]
+        else:
+            current_user_extras["full_name"] = current_user_extras["first_name"] + " (" + current_user_extras["preferred_name"] + ") " + current_user_extras["last_name"]
+    if is_bamboo_status_key:
+        current_user_extras["status_key"] = bamboo_get_employee["customStatusChatKey"]
+    if is_bamboo_supervisor_eid:
+        current_user_extras["bamboo_supervisor_api_id"] = bamboo_get_employee["supervisorEid"]
+    if is_bamboo_supervisor_id:
+        current_user_extras["bamboo_supervisor_status_id"] = bamboo_get_employee["supervisorId"]
 
 del(userFullName)
 del(userFirstName)
@@ -59,26 +65,14 @@ del(userBambooId)
 del(userDateFormat)
 del(userTimeFormat)</bpmn:script>
     </bpmn:scriptTask>
-    <bpmn:serviceTask id="Activity_1uw66e8" name="Get User Info From Bamboo">
-      <bpmn:extensionElements>
-        <spiffworkflow:serviceTaskOperator id="bamboohr/GetEmployeeInfo" resultVariable="resp_BambooUserInfo">
-          <spiffworkflow:parameters>
-            <spiffworkflow:parameter id="employee_id" type="str" value="userBambooId" />
-            <spiffworkflow:parameter id="fields" type="str" value="&#39;firstName,lastName,preferredName,customStatusChatKey,supervisorId,supervisorEid&#39;" />
-          </spiffworkflow:parameters>
-        </spiffworkflow:serviceTaskOperator>
-      </bpmn:extensionElements>
-      <bpmn:incoming>Flow_0sypyzb</bpmn:incoming>
-      <bpmn:outgoing>Flow_12fb3ir</bpmn:outgoing>
-    </bpmn:serviceTask>
     <bpmn:exclusiveGateway id="Gateway_0byohhl">
       <bpmn:incoming>Flow_0d47w7r</bpmn:incoming>
       <bpmn:incoming>Flow_0dg341m</bpmn:incoming>
       <bpmn:outgoing>Flow_1gd83n0</bpmn:outgoing>
     </bpmn:exclusiveGateway>
-    <bpmn:sequenceFlow id="Flow_1gd83n0" sourceRef="Gateway_0byohhl" targetRef="Activity_0djyn08" />
-    <bpmn:sequenceFlow id="Flow_05s4pvl" sourceRef="Activity_1fkr6s9" targetRef="Activity_0v13afu" />
-    <bpmn:scriptTask id="Activity_1fkr6s9" name="Set Defaults">
+    <bpmn:sequenceFlow id="Flow_1gd83n0" sourceRef="Gateway_0byohhl" targetRef="SR-User_Info-Delete_Unneeded_Variables" />
+    <bpmn:sequenceFlow id="Flow_05s4pvl" sourceRef="SR-User_Info-Set_Defaults" targetRef="Activity_0v13afu" />
+    <bpmn:scriptTask id="SR-User_Info-Set_Defaults" name="Set Defaults">
       <bpmn:incoming>Flow_1q8xtg6</bpmn:incoming>
       <bpmn:outgoing>Flow_05s4pvl</bpmn:outgoing>
       <bpmn:script># If not previously set, set find_user to current_user
@@ -96,20 +90,28 @@ is_status_email = (find_user[-9:] == "status.im")</bpmn:script>
       <bpmn:outgoing>Flow_0sypyzb</bpmn:outgoing>
       <bpmn:outgoing>Flow_1mplhly</bpmn:outgoing>
     </bpmn:exclusiveGateway>
-    <bpmn:sequenceFlow id="Flow_0sypyzb" name="Yes" sourceRef="Gateway_19npvp5" targetRef="Activity_1uw66e8" />
-    <bpmn:sequenceFlow id="Flow_12fb3ir" sourceRef="Activity_1uw66e8" targetRef="Gateway_0xlrnzx" />
-    <bpmn:sequenceFlow id="Flow_0dg341m" sourceRef="Activity_1a9fimb" targetRef="Gateway_0byohhl" />
+    <bpmn:sequenceFlow id="Flow_0sypyzb" name="Yes" sourceRef="Gateway_19npvp5" targetRef="Activity_1eab90d" />
+    <bpmn:sequenceFlow id="Flow_0dg341m" sourceRef="SR-User_Info-Update_Current_User_Extras" targetRef="Gateway_0byohhl" />
     <bpmn:sequenceFlow id="Flow_1mplhly" name="No" sourceRef="Gateway_19npvp5" targetRef="Gateway_0xlrnzx">
       <bpmn:conditionExpression>not(is_status_email)</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
-    <bpmn:sequenceFlow id="Flow_0ltzuow" sourceRef="Activity_0djyn08" targetRef="Event_0fb034d" />
-    <bpmn:scriptTask id="Activity_0djyn08" name="Delete Variables">
+    <bpmn:sequenceFlow id="Flow_0ltzuow" sourceRef="SR-User_Info-Delete_Unneeded_Variables" targetRef="Event_0fb034d" />
+    <bpmn:scriptTask id="SR-User_Info-Delete_Unneeded_Variables" name="Delete Unneeded Variables">
       <bpmn:incoming>Flow_1gd83n0</bpmn:incoming>
       <bpmn:outgoing>Flow_0ltzuow</bpmn:outgoing>
       <bpmn:script># Delete Variables that do not need to be used later
 del(isCurrentUser)
 del(find_user)</bpmn:script>
     </bpmn:scriptTask>
+    <bpmn:callActivity id="Activity_1eab90d" name="Call ST: Get External Data" calledElement="Get_External_Data">
+      <bpmn:extensionElements>
+        <spiffworkflow:preScript>get_employee_id = userBambooId
+external_data_task_name = "start_event"</spiffworkflow:preScript>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0sypyzb</bpmn:incoming>
+      <bpmn:outgoing>Flow_06rpl7o</bpmn:outgoing>
+    </bpmn:callActivity>
+    <bpmn:sequenceFlow id="Flow_06rpl7o" sourceRef="Activity_1eab90d" targetRef="Gateway_0xlrnzx" />
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="SR-User_Info">
@@ -119,36 +121,38 @@ del(find_user)</bpmn:script>
       <bpmndi:BPMNShape id="Activity_0hlcuhi_di" bpmnElement="Activity_0v13afu">
         <dc:Bounds x="270" y="187" width="100" height="80" />
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0fb034d_di" bpmnElement="Event_0fb034d">
+        <dc:Bounds x="1332" y="209" width="36" height="36" />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Gateway_0xlrnzx_di" bpmnElement="Gateway_0xlrnzx" isMarkerVisible="true">
         <dc:Bounds x="765" y="202" width="50" height="50" />
         <bpmndi:BPMNLabel>
           <dc:Bounds x="705" y="243" width="70" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0rvcg5l_di" bpmnElement="Activity_1a9fimb">
-        <dc:Bounds x="900" y="187" width="100" height="80" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0nftxgp_di" bpmnElement="Activity_1uw66e8">
-        <dc:Bounds x="580" y="187" width="100" height="80" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Gateway_0byohhl_di" bpmnElement="Gateway_0byohhl" isMarkerVisible="true">
         <dc:Bounds x="1085" y="202" width="50" height="50" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1azbkzp_di" bpmnElement="Activity_1fkr6s9">
+      <bpmndi:BPMNShape id="Activity_1azbkzp_di" bpmnElement="SR-User_Info-Set_Defaults">
         <dc:Bounds x="100" y="187" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Gateway_19npvp5_di" bpmnElement="Gateway_19npvp5" isMarkerVisible="true">
         <dc:Bounds x="445" y="202" width="50" height="50" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="437" y="172" width="68" height="14" />
+          <dc:Bounds x="386" y="243" width="68" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_0fb034d_di" bpmnElement="Event_0fb034d">
-        <dc:Bounds x="1332" y="209" width="36" height="36" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0qu8ajx_di" bpmnElement="Activity_0djyn08">
+      <bpmndi:BPMNShape id="Activity_0qu8ajx_di" bpmnElement="SR-User_Info-Delete_Unneeded_Variables">
         <dc:Bounds x="1180" y="187" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0ufz8x5_di" bpmnElement="Activity_1eab90d">
+        <dc:Bounds x="580" y="187" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0rvcg5l_di" bpmnElement="SR-User_Info-Update_Current_User_Extras">
+        <dc:Bounds x="900" y="184" width="100" height="80" />
+        <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_1q8xtg6_di" bpmnElement="Flow_1q8xtg6">
         <di:waypoint x="38" y="227" />
@@ -160,9 +164,11 @@ del(find_user)</bpmn:script>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0i96b90_di" bpmnElement="Flow_0i96b90">
         <di:waypoint x="815" y="227" />
-        <di:waypoint x="900" y="227" />
+        <di:waypoint x="858" y="227" />
+        <di:waypoint x="858" y="224" />
+        <di:waypoint x="900" y="224" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="849" y="209" width="18" height="14" />
+          <dc:Bounds x="870" y="206" width="18" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0d47w7r_di" bpmnElement="Flow_0d47w7r">
@@ -186,15 +192,13 @@ del(find_user)</bpmn:script>
         <di:waypoint x="495" y="227" />
         <di:waypoint x="580" y="227" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="529" y="209" width="18" height="14" />
+          <dc:Bounds x="521" y="209" width="18" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_12fb3ir_di" bpmnElement="Flow_12fb3ir">
-        <di:waypoint x="680" y="227" />
-        <di:waypoint x="765" y="227" />
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0dg341m_di" bpmnElement="Flow_0dg341m">
-        <di:waypoint x="1000" y="227" />
+        <di:waypoint x="1000" y="224" />
+        <di:waypoint x="1043" y="224" />
+        <di:waypoint x="1043" y="227" />
         <di:waypoint x="1085" y="227" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1mplhly_di" bpmnElement="Flow_1mplhly">
@@ -209,6 +213,10 @@ del(find_user)</bpmn:script>
       <bpmndi:BPMNEdge id="Flow_0ltzuow_di" bpmnElement="Flow_0ltzuow">
         <di:waypoint x="1280" y="227" />
         <di:waypoint x="1332" y="227" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_06rpl7o_di" bpmnElement="Flow_06rpl7o">
+        <di:waypoint x="680" y="227" />
+        <di:waypoint x="765" y="227" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
