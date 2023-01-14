@@ -180,17 +180,12 @@
       <bpmn:startEvent id="Event_0thpuvr">
         <bpmn:outgoing>Flow_07gw03w</bpmn:outgoing>
       </bpmn:startEvent>
-      <bpmn:sequenceFlow id="Flow_05ic75w" sourceRef="Activity_0fcmyop" targetRef="Activity_1htntsw" />
       <bpmn:endEvent id="Event_1q26y2e">
         <bpmn:incoming>Flow_0t362kd</bpmn:incoming>
       </bpmn:endEvent>
       <bpmn:sequenceFlow id="Flow_045xngq" sourceRef="Activity_1ftyx1p" targetRef="Activity_1abofjd" />
-      <bpmn:scriptTask id="Activity_0fcmyop" name="Check Unit price Decimal">
-        <bpmn:outgoing>Flow_05ic75w</bpmn:outgoing>
-        <bpmn:standardLoopCharacteristics />
-      </bpmn:scriptTask>
+      <bpmn:scriptTask id="Activity_0fcmyop" name="Check Unit price Decimal" />
       <bpmn:scriptTask id="Activity_1htntsw" name="Check Total amount,Curr Decimal">
-        <bpmn:incoming>Flow_05ic75w</bpmn:incoming>
         <bpmn:outgoing>Flow_1oy9au5</bpmn:outgoing>
       </bpmn:scriptTask>
       <bpmn:scriptTask id="Activity_1ftyx1p" name="Convert into USD">
@@ -230,12 +225,20 @@
       </bpmn:businessRuleTask>
       <bpmn:sequenceFlow id="Flow_0t362kd" sourceRef="Activity_1hnknc2" targetRef="Event_1q26y2e" />
       <bpmn:scriptTask id="Activity_1hnknc2" name="Set the Validation result">
-        <bpmn:incoming>Flow_07gw03w</bpmn:incoming>
+        <bpmn:incoming>Flow_0wzics1</bpmn:incoming>
         <bpmn:outgoing>Flow_0t362kd</bpmn:outgoing>
         <bpmn:script>isReview = True</bpmn:script>
       </bpmn:scriptTask>
       <bpmn:sequenceFlow id="Flow_1oy9au5" sourceRef="Activity_1htntsw" targetRef="Gateway_1850i43" />
-      <bpmn:sequenceFlow id="Flow_07gw03w" sourceRef="Event_0thpuvr" targetRef="Activity_1hnknc2" />
+      <bpmn:sequenceFlow id="Flow_07gw03w" sourceRef="Event_0thpuvr" targetRef="Activity_17g8yz6" />
+      <bpmn:sequenceFlow id="Flow_0wzics1" sourceRef="Activity_17g8yz6" targetRef="Activity_1hnknc2" />
+      <bpmn:callActivity id="Activity_17g8yz6" name="Call STL Get External Data">
+        <bpmn:extensionElements>
+          <spiffworkflow:preScript>external_data_task_name = "Raise New Demand Request-Procurement-Normalize Item Cost"</spiffworkflow:preScript>
+        </bpmn:extensionElements>
+        <bpmn:incoming>Flow_07gw03w</bpmn:incoming>
+        <bpmn:outgoing>Flow_0wzics1</bpmn:outgoing>
+      </bpmn:callActivity>
       <bpmn:textAnnotation id="TextAnnotation_00ra9ov">
         <bpmn:text>For every item</bpmn:text>
       </bpmn:textAnnotation>
@@ -2889,10 +2892,9 @@ external_data_task_name = "Raise New Demand Request-Procurement-Submit Request"<
         <dc:Bounds x="700" y="145" width="100" height="30" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge id="Flow_05ic75w_di" bpmnElement="Flow_05ic75w">
-        <di:waypoint x="-20" y="260" />
-        <di:waypoint x="10" y="260" />
-      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="Activity_0nhu7v2_di" bpmnElement="Activity_17g8yz6">
+        <dc:Bounds x="260" y="40" width="100" height="80" />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_045xngq_di" bpmnElement="Flow_045xngq">
         <di:waypoint x="640" y="260" />
         <di:waypoint x="700" y="260" />
@@ -2934,8 +2936,7 @@ external_data_task_name = "Raise New Demand Request-Procurement-Submit Request"<
       <bpmndi:BPMNEdge id="Flow_07gw03w_di" bpmnElement="Flow_07gw03w">
         <di:waypoint x="-240" y="242" />
         <di:waypoint x="-240" y="80" />
-        <di:waypoint x="1060" y="80" />
-        <di:waypoint x="1060" y="220" />
+        <di:waypoint x="260" y="80" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Association_1gn9q28_di" bpmnElement="Association_1gn9q28">
         <di:waypoint x="-70" y="220" />
@@ -2956,6 +2957,11 @@ external_data_task_name = "Raise New Demand Request-Procurement-Submit Request"<
       <bpmndi:BPMNEdge id="Association_1ye3e63_di" bpmnElement="Association_1ye3e63">
         <di:waypoint x="750" y="220" />
         <di:waypoint x="750" y="175" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0wzics1_di" bpmnElement="Flow_0wzics1">
+        <di:waypoint x="360" y="80" />
+        <di:waypoint x="1060" y="80" />
+        <di:waypoint x="1060" y="220" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
