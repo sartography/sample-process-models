@@ -184,22 +184,6 @@
         <bpmn:incoming>Flow_0t362kd</bpmn:incoming>
       </bpmn:endEvent>
       <bpmn:sequenceFlow id="Flow_045xngq" sourceRef="Activity_1ftyx1p" targetRef="Activity_1abofjd" />
-      <bpmn:scriptTask id="Activity_0fcmyop" name="Check Unit price Decimal">
-        <bpmn:incoming>Flow_07gw03w</bpmn:incoming>
-        <bpmn:outgoing>Flow_1humfhp</bpmn:outgoing>
-        <bpmn:script># Check if there are more than two decimal places
-invoiceAmount_str = str(invoice.invoiceAmount)
-d = decimal.Decimal(invoiceAmount_str)
-d_cnt = d.as_tuple().exponent
-
-# Get number of decimal places
-svc_decimal_cnt = abs(d_cnt)
-
-#Delete unneeded variables
-del d
-del d_cnt
-del decimal</bpmn:script>
-      </bpmn:scriptTask>
       <bpmn:scriptTask id="Activity_1htntsw" name="Check Total amount,Curr Decimal">
         <bpmn:outgoing>Flow_1oy9au5</bpmn:outgoing>
       </bpmn:scriptTask>
@@ -260,6 +244,13 @@ xe_decimal_places = 2</spiffworkflow:preScript>
         <bpmn:outgoing>Flow_0wzics1</bpmn:outgoing>
       </bpmn:callActivity>
       <bpmn:sequenceFlow id="Flow_1humfhp" sourceRef="Activity_0fcmyop" targetRef="Activity_17g8yz6" />
+      <bpmn:callActivity id="Activity_0fcmyop" name="Call SRL Get Decimal Place Count">
+        <bpmn:extensionElements>
+          <spiffworkflow:preScript>decimal_count_check = unit_price</spiffworkflow:preScript>
+        </bpmn:extensionElements>
+        <bpmn:incoming>Flow_07gw03w</bpmn:incoming>
+        <bpmn:outgoing>Flow_1humfhp</bpmn:outgoing>
+      </bpmn:callActivity>
       <bpmn:textAnnotation id="TextAnnotation_00ra9ov">
         <bpmn:text>For every item</bpmn:text>
       </bpmn:textAnnotation>
@@ -2913,13 +2904,10 @@ external_data_task_name = "Raise New Demand Request-Procurement-Submit Request"<
         <dc:Bounds x="700" y="145" width="100" height="30" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1l63tje_di" bpmnElement="Activity_0fcmyop">
+      <bpmndi:BPMNShape id="Activity_0qbhhtz_di" bpmnElement="Activity_0fcmyop">
         <dc:Bounds x="-120" y="40" width="100" height="80" />
+        <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge id="Association_1gn9q28_di" bpmnElement="Association_1gn9q28">
-        <di:waypoint x="-70" y="120" />
-        <di:waypoint x="-70" y="160" />
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_045xngq_di" bpmnElement="Flow_045xngq">
         <di:waypoint x="640" y="260" />
         <di:waypoint x="700" y="260" />
@@ -2968,6 +2956,14 @@ external_data_task_name = "Raise New Demand Request-Procurement-Submit Request"<
         <di:waypoint x="1060" y="80" />
         <di:waypoint x="1060" y="220" />
       </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1humfhp_di" bpmnElement="Flow_1humfhp">
+        <di:waypoint x="-20" y="80" />
+        <di:waypoint x="260" y="80" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Association_1gn9q28_di" bpmnElement="Association_1gn9q28">
+        <di:waypoint x="-70" y="120" />
+        <di:waypoint x="-70" y="160" />
+      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Association_1miqz5u_di" bpmnElement="Association_1miqz5u">
         <di:waypoint x="310" y="220" />
         <di:waypoint x="310" y="180" />
@@ -2983,10 +2979,6 @@ external_data_task_name = "Raise New Demand Request-Procurement-Submit Request"<
       <bpmndi:BPMNEdge id="Association_1ye3e63_di" bpmnElement="Association_1ye3e63">
         <di:waypoint x="750" y="220" />
         <di:waypoint x="750" y="175" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_1humfhp_di" bpmnElement="Flow_1humfhp">
-        <di:waypoint x="-20" y="80" />
-        <di:waypoint x="260" y="80" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
