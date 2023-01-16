@@ -178,7 +178,7 @@
       <bpmn:incoming>Flow_0jhh37r</bpmn:incoming>
       <bpmn:outgoing>Flow_0pp3u64</bpmn:outgoing>
       <bpmn:startEvent id="Event_0thpuvr">
-        <bpmn:outgoing>Flow_07gw03w</bpmn:outgoing>
+        <bpmn:outgoing>Flow_1re1gci</bpmn:outgoing>
       </bpmn:startEvent>
       <bpmn:endEvent id="Event_1q26y2e">
         <bpmn:incoming>Flow_0t362kd</bpmn:incoming>
@@ -224,13 +224,11 @@
       </bpmn:businessRuleTask>
       <bpmn:sequenceFlow id="Flow_0t362kd" sourceRef="Activity_1hnknc2" targetRef="Event_1q26y2e" />
       <bpmn:scriptTask id="Activity_1hnknc2" name="Set the Validation result">
-        <bpmn:incoming>Flow_0wzics1</bpmn:incoming>
+        <bpmn:incoming>Flow_1re1gci</bpmn:incoming>
         <bpmn:outgoing>Flow_0t362kd</bpmn:outgoing>
         <bpmn:script>isReview = True</bpmn:script>
       </bpmn:scriptTask>
       <bpmn:sequenceFlow id="Flow_1oy9au5" sourceRef="Activity_1htntsw" targetRef="Gateway_1850i43" />
-      <bpmn:sequenceFlow id="Flow_07gw03w" sourceRef="Event_0thpuvr" targetRef="Activity_0fcmyop" />
-      <bpmn:sequenceFlow id="Flow_0wzics1" sourceRef="Activity_17g8yz6" targetRef="Activity_1hnknc2" />
       <bpmn:callActivity id="Activity_17g8yz6" name="Call STL Get External Data" calledElement="Get_External_Data">
         <bpmn:extensionElements>
           <spiffworkflow:preScript>external_data_task_name = "Raise New Demand Request-Procurement-Normalize Item Cost"
@@ -240,17 +238,13 @@ xe_convert_to_currency = "USD"
 xe_amount = unit_price
 xe_decimal_places = 2</spiffworkflow:preScript>
         </bpmn:extensionElements>
-        <bpmn:incoming>Flow_1humfhp</bpmn:incoming>
-        <bpmn:outgoing>Flow_0wzics1</bpmn:outgoing>
       </bpmn:callActivity>
-      <bpmn:sequenceFlow id="Flow_1humfhp" sourceRef="Activity_0fcmyop" targetRef="Activity_17g8yz6" />
       <bpmn:callActivity id="Activity_0fcmyop" name="Call SRL Decimal Place Count" calledElement="Decimal_Place_Count">
         <bpmn:extensionElements>
           <spiffworkflow:preScript>decimal_count_check = unit_price</spiffworkflow:preScript>
         </bpmn:extensionElements>
-        <bpmn:incoming>Flow_07gw03w</bpmn:incoming>
-        <bpmn:outgoing>Flow_1humfhp</bpmn:outgoing>
       </bpmn:callActivity>
+      <bpmn:sequenceFlow id="Flow_1re1gci" sourceRef="Event_0thpuvr" targetRef="Activity_1hnknc2" />
       <bpmn:textAnnotation id="TextAnnotation_00ra9ov">
         <bpmn:text>For every item</bpmn:text>
       </bpmn:textAnnotation>
@@ -2843,8 +2837,9 @@ external_data_task_name = "Raise New Demand Request-Procurement-Submit Request"<
   </bpmndi:BPMNDiagram>
   <bpmndi:BPMNDiagram id="BPMNDiagram_17xjezd">
     <bpmndi:BPMNPlane id="BPMNPlane_0mso2eq" bpmnElement="Submit_Validate_New_Demand_Request-Sub_Process">
-      <bpmndi:BPMNShape id="Event_0thpuvr_di" bpmnElement="Event_0thpuvr">
-        <dc:Bounds x="-258" y="242" width="36" height="36" />
+      <bpmndi:BPMNShape id="TextAnnotation_00ra9ov_di" bpmnElement="TextAnnotation_00ra9ov">
+        <dc:Bounds x="-110" y="-170" width="100" height="30" />
+        <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_1q26y2e_di" bpmnElement="Event_1q26y2e">
         <dc:Bounds x="1152" y="242" width="36" height="36" />
@@ -2884,14 +2879,6 @@ external_data_task_name = "Raise New Demand Request-Procurement-Submit Request"<
       <bpmndi:BPMNShape id="Activity_0nhu7v2_di" bpmnElement="Activity_17g8yz6">
         <dc:Bounds x="260" y="40" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0qbhhtz_di" bpmnElement="Activity_0fcmyop">
-        <dc:Bounds x="-120" y="40" width="100" height="80" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="TextAnnotation_00ra9ov_di" bpmnElement="TextAnnotation_00ra9ov">
-        <dc:Bounds x="-120" y="160" width="100" height="30" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="TextAnnotation_0hnud2h_di" bpmnElement="TextAnnotation_0hnud2h">
         <dc:Bounds x="260" y="140" width="130" height="40" />
         <bpmndi:BPMNLabel />
@@ -2908,6 +2895,17 @@ external_data_task_name = "Raise New Demand Request-Procurement-Submit Request"<
         <dc:Bounds x="700" y="145" width="100" height="30" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0qbhhtz_di" bpmnElement="Activity_0fcmyop">
+        <dc:Bounds x="-110" y="-80" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0thpuvr_di" bpmnElement="Event_0thpuvr">
+        <dc:Bounds x="1042" y="62" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Association_1gn9q28_di" bpmnElement="Association_1gn9q28">
+        <di:waypoint x="-60" y="-80" />
+        <di:waypoint x="-60" y="-140" />
+      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_045xngq_di" bpmnElement="Flow_045xngq">
         <di:waypoint x="640" y="260" />
         <di:waypoint x="700" y="260" />
@@ -2946,24 +2944,6 @@ external_data_task_name = "Raise New Demand Request-Procurement-Submit Request"<
         <di:waypoint x="110" y="260" />
         <di:waypoint x="155" y="260" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_07gw03w_di" bpmnElement="Flow_07gw03w">
-        <di:waypoint x="-240" y="242" />
-        <di:waypoint x="-240" y="80" />
-        <di:waypoint x="-120" y="80" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0wzics1_di" bpmnElement="Flow_0wzics1">
-        <di:waypoint x="360" y="80" />
-        <di:waypoint x="1060" y="80" />
-        <di:waypoint x="1060" y="220" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_1humfhp_di" bpmnElement="Flow_1humfhp">
-        <di:waypoint x="-20" y="80" />
-        <di:waypoint x="260" y="80" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Association_1gn9q28_di" bpmnElement="Association_1gn9q28">
-        <di:waypoint x="-70" y="120" />
-        <di:waypoint x="-70" y="160" />
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Association_1miqz5u_di" bpmnElement="Association_1miqz5u">
         <di:waypoint x="310" y="220" />
         <di:waypoint x="310" y="180" />
@@ -2979,6 +2959,10 @@ external_data_task_name = "Raise New Demand Request-Procurement-Submit Request"<
       <bpmndi:BPMNEdge id="Association_1ye3e63_di" bpmnElement="Association_1ye3e63">
         <di:waypoint x="750" y="220" />
         <di:waypoint x="750" y="175" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1re1gci_di" bpmnElement="Flow_1re1gci">
+        <di:waypoint x="1060" y="98" />
+        <di:waypoint x="1060" y="220" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
