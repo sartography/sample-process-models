@@ -1,4 +1,13 @@
 {
+    "definitions": {
+		"currencyEnum": {
+			"title": "Currency",
+			"type": "string",
+			"anyOf": [
+				"options_from_task_data_var:currency_enum_list"
+			]
+		}
+	},
   "title": "Demand Request Items",
   "description": "Itemized list of all items included in this demand request.",
     "type": "object",
@@ -10,8 +19,9 @@
         "type": "object",
         "required": [
           "item",
-  		"qty",
-	  	"unit-price"
+  		    "qty",
+
+	  	    "unit-price"
         ],
         "properties": {
           "item": {
@@ -24,6 +34,10 @@
             "title": "Qty",
             "description": "Number of items"
           },
+          "currency": {
+      		  "$ref": "#/definitions/currencyEnum",
+			      "title": "Currency"
+		      },
           "unit-price": {
             "type": "number",
             "title": "Unit Price"
