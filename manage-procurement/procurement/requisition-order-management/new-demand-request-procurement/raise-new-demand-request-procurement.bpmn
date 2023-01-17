@@ -240,7 +240,7 @@ item_list_total = len(Item)</bpmn:script>
       <bpmn:scriptTask id="Activity_1b35305" name="Set Item Amount for Currency Conversion">
         <bpmn:incoming>Flow_00nq3ah</bpmn:incoming>
         <bpmn:outgoing>Flow_006awc6</bpmn:outgoing>
-        <bpmn:script>a=1</bpmn:script>
+        <bpmn:script>a= xe_convert_from["to"][item_list_cnt]["mid"]</bpmn:script>
       </bpmn:scriptTask>
       <bpmn:sequenceFlow id="Flow_133u2an" sourceRef="Activity_1wecdlr" targetRef="Activity_17g8yz6" />
       <bpmn:sequenceFlow id="Flow_00nq3ah" sourceRef="Activity_17g8yz6" targetRef="Activity_1b35305" />
@@ -2836,6 +2836,22 @@ external_data_task_name = "Raise New Demand Request-Procurement-Submit Request"<
         <dc:Bounds x="1010" y="220" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0nhu7v2_di" bpmnElement="Activity_17g8yz6">
+        <dc:Bounds x="190" y="40" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1ifuj7x_di" bpmnElement="Activity_1wecdlr">
+        <dc:Bounds x="10" y="40" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1l3p9iz_di" bpmnElement="Activity_1b35305">
+        <dc:Bounds x="370" y="40" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0kx8hw2_di" bpmnElement="Event_0kx8hw2">
+        <dc:Bounds x="-108" y="62" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1lcahjp_di" bpmnElement="Event_1lcahjp">
+        <dc:Bounds x="552" y="62" width="36" height="36" />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="TextAnnotation_00ra9ov_di" bpmnElement="TextAnnotation_00ra9ov">
         <dc:Bounds x="-110" y="-170" width="100" height="30" />
         <bpmndi:BPMNLabel />
@@ -2855,22 +2871,6 @@ external_data_task_name = "Raise New Demand Request-Procurement-Submit Request"<
       <bpmndi:BPMNShape id="TextAnnotation_145zu6s_di" bpmnElement="TextAnnotation_145zu6s">
         <dc:Bounds x="700" y="145" width="100" height="30" />
         <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1ifuj7x_di" bpmnElement="Activity_1wecdlr">
-        <dc:Bounds x="10" y="40" width="100" height="80" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0nhu7v2_di" bpmnElement="Activity_17g8yz6">
-        <dc:Bounds x="190" y="40" width="100" height="80" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1l3p9iz_di" bpmnElement="Activity_1b35305">
-        <dc:Bounds x="370" y="40" width="100" height="80" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_0kx8hw2_di" bpmnElement="Event_0kx8hw2">
-        <dc:Bounds x="-108" y="62" width="36" height="36" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_1lcahjp_di" bpmnElement="Event_1lcahjp">
-        <dc:Bounds x="552" y="62" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_045xngq_di" bpmnElement="Flow_045xngq">
         <di:waypoint x="640" y="260" />
@@ -2906,22 +2906,6 @@ external_data_task_name = "Raise New Demand Request-Procurement-Submit Request"<
         <di:waypoint x="110" y="260" />
         <di:waypoint x="155" y="260" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Association_1miqz5u_di" bpmnElement="Association_1miqz5u">
-        <di:waypoint x="310" y="220" />
-        <di:waypoint x="310" y="180" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Association_0jlz78q_di" bpmnElement="Association_0jlz78q">
-        <di:waypoint x="310" y="420" />
-        <di:waypoint x="310" y="450" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Association_1mgic64_di" bpmnElement="Association_1mgic64">
-        <di:waypoint x="590" y="220" />
-        <di:waypoint x="590" y="175" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Association_1ye3e63_di" bpmnElement="Association_1ye3e63">
-        <di:waypoint x="750" y="220" />
-        <di:waypoint x="750" y="175" />
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_133u2an_di" bpmnElement="Flow_133u2an">
         <di:waypoint x="110" y="80" />
         <di:waypoint x="190" y="80" />
@@ -2937,6 +2921,22 @@ external_data_task_name = "Raise New Demand Request-Procurement-Submit Request"<
       <bpmndi:BPMNEdge id="Flow_006awc6_di" bpmnElement="Flow_006awc6">
         <di:waypoint x="470" y="80" />
         <di:waypoint x="552" y="80" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Association_1miqz5u_di" bpmnElement="Association_1miqz5u">
+        <di:waypoint x="310" y="220" />
+        <di:waypoint x="310" y="180" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Association_0jlz78q_di" bpmnElement="Association_0jlz78q">
+        <di:waypoint x="310" y="420" />
+        <di:waypoint x="310" y="450" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Association_1mgic64_di" bpmnElement="Association_1mgic64">
+        <di:waypoint x="590" y="220" />
+        <di:waypoint x="590" y="175" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Association_1ye3e63_di" bpmnElement="Association_1ye3e63">
+        <di:waypoint x="750" y="220" />
+        <di:waypoint x="750" y="175" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
