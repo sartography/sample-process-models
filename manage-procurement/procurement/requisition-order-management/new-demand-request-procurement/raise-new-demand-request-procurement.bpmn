@@ -324,8 +324,13 @@ item_list_cnt = item_list_cnt + 1</bpmn:script>
         </spiffworkflow:properties>
         <spiffworkflow:instructionsForEndUser>| Label | Value | Label | Value | 
 |--------|--------|-------|--------| 
-| Requestor | {{ current_user_extras["full_name"] }} | Project | {{ project }} |
-| Category | {{ category }} | Sub-Category | {{ sub_category }} |</spiffworkflow:instructionsForEndUser>
+| Requestor | {{ current_user_extras["full_name"] }} | Project | {{ project_name }} |
+| Category | {{ category }} | Sub-Category | {{ sub_category }} |
+| Purpose | purpose | Criticality | {{ criticality }} |
+| Vendor Name | {{ vendor }} | Period | {{ period }} |
+| Payment Method | {{ payment_method }} | | |
+</spiffworkflow:instructionsForEndUser>
+        <spiffworkflow:preScript>project_name = [x["name"] for x in dept_list if x["id"] == project]</spiffworkflow:preScript>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_0dxhx7x</bpmn:incoming>
       <bpmn:outgoing>Flow_1ac8bib</bpmn:outgoing>
