@@ -21,7 +21,6 @@
         <bpmn:flowNodeRef>StartEvent_1</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_18a4ocw</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_1itequ5</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Gateway_078fn3y</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_10nldyr</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Gateway_1btvqy5</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_15dhedu</bpmn:flowNodeRef>
@@ -176,7 +175,7 @@
     </bpmn:userTask>
     <bpmn:subProcess id="Submit_Validate_New_Demand_Request-Sub_Process" name="Submit and Validate New Demand Request">
       <bpmn:incoming>Flow_0jhh37r</bpmn:incoming>
-      <bpmn:outgoing>Flow_0pp3u64</bpmn:outgoing>
+      <bpmn:outgoing>Flow_0dxhx7x</bpmn:outgoing>
       <bpmn:startEvent id="Event_0thpuvr">
         <bpmn:outgoing>Flow_1re1gci</bpmn:outgoing>
       </bpmn:startEvent>
@@ -239,16 +238,11 @@ xe_amount = unit_price
 xe_decimal_places = 2</spiffworkflow:preScript>
         </bpmn:extensionElements>
       </bpmn:callActivity>
-      <bpmn:callActivity id="Activity_0fcmyop" name="Call SRL Decimal Place Count" calledElement="Decimal_Place_Count">
-        <bpmn:extensionElements>
-          <spiffworkflow:preScript>decimal_count_check = unit_price</spiffworkflow:preScript>
-        </bpmn:extensionElements>
-      </bpmn:callActivity>
       <bpmn:sequenceFlow id="Flow_1re1gci" sourceRef="Event_0thpuvr" targetRef="Activity_1hnknc2" />
+      <bpmn:task id="Activity_1wecdlr" name="Set Item Count" />
       <bpmn:textAnnotation id="TextAnnotation_00ra9ov">
         <bpmn:text>For every item</bpmn:text>
       </bpmn:textAnnotation>
-      <bpmn:association id="Association_1gn9q28" sourceRef="Activity_0fcmyop" targetRef="TextAnnotation_00ra9ov" />
       <bpmn:textAnnotation id="TextAnnotation_0hnud2h">
         <bpmn:text>https://www.xe.com/xecurrencydata/</bpmn:text>
       </bpmn:textAnnotation>
@@ -267,8 +261,6 @@ xe_decimal_places = 2</spiffworkflow:preScript>
       <bpmn:association id="Association_1ye3e63" sourceRef="Activity_1abofjd" targetRef="TextAnnotation_145zu6s" />
     </bpmn:subProcess>
     <bpmn:subProcess id="Activity_1fz0bsz" name="Show and Clear validation Error(s)">
-      <bpmn:incoming>Flow_1spwsg1</bpmn:incoming>
-      <bpmn:outgoing>Flow_1a7xig3</bpmn:outgoing>
       <bpmn:manualTask id="Activity_068wlmk" name="Show validation Error(s)">
         <bpmn:incoming>Flow_1pxvx6b</bpmn:incoming>
         <bpmn:outgoing>Flow_1igpbkd</bpmn:outgoing>
@@ -288,11 +280,6 @@ xe_decimal_places = 2</spiffworkflow:preScript>
       <bpmn:sequenceFlow id="Flow_1pxvx6b" sourceRef="Event_1g1ctt7" targetRef="Activity_068wlmk" />
       <bpmn:sequenceFlow id="Flow_1igpbkd" sourceRef="Activity_068wlmk" targetRef="Activity_1nq2ohm" />
     </bpmn:subProcess>
-    <bpmn:exclusiveGateway id="Gateway_078fn3y" name="Successful?" default="Flow_0n4fh0y">
-      <bpmn:incoming>Flow_0pp3u64</bpmn:incoming>
-      <bpmn:outgoing>Flow_0n4fh0y</bpmn:outgoing>
-      <bpmn:outgoing>Flow_1spwsg1</bpmn:outgoing>
-    </bpmn:exclusiveGateway>
     <bpmn:userTask id="Activity_10nldyr" name="Show the summary">
       <bpmn:extensionElements>
         <spiffworkflow:properties>
@@ -300,7 +287,7 @@ xe_decimal_places = 2</spiffworkflow:preScript>
           <spiffworkflow:property name="formUiSchemaFilename" value="submission-reviewed_UISchema.json" />
         </spiffworkflow:properties>
       </bpmn:extensionElements>
-      <bpmn:incoming>Flow_0n4fh0y</bpmn:incoming>
+      <bpmn:incoming>Flow_0dxhx7x</bpmn:incoming>
       <bpmn:outgoing>Flow_1ac8bib</bpmn:outgoing>
     </bpmn:userTask>
     <bpmn:exclusiveGateway id="Gateway_1btvqy5" name="Submit?" default="Flow_0ledpg2">
@@ -684,7 +671,6 @@ review_outcome = None</spiffworkflow:postScript>
     </bpmn:userTask>
     <bpmn:exclusiveGateway id="Gateway_17sf14l">
       <bpmn:incoming>Flow_0l3u381</bpmn:incoming>
-      <bpmn:incoming>Flow_1a7xig3</bpmn:incoming>
       <bpmn:incoming>Flow_1ful1og</bpmn:incoming>
       <bpmn:incoming>Flow_0qskaka</bpmn:incoming>
       <bpmn:outgoing>Flow_1lfn8yz</bpmn:outgoing>
@@ -1532,12 +1518,6 @@ del(userTimeFormat)</spiffworkflow:postScript>
     <bpmn:sequenceFlow id="Flow_0ss3jdh" sourceRef="Activity_18a4ocw" targetRef="Activity_1itequ5" />
     <bpmn:sequenceFlow id="Flow_1ypq7k8" sourceRef="Activity_1itequ5" targetRef="Activity_18x1o1c" />
     <bpmn:sequenceFlow id="Flow_0jhh37r" sourceRef="Activity_18x1o1c" targetRef="Submit_Validate_New_Demand_Request-Sub_Process" />
-    <bpmn:sequenceFlow id="Flow_0pp3u64" sourceRef="Submit_Validate_New_Demand_Request-Sub_Process" targetRef="Gateway_078fn3y" />
-    <bpmn:sequenceFlow id="Flow_1spwsg1" name="No" sourceRef="Gateway_078fn3y" targetRef="Activity_1fz0bsz">
-      <bpmn:conditionExpression>not(isReview)</bpmn:conditionExpression>
-    </bpmn:sequenceFlow>
-    <bpmn:sequenceFlow id="Flow_1a7xig3" sourceRef="Activity_1fz0bsz" targetRef="Gateway_17sf14l" />
-    <bpmn:sequenceFlow id="Flow_0n4fh0y" name="Yes" sourceRef="Gateway_078fn3y" targetRef="Activity_10nldyr" />
     <bpmn:sequenceFlow id="Flow_1ac8bib" sourceRef="Activity_10nldyr" targetRef="Gateway_1btvqy5" />
     <bpmn:sequenceFlow id="Flow_0l3u381" name="No" sourceRef="Gateway_1btvqy5" targetRef="Gateway_17sf14l">
       <bpmn:conditionExpression>not(isProceed)</bpmn:conditionExpression>
@@ -1669,6 +1649,7 @@ external_data_task_name = "Raise New Demand Request-Procurement-Submit Request"<
         </spiffworkflow:properties>
       </bpmn:extensionElements>
     </bpmn:userTask>
+    <bpmn:sequenceFlow id="Flow_0dxhx7x" sourceRef="Submit_Validate_New_Demand_Request-Sub_Process" targetRef="Activity_10nldyr" />
     <bpmn:textAnnotation id="TextAnnotation_0zy71k9">
       <bpmn:text>Orgdata from BBHR, Categories from a DB, Currencies from Xero</bpmn:text>
     </bpmn:textAnnotation>
@@ -1758,12 +1739,6 @@ external_data_task_name = "Raise New Demand Request-Procurement-Submit Request"<
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_04tjlbp_di" bpmnElement="Activity_1fz0bsz">
         <dc:Bounds x="1614" y="215" width="100" height="80" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Gateway_078fn3y_di" bpmnElement="Gateway_078fn3y" isMarkerVisible="true">
-        <dc:Bounds x="1799" y="440" width="50" height="50" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="1794" y="497" width="60" height="14" />
-        </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1rjn370_di" bpmnElement="Activity_10nldyr">
         <dc:Bounds x="1914" y="425" width="100" height="80" />
@@ -2324,30 +2299,6 @@ external_data_task_name = "Raise New Demand Request-Procurement-Submit Request"<
         <di:waypoint x="1554" y="465" />
         <di:waypoint x="1614" y="465" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0pp3u64_di" bpmnElement="Flow_0pp3u64">
-        <di:waypoint x="1714" y="465" />
-        <di:waypoint x="1799" y="465" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_1spwsg1_di" bpmnElement="Flow_1spwsg1">
-        <di:waypoint x="1824" y="440" />
-        <di:waypoint x="1824" y="255" />
-        <di:waypoint x="1714" y="255" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="1832" y="345" width="15" height="14" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_1a7xig3_di" bpmnElement="Flow_1a7xig3">
-        <di:waypoint x="1614" y="255" />
-        <di:waypoint x="1074" y="255" />
-        <di:waypoint x="1074" y="440" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0n4fh0y_di" bpmnElement="Flow_0n4fh0y">
-        <di:waypoint x="1849" y="465" />
-        <di:waypoint x="1914" y="465" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="1873" y="447" width="18" height="14" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1ac8bib_di" bpmnElement="Flow_1ac8bib">
         <di:waypoint x="2014" y="465" />
         <di:waypoint x="2079" y="465" />
@@ -2769,6 +2720,10 @@ external_data_task_name = "Raise New Demand Request-Procurement-Submit Request"<
         <di:waypoint x="925" y="425" />
         <di:waypoint x="913" y="265" />
       </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0dxhx7x_di" bpmnElement="Flow_0dxhx7x">
+        <di:waypoint x="1714" y="465" />
+        <di:waypoint x="1914" y="465" />
+      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="DataOutputAssociation_019xu31_di" bpmnElement="DataOutputAssociation_019xu31">
         <di:waypoint x="3535" y="2075" />
         <di:waypoint x="3536" y="2040" />
@@ -2837,9 +2792,8 @@ external_data_task_name = "Raise New Demand Request-Procurement-Submit Request"<
   </bpmndi:BPMNDiagram>
   <bpmndi:BPMNDiagram id="BPMNDiagram_17xjezd">
     <bpmndi:BPMNPlane id="BPMNPlane_0mso2eq" bpmnElement="Submit_Validate_New_Demand_Request-Sub_Process">
-      <bpmndi:BPMNShape id="TextAnnotation_00ra9ov_di" bpmnElement="TextAnnotation_00ra9ov">
-        <dc:Bounds x="-110" y="-170" width="100" height="30" />
-        <bpmndi:BPMNLabel />
+      <bpmndi:BPMNShape id="Event_0thpuvr_di" bpmnElement="Event_0thpuvr">
+        <dc:Bounds x="1042" y="62" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_1q26y2e_di" bpmnElement="Event_1q26y2e">
         <dc:Bounds x="1152" y="242" width="36" height="36" />
@@ -2879,6 +2833,10 @@ external_data_task_name = "Raise New Demand Request-Procurement-Submit Request"<
       <bpmndi:BPMNShape id="Activity_0nhu7v2_di" bpmnElement="Activity_17g8yz6">
         <dc:Bounds x="260" y="40" width="100" height="80" />
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="TextAnnotation_00ra9ov_di" bpmnElement="TextAnnotation_00ra9ov">
+        <dc:Bounds x="-110" y="-170" width="100" height="30" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="TextAnnotation_0hnud2h_di" bpmnElement="TextAnnotation_0hnud2h">
         <dc:Bounds x="260" y="140" width="130" height="40" />
         <bpmndi:BPMNLabel />
@@ -2895,17 +2853,10 @@ external_data_task_name = "Raise New Demand Request-Procurement-Submit Request"<
         <dc:Bounds x="700" y="145" width="100" height="30" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0qbhhtz_di" bpmnElement="Activity_0fcmyop">
-        <dc:Bounds x="-110" y="-80" width="100" height="80" />
+      <bpmndi:BPMNShape id="Activity_1wecdlr_di" bpmnElement="Activity_1wecdlr">
+        <dc:Bounds x="90" y="40" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_0thpuvr_di" bpmnElement="Event_0thpuvr">
-        <dc:Bounds x="1042" y="62" width="36" height="36" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge id="Association_1gn9q28_di" bpmnElement="Association_1gn9q28">
-        <di:waypoint x="-60" y="-80" />
-        <di:waypoint x="-60" y="-140" />
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_045xngq_di" bpmnElement="Flow_045xngq">
         <di:waypoint x="640" y="260" />
         <di:waypoint x="700" y="260" />
@@ -2944,6 +2895,10 @@ external_data_task_name = "Raise New Demand Request-Procurement-Submit Request"<
         <di:waypoint x="110" y="260" />
         <di:waypoint x="155" y="260" />
       </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1re1gci_di" bpmnElement="Flow_1re1gci">
+        <di:waypoint x="1060" y="98" />
+        <di:waypoint x="1060" y="220" />
+      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Association_1miqz5u_di" bpmnElement="Association_1miqz5u">
         <di:waypoint x="310" y="220" />
         <di:waypoint x="310" y="180" />
@@ -2959,10 +2914,6 @@ external_data_task_name = "Raise New Demand Request-Procurement-Submit Request"<
       <bpmndi:BPMNEdge id="Association_1ye3e63_di" bpmnElement="Association_1ye3e63">
         <di:waypoint x="750" y="220" />
         <di:waypoint x="750" y="175" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_1re1gci_di" bpmnElement="Flow_1re1gci">
-        <di:waypoint x="1060" y="98" />
-        <di:waypoint x="1060" y="220" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
