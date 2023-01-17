@@ -240,7 +240,8 @@ item_list_total = len(Item)</bpmn:script>
       <bpmn:scriptTask id="Activity_1b35305" name="Set Item Amount for Currency Conversion">
         <bpmn:incoming>Flow_00nq3ah</bpmn:incoming>
         <bpmn:outgoing>Flow_006awc6</bpmn:outgoing>
-        <bpmn:script>a= xe_convert_from["to"][item_list_cnt]["mid"]</bpmn:script>
+        <bpmn:script>Item[item_list_cnt]["converted_to"] = xe_convert_from["to"][item_list_cnt]["quotecurrency"]
+Item[item_list_cnt]["converted_unit_price"] = xe_convert_from["to"][item_list_cnt]["mid"]</bpmn:script>
       </bpmn:scriptTask>
       <bpmn:sequenceFlow id="Flow_133u2an" sourceRef="Activity_1wecdlr" targetRef="Activity_17g8yz6" />
       <bpmn:sequenceFlow id="Flow_00nq3ah" sourceRef="Activity_17g8yz6" targetRef="Activity_1b35305" />
