@@ -169,6 +169,20 @@
           <spiffworkflow:property name="formJsonSchemaFilename" value="demand-request-items-schema.json" />
           <spiffworkflow:property name="formUiSchemaFilename" value="demand-request-items-uischema.json" />
         </spiffworkflow:properties>
+        <spiffworkflow:instructionsForEndUser>Requestor: {{ current_user_extras["full_name"] }} 
+----------
+| Project | Category | Sub-Category | Payment Method | 
+|---------|------------|------------------|---------------------| 
+| {{ project_name[0] }} | {{ category }} | {{ sub_category }} | {{ payment_method }} |
+
+| Vendor Name | Criticality | Period |
+|-----------------|------------|---------|
+| {{ vendor }} | {{ criticality }} | {{ period }} |
+
+| Purpose |
+|-----------|
+| purpose |
+</spiffworkflow:instructionsForEndUser>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_0ss3jdh</bpmn:incoming>
       <bpmn:outgoing>Flow_1ypq7k8</bpmn:outgoing>
@@ -335,7 +349,12 @@ item_list_cnt = item_list_cnt + 1</bpmn:script>
 |------|------|------------|------------|--------------|-------------|
 {% for icnt in range(item_list_total) %}
 | {{ Item[icnt]["item"] }} | {{ Item[icnt]["qty"] }} | {{ Item[icnt]["currency"] }} | {{ Item[icnt]["unit_price"] }} | | |
-{% endfor %}</spiffworkflow:instructionsForEndUser>
+{% endfor %}
+
+
+----------
+
+</spiffworkflow:instructionsForEndUser>
         <spiffworkflow:preScript>project_name = [x["name"] for x in dept_list if x["id"] == int(project)]</spiffworkflow:preScript>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_0dxhx7x</bpmn:incoming>
