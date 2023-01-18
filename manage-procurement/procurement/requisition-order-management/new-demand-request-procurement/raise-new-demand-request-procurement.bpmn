@@ -1083,6 +1083,28 @@ review_outcome = None</spiffworkflow:postScript>
         "value": "rej"
     }
 ]</spiffworkflow:preScript>
+        <spiffworkflow:instructionsForEndUser>Requestor: {{ current_user_extras["full_name"] }} 
+----------
+| Project | Category | Sub-Category | Payment Method | Criticality | Period |
+|---------|------------|------------------|---------------------| ------------|---------|
+| {{ project_name[0] }} | {{ category }} | {{ sub_category }} | {{ payment_method }} | {{ criticality }} | {{ period }} |
+  
+| Vendor Name | Purpose |
+|-----------------|-----------|
+| {{ vendor }} | {{ purpose }} |
+----------
+## Items  
+| Item | Qty | Currency | Unit Price | Total Price | USD Price |
+|------|------|------------|------------|--------------|-------------|
+{% for icnt in range(item_list_total) %}
+| {{ Item[icnt]["item"] }} | {{ Item[icnt]["qty"] }} | {{ Item[icnt]["currency"] }} | {{ Item[icnt]["unit_price"] }} | | |
+{% endfor %}
+----------
+{% if more_details_len &gt; 0 %}
+| Supporting Information |
+|----------------------------|
+| {{ more_details }} |
+{% endif %}</spiffworkflow:instructionsForEndUser>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_0h80bf3</bpmn:incoming>
       <bpmn:outgoing>Flow_0u9k2wx</bpmn:outgoing>
@@ -1748,26 +1770,6 @@ del(userTimeFormat)</spiffworkflow:postScript>
       <bpmndi:BPMNShape id="Lane_1mrq305_di" bpmnElement="Lane_1mrq305" isHorizontal="true">
         <dc:Bounds x="726" y="105" width="4648" height="580" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="TextAnnotation_0zy71k9_di" bpmnElement="TextAnnotation_0zy71k9">
-        <dc:Bounds x="854" y="270" width="130" height="60" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="TextAnnotation_1ofkj5f_di" bpmnElement="TextAnnotation_1ofkj5f">
-        <dc:Bounds x="1784" y="355" width="80" height="40" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="TextAnnotation_0k4fn7g_di" bpmnElement="TextAnnotation_0k4fn7g">
-        <dc:Bounds x="1774" y="535" width="100" height="30" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="TextAnnotation_0qq1kr8_di" bpmnElement="TextAnnotation_0qq1kr8">
-        <dc:Bounds x="4714" y="3495" width="100" height="30" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="TextAnnotation_12tjd1d_di" bpmnElement="TextAnnotation_12tjd1d">
-        <dc:Bounds x="2554" y="935" width="70" height="30" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
         <dc:Bounds x="786" y="447" width="36" height="36" />
         <bpmndi:BPMNLabel>
@@ -1780,6 +1782,38 @@ del(userTimeFormat)</spiffworkflow:postScript>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0vhbxuw_di" bpmnElement="Activity_1itequ5">
         <dc:Bounds x="1304" y="425" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1nyt2o4_di" bpmnElement="Submit_Validate_New_Demand_Request-Sub_Process">
+        <dc:Bounds x="1614" y="425" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1liv0cq_di" bpmnElement="Activity_18x1o1c">
+        <dc:Bounds x="1454" y="425" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_17sf14l_di" bpmnElement="Gateway_17sf14l" isMarkerVisible="true">
+        <dc:Bounds x="1049" y="440" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DataObjectReference_0hsw7aa_di" bpmnElement="DataObjectReference_0hsw7aa">
+        <dc:Bounds x="876" y="580" width="36" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="860" y="637" width="70" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1300gad_di" bpmnElement="Event_1300gad">
+        <dc:Bounds x="1056" y="797" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="961" y="805" width="81" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_1gcwukc_di" bpmnElement="Gateway_1gcwukc" isMarkerVisible="true">
+        <dc:Bounds x="1049" y="1290" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0yi50u7_di" bpmnElement="Activity_18am0at">
+        <dc:Bounds x="1024" y="555" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0migtub_di" bpmnElement="Activity_000swbl">
+        <dc:Bounds x="880" y="425" width="100" height="80" />
+        <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1rjn370_di" bpmnElement="Activity_10nldyr">
         <dc:Bounds x="1774" y="425" width="100" height="80" />
@@ -2095,6 +2129,9 @@ del(userTimeFormat)</spiffworkflow:postScript>
           <dc:Bounds x="2741" y="920" width="65" height="40" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1vchk6r_di" bpmnElement="Activity_108eq0l">
+        <dc:Bounds x="2364" y="425" width="100" height="80" />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1trh55u_di" bpmnElement="Activity_0tt12kf">
         <dc:Bounds x="2124" y="425" width="100" height="80" />
         <bpmndi:BPMNLabel />
@@ -2107,6 +2144,14 @@ del(userTimeFormat)</spiffworkflow:postScript>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_0xklgk1_di" bpmnElement="Event_0xklgk1">
         <dc:Bounds x="3006" y="947" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0bwjeuv_di" bpmnElement="Activity_1iohamu">
+        <dc:Bounds x="2664" y="805" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1qgx40w_di" bpmnElement="Activity_1nfb31d">
+        <dc:Bounds x="2884" y="805" width="100" height="80" />
+        <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1dg2cxw_di" bpmnElement="Activity_14fif5h">
         <dc:Bounds x="2363" y="995" width="100" height="80" />
@@ -2127,69 +2172,6 @@ del(userTimeFormat)</spiffworkflow:postScript>
         <bpmndi:BPMNLabel>
           <dc:Bounds x="3875" y="2611" width="59" height="27" />
         </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Gateway_0vdntex_di" bpmnElement="Gateway_0vdntex" isMarkerVisible="true">
-        <dc:Bounds x="1049" y="1830" width="50" height="50" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Gateway_0msst2a_di" bpmnElement="Gateway_0msst2a" isMarkerVisible="true">
-        <dc:Bounds x="1049" y="2240" width="50" height="50" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Gateway_0tzllzw_di" bpmnElement="Gateway_0tzllzw" isMarkerVisible="true">
-        <dc:Bounds x="1049" y="2840" width="50" height="50" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Gateway_0dj673n_di" bpmnElement="Gateway_0dj673n" isMarkerVisible="true">
-        <dc:Bounds x="1049" y="3190" width="50" height="50" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1nyt2o4_di" bpmnElement="Submit_Validate_New_Demand_Request-Sub_Process">
-        <dc:Bounds x="1614" y="425" width="100" height="80" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1liv0cq_di" bpmnElement="Activity_18x1o1c">
-        <dc:Bounds x="1454" y="425" width="100" height="80" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Gateway_17sf14l_di" bpmnElement="Gateway_17sf14l" isMarkerVisible="true">
-        <dc:Bounds x="1049" y="440" width="50" height="50" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="DataObjectReference_0hsw7aa_di" bpmnElement="DataObjectReference_0hsw7aa">
-        <dc:Bounds x="876" y="580" width="36" height="50" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="860" y="637" width="70" height="27" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_1300gad_di" bpmnElement="Event_1300gad">
-        <dc:Bounds x="1056" y="797" width="36" height="36" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="961" y="805" width="81" height="27" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Gateway_1gcwukc_di" bpmnElement="Gateway_1gcwukc" isMarkerVisible="true">
-        <dc:Bounds x="1049" y="1290" width="50" height="50" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0yi50u7_di" bpmnElement="Activity_18am0at">
-        <dc:Bounds x="1024" y="555" width="100" height="80" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0migtub_di" bpmnElement="Activity_000swbl">
-        <dc:Bounds x="880" y="425" width="100" height="80" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="TextAnnotation_0bqrxlm_di" bpmnElement="TextAnnotation_0bqrxlm">
-        <dc:Bounds x="1694" y="365" width="100" height="40" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge id="Association_13u0dtl_di" bpmnElement="Association_13u0dtl">
-        <di:waypoint x="924" y="425" />
-        <di:waypoint x="914" y="330" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="Activity_1vchk6r_di" bpmnElement="Activity_108eq0l">
-        <dc:Bounds x="2364" y="425" width="100" height="80" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0bwjeuv_di" bpmnElement="Activity_1iohamu">
-        <dc:Bounds x="2664" y="805" width="100" height="80" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1qgx40w_di" bpmnElement="Activity_1nfb31d">
-        <dc:Bounds x="2884" y="805" width="100" height="80" />
-        <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1c9bc58_di" bpmnElement="Activity_0j7pkyk">
         <dc:Bounds x="3054" y="1245" width="100" height="80" />
@@ -2222,44 +2204,46 @@ del(userTimeFormat)</spiffworkflow:postScript>
         <dc:Bounds x="5024" y="3545" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge id="Association_1mgme24_di" bpmnElement="Association_1mgme24">
-        <di:waypoint x="1828" y="425" />
-        <di:waypoint x="1831" y="395" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Association_089aqsx_di" bpmnElement="Association_089aqsx">
-        <di:waypoint x="1824" y="505" />
-        <di:waypoint x="1824" y="535" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Association_1778mrp_di" bpmnElement="Association_1778mrp">
-        <di:waypoint x="4720" y="3547" />
-        <di:waypoint x="4746" y="3525" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Association_012q0h5_di" bpmnElement="Association_012q0h5">
-        <di:waypoint x="2575" y="995" />
-        <di:waypoint x="2584" y="965" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="Event_0tuu728_di" bpmnElement="Event_0x47qrd">
-        <dc:Bounds x="4686" y="3607" width="36" height="36" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="4663" y="3643" width="27" height="14" />
-        </bpmndi:BPMNLabel>
+      <bpmndi:BPMNShape id="Gateway_0vdntex_di" bpmnElement="Gateway_0vdntex" isMarkerVisible="true">
+        <dc:Bounds x="1049" y="1830" width="50" height="50" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_17ye4d4_di" bpmnElement="Event_06pat97">
-        <dc:Bounds x="4126" y="3107" width="36" height="36" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="4100" y="3138" width="27" height="14" />
-        </bpmndi:BPMNLabel>
+      <bpmndi:BPMNShape id="Gateway_0msst2a_di" bpmnElement="Gateway_0msst2a" isMarkerVisible="true">
+        <dc:Bounds x="1049" y="2240" width="50" height="50" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_1a18e2t_di" bpmnElement="Event_19mu5m7">
-        <dc:Bounds x="3666" y="2777" width="36" height="36" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="3640" y="2804" width="27" height="14" />
-        </bpmndi:BPMNLabel>
+      <bpmndi:BPMNShape id="Gateway_0tzllzw_di" bpmnElement="Gateway_0tzllzw" isMarkerVisible="true">
+        <dc:Bounds x="1049" y="2840" width="50" height="50" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_0mex44i_di" bpmnElement="Event_00zhnxu">
-        <dc:Bounds x="3406" y="2137" width="36" height="36" />
+      <bpmndi:BPMNShape id="Gateway_0dj673n_di" bpmnElement="Gateway_0dj673n" isMarkerVisible="true">
+        <dc:Bounds x="1049" y="3190" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="TextAnnotation_0bqrxlm_di" bpmnElement="TextAnnotation_0bqrxlm">
+        <dc:Bounds x="1694" y="365" width="100" height="40" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="TextAnnotation_0zy71k9_di" bpmnElement="TextAnnotation_0zy71k9">
+        <dc:Bounds x="854" y="270" width="130" height="60" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="TextAnnotation_1ofkj5f_di" bpmnElement="TextAnnotation_1ofkj5f">
+        <dc:Bounds x="1784" y="355" width="80" height="40" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="TextAnnotation_0k4fn7g_di" bpmnElement="TextAnnotation_0k4fn7g">
+        <dc:Bounds x="1774" y="535" width="100" height="30" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="TextAnnotation_0qq1kr8_di" bpmnElement="TextAnnotation_0qq1kr8">
+        <dc:Bounds x="4714" y="3495" width="100" height="30" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="TextAnnotation_12tjd1d_di" bpmnElement="TextAnnotation_12tjd1d">
+        <dc:Bounds x="2554" y="935" width="70" height="30" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_095wlf3_di" bpmnElement="Event_06bnz9o">
+        <dc:Bounds x="2425" y="1057" width="36" height="36" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="3383" y="2168" width="27" height="14" />
+          <dc:Bounds x="2401" y="1088" width="27" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_1a4rusd_di" bpmnElement="Event_0eu64qs">
@@ -2268,10 +2252,28 @@ del(userTimeFormat)</spiffworkflow:postScript>
           <dc:Bounds x="3383" y="1778" width="27" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_095wlf3_di" bpmnElement="Event_06bnz9o">
-        <dc:Bounds x="2425" y="1057" width="36" height="36" />
+      <bpmndi:BPMNShape id="Event_0mex44i_di" bpmnElement="Event_00zhnxu">
+        <dc:Bounds x="3406" y="2137" width="36" height="36" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="2401" y="1088" width="27" height="14" />
+          <dc:Bounds x="3383" y="2168" width="27" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1a18e2t_di" bpmnElement="Event_19mu5m7">
+        <dc:Bounds x="3666" y="2777" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="3640" y="2804" width="27" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_17ye4d4_di" bpmnElement="Event_06pat97">
+        <dc:Bounds x="4126" y="3107" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="4100" y="3138" width="27" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0tuu728_di" bpmnElement="Event_0x47qrd">
+        <dc:Bounds x="4686" y="3607" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="4663" y="3643" width="27" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_0mbb848_di" bpmnElement="Flow_0mbb848">
@@ -2756,6 +2758,30 @@ del(userTimeFormat)</spiffworkflow:postScript>
         <di:waypoint x="1704" y="425" />
         <di:waypoint x="1724" y="405" />
       </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Association_13u0dtl_di" bpmnElement="Association_13u0dtl">
+        <di:waypoint x="924" y="425" />
+        <di:waypoint x="914" y="330" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Association_1mgme24_di" bpmnElement="Association_1mgme24">
+        <di:waypoint x="1828" y="425" />
+        <di:waypoint x="1831" y="395" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Association_089aqsx_di" bpmnElement="Association_089aqsx">
+        <di:waypoint x="1824" y="505" />
+        <di:waypoint x="1824" y="535" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Association_1778mrp_di" bpmnElement="Association_1778mrp">
+        <di:waypoint x="4720" y="3547" />
+        <di:waypoint x="4746" y="3525" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Association_012q0h5_di" bpmnElement="Association_012q0h5">
+        <di:waypoint x="2575" y="995" />
+        <di:waypoint x="2584" y="965" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DataOutputAssociation_1yn62s3_di" bpmnElement="DataOutputAssociation_1yn62s3">
+        <di:waypoint x="1024" y="600" />
+        <di:waypoint x="912" y="613" />
+      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="DataOutputAssociation_019xu31_di" bpmnElement="DataOutputAssociation_019xu31">
         <di:waypoint x="3395" y="2075" />
         <di:waypoint x="3396" y="2040" />
@@ -2779,10 +2805,6 @@ del(userTimeFormat)</spiffworkflow:postScript>
       <bpmndi:BPMNEdge id="DataOutputAssociation_0898r38_di" bpmnElement="DataOutputAssociation_0898r38">
         <di:waypoint x="2984" y="843" />
         <di:waypoint x="3056" y="841" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="DataOutputAssociation_1yn62s3_di" bpmnElement="DataOutputAssociation_1yn62s3">
-        <di:waypoint x="1024" y="600" />
-        <di:waypoint x="912" y="613" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="DataOutputAssociation_10aqq31_di" bpmnElement="DataOutputAssociation_10aqq31">
         <di:waypoint x="3054" y="1287" />
