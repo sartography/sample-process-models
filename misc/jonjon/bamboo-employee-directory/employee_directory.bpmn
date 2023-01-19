@@ -6,9 +6,9 @@
     </bpmn:startEvent>
     <bpmn:sequenceFlow id="Flow_1uyqyun" sourceRef="StartEvent_1" targetRef="Activity_1h1nk9q" />
     <bpmn:endEvent id="Event_0vttzam">
-      <bpmn:incoming>Flow_1vpthvx</bpmn:incoming>
+      <bpmn:incoming>Flow_06dhfyg</bpmn:incoming>
     </bpmn:endEvent>
-    <bpmn:sequenceFlow id="Flow_1vpthvx" sourceRef="Activity_1h1nk9q" targetRef="Event_0vttzam" />
+    <bpmn:sequenceFlow id="Flow_1vpthvx" sourceRef="Activity_1h1nk9q" targetRef="Activity_0uxg2py" />
     <bpmn:serviceTask id="Activity_1h1nk9q">
       <bpmn:extensionElements>
         <spiffworkflow:serviceTaskOperator id="http/GetRequest">
@@ -24,17 +24,36 @@
       <bpmn:incoming>Flow_1uyqyun</bpmn:incoming>
       <bpmn:outgoing>Flow_1vpthvx</bpmn:outgoing>
     </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="Flow_06dhfyg" sourceRef="Activity_0uxg2py" targetRef="Event_0vttzam" />
+    <bpmn:serviceTask id="Activity_0uxg2py">
+      <bpmn:extensionElements>
+        <spiffworkflow:serviceTaskOperator id="http/PostRequest">
+          <spiffworkflow:parameters>
+            <spiffworkflow:parameter id="basic_auth_password" type="str" value="&#34;x&#34;" />
+            <spiffworkflow:parameter id="basic_auth_username" type="str" value="&#34;secret:BAMBOOHR_API_KEY&#34;" />
+            <spiffworkflow:parameter id="data" type="any" value="{&#34;fields&#34;: [&#34;department&#34;, &#34;division&#34;, &#34;supervisorEid&#34;], &#34;title&#34;: &#34;Custom Report&#34; }" />
+            <spiffworkflow:parameter id="headers" type="any" value="{&#34;Accept&#34;: &#34;application/json&#34;}" />
+            <spiffworkflow:parameter id="url" type="str" value="&#34;https://api.bamboohr.com/api/gateway.php/statusresearchdemo/v1/reports/custom?format=JSON&#38;onlyCurrent=true&#34;" />
+          </spiffworkflow:parameters>
+        </spiffworkflow:serviceTaskOperator>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1vpthvx</bpmn:incoming>
+      <bpmn:outgoing>Flow_06dhfyg</bpmn:outgoing>
+    </bpmn:serviceTask>
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_378k10q">
       <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
         <dc:Bounds x="179" y="159" width="36" height="36" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_0vttzam_di" bpmnElement="Event_0vttzam">
-        <dc:Bounds x="432" y="159" width="36" height="36" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0paebs7_di" bpmnElement="Activity_1h1nk9q">
         <dc:Bounds x="270" y="137" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0vttzam_di" bpmnElement="Event_0vttzam">
+        <dc:Bounds x="652" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1o0jypg_di" bpmnElement="Activity_0uxg2py">
+        <dc:Bounds x="450" y="137" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_1uyqyun_di" bpmnElement="Flow_1uyqyun">
         <di:waypoint x="215" y="177" />
@@ -42,7 +61,11 @@
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1vpthvx_di" bpmnElement="Flow_1vpthvx">
         <di:waypoint x="370" y="177" />
-        <di:waypoint x="432" y="177" />
+        <di:waypoint x="450" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_06dhfyg_di" bpmnElement="Flow_06dhfyg">
+        <di:waypoint x="550" y="177" />
+        <di:waypoint x="652" y="177" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
