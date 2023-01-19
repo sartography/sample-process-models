@@ -6,7 +6,7 @@
     </bpmn:startEvent>
     <bpmn:sequenceFlow id="Flow_13zm9gj" sourceRef="StartEvent_1" targetRef="Activity_1srkrca" />
     <bpmn:endEvent id="Event_15h0l4f">
-      <bpmn:incoming>Flow_0atd9qt</bpmn:incoming>
+      <bpmn:incoming>Flow_0k1x30e</bpmn:incoming>
     </bpmn:endEvent>
     <bpmn:sequenceFlow id="Flow_0zjeeiy" sourceRef="Activity_1srkrca" targetRef="Activity_19vhkjs" />
     <bpmn:serviceTask id="Activity_1srkrca">
@@ -21,7 +21,7 @@
       <bpmn:incoming>Flow_13zm9gj</bpmn:incoming>
       <bpmn:outgoing>Flow_0zjeeiy</bpmn:outgoing>
     </bpmn:serviceTask>
-    <bpmn:sequenceFlow id="Flow_0atd9qt" sourceRef="Activity_19vhkjs" targetRef="Event_15h0l4f" />
+    <bpmn:sequenceFlow id="Flow_0atd9qt" sourceRef="Activity_19vhkjs" targetRef="Activity_1vpwian" />
     <bpmn:serviceTask id="Activity_19vhkjs">
       <bpmn:extensionElements>
         <spiffworkflow:serviceTaskOperator id="bamboohr/GetPayRate">
@@ -33,6 +33,11 @@
       <bpmn:incoming>Flow_0zjeeiy</bpmn:incoming>
       <bpmn:outgoing>Flow_0atd9qt</bpmn:outgoing>
     </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="Flow_0k1x30e" sourceRef="Activity_1vpwian" targetRef="Event_15h0l4f" />
+    <bpmn:callActivity id="Activity_1vpwian" name="Bamboo Metadata" calledElement="bamboo-list_metadata">
+      <bpmn:incoming>Flow_0atd9qt</bpmn:incoming>
+      <bpmn:outgoing>Flow_0k1x30e</bpmn:outgoing>
+    </bpmn:callActivity>
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Proccess_k7hz4tk">
@@ -42,11 +47,15 @@
       <bpmndi:BPMNShape id="Activity_10o5p6c_di" bpmnElement="Activity_1srkrca">
         <dc:Bounds x="270" y="137" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_15h0l4f_di" bpmnElement="Event_15h0l4f">
-        <dc:Bounds x="512" y="159" width="36" height="36" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1lm3u4o_di" bpmnElement="Activity_19vhkjs">
         <dc:Bounds x="390" y="137" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_15h0l4f_di" bpmnElement="Event_15h0l4f">
+        <dc:Bounds x="662" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0g4pifz_di" bpmnElement="Activity_1vpwian">
+        <dc:Bounds x="520" y="137" width="100" height="80" />
+        <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_13zm9gj_di" bpmnElement="Flow_13zm9gj">
         <di:waypoint x="215" y="177" />
@@ -58,7 +67,11 @@
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0atd9qt_di" bpmnElement="Flow_0atd9qt">
         <di:waypoint x="490" y="177" />
-        <di:waypoint x="512" y="177" />
+        <di:waypoint x="520" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0k1x30e_di" bpmnElement="Flow_0k1x30e">
+        <di:waypoint x="620" y="177" />
+        <di:waypoint x="662" y="177" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
