@@ -21,7 +21,7 @@
       <bpmn:incoming>Flow_0r3dqim</bpmn:incoming>
       <bpmn:outgoing>Flow_1ucq30g</bpmn:outgoing>
     </bpmn:serviceTask>
-    <bpmn:sequenceFlow id="Flow_1ucq30g" sourceRef="Activity_1hcms0g" targetRef="Activity_1qa56id" />
+    <bpmn:sequenceFlow id="Flow_1ucq30g" sourceRef="Activity_1hcms0g" targetRef="Activity_0yvoh8b" />
     <bpmn:serviceTask id="Activity_1qa56id" name="Write to DB">
       <bpmn:extensionElements>
         <spiffworkflow:serviceTaskOperator id="postgresql/InsertValues">
@@ -31,8 +31,21 @@
           </spiffworkflow:parameters>
         </spiffworkflow:serviceTaskOperator>
       </bpmn:extensionElements>
-      <bpmn:incoming>Flow_1ucq30g</bpmn:incoming>
+      <bpmn:incoming>Flow_1xxdp0x</bpmn:incoming>
       <bpmn:outgoing>Flow_0a7b282</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="Flow_1xxdp0x" sourceRef="Activity_0yvoh8b" targetRef="Activity_1qa56id" />
+    <bpmn:serviceTask id="Activity_0yvoh8b" name="Create Empl Table">
+      <bpmn:extensionElements>
+        <spiffworkflow:serviceTaskOperator id="postgresql/CreateTable">
+          <spiffworkflow:parameters>
+            <spiffworkflow:parameter id="schema" type="str" value="&#39;{&#34;columns&#34;: [&#34;FN&#34;, &#34;LN&#34;]}&#39;" />
+            <spiffworkflow:parameter id="table_name" type="str" value="&#39;empl&#39;" />
+          </spiffworkflow:parameters>
+        </spiffworkflow:serviceTaskOperator>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1ucq30g</bpmn:incoming>
+      <bpmn:outgoing>Flow_1xxdp0x</bpmn:outgoing>
     </bpmn:serviceTask>
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
@@ -45,22 +58,30 @@
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_106wmt6_di" bpmnElement="Event_106wmt6">
-        <dc:Bounds x="642" y="159" width="36" height="36" />
+        <dc:Bounds x="892" y="159" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1hfdp44_di" bpmnElement="Activity_1qa56id">
-        <dc:Bounds x="450" y="137" width="100" height="80" />
+        <dc:Bounds x="680" y="137" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0af6e3z_di" bpmnElement="Activity_0yvoh8b">
+        <dc:Bounds x="420" y="137" width="100" height="80" />
+        <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_0r3dqim_di" bpmnElement="Flow_0r3dqim">
         <di:waypoint x="215" y="177" />
         <di:waypoint x="270" y="177" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0a7b282_di" bpmnElement="Flow_0a7b282">
-        <di:waypoint x="550" y="177" />
-        <di:waypoint x="642" y="177" />
+        <di:waypoint x="780" y="177" />
+        <di:waypoint x="892" y="177" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1ucq30g_di" bpmnElement="Flow_1ucq30g">
         <di:waypoint x="370" y="177" />
-        <di:waypoint x="450" y="177" />
+        <di:waypoint x="420" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1xxdp0x_di" bpmnElement="Flow_1xxdp0x">
+        <di:waypoint x="520" y="177" />
+        <di:waypoint x="680" y="177" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
