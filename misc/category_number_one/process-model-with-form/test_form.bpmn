@@ -8,32 +8,15 @@
     <bpmn:endEvent id="EndEvent_0q4qzl9">
       <bpmn:incoming>Flow_17my2ps</bpmn:incoming>
     </bpmn:endEvent>
-    <bpmn:userTask id="form1" name="get_user_generated_number_one" camunda:formKey="ConfirmEmail">
-      <bpmn:extensionElements>
-        <spiffworkflow:properties>
-          <spiffworkflow:property name="formJsonSchemaFilename" value="form1.json" />
-          <spiffworkflow:property name="formUiSchemaFilename" value="form1_ui.json" />
-        </spiffworkflow:properties>
-        <spiffworkflow:instructionsForEndUser>HEY
-
-HO
-
-{{system_generated_number}}</spiffworkflow:instructionsForEndUser>
-      </bpmn:extensionElements>
-      <bpmn:incoming>Flow_0kk2hzj</bpmn:incoming>
-      <bpmn:outgoing>Flow_1cck1pb</bpmn:outgoing>
-    </bpmn:userTask>
     <bpmn:scriptTask id="multiply1" name="multiply" scriptFormat="python">
-      <bpmn:incoming>Flow_1cck1pb</bpmn:incoming>
+      <bpmn:incoming>Flow_1pq3xb5</bpmn:incoming>
       <bpmn:outgoing>Flow_16gxvwr</bpmn:outgoing>
       <bpmn:script>product_one = system_generated_number * user_generated_number_1</bpmn:script>
     </bpmn:scriptTask>
-    <bpmn:sequenceFlow id="Flow_0kk2hzj" sourceRef="set_system_generated_number" targetRef="form1" />
     <bpmn:sequenceFlow id="Flow_16gxvwr" sourceRef="multiply1" targetRef="form2" />
-    <bpmn:sequenceFlow id="Flow_1cck1pb" sourceRef="form1" targetRef="multiply1" />
     <bpmn:scriptTask id="set_system_generated_number" name="set_system_generated_number" scriptFormat="python">
       <bpmn:incoming>SequenceFlow_0lvudp8</bpmn:incoming>
-      <bpmn:outgoing>Flow_0kk2hzj</bpmn:outgoing>
+      <bpmn:outgoing>Flow_1n3gm10</bpmn:outgoing>
       <bpmn:script>system_generated_number = 4</bpmn:script>
     </bpmn:scriptTask>
     <bpmn:userTask id="form2" name="get_user_generated_number_two">
@@ -87,15 +70,43 @@ HO
     </bpmn:scriptTask>
     <bpmn:sequenceFlow id="Flow_17my2ps" sourceRef="multiply4" targetRef="EndEvent_0q4qzl9" />
     <bpmn:sequenceFlow id="Flow_0lxveac" sourceRef="form4" targetRef="multiply4" />
+    <bpmn:sequenceFlow id="Flow_1n3gm10" sourceRef="set_system_generated_number" targetRef="form_subprocess" />
+    <bpmn:sequenceFlow id="Flow_1pq3xb5" sourceRef="form_subprocess" targetRef="multiply1" />
+    <bpmn:subProcess id="form_subprocess" name="form_subprocess">
+      <bpmn:incoming>Flow_1n3gm10</bpmn:incoming>
+      <bpmn:outgoing>Flow_1pq3xb5</bpmn:outgoing>
+      <bpmn:startEvent id="Event_0ndd0oh">
+        <bpmn:outgoing>Flow_1ol104g</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="form1" name="get_user_generated_number_one" camunda:formKey="ConfirmEmail">
+        <bpmn:extensionElements>
+          <spiffworkflow:properties>
+            <spiffworkflow:property name="formJsonSchemaFilename" value="form1.json" />
+            <spiffworkflow:property name="formUiSchemaFilename" value="form1_ui.json" />
+          </spiffworkflow:properties>
+          <spiffworkflow:instructionsForEndUser>HEY
+
+HO
+
+{{system_generated_number}}</spiffworkflow:instructionsForEndUser>
+        </bpmn:extensionElements>
+        <bpmn:incoming>Flow_1ol104g</bpmn:incoming>
+        <bpmn:outgoing>Flow_0s5gxxe</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:sequenceFlow id="Flow_1ol104g" sourceRef="Event_0ndd0oh" targetRef="form1" />
+      <bpmn:endEvent id="Event_01q6of6">
+        <bpmn:incoming>Flow_0s5gxxe</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:sequenceFlow id="Flow_0s5gxxe" sourceRef="form1" targetRef="Event_01q6of6" />
+    </bpmn:subProcess>
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="test_form">
       <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
         <dc:Bounds x="112" y="99" width="36" height="36" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0hkyp4b_di" bpmnElement="form1">
-        <dc:Bounds x="230" y="210" width="100" height="80" />
-        <bpmndi:BPMNLabel />
+      <bpmndi:BPMNShape id="EndEvent_0q4qzl9_di" bpmnElement="EndEvent_0q4qzl9">
+        <dc:Bounds x="902" y="99" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1fztkl6_di" bpmnElement="multiply1">
         <dc:Bounds x="330" y="77" width="100" height="80" />
@@ -129,29 +140,19 @@ HO
         <dc:Bounds x="760" y="77" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="EndEvent_0q4qzl9_di" bpmnElement="EndEvent_0q4qzl9">
-        <dc:Bounds x="902" y="99" width="36" height="36" />
+      <bpmndi:BPMNShape id="Activity_0c1khwq_di" bpmnElement="form_subprocess" isExpanded="false">
+        <dc:Bounds x="230" y="210" width="100" height="80" />
+        <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="SequenceFlow_0lvudp8_di" bpmnElement="SequenceFlow_0lvudp8">
         <di:waypoint x="147" y="110" />
         <di:waypoint x="190" y="110" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0kk2hzj_di" bpmnElement="Flow_0kk2hzj">
-        <di:waypoint x="240" y="157" />
-        <di:waypoint x="240" y="184" />
-        <di:waypoint x="280" y="184" />
-        <di:waypoint x="280" y="210" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_16gxvwr_di" bpmnElement="Flow_16gxvwr">
         <di:waypoint x="380" y="157" />
         <di:waypoint x="380" y="184" />
         <di:waypoint x="430" y="184" />
         <di:waypoint x="430" y="210" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_1cck1pb_di" bpmnElement="Flow_1cck1pb">
-        <di:waypoint x="330" y="250" />
-        <di:waypoint x="350" y="250" />
-        <di:waypoint x="350" y="157" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0k1q81g_di" bpmnElement="Flow_0k1q81g">
         <di:waypoint x="470" y="210" />
@@ -186,6 +187,40 @@ HO
         <di:waypoint x="730" y="184" />
         <di:waypoint x="810" y="184" />
         <di:waypoint x="810" y="157" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1n3gm10_di" bpmnElement="Flow_1n3gm10">
+        <di:waypoint x="240" y="77" />
+        <di:waypoint x="240" y="57" />
+        <di:waypoint x="280" y="57" />
+        <di:waypoint x="280" y="210" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1pq3xb5_di" bpmnElement="Flow_1pq3xb5">
+        <di:waypoint x="280" y="210" />
+        <di:waypoint x="280" y="57" />
+        <di:waypoint x="380" y="57" />
+        <di:waypoint x="380" y="77" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_0jwlhvm">
+    <bpmndi:BPMNPlane id="BPMNPlane_0bwdw29" bpmnElement="form_subprocess">
+      <bpmndi:BPMNShape id="Event_0ndd0oh_di" bpmnElement="Event_0ndd0oh">
+        <dc:Bounds x="180" y="182" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0hkyp4b_di" bpmnElement="form1">
+        <dc:Bounds x="254.66666666666666" y="160" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_01q6of6_di" bpmnElement="Event_01q6of6">
+        <dc:Bounds x="396.66666666666663" y="182" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_1ol104g_di" bpmnElement="Flow_1ol104g">
+        <di:waypoint x="215.66666666666666" y="200" />
+        <di:waypoint x="254.66666666666666" y="200" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0s5gxxe_di" bpmnElement="Flow_0s5gxxe">
+        <di:waypoint x="354.66666666666663" y="200" />
+        <di:waypoint x="396.66666666666663" y="200" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
