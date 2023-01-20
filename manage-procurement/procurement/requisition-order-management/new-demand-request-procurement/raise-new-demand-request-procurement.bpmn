@@ -270,7 +270,8 @@ item_list_cnt = item_list_cnt + 1</bpmn:script>
       <bpmn:scriptTask id="Activity_12ynqv3" name="Get Total">
         <bpmn:incoming>Flow_1m64gw4</bpmn:incoming>
         <bpmn:outgoing>Flow_15m8ket</bpmn:outgoing>
-        <bpmn:script>converted_to_unit_price_total_sum = sum(v["converted_to_unit_price_total"] for v in Item.values())</bpmn:script>
+        <bpmn:script># converted_to_unit_price_total_sum = sum(v["converted_to_unit_price_total"] for v in Item.values())
+converted_to_unit_price_total_sum = 0</bpmn:script>
       </bpmn:scriptTask>
       <bpmn:textAnnotation id="TextAnnotation_00ra9ov">
         <bpmn:text>For every item</bpmn:text>
@@ -309,10 +310,10 @@ item_list_cnt = item_list_cnt + 1</bpmn:script>
 | {{ vendor }} | {{ purpose }} |
 ----------
 ## Items  
-| Item | Qty | Currency | Unit Price | Total Price | USD Price |
-|------|------|------------|------------|--------------|-------------|
+| Item | Qty | Currency | Unit Price | Total Price |
+|------|------|------------|------------|--------------|
 {% for icnt in range(item_list_total) %}
-| {{ Item[icnt]["item"] }} | {{ Item[icnt]["qty"] }} | {{ Item[icnt]["currency"] }} | {{ Item[icnt]["unit_price"] }} | | |
+| {{ Item[icnt]["item"] }} | {{ Item[icnt]["qty"] }} | {{ Item[icnt]["currency"] }} | {{ Item[icnt]["unit_price"] }} |
 {% endfor %}
 
 
