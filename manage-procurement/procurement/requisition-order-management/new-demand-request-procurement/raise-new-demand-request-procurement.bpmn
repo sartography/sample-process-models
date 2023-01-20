@@ -296,6 +296,27 @@ item_list_cnt = item_list_cnt + 1</bpmn:script>
           <spiffworkflow:property name="formJsonSchemaFilename" value="supporting-info-and-files-schema.json" />
           <spiffworkflow:property name="formUiSchemaFilename" value="supporting-info-and-files-uischema.json" />
         </spiffworkflow:properties>
+        <spiffworkflow:instructionsForEndUser>Requestor: {{ current_user_extras["full_name"] }} 
+----------
+| Project | Category | Sub-Category | Payment Method | Criticality | Period |
+|---------|------------|------------------|---------------------| ------------|---------|
+| {{ project_name[0] }} | {{ category }} | {{ sub_category }} | {{ payment_method }} | {{ criticality }} | {{ period }} |
+  
+| Vendor Name | Purpose |
+|-----------------|-----------|
+| {{ vendor }} | {{ purpose }} |
+----------
+## Items  
+| Item | Qty | Currency | Unit Price | Total Price | USD Price |
+|------|------|------------|------------|--------------|-------------|
+{% for icnt in range(item_list_total) %}
+| {{ Item[icnt]["item"] }} | {{ Item[icnt]["qty"] }} | {{ Item[icnt]["currency"] }} | {{ Item[icnt]["unit_price"] }} | | |
+{% endfor %}
+
+
+----------
+
+</spiffworkflow:instructionsForEndUser>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_1ypq7k8</bpmn:incoming>
       <bpmn:outgoing>Flow_0jhh37r</bpmn:outgoing>
@@ -2897,6 +2918,9 @@ del(userTimeFormat)</spiffworkflow:postScript>
       <bpmndi:BPMNShape id="Event_0kx8hw2_di" bpmnElement="Event_0kx8hw2">
         <dc:Bounds x="-178" y="62" width="36" height="36" />
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1lcahjp_di" bpmnElement="Event_1lcahjp">
+        <dc:Bounds x="1022" y="62" width="36" height="36" />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Gateway_0ogiyq1_di" bpmnElement="Gateway_0ogiyq1" isMarkerVisible="true">
         <dc:Bounds x="705" y="55" width="50" height="50" />
         <bpmndi:BPMNLabel>
@@ -2908,6 +2932,9 @@ del(userTimeFormat)</spiffworkflow:postScript>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0da9fog_di" bpmnElement="Activity_1anhdde">
         <dc:Bounds x="200" y="40" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0hqe7gf_di" bpmnElement="Activity_12ynqv3">
+        <dc:Bounds x="840" y="40" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="TextAnnotation_00ra9ov_di" bpmnElement="TextAnnotation_00ra9ov">
         <dc:Bounds x="-110" y="-170" width="100" height="30" />
@@ -2928,12 +2955,6 @@ del(userTimeFormat)</spiffworkflow:postScript>
       <bpmndi:BPMNShape id="TextAnnotation_145zu6s_di" bpmnElement="TextAnnotation_145zu6s">
         <dc:Bounds x="870" y="145" width="100" height="30" />
         <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_1lcahjp_di" bpmnElement="Event_1lcahjp">
-        <dc:Bounds x="1022" y="62" width="36" height="36" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0hqe7gf_di" bpmnElement="Activity_12ynqv3">
-        <dc:Bounds x="840" y="40" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_045xngq_di" bpmnElement="Flow_045xngq">
         <di:waypoint x="810" y="260" />
@@ -3009,6 +3030,10 @@ del(userTimeFormat)</spiffworkflow:postScript>
         <di:waypoint x="300" y="80" />
         <di:waypoint x="370" y="80" />
       </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_15m8ket_di" bpmnElement="Flow_15m8ket">
+        <di:waypoint x="940" y="80" />
+        <di:waypoint x="1022" y="80" />
+      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Association_1miqz5u_di" bpmnElement="Association_1miqz5u">
         <di:waypoint x="480" y="220" />
         <di:waypoint x="480" y="180" />
@@ -3024,10 +3049,6 @@ del(userTimeFormat)</spiffworkflow:postScript>
       <bpmndi:BPMNEdge id="Association_1ye3e63_di" bpmnElement="Association_1ye3e63">
         <di:waypoint x="920" y="220" />
         <di:waypoint x="920" y="175" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_15m8ket_di" bpmnElement="Flow_15m8ket">
-        <di:waypoint x="940" y="80" />
-        <di:waypoint x="1022" y="80" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
