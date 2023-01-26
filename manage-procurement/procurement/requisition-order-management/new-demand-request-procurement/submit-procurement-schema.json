@@ -1,13 +1,7 @@
 {
 	"definitions": {
-		"currency": {
-			"title": "Currency",
-			"type": "string",
-			"anyOf": [
-				"options_from_task_data_var:currency_enum_list"
-			]
-		},
-		"project": {
+
+		"projectEnum": {
 			"title": "Project",
 			"type": "string",
 			"anyOf": [
@@ -23,7 +17,7 @@
 			"title": "Requestor"
 		},
 		"project": {
-			"$ref": "#/definitions/project",
+			"$ref": "#/definitions/projectEnum",
 			"title": "Project"
 		},
 		"category": {
@@ -55,20 +49,20 @@
 		},
 		"period": {
 			"type": "string",
-			"title": "Period"
+			"format": "date",
+	        "minimumDate": "today",
+			"title": "Period",
+			"validationErrorMessage": "Date must be equal to or greater than today's date"
 		},
-		"payment-method": {
+		"payment_method": {
 			"type": "string",
 			"title": "Payment method",
 			"enum": [
 				"Bank transfer",
+				"Crypto transfer",
 				"Debit Card",
-				"Crypto transfer"
+				"Reimbursement"
 			]
-		},
-		"currency": {
-			"$ref": "#/definitions/currency",
-			"title": "Currency"
 		}
 	},
 	"dependencies": {
@@ -80,8 +74,8 @@
 									"Software & Licences"
 								]
 							},
-							"sub-category": {
-								"title": "Sub Category",
+							"sub_category": {
+								"title": "Sub-Category",
 								"type": "string",
 								"enum": [
 									"Licences",
@@ -91,7 +85,7 @@
 							}
 						},
 						"required": [
-							"sub-category"
+							"sub_category"
 						]
 					},
 					{
@@ -101,8 +95,8 @@
 									"Learning & Development"
 								]
 							},
-							"sub-category": {
-								"title": "Sub Category",
+							"sub_category": {
+								"title": "Sub-Category",
 								"type": "string",
 								"enum": [
 									"Books",
@@ -112,7 +106,7 @@
 							}
 						},
 						"required": [
-							"sub-category"
+							"sub_category"
 						]
 					},
 					{
@@ -122,8 +116,8 @@
 									"Equipment"
 								]
 							},
-							"sub-category": {
-								"title": "Sub Category",
+							"sub_category": {
+								"title": "Sub-Category",
 								"type": "string",
 								"enum": [
 									"Laptops",
@@ -133,7 +127,7 @@
 							}
 						},
 						"required": [
-							"sub-category"
+							"sub_category"
 						]
 					}
 				]

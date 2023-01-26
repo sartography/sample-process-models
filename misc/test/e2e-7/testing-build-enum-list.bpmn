@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:spiffworkflow="http://spiffworkflow.org/bpmn/schema/1.0/core" id="Definitions_96f6665" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.7.0">
+  <bpmn:process id="Testing_Build_Enum_List" name="SR: Build Enum List" isExecutable="true">
+    <bpmn:ioSpecification>
+      <bpmn:dataInput id="whichSubject" name="whichSubject" />
+      <bpmn:dataInput id="whichGrouping" name="whichGrouping" />
+      <bpmn:dataInput id="addNew" name="addNew" />
+      <bpmn:dataOutput id="enumerations_list" name="enumerations_list" />
+      <bpmn:inputSet />
+      <bpmn:outputSet />
+    </bpmn:ioSpecification>
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>Flow_1q2eauk</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:scriptTask id="Activity_0w26t4e" name="Build Enum List" scriptFormat="python">
+      <bpmn:incoming>Flow_0v5fbcq</bpmn:incoming>
+      <bpmn:outgoing>Flow_1lst375</bpmn:outgoing>
+      <bpmn:script># Build Enum List from AWS
+enumerations_items_list = enumerations
+
+# Build Enum List
+enumerations_items_list_cnt = len(enumerations)
+enumerations_list = []
+if addNew:
+    enumerations_list.append({'label': 'Add New', 'value': 'add'})
+if enumerations_items_list_cnt &gt; 0:
+    for n in range(0, enumerations_items_list_cnt):
+        if enumerations_items_list[n][0] == whichSubject:
+            enumerations_list.append({'value': enumerations_items_list[n][1], 'label': enumerations_items_list[n][2]})
+
+# del(enumerations)
+# del(enumerations_items_list)
+# del(enumerations_items_list_cnt)
+# del(whichGrouping)
+# del(whichSubject)</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:endEvent id="Event_0imyhx8">
+      <bpmn:incoming>Flow_1lst375</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_1lst375" sourceRef="Activity_0w26t4e" targetRef="Event_0imyhx8" />
+    <bpmn:serviceTask id="Activity_0jnxeox" name="Select From PostgreSQL Enumeration Tabl;e">
+      <bpmn:extensionElements>
+        <spiffworkflow:serviceTaskOperator id="postgresql/SelectValues" resultVariable="enumerations">
+          <spiffworkflow:parameters>
+            <spiffworkflow:parameter id="schema" type="str" value="{&#34;columns&#34;: [&#34;subject&#34;, &#34;value&#34;, &#34;label&#34;], &#34;where&#34;: [[&#34;subject&#34;, &#34;=&#34;, whichSubject]]}" />
+            <spiffworkflow:parameter id="table_name" type="str" value="&#39;enumeration&#39;" />
+          </spiffworkflow:parameters>
+        </spiffworkflow:serviceTaskOperator>
+        <spiffworkflow:preScript />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1bkxgbz</bpmn:incoming>
+      <bpmn:outgoing>Flow_0gixuq8</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="Flow_1q2eauk" sourceRef="StartEvent_1" targetRef="Activity_065r39v" />
+    <bpmn:sequenceFlow id="Flow_0gixuq8" sourceRef="Activity_0jnxeox" targetRef="Gateway_18yu9q8" />
+    <bpmn:sequenceFlow id="Flow_0er16yj" sourceRef="Activity_065r39v" targetRef="Gateway_0o3szv4" />
+    <bpmn:exclusiveGateway id="Gateway_0o3szv4" default="Flow_1bkxgbz">
+      <bpmn:incoming>Flow_0er16yj</bpmn:incoming>
+      <bpmn:outgoing>Flow_1bkxgbz</bpmn:outgoing>
+      <bpmn:outgoing>Flow_1mfo25a</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="Flow_1bkxgbz" name="Subject Only" sourceRef="Gateway_0o3szv4" targetRef="Activity_0jnxeox" />
+    <bpmn:scriptTask id="Activity_065r39v" name="Set Which Select">
+      <bpmn:incoming>Flow_1q2eauk</bpmn:incoming>
+      <bpmn:outgoing>Flow_0er16yj</bpmn:outgoing>
+      <bpmn:script># Check if whichGrouping was passed in
+try:
+  whichGrouping
+except NameError:
+  whichGrouping = ""</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:exclusiveGateway id="Gateway_18yu9q8">
+      <bpmn:incoming>Flow_0gixuq8</bpmn:incoming>
+      <bpmn:incoming>Flow_09gbpg5</bpmn:incoming>
+      <bpmn:outgoing>Flow_0v5fbcq</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="Flow_0v5fbcq" sourceRef="Gateway_18yu9q8" targetRef="Activity_0w26t4e" />
+    <bpmn:sequenceFlow id="Flow_1mfo25a" name="Subject &#38; Grouping" sourceRef="Gateway_0o3szv4" targetRef="Activity_1prvd2f">
+      <bpmn:conditionExpression>whichGrouping != ""</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:serviceTask id="Activity_1prvd2f" name="Select whichCategory &#38; whicbGrouping">
+      <bpmn:extensionElements>
+        <spiffworkflow:serviceTaskOperator id="postgresql/SelectValues" resultVariable="enumerations">
+          <spiffworkflow:parameters>
+            <spiffworkflow:parameter id="schema" type="any" value="{&#34;columns&#34;: [&#34;subject&#34;, &#34;value&#34;, &#34;label&#34;], &#34;where&#34;: [[&#34;subject&#34;, &#34;=&#34;, whichSubject], [&#34;grouping&#34;, &#34;=&#34;, whichGrouping]]}" />
+            <spiffworkflow:parameter id="table_name" type="str" value="&#39;enumeration&#39;" />
+          </spiffworkflow:parameters>
+        </spiffworkflow:serviceTaskOperator>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1mfo25a</bpmn:incoming>
+      <bpmn:outgoing>Flow_09gbpg5</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="Flow_09gbpg5" sourceRef="Activity_1prvd2f" targetRef="Gateway_18yu9q8" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Testing_Build_Enum_List">
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="-118" y="99" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1lf3qci_di" bpmnElement="Activity_0w26t4e">
+        <dc:Bounds x="560" y="77" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0imyhx8_di" bpmnElement="Event_0imyhx8">
+        <dc:Bounds x="732" y="99" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0q9yh3w_di" bpmnElement="Activity_0jnxeox">
+        <dc:Bounds x="260" y="-10" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_0o3szv4_di" bpmnElement="Gateway_0o3szv4" isMarkerVisible="true">
+        <dc:Bounds x="135" y="92" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_09n2cmg_di" bpmnElement="Activity_065r39v">
+        <dc:Bounds x="-30" y="77" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_18yu9q8_di" bpmnElement="Gateway_18yu9q8" isMarkerVisible="true">
+        <dc:Bounds x="435" y="92" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0d2o4uz_di" bpmnElement="Activity_1prvd2f">
+        <dc:Bounds x="260" y="170" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DataInput-617860420-1DI" bpmnElement="whichSubject">
+        <dc:Bounds x="-98" y="-75" width="36" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="-110" y="-18" width="65" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DataInput-312078453-1DI" bpmnElement="whichGrouping">
+        <dc:Bounds x="12" y="-75" width="36" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="-6" y="-18" width="74" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DataInput-367684539-1DI" bpmnElement="addNew">
+        <dc:Bounds x="112" y="-75" width="36" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="110" y="-18" width="41" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DataOutput-120561074-1DI" bpmnElement="enumerations_list">
+        <dc:Bounds x="722" y="-75" width="36" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="698" y="-18" width="87" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_1lst375_di" bpmnElement="Flow_1lst375">
+        <di:waypoint x="660" y="117" />
+        <di:waypoint x="732" y="117" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1q2eauk_di" bpmnElement="Flow_1q2eauk">
+        <di:waypoint x="-82" y="117" />
+        <di:waypoint x="-30" y="117" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0gixuq8_di" bpmnElement="Flow_0gixuq8">
+        <di:waypoint x="360" y="30" />
+        <di:waypoint x="460" y="30" />
+        <di:waypoint x="460" y="92" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0er16yj_di" bpmnElement="Flow_0er16yj">
+        <di:waypoint x="70" y="117" />
+        <di:waypoint x="135" y="117" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1bkxgbz_di" bpmnElement="Flow_1bkxgbz">
+        <di:waypoint x="160" y="92" />
+        <di:waypoint x="160" y="30" />
+        <di:waypoint x="260" y="30" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="168" y="43" width="63" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0v5fbcq_di" bpmnElement="Flow_0v5fbcq">
+        <di:waypoint x="485" y="117" />
+        <di:waypoint x="560" y="117" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1mfo25a_di" bpmnElement="Flow_1mfo25a">
+        <di:waypoint x="160" y="142" />
+        <di:waypoint x="160" y="210" />
+        <di:waypoint x="260" y="210" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="166" y="173" width="48" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_09gbpg5_di" bpmnElement="Flow_09gbpg5">
+        <di:waypoint x="360" y="210" />
+        <di:waypoint x="460" y="210" />
+        <di:waypoint x="460" y="142" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

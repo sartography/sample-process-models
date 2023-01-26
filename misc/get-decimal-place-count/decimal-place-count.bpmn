@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_96f6665" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.0.0-dev">
+  <bpmn:process id="Decimal_Place_Count" name="Decimal Place Count" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>Flow_14jfd9v</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_14jfd9v" sourceRef="StartEvent_1" targetRef="Get_Decimal_Place_Count" />
+    <bpmn:scriptTask id="Get_Decimal_Place_Count" name="Get Decimal Place Count">
+      <bpmn:incoming>Flow_14jfd9v</bpmn:incoming>
+      <bpmn:outgoing>Flow_1lsx968</bpmn:outgoing>
+      <bpmn:script># Check is done on a string
+# Convert if variable is integer or float
+if isinstance(decimal_count_check, int) or isinstance(decimal_count_check, float):
+    decimal_count_str = str(decimal_count_check)
+else:
+    decimal_count_str = decimal_count_check
+
+# Check if there are more than two decimal places
+d = decimal.Decimal(decimal_count_str)
+d_cnt = d.as_tuple().exponent
+
+# Get number of decimal places
+decimal_count_result = abs(d_cnt)
+
+#Delete unneeded variables
+del d
+del d_cnt
+del decimal</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:endEvent id="Event_1ab9t2a">
+      <bpmn:incoming>Flow_1lsx968</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_1lsx968" sourceRef="Get_Decimal_Place_Count" targetRef="Event_1ab9t2a" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Decimal_Place_Count">
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="179" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1rmow2j_di" bpmnElement="Get_Decimal_Place_Count">
+        <dc:Bounds x="270" y="137" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1ab9t2a_di" bpmnElement="Event_1ab9t2a">
+        <dc:Bounds x="432" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_14jfd9v_di" bpmnElement="Flow_14jfd9v">
+        <di:waypoint x="215" y="177" />
+        <di:waypoint x="270" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1lsx968_di" bpmnElement="Flow_1lsx968">
+        <di:waypoint x="370" y="177" />
+        <di:waypoint x="432" y="177" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

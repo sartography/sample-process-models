@@ -2,30 +2,20 @@
 <definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/" xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/" xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/" xmlns:biodi="http://bpmn.io/schema/dmn/biodi/2.0" id="Definitions_76910d7" name="DRD" namespace="http://camunda.org/schema/1.0/dmn">
   <decision id="Which_External_Data" name="Which External Data">
     <decisionTable id="decisionTable_1">
-      <input id="input_1" label="Process Model Identifier" biodi:width="374">
-        <inputExpression id="inputExpression_1" typeRef="string">
-          <text>process_info["process_model_identifier"]</text>
-        </inputExpression>
-      </input>
-      <input id="InputClause_1qnbg4j" label="Task Name">
+      <input id="InputClause_1qnbg4j" label="Task Name" biodi:width="520">
         <inputExpression id="LiteralExpression_0m4cel6" typeRef="string">
           <text>external_data_task_name</text>
         </inputExpression>
       </input>
-      <output id="output_1" label="Xero Currencies?" name="is_xero_currencies" typeRef="boolean" biodi:width="151" />
       <output id="OutputClause_1splafh" label="Bamboo Employee?" name="is_bamboo_employee" typeRef="boolean" biodi:width="170" />
       <output id="OutputClause_06hxojo" label="Bamboo Pay?" name="is_bamboo_pay" typeRef="boolean" biodi:width="150" />
       <output id="OutputClause_0j6a4mc" label="Bamboo Dept &#38; Div?" name="is_bamboo_dept_div" typeRef="boolean" biodi:width="180" />
+      <output id="output_1" label="Xero Currencies?" name="is_xero_currencies" typeRef="boolean" biodi:width="151" />
+      <output id="OutputClause_0wlrvvd" label="Xero Currency Converter?" name="is_xero_currency_converter" typeRef="boolean" biodi:width="208" />
       <rule id="DecisionRule_1e2h6me">
-        <inputEntry id="UnaryTests_0pxijal">
-          <text>"manage-procurement/procurement/requisition-order-management/raise-new-demand-request"</text>
-        </inputEntry>
         <inputEntry id="UnaryTests_1dzler4">
-          <text>"start_event"</text>
+          <text>"Process Start"</text>
         </inputEntry>
-        <outputEntry id="LiteralExpression_0a6n1h7">
-          <text>False</text>
-        </outputEntry>
         <outputEntry id="LiteralExpression_1lwjowo">
           <text>True</text>
         </outputEntry>
@@ -35,17 +25,17 @@
         <outputEntry id="LiteralExpression_1ofjl4w">
           <text>False</text>
         </outputEntry>
+        <outputEntry id="LiteralExpression_0a6n1h7">
+          <text>False</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1yktzjs">
+          <text>False</text>
+        </outputEntry>
       </rule>
       <rule id="DecisionRule_0ytp2ox">
-        <inputEntry id="UnaryTests_057hy8a">
-          <text>"manage-procurement/procurement/requisition-order-management/raise-new-demand-request"</text>
-        </inputEntry>
         <inputEntry id="UnaryTests_1ti47mt">
-          <text>"submit_procurement"</text>
+          <text>"Raise New Demand Request-Procurement-Submit Request"</text>
         </inputEntry>
-        <outputEntry id="LiteralExpression_0aatda1">
-          <text>True</text>
-        </outputEntry>
         <outputEntry id="LiteralExpression_0u2xbuk">
           <text>False</text>
         </outputEntry>
@@ -55,17 +45,37 @@
         <outputEntry id="LiteralExpression_0nepskb">
           <text>True</text>
         </outputEntry>
+        <outputEntry id="LiteralExpression_0aatda1">
+          <text>True</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_0jwygj4">
+          <text>False</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_07etklr">
+        <inputEntry id="UnaryTests_0zkwtvh">
+          <text>"Raise New Demand Request-Procurement-Normalize Item Cost"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1kk73az">
+          <text>False</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_03hrh1e">
+          <text>False</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_0ve2zsc">
+          <text>False</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1l9fhds">
+          <text>False</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1novyb9">
+          <text>True</text>
+        </outputEntry>
       </rule>
       <rule id="DecisionRule_1whj59o">
-        <inputEntry id="UnaryTests_0z3lajt">
-          <text></text>
-        </inputEntry>
         <inputEntry id="UnaryTests_155nlct">
           <text></text>
         </inputEntry>
-        <outputEntry id="LiteralExpression_0dghajx">
-          <text>False</text>
-        </outputEntry>
         <outputEntry id="LiteralExpression_053ncrw">
           <text>False</text>
         </outputEntry>
@@ -73,6 +83,12 @@
           <text>False</text>
         </outputEntry>
         <outputEntry id="LiteralExpression_1r2hok0">
+          <text>False</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_0dghajx">
+          <text>False</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_01wtqwb">
           <text>False</text>
         </outputEntry>
       </rule>

@@ -1,20 +1,51 @@
 {
+  "definitions": {
+		"currencyEnum": {
+			"title": "Currency",
+			"type": "string",
+			"anyOf": [
+				"options_from_task_data_var:currency_enum_list"
+			]
+		}
+	},
   "title": "Demand Request Items",
   "description": "Itemized list of all items included in this demand request.",
-  "properties": {
-    "item": {
-      "type": "string",
-      "title": "Item",
-      "maxLength": 100
-    },
-    "qty": {
-      "type": "integer",
-      "title": "Qty"
-    },
-    "unit-price": {
-      "type": "number",
-      "title": "Unit price"
+    "type": "object",
+    "properties": {
+    "Item": {
+      "type": "array",
+      "title": "Items",
+      "items": {
+        "type": "object",
+        "required": [
+          "item",
+  		    "qty",
+          "currency",
+	  	    "unit_price"
+        ],
+        "properties": {
+          "item": {
+            "type": "string",
+            "title": "Item",
+            "description": "Name of item to be purchased"
+          },
+          "qty": {
+            "type": "number",
+            "title": "Qty",
+            "description": "Number of items"
+          },
+          "currency": {
+      		  "$ref": "#/definitions/currencyEnum",
+			      "title": "Currency"
+		      },
+          "unit_price": {
+            "type": "string",
+            "title": "Unit Price",
+            "pattern": "^(\\d{1,3}(,?\\d{3})*)(\\.\\d\\d)?$",
+            "validationErrorMessage": "Must have no commas orcommas every 3 places, period for separator, 0 or 2 numbers after separator"
+          }
+        }
+      }
     }
-  },
-  "required": ["item","qty","unit-price"]
+  }
 }

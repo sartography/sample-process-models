@@ -17,10 +17,10 @@
 process_info = get_process_info()</bpmn:script>
     </bpmn:scriptTask>
     <bpmn:endEvent id="Event_1ghzw9d">
-      <bpmn:incoming>Flow_00fd8n9</bpmn:incoming>
+      <bpmn:incoming>Flow_0w854zv</bpmn:incoming>
     </bpmn:endEvent>
     <bpmn:sequenceFlow id="Flow_1m5aamy" sourceRef="Activity_0i59o4c" targetRef="Activity_0yoy91y" />
-    <bpmn:sequenceFlow id="Flow_00fd8n9" sourceRef="Activity_0yoy91y" targetRef="Event_1ghzw9d" />
+    <bpmn:sequenceFlow id="Flow_00fd8n9" sourceRef="Activity_0yoy91y" targetRef="Activity_0437lb9" />
     <bpmn:callActivity id="Activity_0yoy91y" name="Call SR: User Info" calledElement="SR-User_Info">
       <bpmn:extensionElements>
         <spiffworkflow:preScript />
@@ -28,6 +28,40 @@ process_info = get_process_info()</bpmn:script>
       <bpmn:incoming>Flow_1m5aamy</bpmn:incoming>
       <bpmn:outgoing>Flow_00fd8n9</bpmn:outgoing>
     </bpmn:callActivity>
+    <bpmn:sequenceFlow id="Flow_0w854zv" sourceRef="Activity_0437lb9" targetRef="Event_1ghzw9d" />
+    <bpmn:scriptTask id="Activity_0437lb9" name="Update Current User Info">
+      <bpmn:incoming>Flow_00fd8n9</bpmn:incoming>
+      <bpmn:outgoing>Flow_0w854zv</bpmn:outgoing>
+      <bpmn:script># Update Current User Extras
+current_user_extras = {}
+
+# Add User Info DMN Table info
+current_user_extras["bamboo_api_id"] = userBambooId
+current_user_extras["time_zone"] = userTimeZone
+current_user_extras["date_format"] = userDateFormat
+current_user_extras["time_format"] = userTimeFormat
+
+# Add Bamboo Info to Extras if Status email
+if is_status_email:
+    current_user_extras["first_name"] = bamboo_get_employee["firstName"]
+    current_user_extras["last_name"] = bamboo_get_employee["lastName"]
+    current_user_extras["preferred_name"] = bamboo_get_employee["preferredName"]
+    if current_user_extras["preferred_name"] is None:
+        current_user_extras["full_name"] = current_user_extras["first_name"] + " " + current_user_extras["last_name"]
+    else:
+        current_user_extras["full_name"] = current_user_extras["first_name"] + " (" + current_user_extras["preferred_name"] + ") " + current_user_extras["last_name"]
+    current_user_extras["status_key"] = bamboo_get_employee["customStatusChatKey"]
+    current_user_extras["bamboo_reporting_to"] = bamboo_get_employee["supervisor"]
+
+del(userFullName)
+del(userFirstName)
+del(userTimeZone)
+del(userStatusKey)
+del(userBambooId)
+del(userDateFormat)
+del(userTimeFormat)
+del(bamboo_get_employee)</bpmn:script>
+    </bpmn:scriptTask>
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="SR-Start_Process">
@@ -38,12 +72,15 @@ process_info = get_process_info()</bpmn:script>
         <dc:Bounds x="270" y="77" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1ghzw9d_di" bpmnElement="Event_1ghzw9d">
+        <dc:Bounds x="812" y="99" width="36" height="36" />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_18fbf94_di" bpmnElement="Activity_0yoy91y">
         <dc:Bounds x="440" y="77" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_1ghzw9d_di" bpmnElement="Event_1ghzw9d">
-        <dc:Bounds x="632" y="99" width="36" height="36" />
+      <bpmndi:BPMNShape id="Activity_0y9449j_di" bpmnElement="Activity_0437lb9">
+        <dc:Bounds x="620" y="77" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_1u7dtsr_di" bpmnElement="Flow_1u7dtsr">
         <di:waypoint x="215" y="117" />
@@ -55,7 +92,11 @@ process_info = get_process_info()</bpmn:script>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_00fd8n9_di" bpmnElement="Flow_00fd8n9">
         <di:waypoint x="540" y="117" />
-        <di:waypoint x="632" y="117" />
+        <di:waypoint x="620" y="117" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0w854zv_di" bpmnElement="Flow_0w854zv">
+        <di:waypoint x="720" y="117" />
+        <di:waypoint x="812" y="117" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
