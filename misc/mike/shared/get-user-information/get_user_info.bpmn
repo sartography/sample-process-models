@@ -1,37 +1,46 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_96f6665" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.0.0-dev">
-  <bpmn:process id="Process_i9h0a1l" isExecutable="true">
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:spiffworkflow="http://spiffworkflow.org/bpmn/schema/1.0/core" id="Definitions_96f6665" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.0.0-dev">
+  <bpmn:process id="Process_GetUserInformation" name="Get User Information" isExecutable="true">
+    <bpmn:ioSpecification>
+      <bpmn:dataOutput id="user_name" name="User Name" />
+      <bpmn:inputSet />
+      <bpmn:outputSet />
+    </bpmn:ioSpecification>
     <bpmn:startEvent id="StartEvent_1">
       <bpmn:outgoing>Flow_17yyroi</bpmn:outgoing>
     </bpmn:startEvent>
-    <bpmn:sequenceFlow id="Flow_17yyroi" sourceRef="StartEvent_1" targetRef="Activity_1pr5125" />
-    <bpmn:userTask id="Activity_1pr5125">
+    <bpmn:sequenceFlow id="Flow_17yyroi" sourceRef="StartEvent_1" targetRef="Activity_GetUserInformationForm" />
+    <bpmn:userTask id="Activity_GetUserInformationForm" name="Get User Information Form">
+      <bpmn:extensionElements>
+        <spiffworkflow:properties>
+          <spiffworkflow:property name="formJsonSchemaFilename" value="user_information_form.json" />
+        </spiffworkflow:properties>
+      </bpmn:extensionElements>
       <bpmn:incoming>Flow_17yyroi</bpmn:incoming>
       <bpmn:outgoing>Flow_1jdss7g</bpmn:outgoing>
     </bpmn:userTask>
-    <bpmn:task id="Activity_0tgwozm">
-      <bpmn:incoming>Flow_1jdss7g</bpmn:incoming>
-      <bpmn:outgoing>Flow_0m6w8tv</bpmn:outgoing>
-    </bpmn:task>
-    <bpmn:sequenceFlow id="Flow_1jdss7g" sourceRef="Activity_1pr5125" targetRef="Activity_0tgwozm" />
+    <bpmn:sequenceFlow id="Flow_1jdss7g" sourceRef="Activity_GetUserInformationForm" targetRef="Event_18dn05a" />
     <bpmn:endEvent id="Event_18dn05a">
-      <bpmn:incoming>Flow_0m6w8tv</bpmn:incoming>
+      <bpmn:incoming>Flow_1jdss7g</bpmn:incoming>
     </bpmn:endEvent>
-    <bpmn:sequenceFlow id="Flow_0m6w8tv" sourceRef="Activity_0tgwozm" targetRef="Event_18dn05a" />
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
-    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_i9h0a1l">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_GetUserInformation">
+      <bpmndi:BPMNShape id="DataOutput-720669518-1DI" bpmnElement="user_name">
+        <dc:Bounds x="492" y="35" width="36" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="483" y="92" width="56" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
         <dc:Bounds x="179" y="159" width="36" height="36" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0fiqijf_di" bpmnElement="Activity_1pr5125">
+      <bpmndi:BPMNShape id="Activity_0fiqijf_di" bpmnElement="Activity_GetUserInformationForm">
         <dc:Bounds x="270" y="137" width="100" height="80" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0tgwozm_di" bpmnElement="Activity_0tgwozm">
-        <dc:Bounds x="430" y="137" width="100" height="80" />
+        <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_18dn05a_di" bpmnElement="Event_18dn05a">
-        <dc:Bounds x="592" y="159" width="36" height="36" />
+        <dc:Bounds x="428" y="159" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_17yyroi_di" bpmnElement="Flow_17yyroi">
         <di:waypoint x="215" y="177" />
@@ -39,11 +48,7 @@
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1jdss7g_di" bpmnElement="Flow_1jdss7g">
         <di:waypoint x="370" y="177" />
-        <di:waypoint x="430" y="177" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0m6w8tv_di" bpmnElement="Flow_0m6w8tv">
-        <di:waypoint x="530" y="177" />
-        <di:waypoint x="592" y="177" />
+        <di:waypoint x="428" y="177" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
