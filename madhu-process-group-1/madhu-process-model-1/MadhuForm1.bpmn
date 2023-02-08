@@ -1,13 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_96f6665" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.0.0-dev">
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:spiffworkflow="http://spiffworkflow.org/bpmn/schema/1.0/core" id="Definitions_96f6665" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.0.0-dev">
   <bpmn:process id="Process_oa8nhxw" isExecutable="true">
     <bpmn:startEvent id="StartEvent_1">
       <bpmn:outgoing>Flow_1cokb41</bpmn:outgoing>
     </bpmn:startEvent>
     <bpmn:sequenceFlow id="Flow_1cokb41" sourceRef="StartEvent_1" targetRef="Activity_GetData" />
     <bpmn:userTask id="Activity_GetData" name="Get Data">
+      <bpmn:extensionElements>
+        <spiffworkflow:properties>
+          <spiffworkflow:property name="formJsonSchemaFilename" value="GetData.json" />
+        </spiffworkflow:properties>
+      </bpmn:extensionElements>
       <bpmn:incoming>Flow_1cokb41</bpmn:incoming>
+      <bpmn:outgoing>Flow_0oap1ox</bpmn:outgoing>
     </bpmn:userTask>
+    <bpmn:sequenceFlow id="Flow_0oap1ox" sourceRef="Activity_GetData" targetRef="Activity_Showdata" />
+    <bpmn:endEvent id="Event_059ra88">
+      <bpmn:incoming>Flow_0jvxbj1</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_0jvxbj1" sourceRef="Activity_Showdata" targetRef="Event_059ra88" />
+    <bpmn:scriptTask id="Activity_Showdata" name="Show Data">
+      <bpmn:incoming>Flow_0oap1ox</bpmn:incoming>
+      <bpmn:outgoing>Flow_0jvxbj1</bpmn:outgoing>
+      <bpmn:script>data = {"id": id}</bpmn:script>
+    </bpmn:scriptTask>
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_oa8nhxw">
@@ -18,9 +34,24 @@
         <dc:Bounds x="270" y="137" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_059ra88_di" bpmnElement="Event_059ra88">
+        <dc:Bounds x="572" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0va0gqf_di" bpmnElement="Activity_Showdata">
+        <dc:Bounds x="420" y="137" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_1cokb41_di" bpmnElement="Flow_1cokb41">
         <di:waypoint x="215" y="177" />
         <di:waypoint x="270" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0oap1ox_di" bpmnElement="Flow_0oap1ox">
+        <di:waypoint x="370" y="177" />
+        <di:waypoint x="420" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0jvxbj1_di" bpmnElement="Flow_0jvxbj1">
+        <di:waypoint x="520" y="177" />
+        <di:waypoint x="572" y="177" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
