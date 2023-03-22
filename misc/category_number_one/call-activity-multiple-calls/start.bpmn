@@ -6,27 +6,33 @@
     </bpmn:startEvent>
     <bpmn:sequenceFlow id="Flow_0m4suiu" sourceRef="StartEvent_1" targetRef="call_one" />
     <bpmn:endEvent id="Event_0pq4nje">
-      <bpmn:incoming>Flow_0negut5</bpmn:incoming>
+      <bpmn:incoming>Flow_04l47c7</bpmn:incoming>
     </bpmn:endEvent>
     <bpmn:callActivity id="call_one" name="Call One" calledElement="process_to_call">
       <bpmn:extensionElements>
         <spiffworkflow:preScript>a = 1</spiffworkflow:preScript>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_0m4suiu</bpmn:incoming>
-      <bpmn:outgoing>Flow_0negut5</bpmn:outgoing>
+      <bpmn:outgoing>Flow_1fzxj1j</bpmn:outgoing>
     </bpmn:callActivity>
     <bpmn:callActivity id="call_two" name="Call Two" calledElement="process_to_call">
       <bpmn:extensionElements>
         <spiffworkflow:preScript>a = 2
 b = 1</spiffworkflow:preScript>
       </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1fzxj1j</bpmn:incoming>
+      <bpmn:outgoing>Flow_1rsg9zi</bpmn:outgoing>
     </bpmn:callActivity>
     <bpmn:callActivity id="call_three" name="Call Three" calledElement="process_to_call">
       <bpmn:extensionElements>
         <spiffworkflow:preScript>a = 3</spiffworkflow:preScript>
       </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1rsg9zi</bpmn:incoming>
+      <bpmn:outgoing>Flow_0gknqdd</bpmn:outgoing>
     </bpmn:callActivity>
     <bpmn:subProcess id="sub_process_call_acitivty_multiple" name="SubProcess Call Activity Multiple">
+      <bpmn:incoming>Flow_0gknqdd</bpmn:incoming>
+      <bpmn:outgoing>Flow_04l47c7</bpmn:outgoing>
       <bpmn:startEvent id="Event_0vhoie3">
         <bpmn:outgoing>Flow_16fkfvy</bpmn:outgoing>
       </bpmn:startEvent>
@@ -40,7 +46,10 @@ b = 1</spiffworkflow:preScript>
         <bpmn:outgoing>Flow_0jbrwwb</bpmn:outgoing>
       </bpmn:callActivity>
     </bpmn:subProcess>
-    <bpmn:sequenceFlow id="Flow_0negut5" sourceRef="call_one" targetRef="Event_0pq4nje" />
+    <bpmn:sequenceFlow id="Flow_1fzxj1j" sourceRef="call_one" targetRef="call_two" />
+    <bpmn:sequenceFlow id="Flow_1rsg9zi" sourceRef="call_two" targetRef="call_three" />
+    <bpmn:sequenceFlow id="Flow_0gknqdd" sourceRef="call_three" targetRef="sub_process_call_acitivty_multiple" />
+    <bpmn:sequenceFlow id="Flow_04l47c7" sourceRef="sub_process_call_acitivty_multiple" targetRef="Event_0pq4nje" />
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_rmvgdyk">
@@ -70,8 +79,24 @@ b = 1</spiffworkflow:preScript>
         <di:waypoint x="215" y="177" />
         <di:waypoint x="270" y="177" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0negut5_di" bpmnElement="Flow_0negut5">
+      <bpmndi:BPMNEdge id="Flow_1fzxj1j_di" bpmnElement="Flow_1fzxj1j">
         <di:waypoint x="370" y="177" />
+        <di:waypoint x="400" y="177" />
+        <di:waypoint x="400" y="180" />
+        <di:waypoint x="430" y="180" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1rsg9zi_di" bpmnElement="Flow_1rsg9zi">
+        <di:waypoint x="530" y="177" />
+        <di:waypoint x="560" y="177" />
+        <di:waypoint x="560" y="190" />
+        <di:waypoint x="590" y="190" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0gknqdd_di" bpmnElement="Flow_0gknqdd">
+        <di:waypoint x="690" y="177" />
+        <di:waypoint x="750" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_04l47c7_di" bpmnElement="Flow_04l47c7">
+        <di:waypoint x="850" y="177" />
         <di:waypoint x="912" y="177" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
