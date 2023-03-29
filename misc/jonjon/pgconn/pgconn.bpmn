@@ -1,37 +1,68 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:spiffworkflow="http://spiffworkflow.org/bpmn/schema/1.0/core" id="Definitions_96f6665" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.0.0-dev">
   <bpmn:process id="Process_u5uill4" isExecutable="true">
-    <bpmn:startEvent id="StartEvent_1">
-      <bpmn:outgoing>Flow_0eq3sw1</bpmn:outgoing>
+    <bpmn:scriptTask id="Activity_0tj29cs" name="set vars">
+      <bpmn:incoming>Flow_0juis1q</bpmn:incoming>
+      <bpmn:outgoing>Flow_03hjh5l</bpmn:outgoing>
+      <bpmn:script>column_definitions = [
+    {
+        "name": "country",
+        "type": "varchar(255)",
+    },
+    {
+        "name": "state",
+        "type": "varchar(13)",
+    },
+    {
+        "name": "abbrev",
+        "type": "char(2)",
+    },
+    {
+        "name": "somenum",
+        "type": "int",
+    }
+]
+
+column_names = [x["name"] for x in column_definitions] </bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:startEvent id="Event_1uk9jgo">
+      <bpmn:outgoing>Flow_0juis1q</bpmn:outgoing>
     </bpmn:startEvent>
-    <bpmn:sequenceFlow id="Flow_0eq3sw1" sourceRef="StartEvent_1" targetRef="Activity_0tj29cs" />
-    <bpmn:endEvent id="Event_13z2v9m">
-      <bpmn:incoming>Flow_1wf13zr</bpmn:incoming>
+    <bpmn:serviceTask id="delete_state" name="delete state">
+      <bpmn:extensionElements>
+        <spiffworkflow:serviceTaskOperator id="postgresql/DeleteValues">
+          <spiffworkflow:parameters>
+            <spiffworkflow:parameter id="database_connection_str" type="str" value="&#34;secret:POSTGRES_CONN&#34;" />
+            <spiffworkflow:parameter id="schema" type="any" value="{&#34;where&#34;: [[&#34;abbrev&#34;, &#34;=&#34;, GA_Abbrev]]}" />
+            <spiffworkflow:parameter id="table_name" type="str" value="&#39;states&#39;" />
+          </spiffworkflow:parameters>
+        </spiffworkflow:serviceTaskOperator>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_068cb2a</bpmn:incoming>
+      <bpmn:outgoing>Flow_1ja8m4s</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="update_states" name="update states">
+      <bpmn:extensionElements>
+        <spiffworkflow:serviceTaskOperator id="postgresql/UpdateValues">
+          <spiffworkflow:parameters>
+            <spiffworkflow:parameter id="database_connection_str" type="str" value="&#34;secret:POSTGRES_CONN&#34;" />
+            <spiffworkflow:parameter id="schema" type="any" value="{&#34;set&#34;: {&#34;abbrev&#34;: &#34;ZZ&#34;, &#34;somenum&#34;: 77}, &#34;where&#34;: [[&#34;abbrev&#34;, &#34;=&#34;, &#34;VA&#34;]]}" />
+            <spiffworkflow:parameter id="table_name" type="str" value="&#39;states&#39;" />
+          </spiffworkflow:parameters>
+        </spiffworkflow:serviceTaskOperator>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1ja8m4s</bpmn:incoming>
+      <bpmn:outgoing>Flow_03cnoiv</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:endEvent id="Event_03pgta0">
+      <bpmn:incoming>Flow_19se0v3</bpmn:incoming>
     </bpmn:endEvent>
-    <bpmn:serviceTask id="CreateTableStates" name="create states table">
-      <bpmn:extensionElements>
-        <spiffworkflow:serviceTaskOperator id="postgresql/CreateTable">
-          <spiffworkflow:parameters>
-            <spiffworkflow:parameter id="schema" type="str" value="{&#34;columns&#34;: my_columns}" />
-            <spiffworkflow:parameter id="table_name" type="str" value="&#39;states&#39;" />
-          </spiffworkflow:parameters>
-        </spiffworkflow:serviceTaskOperator>
-      </bpmn:extensionElements>
-    </bpmn:serviceTask>
-    <bpmn:serviceTask id="DropTableStates" name="drop table states">
-      <bpmn:extensionElements>
-        <spiffworkflow:serviceTaskOperator id="postgresql/DropTable">
-          <spiffworkflow:parameters>
-            <spiffworkflow:parameter id="table_name" type="str" value="&#39;states&#39;" />
-          </spiffworkflow:parameters>
-        </spiffworkflow:serviceTaskOperator>
-      </bpmn:extensionElements>
-    </bpmn:serviceTask>
-    <bpmn:serviceTask id="InsertStates" name="insert states">
+    <bpmn:serviceTask id="insert_states" name="insert states">
       <bpmn:extensionElements>
         <spiffworkflow:serviceTaskOperator id="postgresql/InsertValues">
           <spiffworkflow:parameters>
-            <spiffworkflow:parameter id="schema" type="str" value="{&#34;columns&#34;: [&#34;country&#34;, &#34;state&#34;, &#34;abbrev&#34;], &#34;values&#34;: [[GA_Country, GA_State, GA_Abbrev], [&#34;USA&#34;, &#34;Virginia&#34;, &#34;VA&#34;]]}" />
+            <spiffworkflow:parameter id="database_connection_str" type="str" value="&#34;secret:POSTGRES_CONN&#34;" />
+            <spiffworkflow:parameter id="schema" type="any" value="{&#34;columns&#34;: column_names, &#34;values&#34;: [[GA_Country, GA_State, GA_Abbrev, 33], [&#34;USA&#34;, &#34;Virginia&#34;, &#34;VA&#34;, 55]]}" />
             <spiffworkflow:parameter id="table_name" type="str" value="&#39;states&#39;" />
           </spiffworkflow:parameters>
         </spiffworkflow:serviceTaskOperator>
@@ -39,158 +70,249 @@
 GA_Abbrev="GA"
 GA_Country="USA"</spiffworkflow:preScript>
       </bpmn:extensionElements>
-      <bpmn:incoming>Flow_1x4db33</bpmn:incoming>
-      <bpmn:outgoing>Flow_1nlzsbt</bpmn:outgoing>
+      <bpmn:incoming>Flow_1tyet78</bpmn:incoming>
+      <bpmn:outgoing>Flow_1ysh9ph</bpmn:outgoing>
     </bpmn:serviceTask>
-    <bpmn:sequenceFlow id="Flow_1ypudmn" sourceRef="SelectStatesAfterInsert" targetRef="DeleteState" />
-    <bpmn:serviceTask id="SelectStatesAfterInsert" name="select states">
+    <bpmn:sequenceFlow id="Flow_1ysh9ph" sourceRef="insert_states" targetRef="select_states_somenum" />
+    <bpmn:sequenceFlow id="Flow_19se0v3" sourceRef="select_states" targetRef="Event_03pgta0" />
+    <bpmn:serviceTask id="select_states" name="select states">
       <bpmn:extensionElements>
         <spiffworkflow:serviceTaskOperator id="postgresql/SelectValues">
           <spiffworkflow:parameters>
-            <spiffworkflow:parameter id="schema" type="str" value="{&#34;columns&#34;: [&#34;country&#34;, &#34;state&#34;, &#34;abbrev&#34;], &#34;where&#34;: [[&#34;abbrev&#34;, &#34;=&#34;, &#34;GA&#34;], [&#34;country&#34;, &#34;=&#34;, &#34;USA&#34;]]}" />
+            <spiffworkflow:parameter id="database_connection_str" type="str" value="&#34;secret:POSTGRES_CONN&#34;" />
+            <spiffworkflow:parameter id="schema" type="any" value="{&#34;columns&#34;: column_names}" />
             <spiffworkflow:parameter id="table_name" type="str" value="&#39;states&#39;" />
           </spiffworkflow:parameters>
         </spiffworkflow:serviceTaskOperator>
       </bpmn:extensionElements>
-      <bpmn:incoming>Flow_14su4se</bpmn:incoming>
-      <bpmn:outgoing>Flow_1ypudmn</bpmn:outgoing>
+      <bpmn:incoming>Flow_03cnoiv</bpmn:incoming>
+      <bpmn:outgoing>Flow_19se0v3</bpmn:outgoing>
     </bpmn:serviceTask>
-    <bpmn:sequenceFlow id="Flow_1wf13zr" sourceRef="SelectStatesAfterDelete" targetRef="Event_13z2v9m" />
-    <bpmn:serviceTask id="SelectStatesAfterDelete" name="select states after delete">
+    <bpmn:serviceTask id="select_states_somenum" name="select states where somenum">
       <bpmn:extensionElements>
         <spiffworkflow:serviceTaskOperator id="postgresql/SelectValues">
           <spiffworkflow:parameters>
-            <spiffworkflow:parameter id="schema" type="str" value="{&#34;columns&#34;: [&#34;country&#34;, &#34;state&#34;, &#34;abbrev&#34;]}" />
+            <spiffworkflow:parameter id="database_connection_str" type="str" value="&#34;secret:POSTGRES_CONN&#34;" />
+            <spiffworkflow:parameter id="schema" type="any" value="{&#34;columns&#34;: column_names, &#34;where&#34;: [[&#34;somenum&#34;, &#34;=&#34;, 33]]}" />
             <spiffworkflow:parameter id="table_name" type="str" value="&#39;states&#39;" />
           </spiffworkflow:parameters>
         </spiffworkflow:serviceTaskOperator>
       </bpmn:extensionElements>
-      <bpmn:incoming>Flow_1lshyxa</bpmn:incoming>
-      <bpmn:outgoing>Flow_1wf13zr</bpmn:outgoing>
+      <bpmn:incoming>Flow_1ysh9ph</bpmn:incoming>
+      <bpmn:outgoing>Flow_068cb2a</bpmn:outgoing>
     </bpmn:serviceTask>
-    <bpmn:sequenceFlow id="Flow_0jqavol" sourceRef="DeleteState" targetRef="UpdateStates" />
-    <bpmn:serviceTask id="DeleteState" name="delete state">
+    <bpmn:sequenceFlow id="Flow_068cb2a" sourceRef="select_states_somenum" targetRef="delete_state" />
+    <bpmn:sequenceFlow id="Flow_1ja8m4s" sourceRef="delete_state" targetRef="update_states" />
+    <bpmn:sequenceFlow id="Flow_03cnoiv" sourceRef="update_states" targetRef="select_states" />
+    <bpmn:sequenceFlow id="Flow_0juis1q" sourceRef="Event_1uk9jgo" targetRef="Activity_0tj29cs" />
+    <bpmn:serviceTask id="Activity_09uxx0q" name="create stored procs">
       <bpmn:extensionElements>
-        <spiffworkflow:serviceTaskOperator id="postgresql/DeleteValues">
+        <spiffworkflow:serviceTaskOperator id="postgresql/DoSQL" resultVariable="create_stored_proc">
           <spiffworkflow:parameters>
-            <spiffworkflow:parameter id="schema" type="str" value="{&#34;where&#34;: [[&#34;abbrev&#34;, &#34;=&#34;, &#34;GA&#34;]]}" />
-            <spiffworkflow:parameter id="table_name" type="str" value="&#39;states&#39;" />
+            <spiffworkflow:parameter id="database_connection_str" type="str" value="&#34;secret:POSTGRES_CONN&#34;" />
+            <spiffworkflow:parameter id="schema" type="any" value="create_stored_proc_schema" />
           </spiffworkflow:parameters>
         </spiffworkflow:serviceTaskOperator>
+        <spiffworkflow:preScript>create_stored_proc_schema = {
+    "sql": """
+CREATE OR REPLACE PROCEDURE insert_data(state_val varchar(13), somenum_val int, somejson jsonb)
+LANGUAGE SQL
+AS $$
+INSERT INTO states (country, state, abbrev, somenum, testingjsonb) VALUES ('procname', state_val, 'SP', somenum_val, somejson);
+$$;
+"""
+}
+
+#column_definitions = [
+#    {
+#        "name": "country",
+#        "type": "varchar(255)",
+#    },
+#    {
+#        "name": "state",
+#        "type": "varchar(13)",
+#    },
+#    {
+#        "name": "abbrev",
+#        "type": "char(2)",
+#    },
+#    {
+#        "name": "somenum",
+#        "type": "int",
+#    }
+#]</spiffworkflow:preScript>
       </bpmn:extensionElements>
-      <bpmn:incoming>Flow_1ypudmn</bpmn:incoming>
-      <bpmn:outgoing>Flow_0jqavol</bpmn:outgoing>
+      <bpmn:incoming>Flow_11gp7u8</bpmn:incoming>
+      <bpmn:outgoing>Flow_0pgxzmx</bpmn:outgoing>
     </bpmn:serviceTask>
-    <bpmn:sequenceFlow id="Flow_1lshyxa" sourceRef="UpdateStates" targetRef="SelectStatesAfterDelete" />
-    <bpmn:serviceTask id="UpdateStates" name="update states">
+    <bpmn:endEvent id="Event_0czms8m" />
+    <bpmn:sequenceFlow id="Flow_0pgxzmx" sourceRef="Activity_09uxx0q" targetRef="Activity_1escddg" />
+    <bpmn:serviceTask id="Activity_0muz0ta" name="alter states">
       <bpmn:extensionElements>
-        <spiffworkflow:serviceTaskOperator id="postgresql/UpdateValues">
+        <spiffworkflow:preScript>alter_states_schema = {
+    "sql": 'ALTER TABLE "states" ADD COLUMN IF NOT EXISTS testingjsonb jsonb;'
+}</spiffworkflow:preScript>
+        <spiffworkflow:serviceTaskOperator id="postgresql/DoSQL">
           <spiffworkflow:parameters>
-            <spiffworkflow:parameter id="schema" type="str" value="{&#34;set&#34;: {&#34;abbrev&#34;: &#34;ZZ&#34;}, &#34;where&#34;: [[&#34;abbrev&#34;, &#34;=&#34;, &#34;VA&#34;]]}" />
-            <spiffworkflow:parameter id="table_name" type="str" value="&#39;states&#39;" />
+            <spiffworkflow:parameter id="database_connection_str" type="str" value="&#34;secret:POSTGRES_CONN&#34;" />
+            <spiffworkflow:parameter id="schema" type="any" value="alter_states_schema" />
           </spiffworkflow:parameters>
         </spiffworkflow:serviceTaskOperator>
       </bpmn:extensionElements>
-      <bpmn:incoming>Flow_0jqavol</bpmn:incoming>
-      <bpmn:outgoing>Flow_1lshyxa</bpmn:outgoing>
+      <bpmn:incoming>Flow_1uff176</bpmn:incoming>
+      <bpmn:outgoing>Flow_11gp7u8</bpmn:outgoing>
     </bpmn:serviceTask>
-    <bpmn:scriptTask id="Activity_0tj29cs" name="set vars">
-      <bpmn:incoming>Flow_0eq3sw1</bpmn:incoming>
-      <bpmn:outgoing>Flow_1x4db33</bpmn:outgoing>
-      <bpmn:script>my_columns = ["country", "state", "abbrev"]</bpmn:script>
-    </bpmn:scriptTask>
-    <bpmn:sequenceFlow id="Flow_1nlzsbt" sourceRef="InsertStates" targetRef="Activity_05qzqp2" />
-    <bpmn:sequenceFlow id="Flow_14su4se" sourceRef="Activity_05qzqp2" targetRef="SelectStatesAfterInsert" />
-    <bpmn:serviceTask id="Activity_05qzqp2" name="insert state 2">
+    <bpmn:sequenceFlow id="Flow_10lsc31" sourceRef="Activity_1escddg" targetRef="Activity_02bzazh" />
+    <bpmn:serviceTask id="Activity_1escddg" name="call insert_data">
       <bpmn:extensionElements>
-        <spiffworkflow:serviceTaskOperator id="postgresql/InsertValues">
+        <spiffworkflow:serviceTaskOperator id="postgresql/DoSQL">
           <spiffworkflow:parameters>
-            <spiffworkflow:parameter id="schema" type="any" value="{&#34;columns&#34;: [&#34;country&#34;, &#34;state&#34;, &#34;abbrev&#34;], &#34;values&#34;: [[&#34;soft_and_lic&#34;, &#34;Software &#38; License&#34;, &#34;Category&#34;]]}" />
+            <spiffworkflow:parameter id="database_connection_str" type="str" value="&#34;secret:POSTGRES_CONN&#34;" />
+            <spiffworkflow:parameter id="schema" type="any" value="call_insert_data_schema" />
+          </spiffworkflow:parameters>
+        </spiffworkflow:serviceTaskOperator>
+        <spiffworkflow:preScript>call_insert_data_schema = {
+    "sql": "CALL insert_data(%s, %s, %s);",
+    "values": ["call_state", 33, {"hey": "joe"}],
+}</spiffworkflow:preScript>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0pgxzmx</bpmn:incoming>
+      <bpmn:outgoing>Flow_10lsc31</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="Activity_02bzazh" name="dosql select">
+      <bpmn:extensionElements>
+        <spiffworkflow:serviceTaskOperator id="postgresql/DoSQL" resultVariable="dosql_select">
+          <spiffworkflow:parameters>
+            <spiffworkflow:parameter id="database_connection_str" type="str" value="&#34;secret:POSTGRES_CONN&#34;" />
+            <spiffworkflow:parameter id="schema" type="any" value="dosql_select_schema" />
+          </spiffworkflow:parameters>
+        </spiffworkflow:serviceTaskOperator>
+        <spiffworkflow:preScript>dosql_select_schema = {
+    "sql": "SELECT somenum, testingjsonb FROM states;",
+    "fetch_results": True
+}</spiffworkflow:preScript>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_10lsc31</bpmn:incoming>
+      <bpmn:outgoing>Flow_1tyet78</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="Activity_0v7pxfm" name="create table states">
+      <bpmn:extensionElements>
+        <spiffworkflow:serviceTaskOperator id="postgresql/CreateTable">
+          <spiffworkflow:parameters>
+            <spiffworkflow:parameter id="database_connection_str" type="str" value="&#34;secret:POSTGRES_CONN&#34;" />
+            <spiffworkflow:parameter id="schema" type="any" value="{&#34;column_definitions&#34;: column_definitions}" />
             <spiffworkflow:parameter id="table_name" type="str" value="&#39;states&#39;" />
           </spiffworkflow:parameters>
         </spiffworkflow:serviceTaskOperator>
       </bpmn:extensionElements>
-      <bpmn:incoming>Flow_1nlzsbt</bpmn:incoming>
-      <bpmn:outgoing>Flow_14su4se</bpmn:outgoing>
+      <bpmn:incoming>Flow_03hjh5l</bpmn:incoming>
+      <bpmn:outgoing>Flow_1uff176</bpmn:outgoing>
     </bpmn:serviceTask>
-    <bpmn:sequenceFlow id="Flow_1x4db33" sourceRef="Activity_0tj29cs" targetRef="InsertStates" />
+    <bpmn:sequenceFlow id="Flow_03hjh5l" sourceRef="Activity_0tj29cs" targetRef="Activity_0v7pxfm" />
+    <bpmn:sequenceFlow id="Flow_1uff176" sourceRef="Activity_0v7pxfm" targetRef="Activity_0muz0ta" />
+    <bpmn:sequenceFlow id="Flow_11gp7u8" sourceRef="Activity_0muz0ta" targetRef="Activity_09uxx0q" />
+    <bpmn:sequenceFlow id="Flow_1tyet78" sourceRef="Activity_02bzazh" targetRef="insert_states" />
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_u5uill4">
-      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
-        <dc:Bounds x="182" y="22" width="36" height="36" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_13z2v9m_di" bpmnElement="Event_13z2v9m">
-        <dc:Bounds x="182" y="822" width="36" height="36" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0ttzbft_di" bpmnElement="CreateTableStates">
-        <dc:Bounds x="150" y="200" width="100" height="80" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1x5xt9n_di" bpmnElement="DropTableStates">
-        <dc:Bounds x="150" y="90" width="100" height="80" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_13xjhfz_di" bpmnElement="InsertStates">
-        <dc:Bounds x="380" y="300" width="100" height="80" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1umofa5_di" bpmnElement="SelectStatesAfterInsert">
-        <dc:Bounds x="150" y="400" width="100" height="80" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1daskcl_di" bpmnElement="SelectStatesAfterDelete">
-        <dc:Bounds x="150" y="700" width="100" height="80" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1t4ghj9_di" bpmnElement="DeleteState">
-        <dc:Bounds x="150" y="500" width="100" height="80" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_07xclh2_di" bpmnElement="UpdateStates">
-        <dc:Bounds x="150" y="600" width="100" height="80" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1xr63ru_di" bpmnElement="Activity_0tj29cs">
-        <dc:Bounds x="410" y="140" width="100" height="80" />
+        <dc:Bounds x="-170" y="0" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0xwl4zh_di" bpmnElement="Activity_05qzqp2">
-        <dc:Bounds x="380" y="420" width="100" height="80" />
+      <bpmndi:BPMNShape id="Event_1uk9jgo_di" bpmnElement="Event_1uk9jgo">
+        <dc:Bounds x="-238" y="22" width="36" height="36" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge id="Flow_0eq3sw1_di" bpmnElement="Flow_0eq3sw1">
-        <di:waypoint x="218" y="40" />
+      <bpmndi:BPMNShape id="Activity_0bjy3zi_di" bpmnElement="delete_state">
+        <dc:Bounds x="480" y="0" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1l7etur_di" bpmnElement="update_states">
+        <dc:Bounds x="610" y="0" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_03pgta0_di" bpmnElement="Event_03pgta0">
+        <dc:Bounds x="882" y="22" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1m1r2kw_di" bpmnElement="insert_states">
+        <dc:Bounds x="230" y="0" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1p6opvx_di" bpmnElement="select_states">
+        <dc:Bounds x="750" y="0" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_0lbguja" bpmnElement="select_states_somenum">
+        <dc:Bounds x="360" y="0" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_01yznob_di" bpmnElement="Activity_09uxx0q">
+        <dc:Bounds x="-170" y="310" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0czms8m_di" bpmnElement="Event_0czms8m">
+        <dc:Bounds x="-138" y="612" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1nqonuc_di" bpmnElement="Activity_0muz0ta">
+        <dc:Bounds x="-170" y="200" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0q3y2sb_di" bpmnElement="Activity_1escddg">
+        <dc:Bounds x="-170" y="410" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0ih71mc_di" bpmnElement="Activity_02bzazh">
+        <dc:Bounds x="-170" y="510" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0371us3_di" bpmnElement="Activity_0v7pxfm">
+        <dc:Bounds x="-170" y="100" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_1ysh9ph_di" bpmnElement="Flow_1ysh9ph">
+        <di:waypoint x="330" y="40" />
+        <di:waypoint x="360" y="40" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_19se0v3_di" bpmnElement="Flow_19se0v3">
+        <di:waypoint x="850" y="40" />
+        <di:waypoint x="882" y="40" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_068cb2a_di" bpmnElement="Flow_068cb2a">
         <di:waypoint x="460" y="40" />
-        <di:waypoint x="460" y="140" />
+        <di:waypoint x="480" y="40" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_1ypudmn_di" bpmnElement="Flow_1ypudmn">
-        <di:waypoint x="200" y="480" />
-        <di:waypoint x="200" y="500" />
+      <bpmndi:BPMNEdge id="Flow_1ja8m4s_di" bpmnElement="Flow_1ja8m4s">
+        <di:waypoint x="580" y="40" />
+        <di:waypoint x="610" y="40" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_1wf13zr_di" bpmnElement="Flow_1wf13zr">
-        <di:waypoint x="200" y="780" />
-        <di:waypoint x="200" y="822" />
+      <bpmndi:BPMNEdge id="Flow_03cnoiv_di" bpmnElement="Flow_03cnoiv">
+        <di:waypoint x="710" y="40" />
+        <di:waypoint x="750" y="40" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0jqavol_di" bpmnElement="Flow_0jqavol">
-        <di:waypoint x="200" y="580" />
-        <di:waypoint x="200" y="600" />
+      <bpmndi:BPMNEdge id="Flow_0juis1q_di" bpmnElement="Flow_0juis1q">
+        <di:waypoint x="-202" y="40" />
+        <di:waypoint x="-170" y="40" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_1lshyxa_di" bpmnElement="Flow_1lshyxa">
-        <di:waypoint x="200" y="680" />
-        <di:waypoint x="200" y="700" />
+      <bpmndi:BPMNEdge id="Flow_0pgxzmx_di" bpmnElement="Flow_0pgxzmx">
+        <di:waypoint x="-120" y="390" />
+        <di:waypoint x="-120" y="410" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_1nlzsbt_di" bpmnElement="Flow_1nlzsbt">
-        <di:waypoint x="430" y="380" />
-        <di:waypoint x="430" y="420" />
+      <bpmndi:BPMNEdge id="Flow_10lsc31_di" bpmnElement="Flow_10lsc31">
+        <di:waypoint x="-120" y="490" />
+        <di:waypoint x="-120" y="510" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_14su4se_di" bpmnElement="Flow_14su4se">
-        <di:waypoint x="380" y="460" />
-        <di:waypoint x="315" y="460" />
-        <di:waypoint x="315" y="440" />
-        <di:waypoint x="250" y="440" />
+      <bpmndi:BPMNEdge id="Flow_03hjh5l_di" bpmnElement="Flow_03hjh5l">
+        <di:waypoint x="-120" y="80" />
+        <di:waypoint x="-120" y="100" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_1x4db33_di" bpmnElement="Flow_1x4db33">
-        <di:waypoint x="460" y="220" />
-        <di:waypoint x="460" y="260" />
-        <di:waypoint x="430" y="260" />
-        <di:waypoint x="430" y="300" />
+      <bpmndi:BPMNEdge id="Flow_1uff176_di" bpmnElement="Flow_1uff176">
+        <di:waypoint x="-120" y="180" />
+        <di:waypoint x="-120" y="200" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_11gp7u8_di" bpmnElement="Flow_11gp7u8">
+        <di:waypoint x="-120" y="280" />
+        <di:waypoint x="-120" y="310" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1tyet78_di" bpmnElement="Flow_1tyet78">
+        <di:waypoint x="-70" y="550" />
+        <di:waypoint x="80" y="550" />
+        <di:waypoint x="80" y="40" />
+        <di:waypoint x="230" y="40" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
