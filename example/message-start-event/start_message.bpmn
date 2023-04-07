@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:spiffworkflow="http://spiffworkflow.org/bpmn/schema/1.0/core" id="Definitions_96f6665" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.0.0-dev">
+  <bpmn:collaboration id="Collaboration_0phym66">
+    <bpmn:participant id="Participant_02wc2sh" processRef="Process_e1zq6wb" />
+    <bpmn:correlationKey name="participant">
+      <bpmn:correlationPropertyRef>email</bpmn:correlationPropertyRef>
+    </bpmn:correlationKey>
+  </bpmn:collaboration>
+  <bpmn:process id="Process_e1zq6wb" isExecutable="true">
+    <bpmn:endEvent id="Event_0nn631c">
+      <bpmn:incoming>Flow_0hlasr0</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:scriptTask id="Activity_13fwwbf" name="Simple Script Task">
+      <bpmn:incoming>Flow_1yfzaca</bpmn:incoming>
+      <bpmn:outgoing>Flow_0hlasr0</bpmn:outgoing>
+      <bpmn:script>x = 1</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:sequenceFlow id="Flow_1yfzaca" sourceRef="StartEvent_1" targetRef="Activity_13fwwbf" />
+    <bpmn:sequenceFlow id="Flow_0hlasr0" sourceRef="Activity_13fwwbf" targetRef="Event_0nn631c" />
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>Flow_1yfzaca</bpmn:outgoing>
+      <bpmn:messageEventDefinition id="MessageEventDefinition_0bfy03r" messageRef="start_test" />
+    </bpmn:startEvent>
+  </bpmn:process>
+  <bpmn:message id="start_test" name="start_test">
+    <bpmn:extensionElements>
+      <spiffworkflow:messageVariable>payload</spiffworkflow:messageVariable>
+    </bpmn:extensionElements>
+  </bpmn:message>
+  <bpmn:correlationProperty id="email" name="email">
+    <bpmn:correlationPropertyRetrievalExpression messageRef="start_test">
+      <bpmn:formalExpression>payload.email</bpmn:formalExpression>
+    </bpmn:correlationPropertyRetrievalExpression>
+  </bpmn:correlationProperty>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_0phym66">
+      <bpmndi:BPMNShape id="Participant_02wc2sh_di" bpmnElement="Participant_02wc2sh" isHorizontal="true">
+        <dc:Bounds x="60" y="40" width="510" height="140" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0nn631c_di" bpmnElement="Event_0nn631c">
+        <dc:Bounds x="452" y="99" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1to7o28_di" bpmnElement="Activity_13fwwbf">
+        <dc:Bounds x="290" y="77" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1ha1pmx_di" bpmnElement="StartEvent_1">
+        <dc:Bounds x="199" y="99" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_1yfzaca_di" bpmnElement="Flow_1yfzaca">
+        <di:waypoint x="235" y="117" />
+        <di:waypoint x="290" y="117" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0hlasr0_di" bpmnElement="Flow_0hlasr0">
+        <di:waypoint x="390" y="117" />
+        <di:waypoint x="452" y="117" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

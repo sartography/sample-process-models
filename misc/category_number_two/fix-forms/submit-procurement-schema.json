@@ -1,0 +1,105 @@
+{
+	"definitions": {
+		"projectEnum": {
+			"title": "Project",
+			"type": "string",
+			"enum": [
+				"sure"
+			]
+		},
+		"categoryEnum": {
+			"title": "Category",
+			"type": "string",
+			"enum": [
+				"yes"
+			]
+		},
+		"equip_sub_catEnum": {
+			"title": "Sub-Category",
+			"type": "string",
+			"enum": [
+				"no"
+			]
+		},
+		"learn_dev_sub_catEnum": {
+			"title": "Sub-Category",
+			"type": "string",
+			"enum": [
+				"whateves"
+			]
+		},
+		"soft_lic_sub_catEnum": {
+			"title": "Sub-Category",
+			"type": "string",
+			"enum": [
+				"uh huh"
+			]
+		},
+		"pay_methodEnum": {
+			"title": "Payment Method",
+			"type": "string",
+			"enum": [
+				"pay_method_enum_list"
+			]
+		}
+	},
+	"properties": {
+		"ndr_details": {
+			"type": "object",
+			"required": [
+				"project",
+				"category",
+				"purpose",
+				"criticality",
+				"period"
+			],
+			"title": "Submit New Demand Request-Procurement",
+			"description": "Submit a new demand request for the procurement of needed items.  Does not include Travel or Compensation.",
+			"properties": {
+
+				"requestor": {
+					"type": "string",
+					"title": "Requestor",
+					"readOnly": true
+				},
+				"project": {
+					"$ref": "#/definitions/projectEnum",
+					"title": "Project"
+				},
+				"category": {
+					"$ref": "#/definitions/categoryEnum",
+					"title": "Category"
+				},
+				"purpose": {
+					"maxLength": 250,
+					"type": "string",
+					"title": "Purpose"
+				},
+				"criticality": {
+					"type": "string",
+					"title": " Criticality",
+					"enum": [
+						"High",
+						"Medium",
+						"Low"
+					]
+				},
+				"vendor": {
+					"type": "string",
+					"title": "Vendor"
+				},
+				"period": {
+					"type": "string",
+					"format": "date",
+			        "minimumDate": "today",
+					"title": "Period",
+					"validationErrorMessage": "Date must be equal to or greater than today's date"
+				},
+				"payment_method": {
+					"$ref": "#/definitions/pay_methodEnum",
+					"title": "Payment method"
+				}
+			}
+		}
+	}
+}

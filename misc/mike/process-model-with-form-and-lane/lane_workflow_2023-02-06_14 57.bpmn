@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:spiffworkflow="http://spiffworkflow.org/bpmn/schema/1.0/core" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" id="Definitions_ef63ba4" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.0.0-dev">
+  <bpmn:collaboration id="Collaboration_LaneWorkflow">
+    <bpmn:documentation>## Lane Workflow
+</bpmn:documentation>
+    <bpmn:participant id="Participant_Case" name="Case" processRef="Process_LaneWorkflow" />
+  </bpmn:collaboration>
+  <bpmn:process id="Process_LaneWorkflow" name="Lane Workflow" isExecutable="true">
+    <bpmn:laneSet id="LaneSet_0ft4417">
+      <bpmn:lane id="Lane_Initiator">
+        <bpmn:documentation>## Initiator</bpmn:documentation>
+        <bpmn:flowNodeRef>StartEvent_1</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_GetID</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_ReviewCase</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Event_02egqno</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_GetReviewers</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_Reviewer" name="Reviewer">
+        <bpmn:documentation>## Reviewer</bpmn:documentation>
+        <bpmn:flowNodeRef>Activity_GetMoreData</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_MakeCase</bpmn:flowNodeRef>
+      </bpmn:lane>
+    </bpmn:laneSet>
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>Flow_0xivass</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_0xivass" sourceRef="StartEvent_1" targetRef="Activity_GetReviewers" />
+    <bpmn:sequenceFlow id="Flow_11j3kuv" sourceRef="Activity_GetID" targetRef="Activity_GetMoreData" />
+    <bpmn:sequenceFlow id="Flow_0q7kef5" sourceRef="Activity_GetMoreData" targetRef="Activity_MakeCase" />
+    <bpmn:sequenceFlow id="Flow_1hr7g04" sourceRef="Activity_ReviewCase" targetRef="Event_02egqno" />
+    <bpmn:sequenceFlow id="Flow_06x58q0" sourceRef="Activity_MakeCase" targetRef="Activity_ReviewCase" />
+    <bpmn:userTask id="Activity_GetID" name="Get ID" camunda:formKey="DataForm">
+      <bpmn:extensionElements>
+        <camunda:formData>
+          <camunda:formField id="id" label="&#39;ID&#39;" type="long">
+            <camunda:validation>
+              <camunda:constraint name="required" config="True" />
+            </camunda:validation>
+          </camunda:formField>
+        </camunda:formData>
+        <spiffworkflow:properties>
+          <spiffworkflow:property name="formJsonSchemaFilename" value="get_data_form.json" />
+        </spiffworkflow:properties>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_16cpayc</bpmn:incoming>
+      <bpmn:outgoing>Flow_11j3kuv</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:manualTask id="Activity_ReviewCase" name="Review Case">
+      <bpmn:documentation>## Case
+ID: {{ case.id }}
+
+Case ID: {{ case.case_id }}
+
+Case Worker: {{ case.case_worker }}
+
+Notes: {{ case.notes }}
+
+
+</bpmn:documentation>
+      <bpmn:incoming>Flow_06x58q0</bpmn:incoming>
+      <bpmn:outgoing>Flow_1hr7g04</bpmn:outgoing>
+    </bpmn:manualTask>
+    <bpmn:endEvent id="Event_02egqno">
+      <bpmn:incoming>Flow_1hr7g04</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:userTask id="Activity_GetMoreData" name="Get More Data" camunda:formKey="MoreDataForm">
+      <bpmn:extensionElements>
+        <camunda:formData>
+          <camunda:formField id="case_id" label="&#39;Case ID&#39;" type="long">
+            <camunda:validation>
+              <camunda:constraint name="required" config="True" />
+            </camunda:validation>
+          </camunda:formField>
+          <camunda:formField id="case_worker" label="&#39;Case Worker&#39;" type="string" />
+          <camunda:formField id="notes" label="&#39;Notes&#39;" type="string" />
+        </camunda:formData>
+        <spiffworkflow:properties>
+          <spiffworkflow:property name="formJsonSchemaFilename" value="get_more_data_form.json" />
+        </spiffworkflow:properties>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_11j3kuv</bpmn:incoming>
+      <bpmn:outgoing>Flow_0q7kef5</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:scriptTask id="Activity_MakeCase" name="Make Case">
+      <bpmn:incoming>Flow_0q7kef5</bpmn:incoming>
+      <bpmn:outgoing>Flow_06x58q0</bpmn:outgoing>
+      <bpmn:script>case = {'id': id, 'case_id': case_id, 'case_worker': case_worker, 'notes': notes}</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:sequenceFlow id="Flow_16cpayc" sourceRef="Activity_GetReviewers" targetRef="Activity_GetID" />
+    <bpmn:scriptTask id="Activity_GetReviewers" name="Get Reviewers">
+      <bpmn:incoming>Flow_0xivass</bpmn:incoming>
+      <bpmn:outgoing>Flow_16cpayc</bpmn:outgoing>
+      <bpmn:script># current_user = get_current_user()['username']
+lane_owners = {"Reviewer": ["alex@sartography.com", "madhurya@sartography.com"]}</bpmn:script>
+    </bpmn:scriptTask>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_LaneWorkflow">
+      <bpmndi:BPMNShape id="Participant_0aw2kvp_di" bpmnElement="Participant_Case" isHorizontal="true">
+        <dc:Bounds x="129" y="120" width="681" height="250" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_0qw7svk_di" bpmnElement="Lane_Reviewer" isHorizontal="true">
+        <dc:Bounds x="159" y="245" width="651" height="125" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_07wdf9d_di" bpmnElement="Lane_Initiator" isHorizontal="true">
+        <dc:Bounds x="159" y="120" width="651" height="125" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="179" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0ys90wq_di" bpmnElement="Activity_GetID">
+        <dc:Bounds x="420" y="137" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_04nwttv_di" bpmnElement="Activity_ReviewCase">
+        <dc:Bounds x="570" y="137" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_02egqno_di" bpmnElement="Event_02egqno">
+        <dc:Bounds x="722" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0kmaqbt_di" bpmnElement="Activity_GetMoreData">
+        <dc:Bounds x="420" y="270" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1v5jg8i_di" bpmnElement="Activity_MakeCase">
+        <dc:Bounds x="570" y="270" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0ig1l4t_di" bpmnElement="Activity_GetReviewers">
+        <dc:Bounds x="270" y="137" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_0xivass_di" bpmnElement="Flow_0xivass">
+        <di:waypoint x="215" y="177" />
+        <di:waypoint x="270" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_11j3kuv_di" bpmnElement="Flow_11j3kuv">
+        <di:waypoint x="470" y="217" />
+        <di:waypoint x="470" y="270" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0q7kef5_di" bpmnElement="Flow_0q7kef5">
+        <di:waypoint x="520" y="310" />
+        <di:waypoint x="570" y="310" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1hr7g04_di" bpmnElement="Flow_1hr7g04">
+        <di:waypoint x="670" y="177" />
+        <di:waypoint x="722" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_06x58q0_di" bpmnElement="Flow_06x58q0">
+        <di:waypoint x="620" y="270" />
+        <di:waypoint x="620" y="217" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_16cpayc_di" bpmnElement="Flow_16cpayc">
+        <di:waypoint x="370" y="177" />
+        <di:waypoint x="420" y="177" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
