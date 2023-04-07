@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:spiffworkflow="http://spiffworkflow.org/bpmn/schema/1.0/core" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_96f6665" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.0.0-dev">
+  <bpmn:process id="Process_q3wnly3" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>Flow_15rzamb</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_15rzamb" sourceRef="StartEvent_1" targetRef="Activity_0s4vg4g" />
+    <bpmn:endEvent id="Event_00f862i">
+      <bpmn:incoming>Flow_0sizpan</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_0jfk17l" sourceRef="Activity_0s4vg4g" targetRef="Activity_1whh1x3" />
+    <bpmn:userTask id="Activity_0s4vg4g">
+      <bpmn:extensionElements>
+        <spiffworkflow:properties>
+          <spiffworkflow:property name="formJsonSchemaFilename" value="ndrp-supporting_info_repeating_files-schema.json" />
+          <spiffworkflow:property name="formUiSchemaFilename" value="ndrp-supporting_info_repeating_files-uischema.json" />
+        </spiffworkflow:properties>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_15rzamb</bpmn:incoming>
+      <bpmn:incoming>Flow_1wikdi0</bpmn:incoming>
+      <bpmn:outgoing>Flow_0jfk17l</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:sequenceFlow id="Flow_1ju9a4p" sourceRef="Activity_1whh1x3" targetRef="Gateway_0dipadt" />
+    <bpmn:manualTask id="Activity_1whh1x3">
+      <bpmn:extensionElements>
+        <spiffworkflow:preScript>file_links = [markdown_file_download_link(digest_reference["supporting_files"]) for digest_reference in File]</spiffworkflow:preScript>
+        <spiffworkflow:instructionsForEndUser>files:
+
+{% for link in file_links %}
+  {{link}}
+
+{% endfor %}
+</spiffworkflow:instructionsForEndUser>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0jfk17l</bpmn:incoming>
+      <bpmn:outgoing>Flow_1ju9a4p</bpmn:outgoing>
+    </bpmn:manualTask>
+    <bpmn:exclusiveGateway id="Gateway_0dipadt" default="Flow_1wikdi0">
+      <bpmn:incoming>Flow_1ju9a4p</bpmn:incoming>
+      <bpmn:outgoing>Flow_0sizpan</bpmn:outgoing>
+      <bpmn:outgoing>Flow_1wikdi0</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="Flow_0sizpan" sourceRef="Gateway_0dipadt" targetRef="Event_00f862i">
+      <bpmn:conditionExpression>False</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_1wikdi0" sourceRef="Gateway_0dipadt" targetRef="Activity_0s4vg4g" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_q3wnly3">
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="142" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_00f862i_di" bpmnElement="Event_00f862i">
+        <dc:Bounds x="542" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0075tt2_di" bpmnElement="Activity_0s4vg4g">
+        <dc:Bounds x="210" y="310" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1iqvzip_di" bpmnElement="Activity_1whh1x3">
+        <dc:Bounds x="350" y="300" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_0dipadt_di" bpmnElement="Gateway_0dipadt" isMarkerVisible="true">
+        <dc:Bounds x="465" y="152" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_15rzamb_di" bpmnElement="Flow_15rzamb">
+        <di:waypoint x="178" y="177" />
+        <di:waypoint x="194" y="177" />
+        <di:waypoint x="194" y="350" />
+        <di:waypoint x="210" y="350" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0jfk17l_di" bpmnElement="Flow_0jfk17l">
+        <di:waypoint x="310" y="350" />
+        <di:waypoint x="330" y="350" />
+        <di:waypoint x="330" y="340" />
+        <di:waypoint x="350" y="340" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1ju9a4p_di" bpmnElement="Flow_1ju9a4p">
+        <di:waypoint x="450" y="340" />
+        <di:waypoint x="490" y="340" />
+        <di:waypoint x="490" y="202" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0sizpan_di" bpmnElement="Flow_0sizpan">
+        <di:waypoint x="515" y="177" />
+        <di:waypoint x="542" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1wikdi0_di" bpmnElement="Flow_1wikdi0">
+        <di:waypoint x="472" y="184" />
+        <di:waypoint x="360" y="230" />
+        <di:waypoint x="420" y="180" />
+        <di:waypoint x="380" y="160" />
+        <di:waypoint x="239" y="310" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

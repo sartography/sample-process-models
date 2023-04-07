@@ -1,0 +1,413 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:spiffworkflow="http://spiffworkflow.org/bpmn/schema/1.0/core" id="Definitions_96f6665" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.0.0-dev">
+  <bpmn:process id="file-upload_process2" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>Flow_0e84r7i</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:userTask id="present_form" name="Present Form">
+      <bpmn:extensionElements>
+        <spiffworkflow:properties>
+          <spiffworkflow:property name="formJsonSchemaFilename" value="file-upload-schema.json" />
+          <spiffworkflow:property name="formUiSchemaFilename" value="file-upload-uischema.json" />
+        </spiffworkflow:properties>
+      </bpmn:extensionElements>
+      <bpmn:outgoing>Flow_1nv52hu</bpmn:outgoing>
+      <bpmn:dataOutputAssociation id="DataOutputAssociation_1n3sruk">
+        <bpmn:targetRef>DataObjectReference_09cyvmw</bpmn:targetRef>
+      </bpmn:dataOutputAssociation>
+    </bpmn:userTask>
+    <bpmn:endEvent id="Event_003bxs1">
+      <bpmn:incoming>Flow_1p2cge9</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_1p2cge9" sourceRef="Activity_14zfmoe" targetRef="Event_003bxs1" />
+    <bpmn:manualTask id="Activity_14zfmoe" name="Show links">
+      <bpmn:extensionElements>
+        <spiffworkflow:instructionsForEndUser>From Data Object:
+
+{% for link in file_links %}
+  {{link}}
+
+  -----
+
+{% endfor %}
+
+From Task Data (user form):
+
+{% for link2 in file_links2 %}
+  {{link2}}
+
+  -----
+
+{% endfor %}
+
+
+From Task Data (hardcoded):
+
+{% for zz_link in zz_file_links %}
+  {{zz_link}}
+
+  -----
+
+{% endfor %}</spiffworkflow:instructionsForEndUser>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1t5oozx</bpmn:incoming>
+      <bpmn:outgoing>Flow_1p2cge9</bpmn:outgoing>
+    </bpmn:manualTask>
+    <bpmn:dataObjectReference id="DataStoreReference_0mo2e2d" name="Uploaded Files" dataObjectRef="uploaded_files" />
+    <bpmn:dataObject id="uploaded_files" />
+    <bpmn:scriptTask id="Activity_0wc08l2" name="yo">
+      <bpmn:incoming>Flow_1nv52hu</bpmn:incoming>
+      <bpmn:outgoing>Flow_0jymbuj</bpmn:outgoing>
+      <bpmn:dataOutputAssociation id="DataOutputAssociation_16xe24p">
+        <bpmn:targetRef>DataStoreReference_0mo2e2d</bpmn:targetRef>
+      </bpmn:dataOutputAssociation>
+      <bpmn:script>zz_uploaded_files = [
+    "data:application/pdf;name=Harmeet_1234.pdf;base64,JVBERi0xLjQKJZOMi54gUmVwb3J0TGFiIEdlbmVyYXRlZCBQREYgZG9jdW1lbnQgaHR0cDovL3d3dy5yZXBvcnRsYWIuY29tCjEgMCBvYmoKPDwKL0YxIDIgMCBSIC9GMiAzIDAgUiAvRjMgNCAwIFIKPj4KZW5kb2JqCjIgMCBvYmoKPDwKL0Jhc2VGb250IC9IZWx2ZXRpY2EgL0VuY29kaW5nIC9XaW5BbnNpRW5jb2RpbmcgL05hbWUgL0YxIC9TdWJ0eXBlIC9UeXBlMSAvVHlwZSAvRm9udAo+PgplbmRvYmoKMyAwIG9iago8PAovQmFzZUZvbnQgL0hlbHZldGljYS1Cb2xkIC9FbmNvZGluZyAvV2luQW5zaUVuY29kaW5nIC9OYW1lIC9GMiAvU3VidHlwZSAvVHlwZTEgL1R5cGUgL0ZvbnQKPj4KZW5kb2JqCjQgMCBvYmoKPDwKL0Jhc2VGb250IC9IZWx2ZXRpY2EtQm9sZE9ibGlxdWUgL0VuY29kaW5nIC9XaW5BbnNpRW5jb2RpbmcgL05hbWUgL0YzIC9TdWJ0eXBlIC9UeXBlMSAvVHlwZSAvRm9udAo+PgplbmRvYmoKNSAwIG9iago8PAovQ29udGVudHMgMTIgMCBSIC9NZWRpYUJveCBbIDAgMCA1OTUuMjc1NiA4NDEuODg5OCBdIC9QYXJlbnQgMTEgMCBSIC9SZXNvdXJjZXMgPDwKL0ZvbnQgMSAwIFIgL1Byb2NTZXQgWyAvUERGIC9UZXh0IC9JbWFnZUIgL0ltYWdlQyAvSW1hZ2VJIF0KPj4gL1JvdGF0ZSAwIC9UcmFucyA8PAoKPj4gCiAgL1R5cGUgL1BhZ2UKPj4KZW5kb2JqCjYgMCBvYmoKPDwKL091dGxpbmVzIDggMCBSIC9QYWdlTW9kZSAvVXNlTm9uZSAvUGFnZXMgMTEgMCBSIC9UeXBlIC9DYXRhbG9nCj4+CmVuZG9iago3IDAgb2JqCjw8Ci9BdXRob3IgKCkgL0NyZWF0aW9uRGF0ZSAoRDoyMDIyMTAxMzExNDQyNSswMCcwMCcpIC9DcmVhdG9yIChcKHVuc3BlY2lmaWVkXCkpIC9LZXl3b3JkcyAoKSAvTW9kRGF0ZSAoRDoyMDIyMTAxMzExNDQyNSswMCcwMCcpIC9Qcm9kdWNlciAoeGh0bWwycGRmIDxodHRwczovL2dpdGh1Yi5jb20veGh0bWwycGRmL3hodG1sMnBkZi8+KSAKICAvU3ViamVjdCAoKSAvVGl0bGUgKCkgL1RyYXBwZWQgL0ZhbHNlCj4+CmVuZG9iago4IDAgb2JqCjw8Ci9Db3VudCAyIC9GaXJzdCA5IDAgUiAvTGFzdCA5IDAgUiAvVHlwZSAvT3V0bGluZXMKPj4KZW5kb2JqCjkgMCBvYmoKPDwKL0NvdW50IC0xIC9EZXN0IFsgNSAwIFIgL0ZpdCBdIC9GaXJzdCAxMCAwIFIgL0xhc3QgMTAgMCBSIC9QYXJlbnQgOCAwIFIgL1RpdGxlIChJbnZvaWNlIFN1Ym1pc3Npb24gSW5mb3JtYXRpb24pCj4+CmVuZG9iagoxMCAwIG9iago8PAovRGVzdCBbIDUgMCBSIC9GaXQgXSAvUGFyZW50IDkgMCBSIC9UaXRsZSAoSW52b2ljZSBTdWJtaXNzaW9uIEluZm9ybWF0aW9uKQo+PgplbmRvYmoKMTEgMCBvYmoKPDwKL0NvdW50IDEgL0tpZHMgWyA1IDAgUiBdIC9UeXBlIC9QYWdlcwo+PgplbmRvYmoKMTIgMCBvYmoKPDwKL0ZpbHRlciBbIC9BU0NJSTg1RGVjb2RlIC9GbGF0ZURlY29kZSBdIC9MZW5ndGggNTA3Cj4+CnN0cmVhbQpHYXUxK2dJZkBLJjtLWkYnUVtDYmg8cksuai4zVW8kUjFoVCM9cUtrLk87aUlVQTRGVzY3WjRgNnRmWzhRQ1soMW1mPmBGXyJQT2YhVV5WZy9lRiplZmA+aV0rYUpacCxeUEFMcjhHYmVdTVI8cyRTSFY+YF1WcjpYZ288WCp1MW9NOy1rKTglYVlLYl1lXjNUZlN0QWw2QzsuTllTRUg8M21CNkkrVXQ/MkplWGIzI11HXk0lUikqKShWXlBrNW89cipPUTpyVzwwUjNPL3VaJDRuT3Q3YCZiW25eKEBVP25TJilcbWpHMmRjOl9wOGRHJUpiRE1XWnBbXUwiQWtrWjtXSVgkOEZbTD9oX1JgX1ImLlRSUjVUS0pVVmciOkhiIiRyMWt1Rz5dU2cwJlUiWzhrWTE9ViYhOypsMzZkXC8/M1tBZTVbQ0UzUituYig6Ml1jUE5ySnFkdVwzRmVYUEljMHNPKzk+OXNLSj9kOmFjT2E6TGZtVksrRXBPJFE9J3VBTCU+MUgsJlREMztJVjNVOylPIU5gJEcyNFVAWHA5SFJePD1eMlc0TCdIbSlzNlUpWHQwW0szMW86VHUzckErWTEhbio/KVNsa0lpYGwzOGZlWms+XmF0OGhhJkElLURdYTkxUC5ZSm9YMzFNJTdvTC4/VElhfj5lbmRzdHJlYW0KZW5kb2JqCnhyZWYKMCAxMwowMDAwMDAwMDAwIDY1NTM1IGYgCjAwMDAwMDAwNzMgMDAwMDAgbiAKMDAwMDAwMDEyNCAwMDAwMCBuIAowMDAwMDAwMjMxIDAwMDAwIG4gCjAwMDAwMDAzNDMgMDAwMDAgbiAKMDAwMDAwMDQ2MiAwMDAwMCBuIAowMDAwMDAwNjY3IDAwMDAwIG4gCjAwMDAwMDA3NTIgMDAwMDAgbiAKMDAwMDAwMTAwNCAwMDAwMCBuIAowMDAwMDAxMDc1IDAwMDAwIG4gCjAwMDAwMDEyMDggMDAwMDAgbiAKMDAwMDAwMTMwNSAwMDAwMCBuIAowMDAwMDAxMzY1IDAwMDAwIG4gCnRyYWlsZXIKPDwKL0lEIApbPDFjM2QzNmZmOTRjM2ZmMjRkNDg2MTViY2ZlNTg3ZDY5PjwxYzNkMzZmZjk0YzNmZjI0ZDQ4NjE1YmNmZTU4N2Q2OT5dCiUgUmVwb3J0TGFiIGdlbmVyYXRlZCBQREYgZG9jdW1lbnQgLS0gZGlnZXN0IChodHRwOi8vd3d3LnJlcG9ydGxhYi5jb20pCgovSW5mbyA3IDAgUgovUm9vdCA2IDAgUgovU2l6ZSAxMwo+PgpzdGFydHhyZWYKMTk2MwolJUVPRgo=",
+    "data:text/x-fortran;name=noforth%20r%20das.f;base64,XA0KXCBub0ZvcnRoIHIoY3YpIGRhcyAtLSBkaXNhc3NlbWJsZXIgLS0gYW4gLSAwMmp1bGkyMA0KaGV4IFwgdW50aWwgdGhlIGVuZA0KdjogZnJlc2ggIGV4dHJhIGRlZmluaXRpb25zICB2b2NhYnVsYXJ5IERBU00NCnY6IGRhc20gZGVmaW5pdGlvbnMNCjogLmNoICggY2ggLS0gKSBbIGhleCBdDQogICAgZHVwIDdGIHU8IGFuZCBibCBtYXggZW1pdCA7DQo6IHR5cGUyMCAoIGEgLS0gKQ0KICAgIDEwIDAgZG8gY291bnQgZHVwIGVtaXQNCiAgICAgICAgICAgIGJsID0gaWYgbGVhdmUgdGhlbg0KICAgIGxvb3AgZHJvcCA7DQo6IG9wYz8gKCBjaCBhIG4gLS0gKQ0KICAgIGRyb3Agc3dhcCBjaCAwICsgPnINCiAgICBiZWdpbiBjb3VudCByQCA9IGlmIHJkcm9wIGV4aXQgdGhlbg0KICAgICAgICBiZWdpbiAgY291bnQgYmwgPSB1bnRpbA0KICAgICAgICBkdXAgY0AgY2ggPyA9DQogICAgdW50aWwgZHJvcCByZHJvcCBmYWxzZSA7DQo6IC5yZWduciAoIHJlZ25yIC0tICkNCiAgICBkdXAgMTggYW5kIDggPSAgICAgICAgXCBpbiA4Li5GID8NCiAgICBpZiA3IGFuZA0KICAgICAgICBzIiAwdG9zIDFzcCAyaXAgM3cgNGhvcCA1ZGF5IDZzdW4gN21vb24gPyINCiAgICAgICAgT1BDPyA/ZHVwIGlmIHR5cGUyMCB0aGVuIGV4aXQNCiAgIHRoZW4NCiAgICBkdXAgcyIgMHplcm8gMWxpbmsgMnJwIDZyYW0gN254dCA/Ig0KICAgICAgT1BDPyA/ZHVwDQogICAgICAgIGlmIHR5cGUyMCBkcm9wIGV4aXQNCiAgICAgICAgdGhlbiAuIiB4IiBiYXNlIEAgZGVjaW1hbCBzd2FwIC4gYmFzZSAhIDsNCjogLnJlZyAoIGNvZGUgcG9zaXRpZSAtLSApIHJzaGlmdCAxRiBhbmQgLnJlZ25yIDsNCjogLnJlZycgKCBjb2RlIHBvc2l0aWUgLS0gKSByc2hpZnQgNyBhbmQgOCArIC5yZWduciA7DQo6IEdFVCAoIGNvZGUgcG9zIC0tIGNvZGUgaW1tICkgcnNoaWZ0IDsNCnZhbHVlIGRhc2EgIDQwMCB0byBkYXNhDQp2YWx1ZSBeDQpcIDogLngpIC4iIHgpICIgOw0KOiAueCkgKCBvZmZzZXQgLS0gKQ0KICAgIGlmIGNoIHggZW1pdCB0aGVuIC4iICkgIiA7DQpcIC0tLS0tIHF1YWRyYW50IDAgLS0tLS0NCjogWzI2LjNddSAgICAgKCB4IC0tIHkgKSAgICBcIGFkZGk0c3BuLCBzdyBsdw0KICAgMCBvdmVyIDBGIGFuZCBvciAxIGxzaGlmdA0KICAgc3dhcCA0IGdldCAxIGFuZCBvciAyIGxzaGlmdCA7DQo6IFs1NDk4NzYyM10gKCB4IC0tIHkgKQ0KICAgMCBvdmVyIDIgZ2V0IDBGIGFuZCBvciAyIGxzaGlmdA0KICAgb3ZlciA2IGdldCAzIGFuZCBvciAxIGxzaGlmdA0KICAgb3ZlciAwIGdldCAxIGFuZCBvciAxIGxzaGlmdA0KICAgc3dhcCAxIGdldCAxIGFuZCBvciAyIGxzaGlmdCA7DQo6IGNoPyAoIGNoIC0tIGNofDAgKQ0KICAgIGR1cCA3RiA8ICAgIGlmDQogICAgYmwgb3ZlciA8ICAgaWYNCiAgICBkdXAgY2ggYSAtIDE5IHU+IGlmDQogICAgICAgIGV4aXQNCiAgICB0aGVuIHRoZW4gdGhlbiBkcm9wIDAgIDsNCjogLnN0cmluZz8gKCBhIG4gLS0gKSAgICBcIHR5cGUgaWYgbmFtZQ0KICAgIDFFIG92ZXIgMS0gdTwgaWYgMmRyb3AgZXhpdCB0aGVuDQogICAgMmR1cCAwIGRvDQogICAgICAgIGNvdW50DQogICAgICAgY2g/IDA9IGlmIHVubG9vcCBkcm9wIDJkcm9wIGV4aXQgdGhlbg0KICAgIGxvb3AgZHJvcA0KICAgIGNyIDcgc3BhY2VzIHR5cGUgIDsNCjogUTAgKCAtLSApDQpeIDA9ID9leGl0DQpeIDBEIGdldCA3IGFuZA0KPnIgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcIG9wYw0KckAgMD0NCmlmICBeIDIgLnJlZycNCiAgICBeIDUgZ2V0IFs1NDk4NzYyM10gLg0KdGhlbg0KckAgMiA9IHJAIDYgPSBvcg0KaWYgIF4gMiAucmVnJw0KICAgIF4gMEEgZ2V0IDcgYW5kDQogICAgXiA1IGdldCAzIGFuZCAzIGxzaGlmdA0KICAgIG9yIFsyNi4zXXUgPnIgICByQCA/ZHVwIGlmIC4gdGhlbg0KICAgIF4gNyAucmVnJyByPiAueCkNCnRoZW4NCnI+IHMiIDIubHcgNi5zdyAwLmFkZGk0c3BuIDQuUmVzZXJ2ZWQgPyINCm9wYz8gP2R1cCBpZiB0eXBlMjAgZWxzZSAuIiA/IiB0aGVuIDsNCg0KXCAtLS0tLSBxdWFkcmFudCAxIC0tLS0tDQo6IFtCNDk4QTY3My4xNV1zICggeCAtLSB5ICkgXCAuamFsDQogICAwIG92ZXIgMEEgZ2V0IDEgYW5kIG9yIDEgbHNoaWZ0DQogICBvdmVyIDYgZ2V0IDEgYW5kIG9yIDIgbHNoaWZ0DQogICBvdmVyIDcgZ2V0IDMgYW5kIG9yIDEgbHNoaWZ0DQogICBvdmVyIDQgZ2V0IDEgYW5kIG9yIDEgbHNoaWZ0DQogICBvdmVyIDUgZ2V0IDEgYW5kIG9yIDEgbHNoaWZ0DQogICBvdmVyIDAgZ2V0IDEgYW5kIG9yIDEgbHNoaWZ0DQogICBvdmVyIDkgZ2V0IDEgYW5kIG9yIDMgbHNoaWZ0DQogICBzd2FwIDEgZ2V0IDcgYW5kIG9yIDEgbHNoaWZ0DQogICBkdXAgODAwIGFuZCAyKiAtIDsNCjogWzg0Mzc2MjE1XXMgKCB4IC0tIHkgKSAgICBcIGJlcXoNCiAgIDAgb3ZlciA3IGdldCAxIGFuZCBvciAyIGxzaGlmdA0KICAgb3ZlciAzIGdldCAzIGFuZCBvciAxIGxzaGlmdA0KICAgb3ZlciAwIGdldCAxIGFuZCBvciAyIGxzaGlmdA0KICAgb3ZlciA1IGdldCAzIGFuZCBvciAyIGxzaGlmdA0KICAgc3dhcCAxIGdldCAzIGFuZCBvciAxIGxzaGlmdA0KICAgZHVwIDEwMCBhbmQgMiogLSA7DQo6IFExICggLS0gKQ0KXiAxID0gaWYgLiIgLm5vcCIgZXhpdCB0aGVuDQpeIDBEIGdldCA3IGFuZA0KPnIgICAgICAgICAgICAgXCBwICByOiBvcGMNCnJAIDQgPD4NCmlmICByQCAwPSByQCAyID0gb3INCiAgICBpZiAgXiA3IC5yZWcNCiAgICAgICAgXiAyIGdldCAxRiBhbmQgICAgICAgICAgXCBbNDMyMTBdcw0KICAgICAgICBeIDBDIGdldCAxIGFuZCAgICAgICAgICBcIFs1XQ0KICAgICAgICAgICAgNSBsc2hpZnQgLSAuDQogICAgICAgIHI+IHMiIDAuYWRkaSAyLmxpID8iDQogICAgICAgIG9wYz8gdHlwZTIwIGV4aXQNCiAgICB0aGVuDQogICAgckAgMSA9IHJAIDUgPSBvcg0KICAgIGlmICBeIDIgZ2V0DQogICAgICAgIFtCNDk4QTY3My4xNV1zIGRhc2EgKyAuDQogICAgICAgIHI+IHMiIDEuamFsIDUuaiA/Ig0KICAgICAgICBvcGM/IHR5cGUyMCBleGl0DQogICAgdGhlbg0KICAgIHJAIDMgPQ0KICAgIGlmICBeIDcgLnJlZw0KICAgICAgICBeIDIgZ2V0IDFGIGFuZCAgICAgICAgICBcIFsxNjoxMl0NCiAgICAgICAgXiAwQyBnZXQgMSBhbmQgICAgICAgICAgXCBbMTddIG56DQogICAgICAgICAgICA1IGxzaGlmdCAtDQogICAgICAgIDBDIGxzaGlmdCB1Lg0KICAgICAgICAuIiAubHVpIiByZHJvcCBleGl0DQogICAgdGhlbg0KICAgIHJAIDUgPg0KICAgIGlmICBeIDcgLnJlZycNCiAgICAgICAgXiAyIGdldCAxRiBhbmQNCiAgICAgICAgXiAwQSBnZXQgNyBhbmQNCiAgICAgICAgICAgIDUgbHNoaWZ0IG9yDQogICAgICAgIFs4NDM3NjIxNV1zDQogICAgICAgIHM+ZCAwPSBpZiAuIiArIiB0aGVuIGR1cCAuIC4iIC0+ICINCiAgICAgICAgZGFzYSArIC4NCiAgICAgICAgcj4gcyIgNi5iZXF6IDcuYm5leiA/Ig0KICAgICAgICBvcGM/IHR5cGUyMCBleGl0DQogICAgdGhlbg0KdGhlbiByZHJvcCAgICAgXCA9NA0KXiAwQSBnZXQgMyBhbmQNCj5yDQpyQCAyIDwNCmlmICBeIDcgLnJlZycNCiAgICBeIDIgZ2V0IDFGIGFuZA0KICAgIF4gMEMgZ2V0IDEgYW5kDQogICAgICAgIDUgbHNoaWZ0IG9yIC4NCiAgICByPiBzIiAwLnNybGkgMS5zcmFpID8iDQogICAgb3BjPyB0eXBlMjAgZXhpdA0KdGhlbg0KckAgMiA9DQppZiAgXiA3IC5yZWcnDQogICAgXiAyIGdldCAxRiBhbmQNCiAgICBeIDBDIGdldCAxIGFuZA0KICAgICAgICA1IGxzaGlmdCAtIC4NCiAgICAuIiAuYW5kaSIgcmRyb3AgZXhpdA0KdGhlbg0KcmRyb3ANCl4gNSBnZXQgMyBhbmQNCl4gMEMgZ2V0IDEgYW5kDQogICAgMiBsc2hpZnQgKw0KPnINCnJAIDQgPA0KaWYgIF4gNyAucmVnJw0KICAgIF4gMiAucmVnJw0KckAgcyIgMC5zdWIgMS54b3IgMi5vciAzLmFuZCA/Ig0Kb3BjPyA/ZHVwIGlmIHR5cGUyMCB0aGVuDQp0aGVuIHJkcm9wDQo7DQpcIC0tLS0tIHF1YWRyYW50IDIgLS0tLS0NCjogWzUuMjc2XXUNCiAgICAwIG92ZXIgMCBnZXQgMyBhbmQgb3IgNCBsc2hpZnQNCiAgICBzd2FwIDIgZ2V0IDBGIGFuZCBvciAyIGxzaGlmdCA7DQo6IFs0LjI3LjVddQ0KICAgIDAgb3ZlciAwIGdldCA3IGFuZCBvciAzIGxzaGlmdA0KICAgIHN3YXAgMyBnZXQgNyBhbmQgb3IgMiBsc2hpZnQgOw0KOiBRMiAgKCAtLSApDQpeIDkwMDIgPSBpZiAuIiAuZWJyZWFrIiBleGl0IHRoZW4NCl4gMEQgZ2V0IDcgYW5kDQo+cg0KckAgNCA8Pg0KaWYgckAgMD0NCiAgICBpZiBeIDcgLnJlZw0KICAgICAgIF4gMiBnZXQgMUYgYW5kIC4NCiAgICAgIC4iIC5zbGxpIiByZHJvcCBleGl0DQogICB0aGVuDQogICByQCAyID0NCiAgIGlmIF4gNyAucmVnDQogICAgICBeIDIgZ2V0IDFGIGFuZCAxIGxzaGlmdCAgXCBbNDM4NzY/XQ0KICAgICAgXiAwQyBnZXQgMSBhbmQNCiAgICAgICAgb3IgWzQuMjcuNV11ID5yICAgckAgP2R1cCBpZiAuIHRoZW4NCiAgICAgICAgLiIgcnAgIiByPiAueCkNCiAgICAgIC4iIC5sd3NwIiByZHJvcCBleGl0DQogICB0aGVuDQogICByQCA2ID0NCiAgIGlmIF4gMiAucmVnDQogICAgICBeIDcgZ2V0IDdGIGFuZA0KICAgICAgWzUuMjc2XXUgPnIgICByQCA/ZHVwIGlmIC4gdGhlbg0KICAgICAgLiIgcnAgIiByPiAueCkNCiAgICAgIC4iIC5zd3NwIg0KICAgdGhlbg0KICAgIHJkcm9wIGV4aXQNCnRoZW4gcmRyb3AgICAgICAgICAgXCA9IDQNCiAgIF4gNyAucmVnDQogICBeIDIgZ2V0IDFGIGFuZA0KICAgaWYgXiAyIC5yZWcNCiAgICAgIF4gMEMgZ2V0IDEgYW5kDQogICAgICBzIiAwLm12IDEuYWRkID8iDQogICAgICBvcGM/IHR5cGUyMCBleGl0DQogICB0aGVuDQogICBeIDBDIGdldCAxIGFuZA0KICAgcyIgMC5qciAxLmphbHIgPyINCiAgIG9wYz8gdHlwZTIwIDsNClwgLS0tLS0gcXVhZHJhbnQgMyAtLS0tLQ0KOiBtdWxhZGQzMiAoIC0tICkNCl4gNyAucmVnDQpeIDBGIC5yZWcNCl4gMTQgLnJlZw0KXiAxOSBnZXQNCj5yDQpeIDBDIGdldCA3IGFuZA0KckAgMSA9DQppZiBzIiAwTVVMIDFNVUxIIDJNVUxIU1UgM01VTEhVIDRESVYgNURJVlUgNlJFTSA3IFJFTVUgPyINCiAgIG9wYz8gdHlwZTIwIHJkcm9wIGV4aXQgdGhlbg0KckAgMD0NCmlmIHMiIDBBREQgMVNMTCAyU0xUIDNTTFRVIDRYT1IgNVNSTCA2T1IgN0FORCA/Ig0KICAgb3BjPyB0eXBlMjAgcmRyb3AgZXhpdCB0aGVuDQpyQCAyMCA9DQppZiBzIiAwU1VCIDVTUkEgPyINCiAgICBvcGM/ID9kdXAgaWYgdHlwZTIwIHJkcm9wIGV4aXQgdGhlbg0KdGhlbiAuIiA/Ig0KcmRyb3AgZHJvcCA7DQo6IHNoaWFkZGkzMiAoIC0tICkNCl4gNyAucmVnDQpeIDBGIC5yZWcNCl4gMEMgZ2V0IDcgYW5kDQo+cg0KXiAxNCBnZXQNCiAgICByQCA1ID0gaWYgMUYgYW5kIHRoZW4NCiAgICBkdXAgODAwIGFuZCAyKiAtIC4gICAgICAgICAgXCAxMmJpdHMNCnJAIHMiIDBBRERJIDFTTExJIDJTTFRJIDNTTFRJVSA0WE9SSSA2T1JJIDdBTkRJID8iDQpvcGM/ICA/ZHVwIGlmIHR5cGUyMCByZHJvcCBleGl0IHRoZW4NCnI+IDUgPD4gaWYgLiIgPyIgZXhpdCB0aGVuDQpeIDE5IGdldA0KMDw+IGFicw0KcyIgMFNSTEkgMVNSQUkgPyINCm9wYz8gdHlwZTIwIDsNCjogbG9hZDMyICggLS0gKQ0KXiA3IC5yZWcNCl4gMTQgZ2V0IGR1cCA4MDAgYW5kIDIqIC0gPnIgICByQCA/ZHVwIGlmIC4gdGhlbg0KXiAwRiAucmVnIHI+IC54KQ0KXiAwQyBnZXQgNyBhbmQNCnMiIDBMQiAxTEggMkxXIDRMQlUgNUxIVSA/Ig0Kb3BjPyA/ZHVwIGlmIHR5cGUyMCBlbHNlIC4iID8iIHRoZW4gOw0KOiBzdG9yZTMyICggLS0gKQ0KXiAwQyBnZXQgNyBhbmQNCj5yDQoyIHJAIDwgaWYgcmRyb3AgZXhpdCB0aGVuDQpeIDBGIC5yZWcNCl4gMTkgZ2V0IDUgbHNoaWZ0DQpeIDcgZ2V0IDFGIGFuZCBvcg0KICAgIGR1cCA4MDAgYW5kIDIqIC0gPnIgICByQCA/ZHVwIGlmIC4gdGhlbg0KXiAxNCAucmVnIHI+IC54KQ0Kcj4gcyIgMFNCIDFTSCAyU1cgPyIgb3BjPyB0eXBlMjAgOw0KDQo6IFtDQS4xQl1zICggeCAtLSB5ICkgICAgXCBiZXENCjAgb3ZlciAwQiBnZXQgMSBhbmQgb3IgMSBsc2hpZnQNCm92ZXIgMCBnZXQgMSBhbmQgb3IgMEEgbHNoaWZ0DQpzd2FwIDEgZ2V0IDNGRiBhbmQgb3IgMSBsc2hpZnQNCmR1cCAxMDAwIGFuZCAyKiAtIDsNCg0KOiBiZXEzMiAoIC0tICkNCl4gMEMgZ2V0IDcgYW5kDQo+cg0KckAgMiA9IHJAIDMgPSBvciBpZiByZHJvcCBleGl0IHRoZW4NCl4gMEYgLnJlZw0KXiAxNCAucmVnDQpeIDE5IGdldCA1IGxzaGlmdA0KXiA3IGdldCAxRiBhbmQgb3INCltDQS4xQl1zDQpzPmQgMD0gaWYgLiIgKyIgdGhlbiBkdXAgLiAuIiAtPiAiDQpkYXNhICsgLg0Kcj4gcyIgMEJFUSAxQk5FIDRCTFQgNUJHRSA2QkxUVSA3QkdFVSA/Ig0KT1BDPyBUWVBFMjAgOw0KOiBjc3JyMzIgKCAtLSApDQpeIDcgLnJlZw0KXiAxNCBnZXQgLg0KXiAwRg0KXiAwRSBnZXQgMSBhbmQNCmlmIGdldCAxRiBhbmQgLiBlbHNlIC5yZWcgdGhlbg0KXiAwQyBnZXQgNyBhbmQNCnMiIDFDU1JSVyAyQ1NSUlMgM0NTUlJDIDVDU1JSV0kgNkNTUlJTSSA3Q1NSUkNJID8iDQpvcGM/ID9kdXAgaWYgdHlwZTIwIGVsc2UgLiIgPyIgdGhlbiAgOw0KOiBbamFsXXMgICAgXCBbMjAgMTA6MSAxMSAxOToxMl0NCjAgb3ZlciAxMyBnZXQgMSBhbmQgb3IgOCBsc2hpZnQNCm92ZXIgMCBnZXQgRkYgYW5kIG9yIDEgbHNoaWZ0DQpvdmVyIDggZ2V0IDEgYW5kIG9yIDBBIGxzaGlmdA0Kb3ZlciA5IGdldCAzRkYgYW5kICBvciAxIGxzaGlmdA0Kc3dhcCA4MDAwMCBhbmQgMiogLSA7DQo6IHJlc3QzMiAoIG9wYyAtLSApDQpeIDcgLnJlZw0KZHVwIDFCID0gKCAxMTAxMSBqYWwgKQ0KaWYgZHJvcCBeIDBDIGdldCBbamFsXXMgZGFzYSArIHUuIC4iIEpBTCIgZXhpdA0KdGhlbg0KZHVwIDE5ID0gKCAxMTAwMSBqYWxyICkNCmlmIF4gMEMgZ2V0IDcgYW5kIDA9DQogICAgaWYgZHJvcA0KICAgICAgIF4gMEYgLnJlZw0KICAgICAgIF4gMTQgZ2V0IGR1cCA4MDAgYW5kIDIqIC0gLg0KICAgICAgIC4iIEpBTFIiIGV4aXQNCiAgICB0aGVuDQp0aGVuDQoxNyBhbmQgNSA8PiBpZiAuIiA/IiBleGl0IHRoZW4NCl4gRkZGRkYwMDAgYW5kIHUuDQpeIDUgZ2V0IDEgYW5kDQpzIiAwQVVJUEMgMUxVSSA/Ig0Kb3BjPyB0eXBlMjAgOw0KXCA6IGZlbmNlMzIgPz8NCg0KOiBxMyAoIC0tICkNCl4gMiBnZXQgMUYgYW5kDQpkdXAgMD0gICBpZiBkcm9wIGxvYWQzMiBleGl0IHRoZW4NClwgZHVwIDMgID0gaWYgZHJvcCBmZW5jZTMyIGV4aXQgdGhlbg0KZHVwIDQgID0gaWYgZHJvcCBzaGlhZGRpMzIgZXhpdCB0aGVuDQpkdXAgOCAgPSBpZiBkcm9wIHN0b3JlMzIgZXhpdCB0aGVuDQpkdXAgMEMgPSBpZiBkcm9wIG11bGFkZDMyIGV4aXQgdGhlbg0KZHVwIDE4ID0gaWYgZHJvcCBiZXEzMiBleGl0IHRoZW4NCmR1cCAxQyA9IGlmIGRyb3AgY3NycjMyIGV4aXQgdGhlbg0KcmVzdDMyIDsNCjoga29wamUgKCAtLSApDQogICAgZGFzYSBjZWxsLSBAKyA9IGlmICBjciA3IHNwYWNlcyAuIiAtLS0tLS0gIGJvZHkiIHRoZW4NCiAgICBkYXNhIDEtIGNvdW50IC5zdHJpbmc/DQogICBkYXNhIGNyIGR1cCA1IHUuciAuIiA6ICINCiAgIGhAIHRvIF4gICAgICAgXCB3aW5kb3dzLCB0ZSBsYWRlbiB2b29vb3IgZGUgbWV0YSBhc3NlbWJsZXINCiAgIF4gRkYgYW5kIC5jaA0KICAgXiA4IHJzaGlmdCBGRiBhbmQgLmNoDQogICBeIDUgdS5yIHNwYWNlDQogICAgOw0KDQo6IDFkYXMgKCAtLSApDQpcICAgIGRhc2EgMS0gY291bnQgLnN0cmluZz8NCiAgICBrb3BqZSBeIDMgYW5kDQpcICAgICBkdXAgMyA9IGlmIGNoICIgZWxzZSBjaCAnIHRoZW4gZW1pdCBzcGFjZQ0KMiBzcGFjZXMNCiAgICBkdXAgMD0gIGlmIGRyb3AgcTAgIGV4aXQgdGhlbg0KICAgIGR1cCAxID0gaWYgZHJvcCBxMSAgZXhpdCB0aGVuDQogICAgZHVwIDIgPSBpZiBkcm9wIHEyICBleGl0IHRoZW4NCiAgICBkcm9wDQogICAgZGFzYSBAIHRvIF4gcTMNCjIgK3RvIGRhc2ENCmtvcGplIGNoIH4gZW1pdA0KICAgIDsNCnY6IGZyZXNoIGRhc20gYWxzbyBpbnNpZGUNCjogY2RhcyAoIC0tICkNCiAgICAxDQogICAgZm9yIDEyMzQ1IDFkYXMgMiArdG8gZGFzYQ0KICAgICAgICAxMjM0NSA8PiA/YWJvcnQNCiAgICByZWN1ciBuZXh0IDsNCjogZGFzICggJ25hYW0nIC0tICkgJyB0byBkYXNhIGNkYXMgOw0KOiBtZGFzICggYWRyIC0tICkgLTIgYW5kIHRvIGRhc2EgY2RhcyA7DQoNCnY6IGZyZXNoDQpzaGllbGQgZGFzXCAgZnJlZXplDQoNCg0KXCA8Pjw+DQo="
+  ]
+</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:sequenceFlow id="Flow_0jymbuj" sourceRef="Activity_0wc08l2" targetRef="Activity_14qpuys" />
+    <bpmn:sequenceFlow id="Flow_1t5oozx" sourceRef="Activity_14qpuys" targetRef="Activity_14zfmoe" />
+    <bpmn:scriptTask id="Activity_14qpuys" name="yo2">
+      <bpmn:incoming>Flow_0jymbuj</bpmn:incoming>
+      <bpmn:outgoing>Flow_1t5oozx</bpmn:outgoing>
+      <bpmn:property id="Property_0mhldh0" name="__targetRef_placeholder" />
+      <bpmn:dataInputAssociation id="DataInputAssociation_1mhove6">
+        <bpmn:sourceRef>DataStoreReference_0mo2e2d</bpmn:sourceRef>
+        <bpmn:targetRef>Property_0mhldh0</bpmn:targetRef>
+      </bpmn:dataInputAssociation>
+      <bpmn:script>def make_link(key, file_data, file_index):
+    return markdown_file_download_link(key=key, file_data=file_data, file_index=file_index)
+
+file_links = [make_link("uploaded_files", file_data, file_index) for file_index, file_data in enumerate(uploaded_files)]
+
+file_links2 = [make_link("uploaded_files2", file_data, file_index) for file_index, file_data in enumerate(uploaded_files2)]
+
+zz_file_links = [make_link("zz_uploaded_files", file_data, file_index) for file_index, file_data in enumerate(zz_uploaded_files)]</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:sequenceFlow id="Flow_1nv52hu" sourceRef="present_form" targetRef="Activity_0wc08l2" />
+    <bpmn:dataObjectReference id="DataObjectReference_1gk8jnk" dataObjectRef="uploaded_files" />
+    <bpmn:dataObject id="uploaded_file" />
+    <bpmn:dataObjectReference id="DataObjectReference_09cyvmw" name="Uploaded File" dataObjectRef="uploaded_file" />
+    <bpmn:userTask id="Activity_1y64pe3" name="Present Form2">
+      <bpmn:extensionElements>
+        <spiffworkflow:properties>
+          <spiffworkflow:property name="formJsonSchemaFilename" value="file-upload-schema.json" />
+          <spiffworkflow:property name="formUiSchemaFilename" value="file-upload-uischema.json" />
+        </spiffworkflow:properties>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_18wxuky</bpmn:incoming>
+      <bpmn:outgoing>Flow_13ydzo0</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:sequenceFlow id="Flow_13ydzo0" sourceRef="Activity_1y64pe3" targetRef="Activity_0s91t1d" />
+    <bpmn:endEvent id="Event_1jrh6tg">
+      <bpmn:incoming>Flow_1yhxczq</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:manualTask id="Activity_0ht3a59" name="Show links">
+      <bpmn:extensionElements>
+        <spiffworkflow:instructionsForEndUser>uploaded_file: 
+
+{{uploaded_file_link}}
+
+uploaded_files:
+
+{% for link in uploaded_files_links %}
+  {{link}}
+
+  -----
+
+{% endfor %}
+
+uploaded_files2:
+
+{% for link2 in uploaded_files2_links %}
+  {{link2}}
+
+  -----
+
+{% endfor %}
+</spiffworkflow:instructionsForEndUser>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_12zrppa</bpmn:incoming>
+      <bpmn:outgoing>Flow_17zb7t0</bpmn:outgoing>
+    </bpmn:manualTask>
+    <bpmn:sequenceFlow id="Flow_0e84r7i" sourceRef="StartEvent_1" targetRef="Activity_0j2adxt" />
+    <bpmn:sequenceFlow id="Flow_1j3txf1" sourceRef="Activity_075rqb7" targetRef="Activity_1kn0hc9" />
+    <bpmn:scriptTask id="Activity_075rqb7">
+      <bpmn:incoming>Flow_0manfs2</bpmn:incoming>
+      <bpmn:outgoing>Flow_1j3txf1</bpmn:outgoing>
+      <bpmn:script>sizes.append(get_data_sizes())</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:scriptTask id="Activity_1kn0hc9">
+      <bpmn:incoming>Flow_1j3txf1</bpmn:incoming>
+      <bpmn:outgoing>Flow_03w7hfa</bpmn:outgoing>
+      <bpmn:script>True</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:sequenceFlow id="Flow_03w7hfa" sourceRef="Activity_1kn0hc9" targetRef="Activity_0bzqtn5" />
+    <bpmn:scriptTask id="Activity_0bzqtn5">
+      <bpmn:incoming>Flow_03w7hfa</bpmn:incoming>
+      <bpmn:outgoing>Flow_0pg8bxf</bpmn:outgoing>
+      <bpmn:script>True</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:sequenceFlow id="Flow_0pg8bxf" sourceRef="Activity_0bzqtn5" targetRef="Activity_0sr6xi1" />
+    <bpmn:scriptTask id="Activity_0sr6xi1">
+      <bpmn:incoming>Flow_0pg8bxf</bpmn:incoming>
+      <bpmn:outgoing>Flow_0xmtgo5</bpmn:outgoing>
+      <bpmn:script>True</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:sequenceFlow id="Flow_0xmtgo5" sourceRef="Activity_0sr6xi1" targetRef="Activity_1xpuz92" />
+    <bpmn:scriptTask id="Activity_1xpuz92">
+      <bpmn:incoming>Flow_0xmtgo5</bpmn:incoming>
+      <bpmn:outgoing>Flow_0804qou</bpmn:outgoing>
+      <bpmn:script>True</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:sequenceFlow id="Flow_0804qou" sourceRef="Activity_1xpuz92" targetRef="Activity_0bam9j0" />
+    <bpmn:scriptTask id="Activity_0bam9j0">
+      <bpmn:incoming>Flow_0804qou</bpmn:incoming>
+      <bpmn:outgoing>Flow_0nmqh7m</bpmn:outgoing>
+      <bpmn:script>True</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:sequenceFlow id="Flow_0nmqh7m" sourceRef="Activity_0bam9j0" targetRef="Activity_0bi6z0c" />
+    <bpmn:scriptTask id="Activity_1jx4ptn">
+      <bpmn:incoming>Flow_0elrpxu</bpmn:incoming>
+      <bpmn:outgoing>Flow_12zrppa</bpmn:outgoing>
+      <bpmn:script>sizes.append(get_data_sizes())
+
+encoded_uploaded_file = get_encoded_file_data(uploaded_file)
+del(encoded_uploaded_file)</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:sequenceFlow id="Flow_12zrppa" sourceRef="Activity_1jx4ptn" targetRef="Activity_0ht3a59" />
+    <bpmn:sequenceFlow id="Flow_18wxuky" sourceRef="Activity_04k0ox3" targetRef="Activity_1y64pe3" />
+    <bpmn:scriptTask id="Activity_04k0ox3">
+      <bpmn:incoming>Flow_0jow4v5</bpmn:incoming>
+      <bpmn:incoming>Flow_0o94q3q</bpmn:incoming>
+      <bpmn:outgoing>Flow_18wxuky</bpmn:outgoing>
+      <bpmn:script>#sizes.append(get_data_sizes())
+sizes = [get_data_sizes()]</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:sequenceFlow id="Flow_0elrpxu" sourceRef="Activity_0bi6z0c" targetRef="Activity_1jx4ptn" />
+    <bpmn:userTask id="Activity_0bi6z0c" name="Form with no files">
+      <bpmn:extensionElements>
+        <spiffworkflow:properties>
+          <spiffworkflow:property name="formJsonSchemaFilename" value="file-upload-schema(1).json" />
+          <spiffworkflow:property name="formUiSchemaFilename" value="file-upload-uischema(1).json" />
+        </spiffworkflow:properties>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0nmqh7m</bpmn:incoming>
+      <bpmn:outgoing>Flow_0elrpxu</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:sequenceFlow id="Flow_17zb7t0" sourceRef="Activity_0ht3a59" targetRef="Gateway_0d78b2w" />
+    <bpmn:exclusiveGateway id="Gateway_0d78b2w" default="Flow_0jow4v5">
+      <bpmn:incoming>Flow_17zb7t0</bpmn:incoming>
+      <bpmn:outgoing>Flow_1yhxczq</bpmn:outgoing>
+      <bpmn:outgoing>Flow_0jow4v5</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="Flow_1yhxczq" sourceRef="Gateway_0d78b2w" targetRef="Event_1jrh6tg">
+      <bpmn:conditionExpression>False</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_0jow4v5" sourceRef="Gateway_0d78b2w" targetRef="Activity_04k0ox3" />
+    <bpmn:scriptTask id="Activity_0s91t1d" name="yo22">
+      <bpmn:incoming>Flow_13ydzo0</bpmn:incoming>
+      <bpmn:outgoing>Flow_0manfs2</bpmn:outgoing>
+      <bpmn:script>#def make_link(key, file_data, file_index):
+#    return markdown_file_download_link(key=key, file_data=file_data, file_index=file_index)
+
+#file_links = [make_link("uploaded_files", file_data, file_index) for file_index, file_data in enumerate(uploaded_files)]
+
+#file_links2 = [make_link("uploaded_files2", file_data, file_index) for file_index, file_data in enumerate(uploaded_files2)]
+
+#zz_file_links = [make_link("zz_uploaded_files", file_data, file_index) for file_index, file_data in enumerate(zz_uploaded_files)]
+
+uploaded_file_link = markdown_file_download_link(uploaded_file)
+uploaded_files_links = [markdown_file_download_link(digest_reference) for digest_reference in uploaded_files]
+uploaded_files2_links = [markdown_file_download_link(digest_reference) for digest_reference in uploaded_files2]</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:sequenceFlow id="Flow_0manfs2" sourceRef="Activity_0s91t1d" targetRef="Activity_075rqb7" />
+    <bpmn:sequenceFlow id="Flow_0o94q3q" sourceRef="Activity_0j2adxt" targetRef="Activity_04k0ox3" />
+    <bpmn:scriptTask id="Activity_0j2adxt">
+      <bpmn:incoming>Flow_0e84r7i</bpmn:incoming>
+      <bpmn:outgoing>Flow_0o94q3q</bpmn:outgoing>
+      <bpmn:script>sizes = [get_data_sizes()]</bpmn:script>
+    </bpmn:scriptTask>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="file-upload_process2">
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="2" y="252" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0ajk9gf_di" bpmnElement="present_form">
+        <dc:Bounds x="170" y="137" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_003bxs1_di" bpmnElement="Event_003bxs1">
+        <dc:Bounds x="782" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0lsq9cd_di" bpmnElement="Activity_14zfmoe">
+        <dc:Bounds x="590" y="137" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DataObjectReference_0cit5ef_di" bpmnElement="DataStoreReference_0mo2e2d">
+        <dc:Bounds x="432" y="345" width="36" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="416" y="402" width="74" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1mtmeng_di" bpmnElement="Activity_0wc08l2">
+        <dc:Bounds x="290" y="137" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0jqv7u9_di" bpmnElement="Activity_14qpuys">
+        <dc:Bounds x="430" y="137" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DataObjectReference_09cyvmw_di" bpmnElement="DataObjectReference_09cyvmw">
+        <dc:Bounds x="292" y="435" width="36" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="276" y="492" width="68" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_02b2x61_di" bpmnElement="Activity_1y64pe3">
+        <dc:Bounds x="170" y="600" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1jrh6tg_di" bpmnElement="Event_1jrh6tg">
+        <dc:Bounds x="1612" y="622" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_00njw05_di" bpmnElement="Activity_0ht3a59">
+        <dc:Bounds x="1390" y="600" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1vi6exq_di" bpmnElement="Activity_075rqb7">
+        <dc:Bounds x="410" y="600" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_0zbaqde" bpmnElement="Activity_1kn0hc9">
+        <dc:Bounds x="530" y="600" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_004107h" bpmnElement="Activity_0bzqtn5">
+        <dc:Bounds x="650" y="600" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_1ofiy4v" bpmnElement="Activity_0sr6xi1">
+        <dc:Bounds x="770" y="600" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_0ica3k2" bpmnElement="Activity_1xpuz92">
+        <dc:Bounds x="890" y="600" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_1yv7q7j" bpmnElement="Activity_0bam9j0">
+        <dc:Bounds x="1010" y="600" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_1a2199y" bpmnElement="Activity_1jx4ptn">
+        <dc:Bounds x="1270" y="600" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1u7u45j_di" bpmnElement="Activity_04k0ox3">
+        <dc:Bounds x="54" y="460" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_060clsg_di" bpmnElement="Activity_0bi6z0c">
+        <dc:Bounds x="1130" y="600" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_0d78b2w_di" bpmnElement="Gateway_0d78b2w" isMarkerVisible="true">
+        <dc:Bounds x="1515" y="615" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1543ace_di" bpmnElement="Activity_0s91t1d">
+        <dc:Bounds x="290" y="600" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0sanufs_di" bpmnElement="Activity_0j2adxt">
+        <dc:Bounds x="54" y="320" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="DataOutputAssociation_1n3sruk_di" bpmnElement="DataOutputAssociation_1n3sruk">
+        <di:waypoint x="233" y="217" />
+        <di:waypoint x="302" y="435" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1p2cge9_di" bpmnElement="Flow_1p2cge9">
+        <di:waypoint x="690" y="177" />
+        <di:waypoint x="782" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DataOutputAssociation_16xe24p_di" bpmnElement="DataOutputAssociation_16xe24p">
+        <di:waypoint x="363" y="217" />
+        <di:waypoint x="437" y="345" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0jymbuj_di" bpmnElement="Flow_0jymbuj">
+        <di:waypoint x="390" y="177" />
+        <di:waypoint x="430" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1t5oozx_di" bpmnElement="Flow_1t5oozx">
+        <di:waypoint x="530" y="177" />
+        <di:waypoint x="590" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DataInputAssociation_1mhove6_di" bpmnElement="DataInputAssociation_1mhove6">
+        <di:waypoint x="455" y="345" />
+        <di:waypoint x="479" y="217" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1nv52hu_di" bpmnElement="Flow_1nv52hu">
+        <di:waypoint x="270" y="177" />
+        <di:waypoint x="290" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_13ydzo0_di" bpmnElement="Flow_13ydzo0">
+        <di:waypoint x="270" y="640" />
+        <di:waypoint x="290" y="640" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0e84r7i_di" bpmnElement="Flow_0e84r7i">
+        <di:waypoint x="38" y="270" />
+        <di:waypoint x="104" y="270" />
+        <di:waypoint x="104" y="320" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1j3txf1_di" bpmnElement="Flow_1j3txf1">
+        <di:waypoint x="510" y="640" />
+        <di:waypoint x="530" y="640" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_03w7hfa_di" bpmnElement="Flow_03w7hfa">
+        <di:waypoint x="630" y="640" />
+        <di:waypoint x="650" y="640" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0pg8bxf_di" bpmnElement="Flow_0pg8bxf">
+        <di:waypoint x="750" y="640" />
+        <di:waypoint x="770" y="640" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0xmtgo5_di" bpmnElement="Flow_0xmtgo5">
+        <di:waypoint x="870" y="640" />
+        <di:waypoint x="890" y="640" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0804qou_di" bpmnElement="Flow_0804qou">
+        <di:waypoint x="990" y="640" />
+        <di:waypoint x="1010" y="640" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0nmqh7m_di" bpmnElement="Flow_0nmqh7m">
+        <di:waypoint x="1110" y="640" />
+        <di:waypoint x="1130" y="640" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_12zrppa_di" bpmnElement="Flow_12zrppa">
+        <di:waypoint x="1370" y="640" />
+        <di:waypoint x="1390" y="640" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_18wxuky_di" bpmnElement="Flow_18wxuky">
+        <di:waypoint x="104" y="540" />
+        <di:waypoint x="104" y="640" />
+        <di:waypoint x="170" y="640" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0elrpxu_di" bpmnElement="Flow_0elrpxu">
+        <di:waypoint x="1230" y="640" />
+        <di:waypoint x="1270" y="640" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_17zb7t0_di" bpmnElement="Flow_17zb7t0">
+        <di:waypoint x="1490" y="640" />
+        <di:waypoint x="1515" y="640" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1yhxczq_di" bpmnElement="Flow_1yhxczq">
+        <di:waypoint x="1565" y="640" />
+        <di:waypoint x="1612" y="640" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0jow4v5_di" bpmnElement="Flow_0jow4v5">
+        <di:waypoint x="1540" y="615" />
+        <di:waypoint x="1540" y="520" />
+        <di:waypoint x="154" y="520" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0manfs2_di" bpmnElement="Flow_0manfs2">
+        <di:waypoint x="390" y="640" />
+        <di:waypoint x="410" y="640" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0o94q3q_di" bpmnElement="Flow_0o94q3q">
+        <di:waypoint x="104" y="400" />
+        <di:waypoint x="104" y="460" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

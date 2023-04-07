@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:spiffworkflow="http://spiffworkflow.org/bpmn/schema/1.0/core" id="Definitions_96f6665" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.0.0-dev">
+  <bpmn:process id="Process_w13g1wd" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>Flow_1e1w06q</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_1e1w06q" sourceRef="StartEvent_1" targetRef="Activity_1742krl" />
+    <bpmn:sequenceFlow id="Flow_12c1a3u" sourceRef="Event_12o0kkm" targetRef="Event_1hm16rp" />
+    <bpmn:endEvent id="Event_1hm16rp">
+      <bpmn:incoming>Flow_0mk8t2t</bpmn:incoming>
+      <bpmn:incoming>Flow_12c1a3u</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_0mk8t2t" sourceRef="Activity_0ocbxin" targetRef="Event_1hm16rp" />
+    <bpmn:userTask id="Activity_1742krl" name="Get name">
+      <bpmn:extensionElements>
+        <spiffworkflow:properties>
+          <spiffworkflow:property name="formJsonSchemaFilename" value="getname.json" />
+        </spiffworkflow:properties>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1e1w06q</bpmn:incoming>
+      <bpmn:outgoing>Flow_1n1put7</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:manualTask id="Activity_0ocbxin" name="Show name">
+      <bpmn:extensionElements>
+        <spiffworkflow:instructionsForEndUser>{{name}}</spiffworkflow:instructionsForEndUser>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1n1put7</bpmn:incoming>
+      <bpmn:outgoing>Flow_0mk8t2t</bpmn:outgoing>
+    </bpmn:manualTask>
+    <bpmn:boundaryEvent id="Event_12o0kkm" attachedToRef="Activity_1742krl">
+      <bpmn:outgoing>Flow_12c1a3u</bpmn:outgoing>
+      <bpmn:timerEventDefinition id="TimerEventDefinition_0hyzgfk">
+        <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">"PT30S"</bpmn:timeDuration>
+      </bpmn:timerEventDefinition>
+    </bpmn:boundaryEvent>
+    <bpmn:sequenceFlow id="Flow_1n1put7" sourceRef="Activity_1742krl" targetRef="Activity_0ocbxin" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_w13g1wd">
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="179" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0is2zzs_di" bpmnElement="Activity_1742krl">
+        <dc:Bounds x="270" y="137" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1e95eug_di" bpmnElement="Activity_0ocbxin">
+        <dc:Bounds x="440" y="137" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1hm16rp_di" bpmnElement="Event_1hm16rp">
+        <dc:Bounds x="642" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_12k6d76_di" bpmnElement="Event_12o0kkm">
+        <dc:Bounds x="322" y="199" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_1e1w06q_di" bpmnElement="Flow_1e1w06q">
+        <di:waypoint x="215" y="177" />
+        <di:waypoint x="270" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_12c1a3u_di" bpmnElement="Flow_12c1a3u">
+        <di:waypoint x="340" y="235" />
+        <di:waypoint x="340" y="270" />
+        <di:waypoint x="660" y="270" />
+        <di:waypoint x="660" y="195" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0mk8t2t_di" bpmnElement="Flow_0mk8t2t">
+        <di:waypoint x="540" y="177" />
+        <di:waypoint x="642" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1n1put7_di" bpmnElement="Flow_1n1put7">
+        <di:waypoint x="370" y="177" />
+        <di:waypoint x="440" y="177" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
