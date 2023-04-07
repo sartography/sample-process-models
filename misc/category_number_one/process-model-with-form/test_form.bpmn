@@ -10,14 +10,15 @@
     </bpmn:endEvent>
     <bpmn:scriptTask id="multiply1" name="multiply" scriptFormat="python">
       <bpmn:incoming>Flow_1pq3xb5</bpmn:incoming>
-      <bpmn:outgoing>Flow_16gxvwr</bpmn:outgoing>
-      <bpmn:script>product_one = system_generated_number * user_generated_number_1</bpmn:script>
+      <bpmn:outgoing>Flow_06y928b</bpmn:outgoing>
+      <bpmn:script>product_one = system_generated_number * user_generated_number_1
+del(this_will_delete)</bpmn:script>
     </bpmn:scriptTask>
-    <bpmn:sequenceFlow id="Flow_16gxvwr" sourceRef="multiply1" targetRef="form2" />
     <bpmn:scriptTask id="set_system_generated_number" name="set_system_generated_number" scriptFormat="python">
       <bpmn:incoming>SequenceFlow_0lvudp8</bpmn:incoming>
       <bpmn:outgoing>Flow_1n3gm10</bpmn:outgoing>
-      <bpmn:script>system_generated_number = 4</bpmn:script>
+      <bpmn:script>system_generated_number = 4
+this_will_delete = True</bpmn:script>
     </bpmn:scriptTask>
     <bpmn:userTask id="form2" name="get_user_generated_number_two">
       <bpmn:extensionElements>
@@ -26,7 +27,7 @@
           <spiffworkflow:property name="formUiSchemaFilename" value="form2_ui.json" />
         </spiffworkflow:properties>
       </bpmn:extensionElements>
-      <bpmn:incoming>Flow_16gxvwr</bpmn:incoming>
+      <bpmn:incoming>Flow_0fia6jt</bpmn:incoming>
       <bpmn:outgoing>Flow_0k1q81g</bpmn:outgoing>
     </bpmn:userTask>
     <bpmn:sequenceFlow id="Flow_0k1q81g" sourceRef="form2" targetRef="multiply2" />
@@ -91,14 +92,29 @@ HO
 {{system_generated_number}}</spiffworkflow:instructionsForEndUser>
         </bpmn:extensionElements>
         <bpmn:incoming>Flow_1ol104g</bpmn:incoming>
-        <bpmn:outgoing>Flow_0s5gxxe</bpmn:outgoing>
+        <bpmn:outgoing>Flow_05cwd0o</bpmn:outgoing>
       </bpmn:userTask>
       <bpmn:sequenceFlow id="Flow_1ol104g" sourceRef="Event_0ndd0oh" targetRef="form1" />
       <bpmn:endEvent id="Event_01q6of6">
-        <bpmn:incoming>Flow_0s5gxxe</bpmn:incoming>
+        <bpmn:incoming>Flow_18e17h9</bpmn:incoming>
       </bpmn:endEvent>
-      <bpmn:sequenceFlow id="Flow_0s5gxxe" sourceRef="form1" targetRef="Event_01q6of6" />
+      <bpmn:sequenceFlow id="Flow_05cwd0o" sourceRef="form1" targetRef="subprocess_script_task" />
+      <bpmn:sequenceFlow id="Flow_18e17h9" sourceRef="subprocess_script_task" targetRef="Event_01q6of6" />
+      <bpmn:scriptTask id="subprocess_script_task">
+        <bpmn:extensionElements>
+          <spiffworkflow:postScript />
+        </bpmn:extensionElements>
+        <bpmn:incoming>Flow_05cwd0o</bpmn:incoming>
+        <bpmn:outgoing>Flow_18e17h9</bpmn:outgoing>
+        <bpmn:script>ab = 1</bpmn:script>
+      </bpmn:scriptTask>
     </bpmn:subProcess>
+    <bpmn:sequenceFlow id="Flow_0fia6jt" sourceRef="Event_0ypxbq7" targetRef="form2" />
+    <bpmn:intermediateThrowEvent id="Event_0ypxbq7" name="HEY">
+      <bpmn:incoming>Flow_06y928b</bpmn:incoming>
+      <bpmn:outgoing>Flow_0fia6jt</bpmn:outgoing>
+    </bpmn:intermediateThrowEvent>
+    <bpmn:sequenceFlow id="Flow_06y928b" sourceRef="multiply1" targetRef="Event_0ypxbq7" />
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="test_form">
@@ -140,6 +156,12 @@ HO
         <dc:Bounds x="760" y="77" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_12oudfm_di" bpmnElement="Event_0ypxbq7">
+        <dc:Bounds x="342" y="212" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="348" y="255" width="24" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0c1khwq_di" bpmnElement="form_subprocess" isExpanded="false">
         <dc:Bounds x="230" y="210" width="100" height="80" />
         <bpmndi:BPMNLabel />
@@ -147,12 +169,6 @@ HO
       <bpmndi:BPMNEdge id="SequenceFlow_0lvudp8_di" bpmnElement="SequenceFlow_0lvudp8">
         <di:waypoint x="147" y="110" />
         <di:waypoint x="190" y="110" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_16gxvwr_di" bpmnElement="Flow_16gxvwr">
-        <di:waypoint x="380" y="157" />
-        <di:waypoint x="380" y="184" />
-        <di:waypoint x="430" y="184" />
-        <di:waypoint x="430" y="210" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0k1q81g_di" bpmnElement="Flow_0k1q81g">
         <di:waypoint x="470" y="210" />
@@ -189,16 +205,28 @@ HO
         <di:waypoint x="810" y="157" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1n3gm10_di" bpmnElement="Flow_1n3gm10">
-        <di:waypoint x="240" y="77" />
-        <di:waypoint x="240" y="57" />
-        <di:waypoint x="280" y="57" />
+        <di:waypoint x="240" y="157" />
+        <di:waypoint x="240" y="200" />
+        <di:waypoint x="280" y="200" />
         <di:waypoint x="280" y="210" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1pq3xb5_di" bpmnElement="Flow_1pq3xb5">
-        <di:waypoint x="280" y="210" />
-        <di:waypoint x="280" y="57" />
+        <di:waypoint x="320" y="210" />
+        <di:waypoint x="320" y="57" />
         <di:waypoint x="380" y="57" />
         <di:waypoint x="380" y="77" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0fia6jt_di" bpmnElement="Flow_0fia6jt">
+        <di:waypoint x="378" y="230" />
+        <di:waypoint x="389" y="230" />
+        <di:waypoint x="389" y="250" />
+        <di:waypoint x="400" y="250" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_06y928b_di" bpmnElement="Flow_06y928b">
+        <di:waypoint x="380" y="157" />
+        <di:waypoint x="380" y="185" />
+        <di:waypoint x="360" y="185" />
+        <di:waypoint x="360" y="212" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
@@ -212,15 +240,24 @@ HO
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_01q6of6_di" bpmnElement="Event_01q6of6">
-        <dc:Bounds x="396.66666666666663" y="182" width="36" height="36" />
+        <dc:Bounds x="512" y="182" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_02pjfej_di" bpmnElement="subprocess_script_task">
+        <dc:Bounds x="400" y="160" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_1ol104g_di" bpmnElement="Flow_1ol104g">
         <di:waypoint x="215.66666666666666" y="200" />
         <di:waypoint x="254.66666666666666" y="200" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0s5gxxe_di" bpmnElement="Flow_0s5gxxe">
-        <di:waypoint x="354.66666666666663" y="200" />
-        <di:waypoint x="396.66666666666663" y="200" />
+      <bpmndi:BPMNEdge id="Flow_05cwd0o_di" bpmnElement="Flow_05cwd0o">
+        <di:waypoint x="355" y="200" />
+        <di:waypoint x="400" y="200" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_18e17h9_di" bpmnElement="Flow_18e17h9">
+        <di:waypoint x="450" y="160" />
+        <di:waypoint x="450" y="140" />
+        <di:waypoint x="530" y="140" />
+        <di:waypoint x="530" y="182" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
