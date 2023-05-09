@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:spiffworkflow="http://spiffworkflow.org/bpmn/schema/1.0/core" id="Definitions_96f6665" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.0.0-dev">
+  <bpmn:process id="Process_l04ij5k" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>Flow_1vqnkmr</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_1vqnkmr" sourceRef="StartEvent_1" targetRef="Activity_0hk0377" />
+    <bpmn:endEvent id="Event_16hwisf">
+      <bpmn:incoming>Flow_0wh82oz</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_0wh82oz" sourceRef="Activity_19vu7pq" targetRef="Event_16hwisf" />
+    <bpmn:userTask id="Activity_19vu7pq">
+      <bpmn:extensionElements>
+        <spiffworkflow:properties>
+          <spiffworkflow:property name="formUiSchemaFilename" value="thedrop-uischema.json" />
+          <spiffworkflow:property name="formJsonSchemaFilename" value="thedrop-schema.json" />
+        </spiffworkflow:properties>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1udoe6p</bpmn:incoming>
+      <bpmn:outgoing>Flow_0wh82oz</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:sequenceFlow id="Flow_1udoe6p" sourceRef="Activity_0hk0377" targetRef="Activity_19vu7pq" />
+    <bpmn:scriptTask id="Activity_0hk0377">
+      <bpmn:incoming>Flow_1vqnkmr</bpmn:incoming>
+      <bpmn:outgoing>Flow_1udoe6p</bpmn:outgoing>
+      <bpmn:script>dept_enum_list = [{"label": "LABEL1", "value": "VALUE1"}, {"label": "LABEL2", "value": "VALUE2"}]</bpmn:script>
+    </bpmn:scriptTask>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_l04ij5k">
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="179" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_16hwisf_di" bpmnElement="Event_16hwisf">
+        <dc:Bounds x="592" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_02ao221_di" bpmnElement="Activity_19vu7pq">
+        <dc:Bounds x="400" y="137" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_16xdkr1_di" bpmnElement="Activity_0hk0377">
+        <dc:Bounds x="250" y="137" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_1vqnkmr_di" bpmnElement="Flow_1vqnkmr">
+        <di:waypoint x="215" y="177" />
+        <di:waypoint x="250" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0wh82oz_di" bpmnElement="Flow_0wh82oz">
+        <di:waypoint x="500" y="177" />
+        <di:waypoint x="592" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1udoe6p_di" bpmnElement="Flow_1udoe6p">
+        <di:waypoint x="350" y="177" />
+        <di:waypoint x="400" y="177" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
