@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:spiffworkflow="http://spiffworkflow.org/bpmn/schema/1.0/core" id="Definitions_96f6665" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.0.0-dev">
+  <bpmn:collaboration id="Collaboration_07yp894">
+    <bpmn:participant id="Participant_0unj1vb" processRef="Process_15z0wpx" />
+    <bpmn:correlationKey name="interstitial_correlation_key">
+      <bpmn:correlationPropertyRef>interstitial_correlation_property</bpmn:correlationPropertyRef>
+    </bpmn:correlationKey>
+  </bpmn:collaboration>
+  <bpmn:process id="Process_15z0wpx">
+    <bpmn:startEvent id="Event_1ylz5r2">
+      <bpmn:outgoing>Flow_1p1q9bf</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_1p1q9bf" sourceRef="Event_1ylz5r2" targetRef="Event_0kkhzhf" />
+    <bpmn:endEvent id="Event_1la2c8u">
+      <bpmn:incoming>Flow_02014cv</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_02014cv" sourceRef="Event_0kkhzhf" targetRef="Event_1la2c8u" />
+    <bpmn:intermediateThrowEvent id="Event_0kkhzhf">
+      <bpmn:incoming>Flow_1p1q9bf</bpmn:incoming>
+      <bpmn:outgoing>Flow_02014cv</bpmn:outgoing>
+      <bpmn:messageEventDefinition id="MessageEventDefinition_1uy8kq4" messageRef="Message_0uo9ra4" />
+    </bpmn:intermediateThrowEvent>
+  </bpmn:process>
+  <bpmn:correlationProperty id="interstitial_correlation_property" name="interstitial_correlation_property">
+    <bpmn:correlationPropertyRetrievalExpression messageRef="Message_0uo9ra4">
+      <bpmn:formalExpression>x</bpmn:formalExpression>
+    </bpmn:correlationPropertyRetrievalExpression>
+  </bpmn:correlationProperty>
+  <bpmn:message id="Message_0uo9ra4" name="interstitial_message">
+    <bpmn:extensionElements>
+      <spiffworkflow:messagePayload>{"x": 1}</spiffworkflow:messagePayload>
+    </bpmn:extensionElements>
+  </bpmn:message>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_07yp894">
+      <bpmndi:BPMNShape id="Participant_0unj1vb_di" bpmnElement="Participant_0unj1vb" isHorizontal="true">
+        <dc:Bounds x="320" y="230" width="600" height="250" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1ylz5r2_di" bpmnElement="Event_1ylz5r2">
+        <dc:Bounds x="452" y="332" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1la2c8u_di" bpmnElement="Event_1la2c8u">
+        <dc:Bounds x="632" y="332" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1mf48m2_di" bpmnElement="Event_0kkhzhf">
+        <dc:Bounds x="542" y="332" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_1p1q9bf_di" bpmnElement="Flow_1p1q9bf">
+        <di:waypoint x="488" y="350" />
+        <di:waypoint x="542" y="350" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_02014cv_di" bpmnElement="Flow_02014cv">
+        <di:waypoint x="578" y="350" />
+        <di:waypoint x="632" y="350" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
