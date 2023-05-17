@@ -1,18 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_96f6665" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.0.0-dev">
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:spiffworkflow="http://spiffworkflow.org/bpmn/schema/1.0/core" id="Definitions_96f6665" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.0.0-dev">
   <bpmn:process id="Process_1l1uycu" isExecutable="false">
     <bpmn:startEvent id="StartEvent_1" name="Event">
       <bpmn:outgoing>Flow_17s7dmu</bpmn:outgoing>
     </bpmn:startEvent>
-    <bpmn:task id="Activity_0kmolhi" name="Receive Order">
-      <bpmn:incoming>Flow_17s7dmu</bpmn:incoming>
-      <bpmn:outgoing>Flow_0fs3m4h</bpmn:outgoing>
-    </bpmn:task>
     <bpmn:sequenceFlow id="Flow_17s7dmu" sourceRef="StartEvent_1" targetRef="Activity_0kmolhi" />
-    <bpmn:task id="Activity_11re6ih" name="Check Credit">
-      <bpmn:incoming>Flow_0fs3m4h</bpmn:incoming>
-      <bpmn:outgoing>Flow_0cyqllc</bpmn:outgoing>
-    </bpmn:task>
     <bpmn:sequenceFlow id="Flow_0fs3m4h" sourceRef="Activity_0kmolhi" targetRef="Activity_11re6ih" />
     <bpmn:exclusiveGateway id="Gateway_0hq7m1n" name="Credit">
       <bpmn:incoming>Flow_0cyqllc</bpmn:incoming>
@@ -46,6 +38,32 @@
     </bpmn:endEvent>
     <bpmn:sequenceFlow id="Flow_06y4dhr" sourceRef="Activity_0oymbco" targetRef="Event_1780m8a" />
     <bpmn:sequenceFlow id="Flow_0sx415n" name="No" sourceRef="Gateway_1x4530q" targetRef="Event_1utrjw8" />
+    <bpmn:userTask id="Activity_0kmolhi" name="Receive Order">
+      <bpmn:extensionElements>
+        <spiffworkflow:properties>
+          <spiffworkflow:property name="formJsonSchemaFilename" value="SimpleReceive.json" />
+          <spiffworkflow:property name="formUiSchemaFilename" value="SimpleReceive.json" />
+        </spiffworkflow:properties>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_17s7dmu</bpmn:incoming>
+      <bpmn:outgoing>Flow_0fs3m4h</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:serviceTask id="Activity_11re6ih" name="Check Credit">
+      <bpmn:extensionElements>
+        <spiffworkflow:postScript />
+        <spiffworkflow:instructionsForEndUser>def check_credit(customer_id, amount):
+    # Perform credit check logic here
+    # Replace the placeholder code with your actual credit check implementation
+    
+    # Assuming a simple credit check that approves orders below $1000
+    if amount &lt;= 1000:
+        return True
+    else:
+        return False</spiffworkflow:instructionsForEndUser>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0fs3m4h</bpmn:incoming>
+      <bpmn:outgoing>Flow_0cyqllc</bpmn:outgoing>
+    </bpmn:serviceTask>
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_1l1uycu">
@@ -54,14 +72,6 @@
         <bpmndi:BPMNLabel>
           <dc:Bounds x="226" y="225" width="30" height="14" />
         </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0kmolhi_di" bpmnElement="Activity_0kmolhi">
-        <dc:Bounds x="310" y="160" width="100" height="80" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_11re6ih_di" bpmnElement="Activity_11re6ih">
-        <dc:Bounds x="470" y="160" width="100" height="80" />
-        <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Gateway_0hq7m1n_di" bpmnElement="Gateway_0hq7m1n" isMarkerVisible="true">
         <dc:Bounds x="635" y="175" width="50" height="50" />
@@ -94,6 +104,12 @@
         <bpmndi:BPMNLabel>
           <dc:Bounds x="1058" y="225" width="85" height="14" />
         </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0glgxcp_di" bpmnElement="Activity_0kmolhi">
+        <dc:Bounds x="310" y="160" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_04q4f9j_di" bpmnElement="Activity_11re6ih">
+        <dc:Bounds x="470" y="160" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_17s7dmu_di" bpmnElement="Flow_17s7dmu">
         <di:waypoint x="258" y="200" />
