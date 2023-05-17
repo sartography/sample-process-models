@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:spiffworkflow="http://spiffworkflow.org/bpmn/schema/1.0/core" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="Definitions_96f6665" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.0.0-dev">
+  <bpmn:process id="Process_Signal_Button_Test" name="Signal Button Test Process" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>Flow_0elszck</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_0elszck" sourceRef="StartEvent_1" targetRef="Activity_0cmmlen" />
+    <bpmn:endEvent id="Event_1mjvim4">
+      <bpmn:incoming>Flow_1akz8b3</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_1akz8b3" sourceRef="Activity_0cmmlen" targetRef="Event_1mjvim4" />
+    <bpmn:endEvent id="Event_1dvll15">
+      <bpmn:incoming>Flow_16bzuvz</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_16bzuvz" sourceRef="Activity_1u4om4i" targetRef="Event_1dvll15" />
+    <bpmn:manualTask id="Activity_0cmmlen" name="My Manual Task">
+      <bpmn:extensionElements>
+        <spiffworkflow:instructionsForEndUser># Welcome
+This manual task has Two Buttons!  The first is standard submit button that will take you to the end.  The second button will fire a signal event and take you to a different manual task.</spiffworkflow:instructionsForEndUser>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0elszck</bpmn:incoming>
+      <bpmn:outgoing>Flow_1akz8b3</bpmn:outgoing>
+    </bpmn:manualTask>
+    <bpmn:manualTask id="Activity_1u4om4i" name="Spam Message">
+      <bpmn:extensionElements>
+        <spiffworkflow:instructionsForEndUser># Spam Eaten!
+Congratulations!  You have selected the Eat Additional Spam option, which opens up new doors to vast previously uncharted culinary eating experiences!   Oh the Joy!  Oh the Reward!  Sweet savory wonderful Spam!  </spiffworkflow:instructionsForEndUser>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_02nfkmi</bpmn:incoming>
+      <bpmn:outgoing>Flow_16bzuvz</bpmn:outgoing>
+    </bpmn:manualTask>
+    <bpmn:boundaryEvent id="Event_1lvntp7" attachedToRef="Activity_0cmmlen">
+      <bpmn:outgoing>Flow_0fyxy40</bpmn:outgoing>
+      <bpmn:timerEventDefinition id="TimerEventDefinition_0lrkkui">
+        <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">'PT15M'</bpmn:timeDuration>
+      </bpmn:timerEventDefinition>
+    </bpmn:boundaryEvent>
+    <bpmn:sequenceFlow id="Flow_0fyxy40" sourceRef="Event_1lvntp7" targetRef="Activity_1m3zxxg" />
+    <bpmn:manualTask id="Activity_1m3zxxg" name="15 Minute Timer Message">
+      <bpmn:extensionElements>
+        <spiffworkflow:instructionsForEndUser># Timer Event
+This task will not be caused by a button, and no button should be visible. </spiffworkflow:instructionsForEndUser>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0fyxy40</bpmn:incoming>
+      <bpmn:outgoing>Flow_1741ps8</bpmn:outgoing>
+    </bpmn:manualTask>
+    <bpmn:endEvent id="Event_0pr29vo">
+      <bpmn:incoming>Flow_1741ps8</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_1741ps8" sourceRef="Activity_1m3zxxg" targetRef="Event_0pr29vo" />
+    <bpmn:sequenceFlow id="Flow_1qya0og" sourceRef="Event_0usahfx" targetRef="Activity_0z8cuko" />
+    <bpmn:boundaryEvent id="Event_0usahfx" attachedToRef="Activity_0cmmlen">
+      <bpmn:outgoing>Flow_1qya0og</bpmn:outgoing>
+      <bpmn:signalEventDefinition id="SignalEventDefinition_13pwj9v" signalRef="Signal_151h644" />
+    </bpmn:boundaryEvent>
+    <bpmn:endEvent id="Event_0ezler8">
+      <bpmn:incoming>Flow_0u77h13</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_0u77h13" sourceRef="Activity_0z8cuko" targetRef="Event_0ezler8" />
+    <bpmn:manualTask id="Activity_0z8cuko" name="No Button Label">
+      <bpmn:extensionElements>
+        <spiffworkflow:instructionsForEndUser># This task should not show up.
+This task, which has no button label, should not be accessible.  You would need to fire this from some external system instead.</spiffworkflow:instructionsForEndUser>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1qya0og</bpmn:incoming>
+      <bpmn:outgoing>Flow_0u77h13</bpmn:outgoing>
+    </bpmn:manualTask>
+    <bpmn:endEvent id="Event_056340o">
+      <bpmn:incoming>Flow_0k6ullg</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_0k6ullg" sourceRef="Activity_1jjz4ax" targetRef="Event_056340o" />
+    <bpmn:manualTask id="Activity_1jjz4ax" name="Cheetos Message">
+      <bpmn:extensionElements>
+        <spiffworkflow:instructionsForEndUser># Cheetos!
+You have selected to eat Cheetos today!  Wohoo!!!!</spiffworkflow:instructionsForEndUser>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0tfc3q2</bpmn:incoming>
+      <bpmn:outgoing>Flow_0k6ullg</bpmn:outgoing>
+    </bpmn:manualTask>
+    <bpmn:boundaryEvent id="Event_0vo3icv" attachedToRef="Activity_0cmmlen">
+      <bpmn:extensionElements>
+        <spiffworkflow:signalButtonLabel>Eat Cheetos!</spiffworkflow:signalButtonLabel>
+      </bpmn:extensionElements>
+      <bpmn:outgoing>Flow_0tfc3q2</bpmn:outgoing>
+      <bpmn:signalEventDefinition id="SignalEventDefinition_002ue4s" signalRef="Signal_2o87k4q" />
+    </bpmn:boundaryEvent>
+    <bpmn:sequenceFlow id="Flow_0tfc3q2" sourceRef="Event_0vo3icv" targetRef="Activity_1jjz4ax" />
+    <bpmn:boundaryEvent id="Event_0du75ds" attachedToRef="Activity_0cmmlen">
+      <bpmn:extensionElements>
+        <spiffworkflow:signalButtonLabel>Eat Spam</spiffworkflow:signalButtonLabel>
+      </bpmn:extensionElements>
+      <bpmn:outgoing>Flow_02nfkmi</bpmn:outgoing>
+      <bpmn:signalEventDefinition id="SignalEventDefinition_1jkudgi" signalRef="Signal_17t90lm" />
+    </bpmn:boundaryEvent>
+    <bpmn:sequenceFlow id="Flow_02nfkmi" sourceRef="Event_0du75ds" targetRef="Activity_1u4om4i" />
+  </bpmn:process>
+  <bpmn:signal id="Signal_17t90lm" name="eat_spam" />
+  <bpmn:signal id="Signal_151h644" name="eat_potato_chips" />
+  <bpmn:signal id="Signal_2o87k4q" name="eat_cheetos" />
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_Signal_Button_Test">
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="179" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1mjvim4_di" bpmnElement="Event_1mjvim4">
+        <dc:Bounds x="432" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1dvll15_di" bpmnElement="Event_1dvll15">
+        <dc:Bounds x="692" y="282" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0zxmtux_di" bpmnElement="Activity_0cmmlen">
+        <dc:Bounds x="270" y="137" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0tll58x_di" bpmnElement="Activity_1u4om4i">
+        <dc:Bounds x="520" y="260" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1p465d5_di" bpmnElement="Activity_1m3zxxg">
+        <dc:Bounds x="520" y="530" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0pr29vo_di" bpmnElement="Event_0pr29vo">
+        <dc:Bounds x="692" y="552" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0ezler8_di" bpmnElement="Event_0ezler8">
+        <dc:Bounds x="692" y="462" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0dxfl6u_di" bpmnElement="Activity_0z8cuko">
+        <dc:Bounds x="520" y="440" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_056340o_di" bpmnElement="Event_056340o">
+        <dc:Bounds x="692" y="372" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_03a4vi7_di" bpmnElement="Activity_1jjz4ax">
+        <dc:Bounds x="520" y="350" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_18fcd1o_di" bpmnElement="Event_0du75ds">
+        <dc:Bounds x="352" y="119" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_19518xv_di" bpmnElement="Event_0vo3icv">
+        <dc:Bounds x="332" y="199" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0w0k7qx_di" bpmnElement="Event_0usahfx">
+        <dc:Bounds x="292" y="199" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1moswh3_di" bpmnElement="Event_1lvntp7">
+        <dc:Bounds x="252" y="199" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_0elszck_di" bpmnElement="Flow_0elszck">
+        <di:waypoint x="215" y="177" />
+        <di:waypoint x="270" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1akz8b3_di" bpmnElement="Flow_1akz8b3">
+        <di:waypoint x="370" y="177" />
+        <di:waypoint x="432" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_16bzuvz_di" bpmnElement="Flow_16bzuvz">
+        <di:waypoint x="620" y="300" />
+        <di:waypoint x="692" y="300" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0fyxy40_di" bpmnElement="Flow_0fyxy40">
+        <di:waypoint x="270" y="235" />
+        <di:waypoint x="270" y="570" />
+        <di:waypoint x="520" y="570" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1741ps8_di" bpmnElement="Flow_1741ps8">
+        <di:waypoint x="620" y="570" />
+        <di:waypoint x="692" y="570" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1qya0og_di" bpmnElement="Flow_1qya0og">
+        <di:waypoint x="310" y="235" />
+        <di:waypoint x="310" y="480" />
+        <di:waypoint x="520" y="480" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0u77h13_di" bpmnElement="Flow_0u77h13">
+        <di:waypoint x="620" y="480" />
+        <di:waypoint x="692" y="480" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0k6ullg_di" bpmnElement="Flow_0k6ullg">
+        <di:waypoint x="620" y="390" />
+        <di:waypoint x="692" y="390" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0tfc3q2_di" bpmnElement="Flow_0tfc3q2">
+        <di:waypoint x="350" y="235" />
+        <di:waypoint x="350" y="390" />
+        <di:waypoint x="520" y="390" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_02nfkmi_di" bpmnElement="Flow_02nfkmi">
+        <di:waypoint x="388" y="137" />
+        <di:waypoint x="570" y="137" />
+        <di:waypoint x="570" y="260" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:spiffworkflow="http://spiffworkflow.org/bpmn/schema/1.0/core" id="Definitions_96f6665" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.0.0-dev">
+  <bpmn:process id="Process_7kik021" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>Flow_1djhqzp</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:endEvent id="Event_1nuxsxl">
+      <bpmn:incoming>Flow_0aw40yc</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_1djhqzp" sourceRef="StartEvent_1" targetRef="Activity_16qfwpz" />
+    <bpmn:sequenceFlow id="Flow_0fj602z" sourceRef="Activity_16qfwpz" targetRef="Activity_0j3j0ev" />
+    <bpmn:scriptTask id="Activity_16qfwpz" name="Set Hello Wolrd Variable">
+      <bpmn:incoming>Flow_1djhqzp</bpmn:incoming>
+      <bpmn:outgoing>Flow_0fj602z</bpmn:outgoing>
+      <bpmn:script>my_message = "Hello World"</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:sequenceFlow id="Flow_0aw40yc" sourceRef="Activity_0j3j0ev" targetRef="Event_1nuxsxl" />
+    <bpmn:manualTask id="Activity_0j3j0ev" name="Show Hello World">
+      <bpmn:extensionElements>
+        <spiffworkflow:instructionsForEndUser>{{ my_message }}</spiffworkflow:instructionsForEndUser>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0fj602z</bpmn:incoming>
+      <bpmn:outgoing>Flow_0aw40yc</bpmn:outgoing>
+    </bpmn:manualTask>
+    <bpmn:serviceTask id="Activity_04nklcf" name="Send Hello World" />
+    <bpmn:textAnnotation id="TextAnnotation_0n80njr">
+      <bpmn:text>Sets the my_message variable to "Hello World"</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:association id="Association_0xm5mzh" sourceRef="Activity_16qfwpz" targetRef="TextAnnotation_0n80njr" />
+    <bpmn:textAnnotation id="TextAnnotation_1yze331">
+      <bpmn:text>Displays the my_message variable to the user when process is run</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:association id="Association_13sqazn" sourceRef="Activity_0j3j0ev" targetRef="TextAnnotation_1yze331" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_7kik021">
+      <bpmndi:BPMNShape id="TextAnnotation_0n80njr_di" bpmnElement="TextAnnotation_0n80njr">
+        <dc:Bounds x="140" y="10" width="100" height="70" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="TextAnnotation_1yze331_di" bpmnElement="TextAnnotation_1yze331">
+        <dc:Bounds x="510" y="-20" width="100" height="84" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="179" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1nuxsxl_di" bpmnElement="Event_1nuxsxl">
+        <dc:Bounds x="852" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1e5du3q_di" bpmnElement="Activity_16qfwpz">
+        <dc:Bounds x="280" y="137" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0crrakz_di" bpmnElement="Activity_0j3j0ev">
+        <dc:Bounds x="450" y="137" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0zsvyuq_di" bpmnElement="Activity_04nklcf">
+        <dc:Bounds x="650" y="240" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Association_0xm5mzh_di" bpmnElement="Association_0xm5mzh">
+        <di:waypoint x="293" y="137" />
+        <di:waypoint x="240" y="79" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Association_13sqazn_di" bpmnElement="Association_13sqazn">
+        <di:waypoint x="513" y="137" />
+        <di:waypoint x="537" y="64" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1djhqzp_di" bpmnElement="Flow_1djhqzp">
+        <di:waypoint x="215" y="177" />
+        <di:waypoint x="280" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0fj602z_di" bpmnElement="Flow_0fj602z">
+        <di:waypoint x="380" y="177" />
+        <di:waypoint x="450" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0aw40yc_di" bpmnElement="Flow_0aw40yc">
+        <di:waypoint x="550" y="177" />
+        <di:waypoint x="852" y="177" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

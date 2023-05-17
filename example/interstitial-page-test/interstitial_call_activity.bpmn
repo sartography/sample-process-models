@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:spiffworkflow="http://spiffworkflow.org/bpmn/schema/1.0/core" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_96f6665" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.0.0-dev">
+  <bpmn:process id="Interstitial_Call_Activity_Process" name="Interstitial Call Activity Process" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>Flow_1qlnctx</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_1qlnctx" sourceRef="StartEvent_1" targetRef="B_Level_2_First_Script" />
+    <bpmn:endEvent id="Event_End_Call_Activity">
+      <bpmn:incoming>Flow_147fsiu</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_14b2x1z" sourceRef="B_Level_2_First_Script" targetRef="C_To_Level_3_Call_Activity" />
+    <bpmn:scriptTask id="B_Level_2_First_Script" name="2. Script Within Call Activity">
+      <bpmn:extensionElements>
+        <spiffworkflow:instructionsForEndUser>Level 2, Script 1</spiffworkflow:instructionsForEndUser>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1qlnctx</bpmn:incoming>
+      <bpmn:outgoing>Flow_14b2x1z</bpmn:outgoing>
+      <bpmn:script>x=100</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:sequenceFlow id="Flow_147fsiu" sourceRef="C_To_Level_3_Call_Activity" targetRef="Event_End_Call_Activity" />
+    <bpmn:callActivity id="C_To_Level_3_Call_Activity" name="3. To Level 3" calledElement="Third_Level_Process">
+      <bpmn:extensionElements>
+        <spiffworkflow:instructionsForEndUser>Level 3 - Call Activity</spiffworkflow:instructionsForEndUser>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_14b2x1z</bpmn:incoming>
+      <bpmn:outgoing>Flow_147fsiu</bpmn:outgoing>
+    </bpmn:callActivity>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Interstitial_Call_Activity_Process">
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="262" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_049s1h2_di" bpmnElement="Event_End_Call_Activity">
+        <dc:Bounds x="632" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1xxbpv9_di" bpmnElement="B_Level_2_First_Script">
+        <dc:Bounds x="350" y="137" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0z58dpa_di" bpmnElement="C_To_Level_3_Call_Activity">
+        <dc:Bounds x="490" y="137" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_1qlnctx_di" bpmnElement="Flow_1qlnctx">
+        <di:waypoint x="298" y="177" />
+        <di:waypoint x="350" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_14b2x1z_di" bpmnElement="Flow_14b2x1z">
+        <di:waypoint x="450" y="177" />
+        <di:waypoint x="490" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_147fsiu_di" bpmnElement="Flow_147fsiu">
+        <di:waypoint x="590" y="177" />
+        <di:waypoint x="632" y="177" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

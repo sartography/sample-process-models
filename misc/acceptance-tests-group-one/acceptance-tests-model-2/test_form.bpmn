@@ -8,7 +8,7 @@
     <bpmn:endEvent id="EndEvent_0q4qzl9">
       <bpmn:incoming>Flow_17my2ps</bpmn:incoming>
     </bpmn:endEvent>
-    <bpmn:userTask id="form1" name="get_user_generated_number_one" camunda:formKey="ConfirmEmail">
+    <bpmn:userTask id="form1" name="get_form_num_one" camunda:formKey="ConfirmEmail">
       <bpmn:extensionElements>
         <spiffworkflow:properties>
           <spiffworkflow:property name="formJsonSchemaFilename" value="form1.json" />
@@ -21,7 +21,7 @@
     <bpmn:scriptTask id="multiply1" name="multiply" scriptFormat="python">
       <bpmn:incoming>Flow_1cck1pb</bpmn:incoming>
       <bpmn:outgoing>Flow_16gxvwr</bpmn:outgoing>
-      <bpmn:script>product_one = system_generated_number * user_generated_number_1</bpmn:script>
+      <bpmn:script>product_one = system_generated_number * form_num_1</bpmn:script>
     </bpmn:scriptTask>
     <bpmn:sequenceFlow id="Flow_0kk2hzj" sourceRef="set_system_generated_number" targetRef="form1" />
     <bpmn:sequenceFlow id="Flow_16gxvwr" sourceRef="multiply1" targetRef="form2" />
@@ -31,7 +31,7 @@
       <bpmn:outgoing>Flow_0kk2hzj</bpmn:outgoing>
       <bpmn:script>system_generated_number = 4</bpmn:script>
     </bpmn:scriptTask>
-    <bpmn:userTask id="form2" name="get_user_generated_number_two">
+    <bpmn:userTask id="form2" name="get_form_num_two">
       <bpmn:extensionElements>
         <spiffworkflow:properties>
           <spiffworkflow:property name="formJsonSchemaFilename" value="form2.json" />
@@ -45,9 +45,9 @@
     <bpmn:scriptTask id="multiply2" name="multiply" scriptFormat="python">
       <bpmn:incoming>Flow_0k1q81g</bpmn:incoming>
       <bpmn:outgoing>Flow_1dhe346</bpmn:outgoing>
-      <bpmn:script>product_two = product_one * user_generated_number_2</bpmn:script>
+      <bpmn:script>product_two = product_one * form_num_2</bpmn:script>
     </bpmn:scriptTask>
-    <bpmn:userTask id="form3" name="get_user_generated_number_three">
+    <bpmn:userTask id="form3" name="get_form_num_three">
       <bpmn:extensionElements>
         <spiffworkflow:properties>
           <spiffworkflow:property name="formJsonSchemaFilename" value="form3.json" />
@@ -61,10 +61,10 @@
     <bpmn:scriptTask id="multiply3" name="multiply" scriptFormat="python">
       <bpmn:incoming>Flow_0h8gnje</bpmn:incoming>
       <bpmn:outgoing>Flow_0lq17rq</bpmn:outgoing>
-      <bpmn:script>product_three = product_two * user_generated_number_3</bpmn:script>
+      <bpmn:script>product_three = product_two * form_num_3</bpmn:script>
     </bpmn:scriptTask>
     <bpmn:sequenceFlow id="Flow_0h8gnje" sourceRef="form3" targetRef="multiply3" />
-    <bpmn:userTask id="form4" name="get_user_generated_number_four">
+    <bpmn:userTask id="form4" name="get_form_num_four">
       <bpmn:extensionElements>
         <spiffworkflow:properties>
           <spiffworkflow:property name="formJsonSchemaFilename" value="form4.json" />
@@ -78,7 +78,7 @@
     <bpmn:scriptTask id="multiply4" name="multiply" scriptFormat="python">
       <bpmn:incoming>Flow_0lxveac</bpmn:incoming>
       <bpmn:outgoing>Flow_17my2ps</bpmn:outgoing>
-      <bpmn:script>product_four = product_three * user_generated_number_4</bpmn:script>
+      <bpmn:script>product_four = product_three * form_num_4</bpmn:script>
     </bpmn:scriptTask>
     <bpmn:sequenceFlow id="Flow_17my2ps" sourceRef="multiply4" targetRef="EndEvent_0q4qzl9" />
     <bpmn:sequenceFlow id="Flow_0lxveac" sourceRef="form4" targetRef="multiply4" />
