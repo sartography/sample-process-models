@@ -22,7 +22,19 @@
       <bpmn:incoming>Flow_0fj602z</bpmn:incoming>
       <bpmn:outgoing>Flow_0aw40yc</bpmn:outgoing>
     </bpmn:manualTask>
-    <bpmn:serviceTask id="Activity_04nklcf" name="Send Hello World" />
+    <bpmn:serviceTask id="Activity_04nklcf" name="Send Hello World">
+      <bpmn:extensionElements>
+        <spiffworkflow:serviceTaskOperator id="http/PostRequest" resultVariable="resp_DiscordHelloWorld">
+          <spiffworkflow:parameters>
+            <spiffworkflow:parameter id="basic_auth_password" type="str" value="None" />
+            <spiffworkflow:parameter id="basic_auth_username" type="str" value="None" />
+            <spiffworkflow:parameter id="data" type="any" value="{&#34;content&#34;: &#34;Hello World&#34;}" />
+            <spiffworkflow:parameter id="headers" type="any" value="{&#34;Content-type&#34;: &#34;application/json&#34;}" />
+            <spiffworkflow:parameter id="url" type="str" value="&#34;secret:DISCORD_TEST_CONNECTION&#34;" />
+          </spiffworkflow:parameters>
+        </spiffworkflow:serviceTaskOperator>
+      </bpmn:extensionElements>
+    </bpmn:serviceTask>
     <bpmn:textAnnotation id="TextAnnotation_0n80njr">
       <bpmn:text>Sets the my_message variable to "Hello World"</bpmn:text>
     </bpmn:textAnnotation>
@@ -34,14 +46,6 @@
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_7kik021">
-      <bpmndi:BPMNShape id="TextAnnotation_0n80njr_di" bpmnElement="TextAnnotation_0n80njr">
-        <dc:Bounds x="140" y="10" width="100" height="70" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="TextAnnotation_1yze331_di" bpmnElement="TextAnnotation_1yze331">
-        <dc:Bounds x="510" y="-20" width="100" height="84" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
         <dc:Bounds x="179" y="159" width="36" height="36" />
       </bpmndi:BPMNShape>
@@ -57,14 +61,14 @@
       <bpmndi:BPMNShape id="Activity_0zsvyuq_di" bpmnElement="Activity_04nklcf">
         <dc:Bounds x="650" y="240" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge id="Association_0xm5mzh_di" bpmnElement="Association_0xm5mzh">
-        <di:waypoint x="293" y="137" />
-        <di:waypoint x="240" y="79" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Association_13sqazn_di" bpmnElement="Association_13sqazn">
-        <di:waypoint x="513" y="137" />
-        <di:waypoint x="537" y="64" />
-      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="TextAnnotation_0n80njr_di" bpmnElement="TextAnnotation_0n80njr">
+        <dc:Bounds x="140" y="10" width="100" height="70" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="TextAnnotation_1yze331_di" bpmnElement="TextAnnotation_1yze331">
+        <dc:Bounds x="510" y="-20" width="100" height="84" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_1djhqzp_di" bpmnElement="Flow_1djhqzp">
         <di:waypoint x="215" y="177" />
         <di:waypoint x="280" y="177" />
@@ -76,6 +80,14 @@
       <bpmndi:BPMNEdge id="Flow_0aw40yc_di" bpmnElement="Flow_0aw40yc">
         <di:waypoint x="550" y="177" />
         <di:waypoint x="852" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Association_0xm5mzh_di" bpmnElement="Association_0xm5mzh">
+        <di:waypoint x="293" y="137" />
+        <di:waypoint x="240" y="79" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Association_13sqazn_di" bpmnElement="Association_13sqazn">
+        <di:waypoint x="513" y="137" />
+        <di:waypoint x="537" y="64" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
