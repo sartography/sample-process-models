@@ -2,27 +2,12 @@
 <bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:spiffworkflow="http://spiffworkflow.org/bpmn/schema/1.0/core" id="Definitions_96f6665" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.11.0">
   <bpmn:process id="Hello_BPMN_World" name="Hello BPMN World" isExecutable="true">
     <bpmn:startEvent id="StartEvent_1">
-      <bpmn:outgoing>Flow_1djhqzp</bpmn:outgoing>
+      <bpmn:outgoing>Flow_1dsg4jb</bpmn:outgoing>
     </bpmn:startEvent>
     <bpmn:endEvent id="Event_1nuxsxl">
       <bpmn:incoming>Flow_0jbgbqr</bpmn:incoming>
     </bpmn:endEvent>
-    <bpmn:sequenceFlow id="Flow_1djhqzp" sourceRef="StartEvent_1" targetRef="Activity_16qfwpz" />
-    <bpmn:sequenceFlow id="Flow_0fj602z" sourceRef="Activity_16qfwpz" targetRef="Activity_0j3j0ev" />
-    <bpmn:scriptTask id="Activity_16qfwpz" name="Set Hello Wolrd Variable">
-      <bpmn:incoming>Flow_1djhqzp</bpmn:incoming>
-      <bpmn:outgoing>Flow_0fj602z</bpmn:outgoing>
-      <bpmn:script># Set message Variable
-my_message = "Hello World"</bpmn:script>
-    </bpmn:scriptTask>
     <bpmn:sequenceFlow id="Flow_0aw40yc" sourceRef="Activity_0j3j0ev" targetRef="Activity_04nklcf" />
-    <bpmn:manualTask id="Activity_0j3j0ev" name="Show Hello World">
-      <bpmn:extensionElements>
-        <spiffworkflow:instructionsForEndUser>{{ my_message }}</spiffworkflow:instructionsForEndUser>
-      </bpmn:extensionElements>
-      <bpmn:incoming>Flow_0fj602z</bpmn:incoming>
-      <bpmn:outgoing>Flow_0aw40yc</bpmn:outgoing>
-    </bpmn:manualTask>
     <bpmn:serviceTask id="Activity_04nklcf" name="Send Hello World">
       <bpmn:extensionElements>
         <spiffworkflow:serviceTaskOperator id="http/PostRequest" resultVariable="resp_DiscordHelloWorld">
@@ -39,10 +24,17 @@ my_message = "Hello World"</bpmn:script>
       <bpmn:outgoing>Flow_0jbgbqr</bpmn:outgoing>
     </bpmn:serviceTask>
     <bpmn:sequenceFlow id="Flow_0jbgbqr" sourceRef="Activity_04nklcf" targetRef="Event_1nuxsxl" />
+    <bpmn:userTask id="Activity_0j3j0ev" name="Show Hello World">
+      <bpmn:extensionElements>
+        <spiffworkflow:instructionsForEndUser>{{ my_message }}</spiffworkflow:instructionsForEndUser>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1dsg4jb</bpmn:incoming>
+      <bpmn:outgoing>Flow_0aw40yc</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:sequenceFlow id="Flow_1dsg4jb" sourceRef="StartEvent_1" targetRef="Activity_0j3j0ev" />
     <bpmn:textAnnotation id="TextAnnotation_0n80njr">
       <bpmn:text>Sets the my_message variable to "Hello World"</bpmn:text>
     </bpmn:textAnnotation>
-    <bpmn:association id="Association_0xm5mzh" sourceRef="Activity_16qfwpz" targetRef="TextAnnotation_0n80njr" />
     <bpmn:textAnnotation id="TextAnnotation_1yze331">
       <bpmn:text>Displays the my_message variable to the user</bpmn:text>
     </bpmn:textAnnotation>
@@ -60,12 +52,6 @@ my_message = "Hello World"</bpmn:script>
       <bpmndi:BPMNShape id="Event_1nuxsxl_di" bpmnElement="Event_1nuxsxl">
         <dc:Bounds x="852" y="259" width="36" height="36" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1e5du3q_di" bpmnElement="Activity_16qfwpz">
-        <dc:Bounds x="280" y="237" width="100" height="80" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0crrakz_di" bpmnElement="Activity_0j3j0ev">
-        <dc:Bounds x="450" y="237" width="100" height="80" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0zsvyuq_di" bpmnElement="Activity_04nklcf">
         <dc:Bounds x="680" y="237" width="100" height="80" />
       </bpmndi:BPMNShape>
@@ -81,33 +67,28 @@ my_message = "Hello World"</bpmn:script>
         <dc:Bounds x="740" y="80" width="112" height="70" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge id="Flow_1djhqzp_di" bpmnElement="Flow_1djhqzp">
-        <di:waypoint x="215" y="277" />
-        <di:waypoint x="280" y="277" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0fj602z_di" bpmnElement="Flow_0fj602z">
-        <di:waypoint x="380" y="277" />
-        <di:waypoint x="450" y="277" />
+      <bpmndi:BPMNShape id="Activity_1974xwn_di" bpmnElement="Activity_0j3j0ev">
+        <dc:Bounds x="280" y="237" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Association_13sqazn_di" bpmnElement="Association_13sqazn">
+        <di:waypoint x="372" y="237" />
+        <di:waypoint x="469" y="145" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0aw40yc_di" bpmnElement="Flow_0aw40yc">
-        <di:waypoint x="550" y="277" />
+        <di:waypoint x="380" y="277" />
         <di:waypoint x="680" y="277" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0jbgbqr_di" bpmnElement="Flow_0jbgbqr">
         <di:waypoint x="780" y="277" />
         <di:waypoint x="852" y="277" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Association_0xm5mzh_di" bpmnElement="Association_0xm5mzh">
-        <di:waypoint x="305" y="237" />
-        <di:waypoint x="251" y="150" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Association_13sqazn_di" bpmnElement="Association_13sqazn">
-        <di:waypoint x="500" y="237" />
-        <di:waypoint x="500" y="145" />
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Association_1fgflyp_di" bpmnElement="Association_1fgflyp">
         <di:waypoint x="742" y="237" />
         <di:waypoint x="768" y="150" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1dsg4jb_di" bpmnElement="Flow_1dsg4jb">
+        <di:waypoint x="215" y="277" />
+        <di:waypoint x="280" y="277" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
