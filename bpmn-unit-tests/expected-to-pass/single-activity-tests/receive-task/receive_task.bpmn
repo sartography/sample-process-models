@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:spiffworkflow="http://spiffworkflow.org/bpmn/schema/1.0/core" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_96f6665" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.0.0-dev">
-  <bpmn:collaboration id="Collaboration_0u8xvi6">
+  <bpmn:collaboration id="Collaboration_Receive_Task">
     <bpmn:participant id="Participant_0kptgao" processRef="Process_mto0zln" />
     <bpmn:correlationKey name="sendMessage">
       <bpmn:correlationPropertyRef>msgId</bpmn:correlationPropertyRef>
@@ -13,9 +13,9 @@
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_1hcsxt6</bpmn:incoming>
     </bpmn:endEvent>
-    <bpmn:sequenceFlow id="Flow_0fns3we" targetRef="Activity_1j9t45f" />
-    <bpmn:sequenceFlow id="Flow_1hcsxt6" sourceRef="Activity_1j9t45f" targetRef="Event_0mr5mfg" />
-    <bpmn:receiveTask id="Activity_1j9t45f" name="Receive Task" messageRef="Message_0jkxz6z">
+    <bpmn:sequenceFlow id="Flow_0fns3we" targetRef="Receive_Task" />
+    <bpmn:sequenceFlow id="Flow_1hcsxt6" sourceRef="Receive_Task" targetRef="Event_0mr5mfg" />
+    <bpmn:receiveTask id="Receive_Task" name="Receive Task" messageRef="Message_0jkxz6z">
       <bpmn:incoming>Flow_0fns3we</bpmn:incoming>
       <bpmn:incoming>Flow_1c4r9dw</bpmn:incoming>
       <bpmn:outgoing>Flow_1hcsxt6</bpmn:outgoing>
@@ -23,7 +23,7 @@
     <bpmn:startEvent id="Event_124ro1m">
       <bpmn:outgoing>Flow_1c4r9dw</bpmn:outgoing>
     </bpmn:startEvent>
-    <bpmn:sequenceFlow id="Flow_1c4r9dw" sourceRef="Event_124ro1m" targetRef="Activity_1j9t45f" />
+    <bpmn:sequenceFlow id="Flow_1c4r9dw" sourceRef="Event_124ro1m" targetRef="Receive_Task" />
   </bpmn:process>
   <bpmn:correlationProperty id="msgId" name="msgId">
     <bpmn:correlationPropertyRetrievalExpression messageRef="Message_0jkxz6z">
@@ -54,14 +54,14 @@
     </bpmn:extensionElements>
   </bpmn:message>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
-    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_0u8xvi6">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_Receive_Task">
       <bpmndi:BPMNShape id="Participant_0kptgao_di" bpmnElement="Participant_0kptgao" isHorizontal="true">
         <dc:Bounds x="360" y="145" width="600" height="250" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_0mr5mfg_di" bpmnElement="Event_0mr5mfg">
         <dc:Bounds x="762" y="252" width="36" height="36" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0wu47cx_di" bpmnElement="Activity_1j9t45f">
+      <bpmndi:BPMNShape id="Activity_0wu47cx_di" bpmnElement="Receive_Task">
         <dc:Bounds x="610" y="230" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
