@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:spiffworkflow="http://spiffworkflow.org/bpmn/schema/1.0/core" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_96f6665" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.0.0-dev">
-  <bpmn:collaboration id="Collaboration_03z1ll8">
+  <bpmn:collaboration id="Collaboration_Send_Task">
     <bpmn:participant id="Participant_1edzwm2" processRef="Process_eqmuka4" />
     <bpmn:correlationKey name="sendMessage">
       <bpmn:correlationPropertyRef>msgId</bpmn:correlationPropertyRef>
     </bpmn:correlationKey>
   </bpmn:collaboration>
   <bpmn:process id="Process_eqmuka4" isExecutable="true">
-    <bpmn:sequenceFlow id="Flow_096weny" sourceRef="Activity_0dnmdyn" targetRef="Event_1ac6u0n" />
-    <bpmn:sequenceFlow id="Flow_0uok76o" targetRef="Activity_0dnmdyn" />
-    <bpmn:sequenceFlow id="Flow_0plny4e" sourceRef="Event_1twrb4j" targetRef="Activity_0dnmdyn" />
+    <bpmn:sequenceFlow id="Flow_096weny" sourceRef="Send_Task" targetRef="Event_1ac6u0n" />
+    <bpmn:sequenceFlow id="Flow_0uok76o" targetRef="Send_Task" />
+    <bpmn:sequenceFlow id="Flow_0plny4e" sourceRef="Event_1twrb4j" targetRef="Send_Task" />
     <bpmn:startEvent id="Event_1twrb4j">
       <bpmn:outgoing>Flow_0plny4e</bpmn:outgoing>
     </bpmn:startEvent>
@@ -19,7 +19,7 @@
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_096weny</bpmn:incoming>
     </bpmn:endEvent>
-    <bpmn:sendTask id="Activity_0dnmdyn" name="Send Task" messageRef="Message_17nct4a">
+    <bpmn:sendTask id="Send_Task" name="Send Task" messageRef="Message_17nct4a">
       <bpmn:extensionElements>
         <spiffworkflow:preScript />
       </bpmn:extensionElements>
@@ -43,7 +43,7 @@
     </bpmn:extensionElements>
   </bpmn:message>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
-    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_03z1ll8">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_Send_Task">
       <bpmndi:BPMNShape id="Participant_1edzwm2_di" bpmnElement="Participant_1edzwm2" isHorizontal="true">
         <dc:Bounds x="240" y="150" width="600" height="250" />
       </bpmndi:BPMNShape>
@@ -53,7 +53,7 @@
       <bpmndi:BPMNShape id="Event_1ac6u0n_di" bpmnElement="Event_1ac6u0n">
         <dc:Bounds x="622" y="252" width="36" height="36" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_053wa2x_di" bpmnElement="Activity_0dnmdyn">
+      <bpmndi:BPMNShape id="Activity_053wa2x_di" bpmnElement="Send_Task">
         <dc:Bounds x="460" y="230" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
