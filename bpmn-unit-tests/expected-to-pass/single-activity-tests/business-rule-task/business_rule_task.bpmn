@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:spiffworkflow="http://spiffworkflow.org/bpmn/schema/1.0/core" id="Definitions_96f6665" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.0.0-dev">
-  <bpmn:process id="Process_8b9f0ba" name="Unit Test Business Rule Task" isExecutable="true">
+  <bpmn:process id="Business_Rule_Task_Process" name="Business Rule Task  Process" isExecutable="true">
     <bpmn:startEvent id="StartEvent_1">
       <bpmn:outgoing>Flow_0ebs8id</bpmn:outgoing>
     </bpmn:startEvent>
-    <bpmn:sequenceFlow id="Flow_0ebs8id" sourceRef="StartEvent_1" targetRef="Business_Rule_Result" />
+    <bpmn:sequenceFlow id="Flow_0ebs8id" sourceRef="StartEvent_1" targetRef="Business_Rule_Task" />
     <bpmn:endEvent id="Event_1sloc0s">
       <bpmn:extensionElements>
         <spiffworkflow:instructionsForEndUser>End Business Rule Task Unit Test. Warning Color: {{warning_color}}</spiffworkflow:instructionsForEndUser>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_1c50jyt</bpmn:incoming>
     </bpmn:endEvent>
-    <bpmn:sequenceFlow id="Flow_1c50jyt" sourceRef="Business_Rule_Result" targetRef="Event_1sloc0s" />
-    <bpmn:businessRuleTask id="Business_Rule_Result" name="Business Rule Task">
+    <bpmn:sequenceFlow id="Flow_1c50jyt" sourceRef="Business_Rule_Task" targetRef="Event_1sloc0s" />
+    <bpmn:businessRuleTask id="Business_Rule_Task" name="Business Rule Task">
       <bpmn:extensionElements>
         <spiffworkflow:calledDecisionId>warning_color</spiffworkflow:calledDecisionId>
         <spiffworkflow:preScript>level="Low"</spiffworkflow:preScript>
@@ -23,14 +23,14 @@
     </bpmn:businessRuleTask>
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
-    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_8b9f0ba">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Business_Rule_Task_Process">
       <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
         <dc:Bounds x="179" y="159" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_1sloc0s_di" bpmnElement="Event_1sloc0s">
         <dc:Bounds x="432" y="159" width="36" height="36" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0r4284r_di" bpmnElement="Business_Rule_Result">
+      <bpmndi:BPMNShape id="Activity_0r4284r_di" bpmnElement="Business_Rule_Task">
         <dc:Bounds x="270" y="137" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
