@@ -4,13 +4,13 @@
     <bpmn:startEvent id="StartEvent_1">
       <bpmn:outgoing>Flow_0vnkhc5</bpmn:outgoing>
     </bpmn:startEvent>
-    <bpmn:sequenceFlow id="Flow_0vnkhc5" sourceRef="StartEvent_1" targetRef="Script_Task" />
+    <bpmn:sequenceFlow id="Flow_0vnkhc5" sourceRef="StartEvent_1" targetRef="User_Task" />
     <bpmn:exclusiveGateway id="Gateway_04kw2o4" name="Exclusive Gateway">
       <bpmn:incoming>Flow_1vfbldw</bpmn:incoming>
       <bpmn:outgoing>Flow_0ejbl6k</bpmn:outgoing>
       <bpmn:outgoing>Flow_1hua65s</bpmn:outgoing>
     </bpmn:exclusiveGateway>
-    <bpmn:sequenceFlow id="Flow_1vfbldw" sourceRef="Script_Task" targetRef="Gateway_04kw2o4" />
+    <bpmn:sequenceFlow id="Flow_1vfbldw" sourceRef="User_Task" targetRef="Gateway_04kw2o4" />
     <bpmn:endEvent id="Event_0767czo">
       <bpmn:extensionElements>
         <spiffworkflow:instructionsForEndUser>End Exclusive Gateway Unit Test. Variable value greater or equal to 10.</spiffworkflow:instructionsForEndUser>
@@ -18,7 +18,7 @@
       <bpmn:incoming>Flow_03q9vbw</bpmn:incoming>
     </bpmn:endEvent>
     <bpmn:sequenceFlow id="Flow_0ejbl6k" sourceRef="Gateway_04kw2o4" targetRef="Activity_0037bsk">
-      <bpmn:conditionExpression>x &gt;= 10</bpmn:conditionExpression>
+      <bpmn:conditionExpression>age &gt; 21</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:endEvent id="Event_08nh8ex">
       <bpmn:extensionElements>
@@ -27,28 +27,31 @@
       <bpmn:incoming>Flow_02hom7j</bpmn:incoming>
     </bpmn:endEvent>
     <bpmn:sequenceFlow id="Flow_1hua65s" sourceRef="Gateway_04kw2o4" targetRef="Activity_1tgpm05">
-      <bpmn:conditionExpression>x &lt; 10</bpmn:conditionExpression>
+      <bpmn:conditionExpression>age &lt; 13</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="Flow_02hom7j" sourceRef="Activity_1tgpm05" targetRef="Event_08nh8ex" />
     <bpmn:sequenceFlow id="Flow_03q9vbw" sourceRef="Activity_0037bsk" targetRef="Event_0767czo" />
-    <bpmn:scriptTask id="Activity_0037bsk" name="More than 10">
+    <bpmn:scriptTask id="Activity_0037bsk" name="Adult">
       <bpmn:incoming>Flow_0ejbl6k</bpmn:incoming>
       <bpmn:outgoing>Flow_03q9vbw</bpmn:outgoing>
       <bpmn:script>sel_val = 10</bpmn:script>
     </bpmn:scriptTask>
-    <bpmn:scriptTask id="Activity_1tgpm05" name="Less than 10">
+    <bpmn:scriptTask id="Activity_1tgpm05" name="Kid">
       <bpmn:incoming>Flow_1hua65s</bpmn:incoming>
       <bpmn:outgoing>Flow_02hom7j</bpmn:outgoing>
       <bpmn:script>sel_val = 1</bpmn:script>
     </bpmn:scriptTask>
-    <bpmn:scriptTask id="Script_Task" name="Script Task">
+    <bpmn:userTask id="User_Task" name="User Task">
       <bpmn:extensionElements>
         <spiffworkflow:instructionsForEndUser />
+        <spiffworkflow:properties>
+          <spiffworkflow:property name="formJsonSchemaFilename" value="your-age-schema.json" />
+          <spiffworkflow:property name="formUiSchemaFilename" value="your-age-uischema.json" />
+        </spiffworkflow:properties>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_0vnkhc5</bpmn:incoming>
       <bpmn:outgoing>Flow_1vfbldw</bpmn:outgoing>
-      <bpmn:script>x=0</bpmn:script>
-    </bpmn:scriptTask>
+    </bpmn:userTask>
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Unit_Test_Exclusive_Gateway_Process">
@@ -75,7 +78,7 @@
         <dc:Bounds x="520" y="230" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1se64ud_di" bpmnElement="Script_Task">
+      <bpmndi:BPMNShape id="Activity_17bafzu_di" bpmnElement="User_Task">
         <dc:Bounds x="270" y="137" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
