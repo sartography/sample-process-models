@@ -1,14 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:spiffworkflow="http://spiffworkflow.org/bpmn/schema/1.0/core" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_96f6665" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.0.0-dev">
+  <bpmn:signal id="Signal_3pqe79i" name="edit_signal" />
+  <bpmn:collaboration id="Collaboration_0rpg1ez">
+    <bpmn:participant id="Participant_1e5s2b8" processRef="Process_2sn0gya" />
+  </bpmn:collaboration>
   <bpmn:process id="Process_2sn0gya" isExecutable="true">
+    <bpmn:laneSet id="LaneSet_0gl3wqb">
+      <bpmn:lane id="Lane_1xeqd5i">
+        <bpmn:flowNodeRef>StartEvent_1</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Event_10e2nu3</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="everybody" name="everybody">
+        <bpmn:flowNodeRef>client_details_form</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>display_client_details</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>edit_button</bpmn:flowNodeRef>
+      </bpmn:lane>
+    </bpmn:laneSet>
     <bpmn:startEvent id="StartEvent_1">
       <bpmn:outgoing>Flow_1t3jxm7</bpmn:outgoing>
     </bpmn:startEvent>
-    <bpmn:sequenceFlow id="Flow_1t3jxm7" sourceRef="StartEvent_1" targetRef="client_details_form" />
-    <bpmn:sequenceFlow id="Flow_1g8rpgo" sourceRef="client_details_form" targetRef="display_client_details" />
     <bpmn:endEvent id="Event_10e2nu3">
       <bpmn:incoming>Flow_1sq481k</bpmn:incoming>
     </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_1t3jxm7" sourceRef="StartEvent_1" targetRef="client_details_form" />
+    <bpmn:sequenceFlow id="Flow_1sq481k" sourceRef="display_client_details" targetRef="Event_10e2nu3" />
+    <bpmn:sequenceFlow id="Flow_18u6omr" sourceRef="edit_button" targetRef="client_details_form" />
+    <bpmn:sequenceFlow id="Flow_1g8rpgo" sourceRef="client_details_form" targetRef="display_client_details" />
     <bpmn:userTask id="client_details_form" name="Client Details Form">
       <bpmn:extensionElements>
         <spiffworkflow:properties>
@@ -34,51 +51,59 @@
       <bpmn:outgoing>Flow_18u6omr</bpmn:outgoing>
       <bpmn:signalEventDefinition id="SignalEventDefinition_0aa50mx" signalRef="Signal_3pqe79i" />
     </bpmn:boundaryEvent>
-    <bpmn:sequenceFlow id="Flow_1sq481k" sourceRef="display_client_details" targetRef="Event_10e2nu3" />
-    <bpmn:sequenceFlow id="Flow_18u6omr" sourceRef="edit_button" targetRef="client_details_form" />
   </bpmn:process>
-  <bpmn:signal id="Signal_3pqe79i" name="edit_signal" />
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
-    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_2sn0gya">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_0rpg1ez">
+      <bpmndi:BPMNShape id="Participant_1e5s2b8_di" bpmnElement="Participant_1e5s2b8" isHorizontal="true">
+        <dc:Bounds x="129" y="117" width="620" height="370" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_1xeqd5i_di" bpmnElement="Lane_1xeqd5i" isHorizontal="true">
+        <dc:Bounds x="159" y="117" width="590" height="250" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_0jkyhd0_di" bpmnElement="everybody" isHorizontal="true">
+        <dc:Bounds x="159" y="367" width="590" height="120" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
         <dc:Bounds x="179" y="159" width="36" height="36" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1a63irz_di" bpmnElement="client_details_form">
-        <dc:Bounds x="270" y="137" width="100" height="80" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1foeqze_di" bpmnElement="display_client_details">
-        <dc:Bounds x="430" y="137" width="100" height="80" />
-        <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_10e2nu3_di" bpmnElement="Event_10e2nu3">
         <dc:Bounds x="692" y="159" width="36" height="36" />
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1a63irz_di" bpmnElement="client_details_form">
+        <dc:Bounds x="250" y="380" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1foeqze_di" bpmnElement="display_client_details">
+        <dc:Bounds x="420" y="380" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_0q2z5bg_di" bpmnElement="edit_button">
-        <dc:Bounds x="482" y="199" width="36" height="36" />
+        <dc:Bounds x="472" y="442" width="36" height="36" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="503" y="242" width="54" height="14" />
+          <dc:Bounds x="493" y="485" width="54" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_1t3jxm7_di" bpmnElement="Flow_1t3jxm7">
         <di:waypoint x="215" y="177" />
-        <di:waypoint x="270" y="177" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_1g8rpgo_di" bpmnElement="Flow_1g8rpgo">
-        <di:waypoint x="370" y="177" />
-        <di:waypoint x="430" y="177" />
+        <di:waypoint x="233" y="177" />
+        <di:waypoint x="233" y="420" />
+        <di:waypoint x="250" y="420" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1sq481k_di" bpmnElement="Flow_1sq481k">
-        <di:waypoint x="530" y="177" />
+        <di:waypoint x="520" y="420" />
+        <di:waypoint x="606" y="420" />
+        <di:waypoint x="606" y="177" />
         <di:waypoint x="692" y="177" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_18u6omr_di" bpmnElement="Flow_18u6omr">
-        <di:waypoint x="490" y="232" />
-        <di:waypoint x="490" y="320" />
-        <di:waypoint x="470" y="240" />
-        <di:waypoint x="390" y="240" />
-        <di:waypoint x="350" y="330" />
-        <di:waypoint x="350" y="217" />
+        <di:waypoint x="480" y="445" />
+        <di:waypoint x="480" y="320" />
+        <di:waypoint x="350" y="407" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1g8rpgo_di" bpmnElement="Flow_1g8rpgo">
+        <di:waypoint x="350" y="420" />
+        <di:waypoint x="420" y="420" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
