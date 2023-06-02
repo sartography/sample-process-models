@@ -25,7 +25,7 @@
         <bpmn:outgoing>Flow_0rxcym7</bpmn:outgoing>
       </bpmn:startEvent>
       <bpmn:sequenceFlow id="Flow_0rxcym7" sourceRef="Event_190m3qp" targetRef="Gateway_11imyml" />
-      <bpmn:scriptTask id="Activity_0gbwke2" name="Low">
+      <bpmn:scriptTask id="Script_Task_Low" name="Script Task Low">
         <bpmn:incoming>Flow_1ilvlq7</bpmn:incoming>
         <bpmn:outgoing>Flow_1n8cdr5</bpmn:outgoing>
         <bpmn:script>Output = "Low"</bpmn:script>
@@ -35,13 +35,13 @@
         <bpmn:outgoing>Flow_1ilvlq7</bpmn:outgoing>
         <bpmn:outgoing>Flow_1fpkakt</bpmn:outgoing>
       </bpmn:exclusiveGateway>
-      <bpmn:sequenceFlow id="Flow_1ilvlq7" sourceRef="Gateway_11imyml" targetRef="Activity_0gbwke2">
+      <bpmn:sequenceFlow id="Flow_1ilvlq7" sourceRef="Gateway_11imyml" targetRef="Script_Task_Low">
         <bpmn:conditionExpression>x &lt;= 10</bpmn:conditionExpression>
       </bpmn:sequenceFlow>
-      <bpmn:sequenceFlow id="Flow_1fpkakt" sourceRef="Gateway_11imyml" targetRef="Activity_0n2zi66">
+      <bpmn:sequenceFlow id="Flow_1fpkakt" sourceRef="Gateway_11imyml" targetRef="Script_Task_High">
         <bpmn:conditionExpression>x&gt;10</bpmn:conditionExpression>
       </bpmn:sequenceFlow>
-      <bpmn:scriptTask id="Activity_0n2zi66" name="High">
+      <bpmn:scriptTask id="Script_Task_High" name="Script Task High">
         <bpmn:incoming>Flow_1fpkakt</bpmn:incoming>
         <bpmn:outgoing>Flow_0xy94l5</bpmn:outgoing>
         <bpmn:script>Output = "High"</bpmn:script>
@@ -51,8 +51,8 @@
         <bpmn:incoming>Flow_0xy94l5</bpmn:incoming>
         <bpmn:outgoing>Flow_0ycyc7j</bpmn:outgoing>
       </bpmn:exclusiveGateway>
-      <bpmn:sequenceFlow id="Flow_1n8cdr5" sourceRef="Activity_0gbwke2" targetRef="Gateway_1warshi" />
-      <bpmn:sequenceFlow id="Flow_0xy94l5" sourceRef="Activity_0n2zi66" targetRef="Gateway_1warshi" />
+      <bpmn:sequenceFlow id="Flow_1n8cdr5" sourceRef="Script_Task_Low" targetRef="Gateway_1warshi" />
+      <bpmn:sequenceFlow id="Flow_0xy94l5" sourceRef="Script_Task_High" targetRef="Gateway_1warshi" />
       <bpmn:endEvent id="Event_1tflha0">
         <bpmn:incoming>Flow_0ycyc7j</bpmn:incoming>
       </bpmn:endEvent>
@@ -94,14 +94,14 @@
       <bpmndi:BPMNShape id="Event_190m3qp_di" bpmnElement="Event_190m3qp">
         <dc:Bounds x="232" y="212" width="36" height="36" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_19h2cyj_di" bpmnElement="Activity_0gbwke2">
+      <bpmndi:BPMNShape id="Activity_19h2cyj_di" bpmnElement="Script_Task_Low">
         <dc:Bounds x="450" y="190" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Gateway_11imyml_di" bpmnElement="Gateway_11imyml" isMarkerVisible="true">
         <dc:Bounds x="335" y="205" width="50" height="50" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_15k412r_di" bpmnElement="Activity_0n2zi66">
+      <bpmndi:BPMNShape id="Activity_15k412r_di" bpmnElement="Script_Task_High">
         <dc:Bounds x="450" y="300" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
