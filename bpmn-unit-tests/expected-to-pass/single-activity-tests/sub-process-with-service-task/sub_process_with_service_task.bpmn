@@ -1,29 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:spiffworkflow="http://spiffworkflow.org/bpmn/schema/1.0/core" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_96f6665" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.0.0-dev">
-  <bpmn:process id="Unit_Test_Sub_Process_with_Service_Task" name="Unit Test Sub Process with Service Task" isExecutable="true">
+  <bpmn:process id="Sub_Process_with_Service_Task" name="Sub Process with Service Task" isExecutable="true">
     <bpmn:startEvent id="StartEvent_1">
       <bpmn:outgoing>Flow_0mvs3r4</bpmn:outgoing>
     </bpmn:startEvent>
-    <bpmn:sequenceFlow id="Flow_0mvs3r4" sourceRef="StartEvent_1" targetRef="Activity_1aah17e" />
+    <bpmn:sequenceFlow id="Flow_0mvs3r4" sourceRef="StartEvent_1" targetRef="Activity_0xxfrv3" />
     <bpmn:endEvent id="Event_15mc3d1">
       <bpmn:extensionElements>
         <spiffworkflow:instructionsForEndUser>End Service Task Unit Test. Bamboo User : {{bamboo_get_employee}}</spiffworkflow:instructionsForEndUser>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_16wbabb</bpmn:incoming>
     </bpmn:endEvent>
-    <bpmn:sequenceFlow id="Flow_16wbabb" sourceRef="Activity_1aah17e" targetRef="Event_15mc3d1" />
-    <bpmn:subProcess id="Activity_1aah17e" name="Sub Process Service Task">
+    <bpmn:sequenceFlow id="Flow_16wbabb" sourceRef="Activity_0xxfrv3" targetRef="Event_15mc3d1" />
+    <bpmn:subProcess id="Activity_0xxfrv3" name="Sub Process Service Task">
       <bpmn:incoming>Flow_0mvs3r4</bpmn:incoming>
       <bpmn:outgoing>Flow_16wbabb</bpmn:outgoing>
       <bpmn:startEvent id="Event_1f56v38">
         <bpmn:outgoing>Flow_1c50uqc</bpmn:outgoing>
       </bpmn:startEvent>
-      <bpmn:sequenceFlow id="Flow_1c50uqc" sourceRef="Event_1f56v38" targetRef="Activity_0xxfrv3" />
+      <bpmn:sequenceFlow id="Flow_1c50uqc" sourceRef="Event_1f56v38" targetRef="Sub_Process_Service_Task" />
       <bpmn:endEvent id="Event_08r7kqi">
         <bpmn:incoming>Flow_1usijg3</bpmn:incoming>
       </bpmn:endEvent>
-      <bpmn:sequenceFlow id="Flow_1usijg3" sourceRef="Activity_0xxfrv3" targetRef="Event_08r7kqi" />
-      <bpmn:serviceTask id="Activity_0xxfrv3" name="Sub Process with Service Task">
+      <bpmn:sequenceFlow id="Flow_1usijg3" sourceRef="Sub_Process_Service_Task" targetRef="Event_08r7kqi" />
+      <bpmn:serviceTask id="Sub_Process_Service_Task" name="Sub Process with Service Task">
         <bpmn:extensionElements>
           <spiffworkflow:serviceTaskOperator id="http/GetRequest" resultVariable="bamboo_get_employee">
             <spiffworkflow:parameters>
@@ -41,14 +41,14 @@
     </bpmn:subProcess>
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
-    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Unit_Test_Sub_Process_with_Service_Task">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Sub_Process_with_Service_Task">
       <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
         <dc:Bounds x="179" y="159" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_15mc3d1_di" bpmnElement="Event_15mc3d1">
         <dc:Bounds x="432" y="159" width="36" height="36" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_14l5u13_di" bpmnElement="Activity_1aah17e">
+      <bpmndi:BPMNShape id="Activity_14l5u13_di" bpmnElement="Activity_0xxfrv3">
         <dc:Bounds x="270" y="137" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
@@ -63,14 +63,14 @@
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
   <bpmndi:BPMNDiagram id="BPMNDiagram_10gov52">
-    <bpmndi:BPMNPlane id="BPMNPlane_1q2fhnk" bpmnElement="Activity_1aah17e" label="[object Object]">
+    <bpmndi:BPMNPlane id="BPMNPlane_1q2fhnk" bpmnElement="Activity_0xxfrv3" label="[object Object]">
       <bpmndi:BPMNShape id="Event_1f56v38_di" bpmnElement="Event_1f56v38">
         <dc:Bounds x="182" y="162" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_08r7kqi_di" bpmnElement="Event_08r7kqi">
         <dc:Bounds x="422" y="162" width="36" height="36" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1xs1lsf_di" bpmnElement="Activity_0xxfrv3">
+      <bpmndi:BPMNShape id="Activity_1xs1lsf_di" bpmnElement="Sub_Process_Service_Task">
         <dc:Bounds x="270" y="140" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
