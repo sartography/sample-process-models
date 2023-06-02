@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:spiffworkflow="http://spiffworkflow.org/bpmn/schema/1.0/core" id="Definitions_96f6665" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.0.0-dev">
-  <bpmn:process id="Unit_Test_Sub_Process_with_User_Task" name="Unit Test Sub Process with User Task" isExecutable="true">
+  <bpmn:process id="Sub_Process_with_User_Task" name="Sub Process with User Task" isExecutable="true">
     <bpmn:startEvent id="StartEvent_1">
       <bpmn:outgoing>Flow_0qgepuv</bpmn:outgoing>
     </bpmn:startEvent>
@@ -11,12 +11,12 @@
       <bpmn:startEvent id="Event_15wzu5f">
         <bpmn:outgoing>Flow_0vinu5f</bpmn:outgoing>
       </bpmn:startEvent>
-      <bpmn:sequenceFlow id="Flow_0vinu5f" sourceRef="Event_15wzu5f" targetRef="Activity_1w3u6js" />
+      <bpmn:sequenceFlow id="Flow_0vinu5f" sourceRef="Event_15wzu5f" targetRef="Sub_Process_User_Task" />
       <bpmn:endEvent id="Event_1uqtzo4">
         <bpmn:incoming>Flow_02kn6kb</bpmn:incoming>
       </bpmn:endEvent>
-      <bpmn:sequenceFlow id="Flow_02kn6kb" sourceRef="Activity_1w3u6js" targetRef="Event_1uqtzo4" />
-      <bpmn:userTask id="Activity_1w3u6js" name="Sub Process User Task">
+      <bpmn:sequenceFlow id="Flow_02kn6kb" sourceRef="Sub_Process_User_Task" targetRef="Event_1uqtzo4" />
+      <bpmn:userTask id="Sub_Process_User_Task" name="Sub Process User Task">
         <bpmn:extensionElements>
           <spiffworkflow:properties>
             <spiffworkflow:property name="formJsonSchemaFilename" value="get-name-schema.json" />
@@ -38,7 +38,7 @@ Your name is {{name}}</spiffworkflow:instructionsForEndUser>
     <bpmn:sequenceFlow id="Flow_1457pk3" sourceRef="Activity_1p2nmb5" targetRef="Event_0b21n8e" />
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
-    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Unit_Test_Sub_Process_with_User_Task">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Sub_Process_with_User_Task">
       <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
         <dc:Bounds x="179" y="159" width="36" height="36" />
       </bpmndi:BPMNShape>
@@ -67,7 +67,7 @@ Your name is {{name}}</spiffworkflow:instructionsForEndUser>
       <bpmndi:BPMNShape id="Event_1uqtzo4_di" bpmnElement="Event_1uqtzo4">
         <dc:Bounds x="492" y="182" width="36" height="36" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_098mv12_di" bpmnElement="Activity_1w3u6js">
+      <bpmndi:BPMNShape id="Activity_098mv12_di" bpmnElement="Sub_Process_User_Task">
         <dc:Bounds x="340" y="160" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
