@@ -32,20 +32,21 @@
           <spiffworkflow:property name="formJsonSchemaFilename" value="get-value-schema.json" />
           <spiffworkflow:property name="formUiSchemaFilename" value="get-value-uischema.json" />
         </spiffworkflow:properties>
+        <spiffworkflow:postScript />
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_021rv5h</bpmn:incoming>
       <bpmn:outgoing>Flow_1wsgus7</bpmn:outgoing>
       <bpmn:multiInstanceLoopCharacteristics>
         <bpmn:loopCardinality xsi:type="bpmn:tFormalExpression">int(tasks)</bpmn:loopCardinality>
-        <bpmn:loopDataOutputRef>values</bpmn:loopDataOutputRef>
-        <bpmn:outputDataItem id="value" name="value" />
+        <bpmn:loopDataOutputRef>value_collection</bpmn:loopDataOutputRef>
+        <bpmn:outputDataItem id="values" name="values" />
       </bpmn:multiInstanceLoopCharacteristics>
     </bpmn:userTask>
     <bpmn:sequenceFlow id="Flow_1wsgus7" sourceRef="Activity_1i0kokz" targetRef="Activity_09mrv8o" />
     <bpmn:manualTask id="Activity_09mrv8o" name="Review">
       <bpmn:extensionElements>
         <spiffworkflow:instructionsForEndUser>You entered:
-{% for value in values %}
+{% for value in value_collection %}
 - {{ value }}
 {% endfor %}</spiffworkflow:instructionsForEndUser>
       </bpmn:extensionElements>
