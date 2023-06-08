@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:spiffworkflow="http://spiffworkflow.org/bpmn/schema/1.0/core" id="Definitions_96f6665" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.0.0-dev">
+  <bpmn:process id="Process_zonrb16" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>Flow_0vese56</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_0vese56" sourceRef="StartEvent_1" targetRef="Activity_0wsxv0z" />
+    <bpmn:endEvent id="Event_0l9irfy">
+      <bpmn:incoming>Flow_0e66p35</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:userTask id="Activity_0wsxv0z" name="Initialize">
+      <bpmn:extensionElements>
+        <spiffworkflow:instructionsForEndUser>Click the button.</spiffworkflow:instructionsForEndUser>
+        <spiffworkflow:properties>
+          <spiffworkflow:property name="formJsonSchemaFilename" value="configure-multiinstance-schema.json" />
+          <spiffworkflow:property name="formUiSchemaFilename" value="configure-multiinstance-uischema.json" />
+        </spiffworkflow:properties>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0vese56</bpmn:incoming>
+      <bpmn:outgoing>Flow_021rv5h</bpmn:outgoing>
+      <bpmn:ioSpecification>
+        <bpmn:dataInput name="input list" />
+        <bpmn:dataOutput name="output list" />
+        <bpmn:inputSet />
+        <bpmn:outputSet />
+      </bpmn:ioSpecification>
+    </bpmn:userTask>
+    <bpmn:sequenceFlow id="Flow_021rv5h" sourceRef="Activity_0wsxv0z" targetRef="Activity_1i0kokz" />
+    <bpmn:userTask id="Activity_1i0kokz" name="Enter Value">
+      <bpmn:extensionElements>
+        <spiffworkflow:properties>
+          <spiffworkflow:property name="formJsonSchemaFilename" value="get-value-schema.json" />
+          <spiffworkflow:property name="formUiSchemaFilename" value="get-value-uischema.json" />
+        </spiffworkflow:properties>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_021rv5h</bpmn:incoming>
+      <bpmn:outgoing>Flow_1wsgus7</bpmn:outgoing>
+      <bpmn:multiInstanceLoopCharacteristics>
+        <bpmn:loopCardinality xsi:type="bpmn:tFormalExpression">int(tasks)</bpmn:loopCardinality>
+        <bpmn:loopDataOutputRef>values</bpmn:loopDataOutputRef>
+        <bpmn:outputDataItem id="value" name="value" />
+      </bpmn:multiInstanceLoopCharacteristics>
+    </bpmn:userTask>
+    <bpmn:sequenceFlow id="Flow_1wsgus7" sourceRef="Activity_1i0kokz" targetRef="Activity_09mrv8o" />
+    <bpmn:manualTask id="Activity_09mrv8o" name="Review">
+      <bpmn:extensionElements>
+        <spiffworkflow:instructionsForEndUser>You entered:
+{% for value in values %}
+- {{ value }}
+{% endfor %}</spiffworkflow:instructionsForEndUser>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1wsgus7</bpmn:incoming>
+      <bpmn:outgoing>Flow_0e66p35</bpmn:outgoing>
+    </bpmn:manualTask>
+    <bpmn:sequenceFlow id="Flow_0e66p35" sourceRef="Activity_09mrv8o" targetRef="Event_0l9irfy" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_zonrb16">
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="179" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0l9irfy_di" bpmnElement="Event_0l9irfy">
+        <dc:Bounds x="752" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1eii233_di" bpmnElement="Activity_0wsxv0z">
+        <dc:Bounds x="270" y="137" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0v9gy83_di" bpmnElement="Activity_1i0kokz">
+        <dc:Bounds x="430" y="137" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1kvwmf4_di" bpmnElement="Activity_09mrv8o">
+        <dc:Bounds x="590" y="137" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_0vese56_di" bpmnElement="Flow_0vese56">
+        <di:waypoint x="215" y="177" />
+        <di:waypoint x="270" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_021rv5h_di" bpmnElement="Flow_021rv5h">
+        <di:waypoint x="370" y="177" />
+        <di:waypoint x="430" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1wsgus7_di" bpmnElement="Flow_1wsgus7">
+        <di:waypoint x="530" y="177" />
+        <di:waypoint x="590" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0e66p35_di" bpmnElement="Flow_0e66p35">
+        <di:waypoint x="690" y="177" />
+        <di:waypoint x="752" y="177" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
