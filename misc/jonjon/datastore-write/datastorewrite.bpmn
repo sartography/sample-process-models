@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_96f6665" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.0.0-dev">
-  <bpmn:dataStore name="SomeDataStore" id="super_secret" />
+  <bpmn:dataStore id="typeahead" name="TypeaheadDataStore" />
   <bpmn:process id="Process_i1bzous" isExecutable="true">
     <bpmn:startEvent id="StartEvent_1">
       <bpmn:outgoing>Flow_1rnthyk</bpmn:outgoing>
@@ -16,10 +16,17 @@
       <bpmn:dataOutputAssociation id="DataOutputAssociation_0q5uzra">
         <bpmn:targetRef>DataStoreReference_1t6u3kf</bpmn:targetRef>
       </bpmn:dataOutputAssociation>
-      <bpmn:script>super_secret="XYZ"
+      <bpmn:script>typeahead = {
+    "employees": [
+        {"search_term": "bob smith", "result": {"first_name": "bob", "last_name": "smith"}},
+        {"search_term": "sue jones", "result": {"first_name": "sue", "last_name": "jones"}},
+        {"search_term": "bob jones", "result": {"first_name": "bob", "last_name": "jones"}},
+        {"search_term": "sue smith", "result": {"first_name": "sue", "last_name": "smith"}},
+    ]
+}
 ok=1</bpmn:script>
     </bpmn:scriptTask>
-    <bpmn:dataStoreReference id="DataStoreReference_1t6u3kf" name="Secret Data Store" dataStoreRef="super_secret" />
+    <bpmn:dataStoreReference id="DataStoreReference_1t6u3kf" name="Update &#10;Typeahead Data Store" dataStoreRef="typeahead" />
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_i1bzous">
@@ -34,6 +41,9 @@ ok=1</bpmn:script>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="DataStoreReference_1t6u3kf_di" bpmnElement="DataStoreReference_1t6u3kf">
         <dc:Bounds x="295" y="305" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="280" y="355" width="82" height="40" />
+        </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_1rnthyk_di" bpmnElement="Flow_1rnthyk">
         <di:waypoint x="215" y="177" />
