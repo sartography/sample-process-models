@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:spiffworkflow="http://spiffworkflow.org/bpmn/schema/1.0/core" id="Definitions_96f6665" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.0.0-dev">
+  <bpmn:dataStore id="typeahead" name="TypeaheadDataStore" />
+  <bpmn:process id="load_cities" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>Flow_1rnthyk</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_1rnthyk" sourceRef="StartEvent_1" targetRef="Activity_1dsq6ng" />
+    <bpmn:endEvent id="Event_0fwaig9">
+      <bpmn:incoming>Flow_078sc6a</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_078sc6a" sourceRef="Activity_1hyypvh" targetRef="Event_0fwaig9" />
+    <bpmn:scriptTask id="Activity_1hyypvh" name="store cities">
+      <bpmn:incoming>Flow_17laifv</bpmn:incoming>
+      <bpmn:outgoing>Flow_078sc6a</bpmn:outgoing>
+      <bpmn:dataOutputAssociation id="DataOutputAssociation_0q5uzra">
+        <bpmn:targetRef>DataStoreReference_1t6u3kf</bpmn:targetRef>
+      </bpmn:dataOutputAssociation>
+      <bpmn:script>typeahead = {
+    "cities": cities_result,
+}
+ok=1</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:dataStoreReference id="DataStoreReference_1t6u3kf" name="Update &#10;Typeahead Data Store" dataStoreRef="typeahead" />
+    <bpmn:sequenceFlow id="Flow_17laifv" sourceRef="Activity_1dsq6ng" targetRef="Activity_1hyypvh" />
+    <bpmn:serviceTask id="Activity_1dsq6ng" name="fetch cities">
+      <bpmn:extensionElements>
+        <spiffworkflow:serviceTaskOperator id="http/GetRequest" resultVariable="cities_result">
+          <spiffworkflow:parameters>
+            <spiffworkflow:parameter id="basic_auth_password" type="str" />
+            <spiffworkflow:parameter id="basic_auth_username" type="str" />
+            <spiffworkflow:parameter id="headers" type="any" />
+            <spiffworkflow:parameter id="params" type="any" />
+            <spiffworkflow:parameter id="url" type="str" value="&#34;https://raw.githubusercontent.com/dr5hn/countries-states-cities-database/master/cities.json&#34;" />
+          </spiffworkflow:parameters>
+        </spiffworkflow:serviceTaskOperator>
+        <spiffworkflow:postScript>cities_result = [{"search_term": city["name"], "result": {"name": city["name"]}} for city in cities_result]</spiffworkflow:postScript>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1rnthyk</bpmn:incoming>
+      <bpmn:outgoing>Flow_17laifv</bpmn:outgoing>
+    </bpmn:serviceTask>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="load_cities">
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="179" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0fwaig9_di" bpmnElement="Event_0fwaig9">
+        <dc:Bounds x="602" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_12xa6es_di" bpmnElement="Activity_1hyypvh">
+        <dc:Bounds x="450" y="137" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DataStoreReference_1t6u3kf_di" bpmnElement="DataStoreReference_1t6u3kf">
+        <dc:Bounds x="475" y="305" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="460" y="355" width="82" height="40" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_166gh9e_di" bpmnElement="Activity_1dsq6ng">
+        <dc:Bounds x="270" y="137" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_1rnthyk_di" bpmnElement="Flow_1rnthyk">
+        <di:waypoint x="215" y="177" />
+        <di:waypoint x="270" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_078sc6a_di" bpmnElement="Flow_078sc6a">
+        <di:waypoint x="550" y="177" />
+        <di:waypoint x="602" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DataOutputAssociation_0q5uzra_di" bpmnElement="DataOutputAssociation_0q5uzra">
+        <di:waypoint x="500" y="217" />
+        <di:waypoint x="500" y="305" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_17laifv_di" bpmnElement="Flow_17laifv">
+        <di:waypoint x="370" y="177" />
+        <di:waypoint x="450" y="177" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
