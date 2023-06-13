@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:spiffworkflow="http://spiffworkflow.org/bpmn/schema/1.0/core" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_96f6665" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.0.0-dev">
+  <bpmn:dataStore id="typeahead" name="TypeaheadDataStore" />
   <bpmn:process id="load_world" name="Load World" isExecutable="true">
     <bpmn:startEvent id="StartEvent_1">
       <bpmn:outgoing>Flow_0tn4ed3</bpmn:outgoing>
     </bpmn:startEvent>
-    <bpmn:sequenceFlow id="Flow_0tn4ed3" sourceRef="StartEvent_1" targetRef="Activity_0o51srq" />
+    <bpmn:sequenceFlow id="Flow_0tn4ed3" sourceRef="StartEvent_1" targetRef="Activity_09mu4sd" />
     <bpmn:endEvent id="Event_0jxoz7s">
       <bpmn:incoming>Flow_0lz96a1</bpmn:incoming>
     </bpmn:endEvent>
@@ -92,17 +93,30 @@
         },
         "search_term": "Afghanistan"
       }
+    ],
+    "states": [
+      {
+        "result": {
+          "country": "Afghanistan",
+          "name": "Badakhshan"
+        },
+        "search_term": "Badakhshan"
+      }
     ]
   }
 }</spiffworkflow:expectedOutputJson>
           </spiffworkflow:unitTest>
         </spiffworkflow:unitTests>
       </bpmn:extensionElements>
-      <bpmn:incoming>Flow_0tn4ed3</bpmn:incoming>
+      <bpmn:incoming>Flow_0w7oyed</bpmn:incoming>
       <bpmn:outgoing>Flow_0lz96a1</bpmn:outgoing>
+      <bpmn:dataOutputAssociation id="DataOutputAssociation_0tjuw5b">
+        <bpmn:targetRef>DataStoreReference_1oronwq</bpmn:targetRef>
+      </bpmn:dataOutputAssociation>
       <bpmn:script>def parse_cities_result():
     cities = []
     countries = []
+    states = []
     states_by_country = {}
 
     for result in cities_result:
@@ -116,13 +130,32 @@
 
     for country in states_by_country.keys():
         countries.append({"search_term": country, "result":{"name": country}})
+        for state in states_by_country[country]:
+            states.append({"search_term": state, "result": {"name": state, "country": country}})
     
-    return { "cities": cities, "countries": countries }
+    return { "cities": cities, "countries": countries, "states": states }
 
 typeahead = parse_cities_result()
 
 del(cities_result)</bpmn:script>
     </bpmn:scriptTask>
+    <bpmn:sequenceFlow id="Flow_0w7oyed" sourceRef="Activity_09mu4sd" targetRef="Activity_0o51srq" />
+    <bpmn:serviceTask id="Activity_09mu4sd" name="Fetch cities.json">
+      <bpmn:extensionElements>
+        <spiffworkflow:serviceTaskOperator id="http/GetRequest" resultVariable="cities_result">
+          <spiffworkflow:parameters>
+            <spiffworkflow:parameter id="basic_auth_password" type="str" />
+            <spiffworkflow:parameter id="basic_auth_username" type="str" />
+            <spiffworkflow:parameter id="headers" type="any" />
+            <spiffworkflow:parameter id="params" type="any" />
+            <spiffworkflow:parameter id="url" type="str" value="&#34;https://raw.githubusercontent.com/dr5hn/countries-states-cities-database/master/cities.json&#34;" />
+          </spiffworkflow:parameters>
+        </spiffworkflow:serviceTaskOperator>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0tn4ed3</bpmn:incoming>
+      <bpmn:outgoing>Flow_0w7oyed</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:dataStoreReference id="DataStoreReference_1oronwq" name="Update &#10;Typeahead Data Store" dataStoreRef="typeahead" />
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="load_world">
@@ -130,23 +163,37 @@ del(cities_result)</bpmn:script>
         <dc:Bounds x="179" y="159" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_0jxoz7s_di" bpmnElement="Event_0jxoz7s">
-        <dc:Bounds x="432" y="159" width="36" height="36" />
+        <dc:Bounds x="542" y="159" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1fwfxsn_di" bpmnElement="Activity_0o51srq">
-        <dc:Bounds x="270" y="138" width="100" height="80" />
+        <dc:Bounds x="390" y="137" width="100" height="80" />
         <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1hntoll_di" bpmnElement="Activity_09mu4sd">
+        <dc:Bounds x="250" y="137" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DataStoreReference_1oronwq_di" bpmnElement="DataStoreReference_1oronwq">
+        <dc:Bounds x="415" y="305" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="413" y="362" width="55" height="14" />
+        </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_0tn4ed3_di" bpmnElement="Flow_0tn4ed3">
         <di:waypoint x="215" y="177" />
-        <di:waypoint x="243" y="177" />
-        <di:waypoint x="243" y="178" />
-        <di:waypoint x="270" y="178" />
+        <di:waypoint x="250" y="177" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0lz96a1_di" bpmnElement="Flow_0lz96a1">
-        <di:waypoint x="370" y="178" />
-        <di:waypoint x="401" y="178" />
-        <di:waypoint x="401" y="177" />
-        <di:waypoint x="432" y="177" />
+        <di:waypoint x="490" y="177" />
+        <di:waypoint x="542" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0w7oyed_di" bpmnElement="Flow_0w7oyed">
+        <di:waypoint x="350" y="177" />
+        <di:waypoint x="390" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DataOutputAssociation_0tjuw5b_di" bpmnElement="DataOutputAssociation_0tjuw5b">
+        <di:waypoint x="441" y="217" />
+        <di:waypoint x="444" y="305" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
