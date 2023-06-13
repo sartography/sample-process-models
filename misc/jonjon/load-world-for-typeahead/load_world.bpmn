@@ -58,34 +58,43 @@
   ]
 }</spiffworkflow:inputJson>
             <spiffworkflow:expectedOutputJson>{
-    "typeahead": {
-  "cities": [
-    {
-      "search_term": "Ashkāsham",
-      "result": {
-        "name": "Ashkāsham",
-        "country": "Afghanistan",
-        "state": "Badakhshan"
+  "typeahead": {
+    "cities": [
+      {
+        "search_term": "Ashkāsham",
+        "result": {
+          "name": "Ashkāsham",
+          "country": "Afghanistan",
+          "state": "Badakhshan"
+        }
+      },
+      {
+        "search_term": "Fayzabad",
+        "result": {
+          "name": "Fayzabad",
+          "country": "Afghanistan",
+          "state": "Badakhshan"
+        }
+      },
+      {
+        "search_term": "Jurm",
+        "result": {
+          "name": "Jurm",
+          "country": "Afghanistan",
+          "state": "Badakhshan"
+        }
       }
-    },
-    {
-      "search_term": "Fayzabad",
-      "result": {
-        "name": "Fayzabad",
-        "country": "Afghanistan",
-        "state": "Badakhshan"
+    ],
+    "countries": [
+      {
+        "result": {
+          "name": "Afghanistan"
+        },
+        "search_term": "Afghanistan"
       }
-    },
-    {
-      "search_term": "Jurm",
-      "result": {
-        "name": "Jurm",
-        "country": "Afghanistan",
-        "state": "Badakhshan"
-      }
-    }
-  ]
-}}</spiffworkflow:expectedOutputJson>
+    ]
+  }
+}</spiffworkflow:expectedOutputJson>
           </spiffworkflow:unitTest>
         </spiffworkflow:unitTests>
       </bpmn:extensionElements>
@@ -93,14 +102,22 @@
       <bpmn:outgoing>Flow_0lz96a1</bpmn:outgoing>
       <bpmn:script>def parse_cities_result():
     cities = []
+    countries = []
+    states_by_country = {}
 
     for result in cities_result:
         name = result["name"]
         state = result["state_name"]
         country = result["country_name"]
-        city = {"search_term": name, "result": {"name": name, "state": state, "country": country}}
-        cities.append(city)
-    return { "cities": cities }
+        cities.append({"search_term": name, "result": {"name": name, "state": state, "country": country}})
+        if country not in states_by_country:
+            states_by_country[country] = set()
+        states_by_country[country].add(state)
+
+    for country in states_by_country.keys():
+        countries.append({"search_term": country, "result":{"name": country}})
+    
+    return { "cities": cities, "countries": countries }
 
 typeahead = parse_cities_result()
 
@@ -116,15 +133,19 @@ del(cities_result)</bpmn:script>
         <dc:Bounds x="432" y="159" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1fwfxsn_di" bpmnElement="Activity_0o51srq">
-        <dc:Bounds x="270" y="137" width="100" height="80" />
+        <dc:Bounds x="270" y="138" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_0tn4ed3_di" bpmnElement="Flow_0tn4ed3">
         <di:waypoint x="215" y="177" />
-        <di:waypoint x="270" y="177" />
+        <di:waypoint x="243" y="177" />
+        <di:waypoint x="243" y="178" />
+        <di:waypoint x="270" y="178" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0lz96a1_di" bpmnElement="Flow_0lz96a1">
-        <di:waypoint x="370" y="177" />
+        <di:waypoint x="370" y="178" />
+        <di:waypoint x="401" y="178" />
+        <di:waypoint x="401" y="177" />
         <di:waypoint x="432" y="177" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
