@@ -1,20 +1,27 @@
 {
   "schema": {
-    "range": {
-      "type": "integer",
-      "title": "Is JSON Form useful?",
-      "description": "The field should appear as a range that accepts values between 0 (excluded) and 200 by steps of 20 on browsers that support the \"range\" input type.<br/>Note that the \"step\" constraint is not enforced when the form is submitted.",
-      "default": 40,
-      "minimum": 0,
-      "exclusiveMinimum": true,
-      "maximum": 200
+    "friends": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "title": "Friend",
+        "properties": {
+          "nick": {
+            "type": "string",
+            "title": "Nickname",
+            "required": true
+          },
+          "gender": {
+            "type": "string",
+            "title": "Gender",
+            "enum": [ "male", "female", "alien" ]
+          },
+          "age": {
+            "type": "integer",
+            "title": "Age"
+          }
+        }
+      }
     }
-  },
-  "form": [
-    {
-      "key": "range",
-      "type": "range",
-      "step": 20
-    }
-  ]
+  }
 }
