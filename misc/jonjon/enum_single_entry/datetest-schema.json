@@ -1,15 +1,21 @@
 {
   "definitions": {
-    "currencyEnum": {
-      "title": "Currency",
+    "categoryEnum": {
+      "title": "Category",
       "type": "string",
       "anyOf": [
         "options_from_task_data_var:category_enum_list"
       ]
-    }
+    },
+    		"sub_categoryEnum": {
+			"title": "Sub-Category",
+			"type": "string",
+			"anyOf": [
+				"options_from_task_data_var:travel_sub_category_enum_list"
+			]
+		}
   },
-
-  "title": "datetest",
+  "title": "test",
   "description": "",
   "properties": {
     "start_date": {
@@ -38,14 +44,21 @@
   },
   "required": [],
   "dependencies": {
-    "the_not_date": {
-      "properties": {
-        "the_not_date": {
-          "enum": [
-            "Travel111"
-          ]
-        }		
-      }
+		"category": {
+			"properties": {
+				"category": {
+					"enum": [
+						"travel"
+						]
+					},
+					"properties": {
+						"sub_category": {
+							"$ref": "#/definitions/travel_sub_categoryEnum",
+							"title": "Sub Category"
+						}
+					}										
+				}
+			}
     }
   }
 }
