@@ -28,6 +28,7 @@ this_will_delete = True</bpmn:script>
         </spiffworkflow:properties>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_0fia6jt</bpmn:incoming>
+      <bpmn:incoming>Flow_0uq0mat</bpmn:incoming>
       <bpmn:outgoing>Flow_0k1q81g</bpmn:outgoing>
     </bpmn:userTask>
     <bpmn:sequenceFlow id="Flow_0k1q81g" sourceRef="form2" targetRef="multiply2" />
@@ -115,7 +116,16 @@ HO
       <bpmn:outgoing>Flow_0fia6jt</bpmn:outgoing>
     </bpmn:intermediateThrowEvent>
     <bpmn:sequenceFlow id="Flow_06y928b" sourceRef="multiply1" targetRef="Event_0ypxbq7" />
+    <bpmn:sequenceFlow id="Flow_0uq0mat" sourceRef="Event_1gfda2e" targetRef="form2" />
+    <bpmn:boundaryEvent id="Event_1gfda2e" attachedToRef="form3">
+      <bpmn:extensionElements>
+        <spiffworkflow:signalButtonLabel>edit</spiffworkflow:signalButtonLabel>
+      </bpmn:extensionElements>
+      <bpmn:outgoing>Flow_0uq0mat</bpmn:outgoing>
+      <bpmn:signalEventDefinition id="SignalEventDefinition_1s7hfcv" signalRef="Signal_091abqk" />
+    </bpmn:boundaryEvent>
   </bpmn:process>
+  <bpmn:signal id="Signal_091abqk" name="Signal_091abqk" />
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="test_form">
       <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
@@ -156,15 +166,18 @@ HO
         <dc:Bounds x="760" y="77" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0c1khwq_di" bpmnElement="form_subprocess" isExpanded="false">
+        <dc:Bounds x="230" y="210" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_12oudfm_di" bpmnElement="Event_0ypxbq7">
         <dc:Bounds x="342" y="212" width="36" height="36" />
         <bpmndi:BPMNLabel>
           <dc:Bounds x="348" y="255" width="24" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0c1khwq_di" bpmnElement="form_subprocess" isExpanded="false">
-        <dc:Bounds x="230" y="210" width="100" height="80" />
-        <bpmndi:BPMNLabel />
+      <bpmndi:BPMNShape id="Event_14pwany_di" bpmnElement="Event_1gfda2e">
+        <dc:Bounds x="592" y="272" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="SequenceFlow_0lvudp8_di" bpmnElement="SequenceFlow_0lvudp8">
         <di:waypoint x="147" y="110" />
@@ -227,6 +240,12 @@ HO
         <di:waypoint x="380" y="185" />
         <di:waypoint x="360" y="185" />
         <di:waypoint x="360" y="212" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0uq0mat_di" bpmnElement="Flow_0uq0mat">
+        <di:waypoint x="610" y="308" />
+        <di:waypoint x="610" y="328" />
+        <di:waypoint x="490" y="328" />
+        <di:waypoint x="490" y="290" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
