@@ -12,7 +12,79 @@
     <bpmn:scriptTask id="Activity_0xgydrl">
       <bpmn:incoming>Flow_1m8uuib</bpmn:incoming>
       <bpmn:outgoing>Flow_0fckrs2</bpmn:outgoing>
-      <bpmn:script>a = 1</bpmn:script>
+      <bpmn:script>import sqlalchemy
+from sqlalchemy import cast
+from sqlalchemy import func
+from sqlalchemy.orm import aliased
+from spiffworkflow_backend.models.process_instance_metadata import ProcessInstanceMetadataModel
+from spiffworkflow_backend.models.process_instance import ProcessInstanceModel
+from spiffworkflow_backend.models.db import db
+
+
+instance_metadata_aliases = {}
+final_select_fields = []
+final_group_by_fields = []
+
+group_by_array = group_by.split(',') if group_by else []
+filter_by_array = filter_by.split(',') if filter_by else []
+
+for group_by_column in group_by_array:
+    instance_metadata_alias = aliased(ProcessInstanceMetadataModel)
+    instance_metadata_aliases[group_by_column] = instance_metadata_alias
+    final_select_fields.append(instance_metadata_alias.value)
+    final_group_by_fields.append(instance_metadata_alias.value)
+
+aggregator_table_alias = aliased(ProcessInstanceMetadataModel)
+instance_metadata_aliases[aggregator_field] = aggregator_table_alias
+if aggregator_type == "sum":
+    final_select_fields.append(func.sum(aggregator_table_alias.value))
+
+process_instance_query = (
+    db.session.query(*final_select_fields).select_from(ProcessInstanceModel).group_by(*final_group_by_fields)  # type: ignore
+      )
+      
+for filter in filter_by_array:
+    instance_metadata_alias = aliased(ProcessInstanceMetadataModel)
+    instance_metadata_aliases[filter["field_name"]] = instance_metadata_alias
+
+    conditions = [
+        ProcessInstanceModel.id == instance_metadata_alias.process_instance_id,
+        instance_metadata_alias.key == filter["field_name"],
+    ]
+
+    if filter["operator"] == "equals":
+        conditions.append(instance_metadata_alias.value == filter["field_value"])
+    elif filter["operator"] == "less_than":
+        conditions.append(cast(instance_metadata_alias.value, sqlalchemy.Integer) &lt; filter["field_value"])
+    elif filter["operator"] == "greater_than_or_equal":
+        conditions.append(cast(instance_metadata_alias.value, sqlalchemy.Integer) &gt;= filter["field_value"])
+
+    process_instance_query = process_instance_query.join(instance_metadata_alias, and_(*conditions))
+
+for group_by_column in group_by_array:
+   instance_metadata_alias = instance_metadata_aliases[group_by_column]
+   process_instance_query = process_instance_query.join(
+       instance_metadata_alias, ProcessInstanceModel.id == instance_metadata_alias.process_instance_id
+   ).filter(instance_metadata_alias.key == group_by_column)
+
+process_instance_query = process_instance_query.join(
+    aggregator_table_alias, ProcessInstanceModel.id == aggregator_table_alias.process_instance_id
+).filter(aggregator_table_alias.key == aggregator_field)
+our_aggregation = dict(process_instance_query.all())
+
+del(process_instance_query)
+del(instance_metadata_aliases)
+del(final_group_by_fields)
+del(final_select_fields)
+del(aggregator_table_alias)
+del(instance_metadata_alias)
+del(sqlalchemy)
+del(cast)
+del(func)
+del(aliased)
+del(ProcessInstanceMetadataModel)
+del(ProcessInstanceModel)
+del(db)</bpmn:script>
     </bpmn:scriptTask>
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">

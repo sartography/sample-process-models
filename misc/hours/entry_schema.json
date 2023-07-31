@@ -1,0 +1,77 @@
+{
+	"definitions": {
+	},
+	"title": "Track Time",
+	"description": "Information for tracking billable hours.",
+	"type": "object",
+	"required": [
+		"client",
+		"project",
+		"summary",
+		"startDateTime",
+		"endDateTime"
+	],
+	"properties": {
+		"client": {
+			"type": "string",
+			"title": "Client",
+			"default": "Status",
+			"enum":[
+				"Status",
+				"MyOme"
+			]
+		},
+		"summary": {
+			"type": "string",
+			"title": "Summary"
+		},
+		"startDateTime": {
+			"type": "string",
+			"title": "Start Date and Time"
+		},
+		"endDateTime": {
+			"type": "string",
+			"title": "End Date and Time"
+		}
+	},
+	"dependencies": {
+		"client": {
+			"oneOf": [
+				{
+					"properties": {
+						"client": {
+							"enum": [
+								"Status"
+							]
+						},
+						"project": {
+							"type": "string",
+							"title": "Project",
+							"default": "Status-Pilot Processes",
+							"enum":[
+								"Status-Pilot Processes"
+							]
+						}
+					}
+				},
+				{
+					"properties": {
+						"client": {
+							"enum": [
+								"MyOme"
+							]
+						},
+						"project": {
+							"type": "string",
+							"title": "Project",
+							"default": "MyOme POC",
+							"enum":[
+								"MyOme POC"
+							]
+						}
+					}
+				}
+			]
+		}
+	}
+}
