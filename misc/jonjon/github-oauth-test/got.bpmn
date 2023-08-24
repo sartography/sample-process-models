@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:spiffworkflow="http://spiffworkflow.org/bpmn/schema/1.0/core" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_96f6665" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.0.0-dev">
+  <bpmn:process id="Process_141kg23" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>Flow_02rd7ug</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_02rd7ug" sourceRef="StartEvent_1" targetRef="Activity_1umg82c" />
+    <bpmn:endEvent id="Event_08y26wu">
+      <bpmn:incoming>Flow_10s5z0n</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_10s5z0n" sourceRef="Activity_1umg82c" targetRef="Event_08y26wu" />
+    <bpmn:serviceTask id="Activity_1umg82c" name="github user">
+      <bpmn:extensionElements>
+        <spiffworkflow:serviceTaskOperator id="http/GetRequest">
+          <spiffworkflow:parameters>
+            <spiffworkflow:parameter id="basic_auth_password" type="str" />
+            <spiffworkflow:parameter id="basic_auth_username" type="str" />
+            <spiffworkflow:parameter id="headers" type="any" value="{ &#34;Authorization&#34;: &#34;Bearer SPIFF_SECRET:github_oauth&#34; }" />
+            <spiffworkflow:parameter id="params" type="any" />
+            <spiffworkflow:parameter id="url" type="str" value="&#34;https://api.github.com/user&#34;" />
+          </spiffworkflow:parameters>
+        </spiffworkflow:serviceTaskOperator>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_02rd7ug</bpmn:incoming>
+      <bpmn:outgoing>Flow_10s5z0n</bpmn:outgoing>
+    </bpmn:serviceTask>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_141kg23">
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="-338" y="-38" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_08y26wu_di" bpmnElement="Event_08y26wu">
+        <dc:Bounds x="-98" y="-38" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_145g8p6_di" bpmnElement="Activity_1umg82c">
+        <dc:Bounds x="-250" y="-60" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_02rd7ug_di" bpmnElement="Flow_02rd7ug">
+        <di:waypoint x="-302" y="-20" />
+        <di:waypoint x="-250" y="-20" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_10s5z0n_di" bpmnElement="Flow_10s5z0n">
+        <di:waypoint x="-150" y="-20" />
+        <di:waypoint x="-98" y="-20" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
