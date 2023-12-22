@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:spiffworkflow="http://spiffworkflow.org/bpmn/schema/1.0/core" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_96f6665" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.0.0-dev">
+  <bpmn:process id="Process_ynixgwm" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>Flow_17db3yp</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_17db3yp" sourceRef="StartEvent_1" targetRef="Activity_0r6aikr" />
+    <bpmn:endEvent id="EndEvent_1">
+      <bpmn:extensionElements>
+        <spiffworkflow:instructionsForEndUser>The process instance completed successfully.</spiffworkflow:instructionsForEndUser>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_12pkbxb</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_12pkbxb" sourceRef="Activity_0qpzdpu" targetRef="EndEvent_1" />
+    <bpmn:serviceTask id="Activity_0qpzdpu" name="pgv2">
+      <bpmn:extensionElements>
+        <spiffworkflow:instructionsForEndUser>This is an example **Manual Task**. A **Manual Task** is designed to allow someone to complete a task outside of the system and then report back that it is complete. You can click the *Continue* button to proceed. When you are done running this process, you can edit the **Process Model** to include a:
+
+ * **Script Task** - write a short snippet of python code to update some data
+ *  **User Task** - generate a form that collects information from a user
+ * **Service Task** - communicate with an external API to fetch or update some data.
+
+You can also change the text you are reading here by updating the *Instructions* on this example manual task.</spiffworkflow:instructionsForEndUser>
+        <spiffworkflow:serviceTaskOperator id="postgres_v2/DoSQL" resultVariable="rsp">
+          <spiffworkflow:parameters>
+            <spiffworkflow:parameter id="database_connection_str" type="str" value="&#34;SPIFF_SECRET:PG_CON&#34;" />
+            <spiffworkflow:parameter id="schema" type="any" value="schema" />
+          </spiffworkflow:parameters>
+        </spiffworkflow:serviceTaskOperator>
+        <spiffworkflow:preScript>schema = {
+    "sql": "SELECT get_vendors ();",
+    "values": [],
+}</spiffworkflow:preScript>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_05p2lap</bpmn:incoming>
+      <bpmn:outgoing>Flow_12pkbxb</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="Flow_0oebv5u" sourceRef="Activity_0r6aikr" targetRef="Activity_1ckpo8j" />
+    <bpmn:serviceTask id="Activity_0r6aikr" name="create table">
+      <bpmn:extensionElements>
+        <spiffworkflow:serviceTaskOperator id="postgres_v2/DoSQL" resultVariable="rsp_tbl">
+          <spiffworkflow:parameters>
+            <spiffworkflow:parameter id="database_connection_str" type="str" value="&#34;SPIFF_SECRET:PG_CON&#34;" />
+            <spiffworkflow:parameter id="schema" type="any" value="schema" />
+          </spiffworkflow:parameters>
+        </spiffworkflow:serviceTaskOperator>
+        <spiffworkflow:preScript>schema = {
+    "sql": "CREATE TABLE IF NOT EXISTS vendors (id integer, vendor_name varchar(100));",
+    "values": [],
+}</spiffworkflow:preScript>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_17db3yp</bpmn:incoming>
+      <bpmn:outgoing>Flow_0oebv5u</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="Flow_0zvbf76" sourceRef="Activity_1ckpo8j" targetRef="Activity_1dj9tiu" />
+    <bpmn:serviceTask id="Activity_1ckpo8j" name="create proc">
+      <bpmn:extensionElements>
+        <spiffworkflow:preScript>sql = """
+CREATE OR REPLACE FUNCTION get_vendors()
+RETURNS TABLE(vendor_id INTEGER, vendor_name VARCHAR) AS $$
+BEGIN
+    RETURN QUERY
+    SELECT vendors.id, vendors.vendor_name FROM vendors;
+END;
+$$ LANGUAGE plpgsql;
+"""
+
+schema = {
+    "sql": sql,
+    "values": [],
+}</spiffworkflow:preScript>
+        <spiffworkflow:serviceTaskOperator id="postgres_v2/DoSQL" resultVariable="rsp_proc">
+          <spiffworkflow:parameters>
+            <spiffworkflow:parameter id="database_connection_str" type="str" value="&#34;SPIFF_SECRET:PG_CON&#34;" />
+            <spiffworkflow:parameter id="schema" type="any" value="schema" />
+          </spiffworkflow:parameters>
+        </spiffworkflow:serviceTaskOperator>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0oebv5u</bpmn:incoming>
+      <bpmn:outgoing>Flow_0zvbf76</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="Flow_05p2lap" sourceRef="Activity_1dj9tiu" targetRef="Activity_0qpzdpu" />
+    <bpmn:serviceTask id="Activity_1dj9tiu" name="insert vedors">
+      <bpmn:extensionElements>
+        <spiffworkflow:preScript>schema = {
+    "sql": "CREATE TABLE IF NOT EXISTS vendors (id integer, vendor_name varchar(100));",
+    "values": [],
+}</spiffworkflow:preScript>
+        <spiffworkflow:serviceTaskOperator id="postgres_v2/DoSQL" resultVariable="rsp_ins">
+          <spiffworkflow:parameters>
+            <spiffworkflow:parameter id="database_connection_str" type="str" value="&#34;SPIFF_SECRET:PG_CON&#34;" />
+            <spiffworkflow:parameter id="schema" type="any" value="schema" />
+          </spiffworkflow:parameters>
+        </spiffworkflow:serviceTaskOperator>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0zvbf76</bpmn:incoming>
+      <bpmn:outgoing>Flow_05p2lap</bpmn:outgoing>
+    </bpmn:serviceTask>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_ynixgwm">
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="179" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_188ebql_di" bpmnElement="Activity_0r6aikr">
+        <dc:Bounds x="240" y="137" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1j3x0gt_di" bpmnElement="Activity_1ckpo8j">
+        <dc:Bounds x="370" y="137" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_14za570_di" bpmnElement="EndEvent_1">
+        <dc:Bounds x="802" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1gctoow_di" bpmnElement="Activity_0qpzdpu">
+        <dc:Bounds x="660" y="137" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_02026ow_di" bpmnElement="Activity_1dj9tiu">
+        <dc:Bounds x="510" y="137" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_17db3yp_di" bpmnElement="Flow_17db3yp">
+        <di:waypoint x="215" y="177" />
+        <di:waypoint x="240" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_12pkbxb_di" bpmnElement="Flow_12pkbxb">
+        <di:waypoint x="760" y="177" />
+        <di:waypoint x="802" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0oebv5u_di" bpmnElement="Flow_0oebv5u">
+        <di:waypoint x="340" y="177" />
+        <di:waypoint x="370" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0zvbf76_di" bpmnElement="Flow_0zvbf76">
+        <di:waypoint x="470" y="177" />
+        <di:waypoint x="510" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_05p2lap_di" bpmnElement="Flow_05p2lap">
+        <di:waypoint x="610" y="177" />
+        <di:waypoint x="660" y="177" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

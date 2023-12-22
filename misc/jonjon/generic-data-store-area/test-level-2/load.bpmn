@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_96f6665" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.0.0-dev">
-  <bpmn:dataStore id="contacts_datastore" name="JSONFileDataStore" />
+  <bpmn:dataStore id="some_data_store" name="JSONDataStore" />
   <bpmn:process id="Process_fil0r1s2" isExecutable="true">
     <bpmn:startEvent id="StartEvent_1">
       <bpmn:outgoing>Flow_15zp7wu</bpmn:outgoing>
@@ -16,14 +16,14 @@
       <bpmn:dataOutputAssociation id="DataOutputAssociation_0qt31ab">
         <bpmn:targetRef>DataStoreReference_1b40zg5</bpmn:targetRef>
       </bpmn:dataOutputAssociation>
-      <bpmn:script>contacts_datastore = [
-    {"contact": "Joe Bob", "company": "Some Job", "email": "joebob@email.ai"},
-    {"contact": "Sue Smith", "company": "Some Job", "email": "sue@email.ai", "notes": "Decision Maker\nDoes'nt answer emails."},
-    {"contact": "Some Person", "company": "Another Job", "email": "person@test.com"},
-    {"contact": "Them Person", "company": "Them Company", "email": "them@test.com"},
+      <bpmn:script>some_data_store = [
+    {"contact": "Joe Bob L2", "company": "Some Job", "email": "joebob@email.ai"},
+    {"contact": "Sue Smith L2", "company": "Some Job", "email": "sue@email.ai", "notes": "Decision Maker\nDoes'nt answer emails."},
+    {"contact": "Some Person L2", "company": "Another Job", "email": "person@test.com"},
+    {"contact": "Them Person L2", "company": "Them Company", "email": "them@test.com"},
 ]</bpmn:script>
     </bpmn:scriptTask>
-    <bpmn:dataStoreReference id="DataStoreReference_1b40zg5" name="Load Contacts" dataStoreRef="contacts_datastore" />
+    <bpmn:dataStoreReference id="DataStoreReference_1b40zg5" name="Load Contacts" dataStoreRef="some_data_store" />
     <bpmn:sequenceFlow id="Flow_0citdoo" sourceRef="Activity_0t6yb39" targetRef="Event_1qwgen4" />
     <bpmn:scriptTask id="Activity_0t6yb39">
       <bpmn:incoming>Flow_114y4md</bpmn:incoming>
@@ -33,9 +33,9 @@
         <bpmn:sourceRef>DataStoreReference_1nsdav3</bpmn:sourceRef>
         <bpmn:targetRef>Property_1pbyq4i</bpmn:targetRef>
       </bpmn:dataInputAssociation>
-      <bpmn:script>x = contacts_datastore[1]</bpmn:script>
+      <bpmn:script>x = some_data_store[1]</bpmn:script>
     </bpmn:scriptTask>
-    <bpmn:dataStoreReference id="DataStoreReference_1nsdav3" name="Read Contacts" dataStoreRef="contacts_datastore" />
+    <bpmn:dataStoreReference id="DataStoreReference_1nsdav3" name="Read Contacts" dataStoreRef="some_data_store" />
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_fil0r1s2">

@@ -1,27 +1,136 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_96f6665" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.0.0-dev">
-  <bpmn:dataStore id="contacts_datastore" name="JSONFileDataStore" />
+  <bpmn:dataStore id="contacts_datastore" name="KKVDataStore" />
   <bpmn:process id="Process_fil0r1s" isExecutable="true">
     <bpmn:startEvent id="StartEvent_1">
       <bpmn:outgoing>Flow_15zp7wu</bpmn:outgoing>
     </bpmn:startEvent>
-    <bpmn:sequenceFlow id="Flow_15zp7wu" sourceRef="StartEvent_1" targetRef="Activity_1xf8a34" />
+    <bpmn:sequenceFlow id="Flow_15zp7wu" sourceRef="StartEvent_1" targetRef="Activity_13qg3p4" />
     <bpmn:endEvent id="Event_1qwgen4">
       <bpmn:incoming>Flow_0citdoo</bpmn:incoming>
     </bpmn:endEvent>
     <bpmn:sequenceFlow id="Flow_114y4md" sourceRef="Activity_1xf8a34" targetRef="Activity_0t6yb39" />
     <bpmn:scriptTask id="Activity_1xf8a34">
-      <bpmn:incoming>Flow_15zp7wu</bpmn:incoming>
+      <bpmn:incoming>Flow_04vb8cr</bpmn:incoming>
       <bpmn:outgoing>Flow_114y4md</bpmn:outgoing>
       <bpmn:dataOutputAssociation id="DataOutputAssociation_0qt31ab">
         <bpmn:targetRef>DataStoreReference_1b40zg5</bpmn:targetRef>
       </bpmn:dataOutputAssociation>
-      <bpmn:script>contacts_datastore = [
-    {"contact": "Joe Bob", "company": "Some Job", "email": "joebob@email.ai"},
-    {"contact": "Sue Smith", "company": "Some Job", "email": "sue@email.ai", "notes": "Decision Maker\nDoes'nt answer emails."},
-    {"contact": "Some Person", "company": "Another Job", "email": "person@test.com"},
-    {"contact": "Them Person", "company": "Them Company", "email": "them@test.com"},
-]</bpmn:script>
+      <bpmn:script># contacts_datastore = {"k1": {"k2": "some updated value", "k22": "value 2"}, "k3": None, "k4": {"k5": None}, "k6": {"k7": "bob"}}
+
+# "dynamic_enumerations"
+
+x = lambda: True
+y = x()
+
+contacts_datastore = {
+  new_id: {
+    "event_type_enum_list": [
+      {
+        "label": "All Hands",
+        "value": "all_hands"
+      },
+      {
+        "label": "Conference",
+        "value": "conf"
+      },
+      {
+        "label": "Team Event",
+        "value": "team_event"
+      },
+      {
+        "label": "",
+        "value": ""
+      },
+      {
+        "label": "",
+        "value": ""
+      }
+    ],
+    "pay_method_enum_list": [
+      {
+        "label": "Cryto Transfer",
+        "value": "cryto_tran"
+      },
+      {
+        "label": "Debit Card",
+        "value": "debit_card"
+      },
+      {
+        "label": "Reimbursement",
+        "value": "reimburse"
+      }
+    ],
+    "currency_type_enum_list": [
+      {
+        "label": "Crypto",
+        "value": "crypto"
+      },
+      {
+        "label": "Fiat",
+        "value": "fiat"
+      }
+    ],
+    "equip_sub_category_enum_list": [
+      {
+        "label": "Laptops",
+        "value": "laptops"
+      },
+      {
+        "label": "Ledgers",
+        "value": "ledger"
+      },
+      {
+        "label": "Mic and headphones",
+        "value": "mic_and_head"
+      },
+      {
+        "label": "Phones",
+        "value": "phones"
+      },
+      {
+        "label": "Yubikey",
+        "value": "yubikey"
+      }
+    ],
+    "procurement_category_enum_list": [
+      {
+        "label": "Consulting Fees",
+        "value": "consult_fees"
+      },
+      {
+        "label": "Equipment",
+        "value": "equip"
+      },
+      {
+        "label": "Learning &amp; Development",
+        "value": "learn_and_dev"
+      },
+      {
+        "label": "Other Fees",
+        "value": "other_fees"
+      },
+      {
+        "label": "Software &amp; Licences",
+        "value": "soft_and_lic"
+      }
+    ],
+    "consult_fees_sub_category_enum_list": [
+      {
+        "label": "Ambassadors",
+        "value": "ambassadors"
+      },
+      {
+        "label": "Consultants",
+        "value": "consultants"
+      },
+      {
+        "label": "Freelancers",
+        "value": "freelancers"
+      }
+    ]
+  }
+}</bpmn:script>
     </bpmn:scriptTask>
     <bpmn:dataStoreReference id="DataStoreReference_1b40zg5" name="Load Contacts" dataStoreRef="contacts_datastore" />
     <bpmn:sequenceFlow id="Flow_0citdoo" sourceRef="Activity_0t6yb39" targetRef="Event_1qwgen4" />
@@ -33,14 +142,25 @@
         <bpmn:sourceRef>DataStoreReference_1nsdav3</bpmn:sourceRef>
         <bpmn:targetRef>Property_1pbyq4i</bpmn:targetRef>
       </bpmn:dataInputAssociation>
-      <bpmn:script>x = contacts_datastore[1]</bpmn:script>
+      <bpmn:script>event_type_enum_list = contacts_datastore(new_id, "event_type_enum_list")
+procurement_category_enum_list = contacts_datastore(new_id, "procurement_category_enum_list")
+equip_sub_category_enum_list = contacts_datastore(new_id, "equip_sub_category_enum_list")
+invalid_keys_example = contacts_datastore("abc", "def")</bpmn:script>
     </bpmn:scriptTask>
     <bpmn:dataStoreReference id="DataStoreReference_1nsdav3" name="Read Contacts" dataStoreRef="contacts_datastore" />
+    <bpmn:sequenceFlow id="Flow_04vb8cr" sourceRef="Activity_13qg3p4" targetRef="Activity_1xf8a34" />
+    <bpmn:scriptTask id="Activity_13qg3p4">
+      <bpmn:incoming>Flow_15zp7wu</bpmn:incoming>
+      <bpmn:outgoing>Flow_04vb8cr</bpmn:outgoing>
+      <bpmn:script>new_id = create_unique_kkv_top_level_key("dynamic_enumerations_")
+new_id2 = create_unique_kkv_top_level_key("dynamic_enumerations_")
+new_id3 = create_unique_kkv_top_level_key("dynamic_enumerations_")</bpmn:script>
+    </bpmn:scriptTask>
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_fil0r1s">
       <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
-        <dc:Bounds x="-428" y="-38" width="36" height="36" />
+        <dc:Bounds x="-508" y="-38" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_1qwgen4_di" bpmnElement="Event_1qwgen4">
         <dc:Bounds x="82" y="-38" width="36" height="36" />
@@ -60,9 +180,12 @@
           <dc:Bounds x="-57" y="202" width="74" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_020lgyg_di" bpmnElement="Activity_13qg3p4">
+        <dc:Bounds x="-400" y="-60" width="100" height="80" />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_15zp7wu_di" bpmnElement="Flow_15zp7wu">
-        <di:waypoint x="-392" y="-20" />
-        <di:waypoint x="-220" y="-20" />
+        <di:waypoint x="-472" y="-20" />
+        <di:waypoint x="-400" y="-20" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_114y4md_di" bpmnElement="Flow_114y4md">
         <di:waypoint x="-120" y="-20" />
@@ -79,6 +202,10 @@
       <bpmndi:BPMNEdge id="DataInputAssociation_0b9m2aj_di" bpmnElement="DataInputAssociation_0b9m2aj">
         <di:waypoint x="-20" y="145" />
         <di:waypoint x="-20" y="20" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_04vb8cr_di" bpmnElement="Flow_04vb8cr">
+        <di:waypoint x="-300" y="-20" />
+        <di:waypoint x="-220" y="-20" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_96f6665" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.0.0-dev">
+  <bpmn:process id="Process_18ol29c" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>Flow_1s86gtk</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_1s86gtk" sourceRef="StartEvent_1" targetRef="Activity_1y7gelo" />
+    <bpmn:endEvent id="Event_0i4114b">
+      <bpmn:incoming>Flow_1da0s47</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_1da0s47" sourceRef="Activity_1y7gelo" targetRef="Event_0i4114b" />
+    <bpmn:scriptTask id="Activity_1y7gelo" name="set feature flags">
+      <bpmn:incoming>Flow_1s86gtk</bpmn:incoming>
+      <bpmn:outgoing>Flow_1da0s47</bpmn:outgoing>
+      <bpmn:script>default_feature_flags = {
+    "element_units": True,
+    "multi_login": True,
+    "faster_background_processor": False,
+}
+
+process_model_overrides = {
+    "misc/jonjon/lazy-call-activity/sample1": {
+        "element_units": False,
+	},
+    "path/to/pp1": {
+        "faster_background_processor": True,
+	},
+}
+
+set_feature_flags(default_feature_flags, process_model_overrides)</bpmn:script>
+    </bpmn:scriptTask>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_18ol29c">
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="82" y="-58" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0i4114b_di" bpmnElement="Event_0i4114b">
+        <dc:Bounds x="322" y="-58" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_09gyeui_di" bpmnElement="Activity_1y7gelo">
+        <dc:Bounds x="170" y="-80" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_1s86gtk_di" bpmnElement="Flow_1s86gtk">
+        <di:waypoint x="118" y="-40" />
+        <di:waypoint x="170" y="-40" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1da0s47_di" bpmnElement="Flow_1da0s47">
+        <di:waypoint x="270" y="-40" />
+        <di:waypoint x="322" y="-40" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

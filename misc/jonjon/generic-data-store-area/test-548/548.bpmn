@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:spiffworkflow="http://spiffworkflow.org/bpmn/schema/1.0/core" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_96f6665" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.0.0-dev">
+  <bpmn:dataStore id="contact_datastore" name="KKVDataStore" />
+  <bpmn:process id="Process_uv70tlw" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>Flow_08bhg5s</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_08bhg5s" sourceRef="StartEvent_1" targetRef="Activity_0h5ldjt" />
+    <bpmn:sequenceFlow id="Flow_170pmf3" sourceRef="Activity_0h5ldjt" targetRef="Activity_06dq228" />
+    <bpmn:endEvent id="Event_1e9xzi0">
+      <bpmn:extensionElements>
+        <spiffworkflow:instructionsForEndUser>{{x}}</spiffworkflow:instructionsForEndUser>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0w29zu7</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_0w29zu7" sourceRef="Activity_06dq228" targetRef="Event_1e9xzi0" />
+    <bpmn:dataStoreReference id="DataStoreReference_1laow8f" dataStoreRef="contact_datastore" />
+    <bpmn:dataStoreReference id="DataStoreReference_0p8257v" dataStoreRef="contact_datastore" />
+    <bpmn:scriptTask id="Activity_0h5ldjt" name="Save Data">
+      <bpmn:incoming>Flow_08bhg5s</bpmn:incoming>
+      <bpmn:outgoing>Flow_170pmf3</bpmn:outgoing>
+      <bpmn:dataOutputAssociation id="DataOutputAssociation_1jop6uw">
+        <bpmn:targetRef>DataStoreReference_1laow8f</bpmn:targetRef>
+      </bpmn:dataOutputAssociation>
+      <bpmn:script>contact_datastore =  {
+  "k1": {
+    "k2": "some updated value",   
+    "k22": "value 2"
+  }, 
+  "k3": None,  
+  "k4": {"k5": None},   
+  "k6": {"k7": "bob"}   
+}</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:scriptTask id="Activity_06dq228" name="Load Data">
+      <bpmn:incoming>Flow_170pmf3</bpmn:incoming>
+      <bpmn:outgoing>Flow_0w29zu7</bpmn:outgoing>
+      <bpmn:property id="Property_195jd65" name="__targetRef_placeholder" />
+      <bpmn:dataInputAssociation id="DataInputAssociation_1ytfoj9">
+        <bpmn:sourceRef>DataStoreReference_0p8257v</bpmn:sourceRef>
+        <bpmn:targetRef>Property_195jd65</bpmn:targetRef>
+      </bpmn:dataInputAssociation>
+      <bpmn:script>x = contact_datastore("k1", "k2")</bpmn:script>
+    </bpmn:scriptTask>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_uv70tlw">
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="-128" y="102" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1e9xzi0_di" bpmnElement="Event_1e9xzi0">
+        <dc:Bounds x="282" y="102" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DataStoreReference_1laow8f_di" bpmnElement="DataStoreReference_1laow8f">
+        <dc:Bounds x="-15" y="245" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DataStoreReference_0p8257v_di" bpmnElement="DataStoreReference_0p8257v">
+        <dc:Bounds x="145" y="245" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0dk1bwf_di" bpmnElement="Activity_0h5ldjt">
+        <dc:Bounds x="-40" y="80" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0g5i6bl_di" bpmnElement="Activity_06dq228">
+        <dc:Bounds x="120" y="80" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_08bhg5s_di" bpmnElement="Flow_08bhg5s">
+        <di:waypoint x="-92" y="120" />
+        <di:waypoint x="-40" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_170pmf3_di" bpmnElement="Flow_170pmf3">
+        <di:waypoint x="60" y="120" />
+        <di:waypoint x="120" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0w29zu7_di" bpmnElement="Flow_0w29zu7">
+        <di:waypoint x="220" y="120" />
+        <di:waypoint x="282" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DataOutputAssociation_1jop6uw_di" bpmnElement="DataOutputAssociation_1jop6uw">
+        <di:waypoint x="10" y="160" />
+        <di:waypoint x="10" y="245" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DataInputAssociation_1ytfoj9_di" bpmnElement="DataInputAssociation_1ytfoj9">
+        <di:waypoint x="170" y="245" />
+        <di:waypoint x="170" y="160" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
