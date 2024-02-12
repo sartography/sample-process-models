@@ -12,7 +12,20 @@
       "components": [
         {
           "name": "MarkdownRenderer",
-          "arguments": {"source": "## Support\n\nFor support using this app, contact:\n\n* **phone**: 555-5555\n* **email**: support@example.com"}
+          "arguments": {"source": "SPIFF_PROCESS_MODEL_FILE:::support-markdown.md"}
+        },
+        {
+          "name": "CustomForm",
+          "arguments": {
+            "id": "contact-form",
+            "formData": {},
+            "schema": "SPIFF_PROCESS_MODEL_FILE:FROM_JSON:::contact-form-schema.json",
+            "uiSchema": "SPIFF_PROCESS_MODEL_FILE:FROM_JSON:::contact-form-uischema.json"
+          },
+          "on_form_submit": {
+            "api_path": "support",
+            "persistence_level": "full"
+          }
         }
       ]
     }
