@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_96f6665" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.0.0-dev">
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:spiffworkflow="http://spiffworkflow.org/bpmn/schema/1.0/core" id="Definitions_96f6665" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.0.0-dev">
   <bpmn:process id="Process_18ol29c" isExecutable="true">
     <bpmn:startEvent id="StartEvent_1">
       <bpmn:outgoing>Flow_1s86gtk</bpmn:outgoing>
@@ -10,6 +10,18 @@
     </bpmn:endEvent>
     <bpmn:sequenceFlow id="Flow_1da0s47" sourceRef="Activity_1y7gelo" targetRef="Event_0i4114b" />
     <bpmn:scriptTask id="Activity_1y7gelo" name="set feature flags">
+      <bpmn:extensionElements>
+        <spiffworkflow:unitTests>
+          <spiffworkflow:unitTest id="unit_test_2">
+            <spiffworkflow:inputJson>{"test_2": "maybe"}</spiffworkflow:inputJson>
+            <spiffworkflow:expectedOutputJson>{"a": 5}</spiffworkflow:expectedOutputJson>
+          </spiffworkflow:unitTest>
+          <spiffworkflow:unitTest id="unit_test_1">
+            <spiffworkflow:inputJson>{}</spiffworkflow:inputJson>
+            <spiffworkflow:expectedOutputJson>{}</spiffworkflow:expectedOutputJson>
+          </spiffworkflow:unitTest>
+        </spiffworkflow:unitTests>
+      </bpmn:extensionElements>
       <bpmn:incoming>Flow_1s86gtk</bpmn:incoming>
       <bpmn:outgoing>Flow_1da0s47</bpmn:outgoing>
       <bpmn:script>default_feature_flags = {
@@ -27,7 +39,7 @@ process_model_overrides = {
 	},
 }
 
-set_feature_flags(default_feature_flags, process_model_overrides)</bpmn:script>
+#set_feature_flags(default_feature_flags, process_model_overrides)</bpmn:script>
     </bpmn:scriptTask>
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">

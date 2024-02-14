@@ -30,6 +30,7 @@ You can also change the text you are reading here by updating the *Instructions*
         <spiffworkflow:preScript>schema = {
     "sql": "SELECT get_vendors ();",
     "values": [],
+    "fetch_results": True,
 }</spiffworkflow:preScript>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_05p2lap</bpmn:incoming>
@@ -83,8 +84,8 @@ schema = {
     <bpmn:serviceTask id="Activity_1dj9tiu" name="insert vedors">
       <bpmn:extensionElements>
         <spiffworkflow:preScript>schema = {
-    "sql": "CREATE TABLE IF NOT EXISTS vendors (id integer, vendor_name varchar(100));",
-    "values": [],
+    "sql": "INSERT INTO vendors VALUES (%s, %s);",
+    "values": [1, "some vendor"],
 }</spiffworkflow:preScript>
         <spiffworkflow:serviceTaskOperator id="postgres_v2/DoSQL" resultVariable="rsp_ins">
           <spiffworkflow:parameters>
@@ -102,19 +103,19 @@ schema = {
       <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
         <dc:Bounds x="179" y="159" width="36" height="36" />
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_14za570_di" bpmnElement="EndEvent_1">
+        <dc:Bounds x="802" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1gctoow_di" bpmnElement="Activity_0qpzdpu">
+        <dc:Bounds x="660" y="137" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_188ebql_di" bpmnElement="Activity_0r6aikr">
         <dc:Bounds x="240" y="137" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1j3x0gt_di" bpmnElement="Activity_1ckpo8j">
         <dc:Bounds x="370" y="137" width="100" height="80" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_14za570_di" bpmnElement="EndEvent_1">
-        <dc:Bounds x="802" y="159" width="36" height="36" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1gctoow_di" bpmnElement="Activity_0qpzdpu">
-        <dc:Bounds x="660" y="137" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_02026ow_di" bpmnElement="Activity_1dj9tiu">

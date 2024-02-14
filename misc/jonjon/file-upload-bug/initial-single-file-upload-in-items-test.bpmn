@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:spiffworkflow="http://spiffworkflow.org/bpmn/schema/1.0/core" id="Definitions_96f6665" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.16.0">
+  <bpmn:process id="Process_ynixgwmx" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>Flow_17db3yp</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_17db3yp" sourceRef="StartEvent_1" targetRef="Activity_1wsewbg" />
+    <bpmn:endEvent id="EndEvent_1">
+      <bpmn:extensionElements>
+        <spiffworkflow:instructionsForEndUser>The process instance completed successfully.</spiffworkflow:instructionsForEndUser>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_12pkbxb</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_12pkbxb" sourceRef="Activity_0qpzdpu" targetRef="EndEvent_1" />
+    <bpmn:manualTask id="Activity_0qpzdpu" name="show links">
+      <bpmn:extensionElements>
+        <spiffworkflow:instructionsForEndUser>
+uploaded_files2:
+
+{% for link2 in uploaded_files2_links %}
+  {{link2}}
+
+  -----
+
+{% endfor %}
+</spiffworkflow:instructionsForEndUser>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0jtwe1a</bpmn:incoming>
+      <bpmn:outgoing>Flow_12pkbxb</bpmn:outgoing>
+    </bpmn:manualTask>
+    <bpmn:sequenceFlow id="Flow_02q3sbq" sourceRef="Activity_1wsewbg" targetRef="Activity_0b11qwo" />
+    <bpmn:userTask id="Activity_1wsewbg" name="Upload files">
+      <bpmn:extensionElements>
+        <spiffworkflow:properties>
+          <spiffworkflow:property name="formJsonSchemaFilename" value="upload-expense-without-request-schema.json" />
+          <spiffworkflow:property name="formUiSchemaFilename" value="upload-expense-without-request-uischema.json" />
+        </spiffworkflow:properties>
+        <spiffworkflow:postScript />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_17db3yp</bpmn:incoming>
+      <bpmn:outgoing>Flow_02q3sbq</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:sequenceFlow id="Flow_0jtwe1a" sourceRef="Activity_0b11qwo" targetRef="Activity_0qpzdpu" />
+    <bpmn:scriptTask id="Activity_0b11qwo" name="build links">
+      <bpmn:incoming>Flow_02q3sbq</bpmn:incoming>
+      <bpmn:outgoing>Flow_0jtwe1a</bpmn:outgoing>
+      <bpmn:script>
+uploaded_files2_links = [markdown_file_download_link(digest_reference) for digest_reference in [d["supporting_file"] for d in po_details["item"]]]</bpmn:script>
+    </bpmn:scriptTask>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_ynixgwmx">
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="152" y="99" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_14za570_di" bpmnElement="EndEvent_1">
+        <dc:Bounds x="712" y="99" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0zqotmb_di" bpmnElement="Activity_0qpzdpu">
+        <dc:Bounds x="560" y="77" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_023hiv4_di" bpmnElement="Activity_1wsewbg">
+        <dc:Bounds x="260" y="77" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1r3szzu_di" bpmnElement="Activity_0b11qwo">
+        <dc:Bounds x="410" y="77" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_17db3yp_di" bpmnElement="Flow_17db3yp">
+        <di:waypoint x="188" y="117" />
+        <di:waypoint x="260" y="117" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_12pkbxb_di" bpmnElement="Flow_12pkbxb">
+        <di:waypoint x="660" y="117" />
+        <di:waypoint x="712" y="117" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_02q3sbq_di" bpmnElement="Flow_02q3sbq">
+        <di:waypoint x="360" y="117" />
+        <di:waypoint x="410" y="117" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0jtwe1a_di" bpmnElement="Flow_0jtwe1a">
+        <di:waypoint x="510" y="117" />
+        <di:waypoint x="560" y="117" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

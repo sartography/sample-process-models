@@ -2,169 +2,48 @@
 <bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:spiffworkflow="http://spiffworkflow.org/bpmn/schema/1.0/core" id="Definitions_96f6665" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.0.0-dev">
   <bpmn:process id="Process_j3pxh41" isExecutable="true">
     <bpmn:startEvent id="StartEvent_1">
-      <bpmn:outgoing>Flow_1ds47ae</bpmn:outgoing>
+      <bpmn:outgoing>Flow_161lwfo</bpmn:outgoing>
     </bpmn:startEvent>
-    <bpmn:sequenceFlow id="Flow_1ds47ae" sourceRef="StartEvent_1" targetRef="Gateway_1gre9cs" />
-    <bpmn:endEvent id="Event_0kcc58d">
-      <bpmn:incoming>Flow_0ke5w5c</bpmn:incoming>
+    <bpmn:serviceTask id="Activity_1kroz6d" name="Get Universities">
+      <bpmn:extensionElements>
+        <spiffworkflow:serviceTaskOperator id="http/GetRequest" resultVariable="univeristy_list">
+          <spiffworkflow:parameters>
+            <spiffworkflow:parameter id="basic_auth_password" type="str" />
+            <spiffworkflow:parameter id="basic_auth_username" type="str" />
+            <spiffworkflow:parameter id="headers" type="any" value="{&#34;Accept&#34;: &#34;application/json&#34;}" />
+            <spiffworkflow:parameter id="params" type="any" value="{&#34;name&#34;: &#34;istanbul&#34;, &#34;country&#34;: &#34;turkey&#34;}" />
+            <spiffworkflow:parameter id="url" type="str" value="&#34;http://universities.hipolabs.com/search&#34;" />
+          </spiffworkflow:parameters>
+        </spiffworkflow:serviceTaskOperator>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_161lwfo</bpmn:incoming>
+      <bpmn:outgoing>Flow_0nahxf9</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="Flow_161lwfo" sourceRef="StartEvent_1" targetRef="Activity_1kroz6d" />
+    <bpmn:endEvent id="Event_01b0jgd">
+      <bpmn:incoming>Flow_0nahxf9</bpmn:incoming>
     </bpmn:endEvent>
-    <bpmn:sequenceFlow id="Flow_0ke5w5c" sourceRef="Gateway_1ohp8qn" targetRef="Event_0kcc58d" />
-    <bpmn:sequenceFlow id="Flow_13c200u" sourceRef="Gateway_1gre9cs" targetRef="Activity_1kroz6d" />
-    <bpmn:sequenceFlow id="Flow_06h1kkw" sourceRef="Gateway_1gre9cs" targetRef="Activity_0crw1ae" />
-    <bpmn:sequenceFlow id="Flow_0noq31m" sourceRef="Gateway_1gre9cs" targetRef="Activity_1udaz8r" />
-    <bpmn:sequenceFlow id="Flow_00v1olo" sourceRef="Gateway_1gre9cs" targetRef="Activity_1645u8b" />
-    <bpmn:sequenceFlow id="Flow_0y12mpp" sourceRef="Activity_1kroz6d" targetRef="Gateway_1ohp8qn" />
-    <bpmn:sequenceFlow id="Flow_0bs3l2f" sourceRef="Activity_1645u8b" targetRef="Gateway_1ohp8qn" />
-    <bpmn:sequenceFlow id="Flow_0rzg5s6" sourceRef="Activity_0crw1ae" targetRef="Gateway_1ohp8qn" />
-    <bpmn:sequenceFlow id="Flow_18monz0" sourceRef="Activity_1udaz8r" targetRef="Gateway_1ohp8qn" />
-    <bpmn:parallelGateway id="Gateway_1gre9cs">
-      <bpmn:incoming>Flow_1ds47ae</bpmn:incoming>
-      <bpmn:outgoing>Flow_13c200u</bpmn:outgoing>
-      <bpmn:outgoing>Flow_06h1kkw</bpmn:outgoing>
-      <bpmn:outgoing>Flow_0noq31m</bpmn:outgoing>
-      <bpmn:outgoing>Flow_00v1olo</bpmn:outgoing>
-    </bpmn:parallelGateway>
-    <bpmn:parallelGateway id="Gateway_1ohp8qn">
-      <bpmn:incoming>Flow_0y12mpp</bpmn:incoming>
-      <bpmn:incoming>Flow_0bs3l2f</bpmn:incoming>
-      <bpmn:incoming>Flow_0rzg5s6</bpmn:incoming>
-      <bpmn:incoming>Flow_18monz0</bpmn:incoming>
-      <bpmn:outgoing>Flow_0ke5w5c</bpmn:outgoing>
-    </bpmn:parallelGateway>
-    <bpmn:serviceTask id="Activity_1kroz6d" name="one">
-      <bpmn:extensionElements>
-        <spiffworkflow:serviceTaskOperator id="http/GetRequest">
-          <spiffworkflow:parameters>
-            <spiffworkflow:parameter id="basic_auth_password" type="str" />
-            <spiffworkflow:parameter id="basic_auth_username" type="str" />
-            <spiffworkflow:parameter id="headers" type="any" value="{&#34;Accept&#34;: &#34;application/json&#34;}" />
-            <spiffworkflow:parameter id="params" type="any" value="{&#34;name&#34;: &#34;istanbul&#34;, &#34;country&#34;: &#34;turkey&#34;}" />
-            <spiffworkflow:parameter id="url" type="str" value="&#34;http://universities.hipolabs.com/search&#34;" />
-          </spiffworkflow:parameters>
-        </spiffworkflow:serviceTaskOperator>
-      </bpmn:extensionElements>
-      <bpmn:incoming>Flow_13c200u</bpmn:incoming>
-      <bpmn:outgoing>Flow_0y12mpp</bpmn:outgoing>
-    </bpmn:serviceTask>
-    <bpmn:serviceTask id="Activity_0crw1ae" name="two">
-      <bpmn:extensionElements>
-        <spiffworkflow:serviceTaskOperator id="http/GetRequest">
-          <spiffworkflow:parameters>
-            <spiffworkflow:parameter id="basic_auth_password" type="str" />
-            <spiffworkflow:parameter id="basic_auth_username" type="str" />
-            <spiffworkflow:parameter id="headers" type="any" value="{&#34;Accept&#34;: &#34;application/json&#34;}" />
-            <spiffworkflow:parameter id="params" type="any" value="{&#34;name&#34;: &#34;virginia&#34;, &#34;country&#34;: &#34;usa&#34;}" />
-            <spiffworkflow:parameter id="url" type="str" value="&#34;http://universities.hipolabs.com/search&#34;" />
-          </spiffworkflow:parameters>
-        </spiffworkflow:serviceTaskOperator>
-      </bpmn:extensionElements>
-      <bpmn:incoming>Flow_06h1kkw</bpmn:incoming>
-      <bpmn:outgoing>Flow_0rzg5s6</bpmn:outgoing>
-    </bpmn:serviceTask>
-    <bpmn:serviceTask id="Activity_1udaz8r" name="three">
-      <bpmn:extensionElements>
-        <spiffworkflow:serviceTaskOperator id="http/GetRequest">
-          <spiffworkflow:parameters>
-            <spiffworkflow:parameter id="basic_auth_password" type="str" />
-            <spiffworkflow:parameter id="basic_auth_username" type="str" />
-            <spiffworkflow:parameter id="headers" type="any" value="{&#34;Accept&#34;: &#34;application/json&#34;}" />
-            <spiffworkflow:parameter id="params" type="any" value="{&#34;name&#34;: &#34;munich&#34;, &#34;country&#34;: &#34;germany&#34;}" />
-            <spiffworkflow:parameter id="url" type="str" value="&#34;http://universities.hipolabs.com/search&#34;" />
-          </spiffworkflow:parameters>
-        </spiffworkflow:serviceTaskOperator>
-      </bpmn:extensionElements>
-      <bpmn:incoming>Flow_0noq31m</bpmn:incoming>
-      <bpmn:outgoing>Flow_18monz0</bpmn:outgoing>
-    </bpmn:serviceTask>
-    <bpmn:serviceTask id="Activity_1645u8b" name="four">
-      <bpmn:extensionElements>
-        <spiffworkflow:serviceTaskOperator id="http/GetRequest">
-          <spiffworkflow:parameters>
-            <spiffworkflow:parameter id="basic_auth_password" type="str" />
-            <spiffworkflow:parameter id="basic_auth_username" type="str" />
-            <spiffworkflow:parameter id="headers" type="any" value="{&#34;Accept&#34;: &#34;application/json&#34;}" />
-            <spiffworkflow:parameter id="params" type="any" value="{&#34;name&#34;: &#34;istanbul&#34;, &#34;country&#34;: &#34;turkey&#34;}" />
-            <spiffworkflow:parameter id="url" type="str" value="&#34;http://universities.hipolabs.com/search&#34;" />
-          </spiffworkflow:parameters>
-        </spiffworkflow:serviceTaskOperator>
-      </bpmn:extensionElements>
-      <bpmn:incoming>Flow_00v1olo</bpmn:incoming>
-      <bpmn:outgoing>Flow_0bs3l2f</bpmn:outgoing>
-    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="Flow_0nahxf9" sourceRef="Activity_1kroz6d" targetRef="Event_01b0jgd" />
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_j3pxh41">
       <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
-        <dc:Bounds x="179" y="159" width="36" height="36" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_0kcc58d_di" bpmnElement="Event_0kcc58d">
-        <dc:Bounds x="772" y="159" width="36" height="36" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Gateway_1j217yk_di" bpmnElement="Gateway_1gre9cs">
-        <dc:Bounds x="265" y="152" width="50" height="50" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Gateway_015zimg_di" bpmnElement="Gateway_1ohp8qn">
-        <dc:Bounds x="515" y="152" width="50" height="50" />
+        <dc:Bounds x="272" y="-18" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_059fckg_di" bpmnElement="Activity_1kroz6d">
         <dc:Bounds x="360" y="-40" width="100" height="80" />
+        <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0a8fcp6_di" bpmnElement="Activity_0crw1ae">
-        <dc:Bounds x="360" y="70" width="100" height="80" />
+      <bpmndi:BPMNShape id="Event_01b0jgd_di" bpmnElement="Event_01b0jgd">
+        <dc:Bounds x="512" y="-18" width="36" height="36" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0nzlupa_di" bpmnElement="Activity_1udaz8r">
-        <dc:Bounds x="350" y="200" width="100" height="80" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_17jowiq_di" bpmnElement="Activity_1645u8b">
-        <dc:Bounds x="350" y="310" width="100" height="80" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge id="Flow_1ds47ae_di" bpmnElement="Flow_1ds47ae">
-        <di:waypoint x="215" y="177" />
-        <di:waypoint x="265" y="177" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0ke5w5c_di" bpmnElement="Flow_0ke5w5c">
-        <di:waypoint x="565" y="177" />
-        <di:waypoint x="772" y="177" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_13c200u_di" bpmnElement="Flow_13c200u">
-        <di:waypoint x="290" y="152" />
-        <di:waypoint x="290" y="0" />
+      <bpmndi:BPMNEdge id="Flow_161lwfo_di" bpmnElement="Flow_161lwfo">
+        <di:waypoint x="308" y="0" />
         <di:waypoint x="360" y="0" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_06h1kkw_di" bpmnElement="Flow_06h1kkw">
-        <di:waypoint x="290" y="152" />
-        <di:waypoint x="290" y="110" />
-        <di:waypoint x="360" y="110" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0noq31m_di" bpmnElement="Flow_0noq31m">
-        <di:waypoint x="290" y="202" />
-        <di:waypoint x="290" y="240" />
-        <di:waypoint x="350" y="240" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_00v1olo_di" bpmnElement="Flow_00v1olo">
-        <di:waypoint x="290" y="202" />
-        <di:waypoint x="290" y="350" />
-        <di:waypoint x="350" y="350" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0y12mpp_di" bpmnElement="Flow_0y12mpp">
+      <bpmndi:BPMNEdge id="Flow_0nahxf9_di" bpmnElement="Flow_0nahxf9">
         <di:waypoint x="460" y="0" />
-        <di:waypoint x="540" y="0" />
-        <di:waypoint x="540" y="152" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0bs3l2f_di" bpmnElement="Flow_0bs3l2f">
-        <di:waypoint x="450" y="350" />
-        <di:waypoint x="540" y="350" />
-        <di:waypoint x="540" y="202" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0rzg5s6_di" bpmnElement="Flow_0rzg5s6">
-        <di:waypoint x="460" y="110" />
-        <di:waypoint x="540" y="110" />
-        <di:waypoint x="540" y="152" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_18monz0_di" bpmnElement="Flow_18monz0">
-        <di:waypoint x="450" y="240" />
-        <di:waypoint x="540" y="240" />
-        <di:waypoint x="540" y="202" />
+        <di:waypoint x="512" y="0" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>

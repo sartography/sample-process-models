@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_96f6665" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.0.0-dev">
   <bpmn:dataStore id="contacts_datastore" name="KKVDataStore" />
-  <bpmn:process id="Process_fil0r1s" isExecutable="true">
+  <bpmn:process id="test_level_one" isExecutable="true">
     <bpmn:startEvent id="StartEvent_1">
       <bpmn:outgoing>Flow_15zp7wu</bpmn:outgoing>
     </bpmn:startEvent>
     <bpmn:sequenceFlow id="Flow_15zp7wu" sourceRef="StartEvent_1" targetRef="Activity_13qg3p4" />
     <bpmn:endEvent id="Event_1qwgen4">
-      <bpmn:incoming>Flow_0citdoo</bpmn:incoming>
+      <bpmn:incoming>Flow_0rzxji4</bpmn:incoming>
     </bpmn:endEvent>
     <bpmn:sequenceFlow id="Flow_114y4md" sourceRef="Activity_1xf8a34" targetRef="Activity_0t6yb39" />
     <bpmn:scriptTask id="Activity_1xf8a34">
@@ -16,13 +16,7 @@
       <bpmn:dataOutputAssociation id="DataOutputAssociation_0qt31ab">
         <bpmn:targetRef>DataStoreReference_1b40zg5</bpmn:targetRef>
       </bpmn:dataOutputAssociation>
-      <bpmn:script># contacts_datastore = {"k1": {"k2": "some updated value", "k22": "value 2"}, "k3": None, "k4": {"k5": None}, "k6": {"k7": "bob"}}
-
-# "dynamic_enumerations"
-
-x = lambda: True
-y = x()
-
+      <bpmn:script>
 contacts_datastore = {
   new_id: {
     "event_type_enum_list": [
@@ -130,21 +124,23 @@ contacts_datastore = {
       }
     ]
   }
-}</bpmn:script>
+}
+
+#contacts_datastore = { "dynamic_enumerations_28": None }</bpmn:script>
     </bpmn:scriptTask>
     <bpmn:dataStoreReference id="DataStoreReference_1b40zg5" name="Load Contacts" dataStoreRef="contacts_datastore" />
-    <bpmn:sequenceFlow id="Flow_0citdoo" sourceRef="Activity_0t6yb39" targetRef="Event_1qwgen4" />
     <bpmn:scriptTask id="Activity_0t6yb39">
       <bpmn:incoming>Flow_114y4md</bpmn:incoming>
-      <bpmn:outgoing>Flow_0citdoo</bpmn:outgoing>
+      <bpmn:outgoing>Flow_1yosol9</bpmn:outgoing>
       <bpmn:property id="Property_1pbyq4i" name="__targetRef_placeholder" />
       <bpmn:dataInputAssociation id="DataInputAssociation_0b9m2aj">
         <bpmn:sourceRef>DataStoreReference_1nsdav3</bpmn:sourceRef>
         <bpmn:targetRef>Property_1pbyq4i</bpmn:targetRef>
       </bpmn:dataInputAssociation>
-      <bpmn:script>event_type_enum_list = contacts_datastore(new_id, "event_type_enum_list")
-procurement_category_enum_list = contacts_datastore(new_id, "procurement_category_enum_list")
-equip_sub_category_enum_list = contacts_datastore(new_id, "equip_sub_category_enum_list")
+      <bpmn:script>
+FFFFFFFFFFFF = contacts_datastore(new_id, "procurement_category_enum_list")
+GGGGGGGGGGGG = contacts_datastore(new_id, "equip_sub_category_enum_list")
+HHHHHHHHHHHH = contacts_datastore(new_id, None)
 invalid_keys_example = contacts_datastore("abc", "def")</bpmn:script>
     </bpmn:scriptTask>
     <bpmn:dataStoreReference id="DataStoreReference_1nsdav3" name="Read Contacts" dataStoreRef="contacts_datastore" />
@@ -152,60 +148,141 @@ invalid_keys_example = contacts_datastore("abc", "def")</bpmn:script>
     <bpmn:scriptTask id="Activity_13qg3p4">
       <bpmn:incoming>Flow_15zp7wu</bpmn:incoming>
       <bpmn:outgoing>Flow_04vb8cr</bpmn:outgoing>
-      <bpmn:script>new_id = create_unique_kkv_top_level_key("dynamic_enumerations_")
-new_id2 = create_unique_kkv_top_level_key("dynamic_enumerations_")
-new_id3 = create_unique_kkv_top_level_key("dynamic_enumerations_")</bpmn:script>
+      <bpmn:script>new_id = create_unique_kkv_top_level_key("contacts_datastore", "top_level_key_")
+new_id2 = create_unique_kkv_top_level_key("contacts_datastore", "top_level_key_")
+new_id3 = create_unique_kkv_top_level_key("contacts_datastore", "top_level_key_")
+</bpmn:script>
     </bpmn:scriptTask>
+    <bpmn:sequenceFlow id="Flow_1yosol9" sourceRef="Activity_0t6yb39" targetRef="Gateway_1sku1ac" />
+    <bpmn:parallelGateway id="Gateway_1sku1ac">
+      <bpmn:incoming>Flow_1yosol9</bpmn:incoming>
+      <bpmn:outgoing>Flow_0w5ljx1</bpmn:outgoing>
+      <bpmn:outgoing>Flow_1pt70e7</bpmn:outgoing>
+    </bpmn:parallelGateway>
+    <bpmn:sequenceFlow id="Flow_0w5ljx1" sourceRef="Gateway_1sku1ac" targetRef="Activity_14bp4xi" />
+    <bpmn:sequenceFlow id="Flow_1pt70e7" sourceRef="Gateway_1sku1ac" targetRef="Activity_0l03ei6" />
+    <bpmn:sequenceFlow id="Flow_0h357pv" sourceRef="Activity_14bp4xi" targetRef="Gateway_1d3d5qh" />
+    <bpmn:sequenceFlow id="Flow_114ykoi" sourceRef="Activity_0l03ei6" targetRef="Gateway_1d3d5qh" />
+    <bpmn:sequenceFlow id="Flow_0rzxji4" sourceRef="Gateway_1d3d5qh" targetRef="Event_1qwgen4" />
+    <bpmn:parallelGateway id="Gateway_1d3d5qh">
+      <bpmn:incoming>Flow_0h357pv</bpmn:incoming>
+      <bpmn:incoming>Flow_114ykoi</bpmn:incoming>
+      <bpmn:outgoing>Flow_0rzxji4</bpmn:outgoing>
+    </bpmn:parallelGateway>
+    <bpmn:scriptTask id="Activity_14bp4xi">
+      <bpmn:incoming>Flow_0w5ljx1</bpmn:incoming>
+      <bpmn:outgoing>Flow_0h357pv</bpmn:outgoing>
+      <bpmn:script>x=1</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:scriptTask id="Activity_0l03ei6">
+      <bpmn:incoming>Flow_1pt70e7</bpmn:incoming>
+      <bpmn:outgoing>Flow_114ykoi</bpmn:outgoing>
+      <bpmn:property id="Property_10xzj68" name="__targetRef_placeholder" />
+      <bpmn:dataInputAssociation id="DataInputAssociation_1j4hw8m">
+        <bpmn:sourceRef>DataStoreReference_04mhj5t</bpmn:sourceRef>
+        <bpmn:targetRef>Property_10xzj68</bpmn:targetRef>
+      </bpmn:dataInputAssociation>
+      <bpmn:script>y=2
+event_type_enum_list = contacts_datastore(new_id, "event_type_enum_list")</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:dataStoreReference id="DataStoreReference_04mhj5t" name="Data Store (contacts_datastore)" dataStoreRef="contacts_datastore" />
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
-    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_fil0r1s">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="test_level_one">
       <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
-        <dc:Bounds x="-508" y="-38" width="36" height="36" />
+        <dc:Bounds x="-698" y="-38" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_1qwgen4_di" bpmnElement="Event_1qwgen4">
-        <dc:Bounds x="82" y="-38" width="36" height="36" />
+        <dc:Bounds x="172" y="-38" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0y1vdup_di" bpmnElement="Activity_1xf8a34">
-        <dc:Bounds x="-220" y="-60" width="100" height="80" />
+        <dc:Bounds x="-470" y="-60" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="DataStoreReference_1b40zg5_di" bpmnElement="DataStoreReference_1b40zg5">
-        <dc:Bounds x="-195" y="145" width="50" height="50" />
+        <dc:Bounds x="-445" y="85" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="-456" y="135" width="72" height="14" />
+        </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1e8abt4_di" bpmnElement="Activity_0t6yb39">
-        <dc:Bounds x="-70" y="-60" width="100" height="80" />
+        <dc:Bounds x="-340" y="-60" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="DataStoreReference_1nsdav3_di" bpmnElement="DataStoreReference_1nsdav3">
-        <dc:Bounds x="-45" y="145" width="50" height="50" />
+        <dc:Bounds x="-315" y="85" width="50" height="50" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="-57" y="202" width="74" height="14" />
+          <dc:Bounds x="-327" y="142" width="74" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_020lgyg_di" bpmnElement="Activity_13qg3p4">
-        <dc:Bounds x="-400" y="-60" width="100" height="80" />
+        <dc:Bounds x="-620" y="-60" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_1vojr10_di" bpmnElement="Gateway_1sku1ac">
+        <dc:Bounds x="-205" y="-45" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_0iqipxf_di" bpmnElement="Gateway_1d3d5qh">
+        <dc:Bounds x="15" y="-45" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0x0rwxq_di" bpmnElement="Activity_14bp4xi">
+        <dc:Bounds x="-120" y="-60" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1ty6a6t_di" bpmnElement="Activity_0l03ei6">
+        <dc:Bounds x="-120" y="50" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DataStoreReference_04mhj5t_di" bpmnElement="DataStoreReference_04mhj5t">
+        <dc:Bounds x="-95" y="195" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="-113" y="252" width="87" height="40" />
+        </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_15zp7wu_di" bpmnElement="Flow_15zp7wu">
-        <di:waypoint x="-472" y="-20" />
-        <di:waypoint x="-400" y="-20" />
+        <di:waypoint x="-662" y="-20" />
+        <di:waypoint x="-620" y="-20" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_114y4md_di" bpmnElement="Flow_114y4md">
-        <di:waypoint x="-120" y="-20" />
-        <di:waypoint x="-70" y="-20" />
+        <di:waypoint x="-370" y="-20" />
+        <di:waypoint x="-340" y="-20" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="DataOutputAssociation_0qt31ab_di" bpmnElement="DataOutputAssociation_0qt31ab">
-        <di:waypoint x="-169" y="20" />
-        <di:waypoint x="-166" y="145" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0citdoo_di" bpmnElement="Flow_0citdoo">
-        <di:waypoint x="30" y="-20" />
-        <di:waypoint x="82" y="-20" />
+        <di:waypoint x="-418" y="20" />
+        <di:waypoint x="-416" y="85" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="DataInputAssociation_0b9m2aj_di" bpmnElement="DataInputAssociation_0b9m2aj">
-        <di:waypoint x="-20" y="145" />
-        <di:waypoint x="-20" y="20" />
+        <di:waypoint x="-290" y="85" />
+        <di:waypoint x="-290" y="20" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_04vb8cr_di" bpmnElement="Flow_04vb8cr">
-        <di:waypoint x="-300" y="-20" />
-        <di:waypoint x="-220" y="-20" />
+        <di:waypoint x="-520" y="-20" />
+        <di:waypoint x="-470" y="-20" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1yosol9_di" bpmnElement="Flow_1yosol9">
+        <di:waypoint x="-240" y="-20" />
+        <di:waypoint x="-205" y="-20" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0w5ljx1_di" bpmnElement="Flow_0w5ljx1">
+        <di:waypoint x="-155" y="-20" />
+        <di:waypoint x="-120" y="-20" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1pt70e7_di" bpmnElement="Flow_1pt70e7">
+        <di:waypoint x="-180" y="5" />
+        <di:waypoint x="-180" y="90" />
+        <di:waypoint x="-120" y="90" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0h357pv_di" bpmnElement="Flow_0h357pv">
+        <di:waypoint x="-20" y="-20" />
+        <di:waypoint x="15" y="-20" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_114ykoi_di" bpmnElement="Flow_114ykoi">
+        <di:waypoint x="-20" y="90" />
+        <di:waypoint x="40" y="90" />
+        <di:waypoint x="40" y="5" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0rzxji4_di" bpmnElement="Flow_0rzxji4">
+        <di:waypoint x="65" y="-20" />
+        <di:waypoint x="172" y="-20" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DataInputAssociation_1j4hw8m_di" bpmnElement="DataInputAssociation_1j4hw8m">
+        <di:waypoint x="-70" y="195" />
+        <di:waypoint x="-70" y="130" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
