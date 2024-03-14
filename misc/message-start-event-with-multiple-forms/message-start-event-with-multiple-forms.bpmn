@@ -49,7 +49,9 @@ You can also change the text you are reading here by updating the *Instructions*
         </spiffworkflow:properties>
         <spiffworkflow:allowGuest>false</spiffworkflow:allowGuest>
         <spiffworkflow:instructionsForEndUser />
-        <spiffworkflow:guestConfirmation />
+        <spiffworkflow:guestConfirmation># Thanks
+
+We hear you. Your name is **{{incoming_request['firstName']}}**.</spiffworkflow:guestConfirmation>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_12pkbxb</bpmn:incoming>
       <bpmn:outgoing>Flow_14h4dnh</bpmn:outgoing>
@@ -59,10 +61,16 @@ You can also change the text you are reading here by updating the *Instructions*
     </bpmn:endEvent>
     <bpmn:sequenceFlow id="Flow_1aprws7" sourceRef="admin_task" targetRef="Event_0c0wt46" />
     <bpmn:sequenceFlow id="Flow_14h4dnh" sourceRef="user_task_one" targetRef="admin_task" />
-    <bpmn:manualTask id="admin_task" name="Admin task">
+    <bpmn:userTask id="admin_task" name="Admin task">
+      <bpmn:extensionElements>
+        <spiffworkflow:properties>
+          <spiffworkflow:property name="formJsonSchemaFilename" value="admin-task-schema.json" />
+          <spiffworkflow:property name="formUiSchemaFilename" value="admin-task-uischema.json" />
+        </spiffworkflow:properties>
+      </bpmn:extensionElements>
       <bpmn:incoming>Flow_14h4dnh</bpmn:incoming>
       <bpmn:outgoing>Flow_1aprws7</bpmn:outgoing>
-    </bpmn:manualTask>
+    </bpmn:userTask>
   </bpmn:process>
   <bpmn:message id="Message_1rfi4qj" name="bounty_start_multiple_forms">
     <bpmn:extensionElements>
@@ -98,7 +106,7 @@ You can also change the text you are reading here by updating the *Instructions*
       <bpmndi:BPMNShape id="Event_0c0wt46_di" bpmnElement="Event_0c0wt46">
         <dc:Bounds x="542" y="342" width="36" height="36" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0cfmowl_di" bpmnElement="admin_task">
+      <bpmndi:BPMNShape id="Activity_1hiuuow_di" bpmnElement="admin_task">
         <dc:Bounds x="400" y="320" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_17db3yp_di" bpmnElement="Flow_17db3yp">
