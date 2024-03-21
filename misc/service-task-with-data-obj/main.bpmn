@@ -10,10 +10,10 @@
     </bpmn:endEvent>
     <bpmn:sequenceFlow id="Flow_1dbi4yf" sourceRef="top_call_activity" targetRef="Event_1swh8gs" />
     <bpmn:callActivity id="top_call_activity" name="Top Call Activity" calledElement="Process_sub_level">
-      <bpmn:incoming>Flow_0uoa0st</bpmn:incoming>
+      <bpmn:incoming>Flow_0z2u0gc</bpmn:incoming>
       <bpmn:outgoing>Flow_1dbi4yf</bpmn:outgoing>
     </bpmn:callActivity>
-    <bpmn:sequenceFlow id="Flow_0uoa0st" sourceRef="top_script_task" targetRef="top_call_activity" />
+    <bpmn:sequenceFlow id="Flow_0uoa0st" sourceRef="top_script_task" targetRef="top_service_task" />
     <bpmn:dataObjectReference id="DataObjectReference_0qfbjfj" name="top_level_data_object" dataObjectRef="top_level_data_object" />
     <bpmn:dataObject id="top_level_data_object" name="top_level_data_object" />
     <bpmn:scriptTask id="top_script_task" name="Top Script Task">
@@ -36,44 +36,69 @@
       </bpmn:dataOutputAssociation>
       <bpmn:script>top_level_data_object = "a"</bpmn:script>
     </bpmn:scriptTask>
+    <bpmn:sequenceFlow id="Flow_0z2u0gc" sourceRef="top_service_task" targetRef="top_call_activity" />
+    <bpmn:serviceTask id="top_service_task" name="Top Service Task">
+      <bpmn:extensionElements>
+        <spiffworkflow:serviceTaskOperator id="http/GetRequestV2" resultVariable="backend_status_response">
+          <spiffworkflow:parameters>
+            <spiffworkflow:parameter id="url" type="str" value="&#34;http://localhost:7001/v1.0/status&#34;" />
+            <spiffworkflow:parameter id="headers" type="any" />
+            <spiffworkflow:parameter id="params" type="any" />
+            <spiffworkflow:parameter id="basic_auth_username" type="str" />
+            <spiffworkflow:parameter id="basic_auth_password" type="str" />
+            <spiffworkflow:parameter id="attempts" type="int" />
+          </spiffworkflow:parameters>
+        </spiffworkflow:serviceTaskOperator>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0uoa0st</bpmn:incoming>
+      <bpmn:outgoing>Flow_0z2u0gc</bpmn:outgoing>
+    </bpmn:serviceTask>
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_top_level">
       <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
-        <dc:Bounds x="72" y="159" width="36" height="36" />
+        <dc:Bounds x="32" y="159" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_1swh8gs_di" bpmnElement="Event_1swh8gs">
-        <dc:Bounds x="412" y="159" width="36" height="36" />
+        <dc:Bounds x="502" y="159" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_18m3q89_di" bpmnElement="top_call_activity">
-        <dc:Bounds x="270" y="137" width="100" height="80" />
+        <dc:Bounds x="370" y="137" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="DataObjectReference_0qfbjfj_di" bpmnElement="DataObjectReference_0qfbjfj">
-        <dc:Bounds x="172" y="55" width="36" height="50" />
+        <dc:Bounds x="132" y="55" width="36" height="50" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="145" y="31" width="90" height="27" />
+          <dc:Bounds x="105" y="31" width="90" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0dh9loj_di" bpmnElement="top_script_task">
-        <dc:Bounds x="140" y="137" width="100" height="80" />
+        <dc:Bounds x="100" y="137" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1ngnsv7_di" bpmnElement="top_service_task">
+        <dc:Bounds x="230" y="137" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_0j3unyw_di" bpmnElement="Flow_0j3unyw">
-        <di:waypoint x="108" y="177" />
-        <di:waypoint x="140" y="177" />
+        <di:waypoint x="68" y="177" />
+        <di:waypoint x="100" y="177" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1dbi4yf_di" bpmnElement="Flow_1dbi4yf">
-        <di:waypoint x="370" y="177" />
-        <di:waypoint x="412" y="177" />
+        <di:waypoint x="470" y="177" />
+        <di:waypoint x="502" y="177" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0uoa0st_di" bpmnElement="Flow_0uoa0st">
-        <di:waypoint x="240" y="177" />
-        <di:waypoint x="270" y="177" />
+        <di:waypoint x="200" y="177" />
+        <di:waypoint x="230" y="177" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="DataOutputAssociation_1fxfphs_di" bpmnElement="DataOutputAssociation_1fxfphs">
-        <di:waypoint x="192" y="137" />
-        <di:waypoint x="193" y="105" />
+        <di:waypoint x="152" y="137" />
+        <di:waypoint x="153" y="105" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0z2u0gc_di" bpmnElement="Flow_0z2u0gc">
+        <di:waypoint x="330" y="177" />
+        <di:waypoint x="370" y="177" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
