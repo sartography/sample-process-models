@@ -45,7 +45,7 @@
       <bpmn:startEvent id="Event_0yfq3gm">
         <bpmn:outgoing>Flow_1ekcyuv</bpmn:outgoing>
       </bpmn:startEvent>
-      <bpmn:sequenceFlow id="Flow_1ekcyuv" sourceRef="Event_0yfq3gm" targetRef="sub_level_sub_process_script_task" />
+      <bpmn:sequenceFlow id="Flow_1ekcyuv" sourceRef="Event_0yfq3gm" targetRef="sub_level_sub_process_user_task" />
       <bpmn:endEvent id="Event_00vjfmy">
         <bpmn:incoming>Flow_1p3g9vw</bpmn:incoming>
       </bpmn:endEvent>
@@ -53,13 +53,24 @@
       <bpmn:dataObjectReference id="DataObjectReference_1v83y6h" name="sub_level_data_object_three" dataObjectRef="sub_level_data_object_three" />
       <bpmn:dataObject id="sub_level_data_object_three" name="sub_level_data_object_three" />
       <bpmn:scriptTask id="sub_level_sub_process_script_task" name="Sub Level Sub Process Script Task">
-        <bpmn:incoming>Flow_1ekcyuv</bpmn:incoming>
+        <bpmn:incoming>Flow_157qtq3</bpmn:incoming>
         <bpmn:outgoing>Flow_1p3g9vw</bpmn:outgoing>
         <bpmn:dataOutputAssociation id="DataOutputAssociation_1xpueyl">
           <bpmn:targetRef>DataObjectReference_1v83y6h</bpmn:targetRef>
         </bpmn:dataOutputAssociation>
         <bpmn:script>sub_level_data_object_three = 'd'</bpmn:script>
       </bpmn:scriptTask>
+      <bpmn:sequenceFlow id="Flow_157qtq3" sourceRef="sub_level_sub_process_user_task" targetRef="sub_level_sub_process_script_task" />
+      <bpmn:userTask id="sub_level_sub_process_user_task" name="Sub Level Sub Process User Task">
+        <bpmn:extensionElements>
+          <spiffworkflow:properties>
+            <spiffworkflow:property name="formJsonSchemaFilename" value="sub-level-sub-process-user-form-schema.json" />
+            <spiffworkflow:property name="formUiSchemaFilename" value="sub-level-sub-process-user-form-uischema.json" />
+          </spiffworkflow:properties>
+        </bpmn:extensionElements>
+        <bpmn:incoming>Flow_1ekcyuv</bpmn:incoming>
+        <bpmn:outgoing>Flow_157qtq3</bpmn:outgoing>
+      </bpmn:userTask>
     </bpmn:subProcess>
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
@@ -130,9 +141,6 @@
   </bpmndi:BPMNDiagram>
   <bpmndi:BPMNDiagram id="BPMNDiagram_0714uj7">
     <bpmndi:BPMNPlane id="BPMNPlane_1xy36cs" bpmnElement="call_activity_sub_process">
-      <bpmndi:BPMNShape id="Event_0yfq3gm_di" bpmnElement="Event_0yfq3gm">
-        <dc:Bounds x="572" y="292" width="36" height="36" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_00vjfmy_di" bpmnElement="Event_00vjfmy">
         <dc:Bounds x="812" y="292" width="36" height="36" />
       </bpmndi:BPMNShape>
@@ -146,9 +154,16 @@
         <dc:Bounds x="660" y="270" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0yfq3gm_di" bpmnElement="Event_0yfq3gm">
+        <dc:Bounds x="402" y="292" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1xq5smk_di" bpmnElement="sub_level_sub_process_user_task">
+        <dc:Bounds x="490" y="270" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_1ekcyuv_di" bpmnElement="Flow_1ekcyuv">
-        <di:waypoint x="608" y="310" />
-        <di:waypoint x="660" y="310" />
+        <di:waypoint x="438" y="310" />
+        <di:waypoint x="490" y="310" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1p3g9vw_di" bpmnElement="Flow_1p3g9vw">
         <di:waypoint x="760" y="310" />
@@ -157,6 +172,10 @@
       <bpmndi:BPMNEdge id="DataOutputAssociation_1xpueyl_di" bpmnElement="DataOutputAssociation_1xpueyl">
         <di:waypoint x="709" y="270" />
         <di:waypoint x="708" y="185" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_157qtq3_di" bpmnElement="Flow_157qtq3">
+        <di:waypoint x="590" y="310" />
+        <di:waypoint x="660" y="310" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
