@@ -4,7 +4,12 @@
     <bpmn:startEvent id="StartEvent_1">
       <bpmn:outgoing>Flow_161lwfo</bpmn:outgoing>
     </bpmn:startEvent>
-    <bpmn:serviceTask id="Activity_1kroz6d" name="Get Universities">
+    <bpmn:sequenceFlow id="Flow_161lwfo" sourceRef="StartEvent_1" targetRef="Activity_1kroz6d" />
+    <bpmn:endEvent id="Event_01b0jgd">
+      <bpmn:incoming>Flow_0nahxf9</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_0nahxf9" sourceRef="Activity_1kroz6d" targetRef="Event_01b0jgd" />
+    <bpmn:scriptTask id="Activity_1kroz6d" name="bob">
       <bpmn:extensionElements>
         <spiffworkflow:serviceTaskOperator id="http/GetRequest" resultVariable="univeristy_list">
           <spiffworkflow:parameters>
@@ -18,24 +23,20 @@
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_161lwfo</bpmn:incoming>
       <bpmn:outgoing>Flow_0nahxf9</bpmn:outgoing>
-    </bpmn:serviceTask>
-    <bpmn:sequenceFlow id="Flow_161lwfo" sourceRef="StartEvent_1" targetRef="Activity_1kroz6d" />
-    <bpmn:endEvent id="Event_01b0jgd">
-      <bpmn:incoming>Flow_0nahxf9</bpmn:incoming>
-    </bpmn:endEvent>
-    <bpmn:sequenceFlow id="Flow_0nahxf9" sourceRef="Activity_1kroz6d" targetRef="Event_01b0jgd" />
+      <bpmn:script>x=1</bpmn:script>
+    </bpmn:scriptTask>
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_j3pxh41">
       <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
         <dc:Bounds x="272" y="-18" width="36" height="36" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_059fckg_di" bpmnElement="Activity_1kroz6d">
-        <dc:Bounds x="360" y="-40" width="100" height="80" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_01b0jgd_di" bpmnElement="Event_01b0jgd">
         <dc:Bounds x="512" y="-18" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1cx08ru_di" bpmnElement="Activity_1kroz6d">
+        <dc:Bounds x="360" y="-40" width="100" height="80" />
+        <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_161lwfo_di" bpmnElement="Flow_161lwfo">
         <di:waypoint x="308" y="0" />
