@@ -19,6 +19,7 @@
       <bpmn:outgoing>Flow_0bwlgpz</bpmn:outgoing>
       <bpmn:outgoing>Flow_0w7xicw</bpmn:outgoing>
       <bpmn:outgoing>Flow_0p6lb9m</bpmn:outgoing>
+      <bpmn:outgoing>Flow_0ndxjqq</bpmn:outgoing>
     </bpmn:parallelGateway>
     <bpmn:sequenceFlow id="Flow_11t1ctf" sourceRef="gw_end" targetRef="EndEvent_1" />
     <bpmn:sequenceFlow id="Flow_0bwlgpz" sourceRef="gw_start" targetRef="st_hey1" />
@@ -26,14 +27,16 @@
     <bpmn:scriptTask id="st_hey1" name="hey1">
       <bpmn:incoming>Flow_0bwlgpz</bpmn:incoming>
       <bpmn:outgoing>Flow_0kjfb8n</bpmn:outgoing>
-      <bpmn:script>our_hash['hey1'] =  "YO1"</bpmn:script>
+      <bpmn:script>our_hash['hey1'] =  "YO1"
+new_var_hey1 = "NEW"</bpmn:script>
     </bpmn:scriptTask>
     <bpmn:sequenceFlow id="Flow_0w7xicw" sourceRef="gw_start" targetRef="st_hey2" />
     <bpmn:sequenceFlow id="Flow_1bq55n7" sourceRef="st_hey2" targetRef="gw_end" />
     <bpmn:scriptTask id="st_hey2" name="hey2">
       <bpmn:incoming>Flow_0w7xicw</bpmn:incoming>
       <bpmn:outgoing>Flow_1bq55n7</bpmn:outgoing>
-      <bpmn:script>our_hash['hey2'] =  "YO2"</bpmn:script>
+      <bpmn:script>our_hash['hey2'] =  "YO2"
+new_var_hey2 = "NEW"</bpmn:script>
     </bpmn:scriptTask>
     <bpmn:subProcess id="sp_hey3" name="hey3">
       <bpmn:extensionElements>
@@ -48,16 +51,24 @@ pre_var = "yo"</spiffworkflow:preScript>
         <bpmn:outgoing>Flow_1irol51</bpmn:outgoing>
       </bpmn:startEvent>
       <bpmn:endEvent id="Event_06h2igb">
-        <bpmn:incoming>Flow_0c1wjbp</bpmn:incoming>
+        <bpmn:incoming>Flow_1f1d5bp</bpmn:incoming>
       </bpmn:endEvent>
-      <bpmn:sequenceFlow id="Flow_0c1wjbp" sourceRef="st_subproc" targetRef="Event_06h2igb" />
+      <bpmn:sequenceFlow id="Flow_0c1wjbp" sourceRef="st_subproc" targetRef="Activity_01jeifd" />
       <bpmn:sequenceFlow id="Flow_1irol51" sourceRef="Event_1mucpkl" targetRef="st_subproc" />
       <bpmn:scriptTask id="st_subproc">
+        <bpmn:extensionElements>
+          <spiffworkflow:instructionsForEndUser>HEY WE RUN SCRIPT</spiffworkflow:instructionsForEndUser>
+        </bpmn:extensionElements>
         <bpmn:incoming>Flow_1irol51</bpmn:incoming>
         <bpmn:outgoing>Flow_0c1wjbp</bpmn:outgoing>
-        <bpmn:script>new_var = 'yay'
+        <bpmn:script>new_var_hey3 = "NEW"
 our_hash['hey3inner'] =  "YO3inner"</bpmn:script>
       </bpmn:scriptTask>
+      <bpmn:manualTask id="Activity_01jeifd">
+        <bpmn:incoming>Flow_0c1wjbp</bpmn:incoming>
+        <bpmn:outgoing>Flow_1f1d5bp</bpmn:outgoing>
+      </bpmn:manualTask>
+      <bpmn:sequenceFlow id="Flow_1f1d5bp" sourceRef="Activity_01jeifd" targetRef="Event_06h2igb" />
     </bpmn:subProcess>
     <bpmn:sequenceFlow id="Flow_0p6lb9m" sourceRef="gw_start" targetRef="sp_hey3" />
     <bpmn:sequenceFlow id="Flow_0jzhnls" sourceRef="sp_hey3" targetRef="gw_end" />
@@ -65,8 +76,28 @@ our_hash['hey3inner'] =  "YO3inner"</bpmn:script>
       <bpmn:incoming>Flow_0kjfb8n</bpmn:incoming>
       <bpmn:incoming>Flow_1bq55n7</bpmn:incoming>
       <bpmn:incoming>Flow_0jzhnls</bpmn:incoming>
+      <bpmn:incoming>Flow_0mxr5yd</bpmn:incoming>
       <bpmn:outgoing>Flow_11t1ctf</bpmn:outgoing>
     </bpmn:parallelGateway>
+    <bpmn:sequenceFlow id="Flow_0ndxjqq" sourceRef="gw_start" targetRef="hey0" />
+    <bpmn:sequenceFlow id="Flow_0mxr5yd" sourceRef="hey0" targetRef="gw_end" />
+    <bpmn:subProcess id="hey0" name="hey0">
+      <bpmn:incoming>Flow_0ndxjqq</bpmn:incoming>
+      <bpmn:outgoing>Flow_0mxr5yd</bpmn:outgoing>
+      <bpmn:startEvent id="Event_10h9gxb">
+        <bpmn:outgoing>Flow_1156daf</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:sequenceFlow id="Flow_1156daf" sourceRef="Event_10h9gxb" targetRef="Activity_02qt41j" />
+      <bpmn:endEvent id="Event_0k523sf">
+        <bpmn:incoming>Flow_0gicl2c</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:sequenceFlow id="Flow_0gicl2c" sourceRef="Activity_02qt41j" targetRef="Event_0k523sf" />
+      <bpmn:scriptTask id="Activity_02qt41j">
+        <bpmn:incoming>Flow_1156daf</bpmn:incoming>
+        <bpmn:outgoing>Flow_0gicl2c</bpmn:outgoing>
+        <bpmn:script>new_var_hey0 = "NEW"</bpmn:script>
+      </bpmn:scriptTask>
+    </bpmn:subProcess>
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_test_merge_u5mavz4">
@@ -96,6 +127,10 @@ our_hash['hey3inner'] =  "YO3inner"</bpmn:script>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Gateway_1fybjln_di" bpmnElement="gw_end">
         <dc:Bounds x="385" y="145" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1b2pwdf_di" bpmnElement="hey0">
+        <dc:Bounds x="260" y="-80" width="100" height="80" />
+        <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_17db3yp_di" bpmnElement="Flow_17db3yp">
         <di:waypoint x="-12" y="170" />
@@ -137,6 +172,16 @@ our_hash['hey3inner'] =  "YO3inner"</bpmn:script>
         <di:waypoint x="410" y="270" />
         <di:waypoint x="410" y="195" />
       </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0ndxjqq_di" bpmnElement="Flow_0ndxjqq">
+        <di:waypoint x="200" y="145" />
+        <di:waypoint x="200" y="-40" />
+        <di:waypoint x="260" y="-40" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0mxr5yd_di" bpmnElement="Flow_0mxr5yd">
+        <di:waypoint x="360" y="-40" />
+        <di:waypoint x="410" y="-40" />
+        <di:waypoint x="410" y="145" />
+      </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1jzi41f">
@@ -144,19 +189,47 @@ our_hash['hey3inner'] =  "YO3inner"</bpmn:script>
       <bpmndi:BPMNShape id="Event_1mucpkl_di" bpmnElement="Event_1mucpkl">
         <dc:Bounds x="292" y="252" width="36" height="36" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_06h2igb_di" bpmnElement="Event_06h2igb">
-        <dc:Bounds x="512" y="252" width="36" height="36" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0ps216m_di" bpmnElement="st_subproc">
         <dc:Bounds x="370" y="230" width="100" height="80" />
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_06h2igb_di" bpmnElement="Event_06h2igb">
+        <dc:Bounds x="742" y="252" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_02yqz2m_di" bpmnElement="Activity_01jeifd">
+        <dc:Bounds x="540" y="230" width="100" height="80" />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_0c1wjbp_di" bpmnElement="Flow_0c1wjbp">
         <di:waypoint x="470" y="270" />
-        <di:waypoint x="512" y="270" />
+        <di:waypoint x="540" y="270" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1irol51_di" bpmnElement="Flow_1irol51">
         <di:waypoint x="328" y="270" />
         <di:waypoint x="370" y="270" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1f1d5bp_di" bpmnElement="Flow_1f1d5bp">
+        <di:waypoint x="640" y="270" />
+        <di:waypoint x="742" y="270" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1swsg66">
+    <bpmndi:BPMNPlane id="BPMNPlane_1rfhgm1" bpmnElement="hey0">
+      <bpmndi:BPMNShape id="Event_10h9gxb_di" bpmnElement="Event_10h9gxb">
+        <dc:Bounds x="262" y="192" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0k523sf_di" bpmnElement="Event_0k523sf">
+        <dc:Bounds x="502" y="192" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_09jhkao_di" bpmnElement="Activity_02qt41j">
+        <dc:Bounds x="350" y="170" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_1156daf_di" bpmnElement="Flow_1156daf">
+        <di:waypoint x="298" y="210" />
+        <di:waypoint x="350" y="210" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0gicl2c_di" bpmnElement="Flow_0gicl2c">
+        <di:waypoint x="450" y="210" />
+        <di:waypoint x="502" y="210" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
