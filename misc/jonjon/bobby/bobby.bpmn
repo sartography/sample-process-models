@@ -6,9 +6,9 @@
     </bpmn:startEvent>
     <bpmn:sequenceFlow id="Flow_161lwfo" sourceRef="StartEvent_1" targetRef="Activity_1kroz6d" />
     <bpmn:endEvent id="Event_01b0jgd">
-      <bpmn:incoming>Flow_0nahxf9</bpmn:incoming>
+      <bpmn:incoming>Flow_04bynjb</bpmn:incoming>
     </bpmn:endEvent>
-    <bpmn:sequenceFlow id="Flow_0nahxf9" sourceRef="Activity_1kroz6d" targetRef="Event_01b0jgd" />
+    <bpmn:sequenceFlow id="Flow_0nahxf9" sourceRef="Activity_1kroz6d" targetRef="Activity_0v3yz79" />
     <bpmn:scriptTask id="Activity_1kroz6d" name="bob">
       <bpmn:extensionElements>
         <spiffworkflow:serviceTaskOperator id="http/GetRequest" resultVariable="univeristy_list">
@@ -23,7 +23,17 @@
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_161lwfo</bpmn:incoming>
       <bpmn:outgoing>Flow_0nahxf9</bpmn:outgoing>
-      <bpmn:script>x=1</bpmn:script>
+      <bpmn:script>update_task_data_with_dictionary({
+    "x": 1,
+    "y": 2,
+    "z": [{"a": [1, 2, 3]}]
+})</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:sequenceFlow id="Flow_04bynjb" sourceRef="Activity_0v3yz79" targetRef="Event_01b0jgd" />
+    <bpmn:scriptTask id="Activity_0v3yz79">
+      <bpmn:incoming>Flow_0nahxf9</bpmn:incoming>
+      <bpmn:outgoing>Flow_04bynjb</bpmn:outgoing>
+      <bpmn:script>x += 1</bpmn:script>
     </bpmn:scriptTask>
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
@@ -32,11 +42,14 @@
         <dc:Bounds x="272" y="-18" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_01b0jgd_di" bpmnElement="Event_01b0jgd">
-        <dc:Bounds x="512" y="-18" width="36" height="36" />
+        <dc:Bounds x="642" y="-18" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1cx08ru_di" bpmnElement="Activity_1kroz6d">
         <dc:Bounds x="360" y="-40" width="100" height="80" />
         <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1ikls97_di" bpmnElement="Activity_0v3yz79">
+        <dc:Bounds x="500" y="-40" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_161lwfo_di" bpmnElement="Flow_161lwfo">
         <di:waypoint x="308" y="0" />
@@ -44,7 +57,11 @@
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0nahxf9_di" bpmnElement="Flow_0nahxf9">
         <di:waypoint x="460" y="0" />
-        <di:waypoint x="512" y="0" />
+        <di:waypoint x="500" y="0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_04bynjb_di" bpmnElement="Flow_04bynjb">
+        <di:waypoint x="600" y="0" />
+        <di:waypoint x="642" y="0" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
