@@ -11,7 +11,7 @@
     <bpmn:subProcess id="Activity_0os66xf">
       <bpmn:incoming>Flow_1ybbgqu</bpmn:incoming>
       <bpmn:outgoing>Flow_0a8jjfo</bpmn:outgoing>
-      <bpmn:multiInstanceLoopCharacteristics>
+      <bpmn:multiInstanceLoopCharacteristics isSequential="true">
         <bpmn:loopDataInputRef>x</bpmn:loopDataInputRef>
         <bpmn:loopDataOutputRef>y</bpmn:loopDataOutputRef>
         <bpmn:inputDataItem id="z" name="z" />
@@ -22,25 +22,29 @@
       </bpmn:startEvent>
       <bpmn:sequenceFlow id="Flow_0rkfq3y" sourceRef="Event_1eimwxc" targetRef="Activity_01hzfmq" />
       <bpmn:endEvent id="Event_1tahcow">
-        <bpmn:incoming>Flow_1uotev4</bpmn:incoming>
+        <bpmn:incoming>Flow_062mc5o</bpmn:incoming>
       </bpmn:endEvent>
-      <bpmn:sequenceFlow id="Flow_1uotev4" sourceRef="Activity_01hzfmq" targetRef="Event_1tahcow" />
+      <bpmn:sequenceFlow id="Flow_1uotev4" sourceRef="Activity_01hzfmq" targetRef="Activity_047i1pc" />
       <bpmn:scriptTask id="Activity_01hzfmq">
         <bpmn:incoming>Flow_0rkfq3y</bpmn:incoming>
         <bpmn:outgoing>Flow_1uotev4</bpmn:outgoing>
-        <bpmn:script>#a = z + 1
+        <bpmn:script>a =3
 a = 5
 z = 1
-#time.sleep(z)
 bb = 33 * z</bpmn:script>
       </bpmn:scriptTask>
+      <bpmn:sequenceFlow id="Flow_062mc5o" sourceRef="Activity_047i1pc" targetRef="Event_1tahcow" />
+      <bpmn:callActivity id="Activity_047i1pc" calledElement="Process_jqourgt">
+        <bpmn:incoming>Flow_1uotev4</bpmn:incoming>
+        <bpmn:outgoing>Flow_062mc5o</bpmn:outgoing>
+      </bpmn:callActivity>
     </bpmn:subProcess>
     <bpmn:sequenceFlow id="Flow_0a8jjfo" sourceRef="Activity_0os66xf" targetRef="EndEvent_1" />
     <bpmn:sequenceFlow id="Flow_1ybbgqu" sourceRef="Activity_0clyh8p" targetRef="Activity_0os66xf" />
     <bpmn:scriptTask id="Activity_0clyh8p">
       <bpmn:incoming>Flow_17db3yp</bpmn:incoming>
       <bpmn:outgoing>Flow_1ybbgqu</bpmn:outgoing>
-      <bpmn:script>x = [1, 2, 3] * 5</bpmn:script>
+      <bpmn:script>x = [1, 2, 3] * 1</bpmn:script>
     </bpmn:scriptTask>
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
@@ -52,7 +56,7 @@ bb = 33 * z</bpmn:script>
         <dc:Bounds x="522" y="152" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0os66xf_di" bpmnElement="Activity_0os66xf" isExpanded="true">
-        <dc:Bounds x="-90" y="70" width="560" height="200" />
+        <dc:Bounds x="-90" y="70" width="580" height="310" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_1eimwxc_di" bpmnElement="Event_1eimwxc">
         <dc:Bounds x="-50" y="152" width="36" height="36" />
@@ -61,14 +65,21 @@ bb = 33 * z</bpmn:script>
         <dc:Bounds x="362" y="152" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0rd0i0g_di" bpmnElement="Activity_01hzfmq">
-        <dc:Bounds x="200" y="130" width="100" height="80" />
+        <dc:Bounds x="30" y="130" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0bx29rm_di" bpmnElement="Activity_047i1pc">
+        <dc:Bounds x="180" y="130" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_0rkfq3y_di" bpmnElement="Flow_0rkfq3y">
         <di:waypoint x="-14" y="170" />
-        <di:waypoint x="200" y="170" />
+        <di:waypoint x="30" y="170" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1uotev4_di" bpmnElement="Flow_1uotev4">
-        <di:waypoint x="300" y="170" />
+        <di:waypoint x="130" y="170" />
+        <di:waypoint x="180" y="170" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_062mc5o_di" bpmnElement="Flow_062mc5o">
+        <di:waypoint x="280" y="170" />
         <di:waypoint x="362" y="170" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="Activity_0u26ht3_di" bpmnElement="Activity_0clyh8p">
@@ -81,7 +92,7 @@ bb = 33 * z</bpmn:script>
         <di:waypoint x="-170" y="130" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0a8jjfo_di" bpmnElement="Flow_0a8jjfo">
-        <di:waypoint x="470" y="170" />
+        <di:waypoint x="490" y="170" />
         <di:waypoint x="522" y="170" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1ybbgqu_di" bpmnElement="Flow_1ybbgqu">
