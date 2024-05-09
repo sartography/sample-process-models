@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:spiffworkflow="http://spiffworkflow.org/bpmn/schema/1.0/core" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_96f6665" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.0.0-dev">
+  <bpmn:collaboration id="Collaboration_1314akw">
+    <bpmn:participant id="Participant_1p1vu09" processRef="Process_nz83ccm" />
+  </bpmn:collaboration>
+  <bpmn:process id="Process_nz83ccm" isExecutable="true">
+    <bpmn:sequenceFlow id="Flow_167491h" sourceRef="StartEvent_1" targetRef="Activity_0u1uono" />
+    <bpmn:sequenceFlow id="Flow_00aydx3" sourceRef="Activity_0u1uono" targetRef="Activity_1p6cp4t" />
+    <bpmn:sequenceFlow id="Flow_0a83dsg" sourceRef="Activity_1p6cp4t" targetRef="Event_02bd37f" />
+    <bpmn:scriptTask id="Activity_0u1uono">
+      <bpmn:incoming>Flow_167491h</bpmn:incoming>
+      <bpmn:outgoing>Flow_00aydx3</bpmn:outgoing>
+      <bpmn:script>return_payload = {
+    "the_time": task_info['the_time'],
+    "status": "successful"
+}</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>Flow_167491h</bpmn:outgoing>
+      <bpmn:messageEventDefinition id="MessageEventDefinition_092hgp7" messageRef="initiate_task">
+        <bpmn:extensionElements>
+          <spiffworkflow:messageVariable>task_info</spiffworkflow:messageVariable>
+        </bpmn:extensionElements>
+      </bpmn:messageEventDefinition>
+    </bpmn:startEvent>
+    <bpmn:endEvent id="Event_02bd37f">
+      <bpmn:incoming>Flow_0a83dsg</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sendTask id="Activity_1p6cp4t" messageRef="task_complete">
+      <bpmn:extensionElements>
+        <spiffworkflow:messagePayload>return_payload</spiffworkflow:messagePayload>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_00aydx3</bpmn:incoming>
+      <bpmn:outgoing>Flow_0a83dsg</bpmn:outgoing>
+    </bpmn:sendTask>
+  </bpmn:process>
+  <bpmn:message id="initiate_task" name="initiate_task" />
+  <bpmn:correlationProperty id="the_time_id" name="the_time_id">
+    <bpmn:correlationPropertyRetrievalExpression messageRef="initiate_task">
+      <bpmn:formalExpression>the_time</bpmn:formalExpression>
+    </bpmn:correlationPropertyRetrievalExpression>
+    <bpmn:correlationPropertyRetrievalExpression messageRef="task_complete">
+      <bpmn:formalExpression>the_time</bpmn:formalExpression>
+    </bpmn:correlationPropertyRetrievalExpression>
+  </bpmn:correlationProperty>
+  <bpmn:message id="task_complete" name="task_complete" />
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_1314akw">
+      <bpmndi:BPMNShape id="Participant_1p1vu09_di" bpmnElement="Participant_1p1vu09" isHorizontal="true">
+        <dc:Bounds x="100" y="52" width="600" height="250" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1nb4y6t_di" bpmnElement="Activity_0u1uono">
+        <dc:Bounds x="270" y="137" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0rtezut_di" bpmnElement="StartEvent_1">
+        <dc:Bounds x="172" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_02bd37f_di" bpmnElement="Event_02bd37f">
+        <dc:Bounds x="582" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0qz80uy_di" bpmnElement="Activity_1p6cp4t">
+        <dc:Bounds x="430" y="137" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_167491h_di" bpmnElement="Flow_167491h">
+        <di:waypoint x="208" y="177" />
+        <di:waypoint x="270" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_00aydx3_di" bpmnElement="Flow_00aydx3">
+        <di:waypoint x="370" y="177" />
+        <di:waypoint x="430" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0a83dsg_di" bpmnElement="Flow_0a83dsg">
+        <di:waypoint x="530" y="177" />
+        <di:waypoint x="582" y="177" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
