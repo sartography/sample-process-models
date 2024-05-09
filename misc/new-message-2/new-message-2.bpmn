@@ -2,6 +2,9 @@
 <bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:spiffworkflow="http://spiffworkflow.org/bpmn/schema/1.0/core" id="Definitions_96f6665" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.0.0-dev">
   <bpmn:collaboration id="Collaboration_1y9pqba">
     <bpmn:participant id="Participant_0x7pzrm" processRef="Process_new_message_2_zn8t9r5" />
+    <bpmn:correlationKey name="message_correlation_key_one">
+      <bpmn:correlationPropertyRef>the_time_id</bpmn:correlationPropertyRef>
+    </bpmn:correlationKey>
   </bpmn:collaboration>
   <bpmn:process id="Process_new_message_2_zn8t9r5" isExecutable="true">
     <bpmn:startEvent id="Event_07lte66">
@@ -25,12 +28,6 @@
       <bpmn:incoming>Flow_0r58xlp</bpmn:incoming>
       <bpmn:outgoing>Flow_1v9y5lx</bpmn:outgoing>
     </bpmn:sendTask>
-    <bpmn:endEvent id="Event_0o3enti">
-      <bpmn:extensionElements>
-        <spiffworkflow:instructionsForEndUser />
-      </bpmn:extensionElements>
-      <bpmn:incoming>Flow_0lcta8t</bpmn:incoming>
-    </bpmn:endEvent>
     <bpmn:sequenceFlow id="Flow_0lcta8t" sourceRef="Event_1h5w40x" targetRef="Event_0o3enti" />
     <bpmn:intermediateCatchEvent id="Event_1h5w40x">
       <bpmn:incoming>Flow_1v9y5lx</bpmn:incoming>
@@ -41,6 +38,12 @@
         </bpmn:extensionElements>
       </bpmn:messageEventDefinition>
     </bpmn:intermediateCatchEvent>
+    <bpmn:endEvent id="Event_0o3enti">
+      <bpmn:extensionElements>
+        <spiffworkflow:instructionsForEndUser />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0lcta8t</bpmn:incoming>
+    </bpmn:endEvent>
   </bpmn:process>
   <bpmn:message id="initiate_task" name="initiate_task" />
   <bpmn:correlationProperty id="the_time_id" name="the_time_id">
@@ -66,11 +69,11 @@
       <bpmndi:BPMNShape id="Activity_0euf7ib_di" bpmnElement="Activity_009j7y3">
         <dc:Bounds x="320" y="140" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_0o3enti_di" bpmnElement="Event_0o3enti">
-        <dc:Bounds x="562" y="162" width="36" height="36" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_0ekj56v_di" bpmnElement="Event_1h5w40x">
         <dc:Bounds x="472" y="162" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0o3enti_di" bpmnElement="Event_0o3enti">
+        <dc:Bounds x="552" y="162" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_1ffpwon_di" bpmnElement="Flow_1ffpwon">
         <di:waypoint x="138" y="180" />
@@ -86,7 +89,7 @@
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0lcta8t_di" bpmnElement="Flow_0lcta8t">
         <di:waypoint x="508" y="180" />
-        <di:waypoint x="562" y="180" />
+        <di:waypoint x="552" y="180" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>

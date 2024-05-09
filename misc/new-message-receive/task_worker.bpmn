@@ -2,6 +2,9 @@
 <bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:spiffworkflow="http://spiffworkflow.org/bpmn/schema/1.0/core" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_96f6665" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.0.0-dev">
   <bpmn:collaboration id="Collaboration_1314akw">
     <bpmn:participant id="Participant_1p1vu09" processRef="Process_nz83ccm" />
+    <bpmn:correlationKey name="message_correlation_key_one">
+      <bpmn:correlationPropertyRef>the_time_id</bpmn:correlationPropertyRef>
+    </bpmn:correlationKey>
   </bpmn:collaboration>
   <bpmn:process id="Process_nz83ccm" isExecutable="true">
     <bpmn:sequenceFlow id="Flow_167491h" sourceRef="StartEvent_1" targetRef="Activity_0u1uono" />
@@ -15,14 +18,6 @@
     "status": "successful"
 }</bpmn:script>
     </bpmn:scriptTask>
-    <bpmn:startEvent id="StartEvent_1">
-      <bpmn:outgoing>Flow_167491h</bpmn:outgoing>
-      <bpmn:messageEventDefinition id="MessageEventDefinition_092hgp7" messageRef="initiate_task">
-        <bpmn:extensionElements>
-          <spiffworkflow:messageVariable>task_info</spiffworkflow:messageVariable>
-        </bpmn:extensionElements>
-      </bpmn:messageEventDefinition>
-    </bpmn:startEvent>
     <bpmn:endEvent id="Event_02bd37f">
       <bpmn:incoming>Flow_0a83dsg</bpmn:incoming>
     </bpmn:endEvent>
@@ -33,6 +28,14 @@
       <bpmn:incoming>Flow_00aydx3</bpmn:incoming>
       <bpmn:outgoing>Flow_0a83dsg</bpmn:outgoing>
     </bpmn:sendTask>
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>Flow_167491h</bpmn:outgoing>
+      <bpmn:messageEventDefinition id="MessageEventDefinition_092hgp7" messageRef="initiate_task">
+        <bpmn:extensionElements>
+          <spiffworkflow:messageVariable>task_info</spiffworkflow:messageVariable>
+        </bpmn:extensionElements>
+      </bpmn:messageEventDefinition>
+    </bpmn:startEvent>
   </bpmn:process>
   <bpmn:message id="initiate_task" name="initiate_task" />
   <bpmn:correlationProperty id="the_time_id" name="the_time_id">
@@ -52,17 +55,17 @@
       <bpmndi:BPMNShape id="Activity_1nb4y6t_di" bpmnElement="Activity_0u1uono">
         <dc:Bounds x="270" y="137" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_0rtezut_di" bpmnElement="StartEvent_1">
-        <dc:Bounds x="172" y="159" width="36" height="36" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_02bd37f_di" bpmnElement="Event_02bd37f">
         <dc:Bounds x="582" y="159" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0qz80uy_di" bpmnElement="Activity_1p6cp4t">
         <dc:Bounds x="430" y="137" width="100" height="80" />
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0rtezut_di" bpmnElement="StartEvent_1">
+        <dc:Bounds x="182" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_167491h_di" bpmnElement="Flow_167491h">
-        <di:waypoint x="208" y="177" />
+        <di:waypoint x="218" y="177" />
         <di:waypoint x="270" y="177" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_00aydx3_di" bpmnElement="Flow_00aydx3">
