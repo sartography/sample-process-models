@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_96f6665" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.0.0-dev">
   <bpmn:process id="Proccess_nt4f4t2" isExecutable="true">
-    <bpmn:startEvent id="StartEvent_1">
-      <bpmn:outgoing>Flow_11nj48q</bpmn:outgoing>
-    </bpmn:startEvent>
     <bpmn:sequenceFlow id="Flow_11nj48q" sourceRef="StartEvent_1" targetRef="script_task_one" />
     <bpmn:scriptTask id="script_task_one">
       <bpmn:incoming>Flow_11nj48q</bpmn:incoming>
@@ -39,12 +36,17 @@ DataObject_1vpoop0 =  ["hi"] * 10</bpmn:script>
       <bpmn:outgoing>Flow_0up5tm3</bpmn:outgoing>
       <bpmn:script>zz = 12</bpmn:script>
     </bpmn:scriptTask>
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>Flow_11nj48q</bpmn:outgoing>
+      <bpmn:messageEventDefinition id="MessageEventDefinition_1madb0a" messageRef="bob">
+        <bpmn:extensionElements />
+      </bpmn:messageEventDefinition>
+    </bpmn:startEvent>
   </bpmn:process>
+  <bpmn:message id="bob" name="bob" />
+  <bpmn:correlationKey id="CorrelationKey_1y7qhah" name="MainCorrelationKey" />
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Proccess_nt4f4t2">
-      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
-        <dc:Bounds x="312" y="159" width="36" height="36" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1qfxni5_di" bpmnElement="script_task_one">
         <dc:Bounds x="430" y="137" width="100" height="80" />
       </bpmndi:BPMNShape>
@@ -62,6 +64,9 @@ DataObject_1vpoop0 =  ["hi"] * 10</bpmn:script>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_11uadqn_di" bpmnElement="Activity_0gj4vao">
         <dc:Bounds x="550" y="137" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0k1iw91_di" bpmnElement="StartEvent_1">
+        <dc:Bounds x="312" y="159" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_11nj48q_di" bpmnElement="Flow_11nj48q">
         <di:waypoint x="348" y="177" />
