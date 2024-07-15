@@ -1,0 +1,576 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:spiffworkflow="http://spiffworkflow.org/bpmn/schema/1.0/core" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_96f6665" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.0.0-dev">
+  <bpmn:process id="Process_test_pre_scripts_post_scripts_for_tasks_mg2fcs0" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>Flow_12pit63</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_12pit63" sourceRef="StartEvent_1" targetRef="Activity_19voh92" />
+    <bpmn:userTask id="Activity_1ko63ab" name="User Task 4">
+      <bpmn:extensionElements>
+        <spiffworkflow:instructionsForEndUser>User Task Var 1 = {{user_task_1}} , 
+User Task Var 2 = {{user_task_2}},
+User Task Var 3 = {{user_task_3}}</spiffworkflow:instructionsForEndUser>
+        <spiffworkflow:postScript># Delete Unneeded Variable
+del(user_task_1)
+del(user_task_3)
+</spiffworkflow:postScript>
+        <spiffworkflow:preScript>user_task_1 = 1
+user_task_2 = 2
+user_task_3 = 3
+user_task_4 = 4</spiffworkflow:preScript>
+        <spiffworkflow:properties>
+          <spiffworkflow:property name="formJsonSchemaFilename" value="get-user-country-schema.json" />
+          <spiffworkflow:property name="formUiSchemaFilename" value="get-user-country-uischema.json" />
+        </spiffworkflow:properties>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1x55wz3</bpmn:incoming>
+      <bpmn:outgoing>Flow_0rx4171</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:sequenceFlow id="Flow_0rx4171" sourceRef="Activity_1ko63ab" targetRef="Activity_1aa2xu6" />
+    <bpmn:manualTask id="Activity_1aa2xu6" name="Show User Task Data 4">
+      <bpmn:extensionElements>
+        <spiffworkflow:instructionsForEndUser>My Country is {{country}},
+User Task Var 1 = {{user_task_1}},
+User Task Var 2 = {{user_task_2}},
+User Task Var 3 = {{user_task_3}},
+User Task Var 4 = {{user_task_4}}</spiffworkflow:instructionsForEndUser>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0rx4171</bpmn:incoming>
+      <bpmn:outgoing>Flow_0t5wjjo</bpmn:outgoing>
+    </bpmn:manualTask>
+    <bpmn:sequenceFlow id="Flow_0t5wjjo" sourceRef="Activity_1aa2xu6" targetRef="Activity_1nk76nr" />
+    <bpmn:manualTask id="Activity_1nk76nr" name="Manual Task 4">
+      <bpmn:extensionElements>
+        <spiffworkflow:preScript>manual_task_1 = 10
+manual_task_2 = 20
+manual_task_3 = 30
+manual_task_4 = 40
+manual_task_5 = 0</spiffworkflow:preScript>
+        <spiffworkflow:postScript># Delete Unneeded Variable
+del(manual_task_1)
+del(user_task_4)
+manual_task_5  = manual_task_2 + manual_task_4 </spiffworkflow:postScript>
+        <spiffworkflow:instructionsForEndUser>***Hello *this is the manual task showing it's ~~instructions~~.
+**
+Manual_task_1 =  {{manual_task_1}},
+Manual_task_2 = {{manual_task_2}},
+Manual_task_3 = {{manual_task_3}},
+Manual_task_4 = {{manual_task_4}}
+Manual_task_5 = {{manual_task_5}}</spiffworkflow:instructionsForEndUser>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0t5wjjo</bpmn:incoming>
+      <bpmn:outgoing>Flow_0kty908</bpmn:outgoing>
+    </bpmn:manualTask>
+    <bpmn:sequenceFlow id="Flow_0kty908" sourceRef="Activity_1nk76nr" targetRef="Activity_1724gg7" />
+    <bpmn:manualTask id="Activity_1724gg7" name="Show Manual Task Data 4">
+      <bpmn:extensionElements>
+        <spiffworkflow:instructionsForEndUser>Manual Task var 1 = {{manual_task_1}},
+Manual Task var 2 = {{manual_task_2}},
+Manual Task var 3 = {{manual_task_3}},
+Manual Task var 4 = {{manual_task_4}},
+Manual Task var 5 = {{manual_task_5}},</spiffworkflow:instructionsForEndUser>
+        <spiffworkflow:allowGuest>false</spiffworkflow:allowGuest>
+        <spiffworkflow:guestConfirmation />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0kty908</bpmn:incoming>
+      <bpmn:outgoing>Flow_0is9d8n</bpmn:outgoing>
+    </bpmn:manualTask>
+    <bpmn:sequenceFlow id="Flow_0is9d8n" sourceRef="Activity_1724gg7" targetRef="Activity_1cmc6ij" />
+    <bpmn:serviceTask id="Activity_1cmc6ij" name="Service Task 4">
+      <bpmn:extensionElements>
+        <spiffworkflow:preScript>service_task_1 = 50
+service_task_2 = 100</spiffworkflow:preScript>
+        <spiffworkflow:postScript># Delete Unneeded Variable
+del(service_task_1)
+</spiffworkflow:postScript>
+        <spiffworkflow:instructionsForEndUser>My Name is {{name}},
+User Task Var 1 = {{user_task_1}},
+User Task Var 2 = {{user_task_2}},
+User Task Var 3 = {{user_task_3}},
+Manual_task_1 =  {{manual_task_1}},
+Manual_task_2 = {{manual_task_2}},
+Manual_task_3 = {{manual_task_3}},
+Service_task_1 = {{service_task_1}},
+Service_task_2 = {{service_task_2}}</spiffworkflow:instructionsForEndUser>
+        <spiffworkflow:serviceTaskOperator id="http/GetRequestV2" resultVariable="git_resp">
+          <spiffworkflow:parameters>
+            <spiffworkflow:parameter id="url" type="str" value="&#34;https://api.github.com/user&#34;" />
+            <spiffworkflow:parameter id="headers" type="any" value="{ &#34;Authorization&#34;: &#34;Bearer SPIFF_SECRET:github_oauth&#34; }" />
+            <spiffworkflow:parameter id="params" type="any" />
+            <spiffworkflow:parameter id="basic_auth_username" type="str" />
+            <spiffworkflow:parameter id="basic_auth_password" type="str" />
+            <spiffworkflow:parameter id="attempts" type="int" value="2" />
+          </spiffworkflow:parameters>
+        </spiffworkflow:serviceTaskOperator>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0is9d8n</bpmn:incoming>
+      <bpmn:outgoing>Flow_0ghbvoe</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="Flow_0ghbvoe" sourceRef="Activity_1cmc6ij" targetRef="Activity_18wlmcj" />
+    <bpmn:manualTask id="Activity_18wlmcj" name="Show service Task Data 4">
+      <bpmn:extensionElements>
+        <spiffworkflow:instructionsForEndUser>Service Task var 1 = {{service_task_1}},
+Service Task var 2 = {{service_task_2}},
+Manual Task var 4 = {{manual_task_4}},
+Manual Task var 5 = {{manual_task_5}}</spiffworkflow:instructionsForEndUser>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0ghbvoe</bpmn:incoming>
+      <bpmn:outgoing>Flow_0asdpkl</bpmn:outgoing>
+    </bpmn:manualTask>
+    <bpmn:sequenceFlow id="Flow_0asdpkl" sourceRef="Activity_18wlmcj" targetRef="Activity_1gu179k" />
+    <bpmn:businessRuleTask id="Activity_1gu179k" name="Business Rule Task 4">
+      <bpmn:extensionElements>
+        <spiffworkflow:preScript>businessrule_task_1 = 12
+businessrule_task_2 = 24
+businessrule_task_3 = 10
+businessRuleTaskId = businessrule_task_1</spiffworkflow:preScript>
+        <spiffworkflow:postScript># Delete Unneeded Variable
+businessrule_task_3 = businessrule_task_1 + businessrule_task_2
+del(businessrule_task_2)
+del(manual_task_3)
+</spiffworkflow:postScript>
+        <spiffworkflow:calledDecisionId>decision_UserRoleDecision</spiffworkflow:calledDecisionId>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0asdpkl</bpmn:incoming>
+      <bpmn:outgoing>Flow_1hzsoui</bpmn:outgoing>
+    </bpmn:businessRuleTask>
+    <bpmn:sequenceFlow id="Flow_1hzsoui" sourceRef="Activity_1gu179k" targetRef="Activity_1abcuai" />
+    <bpmn:manualTask id="Activity_1abcuai" name="Show BR Task Data 4">
+      <bpmn:extensionElements>
+        <spiffworkflow:instructionsForEndUser>Business Rule Task 1 = {{businessrule_task_1}},
+Business Rule Task 2 = {{businessrule_task_2}},
+Business Rule Task 3 = {{businessrule_task_3}},
+User Name = {{test_name}},
+User Role = {{test_role}}</spiffworkflow:instructionsForEndUser>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1hzsoui</bpmn:incoming>
+      <bpmn:outgoing>Flow_0lv8c94</bpmn:outgoing>
+    </bpmn:manualTask>
+    <bpmn:sequenceFlow id="Flow_0lv8c94" sourceRef="Activity_1abcuai" targetRef="Activity_0uw8p7i" />
+    <bpmn:sequenceFlow id="Flow_0c3kbws" sourceRef="Activity_0uw8p7i" targetRef="Activity_1xl1vnt" />
+    <bpmn:manualTask id="Activity_1xl1vnt" name="Show Send Task Data 4">
+      <bpmn:extensionElements>
+        <spiffworkflow:instructionsForEndUser>Send Task var 1 = {{send_task_1}},
+Send Task var 2 = {{send_task_2}},
+Send Task var 3 = {{send_task_3}},
+payload = {{payload1}}</spiffworkflow:instructionsForEndUser>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0c3kbws</bpmn:incoming>
+      <bpmn:outgoing>Flow_0zbzkxg</bpmn:outgoing>
+    </bpmn:manualTask>
+    <bpmn:sequenceFlow id="Flow_0zbzkxg" sourceRef="Activity_1xl1vnt" targetRef="Activity_0y4kkn9" />
+    <bpmn:sequenceFlow id="Flow_1an8bg3" sourceRef="Activity_0y4kkn9" targetRef="Activity_0atjlml" />
+    <bpmn:manualTask id="Activity_0atjlml" name="Show ReceiveTask Data 4">
+      <bpmn:extensionElements>
+        <spiffworkflow:instructionsForEndUser>Receive Task var 1 = {{receive_task_1}},
+Receive Task var 2 = {{receive_task_2}},
+Receive Task var 3 = {{receive_task_3}}</spiffworkflow:instructionsForEndUser>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1an8bg3</bpmn:incoming>
+      <bpmn:outgoing>Flow_0s5vj9x</bpmn:outgoing>
+    </bpmn:manualTask>
+    <bpmn:sequenceFlow id="Flow_0s5vj9x" sourceRef="Activity_0atjlml" targetRef="Activity_07grwzj" />
+    <bpmn:callActivity id="Activity_07grwzj" name="Call Activity 4" calledElement="Process_simple_form_1_fgbpu4e">
+      <bpmn:extensionElements>
+        <spiffworkflow:preScript>call_activity_1 = 100
+call_activity_2 = 200
+call_activity_4 = "Hi"</spiffworkflow:preScript>
+        <spiffworkflow:postScript># Delete Unneeded Variable
+del(call_activity_1)
+call_activity_3 = "Hellooo"
+</spiffworkflow:postScript>
+        <spiffworkflow:instructionsForEndUser>My FirstName is : {{firstName}}</spiffworkflow:instructionsForEndUser>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0s5vj9x</bpmn:incoming>
+      <bpmn:outgoing>Flow_1hywrcq</bpmn:outgoing>
+    </bpmn:callActivity>
+    <bpmn:sequenceFlow id="Flow_1hywrcq" sourceRef="Activity_07grwzj" targetRef="Activity_0yvvb2l" />
+    <bpmn:manualTask id="Activity_0yvvb2l" name="Show Call Activity Data 4">
+      <bpmn:extensionElements>
+        <spiffworkflow:instructionsForEndUser>My New Name = {{firstName}},
+Call Activity var 1 = {{call_activity_1}}, 
+Call Activity var 2 = {{call_activity_2}},
+Call Activity var 3 = {{call_activity_3}}</spiffworkflow:instructionsForEndUser>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1hywrcq</bpmn:incoming>
+      <bpmn:outgoing>Flow_082ftez</bpmn:outgoing>
+    </bpmn:manualTask>
+    <bpmn:sequenceFlow id="Flow_082ftez" sourceRef="Activity_0yvvb2l" targetRef="Activity_0tw18gv" />
+    <bpmn:subProcess id="Activity_0tw18gv" name="Sub process Collapased 4">
+      <bpmn:extensionElements>
+        <spiffworkflow:preScript>collapsed_subprocess_activity_1 = 44
+collapsed_subprocess_activity_2 = 55
+collapsed_subprocess_activity_3 = 33</spiffworkflow:preScript>
+        <spiffworkflow:postScript># Delete Unneeded Variable
+del(collapsed_subprocess_activity_2)
+collapsed_subprocess_activity_4 = 44</spiffworkflow:postScript>
+        <spiffworkflow:instructionsForEndUser>This is a Collapsed sub process</spiffworkflow:instructionsForEndUser>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_082ftez</bpmn:incoming>
+      <bpmn:outgoing>Flow_170ycko</bpmn:outgoing>
+      <bpmn:startEvent id="Event_0xqdq0e">
+        <bpmn:outgoing>Flow_19vu277</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:sequenceFlow id="Flow_19vu277" sourceRef="Event_0xqdq0e" targetRef="Activity_1l7z1sl" />
+      <bpmn:endEvent id="Event_00mqtfq">
+        <bpmn:incoming>Flow_0ij6o2b</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:sequenceFlow id="Flow_0ij6o2b" sourceRef="Activity_1l7z1sl" targetRef="Event_00mqtfq" />
+      <bpmn:manualTask id="Activity_1l7z1sl" name="Show Message 4">
+        <bpmn:extensionElements>
+          <spiffworkflow:instructionsForEndUser>Hi from Collapsed Sub process with Collapsed subprocess var 1 = {{collapsed_subprocess_activity_1}},
+Collapsed subprocess var 2 = {{collapsed_subprocess_activity_2}}</spiffworkflow:instructionsForEndUser>
+        </bpmn:extensionElements>
+        <bpmn:incoming>Flow_19vu277</bpmn:incoming>
+        <bpmn:outgoing>Flow_0ij6o2b</bpmn:outgoing>
+      </bpmn:manualTask>
+    </bpmn:subProcess>
+    <bpmn:sequenceFlow id="Flow_170ycko" sourceRef="Activity_0tw18gv" targetRef="Activity_01e995n" />
+    <bpmn:manualTask id="Activity_01e995n" name="Show Collapsed sub process Data 4">
+      <bpmn:extensionElements>
+        <spiffworkflow:instructionsForEndUser>Collapsed subprocess var 1 = {{collapsed_subprocess_activity_1}},
+Collapsed subprocess var 2 = {{collapsed_subprocess_activity_2}},
+Collapsed subprocess var 3 = {{collapsed_subprocess_activity_3}},
+Collapsed subprocess var 4 = {{collapsed_subprocess_activity_4}}</spiffworkflow:instructionsForEndUser>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_170ycko</bpmn:incoming>
+      <bpmn:outgoing>Flow_1evk14h</bpmn:outgoing>
+    </bpmn:manualTask>
+    <bpmn:sequenceFlow id="Flow_1evk14h" sourceRef="Activity_01e995n" targetRef="Activity_1iogzej" />
+    <bpmn:subProcess id="Activity_1iogzej" name="Expanded Sub process 4">
+      <bpmn:extensionElements>
+        <spiffworkflow:preScript>expanded_subprocess_activity_1 = 7
+expanded_subprocess_activity_2 = 8
+expanded_subprocess_activity_3 = 3</spiffworkflow:preScript>
+        <spiffworkflow:postScript># Delete Unneeded Variable
+expanded_subprocess_activity_3 = expanded_subprocess_activity_1 + expanded_subprocess_activity_2
+del(expanded_subprocess_activity_1)</spiffworkflow:postScript>
+        <spiffworkflow:instructionsForEndUser>This is an expanded sub process</spiffworkflow:instructionsForEndUser>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1evk14h</bpmn:incoming>
+      <bpmn:outgoing>Flow_0beubtn</bpmn:outgoing>
+      <bpmn:startEvent id="Event_05j3k5i">
+        <bpmn:outgoing>Flow_1n7zz5j</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:sequenceFlow id="Flow_1n7zz5j" sourceRef="Event_05j3k5i" targetRef="Activity_02l6kma" />
+      <bpmn:manualTask id="Activity_02l6kma" name="Show Message 4">
+        <bpmn:extensionElements>
+          <spiffworkflow:instructionsForEndUser>Hello from Expanded Sub process with Expanded subprocess var 1 = {{expanded_subprocess_activity_1}},
+Expanded subprocess var 2 = {{expanded_subprocess_activity_2}}</spiffworkflow:instructionsForEndUser>
+        </bpmn:extensionElements>
+        <bpmn:incoming>Flow_1n7zz5j</bpmn:incoming>
+        <bpmn:outgoing>Flow_136pl6u</bpmn:outgoing>
+      </bpmn:manualTask>
+      <bpmn:endEvent id="Event_1dl71im">
+        <bpmn:incoming>Flow_136pl6u</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:sequenceFlow id="Flow_136pl6u" sourceRef="Activity_02l6kma" targetRef="Event_1dl71im" />
+    </bpmn:subProcess>
+    <bpmn:sequenceFlow id="Flow_0beubtn" sourceRef="Activity_1iogzej" targetRef="Activity_052k826" />
+    <bpmn:endEvent id="Event_1cpmclq">
+      <bpmn:extensionElements>
+        <spiffworkflow:instructionsForEndUser>End Pre-Script Post-Script Test.
+My New Name is {{name}},
+User Task Var 1 = {{user_task_1}},
+User Task Var 2 = {{user_task_2}},
+User Task Var 3 = {{user_task_3}},
+Manual Task var 1 = {{manual_task_1}},
+Manual Task var 2 = {{manual_task_2}},
+Manual Task var 3 = {{manual_task_3}},
+Service Task var 1 = {{service_task_1}},
+Service Task var 2 = {{service_task_2}}
+Business Rule Task 1 = {{businessrule_task_1}},
+Business Rule Task 2 = {{businessrule_task_2}},
+Business Rule Task Id = {{businessRuleTaskId}},
+User Name = {{test_name}},
+User Role = {{test_role}},
+Send Task var 1 = {{send_task_1}},
+Send Task var 2 = {{send_task_2}},
+payload = {{payload}},
+Receive Task var 1 = {{receive_task_1}},
+Receive Task var 2 = {{receive_task_2}},
+Call Activity var 1 = {{call_activity_1}}, 
+Call Activity var 2 = {{call_activity_2}},
+Collapsed subprocess var 1 = {{collapsed_subprocess_activity_1}},
+Collapsed subprocess var 2 = {{collapsed_subprocess_activity_2}},
+Expanded subprocess var 1 = {{expanded_subprocess_activity_1}},
+Expanded subprocess var 2 = {{expanded_subprocess_activity_2}}</spiffworkflow:instructionsForEndUser>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_02y9dpv</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_02y9dpv" sourceRef="Activity_052k826" targetRef="Event_1cpmclq" />
+    <bpmn:manualTask id="Activity_052k826" name="Show expanded sub process Data 4">
+      <bpmn:extensionElements>
+        <spiffworkflow:instructionsForEndUser>Expanded subprocess var 1 = {{expanded_subprocess_activity_1}},
+Expanded subprocess var 2 = {{expanded_subprocess_activity_2}},
+Expanded subprocess var 2 = {{expanded_subprocess_activity_3}},
+Expanded subprocess var 2 = {{expanded_subprocess_activity_4}}</spiffworkflow:instructionsForEndUser>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0beubtn</bpmn:incoming>
+      <bpmn:outgoing>Flow_02y9dpv</bpmn:outgoing>
+    </bpmn:manualTask>
+    <bpmn:receiveTask id="Activity_0y4kkn9" name="Receive Task 4" messageRef="NewPrePostScriptMsg">
+      <bpmn:extensionElements>
+        <spiffworkflow:preScript>receive_task_1 = 11
+receive_task_2 = 22
+receive_task_3 = 0</spiffworkflow:preScript>
+        <spiffworkflow:postScript># Delete Unneeded Variable
+receive_task_3 = receive_task_1 * receive_task_2
+del(receive_task_1)</spiffworkflow:postScript>
+        <spiffworkflow:messageVariable>payloadMsg</spiffworkflow:messageVariable>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0zbzkxg</bpmn:incoming>
+      <bpmn:outgoing>Flow_1an8bg3</bpmn:outgoing>
+    </bpmn:receiveTask>
+    <bpmn:sendTask id="Activity_0uw8p7i" name="Send Task 4" messageRef="NewPrePostScriptMsg">
+      <bpmn:extensionElements>
+        <spiffworkflow:preScript>send_task_1 = 11
+send_task_2 = 22
+payload1 = {"name":"Harry", "age":50}</spiffworkflow:preScript>
+        <spiffworkflow:postScript># Delete Unneeded Variable
+send_task_3 = send_task_1 + send_task_2
+del(send_task_1)</spiffworkflow:postScript>
+        <spiffworkflow:messagePayload>payload1</spiffworkflow:messagePayload>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0lv8c94</bpmn:incoming>
+      <bpmn:outgoing>Flow_0c3kbws</bpmn:outgoing>
+    </bpmn:sendTask>
+    <bpmn:sequenceFlow id="Flow_1x55wz3" sourceRef="Activity_0a914ll" targetRef="Activity_1ko63ab" />
+    <bpmn:scriptTask id="Activity_0a914ll" name="Script Task 1">
+      <bpmn:extensionElements>
+        <spiffworkflow:instructionsForEndUser>a : {{a}}
+b - {{b}}
+c - {{c}}</spiffworkflow:instructionsForEndUser>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0dy0c8r</bpmn:incoming>
+      <bpmn:outgoing>Flow_1x55wz3</bpmn:outgoing>
+      <bpmn:script>a = 5
+b = 6
+c = a * b</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:sequenceFlow id="Flow_0dy0c8r" sourceRef="Activity_19voh92" targetRef="Activity_0a914ll" />
+    <bpmn:manualTask id="Activity_19voh92" name="Manual task">
+      <bpmn:incoming>Flow_12pit63</bpmn:incoming>
+      <bpmn:outgoing>Flow_0dy0c8r</bpmn:outgoing>
+    </bpmn:manualTask>
+  </bpmn:process>
+  <bpmn:message id="NewPrePostScriptMsg" name="NewPrePostScriptMsg" />
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_test_pre_scripts_post_scripts_for_tasks_mg2fcs0">
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="-8" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_17rhhf1_di" bpmnElement="Activity_1ko63ab">
+        <dc:Bounds x="300" y="137" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1wnvwkg_di" bpmnElement="Activity_1aa2xu6">
+        <dc:Bounds x="440" y="137" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0fsrb8u_di" bpmnElement="Activity_1nk76nr">
+        <dc:Bounds x="610" y="137" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0wfvi2h_di" bpmnElement="Activity_1724gg7">
+        <dc:Bounds x="780" y="137" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1u6i1xs_di" bpmnElement="Activity_1cmc6ij">
+        <dc:Bounds x="950" y="137" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0bmtds3_di" bpmnElement="Activity_18wlmcj">
+        <dc:Bounds x="1120" y="137" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0kxl98n_di" bpmnElement="Activity_1gu179k">
+        <dc:Bounds x="1120" y="330" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1t1vnmb_di" bpmnElement="Activity_1abcuai">
+        <dc:Bounds x="950" y="330" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0mm8knu_di" bpmnElement="Activity_1xl1vnt">
+        <dc:Bounds x="620" y="330" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0ye08nd_di" bpmnElement="Activity_0atjlml">
+        <dc:Bounds x="340" y="330" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_05swzae_di" bpmnElement="Activity_07grwzj">
+        <dc:Bounds x="180" y="330" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1po4ot1_di" bpmnElement="Activity_0yvvb2l">
+        <dc:Bounds x="180" y="500" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0q35qe1_di" bpmnElement="Activity_0tw18gv">
+        <dc:Bounds x="330" y="500" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_035rb82_di" bpmnElement="Activity_01e995n">
+        <dc:Bounds x="480" y="500" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1e0i0vz_di" bpmnElement="Activity_1iogzej" isExpanded="true">
+        <dc:Bounds x="720" y="440" width="350" height="200" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_05j3k5i_di" bpmnElement="Event_05j3k5i">
+        <dc:Bounds x="760.3333333333334" y="522" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_04881cq_di" bpmnElement="Activity_02l6kma">
+        <dc:Bounds x="850" y="500" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1dl71im_di" bpmnElement="Event_1dl71im">
+        <dc:Bounds x="1012" y="522" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_1n7zz5j_di" bpmnElement="Flow_1n7zz5j">
+        <di:waypoint x="796" y="540" />
+        <di:waypoint x="850" y="540" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_136pl6u_di" bpmnElement="Flow_136pl6u">
+        <di:waypoint x="950" y="540" />
+        <di:waypoint x="1012" y="540" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="Event_1cpmclq_di" bpmnElement="Event_1cpmclq">
+        <dc:Bounds x="1312" y="522" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0vrnyop_di" bpmnElement="Activity_052k826">
+        <dc:Bounds x="1160" y="500" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0w5hazz_di" bpmnElement="Activity_0y4kkn9">
+        <dc:Bounds x="480" y="330" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1oc7bex_di" bpmnElement="Activity_0uw8p7i">
+        <dc:Bounds x="780" y="330" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1bbkc1w_di" bpmnElement="Activity_0a914ll">
+        <dc:Bounds x="170" y="137" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1d2tlag_di" bpmnElement="Activity_19voh92">
+        <dc:Bounds x="40" y="137" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_12pit63_di" bpmnElement="Flow_12pit63">
+        <di:waypoint x="10" y="159" />
+        <di:waypoint x="10" y="117" />
+        <di:waypoint x="90" y="117" />
+        <di:waypoint x="90" y="137" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0rx4171_di" bpmnElement="Flow_0rx4171">
+        <di:waypoint x="400" y="177" />
+        <di:waypoint x="440" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0t5wjjo_di" bpmnElement="Flow_0t5wjjo">
+        <di:waypoint x="540" y="177" />
+        <di:waypoint x="610" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0kty908_di" bpmnElement="Flow_0kty908">
+        <di:waypoint x="710" y="177" />
+        <di:waypoint x="780" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0is9d8n_di" bpmnElement="Flow_0is9d8n">
+        <di:waypoint x="880" y="177" />
+        <di:waypoint x="950" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0ghbvoe_di" bpmnElement="Flow_0ghbvoe">
+        <di:waypoint x="1050" y="177" />
+        <di:waypoint x="1120" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0asdpkl_di" bpmnElement="Flow_0asdpkl">
+        <di:waypoint x="1170" y="217" />
+        <di:waypoint x="1170" y="330" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1hzsoui_di" bpmnElement="Flow_1hzsoui">
+        <di:waypoint x="1120" y="370" />
+        <di:waypoint x="1050" y="370" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0lv8c94_di" bpmnElement="Flow_0lv8c94">
+        <di:waypoint x="950" y="370" />
+        <di:waypoint x="880" y="370" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0c3kbws_di" bpmnElement="Flow_0c3kbws">
+        <di:waypoint x="780" y="370" />
+        <di:waypoint x="720" y="370" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0zbzkxg_di" bpmnElement="Flow_0zbzkxg">
+        <di:waypoint x="620" y="370" />
+        <di:waypoint x="580" y="370" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1an8bg3_di" bpmnElement="Flow_1an8bg3">
+        <di:waypoint x="480" y="370" />
+        <di:waypoint x="440" y="370" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0s5vj9x_di" bpmnElement="Flow_0s5vj9x">
+        <di:waypoint x="340" y="370" />
+        <di:waypoint x="280" y="370" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1hywrcq_di" bpmnElement="Flow_1hywrcq">
+        <di:waypoint x="280" y="370" />
+        <di:waypoint x="310" y="370" />
+        <di:waypoint x="310" y="540" />
+        <di:waypoint x="280" y="540" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_082ftez_di" bpmnElement="Flow_082ftez">
+        <di:waypoint x="280" y="540" />
+        <di:waypoint x="330" y="540" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_170ycko_di" bpmnElement="Flow_170ycko">
+        <di:waypoint x="430" y="540" />
+        <di:waypoint x="480" y="540" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1evk14h_di" bpmnElement="Flow_1evk14h">
+        <di:waypoint x="580" y="540" />
+        <di:waypoint x="720" y="540" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0beubtn_di" bpmnElement="Flow_0beubtn">
+        <di:waypoint x="1070" y="540" />
+        <di:waypoint x="1160" y="540" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_02y9dpv_di" bpmnElement="Flow_02y9dpv">
+        <di:waypoint x="1260" y="540" />
+        <di:waypoint x="1312" y="540" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1x55wz3_di" bpmnElement="Flow_1x55wz3">
+        <di:waypoint x="270" y="177" />
+        <di:waypoint x="300" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0dy0c8r_di" bpmnElement="Flow_0dy0c8r">
+        <di:waypoint x="140" y="177" />
+        <di:waypoint x="170" y="177" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1usjwzx">
+    <bpmndi:BPMNPlane id="BPMNPlane_0yht31w" bpmnElement="Activity_0tw18gv">
+      <bpmndi:BPMNShape id="Event_0xqdq0e_di" bpmnElement="Event_0xqdq0e">
+        <dc:Bounds x="342" y="212" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_00mqtfq_di" bpmnElement="Event_00mqtfq">
+        <dc:Bounds x="582" y="212" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1cwwkrh_di" bpmnElement="Activity_1l7z1sl">
+        <dc:Bounds x="430" y="190" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_19vu277_di" bpmnElement="Flow_19vu277">
+        <di:waypoint x="378" y="230" />
+        <di:waypoint x="430" y="230" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0ij6o2b_di" bpmnElement="Flow_0ij6o2b">
+        <di:waypoint x="530" y="230" />
+        <di:waypoint x="582" y="230" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

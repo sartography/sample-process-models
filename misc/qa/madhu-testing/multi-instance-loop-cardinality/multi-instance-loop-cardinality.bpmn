@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:spiffworkflow="http://spiffworkflow.org/bpmn/schema/1.0/core" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_96f6665" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.0.0-dev">
+  <bpmn:process id="Test_Multi_Instance_Parallel_Script_Task_Loop_Cardinality" name="Unit Test Multi Instance Parallel Script Task Loop Cardinality" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>Flow_0rgk2c3</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_0rgk2c3" sourceRef="StartEvent_1" targetRef="Activity_088ghob" />
+    <bpmn:endEvent id="Event_1rztaln">
+      <bpmn:extensionElements>
+        <spiffworkflow:instructionsForEndUser>End Multi Instance Parallel Script Task Unit Test. Output Collection: {{z}}</spiffworkflow:instructionsForEndUser>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1m83e8x</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_1m83e8x" sourceRef="Activity_1b8ii73" targetRef="Event_1rztaln" />
+    <bpmn:sequenceFlow id="Flow_1w5pa4y" sourceRef="Activity_088ghob" targetRef="Activity_1b8ii73" />
+    <bpmn:manualTask id="Activity_088ghob">
+      <bpmn:incoming>Flow_0rgk2c3</bpmn:incoming>
+      <bpmn:outgoing>Flow_1w5pa4y</bpmn:outgoing>
+    </bpmn:manualTask>
+    <bpmn:manualTask id="Activity_1b8ii73" name="Parallel Multi Instance">
+      <bpmn:extensionElements>
+        <spiffworkflow:instructionsForEndUser />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1w5pa4y</bpmn:incoming>
+      <bpmn:outgoing>Flow_1m83e8x</bpmn:outgoing>
+      <bpmn:multiInstanceLoopCharacteristics>
+        <bpmn:loopCardinality xsi:type="bpmn:tFormalExpression">5</bpmn:loopCardinality>
+        <bpmn:inputDataItem name="x" />
+        <bpmn:outputDataItem name="y" />
+      </bpmn:multiInstanceLoopCharacteristics>
+    </bpmn:manualTask>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Test_Multi_Instance_Parallel_Script_Task_Loop_Cardinality">
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="-38" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1rztaln_di" bpmnElement="Event_1rztaln">
+        <dc:Bounds x="432" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0z0ddnn_di" bpmnElement="Activity_088ghob">
+        <dc:Bounds x="60" y="137" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0jhne2s_di" bpmnElement="Activity_1b8ii73">
+        <dc:Bounds x="270" y="137" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_0rgk2c3_di" bpmnElement="Flow_0rgk2c3">
+        <di:waypoint x="-2" y="177" />
+        <di:waypoint x="60" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1m83e8x_di" bpmnElement="Flow_1m83e8x">
+        <di:waypoint x="370" y="177" />
+        <di:waypoint x="432" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1w5pa4y_di" bpmnElement="Flow_1w5pa4y">
+        <di:waypoint x="160" y="177" />
+        <di:waypoint x="270" y="177" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
