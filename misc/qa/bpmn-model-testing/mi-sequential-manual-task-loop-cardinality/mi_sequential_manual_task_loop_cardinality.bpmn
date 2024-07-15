@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:spiffworkflow="http://spiffworkflow.org/bpmn/schema/1.0/core" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_96f6665" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.0.0-dev">
+  <bpmn:process id="MI_Sequential_User_Manual_Loop_Cardinality" name="MI Sequential User Manual Loop Cardinality" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>Flow_0gj8blv</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_0gj8blv" sourceRef="StartEvent_1" targetRef="Manual_Task" />
+    <bpmn:manualTask id="Manual_Task" name="Sequential Multi-Instance Manual Task">
+      <bpmn:extensionElements>
+        <spiffworkflow:instructionsForEndUser>This is the Manual Task Unit Test Screen.</spiffworkflow:instructionsForEndUser>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0gj8blv</bpmn:incoming>
+      <bpmn:outgoing>Flow_0rj9bum</bpmn:outgoing>
+      <bpmn:multiInstanceLoopCharacteristics isSequential="true">
+        <bpmn:loopCardinality xsi:type="bpmn:tFormalExpression">3</bpmn:loopCardinality>
+      </bpmn:multiInstanceLoopCharacteristics>
+    </bpmn:manualTask>
+    <bpmn:endEvent id="Event_0xg5vsd">
+      <bpmn:extensionElements>
+        <spiffworkflow:instructionsForEndUser>End Multi-Instance Sequential Manual Task Loop Cardinality Unit Test</spiffworkflow:instructionsForEndUser>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0rj9bum</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_0rj9bum" sourceRef="Manual_Task" targetRef="Event_0xg5vsd" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="MI_Sequential_User_Manual_Loop_Cardinality">
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="-158" y="72" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_159cqcv_di" bpmnElement="Manual_Task">
+        <dc:Bounds x="-70" y="50" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0xg5vsd_di" bpmnElement="Event_0xg5vsd">
+        <dc:Bounds x="82" y="72" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_0gj8blv_di" bpmnElement="Flow_0gj8blv">
+        <di:waypoint x="-122" y="90" />
+        <di:waypoint x="-70" y="90" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0rj9bum_di" bpmnElement="Flow_0rj9bum">
+        <di:waypoint x="30" y="90" />
+        <di:waypoint x="82" y="90" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

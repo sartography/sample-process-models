@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:spiffworkflow="http://spiffworkflow.org/bpmn/schema/1.0/core" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_96f6665" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.0.0-dev">
+  <bpmn:process id="Process_ywywfn2" name="Signal_End_Event" isExecutable="true">
+    <bpmn:startEvent id="Event_01me6x0">
+      <bpmn:outgoing>Flow_1f2czre</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:exclusiveGateway id="Gateway_0ggxty8" default="Flow_1f8l2o0">
+      <bpmn:incoming>Flow_0xe2zrg</bpmn:incoming>
+      <bpmn:outgoing>Flow_1f8l2o0</bpmn:outgoing>
+      <bpmn:outgoing>Flow_0mistxd</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="Flow_0xe2zrg" sourceRef="User_Task" targetRef="Gateway_0ggxty8" />
+    <bpmn:sequenceFlow id="Flow_1f2czre" sourceRef="Event_01me6x0" targetRef="User_Task" />
+    <bpmn:endEvent id="Event_11zjjnf">
+      <bpmn:extensionElements>
+        <spiffworkflow:instructionsForEndUser>End Signal End Event Unit test on a Sunny Day</spiffworkflow:instructionsForEndUser>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1f8l2o0</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_1f8l2o0" name="Sunny Day" sourceRef="Gateway_0ggxty8" targetRef="Event_11zjjnf">
+      <bpmn:conditionExpression />
+    </bpmn:sequenceFlow>
+    <bpmn:userTask id="User_Task" name="User Task">
+      <bpmn:extensionElements>
+        <spiffworkflow:properties>
+          <spiffworkflow:property name="formJsonSchemaFilename" value="rainy-day-schema.json" />
+        </spiffworkflow:properties>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1f2czre</bpmn:incoming>
+      <bpmn:outgoing>Flow_0xe2zrg</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:sequenceFlow id="Flow_0mistxd" name="Rainy Day" sourceRef="Gateway_0ggxty8" targetRef="Event_1af14sj">
+      <bpmn:conditionExpression>isRaining</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:endEvent id="Event_1af14sj">
+      <bpmn:extensionElements>
+        <spiffworkflow:instructionsForEndUser>Send a signal to remind Umbrella.</spiffworkflow:instructionsForEndUser>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0mistxd</bpmn:incoming>
+      <bpmn:signalEventDefinition id="SignalEventDefinition_0goaa03" signalRef="isRainyDay" />
+    </bpmn:endEvent>
+  </bpmn:process>
+  <bpmn:signal id="isRainyDay" name="isRainyDay">
+    <bpmn:extensionElements>
+      <spiffworkflow:variableName>isRainyDay</spiffworkflow:variableName>
+      <spiffworkflow:payloadExpression>isRainyDay</spiffworkflow:payloadExpression>
+    </bpmn:extensionElements>
+  </bpmn:signal>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_ywywfn2">
+      <bpmndi:BPMNShape id="Event_01me6x0_di" bpmnElement="Event_01me6x0">
+        <dc:Bounds x="179" y="-8" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_0ggxty8_di" bpmnElement="Gateway_0ggxty8" isMarkerVisible="true">
+        <dc:Bounds x="425" y="-15" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_11zjjnf_di" bpmnElement="Event_11zjjnf">
+        <dc:Bounds x="532" y="-8" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1nxjsk9_di" bpmnElement="User_Task">
+        <dc:Bounds x="270" y="-30" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1d01fxr_di" bpmnElement="Event_1af14sj">
+        <dc:Bounds x="532" y="102" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_0xe2zrg_di" bpmnElement="Flow_0xe2zrg">
+        <di:waypoint x="370" y="10" />
+        <di:waypoint x="425" y="10" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1f2czre_di" bpmnElement="Flow_1f2czre">
+        <di:waypoint x="215" y="10" />
+        <di:waypoint x="270" y="10" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1f8l2o0_di" bpmnElement="Flow_1f8l2o0">
+        <di:waypoint x="475" y="10" />
+        <di:waypoint x="532" y="10" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="477" y="-8" width="55" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0mistxd_di" bpmnElement="Flow_0mistxd">
+        <di:waypoint x="450" y="35" />
+        <di:waypoint x="450" y="120" />
+        <di:waypoint x="532" y="120" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="441" y="75" width="52" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

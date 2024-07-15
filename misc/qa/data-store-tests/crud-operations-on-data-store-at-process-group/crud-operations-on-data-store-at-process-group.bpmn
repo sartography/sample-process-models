@@ -1,0 +1,325 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:spiffworkflow="http://spiffworkflow.org/bpmn/schema/1.0/core" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_96f6665" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.0.0-dev">
+  <bpmn:process id="Process_crud_operations_on_data_store_at_process_group_kc049m8" name="Read from Datastore" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>Flow_08medfq</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_08medfq" sourceRef="StartEvent_1" targetRef="Activity_1jcxvz0" />
+    <bpmn:dataStoreReference id="DataStoreReference_06f71gw" name="Employees" dataStoreRef="employees" type="kkv" />
+    <bpmn:scriptTask id="Activity_1jcxvz0" name="Write to Datastore">
+      <bpmn:incoming>Flow_08medfq</bpmn:incoming>
+      <bpmn:outgoing>Flow_12lbl7f</bpmn:outgoing>
+      <bpmn:dataOutputAssociation id="DataOutputAssociation_1b2pwqg">
+        <bpmn:targetRef>DataStoreReference_06f71gw</bpmn:targetRef>
+      </bpmn:dataOutputAssociation>
+      <bpmn:script>employees =   {   
+    "001" : {
+	    "name" : "Alexander Garcia"  
+	},
+     "002" : {
+	    "name" : "Isabella Thompson"  
+	},
+     "003" : {
+	    "name" : "Mason Taylor"  
+	},
+     "004" : {
+	    "name" : "Ava Anderson"  
+	},
+     "005" : {
+	    "name" : "Noah Martinez"  
+	},
+     "006" : {
+	    "name" : "Sophia Wilson"  
+	},
+     "007" : {
+	    "name" : "Liam Davis"  
+	},
+     "008" : {
+	    "name" : "Olivia Brown"  
+	},
+     "009" : {
+	    "name" : "Ethan Smith"  
+	},
+     "010" : {
+	    "name" : "Emily Johnson"  
+	} 
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:sequenceFlow id="Flow_12lbl7f" sourceRef="Activity_1jcxvz0" targetRef="Activity_1f7z7go" />
+    <bpmn:scriptTask id="Activity_1f7z7go" name="Read from Datastore">
+      <bpmn:incoming>Flow_12lbl7f</bpmn:incoming>
+      <bpmn:outgoing>Flow_0tajv70</bpmn:outgoing>
+      <bpmn:property id="Property_1g407xg" name="__targetRef_placeholder" />
+      <bpmn:dataInputAssociation id="DataInputAssociation_06x7n8e">
+        <bpmn:sourceRef>DataStoreReference_06f71gw</bpmn:sourceRef>
+        <bpmn:targetRef>Property_1g407xg</bpmn:targetRef>
+      </bpmn:dataInputAssociation>
+      <bpmn:script>empname=employees("001", "name")</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:sequenceFlow id="Flow_0tajv70" sourceRef="Activity_1f7z7go" targetRef="Activity_1j9reed" />
+    <bpmn:sequenceFlow id="Flow_0u93fo3" sourceRef="Activity_1j9reed" targetRef="Activity_1hk8l3q" />
+    <bpmn:userTask id="Activity_1j9reed" name="Get Middle Name">
+      <bpmn:extensionElements>
+        <spiffworkflow:properties>
+          <spiffworkflow:property name="formJsonSchemaFilename" value="middle-name-schema.json" />
+          <spiffworkflow:property name="formUiSchemaFilename" value="middle-name-uischema.json" />
+        </spiffworkflow:properties>
+        <spiffworkflow:instructionsForEndUser>Enter {{empname}}'s Middle Name</spiffworkflow:instructionsForEndUser>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0tajv70</bpmn:incoming>
+      <bpmn:outgoing>Flow_0u93fo3</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:scriptTask id="Activity_1hk8l3q" name="Update Datastore">
+      <bpmn:incoming>Flow_0u93fo3</bpmn:incoming>
+      <bpmn:outgoing>Flow_12kudom</bpmn:outgoing>
+      <bpmn:dataOutputAssociation id="DataOutputAssociation_1g58e1v">
+        <bpmn:targetRef>DataStoreReference_06f71gw</bpmn:targetRef>
+      </bpmn:dataOutputAssociation>
+      <bpmn:script>first_name =  empname.split()[0]
+middle_name =  middleName  
+last_name = empname.split()[1]
+fullname = first_name + " " + middleName + " " + last_name
+
+employees =   { 
+    "001" : {  
+            "name" :fullname
+        }    
+  }
+
+
+
+</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:sequenceFlow id="Flow_12kudom" sourceRef="Activity_1hk8l3q" targetRef="Activity_0ielrv2" />
+    <bpmn:scriptTask id="Activity_0ielrv2" name="Read from Datastore">
+      <bpmn:incoming>Flow_12kudom</bpmn:incoming>
+      <bpmn:outgoing>Flow_0i67evn</bpmn:outgoing>
+      <bpmn:property id="Property_04q4emb" name="__targetRef_placeholder" />
+      <bpmn:dataInputAssociation id="DataInputAssociation_00asfiu">
+        <bpmn:sourceRef>DataStoreReference_06f71gw</bpmn:sourceRef>
+        <bpmn:targetRef>Property_04q4emb</bpmn:targetRef>
+      </bpmn:dataInputAssociation>
+      <bpmn:script>updatedname = employees("001","name")</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:sequenceFlow id="Flow_0i67evn" sourceRef="Activity_0ielrv2" targetRef="Activity_0p64cs0" />
+    <bpmn:manualTask id="Activity_0p64cs0" name="Display Updated Employee List">
+      <bpmn:extensionElements>
+        <spiffworkflow:instructionsForEndUser>Updated Name is {{ updatedname }}
+
+Click on continue to DELETE last employee.</spiffworkflow:instructionsForEndUser>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0i67evn</bpmn:incoming>
+      <bpmn:outgoing>Flow_0onlh40</bpmn:outgoing>
+    </bpmn:manualTask>
+    <bpmn:sequenceFlow id="Flow_0onlh40" sourceRef="Activity_0p64cs0" targetRef="Activity_05khinf" />
+    <bpmn:scriptTask id="Activity_05khinf" name="Delete from Datastore">
+      <bpmn:incoming>Flow_0onlh40</bpmn:incoming>
+      <bpmn:outgoing>Flow_1a3xwk6</bpmn:outgoing>
+      <bpmn:dataOutputAssociation id="DataOutputAssociation_0b63w4n">
+        <bpmn:targetRef>DataStoreReference_06f71gw</bpmn:targetRef>
+      </bpmn:dataOutputAssociation>
+      <bpmn:script>employees =   { 
+    "010" : { 
+            "name" : None
+      } 
+  }</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:scriptTask id="Activity_0iiloxt" name="Read from Datastore">
+      <bpmn:incoming>Flow_1a3xwk6</bpmn:incoming>
+      <bpmn:outgoing>Flow_04was2u</bpmn:outgoing>
+      <bpmn:property id="Property_1480z8v" name="__targetRef_placeholder" />
+      <bpmn:dataInputAssociation id="DataInputAssociation_1erkzj8">
+        <bpmn:sourceRef>DataStoreReference_06f71gw</bpmn:sourceRef>
+        <bpmn:targetRef>Property_1480z8v</bpmn:targetRef>
+      </bpmn:dataInputAssociation>
+      <bpmn:script>
+emp001 = employees("001","name")
+emp002 = employees("002","name")
+emp003 = employees("003","name")
+emp004 = employees("004","name")
+emp005 = employees("005","name")
+emp006 = employees("006","name")
+emp007 = employees("007","name")
+emp008 = employees("008","name")
+emp009 = employees("009","name")
+emp010 = employees("010","name")</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:manualTask id="Activity_1xhdv2e" name="Display Updated Employee List">
+      <bpmn:extensionElements>
+        <spiffworkflow:instructionsForEndUser>DELETED. Click Continue to End
+
+
+Employee List 
+
+
+Employee 001: {{emp001}}
+
+Employee 002: {{emp002}}
+
+Employee 003: {{emp003}}
+
+Employee 004: {{emp004}}
+
+Employee 005: {{emp005}}
+
+Employee 006: {{emp006}}
+
+Employee 007: {{emp007}}
+
+Employee 008: {{emp008}}
+
+Employee 009: {{emp009}}
+
+Employee 010: {{emp010}}</spiffworkflow:instructionsForEndUser>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_04was2u</bpmn:incoming>
+      <bpmn:outgoing>Flow_08ww804</bpmn:outgoing>
+    </bpmn:manualTask>
+    <bpmn:endEvent id="Event_0cxxra2">
+      <bpmn:extensionElements>
+        <spiffworkflow:instructionsForEndUser>The process instance completed successfully.</spiffworkflow:instructionsForEndUser>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_08ww804</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_08ww804" sourceRef="Activity_1xhdv2e" targetRef="Event_0cxxra2" />
+    <bpmn:sequenceFlow id="Flow_1a3xwk6" sourceRef="Activity_05khinf" targetRef="Activity_0iiloxt" />
+    <bpmn:sequenceFlow id="Flow_04was2u" sourceRef="Activity_0iiloxt" targetRef="Activity_1xhdv2e" />
+  </bpmn:process>
+  <bpmn:dataStore id="employees" name="KKVDataStore" />
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_crud_operations_on_data_store_at_process_group_kc049m8">
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="-208" y="142" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DataStoreReference_06f71gw_di" bpmnElement="DataStoreReference_06f71gw">
+        <dc:Bounds x="485" y="-65" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="483" y="-8" width="55" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0pmwxxt_di" bpmnElement="Activity_1jcxvz0">
+        <dc:Bounds x="-120" y="120" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_00stawn_di" bpmnElement="Activity_1f7z7go">
+        <dc:Bounds x="40" y="120" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0yhq2oi_di" bpmnElement="Activity_1j9reed">
+        <dc:Bounds x="200" y="120" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0rtgrvz_di" bpmnElement="Activity_1hk8l3q">
+        <dc:Bounds x="360" y="120" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1cowp3l_di" bpmnElement="Activity_0ielrv2">
+        <dc:Bounds x="520" y="120" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_138u87k_di" bpmnElement="Activity_0p64cs0">
+        <dc:Bounds x="680" y="120" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0ayno68_di" bpmnElement="Activity_05khinf">
+        <dc:Bounds x="840" y="120" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_11jmiv7" bpmnElement="Activity_0iiloxt">
+        <dc:Bounds x="990" y="120" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_0zc1i3c" bpmnElement="Activity_1xhdv2e">
+        <dc:Bounds x="1140" y="120" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0cxxra2_di" bpmnElement="Event_0cxxra2">
+        <dc:Bounds x="1292" y="142" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_08medfq_di" bpmnElement="Flow_08medfq">
+        <di:waypoint x="-172" y="160" />
+        <di:waypoint x="-120" y="160" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DataOutputAssociation_1b2pwqg_di" bpmnElement="DataOutputAssociation_1b2pwqg">
+        <di:waypoint x="-20" y="143" />
+        <di:waypoint x="485" y="-28" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_12lbl7f_di" bpmnElement="Flow_12lbl7f">
+        <di:waypoint x="-20" y="160" />
+        <di:waypoint x="40" y="160" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DataInputAssociation_06x7n8e_di" bpmnElement="DataInputAssociation_06x7n8e">
+        <di:waypoint x="485" y="-30" />
+        <di:waypoint x="115" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0tajv70_di" bpmnElement="Flow_0tajv70">
+        <di:waypoint x="140" y="160" />
+        <di:waypoint x="200" y="160" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0u93fo3_di" bpmnElement="Flow_0u93fo3">
+        <di:waypoint x="300" y="160" />
+        <di:waypoint x="360" y="160" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DataOutputAssociation_1g58e1v_di" bpmnElement="DataOutputAssociation_1g58e1v">
+        <di:waypoint x="432" y="120" />
+        <di:waypoint x="504" y="-15" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_12kudom_di" bpmnElement="Flow_12kudom">
+        <di:waypoint x="460" y="160" />
+        <di:waypoint x="520" y="160" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DataInputAssociation_00asfiu_di" bpmnElement="DataInputAssociation_00asfiu">
+        <di:waypoint x="513" y="-15" />
+        <di:waypoint x="529" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0i67evn_di" bpmnElement="Flow_0i67evn">
+        <di:waypoint x="620" y="160" />
+        <di:waypoint x="680" y="160" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0onlh40_di" bpmnElement="Flow_0onlh40">
+        <di:waypoint x="780" y="160" />
+        <di:waypoint x="840" y="160" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DataOutputAssociation_0b63w4n_di" bpmnElement="DataOutputAssociation_0b63w4n">
+        <di:waypoint x="840" y="134" />
+        <di:waypoint x="535" y="-25" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DataInputAssociation_1erkzj8_di" bpmnElement="DataInputAssociation_1erkzj8">
+        <di:waypoint x="535" y="-32" />
+        <di:waypoint x="1009" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_08ww804_di" bpmnElement="Flow_08ww804">
+        <di:waypoint x="1240" y="160" />
+        <di:waypoint x="1292" y="160" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1a3xwk6_di" bpmnElement="Flow_1a3xwk6">
+        <di:waypoint x="940" y="160" />
+        <di:waypoint x="990" y="160" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_04was2u_di" bpmnElement="Flow_04was2u">
+        <di:waypoint x="1090" y="160" />
+        <di:waypoint x="1140" y="160" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

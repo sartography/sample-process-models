@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:spiffworkflow="http://spiffworkflow.org/bpmn/schema/1.0/core" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_96f6665" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.0.0-dev">
+  <bpmn:process id="Process_guest_form2_muvdhp2" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>Flow_17db3yp</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_17db3yp" sourceRef="StartEvent_1" targetRef="Guest_manual_task" />
+    <bpmn:endEvent id="EndEvent_1">
+      <bpmn:incoming>Flow_0jvpdjh</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_12pkbxb" sourceRef="Guest_manual_task" targetRef="Activity_1mqivbd" />
+    <bpmn:manualTask id="Guest_manual_task" name="Guest manual task">
+      <bpmn:extensionElements>
+        <spiffworkflow:instructionsForEndUser>This is an example **Manual Task** for a Guest user.</spiffworkflow:instructionsForEndUser>
+        <spiffworkflow:allowGuest>true</spiffworkflow:allowGuest>
+        <spiffworkflow:preScript># Get Process Instance
+process_info = get_toplevel_process_info()
+process_instance_id = process_info["process_instance_id"]
+#{get_toplevel_process_info()['process_instance_id']}
+
+task_info = get_current_task_info()
+del task_info["typename"]
+task_guid = task_info['id']
+#task_bpmn_id = task_info['task_spec']
+#   "task_guid": "9c1859d5-a249-4ada-927c-7a96575f0cca",
+#   "task_bpmn_id": "Activity_heyhey"
+
+# Generate guest user task URL
+guest_link = get_url_for_task_with_bpmn_identifier("Guest_manual_task")</spiffworkflow:preScript>
+        <spiffworkflow:postScript />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_17db3yp</bpmn:incoming>
+      <bpmn:outgoing>Flow_12pkbxb</bpmn:outgoing>
+    </bpmn:manualTask>
+    <bpmn:sequenceFlow id="Flow_0xhhjj7" sourceRef="Activity_1mqivbd" targetRef="Activity_1dbh2zu" />
+    <bpmn:userTask id="Activity_1mqivbd" name="User Task1">
+      <bpmn:extensionElements>
+        <spiffworkflow:allowGuest>true</spiffworkflow:allowGuest>
+        <spiffworkflow:guestConfirmation />
+        <spiffworkflow:properties>
+          <spiffworkflow:property name="formJsonSchemaFilename" value="guest-form1-schema.json" />
+          <spiffworkflow:property name="formUiSchemaFilename" value="guest-form1-uischema.json" />
+        </spiffworkflow:properties>
+        <spiffworkflow:preScript />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_12pkbxb</bpmn:incoming>
+      <bpmn:outgoing>Flow_0xhhjj7</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:sequenceFlow id="Flow_0jvpdjh" sourceRef="Activity_1dbh2zu" targetRef="EndEvent_1" />
+    <bpmn:userTask id="Activity_1dbh2zu" name="User Task2">
+      <bpmn:extensionElements>
+        <spiffworkflow:properties>
+          <spiffworkflow:property name="formJsonSchemaFilename" value="test4-schema.json" />
+          <spiffworkflow:property name="formUiSchemaFilename" value="test4-uischema.json" />
+        </spiffworkflow:properties>
+        <spiffworkflow:allowGuest>true</spiffworkflow:allowGuest>
+        <spiffworkflow:guestConfirmation>Thank you!</spiffworkflow:guestConfirmation>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0xhhjj7</bpmn:incoming>
+      <bpmn:outgoing>Flow_0jvpdjh</bpmn:outgoing>
+    </bpmn:userTask>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_guest_form1_muvdhp2">
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="179" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_14za570_di" bpmnElement="EndEvent_1">
+        <dc:Bounds x="812" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0zqotmb_di" bpmnElement="Guest_manual_task">
+        <dc:Bounds x="270" y="137" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1pejru8_di" bpmnElement="Activity_1mqivbd">
+        <dc:Bounds x="460" y="137" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0beholn_di" bpmnElement="Activity_1dbh2zu">
+        <dc:Bounds x="640" y="137" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_17db3yp_di" bpmnElement="Flow_17db3yp">
+        <di:waypoint x="215" y="177" />
+        <di:waypoint x="270" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_12pkbxb_di" bpmnElement="Flow_12pkbxb">
+        <di:waypoint x="370" y="177" />
+        <di:waypoint x="460" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0xhhjj7_di" bpmnElement="Flow_0xhhjj7">
+        <di:waypoint x="560" y="177" />
+        <di:waypoint x="640" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0jvpdjh_di" bpmnElement="Flow_0jvpdjh">
+        <di:waypoint x="740" y="177" />
+        <di:waypoint x="812" y="177" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

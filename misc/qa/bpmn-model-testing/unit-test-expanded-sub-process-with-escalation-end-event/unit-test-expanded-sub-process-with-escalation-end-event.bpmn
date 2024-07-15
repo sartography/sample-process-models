@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:spiffworkflow="http://spiffworkflow.org/bpmn/schema/1.0/core" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_96f6665" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.0.0-dev">
+  <bpmn:process id="Process_unit_test_expanded_sub_process_with_escalation_end_event_xxmiqbx" name="Unit Test Expanded Sub Process with Escalation End Event" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>Flow_17db3yp</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_17db3yp" sourceRef="StartEvent_1" targetRef="Activity_0qpzdpu" />
+    <bpmn:endEvent id="EndEvent_1">
+      <bpmn:extensionElements>
+        <spiffworkflow:instructionsForEndUser>End</spiffworkflow:instructionsForEndUser>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_12pkbxb</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_12pkbxb" sourceRef="Activity_0qpzdpu" targetRef="EndEvent_1" />
+    <bpmn:subProcess id="Activity_0qpzdpu" name="Expanded Sub Process with Escalation End Event">
+      <bpmn:extensionElements>
+        <spiffworkflow:instructionsForEndUser />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_17db3yp</bpmn:incoming>
+      <bpmn:outgoing>Flow_12pkbxb</bpmn:outgoing>
+      <bpmn:startEvent id="Event_1rmcxin">
+        <bpmn:outgoing>Flow_1rv3m4q</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:sequenceFlow id="Flow_1rv3m4q" sourceRef="Event_1rmcxin" targetRef="Activity_1vg2dkh" />
+      <bpmn:exclusiveGateway id="Gateway_0xoufr7" default="Flow_0ifovbz">
+        <bpmn:incoming>Flow_1yyuxeu</bpmn:incoming>
+        <bpmn:outgoing>Flow_0l9ssl1</bpmn:outgoing>
+        <bpmn:outgoing>Flow_0ifovbz</bpmn:outgoing>
+      </bpmn:exclusiveGateway>
+      <bpmn:sequenceFlow id="Flow_1yyuxeu" sourceRef="Activity_1vg2dkh" targetRef="Gateway_0xoufr7" />
+      <bpmn:sequenceFlow id="Flow_0l9ssl1" sourceRef="Gateway_0xoufr7" targetRef="Event_042rg5t">
+        <bpmn:conditionExpression>hungry</bpmn:conditionExpression>
+      </bpmn:sequenceFlow>
+      <bpmn:endEvent id="Event_0yyubhi">
+        <bpmn:extensionElements>
+          <spiffworkflow:instructionsForEndUser>End</spiffworkflow:instructionsForEndUser>
+        </bpmn:extensionElements>
+        <bpmn:incoming>Flow_0ifovbz</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:sequenceFlow id="Flow_0ifovbz" sourceRef="Gateway_0xoufr7" targetRef="Event_0yyubhi" />
+      <bpmn:endEvent id="Event_042rg5t">
+        <bpmn:extensionElements>
+          <spiffworkflow:instructionsForEndUser>Escalation End Event</spiffworkflow:instructionsForEndUser>
+        </bpmn:extensionElements>
+        <bpmn:incoming>Flow_0l9ssl1</bpmn:incoming>
+        <bpmn:escalationEventDefinition id="EscalationEventDefinition_0o76toj" />
+      </bpmn:endEvent>
+      <bpmn:userTask id="Activity_1vg2dkh" name="Hungry ?">
+        <bpmn:extensionElements>
+          <spiffworkflow:properties>
+            <spiffworkflow:property name="formJsonSchemaFilename" value="hungry-schema.json" />
+            <spiffworkflow:property name="formUiSchemaFilename" value="hungry-uischema.json" />
+          </spiffworkflow:properties>
+        </bpmn:extensionElements>
+        <bpmn:incoming>Flow_1rv3m4q</bpmn:incoming>
+        <bpmn:outgoing>Flow_1yyuxeu</bpmn:outgoing>
+      </bpmn:userTask>
+    </bpmn:subProcess>
+    <bpmn:boundaryEvent id="Event_1nkgvcs" attachedToRef="Activity_0qpzdpu">
+      <bpmn:outgoing>Flow_0mhqt8r</bpmn:outgoing>
+      <bpmn:escalationEventDefinition id="EscalationEventDefinition_14a8u4w" />
+    </bpmn:boundaryEvent>
+    <bpmn:sequenceFlow id="Flow_0mhqt8r" sourceRef="Event_1nkgvcs" targetRef="Activity_0avepy5" />
+    <bpmn:endEvent id="Event_0udrsmz">
+      <bpmn:extensionElements>
+        <spiffworkflow:instructionsForEndUser>End Expanded Sub Process with Escalation End Event</spiffworkflow:instructionsForEndUser>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0rupkvw</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_0rupkvw" sourceRef="Activity_0avepy5" targetRef="Event_0udrsmz" />
+    <bpmn:manualTask id="Activity_0avepy5" name="Order Food">
+      <bpmn:incoming>Flow_0mhqt8r</bpmn:incoming>
+      <bpmn:outgoing>Flow_0rupkvw</bpmn:outgoing>
+    </bpmn:manualTask>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_unit_test_expanded_sub_process_with_escalation_end_event_xxmiqbx">
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="22" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_14za570_di" bpmnElement="EndEvent_1">
+        <dc:Bounds x="762" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0udrsmz_di" bpmnElement="Event_0udrsmz">
+        <dc:Bounds x="742" y="392" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0zb4eqp_di" bpmnElement="Activity_0avepy5">
+        <dc:Bounds x="590" y="370" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_13y22vg_di" bpmnElement="Activity_0qpzdpu" isExpanded="true">
+        <dc:Bounds x="145" y="30" width="525" height="300" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1rmcxin_di" bpmnElement="Event_1rmcxin">
+        <dc:Bounds x="185.33333333333334" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_0xoufr7_di" bpmnElement="Gateway_0xoufr7" isMarkerVisible="true">
+        <dc:Bounds x="445" y="152" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0yyubhi_di" bpmnElement="Event_0yyubhi">
+        <dc:Bounds x="562" y="242" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1pm5fuk_di" bpmnElement="Event_042rg5t">
+        <dc:Bounds x="562" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1y38so5_di" bpmnElement="Activity_1vg2dkh">
+        <dc:Bounds x="280" y="137" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_1rv3m4q_di" bpmnElement="Flow_1rv3m4q">
+        <di:waypoint x="221" y="177" />
+        <di:waypoint x="280" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1yyuxeu_di" bpmnElement="Flow_1yyuxeu">
+        <di:waypoint x="380" y="177" />
+        <di:waypoint x="445" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0l9ssl1_di" bpmnElement="Flow_0l9ssl1">
+        <di:waypoint x="495" y="177" />
+        <di:waypoint x="562" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0ifovbz_di" bpmnElement="Flow_0ifovbz">
+        <di:waypoint x="470" y="202" />
+        <di:waypoint x="470" y="260" />
+        <di:waypoint x="562" y="260" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="Event_09hwn3n_di" bpmnElement="Event_1nkgvcs">
+        <dc:Bounds x="502" y="312" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_17db3yp_di" bpmnElement="Flow_17db3yp">
+        <di:waypoint x="58" y="177" />
+        <di:waypoint x="145" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_12pkbxb_di" bpmnElement="Flow_12pkbxb">
+        <di:waypoint x="670" y="177" />
+        <di:waypoint x="762" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0mhqt8r_di" bpmnElement="Flow_0mhqt8r">
+        <di:waypoint x="520" y="348" />
+        <di:waypoint x="520" y="410" />
+        <di:waypoint x="590" y="410" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0rupkvw_di" bpmnElement="Flow_0rupkvw">
+        <di:waypoint x="690" y="410" />
+        <di:waypoint x="742" y="410" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

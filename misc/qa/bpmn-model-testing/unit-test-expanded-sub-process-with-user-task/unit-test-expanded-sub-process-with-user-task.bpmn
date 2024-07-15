@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:spiffworkflow="http://spiffworkflow.org/bpmn/schema/1.0/core" id="Definitions_96f6665" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.0.0-dev">
+  <bpmn:process id="Unit_Test_Expanded_Sub_Process_with_User_Task" name="Unit Test Expanded Sub Process with User Task" isExecutable="true">
+    <bpmn:startEvent id="Event_0klc40m">
+      <bpmn:outgoing>Flow_1sazxcd</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:subProcess id="Expanded_Sub_Process" name="Expanded Sub Process with User Task">
+      <bpmn:incoming>Flow_1sazxcd</bpmn:incoming>
+      <bpmn:outgoing>Flow_09s5tfy</bpmn:outgoing>
+      <bpmn:startEvent id="Event_1aqxjkn">
+        <bpmn:outgoing>Flow_1bmylvo</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:sequenceFlow id="Flow_1bmylvo" sourceRef="Event_1aqxjkn" targetRef="User_Task" />
+      <bpmn:endEvent id="Event_1yzjo2k">
+        <bpmn:incoming>Flow_1mtmwtu</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:sequenceFlow id="Flow_1mtmwtu" sourceRef="User_Task" targetRef="Event_1yzjo2k" />
+      <bpmn:userTask id="User_Task" name="User Task">
+        <bpmn:extensionElements>
+          <spiffworkflow:properties>
+            <spiffworkflow:property name="formJsonSchemaFilename" value="get-name-schema.json" />
+          </spiffworkflow:properties>
+          <spiffworkflow:instructionsForEndUser>Expanded Sub Process User Task.</spiffworkflow:instructionsForEndUser>
+        </bpmn:extensionElements>
+        <bpmn:incoming>Flow_1bmylvo</bpmn:incoming>
+        <bpmn:outgoing>Flow_1mtmwtu</bpmn:outgoing>
+      </bpmn:userTask>
+    </bpmn:subProcess>
+    <bpmn:sequenceFlow id="Flow_1sazxcd" sourceRef="Event_0klc40m" targetRef="Expanded_Sub_Process" />
+    <bpmn:endEvent id="Event_05ue9gw">
+      <bpmn:extensionElements>
+        <spiffworkflow:instructionsForEndUser>End Expanded Sub Process User Task Unit Test.
+Your name is {{name}}</spiffworkflow:instructionsForEndUser>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_09s5tfy</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_09s5tfy" sourceRef="Expanded_Sub_Process" targetRef="Event_05ue9gw" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Unit_Test_Expanded_Sub_Process_with_User_Task">
+      <bpmndi:BPMNShape id="Event_0klc40m_di" bpmnElement="Event_0klc40m">
+        <dc:Bounds x="-68" y="-158" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1fxthf8_di" bpmnElement="Expanded_Sub_Process" isExpanded="true">
+        <dc:Bounds x="42" y="-240" width="350" height="200" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1aqxjkn_di" bpmnElement="Event_1aqxjkn">
+        <dc:Bounds x="82" y="-158" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1yzjo2k_di" bpmnElement="Event_1yzjo2k">
+        <dc:Bounds x="322" y="-158" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_170byra_di" bpmnElement="User_Task">
+        <dc:Bounds x="170" y="-180" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_1bmylvo_di" bpmnElement="Flow_1bmylvo">
+        <di:waypoint x="118" y="-140" />
+        <di:waypoint x="170" y="-140" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1mtmwtu_di" bpmnElement="Flow_1mtmwtu">
+        <di:waypoint x="270" y="-140" />
+        <di:waypoint x="322" y="-140" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="Event_05ue9gw_di" bpmnElement="Event_05ue9gw">
+        <dc:Bounds x="472" y="-158" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_1sazxcd_di" bpmnElement="Flow_1sazxcd">
+        <di:waypoint x="-32" y="-140" />
+        <di:waypoint x="42" y="-140" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_09s5tfy_di" bpmnElement="Flow_09s5tfy">
+        <di:waypoint x="392" y="-140" />
+        <di:waypoint x="472" y="-140" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

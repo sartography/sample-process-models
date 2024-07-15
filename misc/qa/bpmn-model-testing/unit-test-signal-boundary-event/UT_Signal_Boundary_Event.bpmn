@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:spiffworkflow="http://spiffworkflow.org/bpmn/schema/1.0/core" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_96f6665" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.0.0-dev">
+  <bpmn:process id="Unit_Test_Signal_Boundary_Event" name="Unit Test Signal Boundary Event" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>Flow_0l8amjn</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_0l8amjn" sourceRef="StartEvent_1" targetRef="Activity_1ytfcnp" />
+    <bpmn:manualTask id="Activity_1ytfcnp" name="Place Order">
+      <bpmn:incoming>Flow_0l8amjn</bpmn:incoming>
+      <bpmn:outgoing>Flow_1cz0gav</bpmn:outgoing>
+    </bpmn:manualTask>
+    <bpmn:sequenceFlow id="Flow_1cz0gav" sourceRef="Activity_1ytfcnp" targetRef="Activity_1c3ddd6" />
+    <bpmn:endEvent id="Event_01ddydx">
+      <bpmn:extensionElements>
+        <spiffworkflow:instructionsForEndUser>Order Completed</spiffworkflow:instructionsForEndUser>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0183tpu</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_0183tpu" sourceRef="Activity_1c3ddd6" targetRef="Event_01ddydx" />
+    <bpmn:manualTask id="Activity_1c3ddd6" name="Complete Payment">
+      <bpmn:incoming>Flow_1cz0gav</bpmn:incoming>
+      <bpmn:outgoing>Flow_0183tpu</bpmn:outgoing>
+    </bpmn:manualTask>
+    <bpmn:boundaryEvent id="Event_04hzxc9" attachedToRef="Activity_1ytfcnp">
+      <bpmn:extensionElements>
+        <spiffworkflow:signalButtonLabel>Cancel Order</spiffworkflow:signalButtonLabel>
+      </bpmn:extensionElements>
+      <bpmn:outgoing>Flow_1q8gqf3</bpmn:outgoing>
+      <bpmn:signalEventDefinition id="SignalEventDefinition_0dsq9k1" />
+    </bpmn:boundaryEvent>
+    <bpmn:endEvent id="Event_0sxtqvz">
+      <bpmn:extensionElements>
+        <spiffworkflow:instructionsForEndUser>Order Cancelled</spiffworkflow:instructionsForEndUser>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1q8gqf3</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_1q8gqf3" sourceRef="Event_04hzxc9" targetRef="Event_0sxtqvz" />
+  </bpmn:process>
+  <bpmn:signal id="cancel_order" name="cancel_order" />
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Unit_Test_Signal_Boundary_Event">
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="-98" y="132" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1sjqlzv_di" bpmnElement="Activity_1ytfcnp">
+        <dc:Bounds x="-10" y="110" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_01ddydx_di" bpmnElement="Event_01ddydx">
+        <dc:Bounds x="312" y="132" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0onvofr_di" bpmnElement="Activity_1c3ddd6">
+        <dc:Bounds x="150" y="110" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0sxtqvz_di" bpmnElement="Event_0sxtqvz">
+        <dc:Bounds x="182" y="252" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0mbeaxn_di" bpmnElement="Event_04hzxc9">
+        <dc:Bounds x="42" y="172" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_0l8amjn_di" bpmnElement="Flow_0l8amjn">
+        <di:waypoint x="-62" y="150" />
+        <di:waypoint x="-10" y="150" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1cz0gav_di" bpmnElement="Flow_1cz0gav">
+        <di:waypoint x="90" y="150" />
+        <di:waypoint x="150" y="150" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0183tpu_di" bpmnElement="Flow_0183tpu">
+        <di:waypoint x="250" y="150" />
+        <di:waypoint x="312" y="150" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1q8gqf3_di" bpmnElement="Flow_1q8gqf3">
+        <di:waypoint x="60" y="208" />
+        <di:waypoint x="60" y="270" />
+        <di:waypoint x="182" y="270" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

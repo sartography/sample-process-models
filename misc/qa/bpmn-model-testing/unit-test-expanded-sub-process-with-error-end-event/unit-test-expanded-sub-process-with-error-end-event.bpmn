@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:spiffworkflow="http://spiffworkflow.org/bpmn/schema/1.0/core" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_96f6665" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.0.0-dev">
+  <bpmn:process id="Process_unit_test_expanded_sub_process_with_error_end_event_lzg0kkw" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>Flow_17db3yp</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_17db3yp" sourceRef="StartEvent_1" targetRef="Activity_0qpzdpu" />
+    <bpmn:endEvent id="EndEvent_1">
+      <bpmn:extensionElements>
+        <spiffworkflow:instructionsForEndUser>End Unit Test Expanded Sub Process with Error End Event</spiffworkflow:instructionsForEndUser>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_12pkbxb</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_12pkbxb" sourceRef="Activity_0qpzdpu" targetRef="EndEvent_1" />
+    <bpmn:subProcess id="Activity_0qpzdpu" name="Expanded Sub Process with Error End Event">
+      <bpmn:extensionElements>
+        <spiffworkflow:instructionsForEndUser />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_17db3yp</bpmn:incoming>
+      <bpmn:outgoing>Flow_12pkbxb</bpmn:outgoing>
+      <bpmn:startEvent id="Event_1sucv1z">
+        <bpmn:outgoing>Flow_1ahl42f</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:sequenceFlow id="Flow_1ahl42f" sourceRef="Event_1sucv1z" targetRef="Activity_02e9qbx" />
+      <bpmn:userTask id="Activity_02e9qbx" name="Proceed Payment">
+        <bpmn:extensionElements>
+          <spiffworkflow:properties>
+            <spiffworkflow:property name="formJsonSchemaFilename" value="payment-schema.json" />
+            <spiffworkflow:property name="formUiSchemaFilename" value="payment-uischema.json" />
+          </spiffworkflow:properties>
+        </bpmn:extensionElements>
+        <bpmn:incoming>Flow_1ahl42f</bpmn:incoming>
+        <bpmn:outgoing>Flow_1x208xz</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:exclusiveGateway id="Gateway_1hj05dt" default="Flow_09zrs8j">
+        <bpmn:incoming>Flow_1x208xz</bpmn:incoming>
+        <bpmn:outgoing>Flow_1kk5ufa</bpmn:outgoing>
+        <bpmn:outgoing>Flow_09zrs8j</bpmn:outgoing>
+      </bpmn:exclusiveGateway>
+      <bpmn:sequenceFlow id="Flow_1x208xz" sourceRef="Activity_02e9qbx" targetRef="Gateway_1hj05dt" />
+      <bpmn:sequenceFlow id="Flow_1kk5ufa" sourceRef="Gateway_1hj05dt" targetRef="Event_1jtgnix">
+        <bpmn:conditionExpression>cc_expired</bpmn:conditionExpression>
+      </bpmn:sequenceFlow>
+      <bpmn:endEvent id="Event_1jtgnix">
+        <bpmn:incoming>Flow_1kk5ufa</bpmn:incoming>
+        <bpmn:errorEventDefinition id="ErrorEventDefinition_1po6zk7" errorRef="Error1" />
+      </bpmn:endEvent>
+      <bpmn:endEvent id="Event_15nfbfp">
+        <bpmn:extensionElements>
+          <spiffworkflow:instructionsForEndUser>End</spiffworkflow:instructionsForEndUser>
+        </bpmn:extensionElements>
+        <bpmn:incoming>Flow_06tmyk4</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:sequenceFlow id="Flow_09zrs8j" sourceRef="Gateway_1hj05dt" targetRef="Activity_1fybbeb" />
+      <bpmn:sequenceFlow id="Flow_06tmyk4" sourceRef="Activity_1fybbeb" targetRef="Event_15nfbfp" />
+      <bpmn:manualTask id="Activity_1fybbeb" name="Payment Successfully Completed">
+        <bpmn:incoming>Flow_09zrs8j</bpmn:incoming>
+        <bpmn:outgoing>Flow_06tmyk4</bpmn:outgoing>
+      </bpmn:manualTask>
+    </bpmn:subProcess>
+    <bpmn:boundaryEvent id="Event_0np1g12" attachedToRef="Activity_0qpzdpu">
+      <bpmn:outgoing>Flow_1mrjj0f</bpmn:outgoing>
+      <bpmn:errorEventDefinition id="ErrorEventDefinition_0kman62" errorRef="Error1" />
+    </bpmn:boundaryEvent>
+    <bpmn:sequenceFlow id="Flow_1mrjj0f" sourceRef="Event_0np1g12" targetRef="Activity_1n7h4f7" />
+    <bpmn:endEvent id="Event_1ibv1xr">
+      <bpmn:extensionElements>
+        <spiffworkflow:instructionsForEndUser>End Unit Test Expanded Sub Process with Error End Event. Escalation Path.</spiffworkflow:instructionsForEndUser>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1cp1ycm</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_1cp1ycm" sourceRef="Activity_1n7h4f7" targetRef="Event_1ibv1xr" />
+    <bpmn:manualTask id="Activity_1n7h4f7" name="Payment Cancelled">
+      <bpmn:extensionElements>
+        <spiffworkflow:instructionsForEndUser>Message: {{msg.err_msg}}</spiffworkflow:instructionsForEndUser>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1mrjj0f</bpmn:incoming>
+      <bpmn:outgoing>Flow_1cp1ycm</bpmn:outgoing>
+    </bpmn:manualTask>
+  </bpmn:process>
+  <bpmn:error id="Error1" name="Error1" errorCode="Err1">
+    <bpmn:extensionElements>
+      <spiffworkflow:payloadExpression>{
+"err_msg" : "Error Occured : Credit Card Expired"
+}</spiffworkflow:payloadExpression>
+      <spiffworkflow:variableName>msg</spiffworkflow:variableName>
+    </bpmn:extensionElements>
+  </bpmn:error>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_unit_test_expanded_sub_process_with_error_end_event_lzg0kkw">
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="12" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_14za570_di" bpmnElement="EndEvent_1">
+        <dc:Bounds x="712" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1ibv1xr_di" bpmnElement="Event_1ibv1xr">
+        <dc:Bounds x="632" y="402" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1omlzfx_di" bpmnElement="Activity_1n7h4f7">
+        <dc:Bounds x="480" y="380" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_16l1byb_di" bpmnElement="Activity_0qpzdpu" isExpanded="true">
+        <dc:Bounds x="90" y="20" width="570" height="320" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1sucv1z_di" bpmnElement="Event_1sucv1z">
+        <dc:Bounds x="112.33333333333334" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0r5sp9b_di" bpmnElement="Activity_02e9qbx">
+        <dc:Bounds x="200" y="137" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_1hj05dt_di" bpmnElement="Gateway_1hj05dt" isMarkerVisible="true">
+        <dc:Bounds x="355" y="152" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0qy4ywd_di" bpmnElement="Event_1jtgnix">
+        <dc:Bounds x="462" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_15nfbfp_di" bpmnElement="Event_15nfbfp">
+        <dc:Bounds x="552" y="252" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1rzqdl6_di" bpmnElement="Activity_1fybbeb">
+        <dc:Bounds x="430" y="230" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_1ahl42f_di" bpmnElement="Flow_1ahl42f">
+        <di:waypoint x="148" y="177" />
+        <di:waypoint x="200" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1x208xz_di" bpmnElement="Flow_1x208xz">
+        <di:waypoint x="300" y="177" />
+        <di:waypoint x="355" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1kk5ufa_di" bpmnElement="Flow_1kk5ufa">
+        <di:waypoint x="405" y="177" />
+        <di:waypoint x="462" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_09zrs8j_di" bpmnElement="Flow_09zrs8j">
+        <di:waypoint x="380" y="202" />
+        <di:waypoint x="380" y="270" />
+        <di:waypoint x="430" y="270" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_06tmyk4_di" bpmnElement="Flow_06tmyk4">
+        <di:waypoint x="530" y="270" />
+        <di:waypoint x="552" y="270" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="Event_1eo6wql_di" bpmnElement="Event_0np1g12">
+        <dc:Bounds x="392" y="322" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_17db3yp_di" bpmnElement="Flow_17db3yp">
+        <di:waypoint x="48" y="177" />
+        <di:waypoint x="90" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_12pkbxb_di" bpmnElement="Flow_12pkbxb">
+        <di:waypoint x="660" y="177" />
+        <di:waypoint x="712" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1mrjj0f_di" bpmnElement="Flow_1mrjj0f">
+        <di:waypoint x="410" y="358" />
+        <di:waypoint x="410" y="420" />
+        <di:waypoint x="480" y="420" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1cp1ycm_di" bpmnElement="Flow_1cp1ycm">
+        <di:waypoint x="580" y="420" />
+        <di:waypoint x="632" y="420" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

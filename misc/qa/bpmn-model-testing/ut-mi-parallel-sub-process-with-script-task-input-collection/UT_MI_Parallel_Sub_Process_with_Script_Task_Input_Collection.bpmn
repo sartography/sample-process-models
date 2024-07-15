@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:spiffworkflow="http://spiffworkflow.org/bpmn/schema/1.0/core" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_96f6665" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.0.0-dev">
+  <bpmn:process id="UT_MI_Parallel_Sub_Process_with_Script_Task_Input_Collection" name="MI Parallel Sub Process with Script Task Input Collection" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>Flow_1b75bhu</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_1b75bhu" sourceRef="StartEvent_1" targetRef="Activity_1ivw199" />
+    <bpmn:subProcess id="MI_Parallel_Sub_Process" name="MI Parallel Sub Process with Script Task Input Collection">
+      <bpmn:extensionElements>
+        <spiffworkflow:instructionsForEndUser />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0oq1hbk</bpmn:incoming>
+      <bpmn:outgoing>Flow_1uu4s9n</bpmn:outgoing>
+      <bpmn:multiInstanceLoopCharacteristics>
+        <bpmn:loopDataInputRef>mylist</bpmn:loopDataInputRef>
+        <bpmn:loopDataOutputRef>z</bpmn:loopDataOutputRef>
+      </bpmn:multiInstanceLoopCharacteristics>
+      <bpmn:startEvent id="Event_05ej1ga">
+        <bpmn:outgoing>Flow_1nv775d</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:sequenceFlow id="Flow_1nv775d" sourceRef="Event_05ej1ga" targetRef="Script_Task" />
+      <bpmn:endEvent id="Event_1qw9ezc">
+        <bpmn:incoming>Flow_1xbd71m</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:sequenceFlow id="Flow_1xbd71m" sourceRef="Script_Task" targetRef="Event_1qw9ezc" />
+      <bpmn:scriptTask id="Script_Task" name="Script Task">
+        <bpmn:incoming>Flow_1nv775d</bpmn:incoming>
+        <bpmn:outgoing>Flow_1xbd71m</bpmn:outgoing>
+        <bpmn:script>x = 10</bpmn:script>
+      </bpmn:scriptTask>
+    </bpmn:subProcess>
+    <bpmn:sequenceFlow id="Flow_0oq1hbk" sourceRef="Activity_1ivw199" targetRef="MI_Parallel_Sub_Process" />
+    <bpmn:endEvent id="Event_0c38uhu">
+      <bpmn:extensionElements>
+        <spiffworkflow:instructionsForEndUser>End MI Parallel Sub Process with Script Task Input Collection Unit Test. Output: {{x}}</spiffworkflow:instructionsForEndUser>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1uu4s9n</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_1uu4s9n" sourceRef="MI_Parallel_Sub_Process" targetRef="Event_0c38uhu" />
+    <bpmn:scriptTask id="Activity_1ivw199" name="Initializing Script Task">
+      <bpmn:incoming>Flow_1b75bhu</bpmn:incoming>
+      <bpmn:outgoing>Flow_0oq1hbk</bpmn:outgoing>
+      <bpmn:script>mylist = ["apple", "banana", "cherry"]</bpmn:script>
+    </bpmn:scriptTask>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="UT_MI_Parallel_Sub_Process_with_Script_Task_Input_Collection">
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="179" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_03qtoja_di" bpmnElement="MI_Parallel_Sub_Process" isExpanded="false">
+        <dc:Bounds x="430" y="137" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0c38uhu_di" bpmnElement="Event_0c38uhu">
+        <dc:Bounds x="592" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1fdy44c_di" bpmnElement="Activity_1ivw199">
+        <dc:Bounds x="270" y="137" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_1b75bhu_di" bpmnElement="Flow_1b75bhu">
+        <di:waypoint x="215" y="177" />
+        <di:waypoint x="270" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0oq1hbk_di" bpmnElement="Flow_0oq1hbk">
+        <di:waypoint x="370" y="177" />
+        <di:waypoint x="430" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1uu4s9n_di" bpmnElement="Flow_1uu4s9n">
+        <di:waypoint x="530" y="177" />
+        <di:waypoint x="592" y="177" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1xikche">
+    <bpmndi:BPMNPlane id="BPMNPlane_0czihku" bpmnElement="MI_Parallel_Sub_Process">
+      <bpmndi:BPMNShape id="Event_05ej1ga_di" bpmnElement="Event_05ej1ga">
+        <dc:Bounds x="180" y="182" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1qw9ezc_di" bpmnElement="Event_1qw9ezc">
+        <dc:Bounds x="432" y="182" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_01qu0kv_di" bpmnElement="Script_Task">
+        <dc:Bounds x="270" y="160" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_1nv775d_di" bpmnElement="Flow_1nv775d">
+        <di:waypoint x="216" y="200" />
+        <di:waypoint x="270" y="200" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1xbd71m_di" bpmnElement="Flow_1xbd71m">
+        <di:waypoint x="370" y="200" />
+        <di:waypoint x="432" y="200" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

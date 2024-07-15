@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:spiffworkflow="http://spiffworkflow.org/bpmn/schema/1.0/core" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_96f6665" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.0.0-dev">
+  <bpmn:process id="Process_lsnmf1d" name="escalation-end-event" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>Flow_1s3gmca</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_1s3gmca" sourceRef="StartEvent_1" targetRef="Activity_0kvmayq" />
+    <bpmn:userTask id="Activity_0kvmayq" name="Hungry ?">
+      <bpmn:extensionElements>
+        <spiffworkflow:properties>
+          <spiffworkflow:property name="formJsonSchemaFilename" value="hungry-schema.json" />
+          <spiffworkflow:property name="formUiSchemaFilename" value="hungry-uischema.json" />
+        </spiffworkflow:properties>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1s3gmca</bpmn:incoming>
+      <bpmn:outgoing>Flow_1d5s9iy</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:exclusiveGateway id="Gateway_0xy62f6" default="Flow_0myhkec">
+      <bpmn:incoming>Flow_1d5s9iy</bpmn:incoming>
+      <bpmn:outgoing>Flow_17ln2zy</bpmn:outgoing>
+      <bpmn:outgoing>Flow_0myhkec</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="Flow_1d5s9iy" sourceRef="Activity_0kvmayq" targetRef="Gateway_0xy62f6" />
+    <bpmn:sequenceFlow id="Flow_17ln2zy" sourceRef="Gateway_0xy62f6" targetRef="Event_0t3qqnw">
+      <bpmn:conditionExpression>hungry</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:endEvent id="Event_0t3qqnw">
+      <bpmn:incoming>Flow_17ln2zy</bpmn:incoming>
+      <bpmn:escalationEventDefinition id="EscalationEventDefinition_0pgghxu" />
+    </bpmn:endEvent>
+    <bpmn:endEvent id="Event_1njmzts">
+      <bpmn:incoming>Flow_0myhkec</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_0myhkec" sourceRef="Gateway_0xy62f6" targetRef="Event_1njmzts" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_lsnmf1d">
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="-48" y="62" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_129ruif_di" bpmnElement="Activity_0kvmayq">
+        <dc:Bounds x="40" y="40" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_0xy62f6_di" bpmnElement="Gateway_0xy62f6" isMarkerVisible="true">
+        <dc:Bounds x="195" y="55" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0muvz5j_di" bpmnElement="Event_0t3qqnw">
+        <dc:Bounds x="302" y="62" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1njmzts_di" bpmnElement="Event_1njmzts">
+        <dc:Bounds x="302" y="172" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_1s3gmca_di" bpmnElement="Flow_1s3gmca">
+        <di:waypoint x="-12" y="80" />
+        <di:waypoint x="40" y="80" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1d5s9iy_di" bpmnElement="Flow_1d5s9iy">
+        <di:waypoint x="140" y="80" />
+        <di:waypoint x="195" y="80" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_17ln2zy_di" bpmnElement="Flow_17ln2zy">
+        <di:waypoint x="245" y="80" />
+        <di:waypoint x="302" y="80" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0myhkec_di" bpmnElement="Flow_0myhkec">
+        <di:waypoint x="220" y="105" />
+        <di:waypoint x="220" y="190" />
+        <di:waypoint x="302" y="190" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

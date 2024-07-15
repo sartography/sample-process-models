@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:spiffworkflow="http://spiffworkflow.org/bpmn/schema/1.0/core" id="Definitions_96f6665" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.0.0-dev">
+  <bpmn:process id="Conditional_Start_Event_Process" name="Conditional Start Event Process" isExecutable="true">
+    <bpmn:startEvent id="Event_12yyawo">
+      <bpmn:outgoing>Flow_1pkocu4</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_1pkocu4" sourceRef="Event_12yyawo" targetRef="Activity_08c7sxs" />
+    <bpmn:endEvent id="Event_1aqyzv8">
+      <bpmn:extensionElements>
+        <spiffworkflow:instructionsForEndUser>End </spiffworkflow:instructionsForEndUser>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_09xdtji</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_09xdtji" sourceRef="Activity_08c7sxs" targetRef="Event_1aqyzv8" />
+    <bpmn:scriptTask id="Activity_08c7sxs" name="Initialize age">
+      <bpmn:incoming>Flow_1pkocu4</bpmn:incoming>
+      <bpmn:outgoing>Flow_09xdtji</bpmn:outgoing>
+      <bpmn:script>age = 20</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:sequenceFlow id="Flow_0dws30o" sourceRef="Event_1rq8jah" targetRef="Activity_0zuzc7z" />
+    <bpmn:endEvent id="Event_0klkcso">
+      <bpmn:extensionElements>
+        <spiffworkflow:instructionsForEndUser>End Adult Task</spiffworkflow:instructionsForEndUser>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0iijpl4</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_0iijpl4" sourceRef="Activity_0zuzc7z" targetRef="Event_0klkcso" />
+    <bpmn:startEvent id="Event_1rq8jah">
+      <bpmn:outgoing>Flow_0dws30o</bpmn:outgoing>
+      <bpmn:conditionalEventDefinition id="ConditionalEventDefinition_0l4rjvv">
+        <bpmn:condition>age&gt;18</bpmn:condition>
+      </bpmn:conditionalEventDefinition>
+    </bpmn:startEvent>
+    <bpmn:manualTask id="Activity_0zuzc7z" name="Task for Adults">
+      <bpmn:incoming>Flow_0dws30o</bpmn:incoming>
+      <bpmn:outgoing>Flow_0iijpl4</bpmn:outgoing>
+    </bpmn:manualTask>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Conditional_Start_Event_Process">
+      <bpmndi:BPMNShape id="Event_12yyawo_di" bpmnElement="Event_12yyawo">
+        <dc:Bounds x="62" y="-8" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1aqyzv8_di" bpmnElement="Event_1aqyzv8">
+        <dc:Bounds x="302" y="-8" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1r27wzk_di" bpmnElement="Activity_08c7sxs">
+        <dc:Bounds x="150" y="-30" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0klkcso_di" bpmnElement="Event_0klkcso">
+        <dc:Bounds x="302" y="132" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="285" y="175" width="74" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0x8a8w1_di" bpmnElement="Event_1rq8jah">
+        <dc:Bounds x="62" y="132" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1jvcxxi_di" bpmnElement="Activity_0zuzc7z">
+        <dc:Bounds x="150" y="110" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_1pkocu4_di" bpmnElement="Flow_1pkocu4">
+        <di:waypoint x="98" y="10" />
+        <di:waypoint x="150" y="10" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_09xdtji_di" bpmnElement="Flow_09xdtji">
+        <di:waypoint x="250" y="10" />
+        <di:waypoint x="302" y="10" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0dws30o_di" bpmnElement="Flow_0dws30o">
+        <di:waypoint x="98" y="150" />
+        <di:waypoint x="150" y="150" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0iijpl4_di" bpmnElement="Flow_0iijpl4">
+        <di:waypoint x="250" y="150" />
+        <di:waypoint x="302" y="150" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

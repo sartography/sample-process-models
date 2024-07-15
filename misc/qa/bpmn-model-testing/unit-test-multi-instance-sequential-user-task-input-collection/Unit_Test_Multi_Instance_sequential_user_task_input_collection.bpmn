@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:spiffworkflow="http://spiffworkflow.org/bpmn/schema/1.0/core" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="Definitions_96f6665" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.0.0-dev">
+  <bpmn:process id="Unit_Test_Multi_Instance_sequential_user_task_input_collection" name="Unit Test Multi Instance sequential user task input collection" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>Flow_0oqfdx1</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_0oqfdx1" sourceRef="StartEvent_1" targetRef="Activity_10kc46y" />
+    <bpmn:sequenceFlow id="Flow_18upo9k" sourceRef="Activity_10kc46y" targetRef="Activity_0lc3y86" />
+    <bpmn:endEvent id="Event_0z6gmxk">
+      <bpmn:extensionElements>
+        <spiffworkflow:instructionsForEndUser>End Multi Instance Sequential User Task Input Collection Unit Test.
+{{Colors}}</spiffworkflow:instructionsForEndUser>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0cswees</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_0cswees" sourceRef="Activity_0lc3y86" targetRef="Event_0z6gmxk" />
+    <bpmn:scriptTask id="Activity_10kc46y" name="Initializing Script Task">
+      <bpmn:incoming>Flow_0oqfdx1</bpmn:incoming>
+      <bpmn:outgoing>Flow_18upo9k</bpmn:outgoing>
+      <bpmn:script>products = { }
+products[f'item_{len(products) + 1}'] = {
+'product_name': "Product1",
+'product_quantity': 3,
+'product_color': "blue",
+'product_size': 5,
+'product_style': "ttt",
+'product_price': 44,
+}
+products[f'item_{len(products) + 1}'] = {
+'product_name': "Product2",
+'product_quantity': 6,
+'product_color': "red",
+'product_size': 33,
+'product_style': "hhh",
+'product_price': 77,
+}
+products[f'item_{len(products) + 1}'] = {
+'product_name': "Product3",
+'product_quantity': 3,
+'product_color': "black",
+'product_size': 1,
+'product_style': "hhh",
+'product_price': 400,
+}
+
+products[f'item_{len(products) + 1}'] = {
+'product_name': "Product4",
+'product_quantity': 6,
+'product_color': "green",
+'product_size': 24,
+'product_style': "hhh",
+'product_price': 3,
+}</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:userTask id="Activity_0lc3y86" name="Sequential multi-instance user task">
+      <bpmn:extensionElements>
+        <spiffworkflow:properties>
+          <spiffworkflow:property name="formUiSchemaFilename" value="what-color-is-uischema.json" />
+          <spiffworkflow:property name="formJsonSchemaFilename" value="what-color-is-schema.json" />
+        </spiffworkflow:properties>
+        <spiffworkflow:instructionsForEndUser>product {{product}}</spiffworkflow:instructionsForEndUser>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_18upo9k</bpmn:incoming>
+      <bpmn:outgoing>Flow_0cswees</bpmn:outgoing>
+      <bpmn:multiInstanceLoopCharacteristics isSequential="true">
+        <bpmn:loopDataInputRef>products</bpmn:loopDataInputRef>
+        <bpmn:loopDataOutputRef>Colors</bpmn:loopDataOutputRef>
+        <bpmn:inputDataItem id="product" name="product" />
+        <bpmn:outputDataItem id="color" name="color" />
+        <bpmn:completionCondition xsi:type="bpmn:tFormalExpression">product["product_color"]=="black"</bpmn:completionCondition>
+      </bpmn:multiInstanceLoopCharacteristics>
+    </bpmn:userTask>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Unit_Test_Multi_Instance_sequential_user_task_input_collection">
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="179" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0z6gmxk_di" bpmnElement="Event_0z6gmxk">
+        <dc:Bounds x="592" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1fzshr7_di" bpmnElement="Activity_10kc46y">
+        <dc:Bounds x="270" y="137" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_03wd4qp_di" bpmnElement="Activity_0lc3y86">
+        <dc:Bounds x="430" y="137" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_0oqfdx1_di" bpmnElement="Flow_0oqfdx1">
+        <di:waypoint x="215" y="177" />
+        <di:waypoint x="270" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_18upo9k_di" bpmnElement="Flow_18upo9k">
+        <di:waypoint x="370" y="177" />
+        <di:waypoint x="430" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0cswees_di" bpmnElement="Flow_0cswees">
+        <di:waypoint x="530" y="177" />
+        <di:waypoint x="592" y="177" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

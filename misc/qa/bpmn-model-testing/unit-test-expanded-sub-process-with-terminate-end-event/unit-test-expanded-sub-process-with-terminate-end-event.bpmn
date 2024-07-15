@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:spiffworkflow="http://spiffworkflow.org/bpmn/schema/1.0/core" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_96f6665" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.0.0-dev">
+  <bpmn:process id="Process_unit_test_expanded_sub_process_with_terminate_end_event_v07ir8r" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>Flow_17db3yp</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_17db3yp" sourceRef="StartEvent_1" targetRef="Activity_0qpzdpu" />
+    <bpmn:endEvent id="EndEvent_1">
+      <bpmn:extensionElements>
+        <spiffworkflow:instructionsForEndUser>End Unit Test Expanded Sub Process with Terminate End Event.</spiffworkflow:instructionsForEndUser>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_12pkbxb</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_12pkbxb" sourceRef="Activity_0qpzdpu" targetRef="EndEvent_1" />
+    <bpmn:subProcess id="Activity_0qpzdpu" name="Expanded Sub Process">
+      <bpmn:extensionElements>
+        <spiffworkflow:instructionsForEndUser />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_17db3yp</bpmn:incoming>
+      <bpmn:outgoing>Flow_12pkbxb</bpmn:outgoing>
+      <bpmn:startEvent id="Event_1ez7wxh">
+        <bpmn:outgoing>Flow_1en1lu5</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:sequenceFlow id="Flow_1en1lu5" sourceRef="Event_1ez7wxh" targetRef="Activity_1vowx1n" />
+      <bpmn:manualTask id="Activity_1vowx1n" name="Grocery Shopping">
+        <bpmn:incoming>Flow_1en1lu5</bpmn:incoming>
+        <bpmn:outgoing>Flow_16ac1ws</bpmn:outgoing>
+      </bpmn:manualTask>
+      <bpmn:sequenceFlow id="Flow_16ac1ws" sourceRef="Activity_1vowx1n" targetRef="Activity_17mp6xv" />
+      <bpmn:userTask id="Activity_17mp6xv" name="Additional Money Left?">
+        <bpmn:extensionElements>
+          <spiffworkflow:properties>
+            <spiffworkflow:property name="formJsonSchemaFilename" value="check-balance-schema.json" />
+            <spiffworkflow:property name="formUiSchemaFilename" value="check-balance-uischema.json" />
+          </spiffworkflow:properties>
+        </bpmn:extensionElements>
+        <bpmn:incoming>Flow_16ac1ws</bpmn:incoming>
+        <bpmn:outgoing>Flow_0w1z0ae</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:exclusiveGateway id="Gateway_1of6jjd" default="Flow_13ugg2j">
+        <bpmn:incoming>Flow_0w1z0ae</bpmn:incoming>
+        <bpmn:outgoing>Flow_1n64f5g</bpmn:outgoing>
+        <bpmn:outgoing>Flow_13ugg2j</bpmn:outgoing>
+      </bpmn:exclusiveGateway>
+      <bpmn:sequenceFlow id="Flow_0w1z0ae" sourceRef="Activity_17mp6xv" targetRef="Gateway_1of6jjd" />
+      <bpmn:sequenceFlow id="Flow_1n64f5g" sourceRef="Gateway_1of6jjd" targetRef="Event_1cf03n6">
+        <bpmn:conditionExpression>balance == 'No'</bpmn:conditionExpression>
+      </bpmn:sequenceFlow>
+      <bpmn:task id="Activity_1b5l3ya" name="Buy an Ice Cream">
+        <bpmn:incoming>Flow_13ugg2j</bpmn:incoming>
+        <bpmn:outgoing>Flow_1loyn18</bpmn:outgoing>
+      </bpmn:task>
+      <bpmn:sequenceFlow id="Flow_13ugg2j" sourceRef="Gateway_1of6jjd" targetRef="Activity_1b5l3ya">
+        <bpmn:conditionExpression>balance == 'Yes'</bpmn:conditionExpression>
+      </bpmn:sequenceFlow>
+      <bpmn:endEvent id="Event_00hvws7" name="End">
+        <bpmn:incoming>Flow_1loyn18</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:sequenceFlow id="Flow_1loyn18" sourceRef="Activity_1b5l3ya" targetRef="Event_00hvws7" />
+      <bpmn:endEvent id="Event_1cf03n6" name="Additional Money Left?">
+        <bpmn:incoming>Flow_1n64f5g</bpmn:incoming>
+        <bpmn:terminateEventDefinition id="TerminateEventDefinition_187a3tz" />
+      </bpmn:endEvent>
+    </bpmn:subProcess>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_unit_test_expanded_sub_process_with_terminate_end_event_v07ir8r">
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="22" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_14za570_di" bpmnElement="EndEvent_1">
+        <dc:Bounds x="1142" y="157" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0w5y1je_di" bpmnElement="Activity_0qpzdpu" isExpanded="true">
+        <dc:Bounds x="145" y="0" width="935" height="350" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1ez7wxh_di" bpmnElement="Event_1ez7wxh">
+        <dc:Bounds x="185.33333333333334" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_01hvrww_di" bpmnElement="Activity_1vowx1n">
+        <dc:Bounds x="280" y="137" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0arawo4_di" bpmnElement="Activity_17mp6xv">
+        <dc:Bounds x="440" y="137" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_1of6jjd_di" bpmnElement="Gateway_1of6jjd" isMarkerVisible="true">
+        <dc:Bounds x="605" y="152" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1b5l3ya_di" bpmnElement="Activity_1b5l3ya">
+        <dc:Bounds x="730" y="250" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_00hvws7_di" bpmnElement="Event_00hvws7">
+        <dc:Bounds x="912" y="272" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="920" y="315" width="20" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1eb4xte_di" bpmnElement="Event_1cf03n6">
+        <dc:Bounds x="752" y="159" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="728" y="202" width="84" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_1en1lu5_di" bpmnElement="Flow_1en1lu5">
+        <di:waypoint x="221" y="177" />
+        <di:waypoint x="280" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_16ac1ws_di" bpmnElement="Flow_16ac1ws">
+        <di:waypoint x="380" y="177" />
+        <di:waypoint x="440" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0w1z0ae_di" bpmnElement="Flow_0w1z0ae">
+        <di:waypoint x="540" y="177" />
+        <di:waypoint x="605" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1n64f5g_di" bpmnElement="Flow_1n64f5g">
+        <di:waypoint x="655" y="177" />
+        <di:waypoint x="752" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_13ugg2j_di" bpmnElement="Flow_13ugg2j">
+        <di:waypoint x="630" y="202" />
+        <di:waypoint x="630" y="290" />
+        <di:waypoint x="730" y="290" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1loyn18_di" bpmnElement="Flow_1loyn18">
+        <di:waypoint x="830" y="290" />
+        <di:waypoint x="912" y="290" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_17db3yp_di" bpmnElement="Flow_17db3yp">
+        <di:waypoint x="58" y="177" />
+        <di:waypoint x="145" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_12pkbxb_di" bpmnElement="Flow_12pkbxb">
+        <di:waypoint x="1080" y="175" />
+        <di:waypoint x="1142" y="175" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

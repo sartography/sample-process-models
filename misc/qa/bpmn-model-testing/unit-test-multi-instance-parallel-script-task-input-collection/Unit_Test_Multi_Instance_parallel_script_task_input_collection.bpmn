@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:spiffworkflow="http://spiffworkflow.org/bpmn/schema/1.0/core" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_96f6665" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.0.0-dev">
+  <bpmn:process id="Unit_Test_Multi_Instance_parallel_script_task_input_collection" name="Unit Test Multi Instance parallel script task input collection" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>Flow_0t0eq7o</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_0t0eq7o" sourceRef="StartEvent_1" targetRef="Activity_0f7n4i4" />
+    <bpmn:scriptTask id="Activity_0f7n4i4" name="Initializing Script Task">
+      <bpmn:incoming>Flow_0t0eq7o</bpmn:incoming>
+      <bpmn:outgoing>Flow_1fa1fke</bpmn:outgoing>
+      <bpmn:script>mylist = ["apple", "banana", "cherry"]</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:sequenceFlow id="Flow_1fa1fke" sourceRef="Activity_0f7n4i4" targetRef="Activity_1gt7d3t" />
+    <bpmn:scriptTask id="Activity_1gt7d3t" name="Parallel Multi Instance Script Task">
+      <bpmn:extensionElements>
+        <spiffworkflow:instructionsForEndUser />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1fa1fke</bpmn:incoming>
+      <bpmn:outgoing>Flow_0qqs4bb</bpmn:outgoing>
+      <bpmn:multiInstanceLoopCharacteristics>
+        <bpmn:loopDataInputRef>mylist</bpmn:loopDataInputRef>
+        <bpmn:loopDataOutputRef>z</bpmn:loopDataOutputRef>
+        <bpmn:inputDataItem id="x" name="x" />
+        <bpmn:outputDataItem id="y" name="y" />
+      </bpmn:multiInstanceLoopCharacteristics>
+      <bpmn:script>y = 'Eat ' + x</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:endEvent id="Event_09s50km">
+      <bpmn:extensionElements>
+        <spiffworkflow:instructionsForEndUser>End Multi Instance Parallel Script Task Unit Test. Output Collection: {{z}}</spiffworkflow:instructionsForEndUser>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0qqs4bb</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_0qqs4bb" sourceRef="Activity_1gt7d3t" targetRef="Event_09s50km" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Unit_Test_Multi_Instance_parallel_script_task_input_collection">
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="179" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_03j9srx_di" bpmnElement="Activity_0f7n4i4">
+        <dc:Bounds x="270" y="137" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0nfpkhd_di" bpmnElement="Activity_1gt7d3t">
+        <dc:Bounds x="430" y="137" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_09s50km_di" bpmnElement="Event_09s50km">
+        <dc:Bounds x="592" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_0t0eq7o_di" bpmnElement="Flow_0t0eq7o">
+        <di:waypoint x="215" y="177" />
+        <di:waypoint x="270" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1fa1fke_di" bpmnElement="Flow_1fa1fke">
+        <di:waypoint x="370" y="177" />
+        <di:waypoint x="430" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0qqs4bb_di" bpmnElement="Flow_0qqs4bb">
+        <di:waypoint x="530" y="177" />
+        <di:waypoint x="592" y="177" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

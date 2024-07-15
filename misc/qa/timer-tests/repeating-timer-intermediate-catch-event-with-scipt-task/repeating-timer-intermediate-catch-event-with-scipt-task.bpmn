@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:spiffworkflow="http://spiffworkflow.org/bpmn/schema/1.0/core" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_96f6665" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.0.0-dev">
+  <bpmn:process id="repeating-timer-intermediate-catch-event-with-scipt-task" name="Cycle Timer 120 Seconds script task" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>Flow_0el8fqm</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_0el8fqm" sourceRef="StartEvent_1" targetRef="Activity_0kyb5c6" />
+    <bpmn:scriptTask id="Activity_0kyb5c6" name="Script Task">
+      <bpmn:incoming>Flow_0el8fqm</bpmn:incoming>
+      <bpmn:outgoing>Flow_1pu8j69</bpmn:outgoing>
+      <bpmn:script>start_time = round(time.time() * 1000)
+duration = 0</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:sequenceFlow id="Flow_1pu8j69" sourceRef="Activity_0kyb5c6" targetRef="Event_0a1a6x5" />
+    <bpmn:intermediateCatchEvent id="Event_0a1a6x5">
+      <bpmn:incoming>Flow_1pu8j69</bpmn:incoming>
+      <bpmn:outgoing>Flow_0rz2yt9</bpmn:outgoing>
+      <bpmn:timerEventDefinition id="TimerEventDefinition_1xm66u8">
+        <bpmn:timeCycle xsi:type="bpmn:tFormalExpression">"R5/PT65S"</bpmn:timeCycle>
+      </bpmn:timerEventDefinition>
+    </bpmn:intermediateCatchEvent>
+    <bpmn:intermediateThrowEvent id="Event_0kgw1up" name="Cycle timer Intermidate Fired">
+      <bpmn:incoming>Flow_0rz2yt9</bpmn:incoming>
+      <bpmn:outgoing>Flow_0dqhl2x</bpmn:outgoing>
+    </bpmn:intermediateThrowEvent>
+    <bpmn:sequenceFlow id="Flow_0rz2yt9" sourceRef="Event_0a1a6x5" targetRef="Event_0kgw1up" />
+    <bpmn:sequenceFlow id="Flow_0dqhl2x" sourceRef="Event_0kgw1up" targetRef="Activity_04c19jd" />
+    <bpmn:endEvent id="Event_126t75u">
+      <bpmn:incoming>Flow_1ocogrp</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_1ocogrp" sourceRef="Activity_04c19jd" targetRef="Event_126t75u" />
+    <bpmn:scriptTask id="Activity_04c19jd" name="Script Task">
+      <bpmn:extensionElements>
+        <spiffworkflow:preScript>end_time = round(time.time() * 1000)
+
+try:    
+    duration = round((end_time-start_time)/1000)  
+    start_time = end_time  
+except:
+    duration = 0
+    start_time = end_time
+
+</spiffworkflow:preScript>
+        <spiffworkflow:instructionsForEndUser>Timer Triggered after {{duration}}s</spiffworkflow:instructionsForEndUser>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0dqhl2x</bpmn:incoming>
+      <bpmn:outgoing>Flow_1ocogrp</bpmn:outgoing>
+      <bpmn:script>end_time = round(time.time() * 1000)
+
+try:    
+    duration = round((end_time-start_time)/1000)  
+    start_time = end_time  
+except:
+    duration = 0
+    start_time = end_time
+
+#if the duration is between 325-350 set it as 325
+if duration &gt;= 325 and duration &lt; 350:
+    duration = 325</bpmn:script>
+    </bpmn:scriptTask>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="repeating-timer-intermediate-catch-event-with-scipt-task">
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="-48" y="142" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1vcszn3_di" bpmnElement="Activity_0kyb5c6">
+        <dc:Bounds x="40" y="120" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_00mtuoq_di" bpmnElement="Event_0a1a6x5">
+        <dc:Bounds x="192" y="142" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0kgw1up_di" bpmnElement="Event_0kgw1up">
+        <dc:Bounds x="282" y="142" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="260" y="185" width="80" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_126t75u_di" bpmnElement="Event_126t75u">
+        <dc:Bounds x="542" y="142" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_18vzhvb_di" bpmnElement="Activity_04c19jd">
+        <dc:Bounds x="380" y="120" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_0el8fqm_di" bpmnElement="Flow_0el8fqm">
+        <di:waypoint x="-12" y="160" />
+        <di:waypoint x="40" y="160" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1pu8j69_di" bpmnElement="Flow_1pu8j69">
+        <di:waypoint x="140" y="160" />
+        <di:waypoint x="192" y="160" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0rz2yt9_di" bpmnElement="Flow_0rz2yt9">
+        <di:waypoint x="228" y="160" />
+        <di:waypoint x="282" y="160" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0dqhl2x_di" bpmnElement="Flow_0dqhl2x">
+        <di:waypoint x="318" y="160" />
+        <di:waypoint x="380" y="160" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1ocogrp_di" bpmnElement="Flow_1ocogrp">
+        <di:waypoint x="480" y="160" />
+        <di:waypoint x="542" y="160" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

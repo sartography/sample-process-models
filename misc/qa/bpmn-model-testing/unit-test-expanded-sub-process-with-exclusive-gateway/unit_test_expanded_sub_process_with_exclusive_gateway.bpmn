@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:spiffworkflow="http://spiffworkflow.org/bpmn/schema/1.0/core" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_96f6665" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.0.0-dev">
+  <bpmn:process id="Unit_Test_Expanded_Sub_Process_with_Exclusive_Gateway" name="Unit Test Expanded Sub Process with Exclusive Gateway" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>Flow_1i2fuxh</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_1i2fuxh" sourceRef="StartEvent_1" targetRef="Script_Task" />
+    <bpmn:scriptTask id="Script_Task" name="Script Task">
+      <bpmn:incoming>Flow_1i2fuxh</bpmn:incoming>
+      <bpmn:outgoing>Flow_0veac1i</bpmn:outgoing>
+      <bpmn:script>x = 5</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:subProcess id="Expanded_Sub_Process" name="Expanded Sub Process with Exclusive Gateway">
+      <bpmn:incoming>Flow_0veac1i</bpmn:incoming>
+      <bpmn:outgoing>Flow_091iih3</bpmn:outgoing>
+      <bpmn:startEvent id="Event_1cnr2t3">
+        <bpmn:outgoing>Flow_03z3djw</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:exclusiveGateway id="Gateway_15rx8vl">
+        <bpmn:incoming>Flow_03z3djw</bpmn:incoming>
+        <bpmn:outgoing>Flow_14b7uh1</bpmn:outgoing>
+        <bpmn:outgoing>Flow_1jhf1qh</bpmn:outgoing>
+      </bpmn:exclusiveGateway>
+      <bpmn:sequenceFlow id="Flow_03z3djw" sourceRef="Event_1cnr2t3" targetRef="Gateway_15rx8vl" />
+      <bpmn:sequenceFlow id="Flow_14b7uh1" sourceRef="Gateway_15rx8vl" targetRef="Activity_111fzwc">
+        <bpmn:conditionExpression>x &lt;= 10</bpmn:conditionExpression>
+      </bpmn:sequenceFlow>
+      <bpmn:sequenceFlow id="Flow_1jhf1qh" sourceRef="Gateway_15rx8vl" targetRef="Activity_09calaw">
+        <bpmn:conditionExpression>x&gt;10</bpmn:conditionExpression>
+      </bpmn:sequenceFlow>
+      <bpmn:exclusiveGateway id="Gateway_15thllm">
+        <bpmn:incoming>Flow_0l6zcur</bpmn:incoming>
+        <bpmn:incoming>Flow_1c3t1kn</bpmn:incoming>
+        <bpmn:outgoing>Flow_0moum8f</bpmn:outgoing>
+      </bpmn:exclusiveGateway>
+      <bpmn:sequenceFlow id="Flow_0l6zcur" sourceRef="Activity_111fzwc" targetRef="Gateway_15thllm" />
+      <bpmn:sequenceFlow id="Flow_1c3t1kn" sourceRef="Activity_09calaw" targetRef="Gateway_15thllm" />
+      <bpmn:endEvent id="Event_05mndx5">
+        <bpmn:incoming>Flow_0moum8f</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:sequenceFlow id="Flow_0moum8f" sourceRef="Gateway_15thllm" targetRef="Event_05mndx5" />
+      <bpmn:scriptTask id="Activity_111fzwc">
+        <bpmn:incoming>Flow_14b7uh1</bpmn:incoming>
+        <bpmn:outgoing>Flow_0l6zcur</bpmn:outgoing>
+        <bpmn:script>Output = "Low"</bpmn:script>
+      </bpmn:scriptTask>
+      <bpmn:scriptTask id="Activity_09calaw">
+        <bpmn:incoming>Flow_1jhf1qh</bpmn:incoming>
+        <bpmn:outgoing>Flow_1c3t1kn</bpmn:outgoing>
+        <bpmn:script>Output = "High"</bpmn:script>
+      </bpmn:scriptTask>
+    </bpmn:subProcess>
+    <bpmn:sequenceFlow id="Flow_0veac1i" sourceRef="Script_Task" targetRef="Expanded_Sub_Process" />
+    <bpmn:endEvent id="Event_15i59k7">
+      <bpmn:extensionElements>
+        <spiffworkflow:instructionsForEndUser>End Expanded Sub Process with Exclusive Gateway. Variable: {{Output}}</spiffworkflow:instructionsForEndUser>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_091iih3</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_091iih3" sourceRef="Expanded_Sub_Process" targetRef="Event_15i59k7" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Unit_Test_Expanded_Sub_Process_with_Exclusive_Gateway">
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="-298" y="2" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0qa5xou_di" bpmnElement="Script_Task">
+        <dc:Bounds x="-210" y="-20" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_15i59k7_di" bpmnElement="Event_15i59k7">
+        <dc:Bounds x="622" y="57" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0owmj39_di" bpmnElement="Expanded_Sub_Process" isExpanded="true">
+        <dc:Bounds x="-80" y="-80" width="670" height="310" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1cnr2t3_di" bpmnElement="Event_1cnr2t3">
+        <dc:Bounds x="-40" y="2" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_15rx8vl_di" bpmnElement="Gateway_15rx8vl" isMarkerVisible="true">
+        <dc:Bounds x="55" y="-5" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_15thllm_di" bpmnElement="Gateway_15thllm" isMarkerVisible="true">
+        <dc:Bounds x="335" y="-5" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_05mndx5_di" bpmnElement="Event_05mndx5">
+        <dc:Bounds x="452" y="2" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1jdjnht_di" bpmnElement="Activity_111fzwc">
+        <dc:Bounds x="170" y="-20" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0jjubic_di" bpmnElement="Activity_09calaw">
+        <dc:Bounds x="170" y="90" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_03z3djw_di" bpmnElement="Flow_03z3djw">
+        <di:waypoint x="-4" y="20" />
+        <di:waypoint x="55" y="20" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_14b7uh1_di" bpmnElement="Flow_14b7uh1">
+        <di:waypoint x="105" y="20" />
+        <di:waypoint x="170" y="20" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1jhf1qh_di" bpmnElement="Flow_1jhf1qh">
+        <di:waypoint x="80" y="45" />
+        <di:waypoint x="80" y="130" />
+        <di:waypoint x="170" y="130" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0l6zcur_di" bpmnElement="Flow_0l6zcur">
+        <di:waypoint x="270" y="20" />
+        <di:waypoint x="335" y="20" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1c3t1kn_di" bpmnElement="Flow_1c3t1kn">
+        <di:waypoint x="270" y="130" />
+        <di:waypoint x="360" y="130" />
+        <di:waypoint x="360" y="45" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0moum8f_di" bpmnElement="Flow_0moum8f">
+        <di:waypoint x="385" y="20" />
+        <di:waypoint x="452" y="20" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1i2fuxh_di" bpmnElement="Flow_1i2fuxh">
+        <di:waypoint x="-262" y="20" />
+        <di:waypoint x="-210" y="20" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0veac1i_di" bpmnElement="Flow_0veac1i">
+        <di:waypoint x="-110" y="20" />
+        <di:waypoint x="-80" y="20" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_091iih3_di" bpmnElement="Flow_091iih3">
+        <di:waypoint x="590" y="75" />
+        <di:waypoint x="622" y="75" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

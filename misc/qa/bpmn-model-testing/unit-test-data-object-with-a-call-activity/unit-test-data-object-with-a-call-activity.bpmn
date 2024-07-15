@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:spiffworkflow="http://spiffworkflow.org/bpmn/schema/1.0/core" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_96f6665" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.0.0-dev">
+  <bpmn:process id="Unit_Test_Data_Object_With_CallActivity" name="Unit Test Data Object With Call Activity" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>Flow_0g3wx86</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_0g3wx86" sourceRef="StartEvent_1" targetRef="Activity_0nr77uq" />
+    <bpmn:sequenceFlow id="Flow_1ktcieo" sourceRef="Activity_0nr77uq" targetRef="Activity_0fdjzc5" />
+    <bpmn:sequenceFlow id="Flow_12nn551" sourceRef="Activity_01jyc3c" targetRef="Activity_0k75ihn" />
+    <bpmn:endEvent id="Event_0182ql8">
+      <bpmn:extensionElements>
+        <spiffworkflow:instructionsForEndUser>DataObjectA = {{DataObjectA}}
+
+ReadDataObjectA = {{ReadDataObjectA}}
+
+NonDataObjectVar= {{NonDataObjectVar}}</spiffworkflow:instructionsForEndUser>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1xasdk4</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_1xwrfm9" sourceRef="Activity_0k75ihn" targetRef="Activity_0whpffk" />
+    <bpmn:scriptTask id="Activity_0nr77uq" name="Create DO">
+      <bpmn:incoming>Flow_0g3wx86</bpmn:incoming>
+      <bpmn:outgoing>Flow_1ktcieo</bpmn:outgoing>
+      <bpmn:script>DataObjectA = "Red (dataobject)"
+NonDataObjectVar = "Blue (var)"</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:scriptTask id="Activity_0k75ihn" name="Access DO">
+      <bpmn:extensionElements>
+        <spiffworkflow:instructionsForEndUser>DataObjectAVal = {{DataObjectA}}
+
+DataObjectBVal = {{DataObjectB}}
+
+ReadDataObjectA = {{ReadDataObjectA}}
+
+NonDataObjectVar= {{NonDataObjectVar}}</spiffworkflow:instructionsForEndUser>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_12nn551</bpmn:incoming>
+      <bpmn:outgoing>Flow_1xwrfm9</bpmn:outgoing>
+      <bpmn:property id="Property_1ve04cq" name="__targetRef_placeholder" />
+      <bpmn:dataInputAssociation id="DataInputAssociation_00s6spf">
+        <bpmn:sourceRef>DataObjectReference_19u7ict</bpmn:sourceRef>
+        <bpmn:targetRef>Property_1ve04cq</bpmn:targetRef>
+      </bpmn:dataInputAssociation>
+      <bpmn:script>ReadDataObjectA = DataObjectA</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:dataObjectReference id="DataObjectReference_19u7ict" name="Data Object B" dataObjectRef="DataObjectB" />
+    <bpmn:dataObject id="DataObjectA" />
+    <bpmn:manualTask id="Activity_01jyc3c" name="Check DO">
+      <bpmn:extensionElements>
+        <spiffworkflow:instructionsForEndUser>DataObjectAVal = {{DataObjectA}}
+
+DataObjectBVal = {{DataObjectB}}
+
+NonDataObjectVar = {{NonDataObjectVar}}</spiffworkflow:instructionsForEndUser>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0bkc6fl</bpmn:incoming>
+      <bpmn:outgoing>Flow_12nn551</bpmn:outgoing>
+    </bpmn:manualTask>
+    <bpmn:manualTask id="Activity_0whpffk" name="Check DO">
+      <bpmn:extensionElements>
+        <spiffworkflow:instructionsForEndUser>DataObjectAVal = {{DataObjectA}}
+
+DataObjectBVal = {{DataObjectB}}
+
+ReadDataObjectA = {{ReadDataObjectA}}
+
+NonDataObjectVar = {{NonDataObjectVar}}
+
+*NOTE : When a Data Object inserts data, it also automatically removes it on completion of the Task. So it'll not be available in the next task*</spiffworkflow:instructionsForEndUser>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1xwrfm9</bpmn:incoming>
+      <bpmn:outgoing>Flow_1xasdk4</bpmn:outgoing>
+    </bpmn:manualTask>
+    <bpmn:sequenceFlow id="Flow_1xasdk4" sourceRef="Activity_0whpffk" targetRef="Event_0182ql8" />
+    <bpmn:sequenceFlow id="Flow_0bkc6fl" sourceRef="Activity_0fdjzc5" targetRef="Activity_01jyc3c" />
+    <bpmn:callActivity id="Activity_0fdjzc5" name="Call Activity" calledElement="Unit_Test_Script_Task">
+      <bpmn:extensionElements>
+        <spiffworkflow:preScript>DataObjectB = "Green (dataobject)"</spiffworkflow:preScript>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1ktcieo</bpmn:incoming>
+      <bpmn:outgoing>Flow_0bkc6fl</bpmn:outgoing>
+      <bpmn:dataOutputAssociation id="DataOutputAssociation_089yoq5">
+        <bpmn:targetRef>DataObjectReference_19u7ict</bpmn:targetRef>
+      </bpmn:dataOutputAssociation>
+    </bpmn:callActivity>
+    <bpmn:dataObject id="DataObjectB" name="Data Object B" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Unit_Test_Data_Object_With_CallActivity">
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="-298" y="152" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0182ql8_di" bpmnElement="Event_0182ql8">
+        <dc:Bounds x="602" y="152" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0dxki77_di" bpmnElement="Activity_0nr77uq">
+        <dc:Bounds x="-220" y="130" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0yf058g_di" bpmnElement="Activity_0k75ihn">
+        <dc:Bounds x="300" y="130" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DataObjectReference_19u7ict_di" bpmnElement="DataObjectReference_19u7ict">
+        <dc:Bounds x="182" y="-25" width="36" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="165" y="-49" width="70" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0fm3dcu_di" bpmnElement="Activity_01jyc3c">
+        <dc:Bounds x="140" y="130" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_001z6z5" bpmnElement="Activity_0whpffk">
+        <dc:Bounds x="450" y="130" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1xuuw0s_di" bpmnElement="Activity_0fdjzc5">
+        <dc:Bounds x="-30" y="130" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_0g3wx86_di" bpmnElement="Flow_0g3wx86">
+        <di:waypoint x="-262" y="170" />
+        <di:waypoint x="-220" y="170" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1ktcieo_di" bpmnElement="Flow_1ktcieo">
+        <di:waypoint x="-120" y="170" />
+        <di:waypoint x="-30" y="170" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_12nn551_di" bpmnElement="Flow_12nn551">
+        <di:waypoint x="240" y="170" />
+        <di:waypoint x="300" y="170" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1xwrfm9_di" bpmnElement="Flow_1xwrfm9">
+        <di:waypoint x="400" y="170" />
+        <di:waypoint x="450" y="170" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DataInputAssociation_00s6spf_di" bpmnElement="DataInputAssociation_00s6spf">
+        <di:waypoint x="218" y="17" />
+        <di:waypoint x="339" y="130" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1xasdk4_di" bpmnElement="Flow_1xasdk4">
+        <di:waypoint x="550" y="170" />
+        <di:waypoint x="602" y="170" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0bkc6fl_di" bpmnElement="Flow_0bkc6fl">
+        <di:waypoint x="70" y="170" />
+        <di:waypoint x="140" y="170" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DataOutputAssociation_089yoq5_di" bpmnElement="DataOutputAssociation_089yoq5">
+        <di:waypoint x="61" y="130" />
+        <di:waypoint x="182" y="14" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

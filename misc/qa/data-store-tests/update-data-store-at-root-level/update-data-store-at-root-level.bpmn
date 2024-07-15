@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:spiffworkflow="http://spiffworkflow.org/bpmn/schema/1.0/core" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_96f6665" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.0.0-dev">
+  <bpmn:process id="Process_update_data_store_at_root_level_zom00tk" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>Flow_17db3yp</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_17db3yp" sourceRef="StartEvent_1" targetRef="Activity_0qpzdpu" />
+    <bpmn:scriptTask id="Activity_0qpzdpu" name="Update Datastore">
+      <bpmn:extensionElements>
+        <spiffworkflow:instructionsForEndUser />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_17db3yp</bpmn:incoming>
+      <bpmn:outgoing>Flow_1ded8j0</bpmn:outgoing>
+      <bpmn:dataOutputAssociation id="DataOutputAssociation_05dh8lw">
+        <bpmn:targetRef>DataStoreReference_0hmtro2</bpmn:targetRef>
+      </bpmn:dataOutputAssociation>
+      <bpmn:script>travel_destinations =   { 
+    "Kyoto" : {  
+            "elevation" :"N/A" 
+        }    
+  }</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:dataStoreReference id="DataStoreReference_0hmtro2" name="Travel Destinations" dataStoreRef="travel_destinations" type="kkv" />
+    <bpmn:sequenceFlow id="Flow_1ded8j0" sourceRef="Activity_0qpzdpu" targetRef="Activity_0i97qoy" />
+    <bpmn:endEvent id="Event_1aiuiz1">
+      <bpmn:extensionElements>
+        <spiffworkflow:instructionsForEndUser>The process instance completed successfully. 
+
+Paris is in {{ country_of_paris }}
+
+Rome's highlights - {{ highlights_of_rome  }}
+
+Evelation of Kyoto is {{ evelation_of_kyoto  }}</spiffworkflow:instructionsForEndUser>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1wnusx0</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_1wnusx0" sourceRef="Activity_0i97qoy" targetRef="Event_1aiuiz1" />
+    <bpmn:scriptTask id="Activity_0i97qoy" name="Read from Datastore">
+      <bpmn:incoming>Flow_1ded8j0</bpmn:incoming>
+      <bpmn:outgoing>Flow_1wnusx0</bpmn:outgoing>
+      <bpmn:property id="Property_0lkun4p" name="__targetRef_placeholder" />
+      <bpmn:dataInputAssociation id="DataInputAssociation_0vs9ccp">
+        <bpmn:sourceRef>DataStoreReference_0hmtro2</bpmn:sourceRef>
+        <bpmn:targetRef>Property_0lkun4p</bpmn:targetRef>
+      </bpmn:dataInputAssociation>
+      <bpmn:script>country_of_paris = travel_destinations("Paris", "country")
+highlights_of_rome = travel_destinations("Rome", "highlights")
+evelation_of_kyoto = travel_destinations("Kyoto", "elevation")</bpmn:script>
+    </bpmn:scriptTask>
+  </bpmn:process>
+  <bpmn:dataStore id="travel_destinations" name="KKVDataStore" />
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_update_data_store_at_root_level_zom00tk">
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="179" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0ubxkd3_di" bpmnElement="Activity_0qpzdpu">
+        <dc:Bounds x="270" y="137" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DataStoreReference_0hmtro2_di" bpmnElement="DataStoreReference_0hmtro2">
+        <dc:Bounds x="365" y="-45" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="360" y="12" width="61" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1aiuiz1_di" bpmnElement="Event_1aiuiz1">
+        <dc:Bounds x="592" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0x1fs6b_di" bpmnElement="Activity_0i97qoy">
+        <dc:Bounds x="430" y="137" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_17db3yp_di" bpmnElement="Flow_17db3yp">
+        <di:waypoint x="215" y="177" />
+        <di:waypoint x="270" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DataOutputAssociation_05dh8lw_di" bpmnElement="DataOutputAssociation_05dh8lw">
+        <di:waypoint x="336" y="137" />
+        <di:waypoint x="387" y="5" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1ded8j0_di" bpmnElement="Flow_1ded8j0">
+        <di:waypoint x="370" y="177" />
+        <di:waypoint x="430" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1wnusx0_di" bpmnElement="Flow_1wnusx0">
+        <di:waypoint x="530" y="177" />
+        <di:waypoint x="592" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DataInputAssociation_0vs9ccp_di" bpmnElement="DataInputAssociation_0vs9ccp">
+        <di:waypoint x="401" y="5" />
+        <di:waypoint x="462" y="137" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:spiffworkflow="http://spiffworkflow.org/bpmn/schema/1.0/core" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_96f6665" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.0.0-dev">
+  <bpmn:process id="Conditional_Boundary_Event_Non_Interrupting" name="Conditional Boundary Event Non Interrupting" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>Flow_02m9euw</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_02m9euw" sourceRef="StartEvent_1" targetRef="User_Task" />
+    <bpmn:endEvent id="Event_05mvzqw">
+      <bpmn:extensionElements>
+        <spiffworkflow:instructionsForEndUser>End Conditional Boundary Event Non Interrupting Unit Test</spiffworkflow:instructionsForEndUser>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0cga8mo</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_0cga8mo" sourceRef="Activity_0s13gbk" targetRef="Event_05mvzqw" />
+    <bpmn:endEvent id="Event_19dzbsl">
+      <bpmn:extensionElements>
+        <spiffworkflow:instructionsForEndUser>End Conditional Boundary Event Non Interrupting Unit Test. Additional Guidelines.</spiffworkflow:instructionsForEndUser>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1q007l7</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_1q007l7" sourceRef="Activity_0e69iwt" targetRef="Event_19dzbsl" />
+    <bpmn:manualTask id="Activity_0s13gbk" name="Display Healthcare Guidelines">
+      <bpmn:extensionElements>
+        <spiffworkflow:instructionsForEndUser>Healthcare Guidelines for all ages</spiffworkflow:instructionsForEndUser>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0oknkxr</bpmn:incoming>
+      <bpmn:outgoing>Flow_0cga8mo</bpmn:outgoing>
+    </bpmn:manualTask>
+    <bpmn:manualTask id="Activity_0e69iwt" name="Display Additional Healthcare Guidelines">
+      <bpmn:extensionElements>
+        <spiffworkflow:instructionsForEndUser>Additional Healthcare Guidelines for Age Over 60</spiffworkflow:instructionsForEndUser>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1079t6a</bpmn:incoming>
+      <bpmn:outgoing>Flow_1q007l7</bpmn:outgoing>
+    </bpmn:manualTask>
+    <bpmn:userTask id="User_Task" name="Get Age">
+      <bpmn:extensionElements>
+        <spiffworkflow:properties>
+          <spiffworkflow:property name="formJsonSchemaFilename" value="get-age-schema.json" />
+        </spiffworkflow:properties>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_02m9euw</bpmn:incoming>
+      <bpmn:outgoing>Flow_03lxi8h</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:sequenceFlow id="Flow_03lxi8h" sourceRef="User_Task" targetRef="Activity_0dki3fv" />
+    <bpmn:sequenceFlow id="Flow_0oknkxr" sourceRef="Activity_0dki3fv" targetRef="Activity_0s13gbk" />
+    <bpmn:manualTask id="Activity_0dki3fv" name="Manual Task">
+      <bpmn:extensionElements>
+        <spiffworkflow:instructionsForEndUser>Click on Continue</spiffworkflow:instructionsForEndUser>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_03lxi8h</bpmn:incoming>
+      <bpmn:outgoing>Flow_0oknkxr</bpmn:outgoing>
+    </bpmn:manualTask>
+    <bpmn:sequenceFlow id="Flow_1079t6a" sourceRef="Event_0dzb4hh" targetRef="Activity_0e69iwt" />
+    <bpmn:boundaryEvent id="Event_0dzb4hh" cancelActivity="false" attachedToRef="Activity_0dki3fv">
+      <bpmn:outgoing>Flow_1079t6a</bpmn:outgoing>
+      <bpmn:conditionalEventDefinition id="ConditionalEventDefinition_0msxlcy">
+        <bpmn:condition>age&gt;60</bpmn:condition>
+      </bpmn:conditionalEventDefinition>
+    </bpmn:boundaryEvent>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Conditional_Boundary_Event_Non_Interrupting">
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="-328" y="102" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="-132" y="145" width="25" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_05mvzqw_di" bpmnElement="Event_05mvzqw">
+        <dc:Bounds x="302" y="102" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="280" y="145" width="20" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_19dzbsl_di" bpmnElement="Event_19dzbsl">
+        <dc:Bounds x="302" y="242" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="267" y="285" width="49" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0b5uvyw_di" bpmnElement="Activity_0s13gbk">
+        <dc:Bounds x="140" y="80" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1m12znu_di" bpmnElement="Activity_0e69iwt">
+        <dc:Bounds x="140" y="220" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0oa99um_di" bpmnElement="User_Task">
+        <dc:Bounds x="-220" y="80" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0ocgqlc_di" bpmnElement="Activity_0dki3fv">
+        <dc:Bounds x="-50" y="80" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1vkop89_di" bpmnElement="Event_0dzb4hh">
+        <dc:Bounds x="-8" y="142" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_02m9euw_di" bpmnElement="Flow_02m9euw">
+        <di:waypoint x="-292" y="120" />
+        <di:waypoint x="-220" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0cga8mo_di" bpmnElement="Flow_0cga8mo">
+        <di:waypoint x="240" y="120" />
+        <di:waypoint x="302" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1q007l7_di" bpmnElement="Flow_1q007l7">
+        <di:waypoint x="240" y="260" />
+        <di:waypoint x="302" y="260" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_03lxi8h_di" bpmnElement="Flow_03lxi8h">
+        <di:waypoint x="-120" y="120" />
+        <di:waypoint x="-50" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0oknkxr_di" bpmnElement="Flow_0oknkxr">
+        <di:waypoint x="50" y="120" />
+        <di:waypoint x="140" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1079t6a_di" bpmnElement="Flow_1079t6a">
+        <di:waypoint x="10" y="178" />
+        <di:waypoint x="10" y="260" />
+        <di:waypoint x="140" y="260" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

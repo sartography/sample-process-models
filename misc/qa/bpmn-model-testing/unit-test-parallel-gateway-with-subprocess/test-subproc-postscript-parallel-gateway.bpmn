@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:spiffworkflow="http://spiffworkflow.org/bpmn/schema/1.0/core" id="Definitions_96f6665" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.0.0-dev">
+  <bpmn:process id="Process_test_merge_u5mavz4" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>Flow_17db3yp</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_17db3yp" sourceRef="StartEvent_1" targetRef="st_initial" />
+    <bpmn:endEvent id="EndEvent_1">
+      <bpmn:incoming>Flow_11t1ctf</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_042zvc3" sourceRef="st_initial" targetRef="gw_start" />
+    <bpmn:scriptTask id="st_initial" name="Set vars">
+      <bpmn:incoming>Flow_17db3yp</bpmn:incoming>
+      <bpmn:outgoing>Flow_042zvc3</bpmn:outgoing>
+      <bpmn:script>our_hash = {}
+myvar1 = ""
+myvar1 = ""</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:parallelGateway id="gw_start">
+      <bpmn:incoming>Flow_042zvc3</bpmn:incoming>
+      <bpmn:outgoing>Flow_0bwlgpz</bpmn:outgoing>
+      <bpmn:outgoing>Flow_0w7xicw</bpmn:outgoing>
+      <bpmn:outgoing>Flow_0p6lb9m</bpmn:outgoing>
+    </bpmn:parallelGateway>
+    <bpmn:sequenceFlow id="Flow_11t1ctf" sourceRef="gw_end" targetRef="EndEvent_1" />
+    <bpmn:sequenceFlow id="Flow_0bwlgpz" sourceRef="gw_start" targetRef="st_hey1" />
+    <bpmn:sequenceFlow id="Flow_0kjfb8n" sourceRef="st_hey1" targetRef="gw_end" />
+    <bpmn:scriptTask id="st_hey1" name="hey1">
+      <bpmn:incoming>Flow_0bwlgpz</bpmn:incoming>
+      <bpmn:outgoing>Flow_0kjfb8n</bpmn:outgoing>
+      <bpmn:script>our_hash['hey1'] =  "YO1"</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:sequenceFlow id="Flow_0w7xicw" sourceRef="gw_start" targetRef="st_hey2" />
+    <bpmn:sequenceFlow id="Flow_1bq55n7" sourceRef="st_hey2" targetRef="gw_end" />
+    <bpmn:scriptTask id="st_hey2" name="hey2">
+      <bpmn:incoming>Flow_0w7xicw</bpmn:incoming>
+      <bpmn:outgoing>Flow_1bq55n7</bpmn:outgoing>
+      <bpmn:script>our_hash['hey2'] =  "YO2"</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:subProcess id="sp_hey3" name="hey3">
+      <bpmn:extensionElements>
+        <spiffworkflow:postScript>post_var = "yo"
+our_hash['hey3post'] =  "YO3post"
+myvar1 = "myvar1val"
+myvar2 = our_hash['hey3post']</spiffworkflow:postScript>
+        <spiffworkflow:preScript>our_hash['hey3pre'] =  "YO3pre"
+pre_var = "yo"</spiffworkflow:preScript>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0p6lb9m</bpmn:incoming>
+      <bpmn:outgoing>Flow_0jzhnls</bpmn:outgoing>
+      <bpmn:startEvent id="Event_1mucpkl">
+        <bpmn:outgoing>Flow_1irol51</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:endEvent id="Event_06h2igb">
+        <bpmn:incoming>Flow_0c1wjbp</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:sequenceFlow id="Flow_0c1wjbp" sourceRef="st_subproc" targetRef="Event_06h2igb" />
+      <bpmn:sequenceFlow id="Flow_1irol51" sourceRef="Event_1mucpkl" targetRef="st_subproc" />
+      <bpmn:scriptTask id="st_subproc">
+        <bpmn:incoming>Flow_1irol51</bpmn:incoming>
+        <bpmn:outgoing>Flow_0c1wjbp</bpmn:outgoing>
+        <bpmn:script>new_var = 'yay'
+our_hash['hey3inner'] =  "YO3inner"</bpmn:script>
+      </bpmn:scriptTask>
+    </bpmn:subProcess>
+    <bpmn:sequenceFlow id="Flow_0p6lb9m" sourceRef="gw_start" targetRef="sp_hey3" />
+    <bpmn:sequenceFlow id="Flow_0jzhnls" sourceRef="sp_hey3" targetRef="gw_end" />
+    <bpmn:parallelGateway id="gw_end">
+      <bpmn:incoming>Flow_0kjfb8n</bpmn:incoming>
+      <bpmn:incoming>Flow_1bq55n7</bpmn:incoming>
+      <bpmn:incoming>Flow_0jzhnls</bpmn:incoming>
+      <bpmn:outgoing>Flow_11t1ctf</bpmn:outgoing>
+    </bpmn:parallelGateway>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_test_merge_u5mavz4">
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="-48" y="152" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_14za570_di" bpmnElement="EndEvent_1">
+        <dc:Bounds x="472" y="152" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0mm4bkf_di" bpmnElement="st_initial">
+        <dc:Bounds x="50" y="130" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_05hyktz_di" bpmnElement="gw_start">
+        <dc:Bounds x="175" y="145" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0jcuh3l_di" bpmnElement="st_hey1">
+        <dc:Bounds x="260" y="30" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0mauvs1_di" bpmnElement="st_hey2">
+        <dc:Bounds x="260" y="130" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1cle4tc_di" bpmnElement="sp_hey3">
+        <dc:Bounds x="260" y="230" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_1fybjln_di" bpmnElement="gw_end">
+        <dc:Bounds x="385" y="145" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_17db3yp_di" bpmnElement="Flow_17db3yp">
+        <di:waypoint x="-12" y="170" />
+        <di:waypoint x="50" y="170" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_042zvc3_di" bpmnElement="Flow_042zvc3">
+        <di:waypoint x="150" y="170" />
+        <di:waypoint x="175" y="170" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_11t1ctf_di" bpmnElement="Flow_11t1ctf">
+        <di:waypoint x="435" y="170" />
+        <di:waypoint x="472" y="170" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0bwlgpz_di" bpmnElement="Flow_0bwlgpz">
+        <di:waypoint x="200" y="145" />
+        <di:waypoint x="200" y="70" />
+        <di:waypoint x="260" y="70" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0kjfb8n_di" bpmnElement="Flow_0kjfb8n">
+        <di:waypoint x="360" y="70" />
+        <di:waypoint x="410" y="70" />
+        <di:waypoint x="410" y="145" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0w7xicw_di" bpmnElement="Flow_0w7xicw">
+        <di:waypoint x="225" y="170" />
+        <di:waypoint x="260" y="170" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1bq55n7_di" bpmnElement="Flow_1bq55n7">
+        <di:waypoint x="360" y="170" />
+        <di:waypoint x="385" y="170" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0p6lb9m_di" bpmnElement="Flow_0p6lb9m">
+        <di:waypoint x="200" y="195" />
+        <di:waypoint x="200" y="270" />
+        <di:waypoint x="260" y="270" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0jzhnls_di" bpmnElement="Flow_0jzhnls">
+        <di:waypoint x="360" y="270" />
+        <di:waypoint x="410" y="270" />
+        <di:waypoint x="410" y="195" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1jzi41f">
+    <bpmndi:BPMNPlane id="BPMNPlane_1ikwau4" bpmnElement="sp_hey3">
+      <bpmndi:BPMNShape id="Event_1mucpkl_di" bpmnElement="Event_1mucpkl">
+        <dc:Bounds x="292" y="252" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_06h2igb_di" bpmnElement="Event_06h2igb">
+        <dc:Bounds x="512" y="252" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0ps216m_di" bpmnElement="st_subproc">
+        <dc:Bounds x="370" y="230" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_0c1wjbp_di" bpmnElement="Flow_0c1wjbp">
+        <di:waypoint x="470" y="270" />
+        <di:waypoint x="512" y="270" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1irol51_di" bpmnElement="Flow_1irol51">
+        <di:waypoint x="328" y="270" />
+        <di:waypoint x="370" y="270" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

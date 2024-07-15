@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:spiffworkflow="http://spiffworkflow.org/bpmn/schema/1.0/core" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_96f6665" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.0.0-dev">
+  <bpmn:process id="Process_3w8thj3" name="Signal Boundary Event Non-Interrupting" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>Flow_049ihzb</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_049ihzb" sourceRef="StartEvent_1" targetRef="Manual_Task" />
+    <bpmn:endEvent id="Event_0xqmy9y">
+      <bpmn:extensionElements>
+        <spiffworkflow:instructionsForEndUser>End Signal Boundary Event Non-Interrupting Unit Test</spiffworkflow:instructionsForEndUser>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0nvydtp</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_0u495bs" sourceRef="Manual_Task" targetRef="Activity_0ov2sh3" />
+    <bpmn:manualTask id="Manual_Task" name="Read Social Media Post 1">
+      <bpmn:incoming>Flow_049ihzb</bpmn:incoming>
+      <bpmn:outgoing>Flow_0u495bs</bpmn:outgoing>
+    </bpmn:manualTask>
+    <bpmn:boundaryEvent id="Event_0lvqn2d" cancelActivity="false" attachedToRef="Manual_Task">
+      <bpmn:extensionElements>
+        <spiffworkflow:signalButtonLabel>Receive New Alert</spiffworkflow:signalButtonLabel>
+      </bpmn:extensionElements>
+      <bpmn:outgoing>Flow_0a0y6pg</bpmn:outgoing>
+      <bpmn:signalEventDefinition id="SignalEventDefinition_0f7xyqg" signalRef="new_alert" />
+    </bpmn:boundaryEvent>
+    <bpmn:sequenceFlow id="Flow_0a0y6pg" sourceRef="Event_0lvqn2d" targetRef="Activity_1rtfxql" />
+    <bpmn:endEvent id="Event_0px9l82">
+      <bpmn:extensionElements>
+        <spiffworkflow:instructionsForEndUser>End Signal Boundary Event Non-Interrupting Unit Test by Reading New Post</spiffworkflow:instructionsForEndUser>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1fun6jq</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_1fun6jq" sourceRef="Activity_1rtfxql" targetRef="Event_0px9l82" />
+    <bpmn:manualTask id="Activity_1rtfxql" name="Read New Post">
+      <bpmn:incoming>Flow_0a0y6pg</bpmn:incoming>
+      <bpmn:outgoing>Flow_1fun6jq</bpmn:outgoing>
+    </bpmn:manualTask>
+    <bpmn:sequenceFlow id="Flow_0nvydtp" sourceRef="Activity_0ov2sh3" targetRef="Event_0xqmy9y" />
+    <bpmn:manualTask id="Activity_0ov2sh3" name="Read Social Media Post 2">
+      <bpmn:incoming>Flow_0u495bs</bpmn:incoming>
+      <bpmn:outgoing>Flow_0nvydtp</bpmn:outgoing>
+    </bpmn:manualTask>
+  </bpmn:process>
+  <bpmn:signal id="new_alert" name="new_alert" />
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_3w8thj3">
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="-128" y="82" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0xqmy9y_di" bpmnElement="Event_0xqmy9y">
+        <dc:Bounds x="322" y="82" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_047diqd_di" bpmnElement="Manual_Task">
+        <dc:Bounds x="-40" y="60" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0px9l82_di" bpmnElement="Event_0px9l82">
+        <dc:Bounds x="322" y="202" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0upem6g_di" bpmnElement="Activity_1rtfxql">
+        <dc:Bounds x="130" y="180" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_18rjzqz_di" bpmnElement="Activity_0ov2sh3">
+        <dc:Bounds x="130" y="60" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_04mj7cu_di" bpmnElement="Event_0lvqn2d">
+        <dc:Bounds x="-8" y="122" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_049ihzb_di" bpmnElement="Flow_049ihzb">
+        <di:waypoint x="-92" y="100" />
+        <di:waypoint x="-40" y="100" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0u495bs_di" bpmnElement="Flow_0u495bs">
+        <di:waypoint x="60" y="100" />
+        <di:waypoint x="130" y="100" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0a0y6pg_di" bpmnElement="Flow_0a0y6pg">
+        <di:waypoint x="10" y="158" />
+        <di:waypoint x="10" y="220" />
+        <di:waypoint x="130" y="220" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1fun6jq_di" bpmnElement="Flow_1fun6jq">
+        <di:waypoint x="230" y="220" />
+        <di:waypoint x="322" y="220" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0nvydtp_di" bpmnElement="Flow_0nvydtp">
+        <di:waypoint x="230" y="100" />
+        <di:waypoint x="322" y="100" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

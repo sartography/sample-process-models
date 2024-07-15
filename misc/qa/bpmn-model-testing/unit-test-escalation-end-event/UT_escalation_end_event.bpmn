@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:spiffworkflow="http://spiffworkflow.org/bpmn/schema/1.0/core" id="Definitions_96f6665" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.0.0-dev">
+  <bpmn:process id="escalation_end_event" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1" name="Start">
+      <bpmn:outgoing>Flow_0567tda</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_0567tda" sourceRef="StartEvent_1" targetRef="Activity_0sntzq9" />
+    <bpmn:endEvent id="Event_1ri20ev" name="End">
+      <bpmn:incoming>Flow_0mc1eik</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_0mc1eik" sourceRef="Activity_0sntzq9" targetRef="Event_1ri20ev" />
+    <bpmn:subProcess id="Activity_0sntzq9">
+      <bpmn:incoming>Flow_0567tda</bpmn:incoming>
+      <bpmn:outgoing>Flow_0mc1eik</bpmn:outgoing>
+      <bpmn:startEvent id="Event_0xty0qw" name="Sub Process Start">
+        <bpmn:outgoing>Flow_1l5kuke</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:sequenceFlow id="Flow_1l5kuke" sourceRef="Event_0xty0qw" targetRef="Activity_05nouqi" />
+      <bpmn:sequenceFlow id="Flow_0nwa1gk" sourceRef="Activity_05nouqi" targetRef="Gateway_0pz2w2x" />
+      <bpmn:endEvent id="Event_17ib11n" name="Escalation End Event">
+        <bpmn:incoming>Flow_0dyf4zo</bpmn:incoming>
+        <bpmn:escalationEventDefinition id="EscalationEventDefinition_122wccj" escalationRef="order_food" />
+      </bpmn:endEvent>
+      <bpmn:userTask id="Activity_05nouqi" name="Hungry?">
+        <bpmn:extensionElements>
+          <spiffworkflow:properties>
+            <spiffworkflow:property name="formJsonSchemaFilename" value="hungry-schema.json" />
+            <spiffworkflow:property name="formUiSchemaFilename" value="hungry-uischema.json" />
+          </spiffworkflow:properties>
+        </bpmn:extensionElements>
+        <bpmn:incoming>Flow_1l5kuke</bpmn:incoming>
+        <bpmn:outgoing>Flow_0nwa1gk</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:exclusiveGateway id="Gateway_0pz2w2x" default="Flow_1ln2lc8">
+        <bpmn:incoming>Flow_0nwa1gk</bpmn:incoming>
+        <bpmn:outgoing>Flow_0dyf4zo</bpmn:outgoing>
+        <bpmn:outgoing>Flow_1ln2lc8</bpmn:outgoing>
+      </bpmn:exclusiveGateway>
+      <bpmn:sequenceFlow id="Flow_0dyf4zo" sourceRef="Gateway_0pz2w2x" targetRef="Event_17ib11n">
+        <bpmn:conditionExpression>hungry</bpmn:conditionExpression>
+      </bpmn:sequenceFlow>
+      <bpmn:endEvent id="Event_09rvva4">
+        <bpmn:incoming>Flow_1ln2lc8</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:sequenceFlow id="Flow_1ln2lc8" sourceRef="Gateway_0pz2w2x" targetRef="Event_09rvva4" />
+    </bpmn:subProcess>
+    <bpmn:boundaryEvent id="Event_1o75m0c" attachedToRef="Activity_0sntzq9">
+      <bpmn:outgoing>Flow_1mro8ct</bpmn:outgoing>
+      <bpmn:escalationEventDefinition id="EscalationEventDefinition_0ps5cd0" escalationRef="order_food" />
+    </bpmn:boundaryEvent>
+    <bpmn:sequenceFlow id="Flow_1mro8ct" sourceRef="Event_1o75m0c" targetRef="Activity_10i11ya" />
+    <bpmn:manualTask id="Activity_10i11ya" name="Ordering Food">
+      <bpmn:extensionElements>
+        <spiffworkflow:instructionsForEndUser>Message: {{escl.msg}}</spiffworkflow:instructionsForEndUser>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1mro8ct</bpmn:incoming>
+      <bpmn:outgoing>Flow_08cr4zz</bpmn:outgoing>
+    </bpmn:manualTask>
+    <bpmn:endEvent id="Event_0g8jbuy" name="Escalation Path End">
+      <bpmn:extensionElements>
+        <spiffworkflow:instructionsForEndUser>End Unit Test Escalation End Event. Escalation Path End.</spiffworkflow:instructionsForEndUser>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_08cr4zz</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_08cr4zz" sourceRef="Activity_10i11ya" targetRef="Event_0g8jbuy" />
+  </bpmn:process>
+  <bpmn:escalation id="order_food" name="order_food" escalationCode="ESC">
+    <bpmn:extensionElements>
+      <spiffworkflow:variableName>escl</spiffworkflow:variableName>
+      <spiffworkflow:payloadExpression>{
+"msg": "Order Food"
+}</spiffworkflow:payloadExpression>
+    </bpmn:extensionElements>
+  </bpmn:escalation>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="escalation_end_event">
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="-8" y="242" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="-2" y="285" width="24" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1ri20ev_di" bpmnElement="Event_1ri20ev">
+        <dc:Bounds x="892" y="242" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="900" y="285" width="20" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1oefzal_di" bpmnElement="Activity_0sntzq9" isExpanded="true">
+        <dc:Bounds x="160" y="110" width="658" height="340" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0xty0qw_di" bpmnElement="Event_0xty0qw">
+        <dc:Bounds x="262" y="242" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="237" y="285" width="89" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1ajeqne_di" bpmnElement="Event_17ib11n">
+        <dc:Bounds x="692" y="242" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="675" y="285" width="74" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0gn1b1u_di" bpmnElement="Activity_05nouqi">
+        <dc:Bounds x="360" y="220" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_0pz2w2x_di" bpmnElement="Gateway_0pz2w2x" isMarkerVisible="true">
+        <dc:Bounds x="555" y="235" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_09rvva4_di" bpmnElement="Event_09rvva4">
+        <dc:Bounds x="692" y="352" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_1l5kuke_di" bpmnElement="Flow_1l5kuke">
+        <di:waypoint x="298" y="260" />
+        <di:waypoint x="360" y="260" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0nwa1gk_di" bpmnElement="Flow_0nwa1gk">
+        <di:waypoint x="460" y="260" />
+        <di:waypoint x="555" y="260" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0dyf4zo_di" bpmnElement="Flow_0dyf4zo">
+        <di:waypoint x="605" y="260" />
+        <di:waypoint x="692" y="260" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1ln2lc8_di" bpmnElement="Flow_1ln2lc8">
+        <di:waypoint x="580" y="285" />
+        <di:waypoint x="580" y="370" />
+        <di:waypoint x="692" y="370" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="Activity_1svej5a_di" bpmnElement="Activity_10i11ya">
+        <dc:Bounds x="630" y="520" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0g8jbuy_di" bpmnElement="Event_0g8jbuy">
+        <dc:Bounds x="782" y="542" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="763" y="585" width="77" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0jlrow5_di" bpmnElement="Event_1o75m0c">
+        <dc:Bounds x="542" y="432" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_0567tda_di" bpmnElement="Flow_0567tda">
+        <di:waypoint x="28" y="260" />
+        <di:waypoint x="160" y="260" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0mc1eik_di" bpmnElement="Flow_0mc1eik">
+        <di:waypoint x="818" y="260" />
+        <di:waypoint x="892" y="260" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1mro8ct_di" bpmnElement="Flow_1mro8ct">
+        <di:waypoint x="560" y="468" />
+        <di:waypoint x="560" y="560" />
+        <di:waypoint x="630" y="560" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_08cr4zz_di" bpmnElement="Flow_08cr4zz">
+        <di:waypoint x="730" y="560" />
+        <di:waypoint x="782" y="560" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

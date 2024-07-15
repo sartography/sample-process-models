@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:spiffworkflow="http://spiffworkflow.org/bpmn/schema/1.0/core" id="Definitions_96f6665" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.0.0-dev">
+  <bpmn:process id="Loop_Sub_Process_with_Exclusive_Gateway" name="Loop Sub Process with Exclusive Gateway" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>Flow_1pc6459</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_1pc6459" sourceRef="StartEvent_1" targetRef="Sub_Process" />
+    <bpmn:endEvent id="Event_0rxwviz">
+      <bpmn:incoming>Flow_1c8wwrt</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_1c8wwrt" sourceRef="Sub_Process" targetRef="Event_0rxwviz" />
+    <bpmn:subProcess id="Sub_Process" name="Loop Sub Process">
+      <bpmn:incoming>Flow_1pc6459</bpmn:incoming>
+      <bpmn:outgoing>Flow_1c8wwrt</bpmn:outgoing>
+      <bpmn:standardLoopCharacteristics loopMaximum="3" />
+      <bpmn:startEvent id="Event_041vphb">
+        <bpmn:outgoing>Flow_16x2441</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:sequenceFlow id="Flow_16x2441" sourceRef="Event_041vphb" targetRef="Activity_10sf1yk" />
+      <bpmn:exclusiveGateway id="Gateway_0seidy4" name="Exclusive Gateway">
+        <bpmn:incoming>Flow_078q9k2</bpmn:incoming>
+        <bpmn:outgoing>Flow_0gclu4u</bpmn:outgoing>
+        <bpmn:outgoing>Flow_00c5f21</bpmn:outgoing>
+      </bpmn:exclusiveGateway>
+      <bpmn:sequenceFlow id="Flow_078q9k2" sourceRef="Activity_10sf1yk" targetRef="Gateway_0seidy4" />
+      <bpmn:endEvent id="Event_0cqhy23">
+        <bpmn:extensionElements>
+          <spiffworkflow:instructionsForEndUser>End Exclusive Gateway Unit Test. Variable value greater or equal to 10.</spiffworkflow:instructionsForEndUser>
+        </bpmn:extensionElements>
+        <bpmn:incoming>Flow_0gclu4u</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:sequenceFlow id="Flow_0gclu4u" name="x &#62;= 10" sourceRef="Gateway_0seidy4" targetRef="Event_0cqhy23">
+        <bpmn:conditionExpression>x &gt;= 10</bpmn:conditionExpression>
+      </bpmn:sequenceFlow>
+      <bpmn:endEvent id="Event_0wf0h4l">
+        <bpmn:extensionElements>
+          <spiffworkflow:instructionsForEndUser>End Exclusive Gateway Unit Test. Variable value less than 10.</spiffworkflow:instructionsForEndUser>
+        </bpmn:extensionElements>
+        <bpmn:incoming>Flow_00c5f21</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:sequenceFlow id="Flow_00c5f21" name="x &#60; 10" sourceRef="Gateway_0seidy4" targetRef="Event_0wf0h4l">
+        <bpmn:conditionExpression>x &lt; 10</bpmn:conditionExpression>
+      </bpmn:sequenceFlow>
+      <bpmn:scriptTask id="Activity_10sf1yk" name="Script Task">
+        <bpmn:incoming>Flow_16x2441</bpmn:incoming>
+        <bpmn:outgoing>Flow_078q9k2</bpmn:outgoing>
+        <bpmn:script>x = 5</bpmn:script>
+      </bpmn:scriptTask>
+    </bpmn:subProcess>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Loop_Sub_Process_with_Exclusive_Gateway">
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="372" y="-33" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0rxwviz_di" bpmnElement="Event_0rxwviz">
+        <dc:Bounds x="642" y="-33" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0b54wcs_di" bpmnElement="Sub_Process" isExpanded="false">
+        <dc:Bounds x="485" y="-55" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_1pc6459_di" bpmnElement="Flow_1pc6459">
+        <di:waypoint x="408" y="-15" />
+        <di:waypoint x="485" y="-15" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1c8wwrt_di" bpmnElement="Flow_1c8wwrt">
+        <di:waypoint x="585" y="-15" />
+        <di:waypoint x="642" y="-15" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1jl96vh">
+    <bpmndi:BPMNPlane id="BPMNPlane_0qcb2r5" bpmnElement="Sub_Process">
+      <bpmndi:BPMNShape id="Event_041vphb_di" bpmnElement="Event_041vphb">
+        <dc:Bounds x="180" y="197" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_0seidy4_di" bpmnElement="Gateway_0seidy4" isMarkerVisible="true">
+        <dc:Bounds x="425" y="190" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="427" y="160" width="47" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0cqhy23_di" bpmnElement="Event_0cqhy23">
+        <dc:Bounds x="532" y="197" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0wf0h4l_di" bpmnElement="Event_0wf0h4l">
+        <dc:Bounds x="532" y="307" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_01x2y2l_di" bpmnElement="Activity_10sf1yk">
+        <dc:Bounds x="270" y="175" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_16x2441_di" bpmnElement="Flow_16x2441">
+        <di:waypoint x="216" y="215" />
+        <di:waypoint x="270" y="215" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_078q9k2_di" bpmnElement="Flow_078q9k2">
+        <di:waypoint x="370" y="215" />
+        <di:waypoint x="425" y="215" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0gclu4u_di" bpmnElement="Flow_0gclu4u">
+        <di:waypoint x="475" y="215" />
+        <di:waypoint x="532" y="215" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="486" y="197" width="36" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_00c5f21_di" bpmnElement="Flow_00c5f21">
+        <di:waypoint x="450" y="240" />
+        <di:waypoint x="450" y="325" />
+        <di:waypoint x="532" y="325" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="450" y="280" width="30" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

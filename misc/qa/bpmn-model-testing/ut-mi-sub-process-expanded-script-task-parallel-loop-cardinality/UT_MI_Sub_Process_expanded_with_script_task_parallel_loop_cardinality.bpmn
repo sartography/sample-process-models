@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:spiffworkflow="http://spiffworkflow.org/bpmn/schema/1.0/core" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_96f6665" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.0.0-dev">
+  <bpmn:process id="UT_MI_Sub_Process_expanded_with_script_task_parallel_loop_cardinality" name="Expanded Sub Process with MI Parallel Script Task Loop Cardinality" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>Flow_1hu82yo</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:subProcess id="Activity_1fhdfcc" name="Expanded Sub Process with MI Parallel Script Task Loop Cardinality">
+      <bpmn:extensionElements>
+        <spiffworkflow:instructionsForEndUser />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1hu82yo</bpmn:incoming>
+      <bpmn:outgoing>Flow_1y7kb6i</bpmn:outgoing>
+      <bpmn:startEvent id="Event_0pdb43f">
+        <bpmn:outgoing>Flow_04pzgvu</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:sequenceFlow id="Flow_04pzgvu" sourceRef="Event_0pdb43f" targetRef="Activity_0g7zh1b" />
+      <bpmn:endEvent id="Event_0uu2eef">
+        <bpmn:incoming>Flow_12r65oq</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:sequenceFlow id="Flow_12r65oq" sourceRef="Activity_0g7zh1b" targetRef="Event_0uu2eef" />
+      <bpmn:scriptTask id="Activity_0g7zh1b" name="MI Parallel Script Task Loop Cardinality">
+        <bpmn:incoming>Flow_04pzgvu</bpmn:incoming>
+        <bpmn:outgoing>Flow_12r65oq</bpmn:outgoing>
+        <bpmn:multiInstanceLoopCharacteristics>
+          <bpmn:loopCardinality xsi:type="bpmn:tFormalExpression">10</bpmn:loopCardinality>
+          <bpmn:loopDataOutputRef>z</bpmn:loopDataOutputRef>
+          <bpmn:inputDataItem id="x" name="x" />
+          <bpmn:outputDataItem id="y" name="y" />
+          <bpmn:completionCondition xsi:type="bpmn:tFormalExpression">x==4</bpmn:completionCondition>
+        </bpmn:multiInstanceLoopCharacteristics>
+        <bpmn:script>y = x </bpmn:script>
+      </bpmn:scriptTask>
+    </bpmn:subProcess>
+    <bpmn:sequenceFlow id="Flow_1hu82yo" sourceRef="StartEvent_1" targetRef="Activity_1fhdfcc" />
+    <bpmn:endEvent id="Event_1j8ddkk">
+      <bpmn:extensionElements>
+        <spiffworkflow:instructionsForEndUser>End Expanded Sub Process with MI Parallel Script Task Loop Cardinality Unit Test. Output Collection: {{z}} </spiffworkflow:instructionsForEndUser>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1y7kb6i</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_1y7kb6i" sourceRef="Activity_1fhdfcc" targetRef="Event_1j8ddkk" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="UT_MI_Sub_Process_expanded_with_script_task_parallel_loop_cardinality">
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="62" y="82" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1fhdfcc_di" bpmnElement="Activity_1fhdfcc" isExpanded="true">
+        <dc:Bounds x="160" y="0" width="350" height="200" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0pdb43f_di" bpmnElement="Event_0pdb43f">
+        <dc:Bounds x="200" y="82" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0uu2eef_di" bpmnElement="Event_0uu2eef">
+        <dc:Bounds x="452" y="82" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1i1xoi7_di" bpmnElement="Activity_0g7zh1b">
+        <dc:Bounds x="290" y="60" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_04pzgvu_di" bpmnElement="Flow_04pzgvu">
+        <di:waypoint x="236" y="100" />
+        <di:waypoint x="290" y="100" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_12r65oq_di" bpmnElement="Flow_12r65oq">
+        <di:waypoint x="390" y="100" />
+        <di:waypoint x="452" y="100" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="Event_1j8ddkk_di" bpmnElement="Event_1j8ddkk">
+        <dc:Bounds x="572" y="82" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_1hu82yo_di" bpmnElement="Flow_1hu82yo">
+        <di:waypoint x="98" y="100" />
+        <di:waypoint x="160" y="100" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1y7kb6i_di" bpmnElement="Flow_1y7kb6i">
+        <di:waypoint x="510" y="100" />
+        <di:waypoint x="572" y="100" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

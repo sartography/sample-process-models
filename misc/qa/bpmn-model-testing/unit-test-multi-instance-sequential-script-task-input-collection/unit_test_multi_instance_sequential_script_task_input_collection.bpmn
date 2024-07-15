@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:spiffworkflow="http://spiffworkflow.org/bpmn/schema/1.0/core" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="Definitions_96f6665" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.0.0-dev">
+  <bpmn:process id="Unit_Test_Multi_Instance_sequential_script_task_input_collection" name="Unit Test Multi Instance sequential script task input collection" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>Flow_1jv05nl</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_1jv05nl" sourceRef="StartEvent_1" targetRef="Activity_1yp62ws" />
+    <bpmn:sequenceFlow id="Flow_0oin4j8" sourceRef="Activity_1yp62ws" targetRef="Activity_0h6eb00" />
+    <bpmn:endEvent id="Event_1vawsr7">
+      <bpmn:extensionElements>
+        <spiffworkflow:instructionsForEndUser>End Multi Instance Sequential Script Task Unit Test. Output Collection: {{z}}</spiffworkflow:instructionsForEndUser>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1xhbvhh</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_1xhbvhh" sourceRef="Activity_0h6eb00" targetRef="Event_1vawsr7" />
+    <bpmn:scriptTask id="Activity_1yp62ws" name="Initializing Script Task">
+      <bpmn:incoming>Flow_1jv05nl</bpmn:incoming>
+      <bpmn:outgoing>Flow_0oin4j8</bpmn:outgoing>
+      <bpmn:script>mylist = ["apple", "banana", "cherry", "orange",  "pears", "avacado"]</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:scriptTask id="Activity_0h6eb00" name="Sequential Multi Instance Scrip Task">
+      <bpmn:extensionElements>
+        <spiffworkflow:instructionsForEndUser />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0oin4j8</bpmn:incoming>
+      <bpmn:outgoing>Flow_1xhbvhh</bpmn:outgoing>
+      <bpmn:multiInstanceLoopCharacteristics isSequential="true">
+        <bpmn:loopDataInputRef>mylist</bpmn:loopDataInputRef>
+        <bpmn:loopDataOutputRef>z</bpmn:loopDataOutputRef>
+        <bpmn:inputDataItem id="x" name="x" />
+        <bpmn:outputDataItem id="y" name="y" />
+        <bpmn:completionCondition xsi:type="bpmn:tFormalExpression">x == "cherry"</bpmn:completionCondition>
+      </bpmn:multiInstanceLoopCharacteristics>
+      <bpmn:script>y = 'I love ' + x</bpmn:script>
+    </bpmn:scriptTask>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Unit_Test_Multi_Instance_sequential_script_task_input_collection">
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="179" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1vawsr7_di" bpmnElement="Event_1vawsr7">
+        <dc:Bounds x="592" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0r8n6dp_di" bpmnElement="Activity_1yp62ws">
+        <dc:Bounds x="270" y="137" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1qlz2yf_di" bpmnElement="Activity_0h6eb00">
+        <dc:Bounds x="430" y="137" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_1jv05nl_di" bpmnElement="Flow_1jv05nl">
+        <di:waypoint x="215" y="177" />
+        <di:waypoint x="270" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0oin4j8_di" bpmnElement="Flow_0oin4j8">
+        <di:waypoint x="370" y="177" />
+        <di:waypoint x="430" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1xhbvhh_di" bpmnElement="Flow_1xhbvhh">
+        <di:waypoint x="530" y="177" />
+        <di:waypoint x="592" y="177" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

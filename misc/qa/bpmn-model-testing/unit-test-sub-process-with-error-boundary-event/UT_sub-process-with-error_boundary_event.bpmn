@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:spiffworkflow="http://spiffworkflow.org/bpmn/schema/1.0/core" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_96f6665" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.0.0-dev">
+  <bpmn:process id="Error_Boundary_Event" name="Sub Process with Error Boundary Event" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>Flow_18ukgzd</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:subProcess id="Activity_0n4e0tn" name="Sub Process">
+      <bpmn:incoming>Flow_18ukgzd</bpmn:incoming>
+      <bpmn:outgoing>Flow_1rr61kt</bpmn:outgoing>
+      <bpmn:startEvent id="Event_1gesdpq">
+        <bpmn:outgoing>Flow_096at9h</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:sequenceFlow id="Flow_096at9h" sourceRef="Event_1gesdpq" targetRef="Manual_Task1" />
+      <bpmn:sequenceFlow id="Flow_185dc20" sourceRef="Manual_Task1" targetRef="Gateway_1id1tnl" />
+      <bpmn:endEvent id="Event_10s3161">
+        <bpmn:incoming>Flow_0pdw1ud</bpmn:incoming>
+        <bpmn:errorEventDefinition id="ErrorEventDefinition_0c29ucp" errorRef="Error1" />
+      </bpmn:endEvent>
+      <bpmn:userTask id="Manual_Task1" name="Proceed Payments">
+        <bpmn:extensionElements>
+          <spiffworkflow:properties>
+            <spiffworkflow:property name="formJsonSchemaFilename" value="payments-schema.json" />
+            <spiffworkflow:property name="formUiSchemaFilename" value="payments-uischema.json" />
+          </spiffworkflow:properties>
+        </bpmn:extensionElements>
+        <bpmn:incoming>Flow_096at9h</bpmn:incoming>
+        <bpmn:outgoing>Flow_185dc20</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:exclusiveGateway id="Gateway_1id1tnl" default="Flow_0gumflz">
+        <bpmn:incoming>Flow_185dc20</bpmn:incoming>
+        <bpmn:outgoing>Flow_0pdw1ud</bpmn:outgoing>
+        <bpmn:outgoing>Flow_0gumflz</bpmn:outgoing>
+      </bpmn:exclusiveGateway>
+      <bpmn:sequenceFlow id="Flow_0pdw1ud" sourceRef="Gateway_1id1tnl" targetRef="Event_10s3161">
+        <bpmn:conditionExpression>cc_expired</bpmn:conditionExpression>
+      </bpmn:sequenceFlow>
+      <bpmn:endEvent id="Event_1m9dnff">
+        <bpmn:incoming>Flow_0psnzj2</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:sequenceFlow id="Flow_0gumflz" sourceRef="Gateway_1id1tnl" targetRef="Activity_1lmzwjw" />
+      <bpmn:sequenceFlow id="Flow_0psnzj2" sourceRef="Activity_1lmzwjw" targetRef="Event_1m9dnff" />
+      <bpmn:manualTask id="Activity_1lmzwjw" name="Payment Successfully Completed">
+        <bpmn:incoming>Flow_0gumflz</bpmn:incoming>
+        <bpmn:outgoing>Flow_0psnzj2</bpmn:outgoing>
+      </bpmn:manualTask>
+    </bpmn:subProcess>
+    <bpmn:sequenceFlow id="Flow_18ukgzd" sourceRef="StartEvent_1" targetRef="Activity_0n4e0tn" />
+    <bpmn:endEvent id="Event_0viq88i" name="End">
+      <bpmn:extensionElements>
+        <spiffworkflow:instructionsForEndUser>End</spiffworkflow:instructionsForEndUser>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1rr61kt</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_1rr61kt" sourceRef="Activity_0n4e0tn" targetRef="Event_0viq88i" />
+    <bpmn:sequenceFlow id="Flow_0bozrpx" sourceRef="Event_0c5f8ir" targetRef="Manual_Task2" />
+    <bpmn:endEvent id="Event_0wpaj63" name="End Error Boundary Event Path">
+      <bpmn:extensionElements>
+        <spiffworkflow:instructionsForEndUser>End Error Boundary Event Unit Test. </spiffworkflow:instructionsForEndUser>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_157odr8</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_157odr8" sourceRef="Manual_Task2" targetRef="Event_0wpaj63" />
+    <bpmn:boundaryEvent id="Event_0c5f8ir" attachedToRef="Activity_0n4e0tn">
+      <bpmn:outgoing>Flow_0bozrpx</bpmn:outgoing>
+      <bpmn:errorEventDefinition id="ErrorEventDefinition_0s8xzf7" errorRef="Error1" />
+    </bpmn:boundaryEvent>
+    <bpmn:manualTask id="Manual_Task2" name="Payment Cancelled">
+      <bpmn:extensionElements>
+        <spiffworkflow:instructionsForEndUser>Payload: {{msg}}</spiffworkflow:instructionsForEndUser>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0bozrpx</bpmn:incoming>
+      <bpmn:outgoing>Flow_157odr8</bpmn:outgoing>
+    </bpmn:manualTask>
+  </bpmn:process>
+  <bpmn:error id="Error1" name="Error1" errorCode="Err1">
+    <bpmn:extensionElements>
+      <spiffworkflow:variableName>msg</spiffworkflow:variableName>
+      <spiffworkflow:payloadExpression>{
+"err_msg" : "Error Occured : Credit Card Expired"
+}</spiffworkflow:payloadExpression>
+    </bpmn:extensionElements>
+  </bpmn:error>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Error_Boundary_Event">
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="122" y="167" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0n4e0tn_di" bpmnElement="Activity_0n4e0tn" isExpanded="false">
+        <dc:Bounds x="230" y="145" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0viq88i_di" bpmnElement="Event_0viq88i">
+        <dc:Bounds x="402" y="167" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="410" y="210" width="20" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0wpaj63_di" bpmnElement="Event_0wpaj63">
+        <dc:Bounds x="562" y="292" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="540" y="242" width="80" height="40" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1cw077d_di" bpmnElement="Manual_Task2">
+        <dc:Bounds x="370" y="270" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_10oux6f_di" bpmnElement="Event_0c5f8ir">
+        <dc:Bounds x="240" y="207" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_18ukgzd_di" bpmnElement="Flow_18ukgzd">
+        <di:waypoint x="158" y="185" />
+        <di:waypoint x="230" y="185" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1rr61kt_di" bpmnElement="Flow_1rr61kt">
+        <di:waypoint x="330" y="185" />
+        <di:waypoint x="402" y="185" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0bozrpx_di" bpmnElement="Flow_0bozrpx">
+        <di:waypoint x="258" y="243" />
+        <di:waypoint x="258" y="310" />
+        <di:waypoint x="370" y="310" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_157odr8_di" bpmnElement="Flow_157odr8">
+        <di:waypoint x="470" y="310" />
+        <di:waypoint x="562" y="310" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_0fpnjcu">
+    <bpmndi:BPMNPlane id="BPMNPlane_18uwjc0" bpmnElement="Activity_0n4e0tn">
+      <bpmndi:BPMNShape id="Event_1gesdpq_di" bpmnElement="Event_1gesdpq">
+        <dc:Bounds x="180" y="182" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1bfbpqi_di" bpmnElement="Event_10s3161">
+        <dc:Bounds x="692" y="182" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0du87sg_di" bpmnElement="Manual_Task1">
+        <dc:Bounds x="270" y="160" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_1id1tnl_di" bpmnElement="Gateway_1id1tnl" isMarkerVisible="true">
+        <dc:Bounds x="435" y="175" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1m9dnff_di" bpmnElement="Event_1m9dnff">
+        <dc:Bounds x="692" y="292" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1imyg0p_di" bpmnElement="Activity_1lmzwjw">
+        <dc:Bounds x="540" y="270" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_096at9h_di" bpmnElement="Flow_096at9h">
+        <di:waypoint x="216" y="200" />
+        <di:waypoint x="270" y="200" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_185dc20_di" bpmnElement="Flow_185dc20">
+        <di:waypoint x="370" y="200" />
+        <di:waypoint x="435" y="200" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0pdw1ud_di" bpmnElement="Flow_0pdw1ud">
+        <di:waypoint x="485" y="200" />
+        <di:waypoint x="692" y="200" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0gumflz_di" bpmnElement="Flow_0gumflz">
+        <di:waypoint x="460" y="225" />
+        <di:waypoint x="460" y="310" />
+        <di:waypoint x="540" y="310" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0psnzj2_di" bpmnElement="Flow_0psnzj2">
+        <di:waypoint x="640" y="310" />
+        <di:waypoint x="692" y="310" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

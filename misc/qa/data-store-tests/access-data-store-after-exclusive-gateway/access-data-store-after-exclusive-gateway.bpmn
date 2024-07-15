@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:spiffworkflow="http://spiffworkflow.org/bpmn/schema/1.0/core" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_96f6665" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.0.0-dev">
+  <bpmn:process id="Process_access_data_store_after_exclusive_gateway_i1i9mg8" isExecutable="true">
+    <bpmn:exclusiveGateway id="Gateway_0a0fl59" default="Flow_044fuvx">
+      <bpmn:incoming>Flow_06zwcm5</bpmn:incoming>
+      <bpmn:outgoing>Flow_044fuvx</bpmn:outgoing>
+      <bpmn:outgoing>Flow_0xja4pk</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="Flow_044fuvx" sourceRef="Gateway_0a0fl59" targetRef="Activity_0itrafu" />
+    <bpmn:sequenceFlow id="Flow_0xja4pk" sourceRef="Gateway_0a0fl59" targetRef="Activity_1fn3ce1">
+      <bpmn:conditionExpression>my_department == "none"</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:endEvent id="Event_02yu8ua">
+      <bpmn:extensionElements>
+        <spiffworkflow:instructionsForEndUser>The process instance completed successfully.
+
+Please contact Head of the {{ department_name }} Department : {{head_of_department}}</spiffworkflow:instructionsForEndUser>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0xipol4</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_0xipol4" sourceRef="Activity_0itrafu" targetRef="Event_02yu8ua" />
+    <bpmn:endEvent id="Event_1xc87n5">
+      <bpmn:extensionElements>
+        <spiffworkflow:instructionsForEndUser>The process instance completed successfully.
+
+Please contact the Head of the Administration Department: {{head_of_department}}</spiffworkflow:instructionsForEndUser>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1rukd42</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_1rukd42" sourceRef="Activity_1fn3ce1" targetRef="Event_1xc87n5" />
+    <bpmn:scriptTask id="Activity_0itrafu" name="Read from Data Store">
+      <bpmn:incoming>Flow_044fuvx</bpmn:incoming>
+      <bpmn:outgoing>Flow_0xipol4</bpmn:outgoing>
+      <bpmn:property id="Property_0qffirv" name="__targetRef_placeholder" />
+      <bpmn:dataInputAssociation id="DataInputAssociation_00v76t0">
+        <bpmn:sourceRef>DataStoreReference_0zaapt8</bpmn:sourceRef>
+        <bpmn:targetRef>Property_0qffirv</bpmn:targetRef>
+      </bpmn:dataInputAssociation>
+      <bpmn:script>head_of_department = departments(department_name,"Head")</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:scriptTask id="Activity_1fn3ce1" name="Read from Data Store">
+      <bpmn:incoming>Flow_0xja4pk</bpmn:incoming>
+      <bpmn:outgoing>Flow_1rukd42</bpmn:outgoing>
+      <bpmn:property id="Property_1btfyhh" name="__targetRef_placeholder" />
+      <bpmn:dataInputAssociation id="DataInputAssociation_1wvvz3e">
+        <bpmn:sourceRef>DataStoreReference_0zaapt8</bpmn:sourceRef>
+        <bpmn:targetRef>Property_1btfyhh</bpmn:targetRef>
+      </bpmn:dataInputAssociation>
+      <bpmn:script>head_of_department = departments("Administration","Head")</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:startEvent id="Event_1d8r6vi">
+      <bpmn:outgoing>Flow_1d0ppvp</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_1d0ppvp" sourceRef="Event_1d8r6vi" targetRef="Activity_1pj6kgx" />
+    <bpmn:sequenceFlow id="Flow_05yi2j2" sourceRef="Activity_1pj6kgx" targetRef="Activity_1t5lolc" />
+    <bpmn:scriptTask id="Activity_1pj6kgx" name="Write to the Data Store">
+      <bpmn:incoming>Flow_1d0ppvp</bpmn:incoming>
+      <bpmn:outgoing>Flow_05yi2j2</bpmn:outgoing>
+      <bpmn:dataOutputAssociation id="DataOutputAssociation_15mzro2">
+        <bpmn:targetRef>DataStoreReference_0zaapt8</bpmn:targetRef>
+      </bpmn:dataOutputAssociation>
+      <bpmn:script>
+departments = {   
+    "departments" : {
+	    "department_list" : [
+            {
+                "label": "None of the List",
+                "value": "none"
+            },
+            {
+                "label": "Human Resources",
+                "value": "hr"
+            },
+            {
+                "label": "Finance",
+                "value": "finance"
+            },
+            {
+                "label": "Marketing",
+                "value": "marketing"
+            },
+            {
+                "label": "Information Technology",
+                "value": "it"
+            },
+            {
+                "label": "Administration",
+                "value": "admin"
+            },
+            {
+                "label": "Sales",
+                "value": "sales"
+            }
+        ] 
+	},
+    "department_heads" :  None,
+    
+        "Human Resources" : {
+            "Head" : "Emily Johnson"  
+        },
+        "Finance" : {
+            "Head" : "William Jones"  
+        },
+        "Marketing" : {
+            "Head" : "Mia Thomas"  
+        },
+        "Information Technology" : {
+            "Head" : "Ava Anderson"  
+        },
+        "Administration" : {
+            "Head" : "Matthew Young"  
+        }, 
+        "Sales" : {
+            "Head" : "Sophia Wilson"  
+        } 
+}
+
+</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:scriptTask id="Activity_1t5lolc" name="Read Department List from Data Store">
+      <bpmn:incoming>Flow_05yi2j2</bpmn:incoming>
+      <bpmn:outgoing>Flow_012i40t</bpmn:outgoing>
+      <bpmn:property id="Property_0xchz0v" name="__targetRef_placeholder" />
+      <bpmn:dataInputAssociation id="DataInputAssociation_01xvggw">
+        <bpmn:sourceRef>DataStoreReference_0zaapt8</bpmn:sourceRef>
+        <bpmn:targetRef>Property_0xchz0v</bpmn:targetRef>
+      </bpmn:dataInputAssociation>
+      <bpmn:script>departmentlist = departments("departments","department_list")</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:sequenceFlow id="Flow_012i40t" sourceRef="Activity_1t5lolc" targetRef="Activity_14fadak" />
+    <bpmn:userTask id="Activity_14fadak" name="Select Department">
+      <bpmn:extensionElements>
+        <spiffworkflow:properties>
+          <spiffworkflow:property name="formJsonSchemaFilename" value="department-schema.json" />
+          <spiffworkflow:property name="formUiSchemaFilename" value="department-uischema.json" />
+        </spiffworkflow:properties>
+        <spiffworkflow:postScript># Get Department Label
+temp_department_name = [x["label"] for x in departmentlist if x["value"] == my_department]
+department_name = temp_department_name[0]
+del(temp_department_name)</spiffworkflow:postScript>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_012i40t</bpmn:incoming>
+      <bpmn:outgoing>Flow_06zwcm5</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:dataStoreReference id="DataStoreReference_0zaapt8" name="Departments" dataStoreRef="departments" type="kkv" />
+    <bpmn:sequenceFlow id="Flow_06zwcm5" sourceRef="Activity_14fadak" targetRef="Gateway_0a0fl59" />
+  </bpmn:process>
+  <bpmn:dataStore id="departments" name="KKVDataStore" />
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_access_data_store_after_exclusive_gateway_i1i9mg8">
+      <bpmndi:BPMNShape id="Gateway_0a0fl59_di" bpmnElement="Gateway_0a0fl59" isMarkerVisible="true">
+        <dc:Bounds x="205" y="152" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_02yu8ua_di" bpmnElement="Event_02yu8ua">
+        <dc:Bounds x="472" y="52" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1xc87n5_di" bpmnElement="Event_1xc87n5">
+        <dc:Bounds x="472" y="272" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_15zb0gq_di" bpmnElement="Activity_0itrafu">
+        <dc:Bounds x="310" y="30" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1wd5xzb_di" bpmnElement="Activity_1fn3ce1">
+        <dc:Bounds x="310" y="250" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1d8r6vi_di" bpmnElement="Event_1d8r6vi">
+        <dc:Bounds x="-438" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1wjbyz0_di" bpmnElement="Activity_1pj6kgx">
+        <dc:Bounds x="-320" y="137" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1xuxdcs_di" bpmnElement="Activity_1t5lolc">
+        <dc:Bounds x="-150" y="137" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1j5dzjo_di" bpmnElement="Activity_14fadak">
+        <dc:Bounds x="30" y="137" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DataStoreReference_0zaapt8_di" bpmnElement="DataStoreReference_0zaapt8">
+        <dc:Bounds x="-35" y="-175" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="-41" y="-118" width="63" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_044fuvx_di" bpmnElement="Flow_044fuvx">
+        <di:waypoint x="230" y="152" />
+        <di:waypoint x="230" y="70" />
+        <di:waypoint x="310" y="70" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0xja4pk_di" bpmnElement="Flow_0xja4pk">
+        <di:waypoint x="230" y="202" />
+        <di:waypoint x="230" y="290" />
+        <di:waypoint x="310" y="290" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0xipol4_di" bpmnElement="Flow_0xipol4">
+        <di:waypoint x="410" y="70" />
+        <di:waypoint x="472" y="70" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1rukd42_di" bpmnElement="Flow_1rukd42">
+        <di:waypoint x="410" y="290" />
+        <di:waypoint x="472" y="290" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DataInputAssociation_00v76t0_di" bpmnElement="DataInputAssociation_00v76t0">
+        <di:waypoint x="15" y="-137" />
+        <di:waypoint x="341" y="30" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DataInputAssociation_1wvvz3e_di" bpmnElement="DataInputAssociation_1wvvz3e">
+        <di:waypoint x="13" y="-125" />
+        <di:waypoint x="351" y="250" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1d0ppvp_di" bpmnElement="Flow_1d0ppvp">
+        <di:waypoint x="-402" y="177" />
+        <di:waypoint x="-320" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_05yi2j2_di" bpmnElement="Flow_05yi2j2">
+        <di:waypoint x="-220" y="177" />
+        <di:waypoint x="-150" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DataOutputAssociation_15mzro2_di" bpmnElement="DataOutputAssociation_15mzro2">
+        <di:waypoint x="-238" y="137" />
+        <di:waypoint x="-31" y="-125" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DataInputAssociation_01xvggw_di" bpmnElement="DataInputAssociation_01xvggw">
+        <di:waypoint x="-18" y="-125" />
+        <di:waypoint x="-99" y="137" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_012i40t_di" bpmnElement="Flow_012i40t">
+        <di:waypoint x="-50" y="177" />
+        <di:waypoint x="30" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_06zwcm5_di" bpmnElement="Flow_06zwcm5">
+        <di:waypoint x="130" y="177" />
+        <di:waypoint x="205" y="177" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

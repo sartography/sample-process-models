@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:spiffworkflow="http://spiffworkflow.org/bpmn/schema/1.0/core" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_96f6665" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.0.0-dev">
+  <bpmn:process id="Process_access_json_data_store_at_root_level_hnvs1bl" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>Flow_17db3yp</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_17db3yp" sourceRef="StartEvent_1" targetRef="Activity_0qpzdpu" />
+    <bpmn:endEvent id="EndEvent_1">
+      <bpmn:extensionElements>
+        <spiffworkflow:instructionsForEndUser>The process instance completed successfully.
+
+{{book_list}}</spiffworkflow:instructionsForEndUser>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1eij6eu</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:scriptTask id="Activity_0qpzdpu" name="Write to the JSON Data Store">
+      <bpmn:extensionElements>
+        <spiffworkflow:instructionsForEndUser />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_17db3yp</bpmn:incoming>
+      <bpmn:outgoing>Flow_0q0zybr</bpmn:outgoing>
+      <bpmn:dataOutputAssociation id="DataOutputAssociation_1gp0exw">
+        <bpmn:targetRef>DataStoreReference_00gpwrt</bpmn:targetRef>
+      </bpmn:dataOutputAssociation>
+      <bpmn:script>books = [
+    {
+        "name" : "The Lord of the Rings",
+        "author" : "J.R.R. Tolkien"
+    },
+    {
+        "name" : "Jane Eyre",
+        "author" : "Charlotte Bronte"
+    },
+    {
+        "name" : "Anna Karenina",
+        "author" : "Leo Tolstoy"
+    },
+    {
+        "name" : "Harry Potter",
+        "author" : "J.K. Rowlin"
+    },
+    {
+        "name" : "Wuthering Heights",
+        "author" : "Emily Bronte"
+    } 
+]</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:dataStoreReference id="DataStoreReference_00gpwrt" name="Books" dataStoreRef="books" type="json" />
+    <bpmn:sequenceFlow id="Flow_0q0zybr" sourceRef="Activity_0qpzdpu" targetRef="Activity_1g71lbg" />
+    <bpmn:scriptTask id="Activity_1g71lbg" name="Read from Data Store">
+      <bpmn:incoming>Flow_0q0zybr</bpmn:incoming>
+      <bpmn:outgoing>Flow_1eij6eu</bpmn:outgoing>
+      <bpmn:property id="Property_0dw03o7" name="__targetRef_placeholder" />
+      <bpmn:dataInputAssociation id="DataInputAssociation_0x8izl9">
+        <bpmn:sourceRef>DataStoreReference_00gpwrt</bpmn:sourceRef>
+        <bpmn:targetRef>Property_0dw03o7</bpmn:targetRef>
+      </bpmn:dataInputAssociation>
+      <bpmn:script>book_list = books</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:sequenceFlow id="Flow_1eij6eu" sourceRef="Activity_1g71lbg" targetRef="EndEvent_1" />
+  </bpmn:process>
+  <bpmn:dataStore id="books" name="JSONDataStore" />
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_access_json_data_store_at_root_level_hnvs1bl">
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="179" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_14za570_di" bpmnElement="EndEvent_1">
+        <dc:Bounds x="692" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1ac3rek_di" bpmnElement="Activity_0qpzdpu">
+        <dc:Bounds x="270" y="137" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DataStoreReference_00gpwrt_di" bpmnElement="DataStoreReference_00gpwrt">
+        <dc:Bounds x="435" y="-85" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="445" y="-115" width="31" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1w14qag_di" bpmnElement="Activity_1g71lbg">
+        <dc:Bounds x="500" y="137" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_17db3yp_di" bpmnElement="Flow_17db3yp">
+        <di:waypoint x="215" y="177" />
+        <di:waypoint x="270" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DataOutputAssociation_1gp0exw_di" bpmnElement="DataOutputAssociation_1gp0exw">
+        <di:waypoint x="344" y="137" />
+        <di:waypoint x="445" y="-35" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0q0zybr_di" bpmnElement="Flow_0q0zybr">
+        <di:waypoint x="370" y="177" />
+        <di:waypoint x="500" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DataInputAssociation_0x8izl9_di" bpmnElement="DataInputAssociation_0x8izl9">
+        <di:waypoint x="471" y="-35" />
+        <di:waypoint x="546" y="137" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1eij6eu_di" bpmnElement="Flow_1eij6eu">
+        <di:waypoint x="600" y="177" />
+        <di:waypoint x="692" y="177" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

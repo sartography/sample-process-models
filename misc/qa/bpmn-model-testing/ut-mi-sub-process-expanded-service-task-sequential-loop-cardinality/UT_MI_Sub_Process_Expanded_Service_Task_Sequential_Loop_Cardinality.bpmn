@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:spiffworkflow="http://spiffworkflow.org/bpmn/schema/1.0/core" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="Definitions_96f6665" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.0.0-dev">
+  <bpmn:process id="UT_MI_Sub_Process_Expanded_Service_Task_Sequential_Loop_Cardinality" name="MI Sequential Expanded Sub Process with Service Task Loop Cardinality" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>Flow_0cyh820</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:subProcess id="MI_Sequential_Expanded_Sub_Process" name="MI Sequential Expanded Sub Process with Service Task Loop Cardinality">
+      <bpmn:extensionElements>
+        <spiffworkflow:instructionsForEndUser />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0cyh820</bpmn:incoming>
+      <bpmn:outgoing>Flow_028ji7m</bpmn:outgoing>
+      <bpmn:multiInstanceLoopCharacteristics isSequential="true">
+        <bpmn:loopCardinality xsi:type="bpmn:tFormalExpression">3</bpmn:loopCardinality>
+      </bpmn:multiInstanceLoopCharacteristics>
+      <bpmn:startEvent id="Event_00249hk">
+        <bpmn:outgoing>Flow_0h2wum9</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:sequenceFlow id="Flow_0h2wum9" sourceRef="Event_00249hk" targetRef="Service_Task" />
+      <bpmn:endEvent id="Event_113745h">
+        <bpmn:incoming>Flow_1iq3gbl</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:sequenceFlow id="Flow_1iq3gbl" sourceRef="Service_Task" targetRef="Event_113745h" />
+      <bpmn:serviceTask id="Service_Task" name="Service Task">
+        <bpmn:extensionElements>
+          <spiffworkflow:instructionsForEndUser>This is the Service Task Unit Test Screen.</spiffworkflow:instructionsForEndUser>
+          <spiffworkflow:serviceTaskOperator id="http/GetRequest" resultVariable="git_resp">
+            <spiffworkflow:parameters>
+              <spiffworkflow:parameter id="basic_auth_password" type="str" />
+              <spiffworkflow:parameter id="basic_auth_username" type="str" />
+              <spiffworkflow:parameter id="headers" type="any" value="{ &#34;Authorization&#34;: &#34;Bearer SPIFF_SECRET:github_oauth&#34; }" />
+              <spiffworkflow:parameter id="params" type="any" />
+              <spiffworkflow:parameter id="url" type="str" value="&#34;https://api.github.com/user&#34;" />
+            </spiffworkflow:parameters>
+          </spiffworkflow:serviceTaskOperator>
+        </bpmn:extensionElements>
+        <bpmn:incoming>Flow_0h2wum9</bpmn:incoming>
+        <bpmn:outgoing>Flow_1iq3gbl</bpmn:outgoing>
+      </bpmn:serviceTask>
+    </bpmn:subProcess>
+    <bpmn:sequenceFlow id="Flow_0cyh820" sourceRef="StartEvent_1" targetRef="MI_Sequential_Expanded_Sub_Process" />
+    <bpmn:endEvent id="Event_1kqwj2o">
+      <bpmn:extensionElements>
+        <spiffworkflow:instructionsForEndUser>End MI Sequential Expanded Sub Process with Service Task Loop Cardinality Unit Test. Output:{{git_resp.id}}</spiffworkflow:instructionsForEndUser>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_028ji7m</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_028ji7m" sourceRef="MI_Sequential_Expanded_Sub_Process" targetRef="Event_1kqwj2o" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="UT_MI_Sub_Process_Expanded_Service_Task_Sequential_Loop_Cardinality">
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="179" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0kjb4zq_di" bpmnElement="MI_Sequential_Expanded_Sub_Process" isExpanded="true">
+        <dc:Bounds x="280" y="77" width="350" height="200" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_00249hk_di" bpmnElement="Event_00249hk">
+        <dc:Bounds x="320" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_113745h_di" bpmnElement="Event_113745h">
+        <dc:Bounds x="572" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_10bv9g0_di" bpmnElement="Service_Task">
+        <dc:Bounds x="410" y="137" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_0h2wum9_di" bpmnElement="Flow_0h2wum9">
+        <di:waypoint x="356" y="177" />
+        <di:waypoint x="410" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1iq3gbl_di" bpmnElement="Flow_1iq3gbl">
+        <di:waypoint x="510" y="177" />
+        <di:waypoint x="572" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="Event_1kqwj2o_di" bpmnElement="Event_1kqwj2o">
+        <dc:Bounds x="702" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_0cyh820_di" bpmnElement="Flow_0cyh820">
+        <di:waypoint x="215" y="177" />
+        <di:waypoint x="280" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_028ji7m_di" bpmnElement="Flow_028ji7m">
+        <di:waypoint x="630" y="177" />
+        <di:waypoint x="702" y="177" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

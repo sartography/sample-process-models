@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:spiffworkflow="http://spiffworkflow.org/bpmn/schema/1.0/core" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_96f6665" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.0.0-dev">
+  <bpmn:process id="Unit_Test_Exclusive_Gateway_Merge" name="Unit Test Exclusive Gateway Merge" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>Flow_0fsf6ig</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_0fsf6ig" sourceRef="StartEvent_1" targetRef="Activity_1d0kzng" />
+    <bpmn:scriptTask id="Activity_1d0kzng" name="x = 5">
+      <bpmn:incoming>Flow_0fsf6ig</bpmn:incoming>
+      <bpmn:outgoing>Flow_1ky05t1</bpmn:outgoing>
+      <bpmn:script>x = 5</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:exclusiveGateway id="Gateway_1yqj8gh">
+      <bpmn:incoming>Flow_1ky05t1</bpmn:incoming>
+      <bpmn:outgoing>Flow_0hbrcwt</bpmn:outgoing>
+      <bpmn:outgoing>Flow_0tvkd79</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="Flow_1ky05t1" sourceRef="Activity_1d0kzng" targetRef="Gateway_1yqj8gh" />
+    <bpmn:sequenceFlow id="Flow_0hbrcwt" name="x &#62;= 10" sourceRef="Gateway_1yqj8gh" targetRef="Activity_1ga7shk">
+      <bpmn:conditionExpression>x &gt;= 10</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_0tvkd79" name="x &#60; 10" sourceRef="Gateway_1yqj8gh" targetRef="Activity_0y14lbb">
+      <bpmn:conditionExpression>x &lt; 10</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:scriptTask id="Activity_1ga7shk" name="Multiply by 2">
+      <bpmn:incoming>Flow_0hbrcwt</bpmn:incoming>
+      <bpmn:outgoing>Flow_0j5vjfp</bpmn:outgoing>
+      <bpmn:script>x = x * 2</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:scriptTask id="Activity_0y14lbb" name="Multiply by 3">
+      <bpmn:incoming>Flow_0tvkd79</bpmn:incoming>
+      <bpmn:outgoing>Flow_0z8vpf0</bpmn:outgoing>
+      <bpmn:script>x = x * 3</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:exclusiveGateway id="Gateway_1vuwncl">
+      <bpmn:incoming>Flow_0j5vjfp</bpmn:incoming>
+      <bpmn:incoming>Flow_0z8vpf0</bpmn:incoming>
+      <bpmn:outgoing>Flow_1dm6imi</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="Flow_0j5vjfp" sourceRef="Activity_1ga7shk" targetRef="Gateway_1vuwncl" />
+    <bpmn:sequenceFlow id="Flow_0z8vpf0" sourceRef="Activity_0y14lbb" targetRef="Gateway_1vuwncl" />
+    <bpmn:endEvent id="Event_05p2tu1">
+      <bpmn:extensionElements>
+        <spiffworkflow:instructionsForEndUser>End Exclusive Gateway Merge Unit Test. Variable value is {{x}}.</spiffworkflow:instructionsForEndUser>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1dm6imi</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_1dm6imi" sourceRef="Gateway_1vuwncl" targetRef="Event_05p2tu1" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Unit_Test_Exclusive_Gateway_Merge">
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="179" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0wmt1wf_di" bpmnElement="Activity_1d0kzng">
+        <dc:Bounds x="270" y="137" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_1yqj8gh_di" bpmnElement="Gateway_1yqj8gh" isMarkerVisible="true">
+        <dc:Bounds x="425" y="152" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_10q0rwj_di" bpmnElement="Activity_1ga7shk">
+        <dc:Bounds x="530" y="137" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_105cq1z_di" bpmnElement="Activity_0y14lbb">
+        <dc:Bounds x="530" y="250" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_1vuwncl_di" bpmnElement="Gateway_1vuwncl" isMarkerVisible="true">
+        <dc:Bounds x="685" y="152" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_05p2tu1_di" bpmnElement="Event_05p2tu1">
+        <dc:Bounds x="792" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_0fsf6ig_di" bpmnElement="Flow_0fsf6ig">
+        <di:waypoint x="215" y="177" />
+        <di:waypoint x="270" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1ky05t1_di" bpmnElement="Flow_1ky05t1">
+        <di:waypoint x="370" y="177" />
+        <di:waypoint x="425" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0hbrcwt_di" bpmnElement="Flow_0hbrcwt">
+        <di:waypoint x="475" y="177" />
+        <di:waypoint x="530" y="177" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="485" y="159" width="36" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0tvkd79_di" bpmnElement="Flow_0tvkd79">
+        <di:waypoint x="450" y="202" />
+        <di:waypoint x="450" y="290" />
+        <di:waypoint x="530" y="290" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="450" y="243" width="30" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0j5vjfp_di" bpmnElement="Flow_0j5vjfp">
+        <di:waypoint x="630" y="177" />
+        <di:waypoint x="685" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0z8vpf0_di" bpmnElement="Flow_0z8vpf0">
+        <di:waypoint x="630" y="290" />
+        <di:waypoint x="710" y="290" />
+        <di:waypoint x="710" y="202" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1dm6imi_di" bpmnElement="Flow_1dm6imi">
+        <di:waypoint x="735" y="177" />
+        <di:waypoint x="792" y="177" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:spiffworkflow="http://spiffworkflow.org/bpmn/schema/1.0/core" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_96f6665" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.0.0-dev">
+  <bpmn:process id="Process_delete_multiple_items_from_data_store_0ro6uo4" isExecutable="true">
+    <bpmn:startEvent id="Event_0tx0osa">
+      <bpmn:outgoing>Flow_0cm44j0</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_0cm44j0" sourceRef="Event_0tx0osa" targetRef="Activity_1lv04gq" />
+    <bpmn:scriptTask id="Activity_1lv04gq" name="Write to the Data Store">
+      <bpmn:incoming>Flow_0cm44j0</bpmn:incoming>
+      <bpmn:outgoing>Flow_00fiumz</bpmn:outgoing>
+      <bpmn:dataOutputAssociation id="DataOutputAssociation_17p8hrt">
+        <bpmn:targetRef>DataStoreReference_1x62shf</bpmn:targetRef>
+      </bpmn:dataOutputAssociation>
+      <bpmn:script>travel_destinations =   {
+    "Paris" : { 
+            "country" : "France",
+            "highlights": "Known for iconic landmarks like the Eiffel Tower and the Louvre Museum.",
+            "Population" : "2.1 million"
+        },
+    "Eiffel Tower" : { 
+            "country" : "France",
+            "highlights": "The Eiffel Tower is a landmark in Paris.",
+            "latitude" : "48.8584° N",
+            "longitude" : "2.2945° E"
+        },
+    "Cape Town" : { 
+            "country" : "South Africa",
+            "highlights": "Offers stunning landscapes, diverse wildlife, and vibrant cultural experiences."     
+      },
+    "Kyoto" : { 
+            "country" : "Japan",
+            "highlights": "Renowned for its beautiful temples, traditional tea houses, and serene gardens.",
+            "elevation" :"971m" 
+        },
+    "Rome" : { 
+            "country" : "Italy",
+            "highlights": "Home to ancient ruins such as the Colosseum and the Roman Forum."   
+        }     
+  }</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:dataStoreReference id="DataStoreReference_1x62shf" name="Travel Destinations" dataStoreRef="travel_destinations" type="kkv" />
+    <bpmn:sequenceFlow id="Flow_00fiumz" sourceRef="Activity_1lv04gq" targetRef="Activity_0ltbzp5" />
+    <bpmn:sequenceFlow id="Flow_181e7bd" sourceRef="Activity_0ltbzp5" targetRef="Activity_164zxgo" />
+    <bpmn:scriptTask id="Activity_164zxgo" name="Delete 2 items">
+      <bpmn:incoming>Flow_181e7bd</bpmn:incoming>
+      <bpmn:outgoing>Flow_194mpxs</bpmn:outgoing>
+      <bpmn:dataOutputAssociation id="DataOutputAssociation_0muzrzq">
+        <bpmn:targetRef>DataStoreReference_1x62shf</bpmn:targetRef>
+      </bpmn:dataOutputAssociation>
+      <bpmn:script>travel_destinations =   { 
+    "Kyoto" : { 
+            "country" : None
+      },
+    "Rome" : { 
+            "country" : None
+      } 
+  }</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:scriptTask id="Activity_0ltbzp5" name="Delete 1 item">
+      <bpmn:incoming>Flow_00fiumz</bpmn:incoming>
+      <bpmn:outgoing>Flow_181e7bd</bpmn:outgoing>
+      <bpmn:dataOutputAssociation id="DataOutputAssociation_0fwdovc">
+        <bpmn:targetRef>DataStoreReference_1x62shf</bpmn:targetRef>
+      </bpmn:dataOutputAssociation>
+      <bpmn:script>travel_destinations =   { 
+    "Rome" : { 
+            "highlights" : None
+      } 
+  }</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:sequenceFlow id="Flow_194mpxs" sourceRef="Activity_164zxgo" targetRef="Activity_0czd9hs" />
+    <bpmn:endEvent id="Event_1pujmvd">
+      <bpmn:extensionElements>
+        <spiffworkflow:instructionsForEndUser>The process instance completed successfully.</spiffworkflow:instructionsForEndUser>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0p873ev</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_0p873ev" sourceRef="Activity_075aqyi" targetRef="Event_1pujmvd" />
+    <bpmn:manualTask id="Activity_075aqyi" name="Display">
+      <bpmn:extensionElements>
+        <spiffworkflow:instructionsForEndUser>Highlights of Rome -  {{highlights_of_Rome}}
+
+Country of Kyoto - {{country_of_Kyoto}}
+
+Country of Rome -  {{country_of_Rome}}
+</spiffworkflow:instructionsForEndUser>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_03lr6av</bpmn:incoming>
+      <bpmn:outgoing>Flow_0p873ev</bpmn:outgoing>
+      <bpmn:property id="Property_0nauy9g" name="__targetRef_placeholder" />
+      <bpmn:dataInputAssociation id="DataInputAssociation_0z5kkfn">
+        <bpmn:sourceRef>DataStoreReference_1x62shf</bpmn:sourceRef>
+        <bpmn:targetRef>Property_0nauy9g</bpmn:targetRef>
+      </bpmn:dataInputAssociation>
+    </bpmn:manualTask>
+    <bpmn:scriptTask id="Activity_0czd9hs" name="Read from the Data Store">
+      <bpmn:incoming>Flow_194mpxs</bpmn:incoming>
+      <bpmn:outgoing>Flow_03lr6av</bpmn:outgoing>
+      <bpmn:property id="Property_1suxllj" name="__targetRef_placeholder" />
+      <bpmn:dataInputAssociation id="DataInputAssociation_1ql1ofq">
+        <bpmn:sourceRef>DataStoreReference_1x62shf</bpmn:sourceRef>
+        <bpmn:targetRef>Property_1suxllj</bpmn:targetRef>
+      </bpmn:dataInputAssociation>
+      <bpmn:script>highlights_of_Rome = travel_destinations("Rome", "highlights")
+country_of_Kyoto = travel_destinations("Kyoto", "country")
+country_of_Rome = travel_destinations("Rome", "country")</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:sequenceFlow id="Flow_03lr6av" sourceRef="Activity_0czd9hs" targetRef="Activity_075aqyi" />
+  </bpmn:process>
+  <bpmn:dataStore id="travel_destinations" name="KKVDataStore" />
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_delete_multiple_items_from_data_store_0ro6uo4">
+      <bpmndi:BPMNShape id="Event_0tx0osa_di" bpmnElement="Event_0tx0osa">
+        <dc:Bounds x="-158" y="172" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_11bfsy0_di" bpmnElement="Activity_1lv04gq">
+        <dc:Bounds x="-70" y="150" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DataStoreReference_1x62shf_di" bpmnElement="DataStoreReference_1x62shf">
+        <dc:Bounds x="315" y="-75" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="309" y="-18" width="62" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0rrevbm_di" bpmnElement="Activity_164zxgo">
+        <dc:Bounds x="310" y="150" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1g0chxe_di" bpmnElement="Activity_0ltbzp5">
+        <dc:Bounds x="120" y="150" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1pujmvd_di" bpmnElement="Event_1pujmvd">
+        <dc:Bounds x="882" y="172" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_156oud6_di" bpmnElement="Activity_075aqyi">
+        <dc:Bounds x="690" y="150" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0pmms9a_di" bpmnElement="Activity_0czd9hs">
+        <dc:Bounds x="490" y="150" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_0cm44j0_di" bpmnElement="Flow_0cm44j0">
+        <di:waypoint x="-122" y="190" />
+        <di:waypoint x="-70" y="190" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DataOutputAssociation_17p8hrt_di" bpmnElement="DataOutputAssociation_17p8hrt">
+        <di:waypoint x="29" y="157" />
+        <di:waypoint x="315" y="-32" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_00fiumz_di" bpmnElement="Flow_00fiumz">
+        <di:waypoint x="30" y="190" />
+        <di:waypoint x="120" y="190" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_181e7bd_di" bpmnElement="Flow_181e7bd">
+        <di:waypoint x="220" y="190" />
+        <di:waypoint x="310" y="190" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DataOutputAssociation_0muzrzq_di" bpmnElement="DataOutputAssociation_0muzrzq">
+        <di:waypoint x="357" y="150" />
+        <di:waypoint x="346" y="-25" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DataOutputAssociation_0fwdovc_di" bpmnElement="DataOutputAssociation_0fwdovc">
+        <di:waypoint x="198" y="150" />
+        <di:waypoint x="321" y="-25" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_194mpxs_di" bpmnElement="Flow_194mpxs">
+        <di:waypoint x="410" y="190" />
+        <di:waypoint x="490" y="190" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0p873ev_di" bpmnElement="Flow_0p873ev">
+        <di:waypoint x="790" y="190" />
+        <di:waypoint x="882" y="190" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DataInputAssociation_0z5kkfn_di" bpmnElement="DataInputAssociation_0z5kkfn">
+        <di:waypoint x="365" y="-37" />
+        <di:waypoint x="721" y="150" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DataInputAssociation_1ql1ofq_di" bpmnElement="DataInputAssociation_1ql1ofq">
+        <di:waypoint x="364" y="-25" />
+        <di:waypoint x="530" y="150" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_03lr6av_di" bpmnElement="Flow_03lr6av">
+        <di:waypoint x="590" y="190" />
+        <di:waypoint x="690" y="190" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

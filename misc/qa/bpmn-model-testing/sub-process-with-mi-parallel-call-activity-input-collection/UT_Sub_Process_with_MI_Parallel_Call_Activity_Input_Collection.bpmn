@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:spiffworkflow="http://spiffworkflow.org/bpmn/schema/1.0/core" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_96f6665" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.0.0-dev">
+  <bpmn:process id="Sub_Process_with_MI_Parallel_Call_Activity_Input_Collection" name="Sub Process with MI Parallel Call Activity Input Collection" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>Flow_0og5t3y</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:subProcess id="Sub_Process" name="Sub Process  ">
+      <bpmn:incoming>Flow_0og5t3y</bpmn:incoming>
+      <bpmn:outgoing>Flow_0nbef5s</bpmn:outgoing>
+      <bpmn:startEvent id="Event_0leaxc9">
+        <bpmn:outgoing>Flow_18d9rgl</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:sequenceFlow id="Flow_18d9rgl" sourceRef="Event_0leaxc9" targetRef="Activity_0c7u9hm" />
+      <bpmn:sequenceFlow id="Flow_05s7vtv" sourceRef="Activity_0c7u9hm" targetRef="Call_Activity" />
+      <bpmn:endEvent id="Event_0t2a8hq">
+        <bpmn:incoming>Flow_1qjzfyo</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:sequenceFlow id="Flow_1qjzfyo" sourceRef="Call_Activity" targetRef="Event_0t2a8hq" />
+      <bpmn:scriptTask id="Activity_0c7u9hm" name="Script Task">
+        <bpmn:incoming>Flow_18d9rgl</bpmn:incoming>
+        <bpmn:outgoing>Flow_05s7vtv</bpmn:outgoing>
+        <bpmn:script>mycounter = [1,2,3,4]</bpmn:script>
+      </bpmn:scriptTask>
+      <bpmn:callActivity id="Call_Activity" name="MI Parallel Call Activity" calledElement="Unit_Test_Manual_Task">
+        <bpmn:incoming>Flow_05s7vtv</bpmn:incoming>
+        <bpmn:outgoing>Flow_1qjzfyo</bpmn:outgoing>
+        <bpmn:multiInstanceLoopCharacteristics>
+          <bpmn:loopDataInputRef>mycounter</bpmn:loopDataInputRef>
+          <bpmn:loopDataOutputRef>outputcollection</bpmn:loopDataOutputRef>
+        </bpmn:multiInstanceLoopCharacteristics>
+      </bpmn:callActivity>
+    </bpmn:subProcess>
+    <bpmn:sequenceFlow id="Flow_0og5t3y" sourceRef="StartEvent_1" targetRef="Sub_Process" />
+    <bpmn:endEvent id="Event_1it9pno">
+      <bpmn:extensionElements>
+        <spiffworkflow:instructionsForEndUser>End Unit Test Sub Process with MI Parallel Call Activity Input Collection</spiffworkflow:instructionsForEndUser>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0nbef5s</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_0nbef5s" sourceRef="Sub_Process" targetRef="Event_1it9pno" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Sub_Process_with_MI_Parallel_Call_Activity_Input_Collection">
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="102" y="172" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1it9pno_di" bpmnElement="Event_1it9pno">
+        <dc:Bounds x="392" y="172" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_18qhw1x_di" bpmnElement="Sub_Process" isExpanded="false">
+        <dc:Bounds x="225" y="150" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_0og5t3y_di" bpmnElement="Flow_0og5t3y">
+        <di:waypoint x="138" y="190" />
+        <di:waypoint x="225" y="190" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0nbef5s_di" bpmnElement="Flow_0nbef5s">
+        <di:waypoint x="325" y="190" />
+        <di:waypoint x="392" y="190" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1yynq9y">
+    <bpmndi:BPMNPlane id="BPMNPlane_1g4g2to" bpmnElement="Sub_Process">
+      <bpmndi:BPMNShape id="Event_0leaxc9_di" bpmnElement="Event_0leaxc9">
+        <dc:Bounds x="180" y="182" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0t2a8hq_di" bpmnElement="Event_0t2a8hq">
+        <dc:Bounds x="592" y="182" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1g84pzi_di" bpmnElement="Activity_0c7u9hm">
+        <dc:Bounds x="270" y="160" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0w8fyxp_di" bpmnElement="Call_Activity">
+        <dc:Bounds x="430" y="160" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_18d9rgl_di" bpmnElement="Flow_18d9rgl">
+        <di:waypoint x="216" y="200" />
+        <di:waypoint x="270" y="200" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1qjzfyo_di" bpmnElement="Flow_1qjzfyo">
+        <di:waypoint x="530" y="200" />
+        <di:waypoint x="592" y="200" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_05s7vtv_di" bpmnElement="Flow_05s7vtv">
+        <di:waypoint x="370" y="200" />
+        <di:waypoint x="430" y="200" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

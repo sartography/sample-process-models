@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:spiffworkflow="http://spiffworkflow.org/bpmn/schema/1.0/core" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_96f6665" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.0.0-dev">
+  <bpmn:process id="UT_MI_Sub_Process_User_Task_Parallel_loop_cardinality" name="Sub Process with MI Parallel User Task Loop Cardinality" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>Flow_176vkgi</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_176vkgi" sourceRef="StartEvent_1" targetRef="Sub_Process" />
+    <bpmn:endEvent id="Event_11ri9nw">
+      <bpmn:extensionElements>
+        <spiffworkflow:instructionsForEndUser>End Sub Process with MI Parallel User Task Loop Cardinality Unit Test. Your age list {{z}}</spiffworkflow:instructionsForEndUser>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_022sffq</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_022sffq" sourceRef="Sub_Process" targetRef="Event_11ri9nw" />
+    <bpmn:subProcess id="Sub_Process" name="Sub Process with MI Parallel User Task ">
+      <bpmn:extensionElements>
+        <spiffworkflow:instructionsForEndUser />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_176vkgi</bpmn:incoming>
+      <bpmn:outgoing>Flow_022sffq</bpmn:outgoing>
+      <bpmn:startEvent id="Event_04gltdf">
+        <bpmn:outgoing>Flow_0jtgxdc</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:sequenceFlow id="Flow_0jtgxdc" sourceRef="Event_04gltdf" targetRef="Parallel_multi_instance_user_task" />
+      <bpmn:endEvent id="Event_0dw3fdn">
+        <bpmn:incoming>Flow_05vh5ni</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:sequenceFlow id="Flow_05vh5ni" sourceRef="Parallel_multi_instance_user_task" targetRef="Event_0dw3fdn" />
+      <bpmn:userTask id="Parallel_multi_instance_user_task" name="Parallel multi-instance user task">
+        <bpmn:extensionElements>
+          <spiffworkflow:instructionsForEndUser>This is the Parallel multi-instance User Task Unit Test Screen.</spiffworkflow:instructionsForEndUser>
+          <spiffworkflow:properties>
+            <spiffworkflow:property name="formJsonSchemaFilename" value="age-schema.json" />
+          </spiffworkflow:properties>
+        </bpmn:extensionElements>
+        <bpmn:incoming>Flow_0jtgxdc</bpmn:incoming>
+        <bpmn:outgoing>Flow_05vh5ni</bpmn:outgoing>
+        <bpmn:multiInstanceLoopCharacteristics>
+          <bpmn:loopCardinality xsi:type="bpmn:tFormalExpression">3</bpmn:loopCardinality>
+          <bpmn:loopDataOutputRef>z</bpmn:loopDataOutputRef>
+          <bpmn:outputDataItem id="age" name="age" />
+        </bpmn:multiInstanceLoopCharacteristics>
+      </bpmn:userTask>
+    </bpmn:subProcess>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="UT_MI_Sub_Process_User_Task_Parallel_loop_cardinality">
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="132" y="82" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_11ri9nw_di" bpmnElement="Event_11ri9nw">
+        <dc:Bounds x="372" y="82" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_18meltx_di" bpmnElement="Sub_Process">
+        <dc:Bounds x="220" y="60" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_176vkgi_di" bpmnElement="Flow_176vkgi">
+        <di:waypoint x="168" y="100" />
+        <di:waypoint x="220" y="100" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_022sffq_di" bpmnElement="Flow_022sffq">
+        <di:waypoint x="320" y="100" />
+        <di:waypoint x="372" y="100" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_0l372mx">
+    <bpmndi:BPMNPlane id="BPMNPlane_0iu3sm0" bpmnElement="Sub_Process">
+      <bpmndi:BPMNShape id="Event_04gltdf_di" bpmnElement="Event_04gltdf">
+        <dc:Bounds x="172" y="212" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0dw3fdn_di" bpmnElement="Event_0dw3fdn">
+        <dc:Bounds x="412" y="212" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0aswtuw_di" bpmnElement="Parallel_multi_instance_user_task">
+        <dc:Bounds x="260" y="190" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_0jtgxdc_di" bpmnElement="Flow_0jtgxdc">
+        <di:waypoint x="208" y="230" />
+        <di:waypoint x="260" y="230" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_05vh5ni_di" bpmnElement="Flow_05vh5ni">
+        <di:waypoint x="360" y="230" />
+        <di:waypoint x="412" y="230" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

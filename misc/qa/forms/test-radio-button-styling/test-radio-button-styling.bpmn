@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:spiffworkflow="http://spiffworkflow.org/bpmn/schema/1.0/core" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_96f6665" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.0.0-dev">
+  <bpmn:process id="Process_test_radio_button_styling_b6m7res" isExecutable="true">
+    <bpmn:startEvent id="Event_1ox8wek">
+      <bpmn:outgoing>Flow_0r83yf6</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_0r83yf6" sourceRef="Event_1ox8wek" targetRef="Activity_0brsqg9" />
+    <bpmn:sequenceFlow id="Flow_0aamiwc" sourceRef="Activity_0brsqg9" targetRef="Activity_1sqb5un" />
+    <bpmn:endEvent id="Event_1gz3hjw">
+      <bpmn:incoming>Flow_0j098m4</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_0hbuzjk" sourceRef="Activity_1cuci2t" targetRef="Gateway_05qc43i" />
+    <bpmn:userTask id="Activity_0brsqg9" name="Questions Set 1">
+      <bpmn:extensionElements>
+        <spiffworkflow:properties>
+          <spiffworkflow:property name="formJsonSchemaFilename" value="questions-set-1-schema.json" />
+          <spiffworkflow:property name="formUiSchemaFilename" value="questions-set-1-uischema.json" />
+        </spiffworkflow:properties>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0r83yf6</bpmn:incoming>
+      <bpmn:outgoing>Flow_0aamiwc</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:userTask id="Activity_1cuci2t" name="Proceed?">
+      <bpmn:extensionElements>
+        <spiffworkflow:properties>
+          <spiffworkflow:property name="formJsonSchemaFilename" value="proceed-to-next-set-schema.json" />
+          <spiffworkflow:property name="formUiSchemaFilename" value="proceed-to-next-set-uischema.json" />
+        </spiffworkflow:properties>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0j92704</bpmn:incoming>
+      <bpmn:outgoing>Flow_0hbuzjk</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:exclusiveGateway id="Gateway_05qc43i" default="Flow_0j098m4">
+      <bpmn:incoming>Flow_0hbuzjk</bpmn:incoming>
+      <bpmn:outgoing>Flow_0j098m4</bpmn:outgoing>
+      <bpmn:outgoing>Flow_114lue4</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="Flow_0j098m4" sourceRef="Gateway_05qc43i" targetRef="Event_1gz3hjw" />
+    <bpmn:sequenceFlow id="Flow_114lue4" sourceRef="Gateway_05qc43i" targetRef="Activity_1xmojex">
+      <bpmn:conditionExpression>proceed</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:endEvent id="Event_083hvb4">
+      <bpmn:incoming>Flow_0fr3b32</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_1mtk1pt" sourceRef="Activity_1xmojex" targetRef="Activity_1fk48s7" />
+    <bpmn:userTask id="Activity_1xmojex" name="Questions Set 2">
+      <bpmn:extensionElements>
+        <spiffworkflow:properties>
+          <spiffworkflow:property name="formJsonSchemaFilename" value="questions-set-2-schema.json" />
+          <spiffworkflow:property name="formUiSchemaFilename" value="questions-set-2-uischema.json" />
+        </spiffworkflow:properties>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_114lue4</bpmn:incoming>
+      <bpmn:outgoing>Flow_1mtk1pt</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:sequenceFlow id="Flow_0j92704" sourceRef="Activity_1sqb5un" targetRef="Activity_1cuci2t" />
+    <bpmn:sequenceFlow id="Flow_0fr3b32" sourceRef="Activity_1fk48s7" targetRef="Event_083hvb4" />
+    <bpmn:manualTask id="Activity_1sqb5un" name="Display Answers">
+      <bpmn:extensionElements>
+        <spiffworkflow:instructionsForEndUser>Here's your answers for Questions Set 1
+
+1. What is the capital of France? {{capital_of_france}}
+2. Which river is the longest in the world? {{longest_river}}
+3. What is the tallest mountain in the world? {{tallest_mountain}}
+4. Which desert is the largest in the world? {{largest_dessert}}</spiffworkflow:instructionsForEndUser>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0aamiwc</bpmn:incoming>
+      <bpmn:outgoing>Flow_0j92704</bpmn:outgoing>
+    </bpmn:manualTask>
+    <bpmn:manualTask id="Activity_1fk48s7" name="Display Answers">
+      <bpmn:extensionElements>
+        <spiffworkflow:instructionsForEndUser>Here's your answers for Questions Set 2
+
+1. In what year did Christopher Columbus reach the America? {{america_discovered_in}}
+2. What is the chemical symbol for water? {{symbol_of_water}}
+3. Which planet is known as the 'Red Planet'? {{red_planet}}
+4. Who was the first president of the United States? {{first_president_of_usa}}</spiffworkflow:instructionsForEndUser>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1mtk1pt</bpmn:incoming>
+      <bpmn:outgoing>Flow_0fr3b32</bpmn:outgoing>
+    </bpmn:manualTask>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_test_radio_button_styling_b6m7res">
+      <bpmndi:BPMNShape id="Event_1ox8wek_di" bpmnElement="Event_1ox8wek">
+        <dc:Bounds x="-78" y="162" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1gz3hjw_di" bpmnElement="Event_1gz3hjw">
+        <dc:Bounds x="992" y="272" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1bxl4ad_di" bpmnElement="Activity_0brsqg9">
+        <dc:Bounds x="20" y="140" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_03g75ko_di" bpmnElement="Activity_1cuci2t">
+        <dc:Bounds x="360" y="140" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_05qc43i_di" bpmnElement="Gateway_05qc43i" isMarkerVisible="true">
+        <dc:Bounds x="525" y="155" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_083hvb4_di" bpmnElement="Event_083hvb4">
+        <dc:Bounds x="992" y="162" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0f1inj5_di" bpmnElement="Activity_1xmojex">
+        <dc:Bounds x="660" y="140" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_01w0okt_di" bpmnElement="Activity_1sqb5un">
+        <dc:Bounds x="190" y="140" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_020ikww_di" bpmnElement="Activity_1fk48s7">
+        <dc:Bounds x="830" y="140" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_0r83yf6_di" bpmnElement="Flow_0r83yf6">
+        <di:waypoint x="-42" y="180" />
+        <di:waypoint x="20" y="180" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0aamiwc_di" bpmnElement="Flow_0aamiwc">
+        <di:waypoint x="120" y="180" />
+        <di:waypoint x="190" y="180" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0hbuzjk_di" bpmnElement="Flow_0hbuzjk">
+        <di:waypoint x="460" y="180" />
+        <di:waypoint x="525" y="180" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0j098m4_di" bpmnElement="Flow_0j098m4">
+        <di:waypoint x="550" y="205" />
+        <di:waypoint x="550" y="290" />
+        <di:waypoint x="992" y="290" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_114lue4_di" bpmnElement="Flow_114lue4">
+        <di:waypoint x="575" y="180" />
+        <di:waypoint x="660" y="180" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1mtk1pt_di" bpmnElement="Flow_1mtk1pt">
+        <di:waypoint x="760" y="180" />
+        <di:waypoint x="830" y="180" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0j92704_di" bpmnElement="Flow_0j92704">
+        <di:waypoint x="290" y="180" />
+        <di:waypoint x="360" y="180" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0fr3b32_di" bpmnElement="Flow_0fr3b32">
+        <di:waypoint x="930" y="180" />
+        <di:waypoint x="992" y="180" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

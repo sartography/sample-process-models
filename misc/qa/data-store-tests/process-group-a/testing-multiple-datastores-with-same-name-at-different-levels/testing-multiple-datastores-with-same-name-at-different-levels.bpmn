@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:spiffworkflow="http://spiffworkflow.org/bpmn/schema/1.0/core" id="Definitions_96f6665" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.0.0-dev">
+  <bpmn:process id="Process_testing_multiple_datastores_with_same_name_at_different_levels_mxsqi4u" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>Flow_0u6z10j</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:scriptTask id="Activity_0y117va" name="Write to Data Store">
+      <bpmn:incoming>Flow_04h2p5u</bpmn:incoming>
+      <bpmn:outgoing>Flow_1ibt06r</bpmn:outgoing>
+      <bpmn:dataOutputAssociation id="DataOutputAssociation_1913q5s">
+        <bpmn:targetRef>DataStoreReference_1e04gay</bpmn:targetRef>
+      </bpmn:dataOutputAssociation>
+      <bpmn:script> 
+
+colors =   { 
+    "color_A" :{"color":inputcolor} 
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ </bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:dataStoreReference id="DataStoreReference_1e04gay" name="Colors" dataStoreRef="colors" type="kkv" />
+    <bpmn:endEvent id="Event_18kp5gj">
+      <bpmn:extensionElements>
+        <spiffworkflow:instructionsForEndUser>The process instance completed successfully.
+
+Color : {{ mycolor }}</spiffworkflow:instructionsForEndUser>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1kcg7g9</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_1ibt06r" sourceRef="Activity_0y117va" targetRef="Activity_0c322fw" />
+    <bpmn:sequenceFlow id="Flow_0u6z10j" sourceRef="StartEvent_1" targetRef="Activity_1fatlcj" />
+    <bpmn:sequenceFlow id="Flow_04h2p5u" sourceRef="Activity_1fatlcj" targetRef="Activity_0y117va" />
+    <bpmn:userTask id="Activity_1fatlcj" name="Get Color">
+      <bpmn:extensionElements>
+        <spiffworkflow:properties>
+          <spiffworkflow:property name="formJsonSchemaFilename" value="input-color-schema.json" />
+          <spiffworkflow:property name="formUiSchemaFilename" value="input-color-uischema.json" />
+        </spiffworkflow:properties>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0u6z10j</bpmn:incoming>
+      <bpmn:outgoing>Flow_04h2p5u</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:sequenceFlow id="Flow_1kcg7g9" sourceRef="Activity_0c322fw" targetRef="Event_18kp5gj" />
+    <bpmn:scriptTask id="Activity_0c322fw" name="Read from Data Store">
+      <bpmn:incoming>Flow_1ibt06r</bpmn:incoming>
+      <bpmn:outgoing>Flow_1kcg7g9</bpmn:outgoing>
+      <bpmn:property id="Property_0n4tg1y" name="__targetRef_placeholder" />
+      <bpmn:dataInputAssociation id="DataInputAssociation_02yw1fd">
+        <bpmn:sourceRef>DataStoreReference_1e04gay</bpmn:sourceRef>
+        <bpmn:targetRef>Property_0n4tg1y</bpmn:targetRef>
+      </bpmn:dataInputAssociation>
+      <bpmn:script>mycolor = colors("color_A","color")
+ </bpmn:script>
+    </bpmn:scriptTask>
+  </bpmn:process>
+  <bpmn:dataStore id="colors" name="KKVDataStore" />
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_testing_multiple_datastores_with_same_name_at_different_levels_mxsqi4u">
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="-318" y="182" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_03m1tiq_di" bpmnElement="Activity_0y117va">
+        <dc:Bounds x="-20" y="160" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DataStoreReference_1e04gay_di" bpmnElement="DataStoreReference_1e04gay">
+        <dc:Bounds x="5" y="-35" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="14" y="-59" width="32" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1dzzhn4_di" bpmnElement="Activity_1fatlcj">
+        <dc:Bounds x="-210" y="160" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_18kp5gj_di" bpmnElement="Event_18kp5gj">
+        <dc:Bounds x="332" y="182" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0i082mu_di" bpmnElement="Activity_0c322fw">
+        <dc:Bounds x="170" y="160" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="DataOutputAssociation_1913q5s_di" bpmnElement="DataOutputAssociation_1913q5s">
+        <di:waypoint x="30" y="160" />
+        <di:waypoint x="30" y="15" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1ibt06r_di" bpmnElement="Flow_1ibt06r">
+        <di:waypoint x="80" y="200" />
+        <di:waypoint x="170" y="200" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0u6z10j_di" bpmnElement="Flow_0u6z10j">
+        <di:waypoint x="-282" y="200" />
+        <di:waypoint x="-210" y="200" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_04h2p5u_di" bpmnElement="Flow_04h2p5u">
+        <di:waypoint x="-110" y="200" />
+        <di:waypoint x="-20" y="200" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1kcg7g9_di" bpmnElement="Flow_1kcg7g9">
+        <di:waypoint x="270" y="200" />
+        <di:waypoint x="332" y="200" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DataInputAssociation_02yw1fd_di" bpmnElement="DataInputAssociation_02yw1fd">
+        <di:waypoint x="55" y="14" />
+        <di:waypoint x="209" y="160" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

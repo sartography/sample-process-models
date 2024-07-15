@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:spiffworkflow="http://spiffworkflow.org/bpmn/schema/1.0/core" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_96f6665" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.0.0-dev">
+  <bpmn:process id="Process_unit_test_send_task_new_oas91yh" name="Unit Test Send Task (New)" isExecutable="true">
+    <bpmn:startEvent id="Event_12jof52">
+      <bpmn:outgoing>Flow_0m0b6mn</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_0m0b6mn" sourceRef="Event_12jof52" targetRef="Activity_1to24cv" />
+    <bpmn:endEvent id="Event_0lc8fvj">
+      <bpmn:extensionElements>
+        <spiffworkflow:instructionsForEndUser>End New Send Task Unit Test.</spiffworkflow:instructionsForEndUser>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_04dspvw</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_04dspvw" sourceRef="Activity_1to24cv" targetRef="Event_0lc8fvj" />
+    <bpmn:sendTask id="Activity_1to24cv" name="Send Task" messageRef="UnitTestMessage1">
+      <bpmn:extensionElements>
+        <spiffworkflow:messagePayload>payload</spiffworkflow:messagePayload>
+        <spiffworkflow:preScript>payload = {"name":"Joe", "age":35}</spiffworkflow:preScript>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0m0b6mn</bpmn:incoming>
+      <bpmn:outgoing>Flow_04dspvw</bpmn:outgoing>
+    </bpmn:sendTask>
+  </bpmn:process>
+  <bpmn:message id="UnitTestMessage1" name="UnitTestMessage1" />
+  <bpmn:correlationProperty id="Age" name="Age">
+    <bpmn:correlationPropertyRetrievalExpression messageRef="UnitTestMessage1">
+      <bpmn:formalExpression>age</bpmn:formalExpression>
+    </bpmn:correlationPropertyRetrievalExpression>
+  </bpmn:correlationProperty>
+  <bpmn:correlationProperty id="UserName" name="UserName">
+    <bpmn:correlationPropertyRetrievalExpression messageRef="UnitTestMessage1">
+      <bpmn:formalExpression>name</bpmn:formalExpression>
+    </bpmn:correlationPropertyRetrievalExpression>
+  </bpmn:correlationProperty>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_unit_test_send_task_new_oas91yh">
+      <bpmndi:BPMNShape id="Event_12jof52_di" bpmnElement="Event_12jof52">
+        <dc:Bounds x="-408" y="-168" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0lc8fvj_di" bpmnElement="Event_0lc8fvj">
+        <dc:Bounds x="-168" y="-168" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0xsuh9s_di" bpmnElement="Activity_1to24cv">
+        <dc:Bounds x="-320" y="-190" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_0m0b6mn_di" bpmnElement="Flow_0m0b6mn">
+        <di:waypoint x="-372" y="-150" />
+        <di:waypoint x="-320" y="-150" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_04dspvw_di" bpmnElement="Flow_04dspvw">
+        <di:waypoint x="-220" y="-150" />
+        <di:waypoint x="-168" y="-150" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

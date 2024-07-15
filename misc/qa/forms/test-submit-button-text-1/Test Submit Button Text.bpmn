@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:spiffworkflow="http://spiffworkflow.org/bpmn/schema/1.0/core" id="Definitions_96f6665" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.0.0-dev">
+  <bpmn:process id="Test_Submit_Button_Text_1" name="MadhuModel1" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>Flow_0abl6ny</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:userTask id="Activity_0ucsttr" name="Get Username">
+      <bpmn:extensionElements>
+        <spiffworkflow:properties>
+          <spiffworkflow:property name="formJsonSchemaFilename" value="getusername-schema.json" />
+          <spiffworkflow:property name="formUiSchemaFilename" value="getusername-uischema.json" />
+        </spiffworkflow:properties>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0abl6ny</bpmn:incoming>
+      <bpmn:outgoing>Flow_0jt6jx7</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:sequenceFlow id="Flow_0jt6jx7" sourceRef="Activity_0ucsttr" targetRef="Activity_1p75vkr" />
+    <bpmn:sequenceFlow id="Flow_1ldz3nr" sourceRef="Activity_1p75vkr" targetRef="Activity_10u86dg" />
+    <bpmn:sequenceFlow id="Flow_09cqg0q" sourceRef="Activity_10u86dg" targetRef="Activity_02zqxxp" />
+    <bpmn:endEvent id="Event_1cg287a">
+      <bpmn:extensionElements>
+        <spiffworkflow:instructionsForEndUser>The process instance completed successfully.</spiffworkflow:instructionsForEndUser>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1yyl6kn</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_1yyl6kn" sourceRef="Activity_02zqxxp" targetRef="Event_1cg287a" />
+    <bpmn:userTask id="Activity_10u86dg" name="Get City">
+      <bpmn:extensionElements>
+        <spiffworkflow:properties>
+          <spiffworkflow:property name="formJsonSchemaFilename" value="getcity-schema.json" />
+          <spiffworkflow:property name="formUiSchemaFilename" value="getcity-uischema.json" />
+        </spiffworkflow:properties>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1ldz3nr</bpmn:incoming>
+      <bpmn:outgoing>Flow_09cqg0q</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:sequenceFlow id="Flow_0abl6ny" sourceRef="StartEvent_1" targetRef="Activity_0ucsttr" />
+    <bpmn:manualTask id="Activity_1p75vkr" name="Show Name">
+      <bpmn:extensionElements>
+        <spiffworkflow:instructionsForEndUser>My name is {{firstName}}</spiffworkflow:instructionsForEndUser>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0jt6jx7</bpmn:incoming>
+      <bpmn:outgoing>Flow_1ldz3nr</bpmn:outgoing>
+    </bpmn:manualTask>
+    <bpmn:manualTask id="Activity_02zqxxp" name="Show City">
+      <bpmn:extensionElements>
+        <spiffworkflow:instructionsForEndUser>My city is {{city}}</spiffworkflow:instructionsForEndUser>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_09cqg0q</bpmn:incoming>
+      <bpmn:outgoing>Flow_1yyl6kn</bpmn:outgoing>
+    </bpmn:manualTask>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Test_Submit_Button_Text_1">
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="179" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0ihyrh9_di" bpmnElement="Activity_0ucsttr">
+        <dc:Bounds x="260" y="137" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1cg287a_di" bpmnElement="Event_1cg287a">
+        <dc:Bounds x="862" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1785hah_di" bpmnElement="Activity_10u86dg">
+        <dc:Bounds x="560" y="137" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0ib8fs5_di" bpmnElement="Activity_1p75vkr">
+        <dc:Bounds x="410" y="137" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1m5r5g2_di" bpmnElement="Activity_02zqxxp">
+        <dc:Bounds x="710" y="137" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_0jt6jx7_di" bpmnElement="Flow_0jt6jx7">
+        <di:waypoint x="360" y="177" />
+        <di:waypoint x="410" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1ldz3nr_di" bpmnElement="Flow_1ldz3nr">
+        <di:waypoint x="510" y="177" />
+        <di:waypoint x="560" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_09cqg0q_di" bpmnElement="Flow_09cqg0q">
+        <di:waypoint x="660" y="177" />
+        <di:waypoint x="710" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1yyl6kn_di" bpmnElement="Flow_1yyl6kn">
+        <di:waypoint x="810" y="177" />
+        <di:waypoint x="862" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0abl6ny_di" bpmnElement="Flow_0abl6ny">
+        <di:waypoint x="215" y="177" />
+        <di:waypoint x="260" y="177" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:spiffworkflow="http://spiffworkflow.org/bpmn/schema/1.0/core" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_96f6665" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.0.0-dev">
+  <bpmn:process id="Process_eipvdyr" name="Withdraw Money" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>Flow_1e5x6rs</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_1e5x6rs" sourceRef="StartEvent_1" targetRef="Activity_0vgtqgj" />
+    <bpmn:exclusiveGateway id="Gateway_152t30s">
+      <bpmn:incoming>Flow_100z57w</bpmn:incoming>
+      <bpmn:outgoing>Flow_0uyumsp</bpmn:outgoing>
+      <bpmn:outgoing>Flow_1kjh6f2</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="Flow_100z57w" sourceRef="Activity_0vgtqgj" targetRef="Gateway_152t30s" />
+    <bpmn:sequenceFlow id="Flow_0uyumsp" name="Below $100" sourceRef="Gateway_152t30s" targetRef="Event_1aezsrv">
+      <bpmn:conditionExpression>bank_balance ==  'Below $100'</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:userTask id="Activity_0vgtqgj" name="Check Bank Balance">
+      <bpmn:extensionElements>
+        <spiffworkflow:properties>
+          <spiffworkflow:property name="formJsonSchemaFilename" value="bank-balance-schema.json" />
+          <spiffworkflow:property name="formUiSchemaFilename" value="bank-balance-uischema.json" />
+        </spiffworkflow:properties>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1e5x6rs</bpmn:incoming>
+      <bpmn:outgoing>Flow_100z57w</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:endEvent id="Event_0ghiwdd">
+      <bpmn:extensionElements>
+        <spiffworkflow:instructionsForEndUser>End Unit Test Call Activity with Terminate End Event. Normal Path.</spiffworkflow:instructionsForEndUser>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_09e05jh</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_1kjh6f2" name="Sufficient Amount" sourceRef="Gateway_152t30s" targetRef="Activity_00z35pm">
+      <bpmn:conditionExpression>bank_balance == 'Sufficient Amount'</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:endEvent id="Event_1aezsrv" name="Terminate Withdrawal">
+      <bpmn:extensionElements>
+        <spiffworkflow:instructionsForEndUser>End Unit Test Call Activity with Terminate End Event. Terminate End Event Triggered.</spiffworkflow:instructionsForEndUser>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0uyumsp</bpmn:incoming>
+      <bpmn:terminateEventDefinition id="TerminateEventDefinition_14yg0m5" />
+    </bpmn:endEvent>
+    <bpmn:task id="Activity_00z35pm" name="Purchase TV">
+      <bpmn:incoming>Flow_1kjh6f2</bpmn:incoming>
+      <bpmn:outgoing>Flow_09e05jh</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:sequenceFlow id="Flow_09e05jh" sourceRef="Activity_00z35pm" targetRef="Event_0ghiwdd" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_eipvdyr">
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="-68" y="72" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_152t30s_di" bpmnElement="Gateway_152t30s" isMarkerVisible="true">
+        <dc:Bounds x="175" y="65" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1rws0dg_di" bpmnElement="Activity_0vgtqgj">
+        <dc:Bounds x="20" y="50" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0ghiwdd_di" bpmnElement="Event_0ghiwdd">
+        <dc:Bounds x="372" y="182" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1u51ye1_di" bpmnElement="Event_1aezsrv">
+        <dc:Bounds x="372" y="72" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="365" y="115" width="54" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_00z35pm_di" bpmnElement="Activity_00z35pm">
+        <dc:Bounds x="230" y="160" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_1e5x6rs_di" bpmnElement="Flow_1e5x6rs">
+        <di:waypoint x="-32" y="90" />
+        <di:waypoint x="20" y="90" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_100z57w_di" bpmnElement="Flow_100z57w">
+        <di:waypoint x="120" y="90" />
+        <di:waypoint x="175" y="90" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0uyumsp_di" bpmnElement="Flow_0uyumsp">
+        <di:waypoint x="225" y="90" />
+        <di:waypoint x="372" y="90" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="270" y="72" width="58" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1kjh6f2_di" bpmnElement="Flow_1kjh6f2">
+        <di:waypoint x="200" y="115" />
+        <di:waypoint x="200" y="200" />
+        <di:waypoint x="230" y="200" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="172" y="155" width="87" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_09e05jh_di" bpmnElement="Flow_09e05jh">
+        <di:waypoint x="330" y="200" />
+        <di:waypoint x="372" y="200" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

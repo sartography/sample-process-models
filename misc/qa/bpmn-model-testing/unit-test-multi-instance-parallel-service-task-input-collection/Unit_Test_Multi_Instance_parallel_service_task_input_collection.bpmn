@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:spiffworkflow="http://spiffworkflow.org/bpmn/schema/1.0/core" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_96f6665" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.0.0-dev">
+  <bpmn:process id="Unit_Test_Multi_Instance_parallel_service_task_input_collection" name="Unit Test Multi Instance parallel service task input collection" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>Flow_0u0bojx</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_0u0bojx" sourceRef="StartEvent_1" targetRef="Activity_13yw429" />
+    <bpmn:sequenceFlow id="Flow_1nahat1" sourceRef="Activity_13yw429" targetRef="Activity_1ycd8ce" />
+    <bpmn:endEvent id="Event_00m1m72">
+      <bpmn:extensionElements>
+        <spiffworkflow:instructionsForEndUser>End Multi Instance Parallel Service Task Unit Test. Output Collection:
+User1:{{z[0].id}}
+User2:{{z[1].id}}</spiffworkflow:instructionsForEndUser>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0xblt4y</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_0xblt4y" sourceRef="Activity_1ycd8ce" targetRef="Event_00m1m72" />
+    <bpmn:scriptTask id="Activity_13yw429" name="Initializing Script Task">
+      <bpmn:incoming>Flow_0u0bojx</bpmn:incoming>
+      <bpmn:outgoing>Flow_1nahat1</bpmn:outgoing>
+      <bpmn:script>mylist = ["113", "155"]</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:serviceTask id="Activity_1ycd8ce" name="Parallel Multi Instance service Task">
+      <bpmn:extensionElements>
+        <spiffworkflow:preScript />
+        <spiffworkflow:serviceTaskOperator id="http/GetRequest" resultVariable="bamboo_get_employee">
+          <spiffworkflow:parameters>
+            <spiffworkflow:parameter id="basic_auth_password" type="str" value="&#34;x&#34;" />
+            <spiffworkflow:parameter id="basic_auth_username" type="str" value="&#34;secret:BAMBOOHR_API_KEY&#34;" />
+            <spiffworkflow:parameter id="headers" type="any" value="{&#34;Accept&#34;: &#34;application/json&#34;}" />
+            <spiffworkflow:parameter id="params" type="any" value="{&#34;fields&#34;: &#34;firstName,lastName&#34;}" />
+            <spiffworkflow:parameter id="url" type="str" value="f&#34;https://api.bamboohr.com/api/gateway.php/statusresearchdemo/v1/employees/{x}&#34;" />
+          </spiffworkflow:parameters>
+        </spiffworkflow:serviceTaskOperator>
+        <spiffworkflow:instructionsForEndUser />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1nahat1</bpmn:incoming>
+      <bpmn:outgoing>Flow_0xblt4y</bpmn:outgoing>
+      <bpmn:multiInstanceLoopCharacteristics>
+        <bpmn:loopDataInputRef>mylist</bpmn:loopDataInputRef>
+        <bpmn:loopDataOutputRef>z</bpmn:loopDataOutputRef>
+        <bpmn:inputDataItem id="x" name="x" />
+        <bpmn:outputDataItem id="bamboo_get_employee" name="bamboo_get_employee" />
+      </bpmn:multiInstanceLoopCharacteristics>
+    </bpmn:serviceTask>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Unit_Test_Multi_Instance_parallel_service_task_input_collection">
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="179" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_00m1m72_di" bpmnElement="Event_00m1m72">
+        <dc:Bounds x="592" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0w0obsl_di" bpmnElement="Activity_13yw429">
+        <dc:Bounds x="270" y="137" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1mgy2ur_di" bpmnElement="Activity_1ycd8ce">
+        <dc:Bounds x="430" y="137" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_0u0bojx_di" bpmnElement="Flow_0u0bojx">
+        <di:waypoint x="215" y="177" />
+        <di:waypoint x="270" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1nahat1_di" bpmnElement="Flow_1nahat1">
+        <di:waypoint x="370" y="177" />
+        <di:waypoint x="430" y="177" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="360" y="159" width="80" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0xblt4y_di" bpmnElement="Flow_0xblt4y">
+        <di:waypoint x="530" y="177" />
+        <di:waypoint x="592" y="177" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

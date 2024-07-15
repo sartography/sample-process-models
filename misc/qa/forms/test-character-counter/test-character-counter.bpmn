@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:spiffworkflow="http://spiffworkflow.org/bpmn/schema/1.0/core" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_96f6665" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.0.0-dev">
+  <bpmn:process id="Process_test_character_counter_3a230lq" isExecutable="true">
+    <bpmn:startEvent id="Event_0g5bz7z">
+      <bpmn:outgoing>Flow_06uxv56</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_06uxv56" sourceRef="Event_0g5bz7z" targetRef="Activity_0lzh5mk" />
+    <bpmn:sequenceFlow id="Flow_19nzkxv" sourceRef="Activity_0lzh5mk" targetRef="Activity_1lyndh4" />
+    <bpmn:endEvent id="Event_010odip">
+      <bpmn:incoming>Flow_0asnjtq</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_0asnjtq" sourceRef="Activity_1lyndh4" targetRef="Event_010odip" />
+    <bpmn:userTask id="Activity_0lzh5mk" name="Get Data">
+      <bpmn:extensionElements>
+        <spiffworkflow:properties>
+          <spiffworkflow:property name="formJsonSchemaFilename" value="your-info-schema.json" />
+          <spiffworkflow:property name="formUiSchemaFilename" value="your-info-uischema.json" />
+        </spiffworkflow:properties>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_06uxv56</bpmn:incoming>
+      <bpmn:outgoing>Flow_19nzkxv</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:manualTask id="Activity_1lyndh4" name="Display Data">
+      <bpmn:extensionElements>
+        <spiffworkflow:instructionsForEndUser>{{firstName}} {{lastName}}
+
+{{bio}}
+
+{{country}}</spiffworkflow:instructionsForEndUser>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_19nzkxv</bpmn:incoming>
+      <bpmn:outgoing>Flow_0asnjtq</bpmn:outgoing>
+    </bpmn:manualTask>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_test_character_counter_3a230lq">
+      <bpmndi:BPMNShape id="Event_0g5bz7z_di" bpmnElement="Event_0g5bz7z">
+        <dc:Bounds x="152" y="162" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_010odip_di" bpmnElement="Event_010odip">
+        <dc:Bounds x="562" y="162" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1xz6bll_di" bpmnElement="Activity_0lzh5mk">
+        <dc:Bounds x="240" y="140" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1hqqec1_di" bpmnElement="Activity_1lyndh4">
+        <dc:Bounds x="400" y="140" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_06uxv56_di" bpmnElement="Flow_06uxv56">
+        <di:waypoint x="188" y="180" />
+        <di:waypoint x="240" y="180" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_19nzkxv_di" bpmnElement="Flow_19nzkxv">
+        <di:waypoint x="340" y="180" />
+        <di:waypoint x="400" y="180" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0asnjtq_di" bpmnElement="Flow_0asnjtq">
+        <di:waypoint x="500" y="180" />
+        <di:waypoint x="562" y="180" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

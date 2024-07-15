@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:spiffworkflow="http://spiffworkflow.org/bpmn/schema/1.0/core" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_96f6665" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.0.0-dev">
+  <bpmn:process id="Loop_User_Task" name="Loop User Task" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>Flow_1eb88ns</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_1eb88ns" sourceRef="StartEvent_1" targetRef="User_Task" />
+    <bpmn:endEvent id="Event_0zgu5m1">
+      <bpmn:extensionElements>
+        <spiffworkflow:instructionsForEndUser>End Loop User Task Unit Test. Output : {{name}}</spiffworkflow:instructionsForEndUser>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0b14xff</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_0b14xff" sourceRef="User_Task" targetRef="Event_0zgu5m1" />
+    <bpmn:userTask id="User_Task" name="Loop User Task">
+      <bpmn:extensionElements>
+        <spiffworkflow:properties>
+          <spiffworkflow:property name="formJsonSchemaFilename" value="get-name-schema.json" />
+        </spiffworkflow:properties>
+        <spiffworkflow:instructionsForEndUser />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1eb88ns</bpmn:incoming>
+      <bpmn:outgoing>Flow_0b14xff</bpmn:outgoing>
+      <bpmn:standardLoopCharacteristics loopMaximum="3" />
+    </bpmn:userTask>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Loop_User_Task">
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="-188" y="72" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0zgu5m1_di" bpmnElement="Event_0zgu5m1">
+        <dc:Bounds x="52" y="72" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_16kzdkf_di" bpmnElement="User_Task">
+        <dc:Bounds x="-100" y="50" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_1eb88ns_di" bpmnElement="Flow_1eb88ns">
+        <di:waypoint x="-152" y="90" />
+        <di:waypoint x="-100" y="90" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0b14xff_di" bpmnElement="Flow_0b14xff">
+        <di:waypoint x="0" y="90" />
+        <di:waypoint x="52" y="90" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

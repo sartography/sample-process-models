@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:spiffworkflow="http://spiffworkflow.org/bpmn/schema/1.0/core" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_96f6665" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.0.0-dev">
+  <bpmn:process id="Unit_Test_Data_Input" name="Unit Test Data Input" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>Flow_0drjrhq</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_0drjrhq" sourceRef="StartEvent_1" targetRef="Activity_0oa550w" />
+    <bpmn:scriptTask id="Activity_0oa550w" name="Create DO">
+      <bpmn:incoming>Flow_0drjrhq</bpmn:incoming>
+      <bpmn:outgoing>Flow_19r2kph</bpmn:outgoing>
+      <bpmn:dataOutputAssociation id="DataOutputAssociation_0pu6x9b">
+        <bpmn:targetRef>DataObjectReference_182w01i</bpmn:targetRef>
+      </bpmn:dataOutputAssociation>
+      <bpmn:script>DataObjectA = "Hola"</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:dataObjectReference id="DataObjectReference_0jysy2f" />
+    <bpmn:endEvent id="Event_1q6ci2p">
+      <bpmn:extensionElements>
+        <spiffworkflow:instructionsForEndUser>DO Data from Call Activity {{Value}}
+Data Object {{DataObjectA}}</spiffworkflow:instructionsForEndUser>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_19xmmur</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_19xmmur" sourceRef="Activity_1b1oe0w" targetRef="Event_1q6ci2p" />
+    <bpmn:callActivity id="Activity_1b1oe0w" name="Call Activity" calledElement="Data_In_Call_Activity_2">
+      <bpmn:incoming>Flow_168h50s</bpmn:incoming>
+      <bpmn:outgoing>Flow_19xmmur</bpmn:outgoing>
+    </bpmn:callActivity>
+    <bpmn:dataObjectReference id="DataObjectReference_077fv24" />
+    <bpmn:dataObject id="DataObjectA" />
+    <bpmn:sequenceFlow id="Flow_19r2kph" sourceRef="Activity_0oa550w" targetRef="Activity_0dxbx41" />
+    <bpmn:sequenceFlow id="Flow_168h50s" sourceRef="Activity_0dxbx41" targetRef="Activity_1b1oe0w" />
+    <bpmn:manualTask id="Activity_0dxbx41" name="Manual Task 1">
+      <bpmn:extensionElements>
+        <spiffworkflow:instructionsForEndUser>Cant Access Data Object {{DataObjectA}}</spiffworkflow:instructionsForEndUser>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_19r2kph</bpmn:incoming>
+      <bpmn:outgoing>Flow_168h50s</bpmn:outgoing>
+    </bpmn:manualTask>
+    <bpmn:dataObjectReference id="DataObjectReference_182w01i" name="Data Object A" dataObjectRef="DataObjectA" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Unit_Test_Data_Input">
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="-228" y="142" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0hch2e9_di" bpmnElement="Activity_0oa550w">
+        <dc:Bounds x="-160" y="120" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1q6ci2p_di" bpmnElement="Event_1q6ci2p">
+        <dc:Bounds x="292" y="142" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1ya8b5o_di" bpmnElement="Activity_1b1oe0w">
+        <dc:Bounds x="130" y="120" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0n6hsz0_di" bpmnElement="Activity_0dxbx41">
+        <dc:Bounds x="-20" y="120" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DataObjectReference_182w01i_di" bpmnElement="DataObjectReference_182w01i">
+        <dc:Bounds x="-128" y="-5" width="36" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="-145" y="-29" width="69" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_0drjrhq_di" bpmnElement="Flow_0drjrhq">
+        <di:waypoint x="-192" y="160" />
+        <di:waypoint x="-160" y="160" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DataOutputAssociation_0pu6x9b_di" bpmnElement="DataOutputAssociation_0pu6x9b">
+        <di:waypoint x="-109" y="120" />
+        <di:waypoint x="-108" y="45" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_19xmmur_di" bpmnElement="Flow_19xmmur">
+        <di:waypoint x="230" y="160" />
+        <di:waypoint x="292" y="160" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_19r2kph_di" bpmnElement="Flow_19r2kph">
+        <di:waypoint x="-60" y="160" />
+        <di:waypoint x="-20" y="160" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_168h50s_di" bpmnElement="Flow_168h50s">
+        <di:waypoint x="80" y="160" />
+        <di:waypoint x="130" y="160" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

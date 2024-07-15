@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:spiffworkflow="http://spiffworkflow.org/bpmn/schema/1.0/core" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_96f6665" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.0.0-dev">
+  <bpmn:process id="Process_access_data_store_within_collapsed_sub_process_iuhy9u6" name="Access Data Store Within Collapsed Sub Process" isExecutable="true" rootElements="[object Object]">
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>Flow_02ud1ej</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:endEvent id="EndEvent_1">
+      <bpmn:extensionElements>
+        <spiffworkflow:instructionsForEndUser>The process instance completed successfully.</spiffworkflow:instructionsForEndUser>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_13lft62</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_02ud1ej" sourceRef="StartEvent_1" targetRef="Sub_Process" />
+    <bpmn:subProcess id="Sub_Process" name="Sub Process ">
+      <bpmn:extensionElements>
+        <spiffworkflow:instructionsForEndUser />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_02ud1ej</bpmn:incoming>
+      <bpmn:outgoing>Flow_13lft62</bpmn:outgoing>
+      <bpmn:startEvent id="Event_17dmzme">
+        <bpmn:outgoing>Flow_1c1dron</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:sequenceFlow id="Flow_1c1dron" sourceRef="Event_17dmzme" targetRef="Activity_0f1t4wb" />
+      <bpmn:endEvent id="Event_1ustlc2">
+        <bpmn:extensionElements>
+          <spiffworkflow:instructionsForEndUser>Employee Name : {{ empname }}</spiffworkflow:instructionsForEndUser>
+        </bpmn:extensionElements>
+        <bpmn:incoming>Flow_0bx5mbo</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:sequenceFlow id="Flow_0bx5mbo" sourceRef="Activity_0f1t4wb" targetRef="Event_1ustlc2" />
+      <bpmn:dataStoreReference id="DataStoreReference_0ihq63y" name="Employees" type="kkv" />
+      <bpmn:scriptTask id="Activity_0f1t4wb" name="Read from Data Store">
+        <bpmn:incoming>Flow_1c1dron</bpmn:incoming>
+        <bpmn:outgoing>Flow_0bx5mbo</bpmn:outgoing>
+        <bpmn:property id="Property_083hv8l" name="__targetRef_placeholder" />
+        <bpmn:dataInputAssociation id="DataInputAssociation_0jzve2z">
+          <bpmn:sourceRef>DataStoreReference_0ihq63y</bpmn:sourceRef>
+          <bpmn:targetRef>Property_083hv8l</bpmn:targetRef>
+        </bpmn:dataInputAssociation>
+        <bpmn:script>empname = employees("001","name")</bpmn:script>
+      </bpmn:scriptTask>
+    </bpmn:subProcess>
+    <bpmn:sequenceFlow id="Flow_13lft62" sourceRef="Sub_Process" targetRef="EndEvent_1" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_access_data_store_within_collapsed_sub_process_iuhy9u6">
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="-28" y="152" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_14za570_di" bpmnElement="EndEvent_1">
+        <dc:Bounds x="262" y="152" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0nuoiqk_di" bpmnElement="Sub_Process">
+        <dc:Bounds x="90" y="130" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_02ud1ej_di" bpmnElement="Flow_02ud1ej">
+        <di:waypoint x="8" y="170" />
+        <di:waypoint x="90" y="170" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_13lft62_di" bpmnElement="Flow_13lft62">
+        <di:waypoint x="190" y="170" />
+        <di:waypoint x="262" y="170" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_14owp94">
+    <bpmndi:BPMNPlane id="BPMNPlane_08mzyv2" bpmnElement="Sub_Process" label="[object Object]">
+      <bpmndi:BPMNShape id="Event_17dmzme_di" bpmnElement="Event_17dmzme">
+        <dc:Bounds x="462" y="342" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1ustlc2_di" bpmnElement="Event_1ustlc2">
+        <dc:Bounds x="702" y="342" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DataStoreReference_0ihq63y_di" bpmnElement="DataStoreReference_0ihq63y">
+        <dc:Bounds x="575" y="145" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="573" y="115" width="55" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1ksvm6x_di" bpmnElement="Activity_0f1t4wb">
+        <dc:Bounds x="550" y="320" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_1c1dron_di" bpmnElement="Flow_1c1dron">
+        <di:waypoint x="498" y="360" />
+        <di:waypoint x="550" y="360" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0bx5mbo_di" bpmnElement="Flow_0bx5mbo">
+        <di:waypoint x="650" y="360" />
+        <di:waypoint x="702" y="360" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DataInputAssociation_0jzve2z_di" bpmnElement="DataInputAssociation_0jzve2z">
+        <di:waypoint x="600" y="195" />
+        <di:waypoint x="600" y="320" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

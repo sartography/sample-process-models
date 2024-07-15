@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:spiffworkflow="http://spiffworkflow.org/bpmn/schema/1.0/core" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_96f6665" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.0.0-dev">
+  <bpmn:process id="Process_unit_test_message_boundary_event_non_interrupting_l7vk3x0" isExecutable="true">
+    <bpmn:startEvent id="Event_1eer6wp">
+      <bpmn:outgoing>Flow_18oijan</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_18oijan" sourceRef="Event_1eer6wp" targetRef="Activity_05mjnbn" />
+    <bpmn:endEvent id="Event_1t9momt">
+      <bpmn:extensionElements>
+        <spiffworkflow:instructionsForEndUser>End Process.</spiffworkflow:instructionsForEndUser>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1wktc4i</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_1wktc4i" sourceRef="Activity_05mjnbn" targetRef="Event_1t9momt" />
+    <bpmn:manualTask id="Activity_05mjnbn" name="Manual Task 1">
+      <bpmn:incoming>Flow_18oijan</bpmn:incoming>
+      <bpmn:outgoing>Flow_1wktc4i</bpmn:outgoing>
+    </bpmn:manualTask>
+    <bpmn:sequenceFlow id="Flow_14tx7b4" sourceRef="Event_1u7rkx8" targetRef="Activity_11l4dqs" />
+    <bpmn:endEvent id="Event_1qgtoz7">
+      <bpmn:extensionElements>
+        <spiffworkflow:instructionsForEndUser>End Unit Test Message Boundary Event (non-interrupting), Message Received.</spiffworkflow:instructionsForEndUser>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0syeclx</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_0syeclx" sourceRef="Activity_11l4dqs" targetRef="Event_1qgtoz7" />
+    <bpmn:manualTask id="Activity_11l4dqs" name="Manual Task 2">
+      <bpmn:incoming>Flow_14tx7b4</bpmn:incoming>
+      <bpmn:outgoing>Flow_0syeclx</bpmn:outgoing>
+    </bpmn:manualTask>
+    <bpmn:boundaryEvent id="Event_1u7rkx8" cancelActivity="false" attachedToRef="Activity_05mjnbn">
+      <bpmn:outgoing>Flow_14tx7b4</bpmn:outgoing>
+      <bpmn:messageEventDefinition id="MessageEventDefinition_11qgmoj" messageRef="UnitTestMessage1">
+        <bpmn:extensionElements>
+          <spiffworkflow:messageVariable>msgPayloadTxt</spiffworkflow:messageVariable>
+        </bpmn:extensionElements>
+      </bpmn:messageEventDefinition>
+    </bpmn:boundaryEvent>
+  </bpmn:process>
+  <bpmn:message id="UnitTestMessage1" name="UnitTestMessage1" />
+  <bpmn:correlationProperty id="Age" name="Age">
+    <bpmn:correlationPropertyRetrievalExpression messageRef="UnitTestMessage1">
+      <bpmn:formalExpression>age</bpmn:formalExpression>
+    </bpmn:correlationPropertyRetrievalExpression>
+  </bpmn:correlationProperty>
+  <bpmn:correlationProperty id="UserName" name="UserName">
+    <bpmn:correlationPropertyRetrievalExpression messageRef="UnitTestMessage1">
+      <bpmn:formalExpression>name</bpmn:formalExpression>
+    </bpmn:correlationPropertyRetrievalExpression>
+  </bpmn:correlationProperty>
+  <bpmn:correlationKey id="CorrelationKey_0hicajz" name="MainCorrelationKey">
+    <bpmn:correlationPropertyRef>Age</bpmn:correlationPropertyRef>
+    <bpmn:correlationPropertyRef>UserName</bpmn:correlationPropertyRef>
+  </bpmn:correlationKey>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_unit_test_message_boundary_event_non_interrupting_l7vk3x0">
+      <bpmndi:BPMNShape id="Event_1eer6wp_di" bpmnElement="Event_1eer6wp">
+        <dc:Bounds x="-278" y="-108" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1t9momt_di" bpmnElement="Event_1t9momt">
+        <dc:Bounds x="-38" y="-108" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1wx3kmd_di" bpmnElement="Activity_05mjnbn">
+        <dc:Bounds x="-190" y="-130" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1qgtoz7_di" bpmnElement="Event_1qgtoz7">
+        <dc:Bounds x="112" y="12" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0d4unof_di" bpmnElement="Activity_11l4dqs">
+        <dc:Bounds x="-40" y="-10" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_02q5k26_di" bpmnElement="Event_1u7rkx8">
+        <dc:Bounds x="-128" y="-68" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_18oijan_di" bpmnElement="Flow_18oijan">
+        <di:waypoint x="-242" y="-90" />
+        <di:waypoint x="-190" y="-90" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1wktc4i_di" bpmnElement="Flow_1wktc4i">
+        <di:waypoint x="-90" y="-90" />
+        <di:waypoint x="-38" y="-90" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_14tx7b4_di" bpmnElement="Flow_14tx7b4">
+        <di:waypoint x="-110" y="-32" />
+        <di:waypoint x="-110" y="30" />
+        <di:waypoint x="-40" y="30" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0syeclx_di" bpmnElement="Flow_0syeclx">
+        <di:waypoint x="60" y="30" />
+        <di:waypoint x="112" y="30" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

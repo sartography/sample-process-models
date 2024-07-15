@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:spiffworkflow="http://spiffworkflow.org/bpmn/schema/1.0/core" id="Definitions_96f6665" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.0.0-dev">
+  <bpmn:process id="Process_write_to_a_data_store_from_loop_script_task_dpua084" isExecutable="true">
+    <bpmn:startEvent id="Event_0tac7i1">
+      <bpmn:outgoing>Flow_1diz5vk</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_1diz5vk" sourceRef="Event_0tac7i1" targetRef="Activity_0wmhw5q" />
+    <bpmn:scriptTask id="Activity_0wmhw5q" name="Initialize">
+      <bpmn:incoming>Flow_1diz5vk</bpmn:incoming>
+      <bpmn:outgoing>Flow_1vvgklv</bpmn:outgoing>
+      <bpmn:script>x=0</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:sequenceFlow id="Flow_1vvgklv" sourceRef="Activity_0wmhw5q" targetRef="Activity_1vvya6q" />
+    <bpmn:scriptTask id="Activity_1vvya6q" name="Write to the Data Store">
+      <bpmn:incoming>Flow_1vvgklv</bpmn:incoming>
+      <bpmn:outgoing>Flow_050068w</bpmn:outgoing>
+      <bpmn:dataOutputAssociation id="DataOutputAssociation_0f13cjy">
+        <bpmn:targetRef>DataStoreReference_0vj8f56</bpmn:targetRef>
+      </bpmn:dataOutputAssociation>
+      <bpmn:standardLoopCharacteristics loopMaximum="5" />
+      <bpmn:script>x = x+1  
+ 
+words = ["zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten"]
+
+numbers = {
+  words[x] : { "number" : x }
+}
+
+
+ 
+# delete entire data store
+# numbers = {"numbers" : None}   
+ 
+
+
+
+ </bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:sequenceFlow id="Flow_050068w" sourceRef="Activity_1vvya6q" targetRef="Activity_1f9e1uk" />
+    <bpmn:scriptTask id="Activity_1f9e1uk" name="Read from Data Store">
+      <bpmn:incoming>Flow_050068w</bpmn:incoming>
+      <bpmn:outgoing>Flow_0dn4v8t</bpmn:outgoing>
+      <bpmn:property id="Property_1qmmd6y" name="__targetRef_placeholder" />
+      <bpmn:dataInputAssociation id="DataInputAssociation_0f8fmga">
+        <bpmn:sourceRef>DataStoreReference_0vj8f56</bpmn:sourceRef>
+        <bpmn:targetRef>Property_1qmmd6y</bpmn:targetRef>
+      </bpmn:dataInputAssociation>
+      <bpmn:script>num1 = numbers("one","number")
+num2 = numbers("two","number")
+num3 = numbers("three","number")
+num4 = numbers("four","number")
+num5 = numbers("five","number")</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:endEvent id="Event_0ftd69o">
+      <bpmn:extensionElements>
+        <spiffworkflow:instructionsForEndUser>The process instance completed successfully.
+
+Your Number List : {{num1}}, {{num2}}, {{num3}}, {{num4}}, {{num5}} </spiffworkflow:instructionsForEndUser>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0dn4v8t</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_0dn4v8t" sourceRef="Activity_1f9e1uk" targetRef="Event_0ftd69o" />
+    <bpmn:dataStoreReference id="DataStoreReference_0vj8f56" name="Numbers" dataStoreRef="numbers" type="kkv" />
+  </bpmn:process>
+  <bpmn:dataStore id="numbers" name="KKVDataStore" />
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_write_to_a_data_store_from_loop_script_task_dpua084">
+      <bpmndi:BPMNShape id="Event_0tac7i1_di" bpmnElement="Event_0tac7i1">
+        <dc:Bounds x="52" y="192" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0d2vfp6_di" bpmnElement="Activity_0wmhw5q">
+        <dc:Bounds x="140" y="170" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1pbvy3k_di" bpmnElement="Activity_1vvya6q">
+        <dc:Bounds x="300" y="170" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0cpiyzs_di" bpmnElement="Activity_1f9e1uk">
+        <dc:Bounds x="460" y="170" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0ftd69o_di" bpmnElement="Event_0ftd69o">
+        <dc:Bounds x="622" y="192" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DataStoreReference_0vj8f56_di" bpmnElement="DataStoreReference_0vj8f56">
+        <dc:Bounds x="425" y="-5" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="428" y="52" width="45" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_1diz5vk_di" bpmnElement="Flow_1diz5vk">
+        <di:waypoint x="88" y="210" />
+        <di:waypoint x="140" y="210" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1vvgklv_di" bpmnElement="Flow_1vvgklv">
+        <di:waypoint x="240" y="210" />
+        <di:waypoint x="300" y="210" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DataOutputAssociation_0f13cjy_di" bpmnElement="DataOutputAssociation_0f13cjy">
+        <di:waypoint x="350" y="170" />
+        <di:waypoint x="432" y="45" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_050068w_di" bpmnElement="Flow_050068w">
+        <di:waypoint x="400" y="210" />
+        <di:waypoint x="460" y="210" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DataInputAssociation_0f8fmga_di" bpmnElement="DataInputAssociation_0f8fmga">
+        <di:waypoint x="460" y="45" />
+        <di:waypoint x="510" y="170" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0dn4v8t_di" bpmnElement="Flow_0dn4v8t">
+        <di:waypoint x="560" y="210" />
+        <di:waypoint x="622" y="210" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

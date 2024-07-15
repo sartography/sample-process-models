@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:spiffworkflow="http://spiffworkflow.org/bpmn/schema/1.0/core" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_96f6665" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.0.0-dev">
+  <bpmn:process id="UT_MI_Sequential_Sub_Process_with_Service_Task_Input_Collection" name="MI Sequential Sub Process with Service Task Input Collection" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>Flow_0d8r9d8</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_0d8r9d8" sourceRef="StartEvent_1" targetRef="Activity_1y63kwn" />
+    <bpmn:subProcess id="MI_Sequential_Sub_Process" name="MI Sequential Sub Process with Service Task ">
+      <bpmn:extensionElements>
+        <spiffworkflow:instructionsForEndUser />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1651y1w</bpmn:incoming>
+      <bpmn:outgoing>Flow_0mevjep</bpmn:outgoing>
+      <bpmn:multiInstanceLoopCharacteristics isSequential="true">
+        <bpmn:loopDataInputRef>mycounter</bpmn:loopDataInputRef>
+        <bpmn:loopDataOutputRef>z</bpmn:loopDataOutputRef>
+      </bpmn:multiInstanceLoopCharacteristics>
+      <bpmn:startEvent id="Event_1k8k42t">
+        <bpmn:outgoing>Flow_1vd9v5m</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:sequenceFlow id="Flow_1vd9v5m" sourceRef="Event_1k8k42t" targetRef="Service_Task" />
+      <bpmn:endEvent id="Event_0r7kzvc">
+        <bpmn:incoming>Flow_0zvpwvw</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:sequenceFlow id="Flow_0zvpwvw" sourceRef="Service_Task" targetRef="Event_0r7kzvc" />
+      <bpmn:serviceTask id="Service_Task" name="Service Task">
+        <bpmn:extensionElements>
+          <spiffworkflow:instructionsForEndUser>This is the Service Task Unit Test Screen.</spiffworkflow:instructionsForEndUser>
+          <spiffworkflow:serviceTaskOperator id="http/GetRequest" resultVariable="git_resp">
+            <spiffworkflow:parameters>
+              <spiffworkflow:parameter id="basic_auth_password" type="str" />
+              <spiffworkflow:parameter id="basic_auth_username" type="str" />
+              <spiffworkflow:parameter id="headers" type="any" value="{ &#34;Authorization&#34;: &#34;Bearer SPIFF_SECRET:github_oauth&#34; }" />
+              <spiffworkflow:parameter id="params" type="any" />
+              <spiffworkflow:parameter id="url" type="str" value="&#34;https://api.github.com/user&#34;" />
+            </spiffworkflow:parameters>
+          </spiffworkflow:serviceTaskOperator>
+        </bpmn:extensionElements>
+        <bpmn:incoming>Flow_1vd9v5m</bpmn:incoming>
+        <bpmn:outgoing>Flow_0zvpwvw</bpmn:outgoing>
+      </bpmn:serviceTask>
+    </bpmn:subProcess>
+    <bpmn:scriptTask id="Activity_1y63kwn" name="Initializing Script Task">
+      <bpmn:incoming>Flow_0d8r9d8</bpmn:incoming>
+      <bpmn:outgoing>Flow_1651y1w</bpmn:outgoing>
+      <bpmn:script>mycounter=[1,2,3,4]</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:sequenceFlow id="Flow_1651y1w" sourceRef="Activity_1y63kwn" targetRef="MI_Sequential_Sub_Process" />
+    <bpmn:endEvent id="Event_0wbfqtg">
+      <bpmn:extensionElements>
+        <spiffworkflow:instructionsForEndUser>End MI Sequential Sub Process with Service Task Input Collection Unit Test. Output: {{git_resp.id}}</spiffworkflow:instructionsForEndUser>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0mevjep</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_0mevjep" sourceRef="MI_Sequential_Sub_Process" targetRef="Event_0wbfqtg" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="UT_MI_Sequential_Sub_Process_with_Service_Task_Input_Collection">
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="312" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0iv65pv_di" bpmnElement="MI_Sequential_Sub_Process" isExpanded="false">
+        <dc:Bounds x="575" y="137" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1nz0wv2_di" bpmnElement="Activity_1y63kwn">
+        <dc:Bounds x="410" y="137" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0wbfqtg_di" bpmnElement="Event_0wbfqtg">
+        <dc:Bounds x="742" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_0d8r9d8_di" bpmnElement="Flow_0d8r9d8">
+        <di:waypoint x="348" y="177" />
+        <di:waypoint x="410" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1651y1w_di" bpmnElement="Flow_1651y1w">
+        <di:waypoint x="510" y="177" />
+        <di:waypoint x="575" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0mevjep_di" bpmnElement="Flow_0mevjep">
+        <di:waypoint x="675" y="177" />
+        <di:waypoint x="742" y="177" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1q8zs7e">
+    <bpmndi:BPMNPlane id="BPMNPlane_19k1bwk" bpmnElement="MI_Sequential_Sub_Process">
+      <bpmndi:BPMNShape id="Event_1k8k42t_di" bpmnElement="Event_1k8k42t">
+        <dc:Bounds x="180" y="182" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0r7kzvc_di" bpmnElement="Event_0r7kzvc">
+        <dc:Bounds x="432" y="182" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1ps4a0i_di" bpmnElement="Service_Task">
+        <dc:Bounds x="270" y="160" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_1vd9v5m_di" bpmnElement="Flow_1vd9v5m">
+        <di:waypoint x="216" y="200" />
+        <di:waypoint x="270" y="200" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0zvpwvw_di" bpmnElement="Flow_0zvpwvw">
+        <di:waypoint x="370" y="200" />
+        <di:waypoint x="432" y="200" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

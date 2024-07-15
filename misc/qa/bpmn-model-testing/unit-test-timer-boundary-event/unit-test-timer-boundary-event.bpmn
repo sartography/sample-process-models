@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:spiffworkflow="http://spiffworkflow.org/bpmn/schema/1.0/core" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_96f6665" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.0.0-dev">
+  <bpmn:process id="Unit_Test_Timer_Boundary_Event" name="Unit Test Timer Boundary Event" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>Flow_1ppbb64</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_1ppbb64" sourceRef="StartEvent_1" targetRef="Activity_1bmj71t" />
+    <bpmn:sequenceFlow id="Flow_01fk1ah" sourceRef="Activity_1bmj71t" targetRef="Activity_1ce2mmi" />
+    <bpmn:scriptTask id="Activity_1bmj71t" name="Get Start Time">
+      <bpmn:incoming>Flow_1ppbb64</bpmn:incoming>
+      <bpmn:outgoing>Flow_01fk1ah</bpmn:outgoing>
+      <bpmn:script>start_time = round(time.time() * 1000)</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:boundaryEvent id="Event_05f1u3p" attachedToRef="Activity_1ce2mmi">
+      <bpmn:outgoing>Flow_049ghyv</bpmn:outgoing>
+      <bpmn:timerEventDefinition id="TimerEventDefinition_0399uqn">
+        <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">"PT20S"</bpmn:timeDuration>
+      </bpmn:timerEventDefinition>
+    </bpmn:boundaryEvent>
+    <bpmn:sequenceFlow id="Flow_049ghyv" sourceRef="Event_05f1u3p" targetRef="Activity_0clz768" />
+    <bpmn:scriptTask id="Activity_0clz768" name="Get End Time">
+      <bpmn:incoming>Flow_049ghyv</bpmn:incoming>
+      <bpmn:outgoing>Flow_1ul1wpj</bpmn:outgoing>
+      <bpmn:script>end_time = round(time.time() * 1000)
+duration = round((end_time-start_time)/1000)</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:manualTask id="Activity_1ce2mmi" name="Waiting for Timer Event.">
+      <bpmn:extensionElements>
+        <spiffworkflow:instructionsForEndUser>Please Click to Complete or wait for the timer to trigger.</spiffworkflow:instructionsForEndUser>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_01fk1ah</bpmn:incoming>
+      <bpmn:outgoing>Flow_0caroy6</bpmn:outgoing>
+    </bpmn:manualTask>
+    <bpmn:endEvent id="Event_1v6tred">
+      <bpmn:extensionElements>
+        <spiffworkflow:instructionsForEndUser>Process Completed Manually.</spiffworkflow:instructionsForEndUser>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0caroy6</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_0caroy6" sourceRef="Activity_1ce2mmi" targetRef="Event_1v6tred" />
+    <bpmn:endEvent id="Event_1hrg2vv">
+      <bpmn:extensionElements>
+        <spiffworkflow:instructionsForEndUser>Process Completed by Timer. Duration {{duration}}</spiffworkflow:instructionsForEndUser>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1ul1wpj</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_1ul1wpj" sourceRef="Activity_0clz768" targetRef="Event_1hrg2vv" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Unit_Test_Timer_Boundary_Event">
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="179" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1kla14k_di" bpmnElement="Activity_1bmj71t">
+        <dc:Bounds x="270" y="137" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_00kw7l4_di" bpmnElement="Activity_0clz768">
+        <dc:Bounds x="560" y="250" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1iduj7u_di" bpmnElement="Activity_1ce2mmi">
+        <dc:Bounds x="430" y="137" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1v6tred_di" bpmnElement="Event_1v6tred">
+        <dc:Bounds x="592" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1hrg2vv_di" bpmnElement="Event_1hrg2vv">
+        <dc:Bounds x="732" y="272" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0ly1ikk_di" bpmnElement="Event_05f1u3p">
+        <dc:Bounds x="482" y="199" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_1ppbb64_di" bpmnElement="Flow_1ppbb64">
+        <di:waypoint x="215" y="177" />
+        <di:waypoint x="270" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_01fk1ah_di" bpmnElement="Flow_01fk1ah">
+        <di:waypoint x="370" y="177" />
+        <di:waypoint x="430" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_049ghyv_di" bpmnElement="Flow_049ghyv">
+        <di:waypoint x="500" y="235" />
+        <di:waypoint x="500" y="290" />
+        <di:waypoint x="560" y="290" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0caroy6_di" bpmnElement="Flow_0caroy6">
+        <di:waypoint x="530" y="177" />
+        <di:waypoint x="592" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1ul1wpj_di" bpmnElement="Flow_1ul1wpj">
+        <di:waypoint x="660" y="290" />
+        <di:waypoint x="732" y="290" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

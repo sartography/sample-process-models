@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:spiffworkflow="http://spiffworkflow.org/bpmn/schema/1.0/core" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_96f6665" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.0.0-dev">
+  <bpmn:process id="Process_write_to_data_store_within_call_activity_3uyjyhj" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>Flow_1hbyqyc</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:endEvent id="EndEvent_1">
+      <bpmn:extensionElements>
+        <spiffworkflow:instructionsForEndUser>The process instance completed successfully.
+
+Country of Cape Town :{{country_of_capetown }}</spiffworkflow:instructionsForEndUser>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0cjdazx</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_1hbyqyc" sourceRef="StartEvent_1" targetRef="Activity_0ahn8un" />
+    <bpmn:callActivity id="Activity_0ahn8un" name="Call Activity" calledElement="Write_to_Data_Store_at_Root_Level">
+      <bpmn:incoming>Flow_1hbyqyc</bpmn:incoming>
+      <bpmn:outgoing>Flow_13r1vhh</bpmn:outgoing>
+    </bpmn:callActivity>
+    <bpmn:sequenceFlow id="Flow_13r1vhh" sourceRef="Activity_0ahn8un" targetRef="Activity_1awrw1l" />
+    <bpmn:sequenceFlow id="Flow_0cjdazx" sourceRef="Activity_1awrw1l" targetRef="EndEvent_1" />
+    <bpmn:dataStoreReference id="DataStoreReference_17v6khz" name="Travel Destinations" dataStoreRef="travel_destinations" type="kkv" />
+    <bpmn:scriptTask id="Activity_1awrw1l" name="Read From Data Store">
+      <bpmn:incoming>Flow_13r1vhh</bpmn:incoming>
+      <bpmn:outgoing>Flow_0cjdazx</bpmn:outgoing>
+      <bpmn:property id="Property_1aj3in7" name="__targetRef_placeholder" />
+      <bpmn:dataInputAssociation id="DataInputAssociation_0utj6b5">
+        <bpmn:sourceRef>DataStoreReference_17v6khz</bpmn:sourceRef>
+        <bpmn:targetRef>Property_1aj3in7</bpmn:targetRef>
+      </bpmn:dataInputAssociation>
+      <bpmn:script>country_of_capetown = travel_destinations("Cape Town", "country")</bpmn:script>
+    </bpmn:scriptTask>
+  </bpmn:process>
+  <bpmn:dataStore id="travel_destinations" name="KKVDataStore" />
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_write_to_data_store_within_call_activity_3uyjyhj">
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="179" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_14za570_di" bpmnElement="EndEvent_1">
+        <dc:Bounds x="622" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0vgdbkz_di" bpmnElement="Activity_0ahn8un">
+        <dc:Bounds x="270" y="137" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DataStoreReference_17v6khz_di" bpmnElement="DataStoreReference_17v6khz">
+        <dc:Bounds x="475" y="-95" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="470" y="-125" width="61" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_11ob5bf_di" bpmnElement="Activity_1awrw1l">
+        <dc:Bounds x="450" y="137" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_1hbyqyc_di" bpmnElement="Flow_1hbyqyc">
+        <di:waypoint x="215" y="177" />
+        <di:waypoint x="270" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_13r1vhh_di" bpmnElement="Flow_13r1vhh">
+        <di:waypoint x="370" y="177" />
+        <di:waypoint x="450" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0cjdazx_di" bpmnElement="Flow_0cjdazx">
+        <di:waypoint x="550" y="177" />
+        <di:waypoint x="622" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DataInputAssociation_0utj6b5_di" bpmnElement="DataInputAssociation_0utj6b5">
+        <di:waypoint x="500" y="-45" />
+        <di:waypoint x="500" y="137" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

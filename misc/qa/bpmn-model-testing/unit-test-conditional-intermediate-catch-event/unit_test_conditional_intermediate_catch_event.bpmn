@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:spiffworkflow="http://spiffworkflow.org/bpmn/schema/1.0/core" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_96f6665" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.0.0-dev">
+  <bpmn:process id="Conditional_Intermediate_Catch_Event" name="Conditional Intermediate Catch Event" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>Flow_0dud0jm</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_0dud0jm" sourceRef="StartEvent_1" targetRef="User_Task_Get_Age" />
+    <bpmn:sequenceFlow id="Flow_1276olv" sourceRef="User_Task_Get_Age" targetRef="Event_0oklhgf" />
+    <bpmn:sequenceFlow id="Flow_12cifpe" sourceRef="Event_0oklhgf" targetRef="Activity_11bbmwn" />
+    <bpmn:endEvent id="Event_1u73w2q">
+      <bpmn:extensionElements>
+        <spiffworkflow:instructionsForEndUser>End Conditional Intermediate Catch Event Unit Test</spiffworkflow:instructionsForEndUser>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1s4uulm</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_1s4uulm" sourceRef="Activity_11bbmwn" targetRef="Event_1u73w2q" />
+    <bpmn:intermediateCatchEvent id="Event_0oklhgf">
+      <bpmn:incoming>Flow_1276olv</bpmn:incoming>
+      <bpmn:outgoing>Flow_12cifpe</bpmn:outgoing>
+      <bpmn:conditionalEventDefinition id="ConditionalEventDefinition_0j436m2">
+        <bpmn:condition>age &lt; 18</bpmn:condition>
+      </bpmn:conditionalEventDefinition>
+    </bpmn:intermediateCatchEvent>
+    <bpmn:manualTask id="Activity_11bbmwn" name="Manual Task for Age Under 18">
+      <bpmn:incoming>Flow_12cifpe</bpmn:incoming>
+      <bpmn:outgoing>Flow_1s4uulm</bpmn:outgoing>
+    </bpmn:manualTask>
+    <bpmn:userTask id="User_Task_Get_Age" name="Get Age">
+      <bpmn:extensionElements>
+        <spiffworkflow:properties>
+          <spiffworkflow:property name="formJsonSchemaFilename" value="get-age-schema.json" />
+          <spiffworkflow:property name="formUiSchemaFilename" value="get-age-uischema.json" />
+        </spiffworkflow:properties>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0dud0jm</bpmn:incoming>
+      <bpmn:outgoing>Flow_1276olv</bpmn:outgoing>
+    </bpmn:userTask>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Conditional_Intermediate_Catch_Event">
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="-168" y="132" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1u73w2q_di" bpmnElement="Event_1u73w2q">
+        <dc:Bounds x="312" y="132" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_16difzj_di" bpmnElement="Event_0oklhgf">
+        <dc:Bounds x="72" y="132" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1e54mx2_di" bpmnElement="Activity_11bbmwn">
+        <dc:Bounds x="160" y="110" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0g0g1fn_di" bpmnElement="User_Task_Get_Age">
+        <dc:Bounds x="-80" y="110" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_0dud0jm_di" bpmnElement="Flow_0dud0jm">
+        <di:waypoint x="-132" y="150" />
+        <di:waypoint x="-80" y="150" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1276olv_di" bpmnElement="Flow_1276olv">
+        <di:waypoint x="20" y="150" />
+        <di:waypoint x="72" y="150" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_12cifpe_di" bpmnElement="Flow_12cifpe">
+        <di:waypoint x="108" y="150" />
+        <di:waypoint x="160" y="150" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1s4uulm_di" bpmnElement="Flow_1s4uulm">
+        <di:waypoint x="260" y="150" />
+        <di:waypoint x="312" y="150" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

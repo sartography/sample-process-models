@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:spiffworkflow="http://spiffworkflow.org/bpmn/schema/1.0/core" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_96f6665" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.0.0-dev">
+  <bpmn:process id="Process_access_json_data_store_at_process_group_level_iauqdz7" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>Flow_17db3yp</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_17db3yp" sourceRef="StartEvent_1" targetRef="Activity_0qpzdpu" />
+    <bpmn:endEvent id="EndEvent_1">
+      <bpmn:extensionElements>
+        <spiffworkflow:instructionsForEndUser>The process instance completed successfully.
+
+{{ phone_list }}</spiffworkflow:instructionsForEndUser>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_07ahd6t</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:scriptTask id="Activity_0qpzdpu" name="Write to JSON Data store">
+      <bpmn:extensionElements>
+        <spiffworkflow:instructionsForEndUser />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_17db3yp</bpmn:incoming>
+      <bpmn:outgoing>Flow_0ddrwjk</bpmn:outgoing>
+      <bpmn:dataOutputAssociation id="DataOutputAssociation_1lggbfk">
+        <bpmn:targetRef>DataStoreReference_1rm8mkm</bpmn:targetRef>
+      </bpmn:dataOutputAssociation>
+      <bpmn:script>phones =  [
+	{
+		"name": "SAMSUNG Galaxy S24",
+		"price": "$1270"
+	},
+	{
+		"name": "Apple iPhone 15 (128 GB) - Black",
+		"price": "$1450"
+	},
+	{
+		"name": "Apple iPhone 15 Pro Max (256 GB) - Natural Titanium",
+		"price": "$2310"
+	},
+	{
+		"name": "SAMSUNG Galaxy S24 Ultra",
+		"price": "$2045"
+	} 
+] </bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:dataStoreReference id="DataStoreReference_1rm8mkm" name="Phones" dataStoreRef="phones" type="json" />
+    <bpmn:sequenceFlow id="Flow_0ddrwjk" sourceRef="Activity_0qpzdpu" targetRef="Activity_1qkjjdi" />
+    <bpmn:sequenceFlow id="Flow_07ahd6t" sourceRef="Activity_1qkjjdi" targetRef="EndEvent_1" />
+    <bpmn:scriptTask id="Activity_1qkjjdi" name="Read from Data Store">
+      <bpmn:incoming>Flow_0ddrwjk</bpmn:incoming>
+      <bpmn:outgoing>Flow_07ahd6t</bpmn:outgoing>
+      <bpmn:property id="Property_0l3vins" name="__targetRef_placeholder" />
+      <bpmn:dataInputAssociation id="DataInputAssociation_1g21wdf">
+        <bpmn:sourceRef>DataStoreReference_1rm8mkm</bpmn:sourceRef>
+        <bpmn:targetRef>Property_0l3vins</bpmn:targetRef>
+      </bpmn:dataInputAssociation>
+      <bpmn:script>phone_list = phones</bpmn:script>
+    </bpmn:scriptTask>
+  </bpmn:process>
+  <bpmn:dataStore id="phones" name="JSONDataStore" />
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_access_json_data_store_at_process_group_level_iauqdz7">
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="179" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_14za570_di" bpmnElement="EndEvent_1">
+        <dc:Bounds x="642" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0wk9asa_di" bpmnElement="Activity_0qpzdpu">
+        <dc:Bounds x="270" y="137" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DataStoreReference_1rm8mkm_di" bpmnElement="DataStoreReference_1rm8mkm">
+        <dc:Bounds x="415" y="-55" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="421" y="-85" width="38" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0llcqq6_di" bpmnElement="Activity_1qkjjdi">
+        <dc:Bounds x="460" y="137" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_17db3yp_di" bpmnElement="Flow_17db3yp">
+        <di:waypoint x="215" y="177" />
+        <di:waypoint x="270" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DataOutputAssociation_1lggbfk_di" bpmnElement="DataOutputAssociation_1lggbfk">
+        <di:waypoint x="343" y="137" />
+        <di:waypoint x="426" y="-5" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0ddrwjk_di" bpmnElement="Flow_0ddrwjk">
+        <di:waypoint x="370" y="177" />
+        <di:waypoint x="460" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_07ahd6t_di" bpmnElement="Flow_07ahd6t">
+        <di:waypoint x="560" y="177" />
+        <di:waypoint x="642" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DataInputAssociation_1g21wdf_di" bpmnElement="DataInputAssociation_1g21wdf">
+        <di:waypoint x="450" y="-5" />
+        <di:waypoint x="506" y="137" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

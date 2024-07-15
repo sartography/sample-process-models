@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:spiffworkflow="http://spiffworkflow.org/bpmn/schema/1.0/core" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_96f6665" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.0.0-dev">
+  <bpmn:process id="Process_display_all_data_store_valus_using_multi_instances_tlrp8kf" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>Flow_1po0kr7</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:endEvent id="Event_14pryvg">
+      <bpmn:extensionElements>
+        <spiffworkflow:instructionsForEndUser>The process instance completed successfully.
+
+{{z}} </spiffworkflow:instructionsForEndUser>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_18vd0ta</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:dataStoreReference id="DataStoreReference_00czat4" name="Instruments" dataStoreRef="instruments" type="kkv" />
+    <bpmn:sequenceFlow id="Flow_1po0kr7" sourceRef="StartEvent_1" targetRef="Activity_06gpiuy" />
+    <bpmn:sequenceFlow id="Flow_1yxw8b7" sourceRef="Activity_06gpiuy" targetRef="Activity_0mcxky7" />
+    <bpmn:sequenceFlow id="Flow_0wfilg8" sourceRef="Activity_0mcxky7" targetRef="Activity_0u515zo" />
+    <bpmn:scriptTask id="Activity_06gpiuy" name="Write to the Data Store">
+      <bpmn:incoming>Flow_1po0kr7</bpmn:incoming>
+      <bpmn:outgoing>Flow_1yxw8b7</bpmn:outgoing>
+      <bpmn:dataOutputAssociation id="DataOutputAssociation_00rcnmg">
+        <bpmn:targetRef>DataStoreReference_00czat4</bpmn:targetRef>
+      </bpmn:dataOutputAssociation>
+      <bpmn:script>instruments =   {   
+    "1" : {
+	    "name" : "Piano"  
+	},
+     "2" : {
+	    "name" : "Guitar"  
+	},
+     "3" : {
+	    "name" : "Violin"  
+	},
+     "4" : {
+	    "name" : "Drums"  
+	},
+     "5" : {
+	    "name" : "Flute"  
+	},
+     "6" : {
+	    "name" : "Saxophone"  
+	},
+     "7" : {
+	    "name" : "Trumpet"  
+	},
+     "8" : {
+	    "name" : "Clarinet"  
+	},
+     "9" : {
+	    "name" : "Cello"  
+	},
+     "10" : {
+	    "name" : "Banjo"  
+	} 
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:scriptTask id="Activity_0mcxky7" name="Initialize array">
+      <bpmn:extensionElements>
+        <spiffworkflow:instructionsForEndUser />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1yxw8b7</bpmn:incoming>
+      <bpmn:outgoing>Flow_0wfilg8</bpmn:outgoing>
+      <bpmn:script>instrumentids = ["1","2","3","4","5","6","7","8","9","10",]</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:sequenceFlow id="Flow_18vd0ta" sourceRef="Activity_0u515zo" targetRef="Event_14pryvg" />
+    <bpmn:scriptTask id="Activity_0u515zo" name="Read from Data Store">
+      <bpmn:incoming>Flow_0wfilg8</bpmn:incoming>
+      <bpmn:outgoing>Flow_18vd0ta</bpmn:outgoing>
+      <bpmn:property id="Property_1cp2ah6" name="__targetRef_placeholder" />
+      <bpmn:dataInputAssociation id="DataInputAssociation_00cn8wq">
+        <bpmn:sourceRef>DataStoreReference_00czat4</bpmn:sourceRef>
+        <bpmn:targetRef>Property_1cp2ah6</bpmn:targetRef>
+      </bpmn:dataInputAssociation>
+      <bpmn:multiInstanceLoopCharacteristics isSequential="true">
+        <bpmn:loopDataInputRef>instrumentids</bpmn:loopDataInputRef>
+        <bpmn:loopDataOutputRef>z</bpmn:loopDataOutputRef>
+        <bpmn:inputDataItem id="x" name="x" />
+        <bpmn:outputDataItem id="y" name="y" />
+      </bpmn:multiInstanceLoopCharacteristics>
+      <bpmn:script>name = instruments(x,"name")
+y= name</bpmn:script>
+    </bpmn:scriptTask>
+  </bpmn:process>
+  <bpmn:dataStore id="instruments" name="KKVDataStore" />
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_display_all_data_store_valus_using_multi_instances_tlrp8kf">
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="179" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_14pryvg_di" bpmnElement="Event_14pryvg">
+        <dc:Bounds x="752" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DataStoreReference_00czat4_di" bpmnElement="DataStoreReference_00czat4">
+        <dc:Bounds x="455" y="-55" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="451" y="-79" width="58" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0yyu8lo_di" bpmnElement="Activity_06gpiuy">
+        <dc:Bounds x="270" y="137" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0q9ek7s_di" bpmnElement="Activity_0mcxky7">
+        <dc:Bounds x="430" y="137" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0yarotq_di" bpmnElement="Activity_0u515zo">
+        <dc:Bounds x="590" y="137" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_1po0kr7_di" bpmnElement="Flow_1po0kr7">
+        <di:waypoint x="215" y="177" />
+        <di:waypoint x="270" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1yxw8b7_di" bpmnElement="Flow_1yxw8b7">
+        <di:waypoint x="370" y="177" />
+        <di:waypoint x="430" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0wfilg8_di" bpmnElement="Flow_0wfilg8">
+        <di:waypoint x="530" y="177" />
+        <di:waypoint x="590" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DataOutputAssociation_00rcnmg_di" bpmnElement="DataOutputAssociation_00rcnmg">
+        <di:waypoint x="351" y="137" />
+        <di:waypoint x="460" y="-5" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_18vd0ta_di" bpmnElement="Flow_18vd0ta">
+        <di:waypoint x="690" y="177" />
+        <di:waypoint x="752" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DataInputAssociation_00cn8wq_di" bpmnElement="DataInputAssociation_00cn8wq">
+        <di:waypoint x="503" y="-5" />
+        <di:waypoint x="631" y="137" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:spiffworkflow="http://spiffworkflow.org/bpmn/schema/1.0/core" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_96f6665" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.0.0-dev">
+  <bpmn:process id="UT_MI_Sub_Process_Expanded_User_Task_Sequential_Input_Collection" name="MI Sequential Expanded Sub Process with User Task Input Collection " isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>Flow_0sy5obp</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_0sy5obp" sourceRef="StartEvent_1" targetRef="Activity_1a3mo09" />
+    <bpmn:subProcess id="MI_Sequential_Expanded_Sub_Process" name="MI Sequential Expanded Sub Process with User Task Input Collection ">
+      <bpmn:extensionElements>
+        <spiffworkflow:instructionsForEndUser />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0pvimvv</bpmn:incoming>
+      <bpmn:outgoing>Flow_1khifl4</bpmn:outgoing>
+      <bpmn:multiInstanceLoopCharacteristics isSequential="true">
+        <bpmn:loopDataInputRef>counter</bpmn:loopDataInputRef>
+        <bpmn:loopDataOutputRef>z</bpmn:loopDataOutputRef>
+        <bpmn:inputDataItem id="x" name="x" />
+        <bpmn:outputDataItem id="name" name="name" />
+      </bpmn:multiInstanceLoopCharacteristics>
+      <bpmn:startEvent id="Event_1n5buez">
+        <bpmn:outgoing>Flow_0p95kyw</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:sequenceFlow id="Flow_0p95kyw" sourceRef="Event_1n5buez" targetRef="User_Task" />
+      <bpmn:endEvent id="Event_1o4s0cp">
+        <bpmn:incoming>Flow_0ya0x7c</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:sequenceFlow id="Flow_0ya0x7c" sourceRef="User_Task" targetRef="Event_1o4s0cp" />
+      <bpmn:userTask id="User_Task" name="User Task">
+        <bpmn:extensionElements>
+          <spiffworkflow:properties>
+            <spiffworkflow:property name="formJsonSchemaFilename" value="get-name-schema.json" />
+          </spiffworkflow:properties>
+          <spiffworkflow:instructionsForEndUser>This is the User Task Unit Test Screen.</spiffworkflow:instructionsForEndUser>
+        </bpmn:extensionElements>
+        <bpmn:incoming>Flow_0p95kyw</bpmn:incoming>
+        <bpmn:outgoing>Flow_0ya0x7c</bpmn:outgoing>
+      </bpmn:userTask>
+    </bpmn:subProcess>
+    <bpmn:sequenceFlow id="Flow_0pvimvv" sourceRef="Activity_1a3mo09" targetRef="MI_Sequential_Expanded_Sub_Process" />
+    <bpmn:endEvent id="Event_0o4shxk">
+      <bpmn:extensionElements>
+        <spiffworkflow:instructionsForEndUser>End MI Sequential Expanded Sub Process with User Task Input Collection Unit Test. Output: {{z}}</spiffworkflow:instructionsForEndUser>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1khifl4</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_1khifl4" sourceRef="MI_Sequential_Expanded_Sub_Process" targetRef="Event_0o4shxk" />
+    <bpmn:scriptTask id="Activity_1a3mo09" name="Initializing Script Task">
+      <bpmn:incoming>Flow_0sy5obp</bpmn:incoming>
+      <bpmn:outgoing>Flow_0pvimvv</bpmn:outgoing>
+      <bpmn:script>counter = [1,2,3]</bpmn:script>
+    </bpmn:scriptTask>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="UT_MI_Sub_Process_Expanded_User_Task_Sequential_Input_Collection">
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="179" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_00og8cc_di" bpmnElement="MI_Sequential_Expanded_Sub_Process" isExpanded="true">
+        <dc:Bounds x="430" y="70" width="350" height="200" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1n5buez_di" bpmnElement="Event_1n5buez">
+        <dc:Bounds x="470" y="152" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1o4s0cp_di" bpmnElement="Event_1o4s0cp">
+        <dc:Bounds x="722" y="152" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_077ke47_di" bpmnElement="User_Task">
+        <dc:Bounds x="560" y="130" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_0p95kyw_di" bpmnElement="Flow_0p95kyw">
+        <di:waypoint x="506" y="170" />
+        <di:waypoint x="560" y="170" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0ya0x7c_di" bpmnElement="Flow_0ya0x7c">
+        <di:waypoint x="660" y="170" />
+        <di:waypoint x="722" y="170" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="Event_0o4shxk_di" bpmnElement="Event_0o4shxk">
+        <dc:Bounds x="842" y="152" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1ihkp7z_di" bpmnElement="Activity_1a3mo09">
+        <dc:Bounds x="270" y="137" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_0sy5obp_di" bpmnElement="Flow_0sy5obp">
+        <di:waypoint x="215" y="177" />
+        <di:waypoint x="270" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0pvimvv_di" bpmnElement="Flow_0pvimvv">
+        <di:waypoint x="370" y="177" />
+        <di:waypoint x="430" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1khifl4_di" bpmnElement="Flow_1khifl4">
+        <di:waypoint x="780" y="170" />
+        <di:waypoint x="842" y="170" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

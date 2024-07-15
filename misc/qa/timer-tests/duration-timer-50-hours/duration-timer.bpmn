@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:spiffworkflow="http://spiffworkflow.org/bpmn/schema/1.0/core" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_96f6665" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.0.0-dev">
+  <bpmn:process id="Duration_Timer_6" name="Duration Timer 50 hours" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>Flow_1khppaq</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_1khppaq" sourceRef="StartEvent_1" targetRef="Activity_1kvg2ub" />
+    <bpmn:scriptTask id="Activity_1kvg2ub" name="Get Start Time">
+      <bpmn:extensionElements>
+        <spiffworkflow:instructionsForEndUser />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1khppaq</bpmn:incoming>
+      <bpmn:outgoing>Flow_1if3wm0</bpmn:outgoing>
+      <bpmn:script>start_time = round(time.time() * 1000)</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:sequenceFlow id="Flow_1if3wm0" sourceRef="Activity_1kvg2ub" targetRef="Event_1pz3emx" />
+    <bpmn:intermediateCatchEvent id="Event_1pz3emx">
+      <bpmn:incoming>Flow_1if3wm0</bpmn:incoming>
+      <bpmn:outgoing>Flow_116lqvv</bpmn:outgoing>
+      <bpmn:timerEventDefinition id="TimerEventDefinition_01q1jut">
+        <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">"PT50H"</bpmn:timeDuration>
+      </bpmn:timerEventDefinition>
+    </bpmn:intermediateCatchEvent>
+    <bpmn:sequenceFlow id="Flow_116lqvv" sourceRef="Event_1pz3emx" targetRef="Activity_1wtffcs" />
+    <bpmn:scriptTask id="Activity_1wtffcs" name="Get End Time">
+      <bpmn:incoming>Flow_116lqvv</bpmn:incoming>
+      <bpmn:outgoing>Flow_1gbrmax</bpmn:outgoing>
+      <bpmn:script>end_time = round(time.time() * 1000)
+duration = round((end_time-start_time)/1000/60/60)</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:endEvent id="Event_11isusg">
+      <bpmn:extensionElements>
+        <spiffworkflow:instructionsForEndUser>Duration: {{duration}} hours</spiffworkflow:instructionsForEndUser>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1gbrmax</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_1gbrmax" sourceRef="Activity_1wtffcs" targetRef="Event_11isusg" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Duration_Timer_6">
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="179" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1937awy_di" bpmnElement="Activity_1kvg2ub">
+        <dc:Bounds x="270" y="137" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_17n2nv0_di" bpmnElement="Event_1pz3emx">
+        <dc:Bounds x="432" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1ne1ysk_di" bpmnElement="Activity_1wtffcs">
+        <dc:Bounds x="530" y="137" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_11isusg_di" bpmnElement="Event_11isusg">
+        <dc:Bounds x="692" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_1khppaq_di" bpmnElement="Flow_1khppaq">
+        <di:waypoint x="215" y="177" />
+        <di:waypoint x="270" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1if3wm0_di" bpmnElement="Flow_1if3wm0">
+        <di:waypoint x="370" y="177" />
+        <di:waypoint x="432" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_116lqvv_di" bpmnElement="Flow_116lqvv">
+        <di:waypoint x="468" y="177" />
+        <di:waypoint x="530" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1gbrmax_di" bpmnElement="Flow_1gbrmax">
+        <di:waypoint x="630" y="177" />
+        <di:waypoint x="692" y="177" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

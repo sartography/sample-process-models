@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:spiffworkflow="http://spiffworkflow.org/bpmn/schema/1.0/core" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="Definitions_96f6665" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.0.0-dev">
+  <bpmn:process id="Process_access_data_store_using_sequential_multi_instance_script_task_50thz4o" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>Flow_0y82eka</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:endEvent id="EndEvent_1">
+      <bpmn:extensionElements>
+        <spiffworkflow:instructionsForEndUser>The process instance completed successfully.
+
+Output : {{z}}</spiffworkflow:instructionsForEndUser>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1lykmdu</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_0y82eka" sourceRef="StartEvent_1" targetRef="Activity_10562tl" />
+    <bpmn:sequenceFlow id="Flow_1lykmdu" sourceRef="Activity_10562tl" targetRef="EndEvent_1" />
+    <bpmn:scriptTask id="Activity_10562tl" name="Sequential Multi Instance Script Task">
+      <bpmn:incoming>Flow_0y82eka</bpmn:incoming>
+      <bpmn:outgoing>Flow_1lykmdu</bpmn:outgoing>
+      <bpmn:property id="Property_0q7ocyr" name="__targetRef_placeholder" />
+      <bpmn:dataInputAssociation id="DataInputAssociation_04o5578">
+        <bpmn:sourceRef>DataStoreReference_04tcwfi</bpmn:sourceRef>
+        <bpmn:targetRef>Property_0q7ocyr</bpmn:targetRef>
+      </bpmn:dataInputAssociation>
+      <bpmn:multiInstanceLoopCharacteristics isSequential="true">
+        <bpmn:loopCardinality xsi:type="bpmn:tFormalExpression">4</bpmn:loopCardinality>
+        <bpmn:loopDataOutputRef>z</bpmn:loopDataOutputRef>
+        <bpmn:inputDataItem id="x" name="x" />
+        <bpmn:outputDataItem id="y" name="y" />
+        <bpmn:completionCondition xsi:type="bpmn:tFormalExpression" />
+      </bpmn:multiInstanceLoopCharacteristics>
+      <bpmn:script>y = employees("001","name")</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:dataStoreReference id="DataStoreReference_04tcwfi" name="Employees" dataStoreRef="employees" type="kkv" />
+  </bpmn:process>
+  <bpmn:dataStore id="employees" name="KKVDataStore" />
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_access_data_store_using_sequential_multi_instance_script_task_50thz4o">
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="152" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_14za570_di" bpmnElement="EndEvent_1">
+        <dc:Bounds x="432" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0ggj51t_di" bpmnElement="Activity_10562tl">
+        <dc:Bounds x="260" y="137" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DataStoreReference_04tcwfi_di" bpmnElement="DataStoreReference_04tcwfi">
+        <dc:Bounds x="285" y="-65" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="283" y="-95" width="55" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_0y82eka_di" bpmnElement="Flow_0y82eka">
+        <di:waypoint x="188" y="177" />
+        <di:waypoint x="260" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1lykmdu_di" bpmnElement="Flow_1lykmdu">
+        <di:waypoint x="360" y="177" />
+        <di:waypoint x="432" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DataInputAssociation_04o5578_di" bpmnElement="DataInputAssociation_04o5578">
+        <di:waypoint x="310" y="-15" />
+        <di:waypoint x="310" y="137" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

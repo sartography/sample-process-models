@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:spiffworkflow="http://spiffworkflow.org/bpmn/schema/1.0/core" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_96f6665" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.0.0-dev">
+  <bpmn:process id=">Unit_Test_Multi_Instance_Sequential_Manual_Task_Input_Collection" name="MI Sequential Manual Task Input Collection" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>Flow_04calqo</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_04calqo" sourceRef="StartEvent_1" targetRef="Activity_021lvvr" />
+    <bpmn:sequenceFlow id="Flow_1kf72d6" sourceRef="Activity_021lvvr" targetRef="Activity_1lc7cie" />
+    <bpmn:endEvent id="Event_07lbnzi">
+      <bpmn:extensionElements>
+        <spiffworkflow:instructionsForEndUser>End MI Sequential Manual Task Input Collection Unit Test. </spiffworkflow:instructionsForEndUser>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0vh8gsf</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_0vh8gsf" sourceRef="Activity_1lc7cie" targetRef="Event_07lbnzi" />
+    <bpmn:scriptTask id="Activity_021lvvr" name="Initializing Script Task">
+      <bpmn:incoming>Flow_04calqo</bpmn:incoming>
+      <bpmn:outgoing>Flow_1kf72d6</bpmn:outgoing>
+      <bpmn:script>mylist = ["apple", "banana", "cherry"]</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:manualTask id="Activity_1lc7cie" name="Sequential Multi Instance Manual Task ">
+      <bpmn:extensionElements>
+        <spiffworkflow:postScript />
+        <spiffworkflow:preScript />
+        <spiffworkflow:instructionsForEndUser />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1kf72d6</bpmn:incoming>
+      <bpmn:outgoing>Flow_0vh8gsf</bpmn:outgoing>
+      <bpmn:multiInstanceLoopCharacteristics isSequential="true">
+        <bpmn:loopDataInputRef>mylist</bpmn:loopDataInputRef>
+        <bpmn:loopDataOutputRef>z</bpmn:loopDataOutputRef>
+      </bpmn:multiInstanceLoopCharacteristics>
+    </bpmn:manualTask>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="MI_Sequential_Manual_Task_Input_Collection">
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="62" y="92" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_07lbnzi_di" bpmnElement="Event_07lbnzi">
+        <dc:Bounds x="472" y="92" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0477j75_di" bpmnElement="Activity_021lvvr">
+        <dc:Bounds x="150" y="70" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1lj67qj_di" bpmnElement="Activity_1lc7cie">
+        <dc:Bounds x="310" y="70" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_04calqo_di" bpmnElement="Flow_04calqo">
+        <di:waypoint x="98" y="110" />
+        <di:waypoint x="150" y="110" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1kf72d6_di" bpmnElement="Flow_1kf72d6">
+        <di:waypoint x="250" y="110" />
+        <di:waypoint x="310" y="110" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0vh8gsf_di" bpmnElement="Flow_0vh8gsf">
+        <di:waypoint x="410" y="110" />
+        <di:waypoint x="472" y="110" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

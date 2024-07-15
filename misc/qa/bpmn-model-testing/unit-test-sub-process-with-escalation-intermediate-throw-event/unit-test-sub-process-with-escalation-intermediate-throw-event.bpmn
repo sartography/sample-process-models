@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:spiffworkflow="http://spiffworkflow.org/bpmn/schema/1.0/core" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_96f6665" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.0.0-dev">
+  <bpmn:process id="Process_unit_test_sub_process_with_escalation_intermediate_throw_event_z09tdx1" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>Flow_17db3yp</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_17db3yp" sourceRef="StartEvent_1" targetRef="Activity_0qpzdpu" />
+    <bpmn:endEvent id="EndEvent_1">
+      <bpmn:extensionElements>
+        <spiffworkflow:instructionsForEndUser>End.</spiffworkflow:instructionsForEndUser>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_12pkbxb</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_12pkbxb" sourceRef="Activity_0qpzdpu" targetRef="EndEvent_1" />
+    <bpmn:subProcess id="Activity_0qpzdpu" name="Sub Process with Escalation Intermediate Throw Event">
+      <bpmn:extensionElements>
+        <spiffworkflow:instructionsForEndUser />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_17db3yp</bpmn:incoming>
+      <bpmn:outgoing>Flow_12pkbxb</bpmn:outgoing>
+      <bpmn:startEvent id="Event_1v4ijzj">
+        <bpmn:outgoing>Flow_00e1snw</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:sequenceFlow id="Flow_00e1snw" sourceRef="Event_1v4ijzj" targetRef="Activity_1n12y3m" />
+      <bpmn:sequenceFlow id="Flow_0d080rg" sourceRef="Activity_1n12y3m" targetRef="Event_0fmflx5" />
+      <bpmn:task id="Activity_0019bnw" name="Manual Task 2">
+        <bpmn:incoming>Flow_0w6i8dr</bpmn:incoming>
+        <bpmn:outgoing>Flow_12clefp</bpmn:outgoing>
+      </bpmn:task>
+      <bpmn:sequenceFlow id="Flow_0w6i8dr" sourceRef="Event_0fmflx5" targetRef="Activity_0019bnw" />
+      <bpmn:endEvent id="Event_0vzu0e9">
+        <bpmn:incoming>Flow_12clefp</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:sequenceFlow id="Flow_12clefp" sourceRef="Activity_0019bnw" targetRef="Event_0vzu0e9" />
+      <bpmn:manualTask id="Activity_1n12y3m" name="Manual Task 1">
+        <bpmn:incoming>Flow_00e1snw</bpmn:incoming>
+        <bpmn:outgoing>Flow_0d080rg</bpmn:outgoing>
+      </bpmn:manualTask>
+      <bpmn:intermediateThrowEvent id="Event_0fmflx5">
+        <bpmn:incoming>Flow_0d080rg</bpmn:incoming>
+        <bpmn:outgoing>Flow_0w6i8dr</bpmn:outgoing>
+        <bpmn:escalationEventDefinition id="EscalationEventDefinition_174zltv" escalationRef="Escalation1" />
+      </bpmn:intermediateThrowEvent>
+    </bpmn:subProcess>
+    <bpmn:sequenceFlow id="Flow_1fktjx3" sourceRef="Event_0d2tz2v" targetRef="Activity_1awwphm" />
+    <bpmn:endEvent id="Event_07fiywx">
+      <bpmn:extensionElements>
+        <spiffworkflow:instructionsForEndUser>End Unit Test Sub Process with Escalation Intermediate Throw Event.</spiffworkflow:instructionsForEndUser>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1smtuw1</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_1smtuw1" sourceRef="Activity_1awwphm" targetRef="Event_07fiywx" />
+    <bpmn:manualTask id="Activity_1awwphm" name="Escalated">
+      <bpmn:incoming>Flow_1fktjx3</bpmn:incoming>
+      <bpmn:outgoing>Flow_1smtuw1</bpmn:outgoing>
+    </bpmn:manualTask>
+    <bpmn:boundaryEvent id="Event_0d2tz2v" attachedToRef="Activity_0qpzdpu">
+      <bpmn:outgoing>Flow_1fktjx3</bpmn:outgoing>
+      <bpmn:escalationEventDefinition id="EscalationEventDefinition_0bdthfj" escalationRef="Escalation1" />
+    </bpmn:boundaryEvent>
+  </bpmn:process>
+  <bpmn:escalation id="Escalation1" name="Escalation1" escalationCode="ESC">
+    <bpmn:extensionElements>
+      <spiffworkflow:payloadExpression>{
+"msg":"Escalation Thrown"
+}</spiffworkflow:payloadExpression>
+      <spiffworkflow:variableName>msg</spiffworkflow:variableName>
+    </bpmn:extensionElements>
+  </bpmn:escalation>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_unit_test_sub_process_with_escalation_intermediate_throw_event_z09tdx1">
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="42" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_14za570_di" bpmnElement="EndEvent_1">
+        <dc:Bounds x="312" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_07fiywx_di" bpmnElement="Event_07fiywx">
+        <dc:Bounds x="442" y="282" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1ynms4j_di" bpmnElement="Activity_1awwphm">
+        <dc:Bounds x="290" y="260" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0613xl7_di" bpmnElement="Activity_0qpzdpu">
+        <dc:Bounds x="150" y="137" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0eodezf_di" bpmnElement="Event_0d2tz2v">
+        <dc:Bounds x="202" y="199" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_17db3yp_di" bpmnElement="Flow_17db3yp">
+        <di:waypoint x="78" y="177" />
+        <di:waypoint x="150" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_12pkbxb_di" bpmnElement="Flow_12pkbxb">
+        <di:waypoint x="250" y="177" />
+        <di:waypoint x="312" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1fktjx3_di" bpmnElement="Flow_1fktjx3">
+        <di:waypoint x="220" y="235" />
+        <di:waypoint x="220" y="300" />
+        <di:waypoint x="290" y="300" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1smtuw1_di" bpmnElement="Flow_1smtuw1">
+        <di:waypoint x="390" y="300" />
+        <di:waypoint x="442" y="300" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_0mv55ls">
+    <bpmndi:BPMNPlane id="BPMNPlane_14ez90j" bpmnElement="Activity_0qpzdpu">
+      <bpmndi:BPMNShape id="Event_1v4ijzj_di" bpmnElement="Event_1v4ijzj">
+        <dc:Bounds x="132" y="222" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0019bnw_di" bpmnElement="Activity_0019bnw">
+        <dc:Bounds x="460" y="200" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0vzu0e9_di" bpmnElement="Event_0vzu0e9">
+        <dc:Bounds x="612" y="222" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0du6vda_di" bpmnElement="Activity_1n12y3m">
+        <dc:Bounds x="220" y="200" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0q5mgyk_di" bpmnElement="Event_0fmflx5">
+        <dc:Bounds x="372" y="222" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_00e1snw_di" bpmnElement="Flow_00e1snw">
+        <di:waypoint x="168" y="240" />
+        <di:waypoint x="220" y="240" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0d080rg_di" bpmnElement="Flow_0d080rg">
+        <di:waypoint x="320" y="240" />
+        <di:waypoint x="372" y="240" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0w6i8dr_di" bpmnElement="Flow_0w6i8dr">
+        <di:waypoint x="408" y="240" />
+        <di:waypoint x="460" y="240" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_12clefp_di" bpmnElement="Flow_12clefp">
+        <di:waypoint x="560" y="240" />
+        <di:waypoint x="612" y="240" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

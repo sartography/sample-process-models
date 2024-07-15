@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:spiffworkflow="http://spiffworkflow.org/bpmn/schema/1.0/core" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_96f6665" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.0.0-dev">
+  <bpmn:process id="Process_read_from_data_store_at_root_level_rw5zwdj" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>Flow_0nmx2fc</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:endEvent id="EndEvent_1">
+      <bpmn:extensionElements>
+        <spiffworkflow:instructionsForEndUser>The process instance completed successfully. 
+
+Paris is in {{ country_of_paris }}
+
+Rome's highlights - {{ highlights_of_rome  }}
+
+Evelation of Kyoto is {{ evelation_of_kyoto  }}
+
+Eiffel Tower Info - {{ eiffel_tower_info}}</spiffworkflow:instructionsForEndUser>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0fz8nrx</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:dataStoreReference id="DataStoreReference_09o2zcy" name="Travel Destinations" dataStoreRef="travel_destinations" type="kkv" />
+    <bpmn:sequenceFlow id="Flow_0nmx2fc" sourceRef="StartEvent_1" targetRef="Activity_0b78niy" />
+    <bpmn:sequenceFlow id="Flow_0fz8nrx" sourceRef="Activity_0b78niy" targetRef="EndEvent_1" />
+    <bpmn:scriptTask id="Activity_0b78niy" name="Read from Data Store">
+      <bpmn:incoming>Flow_0nmx2fc</bpmn:incoming>
+      <bpmn:outgoing>Flow_0fz8nrx</bpmn:outgoing>
+      <bpmn:property id="Property_1wbsnkb" name="__targetRef_placeholder" />
+      <bpmn:dataInputAssociation id="DataInputAssociation_0165l02">
+        <bpmn:sourceRef>DataStoreReference_09o2zcy</bpmn:sourceRef>
+        <bpmn:targetRef>Property_1wbsnkb</bpmn:targetRef>
+      </bpmn:dataInputAssociation>
+      <bpmn:script>country_of_paris = travel_destinations("Paris", "country")
+highlights_of_rome = travel_destinations("Rome", "highlights")
+evelation_of_kyoto = travel_destinations("Kyoto", "elevation")
+eiffel_tower_info = travel_destinations("Eiffel Tower", None)</bpmn:script>
+    </bpmn:scriptTask>
+  </bpmn:process>
+  <bpmn:dataStore id="travel_destinations" name="KKVDataStore" />
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_read_from_data_store_at_root_level_rw5zwdj">
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="162" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_14za570_di" bpmnElement="EndEvent_1">
+        <dc:Bounds x="452" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DataStoreReference_09o2zcy_di" bpmnElement="DataStoreReference_09o2zcy">
+        <dc:Bounds x="295" y="-75" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="289" y="-112.5" width="61" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0bkdrc3_di" bpmnElement="Activity_0b78niy">
+        <dc:Bounds x="270" y="137" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_0nmx2fc_di" bpmnElement="Flow_0nmx2fc">
+        <di:waypoint x="198" y="177" />
+        <di:waypoint x="270" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0fz8nrx_di" bpmnElement="Flow_0fz8nrx">
+        <di:waypoint x="370" y="177" />
+        <di:waypoint x="452" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DataInputAssociation_0165l02_di" bpmnElement="DataInputAssociation_0165l02">
+        <di:waypoint x="320" y="-25" />
+        <di:waypoint x="320" y="137" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
