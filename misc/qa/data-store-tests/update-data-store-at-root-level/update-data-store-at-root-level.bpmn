@@ -16,7 +16,7 @@
       </bpmn:dataOutputAssociation>
       <bpmn:script>travel_destinations =   { 
     "Kyoto" : {  
-            "elevation" :"N/A" 
+            "elevation" :"N/Axxx" 
         }    
   }</bpmn:script>
     </bpmn:scriptTask>
@@ -32,9 +32,9 @@ Rome's highlights - {{ highlights_of_rome  }}
 
 Evelation of Kyoto is {{ evelation_of_kyoto  }}</spiffworkflow:instructionsForEndUser>
       </bpmn:extensionElements>
-      <bpmn:incoming>Flow_1wnusx0</bpmn:incoming>
+      <bpmn:incoming>Flow_19i7cgu</bpmn:incoming>
     </bpmn:endEvent>
-    <bpmn:sequenceFlow id="Flow_1wnusx0" sourceRef="Activity_0i97qoy" targetRef="Event_1aiuiz1" />
+    <bpmn:sequenceFlow id="Flow_1wnusx0" sourceRef="Activity_0i97qoy" targetRef="Activity_1jorfrg" />
     <bpmn:scriptTask id="Activity_0i97qoy" name="Read from Datastore">
       <bpmn:incoming>Flow_1ded8j0</bpmn:incoming>
       <bpmn:outgoing>Flow_1wnusx0</bpmn:outgoing>
@@ -51,6 +51,11 @@ evelation_of_kyoto = travel_destinations("Kyoto", "elevation")</bpmn:script>
     <bpmn:manualTask id="Activity_1n4uvv5" name="Manual Task">
       <bpmn:incoming>Flow_17db3yp</bpmn:incoming>
       <bpmn:outgoing>Flow_0d2l9v5</bpmn:outgoing>
+    </bpmn:manualTask>
+    <bpmn:sequenceFlow id="Flow_19i7cgu" sourceRef="Activity_1jorfrg" targetRef="Event_1aiuiz1" />
+    <bpmn:manualTask id="Activity_1jorfrg" name="Manual Task 2">
+      <bpmn:incoming>Flow_1wnusx0</bpmn:incoming>
+      <bpmn:outgoing>Flow_19i7cgu</bpmn:outgoing>
     </bpmn:manualTask>
   </bpmn:process>
   <bpmn:dataStore id="travel_destinations" name="KKVDataStore" />
@@ -79,6 +84,10 @@ evelation_of_kyoto = travel_destinations("Kyoto", "elevation")</bpmn:script>
         <dc:Bounds x="120" y="137" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0l62m43_di" bpmnElement="Activity_1jorfrg">
+        <dc:Bounds x="560" y="137" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_17db3yp_di" bpmnElement="Flow_17db3yp">
         <di:waypoint x="78" y="177" />
         <di:waypoint x="120" y="177" />
@@ -93,7 +102,7 @@ evelation_of_kyoto = travel_destinations("Kyoto", "elevation")</bpmn:script>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1wnusx0_di" bpmnElement="Flow_1wnusx0">
         <di:waypoint x="530" y="177" />
-        <di:waypoint x="732" y="177" />
+        <di:waypoint x="560" y="177" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="DataInputAssociation_0vs9ccp_di" bpmnElement="DataInputAssociation_0vs9ccp">
         <di:waypoint x="401" y="5" />
@@ -102,6 +111,10 @@ evelation_of_kyoto = travel_destinations("Kyoto", "elevation")</bpmn:script>
       <bpmndi:BPMNEdge id="Flow_0d2l9v5_di" bpmnElement="Flow_0d2l9v5">
         <di:waypoint x="220" y="177" />
         <di:waypoint x="270" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_19i7cgu_di" bpmnElement="Flow_19i7cgu">
+        <di:waypoint x="660" y="177" />
+        <di:waypoint x="732" y="177" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
