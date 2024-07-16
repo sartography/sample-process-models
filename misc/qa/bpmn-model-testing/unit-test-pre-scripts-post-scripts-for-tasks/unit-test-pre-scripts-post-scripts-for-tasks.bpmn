@@ -69,13 +69,6 @@ service_task_2 = 20</spiffworkflow:preScript>
         <spiffworkflow:postScript># Delete Unneeded Variable
 del(service_task_1)
 </spiffworkflow:postScript>
-        <spiffworkflow:serviceTaskOperator id="waku/SendMessage" resultVariable="the_var">
-          <spiffworkflow:parameters>
-            <spiffworkflow:parameter id="message" type="str" value="&#34;Madhu Test Message&#34;" />
-            <spiffworkflow:parameter id="message_type" type="str" value="&#34;wakuext_sendOneToOneMessage&#34;" />
-            <spiffworkflow:parameter id="recipient" type="str" value="[&#34;zQ3sha4LRj3Q4VtfGUi9msXXjBN3CqKJdJfRSgyfnWG6CgwKN&#34;]" />
-          </spiffworkflow:parameters>
-        </spiffworkflow:serviceTaskOperator>
         <spiffworkflow:instructionsForEndUser>My Name is {{name}},
 User Task Var 1 = {{user_task_1}},
 User Task Var 2 = {{user_task_2}},
@@ -85,6 +78,16 @@ Manual_task_2 = {{manual_task_2}},
 Manual_task_3 = {{manual_task_3}},
 Service_task_1 = {{service_task_1}},
 Service_task_2 = {{service_task_2}}</spiffworkflow:instructionsForEndUser>
+        <spiffworkflow:serviceTaskOperator id="http/GetRequestV2" resultVariable="git_resp">
+          <spiffworkflow:parameters>
+            <spiffworkflow:parameter id="url" type="str" value="&#34;https://api.github.com/user&#34;" />
+            <spiffworkflow:parameter id="headers" type="any" value="{ &#34;Authorization&#34;: &#34;Bearer SPIFF_SECRET:github_oauth&#34; }" />
+            <spiffworkflow:parameter id="params" type="any" />
+            <spiffworkflow:parameter id="basic_auth_username" type="str" />
+            <spiffworkflow:parameter id="basic_auth_password" type="str" />
+            <spiffworkflow:parameter id="attempts" type="int" />
+          </spiffworkflow:parameters>
+        </spiffworkflow:serviceTaskOperator>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_0is9d8n</bpmn:incoming>
       <bpmn:outgoing>Flow_0ghbvoe</bpmn:outgoing>
