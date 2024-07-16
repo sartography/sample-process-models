@@ -4,12 +4,12 @@
     <bpmn:startEvent id="StartEvent_1">
       <bpmn:outgoing>Flow_17db3yp</bpmn:outgoing>
     </bpmn:startEvent>
-    <bpmn:sequenceFlow id="Flow_17db3yp" sourceRef="StartEvent_1" targetRef="Activity_0qpzdpu" />
+    <bpmn:sequenceFlow id="Flow_17db3yp" sourceRef="StartEvent_1" targetRef="Activity_1n4uvv5" />
     <bpmn:scriptTask id="Activity_0qpzdpu" name="Update Datastore">
       <bpmn:extensionElements>
         <spiffworkflow:instructionsForEndUser />
       </bpmn:extensionElements>
-      <bpmn:incoming>Flow_17db3yp</bpmn:incoming>
+      <bpmn:incoming>Flow_0d2l9v5</bpmn:incoming>
       <bpmn:outgoing>Flow_1ded8j0</bpmn:outgoing>
       <bpmn:dataOutputAssociation id="DataOutputAssociation_05dh8lw">
         <bpmn:targetRef>DataStoreReference_0hmtro2</bpmn:targetRef>
@@ -47,13 +47,15 @@ Evelation of Kyoto is {{ evelation_of_kyoto  }}</spiffworkflow:instructionsForEn
 highlights_of_rome = travel_destinations("Rome", "highlights")
 evelation_of_kyoto = travel_destinations("Kyoto", "elevation")</bpmn:script>
     </bpmn:scriptTask>
+    <bpmn:sequenceFlow id="Flow_0d2l9v5" sourceRef="Activity_1n4uvv5" targetRef="Activity_0qpzdpu" />
+    <bpmn:manualTask id="Activity_1n4uvv5" name="Manual Task">
+      <bpmn:incoming>Flow_17db3yp</bpmn:incoming>
+      <bpmn:outgoing>Flow_0d2l9v5</bpmn:outgoing>
+    </bpmn:manualTask>
   </bpmn:process>
   <bpmn:dataStore id="travel_destinations" name="KKVDataStore" />
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_update_data_store_at_root_level_zom00tk">
-      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
-        <dc:Bounds x="179" y="159" width="36" height="36" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0ubxkd3_di" bpmnElement="Activity_0qpzdpu">
         <dc:Bounds x="270" y="137" width="100" height="80" />
         <bpmndi:BPMNLabel />
@@ -64,15 +66,22 @@ evelation_of_kyoto = travel_destinations("Kyoto", "elevation")</bpmn:script>
           <dc:Bounds x="360" y="12" width="61" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_1aiuiz1_di" bpmnElement="Event_1aiuiz1">
-        <dc:Bounds x="592" y="159" width="36" height="36" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0x1fs6b_di" bpmnElement="Activity_0i97qoy">
         <dc:Bounds x="430" y="137" width="100" height="80" />
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="42" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1aiuiz1_di" bpmnElement="Event_1aiuiz1">
+        <dc:Bounds x="732" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1ml2lnt_di" bpmnElement="Activity_1n4uvv5">
+        <dc:Bounds x="120" y="137" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_17db3yp_di" bpmnElement="Flow_17db3yp">
-        <di:waypoint x="215" y="177" />
-        <di:waypoint x="270" y="177" />
+        <di:waypoint x="78" y="177" />
+        <di:waypoint x="120" y="177" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="DataOutputAssociation_05dh8lw_di" bpmnElement="DataOutputAssociation_05dh8lw">
         <di:waypoint x="336" y="137" />
@@ -84,11 +93,15 @@ evelation_of_kyoto = travel_destinations("Kyoto", "elevation")</bpmn:script>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1wnusx0_di" bpmnElement="Flow_1wnusx0">
         <di:waypoint x="530" y="177" />
-        <di:waypoint x="592" y="177" />
+        <di:waypoint x="732" y="177" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="DataInputAssociation_0vs9ccp_di" bpmnElement="DataInputAssociation_0vs9ccp">
         <di:waypoint x="401" y="5" />
         <di:waypoint x="462" y="137" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0d2l9v5_di" bpmnElement="Flow_0d2l9v5">
+        <di:waypoint x="220" y="177" />
+        <di:waypoint x="270" y="177" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
