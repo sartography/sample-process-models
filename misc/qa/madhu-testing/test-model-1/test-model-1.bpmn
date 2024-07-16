@@ -30,15 +30,11 @@ You can also change the text you are reading here by updating the *Instructions*
     </bpmn:scriptTask>
     <bpmn:sequenceFlow id="Flow_114t4am" sourceRef="Activity_125j9jf" targetRef="Activity_1y2ggjh" />
     <bpmn:manualTask id="Activity_125j9jf" name="Manual Task 2">
-      <bpmn:incoming>Flow_0b4vp1r</bpmn:incoming>
+      <bpmn:incoming>Flow_0j19y7l</bpmn:incoming>
       <bpmn:outgoing>Flow_114t4am</bpmn:outgoing>
     </bpmn:manualTask>
-    <bpmn:task id="Activity_1y2ggjh" name="Manual task 3">
-      <bpmn:incoming>Flow_114t4am</bpmn:incoming>
-      <bpmn:outgoing>Flow_0eycgk2</bpmn:outgoing>
-    </bpmn:task>
     <bpmn:sequenceFlow id="Flow_0eycgk2" sourceRef="Activity_1y2ggjh" targetRef="EndEvent_1" />
-    <bpmn:sequenceFlow id="Flow_0b4vp1r" sourceRef="Activity_0qd9tz2" targetRef="Activity_125j9jf" />
+    <bpmn:sequenceFlow id="Flow_0b4vp1r" sourceRef="Activity_0qd9tz2" targetRef="Activity_1comm12" />
     <bpmn:sendTask id="Activity_0qd9tz2" name="Send Task" messageRef="PrePostScriptMsg">
       <bpmn:extensionElements>
         <spiffworkflow:messagePayload>{"name":"Tim", "age":40}</spiffworkflow:messagePayload>
@@ -46,6 +42,15 @@ You can also change the text you are reading here by updating the *Instructions*
       <bpmn:incoming>Flow_12pkbxb</bpmn:incoming>
       <bpmn:outgoing>Flow_0b4vp1r</bpmn:outgoing>
     </bpmn:sendTask>
+    <bpmn:sequenceFlow id="Flow_0j19y7l" sourceRef="Activity_1comm12" targetRef="Activity_125j9jf" />
+    <bpmn:manualTask id="Activity_1comm12" name="Manual Task 1_a">
+      <bpmn:incoming>Flow_0b4vp1r</bpmn:incoming>
+      <bpmn:outgoing>Flow_0j19y7l</bpmn:outgoing>
+    </bpmn:manualTask>
+    <bpmn:manualTask id="Activity_1y2ggjh" name="Manual task 3">
+      <bpmn:incoming>Flow_114t4am</bpmn:incoming>
+      <bpmn:outgoing>Flow_0eycgk2</bpmn:outgoing>
+    </bpmn:manualTask>
   </bpmn:process>
   <bpmn:message id="PrePostScriptMsg" name="PrePostScriptMsg" />
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
@@ -68,13 +73,16 @@ You can also change the text you are reading here by updating the *Instructions*
         <dc:Bounds x="750" y="137" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1y2ggjh_di" bpmnElement="Activity_1y2ggjh">
-        <dc:Bounds x="930" y="137" width="100" height="80" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0uks93n_di" bpmnElement="Activity_0qd9tz2">
         <dc:Bounds x="480" y="137" width="100" height="80" />
         <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0l3ey97_di" bpmnElement="Activity_1comm12">
+        <dc:Bounds x="610" y="137" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_18ajlfj_di" bpmnElement="Activity_1y2ggjh">
+        <dc:Bounds x="930" y="137" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_17db3yp_di" bpmnElement="Flow_17db3yp">
         <di:waypoint x="-22" y="177" />
@@ -98,6 +106,10 @@ You can also change the text you are reading here by updating the *Instructions*
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0b4vp1r_di" bpmnElement="Flow_0b4vp1r">
         <di:waypoint x="580" y="177" />
+        <di:waypoint x="610" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0j19y7l_di" bpmnElement="Flow_0j19y7l">
+        <di:waypoint x="710" y="177" />
         <di:waypoint x="750" y="177" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
