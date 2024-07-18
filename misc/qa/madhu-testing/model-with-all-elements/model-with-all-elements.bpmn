@@ -31,22 +31,23 @@
         <bpmn:flowNodeRef>Event_1we66i8</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_1mr50zv</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_0r04mc3</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Activity_06o6vbf</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_0mz4qjo</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_12t2hwu</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_0456jk8</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Event_148wg0d</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Event_16y1ecr</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_06o6vbf</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Gateway_00q74af</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_12mvls1</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_1ul45i9</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_0tbk5h1</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_049sh8c</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Activity_12t2hwu</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Event_0a7j0za</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_08hxshg</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_1gafp3e</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Event_0a7j0za</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Event_16y1ecr</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Event_148wg0d</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_194pd0d" name="Tester">
-        <bpmn:flowNodeRef>Activity_0mz4qjo</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_15yuetc</bpmn:flowNodeRef>
       </bpmn:lane>
     </bpmn:laneSet>
     <bpmn:startEvent id="StartEvent_1">
@@ -350,9 +351,6 @@ data: "Call Message Data"
       <bpmn:incoming>Flow_11c4e8y</bpmn:incoming>
       <bpmn:outgoing>Flow_1azlgvj</bpmn:outgoing>
     </bpmn:sendTask>
-    <bpmn:manualTask id="Activity_0mz4qjo" name="Message Sent">
-      <bpmn:incoming>Flow_1azlgvj</bpmn:incoming>
-    </bpmn:manualTask>
     <bpmn:sequenceFlow id="Flow_0qddyb5" sourceRef="Event_0a7j0za" targetRef="Activity_08hxshg" />
     <bpmn:boundaryEvent id="Event_0a7j0za" attachedToRef="Activity_12t2hwu">
       <bpmn:outgoing>Flow_0qddyb5</bpmn:outgoing>
@@ -366,6 +364,15 @@ data: "Call Message Data"
       <bpmn:incoming>Flow_0hd1kag</bpmn:incoming>
     </bpmn:endEvent>
     <bpmn:sequenceFlow id="Flow_0hd1kag" sourceRef="Activity_08hxshg" targetRef="Event_1gafp3e" />
+    <bpmn:scriptTask id="Activity_0mz4qjo" name="Message Sent">
+      <bpmn:incoming>Flow_1azlgvj</bpmn:incoming>
+      <bpmn:outgoing>Flow_18gbvtt</bpmn:outgoing>
+      <bpmn:script>lane_owners = {"Tester": ["admin@spiffworkflow.org", "nelson@spiffworkflow.org"]}</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:sequenceFlow id="Flow_18gbvtt" sourceRef="Activity_0mz4qjo" targetRef="Activity_15yuetc" />
+    <bpmn:task id="Activity_15yuetc">
+      <bpmn:incoming>Flow_18gbvtt</bpmn:incoming>
+    </bpmn:task>
   </bpmn:process>
   <bpmn:signal id="check_balance" name="check_balance">
     <bpmn:extensionElements>
@@ -376,19 +383,19 @@ data: "Call Message Data"
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_FormAndLane">
       <bpmndi:BPMNShape id="Participant_1df0bwy_di" bpmnElement="Participant_1df0bwy" isHorizontal="true">
-        <dc:Bounds x="-470" y="101" width="3100" height="949" />
+        <dc:Bounds x="-470" y="101" width="3250" height="949" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Lane_194pd0d_di" bpmnElement="Lane_194pd0d" isHorizontal="true">
-        <dc:Bounds x="-440" y="751" width="3070" height="299" />
+        <dc:Bounds x="-440" y="751" width="3220" height="299" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Lane_10r7fce_di" bpmnElement="Lane_Reviewer" isHorizontal="true">
-        <dc:Bounds x="-440" y="289" width="3070" height="462" />
+        <dc:Bounds x="-440" y="289" width="3220" height="462" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Lane_1vcali6_di" bpmnElement="Lane_Initiator" isHorizontal="true">
-        <dc:Bounds x="-440" y="101" width="3070" height="188" />
+        <dc:Bounds x="-440" y="101" width="3220" height="188" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
         <dc:Bounds x="-420" y="177" width="36" height="36" />
@@ -477,39 +484,11 @@ data: "Call Message Data"
         <dc:Bounds x="380" y="411" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_12mvls1_di" bpmnElement="Event_12mvls1">
-        <dc:Bounds x="-17" y="507" width="36" height="36" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="-36" y="550" width="76" height="14" />
-        </bpmndi:BPMNLabel>
+      <bpmndi:BPMNShape id="Activity_1l725wg_di" bpmnElement="Activity_0mz4qjo">
+        <dc:Bounds x="2430" y="620" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_1ul45i9_di" bpmnElement="Event_1ul45i9">
-        <dc:Bounds x="-288" y="572" width="36" height="36" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="-294" y="615" width="49" height="27" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1wfldjw_di" bpmnElement="Activity_0tbk5h1">
-        <dc:Bounds x="1350" y="411" width="100" height="80" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1e5wyl7_di" bpmnElement="Activity_049sh8c">
-        <dc:Bounds x="2430" y="472" width="100" height="80" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1ajpfpg_di" bpmnElement="Activity_0mz4qjo">
-        <dc:Bounds x="2430" y="880" width="100" height="80" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_14gh0je_di" bpmnElement="Activity_08hxshg">
-        <dc:Bounds x="1710" y="651" width="100" height="80" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_1gafp3e_di" bpmnElement="Event_1gafp3e">
-        <dc:Bounds x="1872" y="673" width="36" height="36" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="1866" y="716" width="52" height="27" />
-        </bpmndi:BPMNLabel>
+      <bpmndi:BPMNShape id="Activity_15yuetc_di" bpmnElement="Activity_15yuetc">
+        <dc:Bounds x="2430" y="820" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1p6wtv8_di" bpmnElement="Activity_12t2hwu" isExpanded="true">
         <dc:Bounds x="1500" y="351" width="710" height="279" />
@@ -574,14 +553,44 @@ data: "Call Message Data"
       <bpmndi:BPMNShape id="Gateway_1w46aif_di" bpmnElement="Gateway_00q74af">
         <dc:Bounds x="1095" y="426" width="50" height="50" />
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_12mvls1_di" bpmnElement="Event_12mvls1">
+        <dc:Bounds x="-17" y="507" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="-36" y="550" width="76" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1ul45i9_di" bpmnElement="Event_1ul45i9">
+        <dc:Bounds x="-288" y="572" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="-294" y="615" width="49" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1wfldjw_di" bpmnElement="Activity_0tbk5h1">
+        <dc:Bounds x="1350" y="411" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1e5wyl7_di" bpmnElement="Activity_049sh8c">
+        <dc:Bounds x="2430" y="472" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_14gh0je_di" bpmnElement="Activity_08hxshg">
+        <dc:Bounds x="1710" y="651" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1gafp3e_di" bpmnElement="Event_1gafp3e">
+        <dc:Bounds x="1872" y="673" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1866" y="716" width="52" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0sud57b_di" bpmnElement="Event_0a7j0za">
+        <dc:Bounds x="1612" y="612" width="36" height="36" />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_1xgh9el_di" bpmnElement="Event_16y1ecr">
         <dc:Bounds x="1172" y="473" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_1tsikld_di" bpmnElement="Event_148wg0d">
         <dc:Bounds x="1272" y="473" width="36" height="36" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_0sud57b_di" bpmnElement="Event_0a7j0za">
-        <dc:Bounds x="1612" y="612" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_1msk5h9_di" bpmnElement="Flow_1msk5h9">
         <di:waypoint x="-384" y="195" />
@@ -737,7 +746,7 @@ data: "Call Message Data"
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1azlgvj_di" bpmnElement="Flow_1azlgvj">
         <di:waypoint x="2480" y="552" />
-        <di:waypoint x="2480" y="880" />
+        <di:waypoint x="2480" y="620" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0qddyb5_di" bpmnElement="Flow_0qddyb5">
         <di:waypoint x="1630" y="648" />
@@ -747,6 +756,10 @@ data: "Call Message Data"
       <bpmndi:BPMNEdge id="Flow_0hd1kag_di" bpmnElement="Flow_0hd1kag">
         <di:waypoint x="1810" y="691" />
         <di:waypoint x="1872" y="691" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_18gbvtt_di" bpmnElement="Flow_18gbvtt">
+        <di:waypoint x="2480" y="700" />
+        <di:waypoint x="2480" y="820" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
