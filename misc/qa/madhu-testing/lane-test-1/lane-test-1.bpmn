@@ -1,10 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:spiffworkflow="http://spiffworkflow.org/bpmn/schema/1.0/core" id="Definitions_96f6665" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.0.0-dev">
   <bpmn:collaboration id="Collaboration_FormAndLane">
-    <bpmn:participant id="Participant_1df0bwy" name="Item" processRef="Test_Process_io42599" />
+    <bpmn:participant id="Participant_1df0bwy" name="Item" processRef="Test_Process_io42599aa" />
   </bpmn:collaboration>
-  <bpmn:process id="Test_Process_io42599" isExecutable="true">
-    <bpmn:laneSet id="LaneSet_06wu5sq" />
+  <bpmn:process id="Test_Process_io42599aa" isExecutable="true">
+    <bpmn:laneSet id="LaneSet_06wu5sq">
+      <bpmn:lane id="Lane_Reviewer" name="Reviewer">
+        <bpmn:flowNodeRef>Activity_GetMoreData</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Gateway_1chm5qn</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Event_09rkmlh</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Event_0t6257a</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_Review</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Event_12mvls1</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Event_0er19np</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Gateway_1y0gjbb</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Gateway_1v7vc1z</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_Initiator">
+        <bpmn:flowNodeRef>StartEvent_1</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_GetData</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_GetReviewers</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Gateway_0l5x84t</bpmn:flowNodeRef>
+      </bpmn:lane>
+    </bpmn:laneSet>
     <bpmn:sequenceFlow id="Flow_0c8hg1n" sourceRef="Activity_GetData" targetRef="Activity_GetMoreData" />
     <bpmn:startEvent id="StartEvent_1">
       <bpmn:outgoing>Flow_1msk5h9</bpmn:outgoing>
@@ -16,16 +34,15 @@
           <spiffworkflow:property name="formUiSchemaFilename" value="get-item-info-uischema.json" />
         </spiffworkflow:properties>
         <spiffworkflow:preScript>current_user = get_current_user()['username']</spiffworkflow:preScript>
-        <spiffworkflow:instructionsForEndUser>New info</spiffworkflow:instructionsForEndUser>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_1loqmjv</bpmn:incoming>
-      <bpmn:incoming>Flow_0rydrx7</bpmn:incoming>
+      <bpmn:incoming>Flow_0rzj542</bpmn:incoming>
       <bpmn:outgoing>Flow_0c8hg1n</bpmn:outgoing>
     </bpmn:userTask>
     <bpmn:scriptTask id="Activity_GetReviewers" name="Get Reviewers">
       <bpmn:incoming>Flow_1msk5h9</bpmn:incoming>
       <bpmn:outgoing>Flow_1loqmjv</bpmn:outgoing>
-      <bpmn:script>lane_owners = {"Reviewer": ["nelson@spiffworkflow.org", "admin@spiffworkflow.org"]}</bpmn:script>
+      <bpmn:script>lane_owners = {"Reviewer": ["admin@spiffworkflow.org", "madhurya@sartography.com"]}</bpmn:script>
     </bpmn:scriptTask>
     <bpmn:sequenceFlow id="Flow_1msk5h9" sourceRef="StartEvent_1" targetRef="Activity_GetReviewers" />
     <bpmn:sequenceFlow id="Flow_1loqmjv" sourceRef="Activity_GetReviewers" targetRef="Activity_GetData" />
@@ -63,9 +80,7 @@
     </bpmn:sequenceFlow>
     <bpmn:userTask id="Activity_Review" name="Review">
       <bpmn:extensionElements>
-        <spiffworkflow:instructionsForEndUser>## Approve
-### Data
-{{ data }}</spiffworkflow:instructionsForEndUser>
+        <spiffworkflow:instructionsForEndUser />
         <spiffworkflow:properties>
           <spiffworkflow:property name="formJsonSchemaFilename" value="review-form-schema.json" />
           <spiffworkflow:property name="formUiSchemaFilename" value="review-form-uischema.json" />
@@ -100,18 +115,25 @@
     </bpmn:exclusiveGateway>
     <bpmn:exclusiveGateway id="Gateway_0l5x84t">
       <bpmn:incoming>Flow_042vla2</bpmn:incoming>
-      <bpmn:outgoing>Flow_0rydrx7</bpmn:outgoing>
+      <bpmn:outgoing>Flow_0rzj542</bpmn:outgoing>
     </bpmn:exclusiveGateway>
     <bpmn:sequenceFlow id="Flow_042vla2" sourceRef="Gateway_1v7vc1z" targetRef="Gateway_0l5x84t">
       <bpmn:conditionExpression>approval == "Needmoreinfo"</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
-    <bpmn:sequenceFlow id="Flow_0rydrx7" sourceRef="Gateway_0l5x84t" targetRef="Activity_GetData" />
     <bpmn:sequenceFlow id="Flow_0q4r19g" sourceRef="Gateway_1v7vc1z" targetRef="Event_09rkmlh" />
+    <bpmn:sequenceFlow id="Flow_0rzj542" sourceRef="Gateway_0l5x84t" targetRef="Activity_GetData" />
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_FormAndLane">
       <bpmndi:BPMNShape id="Participant_1df0bwy_di" bpmnElement="Participant_1df0bwy" isHorizontal="true">
         <dc:Bounds x="139" y="66" width="1311" height="462" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_1vcali6_di" bpmnElement="Lane_Initiator" isHorizontal="true">
+        <dc:Bounds x="169" y="66" width="1281" height="188" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_10r7fce_di" bpmnElement="Lane_Reviewer" isHorizontal="true">
+        <dc:Bounds x="169" y="254" width="1281" height="274" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
@@ -143,6 +165,7 @@
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0bf7hpx_di" bpmnElement="Activity_Review">
         <dc:Bounds x="610" y="300" width="100" height="80" />
+        <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_12mvls1_di" bpmnElement="Event_12mvls1">
         <dc:Bounds x="972" y="432" width="36" height="36" />
@@ -225,15 +248,15 @@
         <di:waypoint x="1220" y="160" />
         <di:waypoint x="675" y="160" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0rydrx7_di" bpmnElement="Flow_0rydrx7">
-        <di:waypoint x="625" y="160" />
-        <di:waypoint x="540" y="160" />
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0q4r19g_di" bpmnElement="Flow_0q4r19g">
         <di:waypoint x="1245" y="360" />
         <di:waypoint x="1304" y="360" />
         <di:waypoint x="1304" y="340" />
         <di:waypoint x="1362" y="340" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0rzj542_di" bpmnElement="Flow_0rzj542">
+        <di:waypoint x="625" y="160" />
+        <di:waypoint x="540" y="160" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
