@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:spiffworkflow="http://spiffworkflow.org/bpmn/schema/1.0/core" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_96f6665" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.0.0-dev">
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:spiffworkflow="http://spiffworkflow.org/bpmn/schema/1.0/core" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="Definitions_96f6665" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.0.0-dev">
   <bpmn:process id="Process_unit_test_pre_scripts_post_scripts_for_tasks_mg2fcs0" isExecutable="true">
     <bpmn:startEvent id="StartEvent_1">
       <bpmn:outgoing>Flow_12pit63</bpmn:outgoing>
@@ -262,13 +262,15 @@ Collapsed subprocess var 2 = {{collapsed_subprocess_activity_2}},
 Expanded subprocess var 1 = {{expanded_subprocess_activity_1}},
 Expanded subprocess var 2 = {{expanded_subprocess_activity_2}}</spiffworkflow:instructionsForEndUser>
       </bpmn:extensionElements>
-      <bpmn:incoming>Flow_02y9dpv</bpmn:incoming>
+      <bpmn:incoming>Flow_093yt3c</bpmn:incoming>
     </bpmn:endEvent>
-    <bpmn:sequenceFlow id="Flow_02y9dpv" sourceRef="Activity_052k826" targetRef="Event_1cpmclq" />
+    <bpmn:sequenceFlow id="Flow_02y9dpv" sourceRef="Activity_052k826" targetRef="Activity_1gzwd72" />
     <bpmn:manualTask id="Activity_052k826" name="Show expanded sub process Data">
       <bpmn:extensionElements>
         <spiffworkflow:instructionsForEndUser>Expanded subprocess var 1 = {{expanded_subprocess_activity_1}},
 Expanded subprocess var 2 = {{expanded_subprocess_activity_2}}</spiffworkflow:instructionsForEndUser>
+        <spiffworkflow:postScript>y = 0
+z = 0</spiffworkflow:postScript>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_0beubtn</bpmn:incoming>
       <bpmn:outgoing>Flow_02y9dpv</bpmn:outgoing>
@@ -295,6 +297,80 @@ del(send_task_1)</spiffworkflow:postScript>
       <bpmn:incoming>Flow_0lv8c94</bpmn:incoming>
       <bpmn:outgoing>Flow_0c3kbws</bpmn:outgoing>
     </bpmn:sendTask>
+    <bpmn:sequenceFlow id="Flow_1e1djbi" sourceRef="Activity_1gzwd72" targetRef="Activity_0cvjffh" />
+    <bpmn:manualTask id="Activity_1gzwd72" name="Manual Loop Task (Script on Inst)">
+      <bpmn:extensionElements>
+        <spiffworkflow:preScript>y = y+1</spiffworkflow:preScript>
+        <spiffworkflow:postScript>z = z+1</spiffworkflow:postScript>
+        <spiffworkflow:instructionsForEndUser>Manual Loop Task (Run script on Instance)
+y is {{y}}
+z is {{z}}</spiffworkflow:instructionsForEndUser>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_02y9dpv</bpmn:incoming>
+      <bpmn:outgoing>Flow_1e1djbi</bpmn:outgoing>
+      <bpmn:standardLoopCharacteristics loopMaximum="3" spiffworkflow:scriptsOnInstances="true" />
+    </bpmn:manualTask>
+    <bpmn:sequenceFlow id="Flow_1bnswgl" sourceRef="Activity_0cvjffh" targetRef="Activity_1hb0gf3" />
+    <bpmn:manualTask id="Activity_0cvjffh" name="Show Manual Loop Task (Script on Inst) Data">
+      <bpmn:extensionElements>
+        <spiffworkflow:instructionsForEndUser>y = {{y}}
+z = {{z}}</spiffworkflow:instructionsForEndUser>
+        <spiffworkflow:postScript>y = 10
+z =10</spiffworkflow:postScript>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1e1djbi</bpmn:incoming>
+      <bpmn:outgoing>Flow_1bnswgl</bpmn:outgoing>
+    </bpmn:manualTask>
+    <bpmn:sequenceFlow id="Flow_0ssa1ws" sourceRef="Activity_1hb0gf3" targetRef="Activity_1f10bdx" />
+    <bpmn:manualTask id="Activity_1hb0gf3" name="Manual Loop Task">
+      <bpmn:extensionElements>
+        <spiffworkflow:instructionsForEndUser>y is {{y}}
+z is {{z}}</spiffworkflow:instructionsForEndUser>
+        <spiffworkflow:preScript>y=y+1</spiffworkflow:preScript>
+        <spiffworkflow:postScript>z=z+1</spiffworkflow:postScript>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1bnswgl</bpmn:incoming>
+      <bpmn:outgoing>Flow_0ssa1ws</bpmn:outgoing>
+      <bpmn:standardLoopCharacteristics loopMaximum="5" />
+    </bpmn:manualTask>
+    <bpmn:sequenceFlow id="Flow_03b91xx" sourceRef="Activity_1f10bdx" targetRef="Activity_11rxivj" />
+    <bpmn:manualTask id="Activity_1f10bdx" name="Show Manual Loop Task Data">
+      <bpmn:extensionElements>
+        <spiffworkflow:instructionsForEndUser>y = {{y}}
+z = {{z}}</spiffworkflow:instructionsForEndUser>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0ssa1ws</bpmn:incoming>
+      <bpmn:outgoing>Flow_03b91xx</bpmn:outgoing>
+    </bpmn:manualTask>
+    <bpmn:sequenceFlow id="Flow_15q2px7" sourceRef="Activity_11rxivj" targetRef="Activity_0bladrd" />
+    <bpmn:userTask id="Activity_11rxivj" name="Parallel Multi Instance (Script on Inst)">
+      <bpmn:extensionElements>
+        <spiffworkflow:properties>
+          <spiffworkflow:property name="formJsonSchemaFilename" value="get-town-schema.json" />
+          <spiffworkflow:property name="formUiSchemaFilename" value="get-town-uischema.json" />
+        </spiffworkflow:properties>
+        <spiffworkflow:preScript>y = y + 1</spiffworkflow:preScript>
+        <spiffworkflow:postScript>z = z + 1</spiffworkflow:postScript>
+        <spiffworkflow:instructionsForEndUser>y is {{y}}
+z is {{z}}</spiffworkflow:instructionsForEndUser>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_03b91xx</bpmn:incoming>
+      <bpmn:outgoing>Flow_15q2px7</bpmn:outgoing>
+      <bpmn:multiInstanceLoopCharacteristics spiffworkflow:scriptsOnInstances="true">
+        <bpmn:loopCardinality xsi:type="bpmn:tFormalExpression">3</bpmn:loopCardinality>
+      </bpmn:multiInstanceLoopCharacteristics>
+    </bpmn:userTask>
+    <bpmn:sequenceFlow id="Flow_093yt3c" sourceRef="Activity_0bladrd" targetRef="Event_1cpmclq" />
+    <bpmn:manualTask id="Activity_0bladrd" name="Show Parallel MI (Script on inst) Data">
+      <bpmn:extensionElements>
+        <spiffworkflow:instructionsForEndUser>Show Parallel Multi Instance (Run script on instance) Data
+town = {{town}}
+y = {{y}}
+z = {{z}}</spiffworkflow:instructionsForEndUser>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_15q2px7</bpmn:incoming>
+      <bpmn:outgoing>Flow_093yt3c</bpmn:outgoing>
+    </bpmn:manualTask>
   </bpmn:process>
   <bpmn:message id="PrePostScriptMsg" name="PrePostScriptMsg" />
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
@@ -349,6 +425,21 @@ del(send_task_1)</spiffworkflow:postScript>
         <dc:Bounds x="180" y="500" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_013cml8_di" bpmnElement="Activity_0bladrd">
+        <dc:Bounds x="270" y="680" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_18dgdi8_di" bpmnElement="Activity_11rxivj">
+        <dc:Bounds x="450" y="680" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1iqkjfa_di" bpmnElement="Activity_1f10bdx">
+        <dc:Bounds x="640" y="680" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_18oeblh_di" bpmnElement="Activity_1hb0gf3">
+        <dc:Bounds x="820" y="680" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0q35qe1_di" bpmnElement="Activity_0tw18gv">
         <dc:Bounds x="330" y="500" width="100" height="80" />
         <bpmndi:BPMNLabel />
@@ -378,7 +469,7 @@ del(send_task_1)</spiffworkflow:postScript>
         <di:waypoint x="1012" y="540" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="Event_1cpmclq_di" bpmnElement="Event_1cpmclq">
-        <dc:Bounds x="1312" y="522" width="36" height="36" />
+        <dc:Bounds x="822" y="872" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0vrnyop_di" bpmnElement="Activity_052k826">
         <dc:Bounds x="1160" y="500" width="100" height="80" />
@@ -390,6 +481,14 @@ del(send_task_1)</spiffworkflow:postScript>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1oc7bex_di" bpmnElement="Activity_0uw8p7i">
         <dc:Bounds x="780" y="330" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0ezwcab_di" bpmnElement="Activity_1gzwd72">
+        <dc:Bounds x="1160" y="680" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1q85bu9_di" bpmnElement="Activity_0cvjffh">
+        <dc:Bounds x="1000" y="680" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_12pit63_di" bpmnElement="Flow_12pit63">
@@ -467,8 +566,33 @@ del(send_task_1)</spiffworkflow:postScript>
         <di:waypoint x="1160" y="540" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_02y9dpv_di" bpmnElement="Flow_02y9dpv">
-        <di:waypoint x="1260" y="540" />
-        <di:waypoint x="1312" y="540" />
+        <di:waypoint x="1210" y="580" />
+        <di:waypoint x="1210" y="680" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1e1djbi_di" bpmnElement="Flow_1e1djbi">
+        <di:waypoint x="1160" y="720" />
+        <di:waypoint x="1100" y="720" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1bnswgl_di" bpmnElement="Flow_1bnswgl">
+        <di:waypoint x="1000" y="720" />
+        <di:waypoint x="920" y="720" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0ssa1ws_di" bpmnElement="Flow_0ssa1ws">
+        <di:waypoint x="820" y="720" />
+        <di:waypoint x="740" y="720" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_03b91xx_di" bpmnElement="Flow_03b91xx">
+        <di:waypoint x="640" y="720" />
+        <di:waypoint x="550" y="720" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_15q2px7_di" bpmnElement="Flow_15q2px7">
+        <di:waypoint x="450" y="720" />
+        <di:waypoint x="370" y="720" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_093yt3c_di" bpmnElement="Flow_093yt3c">
+        <di:waypoint x="320" y="760" />
+        <di:waypoint x="320" y="890" />
+        <di:waypoint x="822" y="890" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
