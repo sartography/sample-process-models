@@ -32,16 +32,18 @@
         <bpmn:flowNodeRef>Activity_1mr50zv</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_0r04mc3</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_06o6vbf</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Activity_12t2hwu</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_0456jk8</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_148wg0d</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_16y1ecr</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Event_0a7j0za</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Gateway_00q74af</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_12mvls1</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_1ul45i9</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_0tbk5h1</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_049sh8c</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_12t2hwu</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Event_0a7j0za</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_08hxshg</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Event_1gafp3e</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_194pd0d" name="Tester">
         <bpmn:flowNodeRef>Activity_0mz4qjo</bpmn:flowNodeRef>
@@ -272,10 +274,6 @@
       <bpmn:sequenceFlow id="Flow_0vbzhdt" sourceRef="Gateway_0tp45t4" targetRef="Event_1tjca2z">
         <bpmn:conditionExpression>approved == False</bpmn:conditionExpression>
       </bpmn:sequenceFlow>
-      <bpmn:endEvent id="Event_1tjca2z" name="Rejected">
-        <bpmn:incoming>Flow_0vbzhdt</bpmn:incoming>
-        <bpmn:terminateEventDefinition id="TerminateEventDefinition_11u6swi" />
-      </bpmn:endEvent>
       <bpmn:userTask id="Activity_16gkhwv" name="Get Approval">
         <bpmn:extensionElements>
           <spiffworkflow:properties>
@@ -290,6 +288,10 @@
         <bpmn:incoming>Flow_1wyfh0d</bpmn:incoming>
         <bpmn:outgoing>Flow_0zp3xpz</bpmn:outgoing>
       </bpmn:scriptTask>
+      <bpmn:endEvent id="Event_1tjca2z" name="Rejected">
+        <bpmn:incoming>Flow_0vbzhdt</bpmn:incoming>
+        <bpmn:escalationEventDefinition id="EscalationEventDefinition_1miocpk" />
+      </bpmn:endEvent>
     </bpmn:subProcess>
     <bpmn:subProcess id="Activity_0456jk8" name="Collapsed Sub Proc Manual Task ">
       <bpmn:incoming>Flow_1bjanul</bpmn:incoming>
@@ -312,9 +314,6 @@
         <bpmn:outgoing>Flow_1v958bw</bpmn:outgoing>
       </bpmn:manualTask>
     </bpmn:subProcess>
-    <bpmn:boundaryEvent id="Event_0a7j0za" attachedToRef="Activity_12t2hwu">
-      <bpmn:escalationEventDefinition id="EscalationEventDefinition_1pim0qt" />
-    </bpmn:boundaryEvent>
     <bpmn:sequenceFlow id="Flow_1ov6487" sourceRef="Activity_12t2hwu" targetRef="Activity_06o6vbf" />
     <bpmn:manualTask id="Activity_06o6vbf" name="Manual Task">
       <bpmn:extensionElements>
@@ -354,6 +353,19 @@ data: "Call Message Data"
     <bpmn:manualTask id="Activity_0mz4qjo" name="Message Sent">
       <bpmn:incoming>Flow_1azlgvj</bpmn:incoming>
     </bpmn:manualTask>
+    <bpmn:sequenceFlow id="Flow_0qddyb5" sourceRef="Event_0a7j0za" targetRef="Activity_08hxshg" />
+    <bpmn:boundaryEvent id="Event_0a7j0za" attachedToRef="Activity_12t2hwu">
+      <bpmn:outgoing>Flow_0qddyb5</bpmn:outgoing>
+      <bpmn:escalationEventDefinition id="EscalationEventDefinition_1pim0qt" />
+    </bpmn:boundaryEvent>
+    <bpmn:manualTask id="Activity_08hxshg" name="Request Rejected">
+      <bpmn:incoming>Flow_0qddyb5</bpmn:incoming>
+      <bpmn:outgoing>Flow_0hd1kag</bpmn:outgoing>
+    </bpmn:manualTask>
+    <bpmn:endEvent id="Event_1gafp3e" name="End Event Rejected">
+      <bpmn:incoming>Flow_0hd1kag</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_0hd1kag" sourceRef="Activity_08hxshg" targetRef="Event_1gafp3e" />
   </bpmn:process>
   <bpmn:signal id="check_balance" name="check_balance">
     <bpmn:extensionElements>
@@ -489,8 +501,18 @@ data: "Call Message Data"
         <dc:Bounds x="2430" y="880" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_14gh0je_di" bpmnElement="Activity_08hxshg">
+        <dc:Bounds x="1710" y="651" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1gafp3e_di" bpmnElement="Event_1gafp3e">
+        <dc:Bounds x="1872" y="673" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1866" y="716" width="52" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1p6wtv8_di" bpmnElement="Activity_12t2hwu" isExpanded="true">
-        <dc:Bounds x="1500" y="351" width="710" height="322" />
+        <dc:Bounds x="1500" y="351" width="710" height="279" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_0h4fk5s_di" bpmnElement="Event_0h4fk5s">
         <dc:Bounds x="1540.3333333333333" y="433" width="36" height="36" />
@@ -504,12 +526,6 @@ data: "Call Message Data"
           <dc:Bounds x="2057" y="425" width="47" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_1kn31ez_di" bpmnElement="Event_1tjca2z">
-        <dc:Bounds x="2062" y="462" width="36" height="36" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="2059" y="505" width="44" height="14" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1xz3271_di" bpmnElement="Activity_16gkhwv">
         <dc:Bounds x="1790" y="411" width="100" height="80" />
         <bpmndi:BPMNLabel />
@@ -517,6 +533,12 @@ data: "Call Message Data"
       <bpmndi:BPMNShape id="Activity_07j2zwc_di" bpmnElement="Activity_1h1escp">
         <dc:Bounds x="1630" y="411" width="100" height="80" />
         <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0kwqm5a_di" bpmnElement="Event_1tjca2z">
+        <dc:Bounds x="2062" y="462" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2059" y="505" width="44" height="14" />
+        </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_1wyfh0d_di" bpmnElement="Flow_1wyfh0d">
         <di:waypoint x="1576" y="451" />
@@ -552,14 +574,14 @@ data: "Call Message Data"
       <bpmndi:BPMNShape id="Gateway_1w46aif_di" bpmnElement="Gateway_00q74af">
         <dc:Bounds x="1095" y="426" width="50" height="50" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_0sud57b_di" bpmnElement="Event_0a7j0za">
-        <dc:Bounds x="1612" y="655" width="36" height="36" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_1xgh9el_di" bpmnElement="Event_16y1ecr">
         <dc:Bounds x="1172" y="473" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_1tsikld_di" bpmnElement="Event_148wg0d">
         <dc:Bounds x="1272" y="473" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0sud57b_di" bpmnElement="Event_0a7j0za">
+        <dc:Bounds x="1612" y="612" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_1msk5h9_di" bpmnElement="Flow_1msk5h9">
         <di:waypoint x="-384" y="195" />
@@ -716,6 +738,15 @@ data: "Call Message Data"
       <bpmndi:BPMNEdge id="Flow_1azlgvj_di" bpmnElement="Flow_1azlgvj">
         <di:waypoint x="2480" y="552" />
         <di:waypoint x="2480" y="880" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0qddyb5_di" bpmnElement="Flow_0qddyb5">
+        <di:waypoint x="1630" y="648" />
+        <di:waypoint x="1630" y="691" />
+        <di:waypoint x="1710" y="691" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0hd1kag_di" bpmnElement="Flow_0hd1kag">
+        <di:waypoint x="1810" y="691" />
+        <di:waypoint x="1872" y="691" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
