@@ -2,7 +2,7 @@
 <bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:spiffworkflow="http://spiffworkflow.org/bpmn/schema/1.0/core" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="Definitions_96f6665" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.0.0-dev">
   <bpmn:collaboration id="Collaboration_FormAndLane">
     <bpmn:participant id="Participant_1df0bwy" name="Item" processRef="Test_Process_aaio42599aa" />
-    <bpmn:correlationKey id="CorrelationKey_0hce99j" name="MainCorrelationKey" />
+    <bpmn:correlationKey id="CorrelationKey_1fpyt7u" name="MainCorrelationKey" />
   </bpmn:collaboration>
   <bpmn:process id="Test_Process_aaio42599aa" isExecutable="true">
     <bpmn:laneSet id="LaneSet_06wu5sq">
@@ -38,10 +38,10 @@
         <bpmn:flowNodeRef>Event_16y1ecr</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_0a7j0za</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Gateway_00q74af</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Activity_049sh8c</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_12mvls1</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_1ul45i9</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_0tbk5h1</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_049sh8c</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_194pd0d" name="Tester">
         <bpmn:flowNodeRef>Activity_0mz4qjo</bpmn:flowNodeRef>
@@ -316,25 +316,21 @@
       <bpmn:escalationEventDefinition id="EscalationEventDefinition_1pim0qt" />
     </bpmn:boundaryEvent>
     <bpmn:sequenceFlow id="Flow_1ov6487" sourceRef="Activity_12t2hwu" targetRef="Activity_06o6vbf" />
-    <bpmn:manualTask id="Activity_06o6vbf">
+    <bpmn:manualTask id="Activity_06o6vbf" name="Manual Task">
+      <bpmn:extensionElements>
+        <spiffworkflow:instructionsForEndUser />
+      </bpmn:extensionElements>
       <bpmn:incoming>Flow_1ov6487</bpmn:incoming>
       <bpmn:outgoing>Flow_11c4e8y</bpmn:outgoing>
       <bpmn:standardLoopCharacteristics loopMaximum="2" />
     </bpmn:manualTask>
     <bpmn:sequenceFlow id="Flow_11c4e8y" sourceRef="Activity_06o6vbf" targetRef="Activity_049sh8c" />
-    <bpmn:task id="Activity_0mz4qjo">
-      <bpmn:incoming>Flow_1azlgvj</bpmn:incoming>
-    </bpmn:task>
     <bpmn:sequenceFlow id="Flow_1azlgvj" sourceRef="Activity_049sh8c" targetRef="Activity_0mz4qjo" />
     <bpmn:parallelGateway id="Gateway_00q74af">
       <bpmn:incoming>Flow_1w3zmqc</bpmn:incoming>
       <bpmn:incoming>Flow_1rm6o2k</bpmn:incoming>
       <bpmn:outgoing>Flow_0q3mz2i</bpmn:outgoing>
     </bpmn:parallelGateway>
-    <bpmn:manualTask id="Activity_049sh8c" name="Make a Send Task">
-      <bpmn:incoming>Flow_11c4e8y</bpmn:incoming>
-      <bpmn:outgoing>Flow_1azlgvj</bpmn:outgoing>
-    </bpmn:manualTask>
     <bpmn:intermediateThrowEvent id="Event_12mvls1" name="Need More Info">
       <bpmn:incoming>Flow_0l3zw86</bpmn:incoming>
       <bpmn:outgoing>Flow_12ty548</bpmn:outgoing>
@@ -346,12 +342,25 @@
       <bpmn:incoming>Flow_1y73gxe</bpmn:incoming>
       <bpmn:outgoing>Flow_0v4e3o3</bpmn:outgoing>
     </bpmn:callActivity>
+    <bpmn:sendTask id="Activity_049sh8c" name="Send Task" messageRef="call_message">
+      <bpmn:extensionElements>
+        <spiffworkflow:messagePayload>{
+data: "Call Message Data"
+}</spiffworkflow:messagePayload>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_11c4e8y</bpmn:incoming>
+      <bpmn:outgoing>Flow_1azlgvj</bpmn:outgoing>
+    </bpmn:sendTask>
+    <bpmn:manualTask id="Activity_0mz4qjo" name="Message Sent">
+      <bpmn:incoming>Flow_1azlgvj</bpmn:incoming>
+    </bpmn:manualTask>
   </bpmn:process>
   <bpmn:signal id="check_balance" name="check_balance">
     <bpmn:extensionElements>
       <spiffworkflow:variableName>checkbalance</spiffworkflow:variableName>
     </bpmn:extensionElements>
   </bpmn:signal>
+  <bpmn:message id="call_message" name="call_message" />
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_FormAndLane">
       <bpmndi:BPMNShape id="Participant_1df0bwy_di" bpmnElement="Participant_1df0bwy" isHorizontal="true">
@@ -456,10 +465,6 @@
         <dc:Bounds x="380" y="411" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1drbpvx_di" bpmnElement="Activity_049sh8c">
-        <dc:Bounds x="2430" y="472" width="100" height="80" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_12mvls1_di" bpmnElement="Event_12mvls1">
         <dc:Bounds x="-17" y="507" width="36" height="36" />
         <bpmndi:BPMNLabel>
@@ -474,6 +479,14 @@
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1wfldjw_di" bpmnElement="Activity_0tbk5h1">
         <dc:Bounds x="1350" y="411" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1e5wyl7_di" bpmnElement="Activity_049sh8c">
+        <dc:Bounds x="2430" y="472" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1ajpfpg_di" bpmnElement="Activity_0mz4qjo">
+        <dc:Bounds x="2430" y="880" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1p6wtv8_di" bpmnElement="Activity_12t2hwu" isExpanded="true">
@@ -534,9 +547,7 @@
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0fjnn6y_di" bpmnElement="Activity_06o6vbf">
         <dc:Bounds x="2270" y="472" width="100" height="80" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0mz4qjo_di" bpmnElement="Activity_0mz4qjo">
-        <dc:Bounds x="2450" y="880" width="100" height="80" />
+        <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Gateway_1w46aif_di" bpmnElement="Gateway_00q74af">
         <dc:Bounds x="1095" y="426" width="50" height="50" />
@@ -704,9 +715,7 @@
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1azlgvj_di" bpmnElement="Flow_1azlgvj">
         <di:waypoint x="2480" y="552" />
-        <di:waypoint x="2480" y="716" />
-        <di:waypoint x="2500" y="716" />
-        <di:waypoint x="2500" y="880" />
+        <di:waypoint x="2480" y="880" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
