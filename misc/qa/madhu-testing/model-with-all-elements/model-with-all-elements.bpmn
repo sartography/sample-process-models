@@ -62,8 +62,8 @@
         <bpmn:flowNodeRef>Activity_0jqe03e</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_0lcjnrs</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_03qzbkj</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Gateway_09b4yam</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_1yxf681</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Gateway_09b4yam</bpmn:flowNodeRef>
       </bpmn:lane>
     </bpmn:laneSet>
     <bpmn:startEvent id="StartEvent_1">
@@ -481,11 +481,11 @@
       <bpmn:outgoing>Flow_0z91073</bpmn:outgoing>
     </bpmn:businessRuleTask>
     <bpmn:sequenceFlow id="Flow_1lrtr1f" sourceRef="Gateway_09b4yam" targetRef="Activity_0lcjnrs">
-      <bpmn:conditionExpression>fries</bpmn:conditionExpression>
+      <bpmn:conditionExpression>false</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="Flow_1520go3" sourceRef="Activity_0lcjnrs" targetRef="Gateway_1jx9agh" />
     <bpmn:sequenceFlow id="Flow_1cg4pxd" sourceRef="Gateway_09b4yam" targetRef="Activity_0jqe03e">
-      <bpmn:conditionExpression>burger</bpmn:conditionExpression>
+      <bpmn:conditionExpression>true</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:userTask id="Activity_1hpllxu" name="Get Food&#10;">
       <bpmn:extensionElements>
@@ -541,12 +541,6 @@ Data outa = {{DataOuta}}</spiffworkflow:instructionsForEndUser>
       <bpmn:incoming>Flow_186u7qc</bpmn:incoming>
       <bpmn:outgoing>Flow_1kol28a</bpmn:outgoing>
     </bpmn:manualTask>
-    <bpmn:inclusiveGateway id="Gateway_09b4yam" default="Flow_186u7qc">
-      <bpmn:incoming>Flow_0wyglew</bpmn:incoming>
-      <bpmn:outgoing>Flow_1lrtr1f</bpmn:outgoing>
-      <bpmn:outgoing>Flow_1cg4pxd</bpmn:outgoing>
-      <bpmn:outgoing>Flow_186u7qc</bpmn:outgoing>
-    </bpmn:inclusiveGateway>
     <bpmn:sequenceFlow id="Flow_0wyglew" sourceRef="Activity_1yxf681" targetRef="Gateway_09b4yam" />
     <bpmn:manualTask id="Activity_1yxf681" name="Show Food">
       <bpmn:extensionElements>
@@ -557,6 +551,12 @@ Coke = {{coke}}</spiffworkflow:instructionsForEndUser>
       <bpmn:incoming>Flow_1f6tr1m</bpmn:incoming>
       <bpmn:outgoing>Flow_0wyglew</bpmn:outgoing>
     </bpmn:manualTask>
+    <bpmn:inclusiveGateway id="Gateway_09b4yam" default="Flow_186u7qc">
+      <bpmn:incoming>Flow_0wyglew</bpmn:incoming>
+      <bpmn:outgoing>Flow_1lrtr1f</bpmn:outgoing>
+      <bpmn:outgoing>Flow_1cg4pxd</bpmn:outgoing>
+      <bpmn:outgoing>Flow_186u7qc</bpmn:outgoing>
+    </bpmn:inclusiveGateway>
   </bpmn:process>
   <bpmn:signal id="check_balance" name="check_balance">
     <bpmn:extensionElements>
@@ -695,12 +695,12 @@ Coke = {{coke}}</spiffworkflow:instructionsForEndUser>
         <dc:Bounds x="1000" y="1070" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Gateway_0bns4d5_di" bpmnElement="Gateway_09b4yam">
-        <dc:Bounds x="1135" y="955" width="50" height="50" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_01zhezf_di" bpmnElement="Activity_1yxf681">
         <dc:Bounds x="1260" y="940" width="100" height="80" />
         <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_0bns4d5_di" bpmnElement="Gateway_09b4yam">
+        <dc:Bounds x="1135" y="955" width="50" height="50" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1p6wtv8_di" bpmnElement="Activity_12t2hwu" isExpanded="true">
         <dc:Bounds x="1500" y="351" width="710" height="279" />
