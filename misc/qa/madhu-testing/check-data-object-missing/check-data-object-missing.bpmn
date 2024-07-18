@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_96f6665" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.0.0-dev">
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:spiffworkflow="http://spiffworkflow.org/bpmn/schema/1.0/core" id="Definitions_96f6665" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.0.0-dev">
   <bpmn:collaboration id="Collaboration_0uru9r3">
     <bpmn:participant id="Participant_0z0accr" name="Item" processRef="Process_check_data_object_missing_fd9etde" />
   </bpmn:collaboration>
@@ -20,6 +20,9 @@
     </bpmn:startEvent>
     <bpmn:sequenceFlow id="Flow_0whbf8j" sourceRef="Event_1ysu24r" targetRef="Activity_0abwm2i" />
     <bpmn:manualTask id="Activity_0abwm2i" name="Manual Task 1">
+      <bpmn:extensionElements>
+        <spiffworkflow:preScript>DataObject_1 = 0</spiffworkflow:preScript>
+      </bpmn:extensionElements>
       <bpmn:incoming>Flow_0whbf8j</bpmn:incoming>
       <bpmn:outgoing>Flow_00jl5t0</bpmn:outgoing>
     </bpmn:manualTask>
@@ -48,7 +51,6 @@
         <bpmn:targetRef>Property_0vhzhrd</bpmn:targetRef>
       </bpmn:dataInputAssociation>
     </bpmn:scriptTask>
-    <bpmn:dataObjectReference id="DataObjectReference_14y2lxp" name="Data Object 1" dataObjectRef="DataObject_1" />
     <bpmn:dataObjectReference id="DataObjectReference_1caecys" name="Data Object 1" dataObjectRef="DataObject_1" />
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
@@ -73,6 +75,12 @@
       <bpmndi:BPMNShape id="Event_19xvzic_di" bpmnElement="Event_19xvzic">
         <dc:Bounds x="442" y="242" width="36" height="36" />
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DataObjectReference_14y2lxp_di" bpmnElement="DataObjectReference_14y2lxp">
+        <dc:Bounds x="62" y="375" width="36" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="46" y="432" width="68" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0rczmp4_di" bpmnElement="Activity_196rdiy">
         <dc:Bounds x="140" y="220" width="100" height="80" />
         <bpmndi:BPMNLabel />
@@ -80,10 +88,10 @@
       <bpmndi:BPMNShape id="Activity_19ncpcq_di" bpmnElement="Activity_0of389d">
         <dc:Bounds x="290" y="220" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="DataObjectReference_14y2lxp_di" bpmnElement="DataObjectReference_14y2lxp">
-        <dc:Bounds x="62" y="375" width="36" height="50" />
+      <bpmndi:BPMNShape id="DataObjectReference_1caecys_di" bpmnElement="DataObjectReference_1caecys">
+        <dc:Bounds x="332" y="375" width="36" height="50" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="46" y="432" width="68" height="14" />
+          <dc:Bounds x="316" y="432" width="68" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_0whbf8j_di" bpmnElement="Flow_0whbf8j">
@@ -104,12 +112,6 @@
         <di:waypoint x="390" y="260" />
         <di:waypoint x="442" y="260" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="DataObjectReference_1caecys_di" bpmnElement="DataObjectReference_1caecys">
-        <dc:Bounds x="332" y="375" width="36" height="50" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="316" y="432" width="68" height="14" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="DataOutputAssociation_00zybps_di" bpmnElement="DataOutputAssociation_00zybps">
         <di:waypoint x="159" y="300" />
         <di:waypoint x="98" y="377" />
