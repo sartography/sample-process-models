@@ -48,11 +48,13 @@
       </bpmn:lane>
       <bpmn:lane id="Lane_194pd0d" name="Tester">
         <bpmn:flowNodeRef>Activity_15yuetc</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Event_0jqx6cq</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_1ocfzii</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_098jtyz</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_1d4ipwo</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_1w17168</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Event_0jqx6cq</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_02tft4w</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_0rp59y8</bpmn:flowNodeRef>
       </bpmn:lane>
     </bpmn:laneSet>
     <bpmn:startEvent id="StartEvent_1">
@@ -378,6 +380,7 @@
     <bpmn:manualTask id="Activity_15yuetc" name="Manual Task">
       <bpmn:extensionElements>
         <spiffworkflow:instructionsForEndUser>Start of New Lane</spiffworkflow:instructionsForEndUser>
+        <spiffworkflow:preScript>DO1 = "Red"</spiffworkflow:preScript>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_18gbvtt</bpmn:incoming>
       <bpmn:outgoing>Flow_1kvu4mu</bpmn:outgoing>
@@ -385,10 +388,7 @@
         <bpmn:targetRef>DO1</bpmn:targetRef>
       </bpmn:dataOutputAssociation>
     </bpmn:manualTask>
-    <bpmn:endEvent id="Event_0jqx6cq">
-      <bpmn:incoming>Flow_0w1l15p</bpmn:incoming>
-    </bpmn:endEvent>
-    <bpmn:sequenceFlow id="Flow_0w1l15p" sourceRef="Activity_1ocfzii" targetRef="Event_0jqx6cq" />
+    <bpmn:sequenceFlow id="Flow_0w1l15p" sourceRef="Activity_1ocfzii" targetRef="Activity_02tft4w" />
     <bpmn:subProcess id="Activity_1ocfzii">
       <bpmn:incoming>Flow_1kvu4mu</bpmn:incoming>
       <bpmn:outgoing>Flow_0w1l15p</bpmn:outgoing>
@@ -445,9 +445,36 @@
       <bpmn:incoming>Flow_06ibn9g</bpmn:incoming>
       <bpmn:outgoing>Flow_1osso7l</bpmn:outgoing>
     </bpmn:manualTask>
-    <bpmn:dataObjectReference id="DO1" name="Data Object 1 Nsqgjx" dataObjectRef="DataObject_1nsqgjx" />
-    <bpmn:dataObject id="DataObject_1nsqgjx" name="Data Object 1 Nsqgjx" />
-    <bpmn:dataObjectReference id="DO1" name="Data Object 1 Nsqgjx" dataObjectRef="DataObject_1nsqgjx" />
+    <bpmn:dataObjectReference id="DO1" name="DO1" dataObjectRef="DO1" />
+    <bpmn:dataObject id="DO1" name="DO1" />
+    <bpmn:dataObjectReference id="DO1" name="DO1" dataObjectRef="DO1" />
+    <bpmn:endEvent id="Event_0jqx6cq">
+      <bpmn:incoming>Flow_0z91073</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_1h0g8ke" sourceRef="Activity_02tft4w" targetRef="Activity_0rp59y8" />
+    <bpmn:manualTask id="Activity_02tft4w" name="Manual Task">
+      <bpmn:extensionElements>
+        <spiffworkflow:preScript>DOval = DO1</spiffworkflow:preScript>
+        <spiffworkflow:instructionsForEndUser>Data Object Value = {{DOval}}</spiffworkflow:instructionsForEndUser>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0w1l15p</bpmn:incoming>
+      <bpmn:outgoing>Flow_1h0g8ke</bpmn:outgoing>
+      <bpmn:property id="Property_0ou7lxn" name="__targetRef_placeholder" />
+      <bpmn:dataInputAssociation id="DataInputAssociation_1pw9eiw">
+        <bpmn:sourceRef>DataObjectReference_0dw8zdu</bpmn:sourceRef>
+        <bpmn:targetRef>Property_0ou7lxn</bpmn:targetRef>
+      </bpmn:dataInputAssociation>
+    </bpmn:manualTask>
+    <bpmn:dataObjectReference id="DataObjectReference_0dw8zdu" name="DO1" dataObjectRef="DO1" />
+    <bpmn:dataObjectReference id="DO1" name="DO1" dataObjectRef="DO1" />
+    <bpmn:sequenceFlow id="Flow_0z91073" sourceRef="Activity_0rp59y8" targetRef="Event_0jqx6cq" />
+    <bpmn:businessRuleTask id="Activity_0rp59y8" name="Business Rule Task">
+      <bpmn:extensionElements>
+        <spiffworkflow:preScript>level="Low"</spiffworkflow:preScript>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1h0g8ke</bpmn:incoming>
+      <bpmn:outgoing>Flow_0z91073</bpmn:outgoing>
+    </bpmn:businessRuleTask>
   </bpmn:process>
   <bpmn:signal id="check_balance" name="check_balance">
     <bpmn:extensionElements>
@@ -566,9 +593,6 @@
       <bpmndi:BPMNShape id="Activity_0i58o6v_di" bpmnElement="Activity_15yuetc">
         <dc:Bounds x="2430" y="940" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_0jqx6cq_di" bpmnElement="Event_0jqx6cq">
-        <dc:Bounds x="1132" y="962" width="36" height="36" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_1d4ipwo_di" bpmnElement="Event_1d4ipwo">
         <dc:Bounds x="1802" y="1182" width="36" height="36" />
         <bpmndi:BPMNLabel>
@@ -579,11 +603,22 @@
         <dc:Bounds x="1640" y="1160" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0jqx6cq_di" bpmnElement="Event_0jqx6cq">
+        <dc:Bounds x="612" y="962" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1y9knrc_di" bpmnElement="Activity_02tft4w">
+        <dc:Bounds x="1320" y="940" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="DataObjectReference_03z8txs_di" bpmnElement="DO1">
-        <dc:Bounds x="2282" y="1205" width="36" height="50" />
+        <dc:Bounds x="2392" y="1205" width="36" height="50" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="2266" y="1262" width="68" height="27" />
+          <dc:Bounds x="2399" y="1262" width="23" height="14" />
         </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0rfrg6x_di" bpmnElement="Activity_0rp59y8">
+        <dc:Bounds x="1190" y="940" width="100" height="80" />
+        <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1p6wtv8_di" bpmnElement="Activity_12t2hwu" isExpanded="true">
         <dc:Bounds x="1500" y="351" width="710" height="279" />
@@ -912,7 +947,7 @@
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0w1l15p_di" bpmnElement="Flow_0w1l15p">
         <di:waypoint x="1480" y="980" />
-        <di:waypoint x="1168" y="980" />
+        <di:waypoint x="1420" y="980" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_06ibn9g_di" bpmnElement="Flow_06ibn9g">
         <di:waypoint x="1569" y="1138" />
@@ -923,9 +958,27 @@
         <di:waypoint x="1740" y="1200" />
         <di:waypoint x="1802" y="1200" />
       </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1h0g8ke_di" bpmnElement="Flow_1h0g8ke">
+        <di:waypoint x="1320" y="980" />
+        <di:waypoint x="1290" y="980" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="DataObjectReference_0dw8zdu_di" bpmnElement="DataObjectReference_0dw8zdu">
+        <dc:Bounds x="1462" y="1205" width="36" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1469" y="1262" width="23" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_0z91073_di" bpmnElement="Flow_0z91073">
+        <di:waypoint x="1190" y="980" />
+        <di:waypoint x="648" y="980" />
+      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="DataOutputAssociation_16dsylz_di" bpmnElement="DataOutputAssociation_16dsylz">
-        <di:waypoint x="2451" y="1020" />
-        <di:waypoint x="2316" y="1205" />
+        <di:waypoint x="2468" y="1020" />
+        <di:waypoint x="2415" y="1205" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DataInputAssociation_1pw9eiw_di" bpmnElement="DataInputAssociation_1pw9eiw">
+        <di:waypoint x="1468" y="1205" />
+        <di:waypoint x="1375" y="1020" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
