@@ -268,12 +268,16 @@
         <bpmn:outgoing>Flow_0vbzhdt</bpmn:outgoing>
       </bpmn:exclusiveGateway>
       <bpmn:sequenceFlow id="Flow_1011zzz" sourceRef="Activity_16gkhwv" targetRef="Gateway_0tp45t4" />
-      <bpmn:sequenceFlow id="Flow_1nydve7" sourceRef="Gateway_0tp45t4" targetRef="Event_0ji4n26" />
+      <bpmn:sequenceFlow id="Flow_1nydve7" sourceRef="Gateway_0tp45t4" targetRef="Event_0ji4n26">
+        <bpmn:conditionExpression>approved == True</bpmn:conditionExpression>
+      </bpmn:sequenceFlow>
       <bpmn:endEvent id="Event_0ji4n26" name="Approved">
         <bpmn:incoming>Flow_1nydve7</bpmn:incoming>
         <bpmn:terminateEventDefinition id="TerminateEventDefinition_083mfdt" />
       </bpmn:endEvent>
-      <bpmn:sequenceFlow id="Flow_0vbzhdt" sourceRef="Gateway_0tp45t4" targetRef="Event_1tjca2z" />
+      <bpmn:sequenceFlow id="Flow_0vbzhdt" sourceRef="Gateway_0tp45t4" targetRef="Event_1tjca2z">
+        <bpmn:conditionExpression>approved == False</bpmn:conditionExpression>
+      </bpmn:sequenceFlow>
       <bpmn:endEvent id="Event_1tjca2z" name="Rejected">
         <bpmn:incoming>Flow_0vbzhdt</bpmn:incoming>
         <bpmn:terminateEventDefinition id="TerminateEventDefinition_11u6swi" />
