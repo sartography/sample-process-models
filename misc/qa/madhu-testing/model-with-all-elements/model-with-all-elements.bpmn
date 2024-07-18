@@ -61,6 +61,7 @@
         <bpmn:flowNodeRef>Activity_0lcjnrs</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_03qzbkj</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Gateway_1jx9agh</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_0qbje6g</bpmn:flowNodeRef>
       </bpmn:lane>
     </bpmn:laneSet>
     <bpmn:startEvent id="StartEvent_1">
@@ -383,7 +384,7 @@
     <bpmn:sequenceFlow id="Flow_1osso7l" sourceRef="Activity_1w17168" targetRef="Event_1d4ipwo" />
     <bpmn:dataObjectReference id="DO1" name="DataObject1" dataObjectRef="DO1" />
     <bpmn:endEvent id="Event_0jqx6cq">
-      <bpmn:incoming>Flow_01zt4ht</bpmn:incoming>
+      <bpmn:incoming>Flow_06oexpt</bpmn:incoming>
     </bpmn:endEvent>
     <bpmn:sequenceFlow id="Flow_1h0g8ke" sourceRef="Activity_02tft4w" targetRef="Activity_0rp59y8" />
     <bpmn:dataObjectReference id="DataObjectReference_0dw8zdu" name="DataObject1" dataObjectRef="DO1" />
@@ -528,7 +529,7 @@
       <bpmn:incoming>Flow_186u7qc</bpmn:incoming>
       <bpmn:outgoing>Flow_1kol28a</bpmn:outgoing>
     </bpmn:manualTask>
-    <bpmn:sequenceFlow id="Flow_01zt4ht" sourceRef="Gateway_1jx9agh" targetRef="Event_0jqx6cq" />
+    <bpmn:sequenceFlow id="Flow_01zt4ht" sourceRef="Gateway_1jx9agh" targetRef="Activity_0qbje6g" />
     <bpmn:inclusiveGateway id="Gateway_1jx9agh">
       <bpmn:incoming>Flow_1520go3</bpmn:incoming>
       <bpmn:incoming>Flow_13apepk</bpmn:incoming>
@@ -537,6 +538,11 @@
     </bpmn:inclusiveGateway>
     <bpmn:sequenceFlow id="Flow_13apepk" sourceRef="Activity_0jqe03e" targetRef="Gateway_1jx9agh" />
     <bpmn:sequenceFlow id="Flow_1kol28a" sourceRef="Activity_03qzbkj" targetRef="Gateway_1jx9agh" />
+    <bpmn:sequenceFlow id="Flow_06oexpt" sourceRef="Activity_0qbje6g" targetRef="Event_0jqx6cq" />
+    <bpmn:callActivity id="Activity_0qbje6g" name="Call Activity with Data Input">
+      <bpmn:incoming>Flow_01zt4ht</bpmn:incoming>
+      <bpmn:outgoing>Flow_06oexpt</bpmn:outgoing>
+    </bpmn:callActivity>
   </bpmn:process>
   <bpmn:signal id="check_balance" name="check_balance">
     <bpmn:extensionElements>
@@ -706,6 +712,10 @@
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Gateway_163gfl9_di" bpmnElement="Gateway_1jx9agh">
         <dc:Bounds x="1095" y="955" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0zu594f_di" bpmnElement="Activity_0qbje6g">
+        <dc:Bounds x="960" y="940" width="100" height="80" />
+        <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1p6wtv8_di" bpmnElement="Activity_12t2hwu" isExpanded="true">
         <dc:Bounds x="1500" y="351" width="710" height="279" />
@@ -1080,7 +1090,7 @@
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_01zt4ht_di" bpmnElement="Flow_01zt4ht">
         <di:waypoint x="1095" y="980" />
-        <di:waypoint x="648" y="980" />
+        <di:waypoint x="1060" y="980" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_13apepk_di" bpmnElement="Flow_13apepk">
         <di:waypoint x="1200" y="860" />
@@ -1091,6 +1101,10 @@
         <di:waypoint x="1200" y="1100" />
         <di:waypoint x="1120" y="1100" />
         <di:waypoint x="1120" y="1005" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_06oexpt_di" bpmnElement="Flow_06oexpt">
+        <di:waypoint x="960" y="980" />
+        <di:waypoint x="648" y="980" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="DataOutputAssociation_16dsylz_di" bpmnElement="DataOutputAssociation_16dsylz">
         <di:waypoint x="2636" y="1020" />
