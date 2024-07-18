@@ -55,6 +55,7 @@
         <bpmn:flowNodeRef>Event_0jqx6cq</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_02tft4w</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_0rp59y8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_1hpllxu</bpmn:flowNodeRef>
       </bpmn:lane>
     </bpmn:laneSet>
     <bpmn:startEvent id="StartEvent_1">
@@ -380,7 +381,7 @@
     <bpmn:manualTask id="Activity_15yuetc" name="Manual Task">
       <bpmn:extensionElements>
         <spiffworkflow:instructionsForEndUser>Start of New Lane</spiffworkflow:instructionsForEndUser>
-        <spiffworkflow:preScript>DO1 = "Red"</spiffworkflow:preScript>
+        <spiffworkflow:preScript>DO1 = "Low"</spiffworkflow:preScript>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_18gbvtt</bpmn:incoming>
       <bpmn:outgoing>Flow_1kvu4mu</bpmn:outgoing>
@@ -447,7 +448,7 @@
     </bpmn:manualTask>
     <bpmn:dataObjectReference id="DO1" name="DataObject1" dataObjectRef="DO1" />
     <bpmn:endEvent id="Event_0jqx6cq">
-      <bpmn:incoming>Flow_0z91073</bpmn:incoming>
+      <bpmn:incoming>Flow_1f6tr1m</bpmn:incoming>
     </bpmn:endEvent>
     <bpmn:sequenceFlow id="Flow_1h0g8ke" sourceRef="Activity_02tft4w" targetRef="Activity_0rp59y8" />
     <bpmn:manualTask id="Activity_02tft4w" name="Manual Task">
@@ -464,16 +465,24 @@
       </bpmn:dataInputAssociation>
     </bpmn:manualTask>
     <bpmn:dataObjectReference id="DataObjectReference_0dw8zdu" name="DataObject1" dataObjectRef="DO1" />
-    <bpmn:sequenceFlow id="Flow_0z91073" sourceRef="Activity_0rp59y8" targetRef="Event_0jqx6cq" />
+    <bpmn:sequenceFlow id="Flow_0z91073" sourceRef="Activity_0rp59y8" targetRef="Activity_1hpllxu" />
     <bpmn:businessRuleTask id="Activity_0rp59y8" name="Business Rule Task">
       <bpmn:extensionElements>
-        <spiffworkflow:preScript>level="Low"</spiffworkflow:preScript>
+        <spiffworkflow:preScript>level=DOval</spiffworkflow:preScript>
         <spiffworkflow:calledDecisionId>warning_color1</spiffworkflow:calledDecisionId>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_1h0g8ke</bpmn:incoming>
       <bpmn:outgoing>Flow_0z91073</bpmn:outgoing>
     </bpmn:businessRuleTask>
     <bpmn:dataObject id="DO1" name="DataObject1" />
+    <bpmn:sequenceFlow id="Flow_1f6tr1m" sourceRef="Activity_1hpllxu" targetRef="Event_0jqx6cq" />
+    <bpmn:manualTask id="Activity_1hpllxu" name="Business Rule Task Data&#10;">
+      <bpmn:extensionElements>
+        <spiffworkflow:instructionsForEndUser>Business Rule Task Value = {{warning_color}}</spiffworkflow:instructionsForEndUser>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0z91073</bpmn:incoming>
+      <bpmn:outgoing>Flow_1f6tr1m</bpmn:outgoing>
+    </bpmn:manualTask>
   </bpmn:process>
   <bpmn:signal id="check_balance" name="check_balance">
     <bpmn:extensionElements>
@@ -584,6 +593,10 @@
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_14vd6wj_di" bpmnElement="Activity_0r04mc3">
         <dc:Bounds x="380" y="411" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1dmlyky_di" bpmnElement="Activity_1hpllxu">
+        <dc:Bounds x="1060" y="940" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1p6wtv8_di" bpmnElement="Activity_12t2hwu" isExpanded="true">
@@ -969,6 +982,10 @@
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0z91073_di" bpmnElement="Flow_0z91073">
         <di:waypoint x="1190" y="980" />
+        <di:waypoint x="1160" y="980" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1f6tr1m_di" bpmnElement="Flow_1f6tr1m">
+        <di:waypoint x="1060" y="980" />
         <di:waypoint x="648" y="980" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="DataOutputAssociation_16dsylz_di" bpmnElement="DataOutputAssociation_16dsylz">
