@@ -48,6 +48,7 @@
       </bpmn:lane>
       <bpmn:lane id="Lane_194pd0d" name="Tester">
         <bpmn:flowNodeRef>Activity_15yuetc</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Event_0jqx6cq</bpmn:flowNodeRef>
       </bpmn:lane>
     </bpmn:laneSet>
     <bpmn:startEvent id="StartEvent_1">
@@ -370,9 +371,17 @@ data: "Call Message Data"
       <bpmn:script>lane_owners = {"Tester": ["admin@spiffworkflow.org", "nelson@spiffworkflow.org"]}</bpmn:script>
     </bpmn:scriptTask>
     <bpmn:sequenceFlow id="Flow_18gbvtt" sourceRef="Activity_0mz4qjo" targetRef="Activity_15yuetc" />
-    <bpmn:task id="Activity_15yuetc">
+    <bpmn:manualTask id="Activity_15yuetc" name="Manual Task">
+      <bpmn:extensionElements>
+        <spiffworkflow:instructionsForEndUser>Start of New Lane</spiffworkflow:instructionsForEndUser>
+      </bpmn:extensionElements>
       <bpmn:incoming>Flow_18gbvtt</bpmn:incoming>
-    </bpmn:task>
+      <bpmn:outgoing>Flow_1kvu4mu</bpmn:outgoing>
+    </bpmn:manualTask>
+    <bpmn:sequenceFlow id="Flow_1kvu4mu" sourceRef="Activity_15yuetc" targetRef="Event_0jqx6cq" />
+    <bpmn:endEvent id="Event_0jqx6cq">
+      <bpmn:incoming>Flow_1kvu4mu</bpmn:incoming>
+    </bpmn:endEvent>
   </bpmn:process>
   <bpmn:signal id="check_balance" name="check_balance">
     <bpmn:extensionElements>
@@ -487,8 +496,11 @@ data: "Call Message Data"
       <bpmndi:BPMNShape id="Activity_1l725wg_di" bpmnElement="Activity_0mz4qjo">
         <dc:Bounds x="2430" y="620" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_15yuetc_di" bpmnElement="Activity_15yuetc">
+      <bpmndi:BPMNShape id="Activity_0i58o6v_di" bpmnElement="Activity_15yuetc">
         <dc:Bounds x="2430" y="820" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0jqx6cq_di" bpmnElement="Event_0jqx6cq">
+        <dc:Bounds x="1762" y="842" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1p6wtv8_di" bpmnElement="Activity_12t2hwu" isExpanded="true">
         <dc:Bounds x="1500" y="351" width="710" height="279" />
@@ -760,6 +772,10 @@ data: "Call Message Data"
       <bpmndi:BPMNEdge id="Flow_18gbvtt_di" bpmnElement="Flow_18gbvtt">
         <di:waypoint x="2480" y="700" />
         <di:waypoint x="2480" y="820" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1kvu4mu_di" bpmnElement="Flow_1kvu4mu">
+        <di:waypoint x="2430" y="860" />
+        <di:waypoint x="1798" y="860" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
