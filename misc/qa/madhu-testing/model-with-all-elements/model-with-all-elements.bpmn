@@ -397,7 +397,7 @@
         <bpmn:incoming>Flow_1l2ilww</bpmn:incoming>
         <bpmn:outgoing>Flow_0doxhx3</bpmn:outgoing>
       </bpmn:userTask>
-      <bpmn:exclusiveGateway id="Gateway_0vy50df">
+      <bpmn:exclusiveGateway id="Gateway_0vy50df" default="Flow_1peesee">
         <bpmn:incoming>Flow_0doxhx3</bpmn:incoming>
         <bpmn:outgoing>Flow_1peesee</bpmn:outgoing>
         <bpmn:outgoing>Flow_0bhp6tt</bpmn:outgoing>
@@ -408,7 +408,9 @@
         <bpmn:incoming>Flow_1peesee</bpmn:incoming>
         <bpmn:errorEventDefinition id="ErrorEventDefinition_0ecjldq" />
       </bpmn:endEvent>
-      <bpmn:sequenceFlow id="Flow_0bhp6tt" sourceRef="Gateway_0vy50df" targetRef="Activity_14peloi" />
+      <bpmn:sequenceFlow id="Flow_0bhp6tt" sourceRef="Gateway_0vy50df" targetRef="Activity_14peloi">
+        <bpmn:conditionExpression>approved == True</bpmn:conditionExpression>
+      </bpmn:sequenceFlow>
       <bpmn:manualTask id="Activity_14peloi" name="Request Approved">
         <bpmn:incoming>Flow_0bhp6tt</bpmn:incoming>
         <bpmn:outgoing>Flow_1ukv419</bpmn:outgoing>
