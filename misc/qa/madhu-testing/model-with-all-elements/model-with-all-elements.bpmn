@@ -21,6 +21,7 @@
         <bpmn:flowNodeRef>Gateway_1v7vc1z</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_0t6257a</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_1ul45i9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_05avaed</bpmn:flowNodeRef>
       </bpmn:lane>
     </bpmn:laneSet>
     <bpmn:startEvent id="StartEvent_1">
@@ -94,6 +95,7 @@
     <bpmn:exclusiveGateway id="Gateway_1v7vc1z">
       <bpmn:incoming>Flow_1ohb8ht</bpmn:incoming>
       <bpmn:outgoing>Flow_042vla2</bpmn:outgoing>
+      <bpmn:outgoing>Flow_1sl1a5o</bpmn:outgoing>
     </bpmn:exclusiveGateway>
     <bpmn:intermediateThrowEvent id="Event_0t6257a" name="Approve">
       <bpmn:incoming>Flow_1efovhl</bpmn:incoming>
@@ -123,6 +125,22 @@
     <bpmn:sequenceFlow id="Flow_0zg89xt" sourceRef="Event_0er19np" targetRef="Gateway_1y0gjbb" />
     <bpmn:sequenceFlow id="Flow_05xruvm" sourceRef="Event_0t6257a" targetRef="Gateway_1y0gjbb" />
     <bpmn:sequenceFlow id="Flow_1ohb8ht" sourceRef="Gateway_1y0gjbb" targetRef="Gateway_1v7vc1z" />
+    <bpmn:serviceTask id="Activity_05avaed" name="Get Github user">
+      <bpmn:extensionElements>
+        <spiffworkflow:serviceTaskOperator id="http/GetRequestV2" resultVariable="gtiResponse">
+          <spiffworkflow:parameters>
+            <spiffworkflow:parameter id="url" type="str" value="&#34;https://api.github.com/user&#34;" />
+            <spiffworkflow:parameter id="headers" type="any" value="{ &#34;Authorization&#34;: &#34;Bearer SPIFF_SECRET:github_oauth&#34; }" />
+            <spiffworkflow:parameter id="params" type="any" />
+            <spiffworkflow:parameter id="basic_auth_username" type="str" />
+            <spiffworkflow:parameter id="basic_auth_password" type="str" />
+            <spiffworkflow:parameter id="attempts" type="int" />
+          </spiffworkflow:parameters>
+        </spiffworkflow:serviceTaskOperator>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1sl1a5o</bpmn:incoming>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="Flow_1sl1a5o" sourceRef="Gateway_1v7vc1z" targetRef="Activity_05avaed" />
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_FormAndLane">
@@ -192,6 +210,10 @@
           <dc:Bounds x="-123" y="540" width="49" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1ir3y0q_di" bpmnElement="Activity_05avaed">
+        <dc:Bounds x="250" y="345" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_1msk5h9_di" bpmnElement="Flow_1msk5h9">
         <di:waypoint x="-354" y="184" />
         <di:waypoint x="-299" y="184" />
@@ -260,6 +282,10 @@
       <bpmndi:BPMNEdge id="Flow_1ohb8ht_di" bpmnElement="Flow_1ohb8ht">
         <di:waypoint x="126" y="385" />
         <di:waypoint x="156" y="385" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1sl1a5o_di" bpmnElement="Flow_1sl1a5o">
+        <di:waypoint x="206" y="385" />
+        <di:waypoint x="250" y="385" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
