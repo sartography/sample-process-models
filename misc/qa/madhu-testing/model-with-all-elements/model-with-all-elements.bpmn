@@ -188,9 +188,12 @@
       <bpmn:outgoing>Flow_1y73gxe</bpmn:outgoing>
     </bpmn:userTask>
     <bpmn:endEvent id="Event_1we66i8">
+      <bpmn:extensionElements>
+        <spiffworkflow:instructionsForEndUser>End Event Balance Check</spiffworkflow:instructionsForEndUser>
+      </bpmn:extensionElements>
       <bpmn:incoming>Flow_0pmggv3</bpmn:incoming>
     </bpmn:endEvent>
-    <bpmn:scriptTask id="Activity_1mr50zv">
+    <bpmn:scriptTask id="Activity_1mr50zv" name="Check Balance Script Task">
       <bpmn:incoming>Flow_0s317qk</bpmn:incoming>
       <bpmn:outgoing>Flow_0pmggv3</bpmn:outgoing>
     </bpmn:scriptTask>
@@ -199,8 +202,11 @@
       <bpmn:outgoing>Flow_10k41d8</bpmn:outgoing>
     </bpmn:scriptTask>
     <bpmn:boundaryEvent id="Event_148wg0d" attachedToRef="Activity_0fzxp68">
+      <bpmn:extensionElements>
+        <spiffworkflow:signalButtonLabel>Check Balance</spiffworkflow:signalButtonLabel>
+      </bpmn:extensionElements>
       <bpmn:outgoing>Flow_0s317qk</bpmn:outgoing>
-      <bpmn:signalEventDefinition id="SignalEventDefinition_1oj1kil" />
+      <bpmn:signalEventDefinition id="SignalEventDefinition_1oj1kil" signalRef="check_balance" />
     </bpmn:boundaryEvent>
     <bpmn:boundaryEvent id="Event_16y1ecr" attachedToRef="Activity_0fzxp68">
       <bpmn:outgoing>Flow_17x52pm</bpmn:outgoing>
@@ -277,7 +283,7 @@
         <bpmn:terminateEventDefinition id="TerminateEventDefinition_11u6swi" />
       </bpmn:endEvent>
     </bpmn:subProcess>
-    <bpmn:callActivity id="Activity_0tbk5h1">
+    <bpmn:callActivity id="Activity_0tbk5h1" name="Pre-Script Post-Script Process" calledElement="Process_unit_test_pre_scripts_post_scripts_for_tasks_mg2fcs0">
       <bpmn:incoming>Flow_1y73gxe</bpmn:incoming>
       <bpmn:outgoing>Flow_0v4e3o3</bpmn:outgoing>
     </bpmn:callActivity>
@@ -326,6 +332,11 @@
       <bpmn:outgoing>Flow_0q3mz2i</bpmn:outgoing>
     </bpmn:parallelGateway>
   </bpmn:process>
+  <bpmn:signal id="check_balance" name="check_balance">
+    <bpmn:extensionElements>
+      <spiffworkflow:variableName>checkbalance</spiffworkflow:variableName>
+    </bpmn:extensionElements>
+  </bpmn:signal>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_FormAndLane">
       <bpmndi:BPMNShape id="Participant_1df0bwy_di" bpmnElement="Participant_1df0bwy" isHorizontal="true">
@@ -436,6 +447,7 @@
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1hzk7lv_di" bpmnElement="Activity_1mr50zv">
         <dc:Bounds x="1240" y="561" width="100" height="80" />
+        <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_14vd6wj_di" bpmnElement="Activity_0r04mc3">
         <dc:Bounds x="380" y="411" width="100" height="80" />
@@ -493,6 +505,7 @@
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="Activity_1wfldjw_di" bpmnElement="Activity_0tbk5h1">
         <dc:Bounds x="1340" y="411" width="100" height="80" />
+        <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0eh2zfi_di" bpmnElement="Activity_0456jk8">
         <dc:Bounds x="950" y="311" width="100" height="80" />
