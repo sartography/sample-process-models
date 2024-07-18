@@ -148,7 +148,7 @@
       <bpmn:outgoing>Flow_1xlr0t8</bpmn:outgoing>
       <bpmn:outgoing>Flow_0mushry</bpmn:outgoing>
     </bpmn:parallelGateway>
-    <bpmn:intermediateThrowEvent id="Event_0137ppy">
+    <bpmn:intermediateThrowEvent id="Event_0137ppy" name="Manual Task Call Activity Completed">
       <bpmn:incoming>Flow_1ym2u47</bpmn:incoming>
       <bpmn:outgoing>Flow_1rm6o2k</bpmn:outgoing>
     </bpmn:intermediateThrowEvent>
@@ -160,11 +160,21 @@
       <bpmn:incoming>Flow_15tn94j</bpmn:incoming>
       <bpmn:outgoing>Flow_1ym2u47</bpmn:outgoing>
     </bpmn:callActivity>
-    <bpmn:manualTask id="Activity_1rp51rg">
+    <bpmn:manualTask id="Activity_1rp51rg" name="Show data from service task">
+      <bpmn:extensionElements>
+        <spiffworkflow:instructionsForEndUser>End Service Task Unit Test. Bamboo User : {{bamboo_get_employee.body}}</spiffworkflow:instructionsForEndUser>
+      </bpmn:extensionElements>
       <bpmn:incoming>Flow_0xw9c77</bpmn:incoming>
       <bpmn:outgoing>Flow_1bjanul</bpmn:outgoing>
     </bpmn:manualTask>
-    <bpmn:userTask id="Activity_1ga06pc">
+    <bpmn:userTask id="Activity_1ga06pc" name="User Task ">
+      <bpmn:extensionElements>
+        <spiffworkflow:instructionsForEndUser />
+        <spiffworkflow:properties>
+          <spiffworkflow:property name="formJsonSchemaFilename" value="get-name-schema.json" />
+          <spiffworkflow:property name="formUiSchemaFilename" value="get-name-uischema.json" />
+        </spiffworkflow:properties>
+      </bpmn:extensionElements>
       <bpmn:incoming>Flow_0mushry</bpmn:incoming>
       <bpmn:outgoing>Flow_15tn94j</bpmn:outgoing>
     </bpmn:userTask>
@@ -269,6 +279,23 @@
     <bpmn:subProcess id="Activity_0456jk8">
       <bpmn:incoming>Flow_1bjanul</bpmn:incoming>
       <bpmn:outgoing>Flow_1w3zmqc</bpmn:outgoing>
+      <bpmn:startEvent id="Event_1qf204v">
+        <bpmn:outgoing>Flow_0vbmtf8</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:sequenceFlow id="Flow_0vbmtf8" sourceRef="Event_1qf204v" targetRef="Activity_1jw2oxp" />
+      <bpmn:sequenceFlow id="Flow_0jjowjn" sourceRef="Activity_1jw2oxp" targetRef="Activity_14xdscs" />
+      <bpmn:endEvent id="Event_14ixh7z">
+        <bpmn:incoming>Flow_1v958bw</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:sequenceFlow id="Flow_1v958bw" sourceRef="Activity_14xdscs" targetRef="Event_14ixh7z" />
+      <bpmn:manualTask id="Activity_1jw2oxp" name="Manual Task 1">
+        <bpmn:incoming>Flow_0vbmtf8</bpmn:incoming>
+        <bpmn:outgoing>Flow_0jjowjn</bpmn:outgoing>
+      </bpmn:manualTask>
+      <bpmn:manualTask id="Activity_14xdscs" name="Manual Task 2">
+        <bpmn:incoming>Flow_0jjowjn</bpmn:incoming>
+        <bpmn:outgoing>Flow_1v958bw</bpmn:outgoing>
+      </bpmn:manualTask>
     </bpmn:subProcess>
     <bpmn:boundaryEvent id="Event_0a7j0za" attachedToRef="Activity_12t2hwu">
       <bpmn:escalationEventDefinition id="EscalationEventDefinition_1pim0qt" />
@@ -375,6 +402,9 @@
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_0137ppy_di" bpmnElement="Event_0137ppy">
         <dc:Bounds x="952" y="543" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="929" y="586" width="85" height="40" />
+        </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1cah2ut_di" bpmnElement="Activity_015fl8l">
         <dc:Bounds x="630" y="311" width="100" height="80" />
@@ -386,9 +416,11 @@
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_16nsn1d_di" bpmnElement="Activity_1rp51rg">
         <dc:Bounds x="790" y="311" width="100" height="80" />
+        <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0mae3xq_di" bpmnElement="Activity_1ga06pc">
         <dc:Bounds x="630" y="521" width="100" height="80" />
+        <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0aqqcjl_di" bpmnElement="Activity_0fzxp68">
         <dc:Bounds x="1190" y="411" width="100" height="80" />
@@ -640,6 +672,32 @@
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1b0ijqs">
-    <bpmndi:BPMNPlane id="BPMNPlane_18vtbsp" bpmnElement="Activity_0456jk8" />
+    <bpmndi:BPMNPlane id="BPMNPlane_18vtbsp" bpmnElement="Activity_0456jk8">
+      <bpmndi:BPMNShape id="Event_1qf204v_di" bpmnElement="Event_1qf204v">
+        <dc:Bounds x="252" y="262" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_14ixh7z_di" bpmnElement="Event_14ixh7z">
+        <dc:Bounds x="662" y="262" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0jc7h11_di" bpmnElement="Activity_1jw2oxp">
+        <dc:Bounds x="340" y="240" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0dxf3tl_di" bpmnElement="Activity_14xdscs">
+        <dc:Bounds x="500" y="240" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_0vbmtf8_di" bpmnElement="Flow_0vbmtf8">
+        <di:waypoint x="288" y="280" />
+        <di:waypoint x="340" y="280" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0jjowjn_di" bpmnElement="Flow_0jjowjn">
+        <di:waypoint x="440" y="280" />
+        <di:waypoint x="500" y="280" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1v958bw_di" bpmnElement="Flow_1v958bw">
+        <di:waypoint x="600" y="280" />
+        <di:waypoint x="662" y="280" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
 </bpmn:definitions>
