@@ -44,6 +44,7 @@
         <bpmn:flowNodeRef>Event_16y1ecr</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_148wg0d</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_0mz4qjo</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_1rp51rg</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_194pd0d" name="Tester">
         <bpmn:flowNodeRef>Activity_15yuetc</bpmn:flowNodeRef>
@@ -234,7 +235,7 @@
     <bpmn:sequenceFlow id="Flow_1rm6o2k" sourceRef="Event_0137ppy" targetRef="Gateway_00q74af" />
     <bpmn:sequenceFlow id="Flow_0q3mz2i" sourceRef="Gateway_00q74af" targetRef="Activity_0fzxp68" />
     <bpmn:sequenceFlow id="Flow_1ym2u47" sourceRef="Activity_1mz10nm" targetRef="Event_0137ppy" />
-    <bpmn:sequenceFlow id="Flow_0xw9c77" sourceRef="Activity_015fl8l" targetRef="Activity_0456jk8" />
+    <bpmn:sequenceFlow id="Flow_0xw9c77" sourceRef="Activity_015fl8l" targetRef="Activity_1rp51rg" />
     <bpmn:sequenceFlow id="Flow_15tn94j" sourceRef="Activity_1ga06pc" targetRef="Activity_1mz10nm" />
     <bpmn:sequenceFlow id="Flow_1y73gxe" sourceRef="Activity_0fzxp68" targetRef="Activity_0tbk5h1" />
     <bpmn:sequenceFlow id="Flow_0pmggv3" sourceRef="Activity_1mr50zv" targetRef="Event_1we66i8" />
@@ -284,7 +285,7 @@
       </bpmn:endEvent>
     </bpmn:subProcess>
     <bpmn:subProcess id="Activity_0456jk8" name="Collapsed Sub Proc Manual Task ">
-      <bpmn:incoming>Flow_0xw9c77</bpmn:incoming>
+      <bpmn:incoming>Flow_1bjanul</bpmn:incoming>
       <bpmn:outgoing>Flow_1w3zmqc</bpmn:outgoing>
       <bpmn:startEvent id="Event_1qf204v">
         <bpmn:outgoing>Flow_0vbmtf8</bpmn:outgoing>
@@ -548,6 +549,14 @@ Coke = {{coke}}</spiffworkflow:instructionsForEndUser>
     <bpmn:endEvent id="Event_0jqx6cq">
       <bpmn:incoming>Flow_1q6ikmu</bpmn:incoming>
     </bpmn:endEvent>
+    <bpmn:manualTask id="Activity_1rp51rg" name="Show data from service task">
+      <bpmn:extensionElements>
+        <spiffworkflow:instructionsForEndUser>End Service Task Unit Test. Bamboo User : {{bamboo_get_employee.body}}</spiffworkflow:instructionsForEndUser>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0xw9c77</bpmn:incoming>
+      <bpmn:outgoing>Flow_1bjanul</bpmn:outgoing>
+    </bpmn:manualTask>
+    <bpmn:sequenceFlow id="Flow_1bjanul" sourceRef="Activity_1rp51rg" targetRef="Activity_0456jk8" />
   </bpmn:process>
   <bpmn:signal id="check_balance" name="check_balance">
     <bpmn:extensionElements>
@@ -628,6 +637,10 @@ Coke = {{coke}}</spiffworkflow:instructionsForEndUser>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1vtemif_di" bpmnElement="Activity_1mz10nm">
         <dc:Bounds x="790" y="521" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_16nsn1d_di" bpmnElement="Activity_1rp51rg">
+        <dc:Bounds x="790" y="311" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0mae3xq_di" bpmnElement="Activity_1ga06pc">
@@ -996,11 +1009,15 @@ Coke = {{coke}}</spiffworkflow:instructionsForEndUser>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0xw9c77_di" bpmnElement="Flow_0xw9c77">
         <di:waypoint x="730" y="351" />
-        <di:waypoint x="950" y="351" />
+        <di:waypoint x="790" y="351" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_15tn94j_di" bpmnElement="Flow_15tn94j">
         <di:waypoint x="730" y="561" />
         <di:waypoint x="790" y="561" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1bjanul_di" bpmnElement="Flow_1bjanul">
+        <di:waypoint x="890" y="351" />
+        <di:waypoint x="950" y="351" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1y73gxe_di" bpmnElement="Flow_1y73gxe">
         <di:waypoint x="1290" y="451" />
