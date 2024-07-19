@@ -41,13 +41,26 @@
       <bpmn:outgoing>Flow_0bozrpx</bpmn:outgoing>
       <bpmn:errorEventDefinition id="ErrorEventDefinition_0s8xzf7" errorRef="Error1" />
     </bpmn:boundaryEvent>
-    <bpmn:manualTask id="Manual_Task2" name="Manual Task 2">
+    <bpmn:manualTask id="Manual_Task2" name="Error 1">
       <bpmn:extensionElements>
         <spiffworkflow:instructionsForEndUser>Payload : {{msg1}}</spiffworkflow:instructionsForEndUser>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_0bozrpx</bpmn:incoming>
       <bpmn:outgoing>Flow_157odr8</bpmn:outgoing>
     </bpmn:manualTask>
+    <bpmn:sequenceFlow id="Flow_06mf600" sourceRef="Event_1ft4eru" targetRef="Activity_0aqtg3h" />
+    <bpmn:endEvent id="Event_1vhfa2q">
+      <bpmn:incoming>Flow_1sn7525</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_1sn7525" sourceRef="Activity_0aqtg3h" targetRef="Event_1vhfa2q" />
+    <bpmn:manualTask id="Activity_0aqtg3h" name="Error 2">
+      <bpmn:incoming>Flow_06mf600</bpmn:incoming>
+      <bpmn:outgoing>Flow_1sn7525</bpmn:outgoing>
+    </bpmn:manualTask>
+    <bpmn:boundaryEvent id="Event_1ft4eru" attachedToRef="Activity_0n4e0tn">
+      <bpmn:outgoing>Flow_06mf600</bpmn:outgoing>
+      <bpmn:errorEventDefinition id="ErrorEventDefinition_1vjyfiv" errorRef="Error_2" />
+    </bpmn:boundaryEvent>
   </bpmn:process>
   <bpmn:error id="Error1" name="Error1" errorCode="Err1">
     <bpmn:extensionElements>
@@ -57,10 +70,18 @@
       <spiffworkflow:variableName>msg1</spiffworkflow:variableName>
     </bpmn:extensionElements>
   </bpmn:error>
+  <bpmn:error id="Error_2" name="Error_2" />
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Test_Error_End_Event">
       <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
         <dc:Bounds x="-138" y="122" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1vhfa2q_di" bpmnElement="Event_1vhfa2q">
+        <dc:Bounds x="132" y="382" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_00i4yti_di" bpmnElement="Activity_0aqtg3h">
+        <dc:Bounds x="-20" y="360" width="100" height="80" />
+        <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0n4e0tn_di" bpmnElement="Activity_0n4e0tn" isExpanded="true">
         <dc:Bounds x="-40" y="40" width="350" height="200" />
@@ -102,6 +123,9 @@
       <bpmndi:BPMNShape id="Event_10oux6f_di" bpmnElement="Event_0c5f8ir">
         <dc:Bounds x="122" y="222" width="36" height="36" />
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0b56p6e_di" bpmnElement="Event_1ft4eru">
+        <dc:Bounds x="0" y="222" width="36" height="36" />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_18ukgzd_di" bpmnElement="Flow_18ukgzd">
         <di:waypoint x="-102" y="140" />
         <di:waypoint x="-40" y="140" />
@@ -118,6 +142,16 @@
       <bpmndi:BPMNEdge id="Flow_157odr8_di" bpmnElement="Flow_157odr8">
         <di:waypoint x="310" y="320" />
         <di:waypoint x="372" y="320" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_06mf600_di" bpmnElement="Flow_06mf600">
+        <di:waypoint x="18" y="258" />
+        <di:waypoint x="18" y="309" />
+        <di:waypoint x="30" y="309" />
+        <di:waypoint x="30" y="360" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1sn7525_di" bpmnElement="Flow_1sn7525">
+        <di:waypoint x="80" y="400" />
+        <di:waypoint x="132" y="400" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
