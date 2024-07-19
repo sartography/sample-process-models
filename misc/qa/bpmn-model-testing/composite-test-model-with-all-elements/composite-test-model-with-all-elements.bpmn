@@ -46,7 +46,6 @@
         <bpmn:flowNodeRef>Event_16y1ecr</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_148wg0d</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_1ul45i9</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Activity_12kkvg2</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_194pd0d" name="Tester">
         <bpmn:flowNodeRef>Activity_15yuetc</bpmn:flowNodeRef>
@@ -124,7 +123,7 @@
           <spiffworkflow:property name="formUiSchemaFilename" value="review-form-uischema.json" />
         </spiffworkflow:properties>
       </bpmn:extensionElements>
-      <bpmn:incoming>Flow_069gfag</bpmn:incoming>
+      <bpmn:incoming>Flow_1xtmg0t</bpmn:incoming>
       <bpmn:outgoing>Flow_10rvmdc</bpmn:outgoing>
     </bpmn:userTask>
     <bpmn:intermediateThrowEvent id="Event_0er19np" name="Reject">
@@ -236,7 +235,7 @@
     <bpmn:sequenceFlow id="Flow_042vla2" sourceRef="Gateway_1v7vc1z" targetRef="Gateway_1px4jo5">
       <bpmn:conditionExpression>approval == "Needmoreinfo"</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
-    <bpmn:sequenceFlow id="Flow_1xtmg0t" sourceRef="Activity_GetMoreData" targetRef="Activity_12kkvg2" />
+    <bpmn:sequenceFlow id="Flow_1xtmg0t" sourceRef="Activity_GetMoreData" targetRef="Activity_Review" />
     <bpmn:sequenceFlow id="Flow_10rvmdc" sourceRef="Activity_Review" targetRef="Gateway_1chm5qn" />
     <bpmn:sequenceFlow id="Flow_1efovhl" sourceRef="Gateway_1chm5qn" targetRef="Event_0t6257a">
       <bpmn:conditionExpression>approval == "Approve"</bpmn:conditionExpression>
@@ -852,11 +851,6 @@ Data outa = {{DataOuta}}</spiffworkflow:instructionsForEndUser>
     <bpmn:endEvent id="Event_1ul45i9" name="Cancelled&#10;">
       <bpmn:incoming>Flow_07dk6k2</bpmn:incoming>
     </bpmn:endEvent>
-    <bpmn:sequenceFlow id="Flow_069gfag" sourceRef="Activity_12kkvg2" targetRef="Activity_Review" />
-    <bpmn:manualTask id="Activity_12kkvg2" name="New Task">
-      <bpmn:incoming>Flow_1xtmg0t</bpmn:incoming>
-      <bpmn:outgoing>Flow_069gfag</bpmn:outgoing>
-    </bpmn:manualTask>
   </bpmn:process>
   <bpmn:signal id="check_balance" name="check_balance">
     <bpmn:extensionElements>
@@ -958,16 +952,6 @@ Data outa = {{DataOuta}}</spiffworkflow:instructionsForEndUser>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_14vd6wj_di" bpmnElement="Activity_0r04mc3">
         <dc:Bounds x="380" y="411" width="100" height="80" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_1ul45i9_di" bpmnElement="Event_1ul45i9">
-        <dc:Bounds x="-109" y="594" width="36" height="36" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="-115" y="637" width="49" height="27" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1co7lpe_di" bpmnElement="Activity_12kkvg2">
-        <dc:Bounds x="-330" y="530" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1p6wtv8_di" bpmnElement="Activity_12t2hwu" isExpanded="true">
@@ -1367,6 +1351,12 @@ Data outa = {{DataOuta}}</spiffworkflow:instructionsForEndUser>
       <bpmndi:BPMNShape id="Activity_1oke3oj_di" bpmnElement="Activity_0illo4l">
         <dc:Bounds x="1150" y="1310" width="100" height="80" />
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1ul45i9_di" bpmnElement="Event_1ul45i9">
+        <dc:Bounds x="-109" y="594" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="-115" y="637" width="49" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_0j1okk8_di" bpmnElement="Event_12g2sx5">
         <dc:Bounds x="82" y="1512" width="36" height="36" />
       </bpmndi:BPMNShape>
@@ -1409,10 +1399,8 @@ Data outa = {{DataOuta}}</spiffworkflow:instructionsForEndUser>
         <di:waypoint x="-140" y="170" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1xtmg0t_di" bpmnElement="Flow_1xtmg0t">
-        <di:waypoint x="-349" y="491" />
-        <di:waypoint x="-349" y="511" />
-        <di:waypoint x="-310" y="511" />
-        <di:waypoint x="-310" y="530" />
+        <di:waypoint x="-299" y="460" />
+        <di:waypoint x="-249" y="460" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_10rvmdc_di" bpmnElement="Flow_10rvmdc">
         <di:waypoint x="-149" y="451" />
@@ -1731,11 +1719,6 @@ Data outa = {{DataOuta}}</spiffworkflow:instructionsForEndUser>
       <bpmndi:BPMNEdge id="Flow_15rbuvl_di" bpmnElement="Flow_15rbuvl">
         <di:waypoint x="950" y="1350" />
         <di:waypoint x="1150" y="1350" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_069gfag_di" bpmnElement="Flow_069gfag">
-        <di:waypoint x="-230" y="570" />
-        <di:waypoint x="-199" y="570" />
-        <di:waypoint x="-199" y="491" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="DataOutputAssociation_16dsylz_di" bpmnElement="DataOutputAssociation_16dsylz">
         <di:waypoint x="2636" y="1020" />
