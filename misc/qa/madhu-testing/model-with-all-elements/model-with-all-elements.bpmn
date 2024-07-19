@@ -291,14 +291,22 @@
         <bpmn:outgoing>Flow_0vbmtf8</bpmn:outgoing>
       </bpmn:startEvent>
       <bpmn:sequenceFlow id="Flow_0vbmtf8" sourceRef="Event_1qf204v" targetRef="Activity_1jw2oxp" />
-      <bpmn:sequenceFlow id="Flow_0jjowjn" sourceRef="Activity_1jw2oxp" targetRef="Event_14ixh7z" />
+      <bpmn:sequenceFlow id="Flow_0jjowjn" sourceRef="Activity_1jw2oxp" targetRef="Activity_14xdscs" />
       <bpmn:endEvent id="Event_14ixh7z">
-        <bpmn:incoming>Flow_0jjowjn</bpmn:incoming>
+        <bpmn:incoming>Flow_1v958bw</bpmn:incoming>
       </bpmn:endEvent>
       <bpmn:manualTask id="Activity_1jw2oxp" name="Manual Task 1">
         <bpmn:incoming>Flow_0vbmtf8</bpmn:incoming>
         <bpmn:outgoing>Flow_0jjowjn</bpmn:outgoing>
       </bpmn:manualTask>
+      <bpmn:manualTask id="Activity_14xdscs" name="Manual Task 2">
+        <bpmn:extensionElements>
+          <spiffworkflow:instructionsForEndUser>Hello from inside collpased sub process</spiffworkflow:instructionsForEndUser>
+        </bpmn:extensionElements>
+        <bpmn:incoming>Flow_0jjowjn</bpmn:incoming>
+        <bpmn:outgoing>Flow_1v958bw</bpmn:outgoing>
+      </bpmn:manualTask>
+      <bpmn:sequenceFlow id="Flow_1v958bw" sourceRef="Activity_14xdscs" targetRef="Event_14ixh7z" />
     </bpmn:subProcess>
     <bpmn:sequenceFlow id="Flow_1ov6487" sourceRef="Activity_12t2hwu" targetRef="Activity_06o6vbf" />
     <bpmn:manualTask id="Activity_06o6vbf" name="Manual Task">
@@ -1154,12 +1162,19 @@ Coke = {{coke}}</spiffworkflow:instructionsForEndUser>
         <dc:Bounds x="340" y="240" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0dxf3tl_di" bpmnElement="Activity_14xdscs">
+        <dc:Bounds x="500" y="240" width="100" height="80" />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_0vbmtf8_di" bpmnElement="Flow_0vbmtf8">
         <di:waypoint x="288" y="280" />
         <di:waypoint x="340" y="280" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0jjowjn_di" bpmnElement="Flow_0jjowjn">
         <di:waypoint x="440" y="280" />
+        <di:waypoint x="500" y="280" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1v958bw_di" bpmnElement="Flow_1v958bw">
+        <di:waypoint x="600" y="280" />
         <di:waypoint x="662" y="280" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
