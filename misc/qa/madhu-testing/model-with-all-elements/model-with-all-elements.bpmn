@@ -13,7 +13,6 @@
         <bpmn:flowNodeRef>Gateway_1px4jo5</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_Reviewer" name="Reviewer">
-        <bpmn:flowNodeRef>Activity_GetMoreData</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Gateway_1chm5qn</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_0t6257a</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_Review</bpmn:flowNodeRef>
@@ -74,17 +73,6 @@
       <bpmn:outgoing>Flow_1loqmjv</bpmn:outgoing>
       <bpmn:script>lane_owners = {"Reviewer": ["admin@spiffworkflow.org", "nelson@spiffworkflow.org"]}</bpmn:script>
     </bpmn:scriptTask>
-    <bpmn:manualTask id="Activity_GetMoreData" name="Show Data">
-      <bpmn:extensionElements>
-        <spiffworkflow:properties>
-          <spiffworkflow:property name="formJsonSchemaFilename" value="get_more_data_form.json" />
-        </spiffworkflow:properties>
-        <spiffworkflow:preScript>data = {"item_id": itemId, "item_desc": itemName}</spiffworkflow:preScript>
-        <spiffworkflow:instructionsForEndUser>User entered data : {{data}}</spiffworkflow:instructionsForEndUser>
-      </bpmn:extensionElements>
-      <bpmn:incoming>Flow_0c8hg1n</bpmn:incoming>
-      <bpmn:outgoing>Flow_1xtmg0t</bpmn:outgoing>
-    </bpmn:manualTask>
     <bpmn:exclusiveGateway id="Gateway_1chm5qn" default="Flow_07dk6k2">
       <bpmn:incoming>Flow_10rvmdc</bpmn:incoming>
       <bpmn:outgoing>Flow_1efovhl</bpmn:outgoing>
@@ -104,7 +92,7 @@
           <spiffworkflow:property name="formUiSchemaFilename" value="review-form-uischema.json" />
         </spiffworkflow:properties>
       </bpmn:extensionElements>
-      <bpmn:incoming>Flow_1xtmg0t</bpmn:incoming>
+      <bpmn:incoming>Flow_0c8hg1n</bpmn:incoming>
       <bpmn:outgoing>Flow_10rvmdc</bpmn:outgoing>
     </bpmn:userTask>
     <bpmn:intermediateThrowEvent id="Event_0er19np" name="Reject">
@@ -205,11 +193,10 @@
     </bpmn:boundaryEvent>
     <bpmn:sequenceFlow id="Flow_1msk5h9" sourceRef="StartEvent_1" targetRef="Activity_GetReviewers" />
     <bpmn:sequenceFlow id="Flow_1loqmjv" sourceRef="Activity_GetReviewers" targetRef="Gateway_1px4jo5" />
-    <bpmn:sequenceFlow id="Flow_0c8hg1n" sourceRef="Activity_GetData" targetRef="Activity_GetMoreData" />
+    <bpmn:sequenceFlow id="Flow_0c8hg1n" sourceRef="Activity_GetData" targetRef="Activity_Review" />
     <bpmn:sequenceFlow id="Flow_042vla2" sourceRef="Gateway_1v7vc1z" targetRef="Gateway_1px4jo5">
       <bpmn:conditionExpression>approval == "Needmoreinfo"</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
-    <bpmn:sequenceFlow id="Flow_1xtmg0t" sourceRef="Activity_GetMoreData" targetRef="Activity_Review" />
     <bpmn:sequenceFlow id="Flow_10rvmdc" sourceRef="Activity_Review" targetRef="Gateway_1chm5qn" />
     <bpmn:sequenceFlow id="Flow_1efovhl" sourceRef="Gateway_1chm5qn" targetRef="Event_0t6257a">
       <bpmn:conditionExpression>approval == "Approve"</bpmn:conditionExpression>
@@ -592,10 +579,6 @@ Coke = {{coke}}</spiffworkflow:instructionsForEndUser>
         <dc:Bounds x="-329" y="155" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_16xsdrr_di" bpmnElement="Activity_GetMoreData">
-        <dc:Bounds x="-399" y="411" width="100" height="80" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Gateway_1chm5qn_di" bpmnElement="Gateway_1chm5qn" isMarkerVisible="true">
         <dc:Bounds x="-116" y="426" width="50" height="50" />
       </bpmndi:BPMNShape>
@@ -640,10 +623,6 @@ Coke = {{coke}}</spiffworkflow:instructionsForEndUser>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1vtemif_di" bpmnElement="Activity_1mz10nm">
         <dc:Bounds x="790" y="521" width="100" height="80" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_16nsn1d_di" bpmnElement="Activity_1rp51rg">
-        <dc:Bounds x="790" y="311" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0mae3xq_di" bpmnElement="Activity_1ga06pc">
@@ -885,6 +864,10 @@ Coke = {{coke}}</spiffworkflow:instructionsForEndUser>
       <bpmndi:BPMNShape id="Event_0jqx6cq_di" bpmnElement="Event_0jqx6cq">
         <dc:Bounds x="462" y="962" width="36" height="36" />
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_16nsn1d_di" bpmnElement="Activity_1rp51rg">
+        <dc:Bounds x="790" y="311" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_0oiewv3_di" bpmnElement="Event_098jtyz">
         <dc:Bounds x="1921" y="1102" width="36" height="36" />
       </bpmndi:BPMNShape>
@@ -909,17 +892,14 @@ Coke = {{coke}}</spiffworkflow:instructionsForEndUser>
         <di:waypoint x="-10" y="235" />
         <di:waypoint x="-10" y="351" />
         <di:waypoint x="-349" y="351" />
-        <di:waypoint x="-349" y="411" />
+        <di:waypoint x="-349" y="451" />
+        <di:waypoint x="-249" y="451" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_042vla2_di" bpmnElement="Flow_042vla2">
         <di:waypoint x="151" y="426" />
         <di:waypoint x="151" y="120" />
         <di:waypoint x="-150" y="120" />
         <di:waypoint x="-150" y="170" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_1xtmg0t_di" bpmnElement="Flow_1xtmg0t">
-        <di:waypoint x="-299" y="451" />
-        <di:waypoint x="-249" y="451" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_10rvmdc_di" bpmnElement="Flow_10rvmdc">
         <di:waypoint x="-149" y="451" />
@@ -1017,10 +997,6 @@ Coke = {{coke}}</spiffworkflow:instructionsForEndUser>
       <bpmndi:BPMNEdge id="Flow_15tn94j_di" bpmnElement="Flow_15tn94j">
         <di:waypoint x="730" y="561" />
         <di:waypoint x="790" y="561" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_1bjanul_di" bpmnElement="Flow_1bjanul">
-        <di:waypoint x="890" y="351" />
-        <di:waypoint x="950" y="351" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1y73gxe_di" bpmnElement="Flow_1y73gxe">
         <di:waypoint x="1290" y="451" />
@@ -1139,6 +1115,10 @@ Coke = {{coke}}</spiffworkflow:instructionsForEndUser>
       <bpmndi:BPMNEdge id="Flow_055r1a4_di" bpmnElement="Flow_055r1a4">
         <di:waypoint x="-125" y="195" />
         <di:waypoint x="-60" y="195" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1bjanul_di" bpmnElement="Flow_1bjanul">
+        <di:waypoint x="890" y="351" />
+        <di:waypoint x="950" y="351" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="DataOutputAssociation_16dsylz_di" bpmnElement="DataOutputAssociation_16dsylz">
         <di:waypoint x="2636" y="1020" />
