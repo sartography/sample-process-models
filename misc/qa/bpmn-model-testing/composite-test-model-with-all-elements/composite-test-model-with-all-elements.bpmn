@@ -77,7 +77,6 @@
         <bpmn:flowNodeRef>Event_1gafp3e</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_0mz4qjo</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_049sh8c</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Activity_06o6vbf</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_1r30e70</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_1ul45i9</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_103elga</bpmn:flowNodeRef>
@@ -86,6 +85,7 @@
         <bpmn:flowNodeRef>Event_0a7j0za</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_16y1ecr</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_148wg0d</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_06o6vbf</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_Initiator">
         <bpmn:flowNodeRef>StartEvent_1</bpmn:flowNodeRef>
@@ -423,14 +423,6 @@ Coke = {{coke}}</spiffworkflow:instructionsForEndUser>
       <bpmn:incoming>Flow_1l4zzex</bpmn:incoming>
       <bpmn:outgoing>Flow_1azlgvj</bpmn:outgoing>
     </bpmn:sendTask>
-    <bpmn:manualTask id="Activity_06o6vbf" name="Manual Task">
-      <bpmn:extensionElements>
-        <spiffworkflow:instructionsForEndUser />
-      </bpmn:extensionElements>
-      <bpmn:incoming>Flow_1ov6487</bpmn:incoming>
-      <bpmn:outgoing>Flow_11c4e8y</bpmn:outgoing>
-      <bpmn:standardLoopCharacteristics loopMaximum="3" />
-    </bpmn:manualTask>
     <bpmn:serviceTask id="Activity_1r30e70" name="Parallel Svc Task Loop Card">
       <bpmn:extensionElements>
         <spiffworkflow:serviceTaskOperator id="http/GetRequestV2" resultVariable="gtiResponse">
@@ -876,17 +868,25 @@ Data outa = {{DataOuta}}</spiffworkflow:instructionsForEndUser>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_1y1vsxu</bpmn:incoming>
     </bpmn:endEvent>
+    <bpmn:manualTask id="Activity_06o6vbf" name="Manual Task">
+      <bpmn:extensionElements>
+        <spiffworkflow:instructionsForEndUser />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1ov6487</bpmn:incoming>
+      <bpmn:outgoing>Flow_11c4e8y</bpmn:outgoing>
+      <bpmn:standardLoopCharacteristics loopMaximum="3" />
+    </bpmn:manualTask>
   </bpmn:process>
   <bpmn:signal id="check_balance" name="check_balance">
     <bpmn:extensionElements>
       <spiffworkflow:variableName>checkbalance</spiffworkflow:variableName>
     </bpmn:extensionElements>
   </bpmn:signal>
-  <bpmn:error id="Error1" name="Error1" />
+  <bpmn:error id="Error1" name="Error1" errorCode="Err1" />
   <bpmn:message id="ModelWithAllElements_Message1" name="ModelWithAllElements_Message1" />
   <bpmn:message id="MessageAgeAbove60" name="MessageAgeAbove60" />
   <bpmn:message id="MessageAgeBelow25" name="MessageAgeBelow25" />
-  <bpmn:error id="Error2" name="Error2" />
+  <bpmn:error id="Error2" name="Error2" errorCode="Err2" />
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_FormAndLane">
       <bpmndi:BPMNShape id="Participant_1df0bwy_di" bpmnElement="Participant_1df0bwy" isHorizontal="true">
@@ -990,6 +990,10 @@ Data outa = {{DataOuta}}</spiffworkflow:instructionsForEndUser>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_14vd6wj_di" bpmnElement="Activity_0r04mc3">
         <dc:Bounds x="10" y="-104" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0fjnn6y_di" bpmnElement="Activity_06o6vbf">
+        <dc:Bounds x="1890" y="-43" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1p6wtv8_di" bpmnElement="Activity_12t2hwu" isExpanded="true">
@@ -1142,10 +1146,6 @@ Data outa = {{DataOuta}}</spiffworkflow:instructionsForEndUser>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1e5wyl7_di" bpmnElement="Activity_049sh8c">
         <dc:Bounds x="2230" y="-43" width="100" height="80" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0fjnn6y_di" bpmnElement="Activity_06o6vbf">
-        <dc:Bounds x="1880" y="-43" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1j0lcx9_di" bpmnElement="Activity_1r30e70">
@@ -1557,7 +1557,7 @@ Data outa = {{DataOuta}}</spiffworkflow:instructionsForEndUser>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1ov6487_di" bpmnElement="Flow_1ov6487">
         <di:waypoint x="1840" y="-3" />
-        <di:waypoint x="1880" y="-3" />
+        <di:waypoint x="1890" y="-3" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1w3zmqc_di" bpmnElement="Flow_1w3zmqc">
         <di:waypoint x="680" y="-164" />
@@ -1619,7 +1619,7 @@ Data outa = {{DataOuta}}</spiffworkflow:instructionsForEndUser>
         <di:waypoint x="2230" y="-3" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_11c4e8y_di" bpmnElement="Flow_11c4e8y">
-        <di:waypoint x="1980" y="-3" />
+        <di:waypoint x="1990" y="-3" />
         <di:waypoint x="2050" y="-3" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_06oexpt_di" bpmnElement="Flow_06oexpt">
