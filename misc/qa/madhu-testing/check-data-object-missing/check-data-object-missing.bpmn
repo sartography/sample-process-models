@@ -5,7 +5,7 @@
   </bpmn:collaboration>
   <bpmn:process id="Process_check_data_object_missing_fd9etde" isExecutable="true">
     <bpmn:laneSet id="LaneSet_1e9ivcd">
-      <bpmn:lane id="Lane_0j5eqe6">
+      <bpmn:lane id="Lane_0j5eqe6" name="Reviewer">
         <bpmn:flowNodeRef>Activity_196rdiy</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_0of389d</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Gateway_1k9edg3</bpmn:flowNodeRef>
@@ -28,7 +28,7 @@
     <bpmn:manualTask id="Activity_196rdiy" name="Manual Task 1">
       <bpmn:extensionElements>
         <spiffworkflow:preScript>DO1 = "Low"
-a = 1</spiffworkflow:preScript>
+</spiffworkflow:preScript>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_00jl5t0</bpmn:incoming>
       <bpmn:outgoing>Flow_03vk7yk</bpmn:outgoing>
@@ -41,7 +41,7 @@ a = 1</spiffworkflow:preScript>
         <spiffworkflow:preScript>DOval = DO1</spiffworkflow:preScript>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_03vk7yk</bpmn:incoming>
-      <bpmn:outgoing>Flow_109pbvx</bpmn:outgoing>
+      <bpmn:outgoing>Flow_0xgdov0</bpmn:outgoing>
       <bpmn:property id="Property_0azosxd" name="__targetRef_placeholder" />
       <bpmn:dataInputAssociation id="DataInputAssociation_1rl5x4m">
         <bpmn:sourceRef>DataObjectReference_1caecys</bpmn:sourceRef>
@@ -51,9 +51,8 @@ a = 1</spiffworkflow:preScript>
     <bpmn:sequenceFlow id="Flow_0whbf8j" sourceRef="Event_1ysu24r" targetRef="Activity_0abwm2i" />
     <bpmn:sequenceFlow id="Flow_00jl5t0" sourceRef="Activity_0abwm2i" targetRef="Activity_196rdiy" />
     <bpmn:sequenceFlow id="Flow_03vk7yk" sourceRef="Activity_196rdiy" targetRef="Activity_0of389d" />
-    <bpmn:sequenceFlow id="Flow_109pbvx" sourceRef="Activity_0of389d" targetRef="Gateway_1k9edg3" />
     <bpmn:inclusiveGateway id="Gateway_1k9edg3" default="Flow_0jh1vgb">
-      <bpmn:incoming>Flow_109pbvx</bpmn:incoming>
+      <bpmn:incoming>Flow_0xgdov0</bpmn:incoming>
       <bpmn:outgoing>Flow_1do7yww</bpmn:outgoing>
       <bpmn:outgoing>Flow_0jh1vgb</bpmn:outgoing>
     </bpmn:inclusiveGateway>
@@ -65,7 +64,7 @@ a = 1</spiffworkflow:preScript>
     <bpmn:inclusiveGateway id="Gateway_018qurf">
       <bpmn:incoming>Flow_0tnbjmh</bpmn:incoming>
       <bpmn:incoming>Flow_0t3t5ht</bpmn:incoming>
-      <bpmn:outgoing>Flow_0axese8</bpmn:outgoing>
+      <bpmn:outgoing>Flow_0jwokh9</bpmn:outgoing>
     </bpmn:inclusiveGateway>
     <bpmn:sequenceFlow id="Flow_0t3t5ht" sourceRef="Activity_0a09lrg" targetRef="Gateway_018qurf" />
     <bpmn:manualTask id="Activity_1x61gdh">
@@ -77,17 +76,19 @@ a = 1</spiffworkflow:preScript>
       <bpmn:outgoing>Flow_0t3t5ht</bpmn:outgoing>
     </bpmn:manualTask>
     <bpmn:endEvent id="Event_0gf4xr7">
-      <bpmn:incoming>Flow_0axese8</bpmn:incoming>
+      <bpmn:incoming>Flow_0jwokh9</bpmn:incoming>
     </bpmn:endEvent>
-    <bpmn:sequenceFlow id="Flow_0axese8" sourceRef="Gateway_018qurf" targetRef="Event_0gf4xr7" />
     <bpmn:scriptTask id="Activity_0abwm2i" name="ScriptTask 1">
       <bpmn:extensionElements>
         <spiffworkflow:preScript />
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_0whbf8j</bpmn:incoming>
       <bpmn:outgoing>Flow_00jl5t0</bpmn:outgoing>
-      <bpmn:script>lane_owners = {"Reviewer": ["admin@spiffworkflow.org", "nelson@spiffworkflow.org"]}</bpmn:script>
+      <bpmn:script>lane_owners = {"Reviewer": ["admin@spiffworkflow.org", "nelson@spiffworkflow.org"]}
+a = 1</bpmn:script>
     </bpmn:scriptTask>
+    <bpmn:sequenceFlow id="Flow_0xgdov0" sourceRef="Activity_0of389d" targetRef="Gateway_1k9edg3" />
+    <bpmn:sequenceFlow id="Flow_0jwokh9" sourceRef="Gateway_018qurf" targetRef="Event_0gf4xr7" />
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_0uru9r3">
@@ -100,6 +101,7 @@ a = 1</spiffworkflow:preScript>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Lane_0j5eqe6_di" bpmnElement="Lane_0j5eqe6" isHorizontal="true">
         <dc:Bounds x="-330" y="230" width="1130" height="290" />
+        <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="DataObjectReference_14y2lxp_di" bpmnElement="DataObjectReference_14y2lxp">
         <dc:Bounds x="-208" y="405" width="36" height="50" />
@@ -157,10 +159,6 @@ a = 1</spiffworkflow:preScript>
         <di:waypoint x="-30" y="290" />
         <di:waypoint x="20" y="290" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_109pbvx_di" bpmnElement="Flow_109pbvx">
-        <di:waypoint x="120" y="290" />
-        <di:waypoint x="175" y="290" />
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1do7yww_di" bpmnElement="Flow_1do7yww">
         <di:waypoint x="225" y="290" />
         <di:waypoint x="280" y="290" />
@@ -179,7 +177,11 @@ a = 1</spiffworkflow:preScript>
         <di:waypoint x="460" y="400" />
         <di:waypoint x="460" y="315" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0axese8_di" bpmnElement="Flow_0axese8">
+      <bpmndi:BPMNEdge id="Flow_0xgdov0_di" bpmnElement="Flow_0xgdov0">
+        <di:waypoint x="120" y="290" />
+        <di:waypoint x="175" y="290" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0jwokh9_di" bpmnElement="Flow_0jwokh9">
         <di:waypoint x="485" y="290" />
         <di:waypoint x="542" y="290" />
       </bpmndi:BPMNEdge>
