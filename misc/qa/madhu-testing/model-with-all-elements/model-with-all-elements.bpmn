@@ -44,6 +44,7 @@
         <bpmn:flowNodeRef>Event_148wg0d</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_0mz4qjo</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_1rp51rg</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_GetMoreData</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_194pd0d" name="Tester">
         <bpmn:flowNodeRef>Activity_15yuetc</bpmn:flowNodeRef>
@@ -92,7 +93,7 @@
           <spiffworkflow:property name="formUiSchemaFilename" value="review-form-uischema.json" />
         </spiffworkflow:properties>
       </bpmn:extensionElements>
-      <bpmn:incoming>Flow_0c8hg1n</bpmn:incoming>
+      <bpmn:incoming>Flow_1xtmg0t</bpmn:incoming>
       <bpmn:outgoing>Flow_10rvmdc</bpmn:outgoing>
     </bpmn:userTask>
     <bpmn:intermediateThrowEvent id="Event_0er19np" name="Reject">
@@ -193,7 +194,7 @@
     </bpmn:boundaryEvent>
     <bpmn:sequenceFlow id="Flow_1msk5h9" sourceRef="StartEvent_1" targetRef="Activity_GetReviewers" />
     <bpmn:sequenceFlow id="Flow_1loqmjv" sourceRef="Activity_GetReviewers" targetRef="Gateway_1px4jo5" />
-    <bpmn:sequenceFlow id="Flow_0c8hg1n" sourceRef="Activity_GetData" targetRef="Activity_Review" />
+    <bpmn:sequenceFlow id="Flow_0c8hg1n" sourceRef="Activity_GetData" targetRef="Activity_GetMoreData" />
     <bpmn:sequenceFlow id="Flow_042vla2" sourceRef="Gateway_1v7vc1z" targetRef="Gateway_1px4jo5">
       <bpmn:conditionExpression>approval == "Needmoreinfo"</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
@@ -547,6 +548,18 @@ Coke = {{coke}}</spiffworkflow:instructionsForEndUser>
       <bpmn:outgoing>Flow_1bjanul</bpmn:outgoing>
     </bpmn:manualTask>
     <bpmn:sequenceFlow id="Flow_1bjanul" sourceRef="Activity_1rp51rg" targetRef="Activity_0456jk8" />
+    <bpmn:manualTask id="Activity_GetMoreData" name="Show Data">
+      <bpmn:extensionElements>
+        <spiffworkflow:properties>
+          <spiffworkflow:property name="formJsonSchemaFilename" value="get_more_data_form.json" />
+        </spiffworkflow:properties>
+        <spiffworkflow:preScript>data = {"item_id": itemId, "item_desc": itemName}</spiffworkflow:preScript>
+        <spiffworkflow:instructionsForEndUser>User entered data : {{data}}</spiffworkflow:instructionsForEndUser>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0c8hg1n</bpmn:incoming>
+      <bpmn:outgoing>Flow_1xtmg0t</bpmn:outgoing>
+    </bpmn:manualTask>
+    <bpmn:sequenceFlow id="Flow_1xtmg0t" sourceRef="Activity_GetMoreData" targetRef="Activity_Review" />
   </bpmn:process>
   <bpmn:signal id="check_balance" name="check_balance">
     <bpmn:extensionElements>
@@ -577,6 +590,10 @@ Coke = {{coke}}</spiffworkflow:instructionsForEndUser>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_07hx4o8_di" bpmnElement="Activity_GetReviewers">
         <dc:Bounds x="-329" y="155" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_16xsdrr_di" bpmnElement="Activity_GetMoreData">
+        <dc:Bounds x="-399" y="411" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Gateway_1chm5qn_di" bpmnElement="Gateway_1chm5qn" isMarkerVisible="true">
@@ -892,14 +909,17 @@ Coke = {{coke}}</spiffworkflow:instructionsForEndUser>
         <di:waypoint x="-10" y="235" />
         <di:waypoint x="-10" y="351" />
         <di:waypoint x="-349" y="351" />
-        <di:waypoint x="-349" y="451" />
-        <di:waypoint x="-249" y="451" />
+        <di:waypoint x="-349" y="411" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_042vla2_di" bpmnElement="Flow_042vla2">
         <di:waypoint x="151" y="426" />
         <di:waypoint x="151" y="120" />
         <di:waypoint x="-150" y="120" />
         <di:waypoint x="-150" y="170" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1xtmg0t_di" bpmnElement="Flow_1xtmg0t">
+        <di:waypoint x="-299" y="451" />
+        <di:waypoint x="-249" y="451" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_10rvmdc_di" bpmnElement="Flow_10rvmdc">
         <di:waypoint x="-149" y="451" />
