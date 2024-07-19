@@ -29,23 +29,21 @@
     <bpmn:startEvent id="Event_1ysu24r">
       <bpmn:outgoing>Flow_0whbf8j</bpmn:outgoing>
     </bpmn:startEvent>
-    <bpmn:manualTask id="Activity_196rdiy" name="Manual Task 1">
+    <bpmn:manualTask id="Activity_196rdiy" name="Manual Task 2">
       <bpmn:extensionElements>
         <spiffworkflow:preScript>DO1 = "Low"
 </spiffworkflow:preScript>
       </bpmn:extensionElements>
-      <bpmn:incoming>Flow_1j23yad</bpmn:incoming>
       <bpmn:outgoing>Flow_03vk7yk</bpmn:outgoing>
       <bpmn:dataOutputAssociation id="DataOutputAssociation_00zybps">
         <bpmn:targetRef>DataObjectReference_14y2lxp</bpmn:targetRef>
       </bpmn:dataOutputAssociation>
     </bpmn:manualTask>
-    <bpmn:manualTask id="Activity_0of389d" name="Manual Task 1">
+    <bpmn:manualTask id="Activity_0of389d" name="Manual Task 3">
       <bpmn:extensionElements>
         <spiffworkflow:preScript>DOval = DO1</spiffworkflow:preScript>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_03vk7yk</bpmn:incoming>
-      <bpmn:outgoing>Flow_0xgdov0</bpmn:outgoing>
       <bpmn:property id="Property_0azosxd" name="__targetRef_placeholder" />
       <bpmn:dataInputAssociation id="DataInputAssociation_1rl5x4m">
         <bpmn:sourceRef>DataObjectReference_1caecys</bpmn:sourceRef>
@@ -55,7 +53,7 @@
     <bpmn:sequenceFlow id="Flow_0whbf8j" sourceRef="Event_1ysu24r" targetRef="Activity_0abwm2i" />
     <bpmn:sequenceFlow id="Flow_03vk7yk" sourceRef="Activity_196rdiy" targetRef="Activity_0of389d" />
     <bpmn:inclusiveGateway id="Gateway_1k9edg3" default="Flow_0jh1vgb">
-      <bpmn:incoming>Flow_0xgdov0</bpmn:incoming>
+      <bpmn:incoming>Flow_1j23yad</bpmn:incoming>
       <bpmn:outgoing>Flow_1do7yww</bpmn:outgoing>
       <bpmn:outgoing>Flow_0jh1vgb</bpmn:outgoing>
     </bpmn:inclusiveGateway>
@@ -74,7 +72,7 @@
       <bpmn:incoming>Flow_1do7yww</bpmn:incoming>
       <bpmn:outgoing>Flow_0tnbjmh</bpmn:outgoing>
     </bpmn:manualTask>
-    <bpmn:manualTask id="Activity_0a09lrg">
+    <bpmn:manualTask id="Activity_0a09lrg" name="Manual Task 4">
       <bpmn:incoming>Flow_0jh1vgb</bpmn:incoming>
       <bpmn:outgoing>Flow_0t3t5ht</bpmn:outgoing>
     </bpmn:manualTask>
@@ -87,10 +85,9 @@
       <bpmn:script>lane_owners = {"Reviewer": ["admin@spiffworkflow.org", "nelson@spiffworkflow.org"]}
 a = 1</bpmn:script>
     </bpmn:scriptTask>
-    <bpmn:sequenceFlow id="Flow_0xgdov0" sourceRef="Activity_0of389d" targetRef="Gateway_1k9edg3" />
     <bpmn:sequenceFlow id="Flow_0jwokh9" sourceRef="Gateway_018qurf" targetRef="Activity_1d7oxmp" />
     <bpmn:sequenceFlow id="Flow_1672g99" sourceRef="Activity_1d7oxmp" targetRef="Gateway_0mlurnn" />
-    <bpmn:manualTask id="Activity_1d7oxmp">
+    <bpmn:manualTask id="Activity_1d7oxmp" name="Manual Task 5">
       <bpmn:incoming>Flow_0jwokh9</bpmn:incoming>
       <bpmn:outgoing>Flow_1672g99</bpmn:outgoing>
     </bpmn:manualTask>
@@ -101,11 +98,11 @@ a = 1</bpmn:script>
     </bpmn:exclusiveGateway>
     <bpmn:sequenceFlow id="Flow_0rzk7m2" sourceRef="Activity_0abwm2i" targetRef="Gateway_1ndnxhe" />
     <bpmn:sequenceFlow id="Flow_0uub323" sourceRef="Gateway_1ndnxhe" targetRef="Activity_0yzh9rw" />
-    <bpmn:manualTask id="Activity_0yzh9rw">
+    <bpmn:manualTask id="Activity_0yzh9rw" name="Manual Task 1">
       <bpmn:incoming>Flow_0uub323</bpmn:incoming>
       <bpmn:outgoing>Flow_1j23yad</bpmn:outgoing>
     </bpmn:manualTask>
-    <bpmn:sequenceFlow id="Flow_1j23yad" sourceRef="Activity_0yzh9rw" targetRef="Activity_196rdiy" />
+    <bpmn:sequenceFlow id="Flow_1j23yad" sourceRef="Activity_0yzh9rw" targetRef="Gateway_1k9edg3" />
     <bpmn:exclusiveGateway id="Gateway_0mlurnn" default="Flow_0koni6i">
       <bpmn:incoming>Flow_1672g99</bpmn:incoming>
       <bpmn:outgoing>Flow_1at45kv</bpmn:outgoing>
@@ -166,6 +163,7 @@ a = 1</bpmn:script>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1nqix9m_di" bpmnElement="Activity_0a09lrg">
         <dc:Bounds x="280" y="360" width="100" height="80" />
+        <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0ltmlwl_di" bpmnElement="Activity_0abwm2i">
         <dc:Bounds x="-190" y="70" width="100" height="80" />
@@ -173,12 +171,14 @@ a = 1</bpmn:script>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_161iabc_di" bpmnElement="Activity_1d7oxmp">
         <dc:Bounds x="510" y="250" width="100" height="80" />
+        <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Gateway_1ndnxhe_di" bpmnElement="Gateway_1ndnxhe" isMarkerVisible="true">
         <dc:Bounds x="-35" y="85" width="50" height="50" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1gkyors_di" bpmnElement="Activity_0yzh9rw">
         <dc:Bounds x="70" y="70" width="100" height="80" />
+        <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Gateway_0mlurnn_di" bpmnElement="Gateway_0mlurnn" isMarkerVisible="true">
         <dc:Bounds x="645" y="265" width="50" height="50" />
@@ -212,10 +212,6 @@ a = 1</bpmn:script>
         <di:waypoint x="460" y="400" />
         <di:waypoint x="460" y="315" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0xgdov0_di" bpmnElement="Flow_0xgdov0">
-        <di:waypoint x="120" y="290" />
-        <di:waypoint x="175" y="290" />
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0jwokh9_di" bpmnElement="Flow_0jwokh9">
         <di:waypoint x="485" y="290" />
         <di:waypoint x="510" y="290" />
@@ -235,8 +231,8 @@ a = 1</bpmn:script>
       <bpmndi:BPMNEdge id="Flow_1j23yad_di" bpmnElement="Flow_1j23yad">
         <di:waypoint x="120" y="150" />
         <di:waypoint x="120" y="170" />
-        <di:waypoint x="-40" y="170" />
-        <di:waypoint x="-40" y="250" />
+        <di:waypoint x="200" y="170" />
+        <di:waypoint x="200" y="265" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1at45kv_di" bpmnElement="Flow_1at45kv">
         <di:waypoint x="695" y="290" />
