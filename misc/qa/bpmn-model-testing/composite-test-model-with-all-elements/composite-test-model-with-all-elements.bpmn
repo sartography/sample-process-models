@@ -8,8 +8,6 @@
     <bpmn:laneSet id="LaneSet_06wu5sq">
       <bpmn:lane id="Lane_194pd0d" name="Tester">
         <bpmn:flowNodeRef>Activity_15yuetc</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Activity_1w17168</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Event_1d4ipwo</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_02tft4w</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_0rp59y8</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_1hpllxu</bpmn:flowNodeRef>
@@ -47,6 +45,11 @@
         <bpmn:flowNodeRef>Event_0v5t1y6</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_14iedtn</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_098jtyz</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_1w17168</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Event_1d4ipwo</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Event_1rurpr7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_1yfuk8w</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Event_1g4r4uk</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_Reviewer" name="Reviewer">
         <bpmn:flowNodeRef>Activity_GetMoreData</bpmn:flowNodeRef>
@@ -361,13 +364,6 @@ gtiResponse = {{gtiResponse.body.name}}
       </bpmn:endEvent>
       <bpmn:sequenceFlow id="Flow_1ukv419" sourceRef="Activity_14peloi" targetRef="Event_0gnzoiv" />
     </bpmn:subProcess>
-    <bpmn:manualTask id="Activity_1w17168" name="Request is Rejected">
-      <bpmn:incoming>Flow_06ibn9g</bpmn:incoming>
-      <bpmn:outgoing>Flow_1osso7l</bpmn:outgoing>
-    </bpmn:manualTask>
-    <bpmn:endEvent id="Event_1d4ipwo" name="Error End Event Triggered">
-      <bpmn:incoming>Flow_1osso7l</bpmn:incoming>
-    </bpmn:endEvent>
     <bpmn:manualTask id="Activity_02tft4w" name="Manual Task">
       <bpmn:extensionElements>
         <spiffworkflow:preScript>DOval = DataObject_1</spiffworkflow:preScript>
@@ -857,6 +853,29 @@ Data outa = {{DataOuta}}</spiffworkflow:instructionsForEndUser>
     <bpmn:sequenceFlow id="Flow_09cmb0k" sourceRef="Activity_03hrd27" targetRef="Event_0jqx6cq" />
     <bpmn:sequenceFlow id="Flow_0vsn07x" sourceRef="Activity_0illo4l" targetRef="Activity_03hrd27" />
     <bpmn:sequenceFlow id="Flow_1loqmjv" sourceRef="Activity_GetReviewers" targetRef="Gateway_1px4jo5" />
+    <bpmn:manualTask id="Activity_1w17168" name="Request is Rejected">
+      <bpmn:incoming>Flow_06ibn9g</bpmn:incoming>
+      <bpmn:outgoing>Flow_1osso7l</bpmn:outgoing>
+    </bpmn:manualTask>
+    <bpmn:endEvent id="Event_1d4ipwo" name="Error End Event Triggered">
+      <bpmn:incoming>Flow_1osso7l</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:boundaryEvent id="Event_1rurpr7" attachedToRef="Activity_1ocfzii">
+      <bpmn:outgoing>Flow_15ad56s</bpmn:outgoing>
+      <bpmn:errorEventDefinition id="ErrorEventDefinition_1ftdbml" />
+    </bpmn:boundaryEvent>
+    <bpmn:sequenceFlow id="Flow_15ad56s" sourceRef="Event_1rurpr7" targetRef="Activity_1yfuk8w" />
+    <bpmn:sequenceFlow id="Flow_1y1vsxu" sourceRef="Activity_1yfuk8w" targetRef="Event_1g4r4uk" />
+    <bpmn:task id="Activity_1yfuk8w" name="Error 2">
+      <bpmn:incoming>Flow_15ad56s</bpmn:incoming>
+      <bpmn:outgoing>Flow_1y1vsxu</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:endEvent id="Event_1g4r4uk">
+      <bpmn:extensionElements>
+        <spiffworkflow:instructionsForEndUser>End Event Error 2</spiffworkflow:instructionsForEndUser>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1y1vsxu</bpmn:incoming>
+    </bpmn:endEvent>
   </bpmn:process>
   <bpmn:signal id="check_balance" name="check_balance">
     <bpmn:extensionElements>
@@ -972,6 +991,23 @@ Data outa = {{DataOuta}}</spiffworkflow:instructionsForEndUser>
       <bpmndi:BPMNShape id="Activity_14vd6wj_di" bpmnElement="Activity_0r04mc3">
         <dc:Bounds x="10" y="-104" width="100" height="80" />
         <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0sh54qz_di" bpmnElement="Activity_1w17168">
+        <dc:Bounds x="1600" y="645" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1d4ipwo_di" bpmnElement="Event_1d4ipwo">
+        <dc:Bounds x="1752" y="667" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1734" y="710" width="79" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1yfuk8w_di" bpmnElement="Activity_1yfuk8w">
+        <dc:Bounds x="1920" y="645" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1g4r4uk_di" bpmnElement="Event_1g4r4uk">
+        <dc:Bounds x="2048" y="667" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1p6wtv8_di" bpmnElement="Activity_12t2hwu" isExpanded="true">
         <dc:Bounds x="1130" y="-164" width="710" height="279" />
@@ -1102,16 +1138,6 @@ Data outa = {{DataOuta}}</spiffworkflow:instructionsForEndUser>
         <di:waypoint x="1990" y="525" />
         <di:waypoint x="2092" y="525" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="Activity_0sh54qz_di" bpmnElement="Activity_1w17168">
-        <dc:Bounds x="1700" y="645" width="100" height="80" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_1d4ipwo_di" bpmnElement="Event_1d4ipwo">
-        <dc:Bounds x="1922" y="667" width="36" height="36" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="1904" y="710" width="79" height="27" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1y9knrc_di" bpmnElement="Activity_02tft4w">
         <dc:Bounds x="1370" y="425" width="100" height="80" />
         <bpmndi:BPMNLabel />
@@ -1389,6 +1415,9 @@ Data outa = {{DataOuta}}</spiffworkflow:instructionsForEndUser>
       <bpmndi:BPMNShape id="Event_0j1okk8_di" bpmnElement="Event_12g2sx5">
         <dc:Bounds x="-288" y="997" width="36" height="36" />
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1u2r9jc_di" bpmnElement="Event_1rurpr7">
+        <dc:Bounds x="1872" y="587" width="36" height="36" />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_1msk5h9_di" bpmnElement="Flow_1msk5h9">
         <di:waypoint x="-754" y="-320" />
         <di:waypoint x="-700" y="-320" />
@@ -1559,11 +1588,11 @@ Data outa = {{DataOuta}}</spiffworkflow:instructionsForEndUser>
       <bpmndi:BPMNEdge id="Flow_06ibn9g_di" bpmnElement="Flow_06ibn9g">
         <di:waypoint x="1569" y="623" />
         <di:waypoint x="1569" y="685" />
-        <di:waypoint x="1700" y="685" />
+        <di:waypoint x="1600" y="685" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1osso7l_di" bpmnElement="Flow_1osso7l">
-        <di:waypoint x="1800" y="685" />
-        <di:waypoint x="1922" y="685" />
+        <di:waypoint x="1700" y="685" />
+        <di:waypoint x="1752" y="685" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1h0g8ke_di" bpmnElement="Flow_1h0g8ke">
         <di:waypoint x="1370" y="465" />
@@ -1737,6 +1766,15 @@ Data outa = {{DataOuta}}</spiffworkflow:instructionsForEndUser>
       <bpmndi:BPMNEdge id="Flow_1loqmjv_di" bpmnElement="Flow_1loqmjv">
         <di:waypoint x="-600" y="-320" />
         <di:waypoint x="-535" y="-320" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_15ad56s_di" bpmnElement="Flow_15ad56s">
+        <di:waypoint x="1890" y="623" />
+        <di:waypoint x="1890" y="685" />
+        <di:waypoint x="1920" y="685" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1y1vsxu_di" bpmnElement="Flow_1y1vsxu">
+        <di:waypoint x="2020" y="685" />
+        <di:waypoint x="2048" y="685" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="DataOutputAssociation_16dsylz_di" bpmnElement="DataOutputAssociation_16dsylz">
         <di:waypoint x="2266" y="505" />
