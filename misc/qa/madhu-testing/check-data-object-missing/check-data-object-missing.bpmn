@@ -68,11 +68,17 @@
       <bpmn:outgoing>Flow_0jwokh9</bpmn:outgoing>
     </bpmn:inclusiveGateway>
     <bpmn:sequenceFlow id="Flow_0t3t5ht" sourceRef="Activity_0a09lrg" targetRef="Gateway_018qurf" />
-    <bpmn:manualTask id="Activity_1x61gdh">
+    <bpmn:manualTask id="Activity_1x61gdh" name="Manual Task 4 A">
+      <bpmn:extensionElements>
+        <spiffworkflow:preScript>a = 5</spiffworkflow:preScript>
+      </bpmn:extensionElements>
       <bpmn:incoming>Flow_1do7yww</bpmn:incoming>
       <bpmn:outgoing>Flow_0tnbjmh</bpmn:outgoing>
     </bpmn:manualTask>
-    <bpmn:manualTask id="Activity_0a09lrg" name="Manual Task 4">
+    <bpmn:manualTask id="Activity_0a09lrg" name="Manual Task 4 B">
+      <bpmn:extensionElements>
+        <spiffworkflow:postScript>a = 10</spiffworkflow:postScript>
+      </bpmn:extensionElements>
       <bpmn:incoming>Flow_0jh1vgb</bpmn:incoming>
       <bpmn:outgoing>Flow_0t3t5ht</bpmn:outgoing>
     </bpmn:manualTask>
@@ -88,6 +94,9 @@ a = 1</bpmn:script>
     <bpmn:sequenceFlow id="Flow_0jwokh9" sourceRef="Gateway_018qurf" targetRef="Activity_1d7oxmp" />
     <bpmn:sequenceFlow id="Flow_1672g99" sourceRef="Activity_1d7oxmp" targetRef="Gateway_0mlurnn" />
     <bpmn:manualTask id="Activity_1d7oxmp" name="Manual Task 5">
+      <bpmn:extensionElements>
+        <spiffworkflow:postScript>a = {{a}}</spiffworkflow:postScript>
+      </bpmn:extensionElements>
       <bpmn:incoming>Flow_0jwokh9</bpmn:incoming>
       <bpmn:outgoing>Flow_1672g99</bpmn:outgoing>
     </bpmn:manualTask>
@@ -160,6 +169,7 @@ a = 1</bpmn:script>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0nhea8k_di" bpmnElement="Activity_1x61gdh">
         <dc:Bounds x="280" y="250" width="100" height="80" />
+        <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1nqix9m_di" bpmnElement="Activity_0a09lrg">
         <dc:Bounds x="280" y="360" width="100" height="80" />
