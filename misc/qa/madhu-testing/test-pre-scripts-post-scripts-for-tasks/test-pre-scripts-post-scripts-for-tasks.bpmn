@@ -5,7 +5,7 @@
       <bpmn:outgoing>Flow_12pit63</bpmn:outgoing>
     </bpmn:startEvent>
     <bpmn:sequenceFlow id="Flow_12pit63" sourceRef="StartEvent_1" targetRef="Activity_1ko63ab" />
-    <bpmn:userTask id="Activity_1ko63ab" name="User Task">
+    <bpmn:userTask id="Activity_1ko63ab" name="User Task 1">
       <bpmn:extensionElements>
         <spiffworkflow:instructionsForEndUser>User Task Var 1 = {{user_task_1}} , 
 User Task Var 2 = {{user_task_2}},
@@ -62,7 +62,7 @@ Manual Task var 3 = {{manual_task_3}}</spiffworkflow:instructionsForEndUser>
       <bpmn:outgoing>Flow_0is9d8n</bpmn:outgoing>
     </bpmn:manualTask>
     <bpmn:sequenceFlow id="Flow_0is9d8n" sourceRef="Activity_1724gg7" targetRef="Activity_1cmc6ij" />
-    <bpmn:serviceTask id="Activity_1cmc6ij" name="Service Task">
+    <bpmn:serviceTask id="Activity_1cmc6ij" name="Service Task 1">
       <bpmn:extensionElements>
         <spiffworkflow:preScript>service_task_1 = 50
 service_task_2 = 20</spiffworkflow:preScript>
@@ -205,7 +205,7 @@ Collapsed subprocess var 2 = {{collapsed_subprocess_activity_2}}</spiffworkflow:
       <bpmn:incoming>Flow_170ycko</bpmn:incoming>
       <bpmn:outgoing>Flow_1evk14h</bpmn:outgoing>
     </bpmn:manualTask>
-    <bpmn:sequenceFlow id="Flow_1evk14h" sourceRef="Activity_01e995n" targetRef="Activity_1iogzej" />
+    <bpmn:sequenceFlow id="Flow_1evk14h" sourceRef="Activity_01e995n" targetRef="Activity_0kk5tag" />
     <bpmn:subProcess id="Activity_1iogzej">
       <bpmn:extensionElements>
         <spiffworkflow:preScript>expanded_subprocess_activity_1 = 7
@@ -213,7 +213,7 @@ expanded_subprocess_activity_2 = 8</spiffworkflow:preScript>
         <spiffworkflow:postScript># Delete Unneeded Variable
 del(expanded_subprocess_activity_1)</spiffworkflow:postScript>
       </bpmn:extensionElements>
-      <bpmn:incoming>Flow_1evk14h</bpmn:incoming>
+      <bpmn:incoming>Flow_1mb8njv</bpmn:incoming>
       <bpmn:outgoing>Flow_0beubtn</bpmn:outgoing>
       <bpmn:startEvent id="Event_05j3k5i">
         <bpmn:outgoing>Flow_1n7zz5j</bpmn:outgoing>
@@ -371,6 +371,14 @@ z = {{z}}</spiffworkflow:instructionsForEndUser>
       <bpmn:incoming>Flow_15q2px7</bpmn:incoming>
       <bpmn:outgoing>Flow_093yt3c</bpmn:outgoing>
     </bpmn:manualTask>
+    <bpmn:sequenceFlow id="Flow_1mb8njv" sourceRef="Activity_0kk5tag" targetRef="Activity_1iogzej" />
+    <bpmn:manualTask id="Activity_0kk5tag" name="Temp Task">
+      <bpmn:extensionElements>
+        <spiffworkflow:instructionsForEndUser>Temp Task</spiffworkflow:instructionsForEndUser>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1evk14h</bpmn:incoming>
+      <bpmn:outgoing>Flow_1mb8njv</bpmn:outgoing>
+    </bpmn:manualTask>
   </bpmn:process>
   <bpmn:message id="PrePostScriptMsg" name="PrePostScriptMsg" />
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
@@ -425,20 +433,8 @@ z = {{z}}</spiffworkflow:instructionsForEndUser>
         <dc:Bounds x="180" y="500" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_013cml8_di" bpmnElement="Activity_0bladrd">
-        <dc:Bounds x="270" y="680" width="100" height="80" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_18dgdi8_di" bpmnElement="Activity_11rxivj">
-        <dc:Bounds x="450" y="680" width="100" height="80" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1iqkjfa_di" bpmnElement="Activity_1f10bdx">
-        <dc:Bounds x="640" y="680" width="100" height="80" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_18oeblh_di" bpmnElement="Activity_1hb0gf3">
-        <dc:Bounds x="820" y="680" width="100" height="80" />
-        <bpmndi:BPMNLabel />
+      <bpmndi:BPMNShape id="Activity_0pt4kdw_di" bpmnElement="Activity_0kk5tag">
+        <dc:Bounds x="600" y="500" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0q35qe1_di" bpmnElement="Activity_0tw18gv">
         <dc:Bounds x="330" y="500" width="100" height="80" />
@@ -489,6 +485,21 @@ z = {{z}}</spiffworkflow:instructionsForEndUser>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1q85bu9_di" bpmnElement="Activity_0cvjffh">
         <dc:Bounds x="1000" y="680" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_18oeblh_di" bpmnElement="Activity_1hb0gf3">
+        <dc:Bounds x="820" y="680" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1iqkjfa_di" bpmnElement="Activity_1f10bdx">
+        <dc:Bounds x="640" y="680" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_18dgdi8_di" bpmnElement="Activity_11rxivj">
+        <dc:Bounds x="450" y="680" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_013cml8_di" bpmnElement="Activity_0bladrd">
+        <dc:Bounds x="270" y="680" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_12pit63_di" bpmnElement="Flow_12pit63">
@@ -559,7 +570,7 @@ z = {{z}}</spiffworkflow:instructionsForEndUser>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1evk14h_di" bpmnElement="Flow_1evk14h">
         <di:waypoint x="580" y="540" />
-        <di:waypoint x="720" y="540" />
+        <di:waypoint x="600" y="540" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0beubtn_di" bpmnElement="Flow_0beubtn">
         <di:waypoint x="1070" y="540" />
@@ -593,6 +604,10 @@ z = {{z}}</spiffworkflow:instructionsForEndUser>
         <di:waypoint x="320" y="760" />
         <di:waypoint x="320" y="890" />
         <di:waypoint x="822" y="890" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1mb8njv_di" bpmnElement="Flow_1mb8njv">
+        <di:waypoint x="700" y="540" />
+        <di:waypoint x="720" y="540" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
