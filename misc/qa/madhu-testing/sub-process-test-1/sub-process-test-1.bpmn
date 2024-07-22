@@ -45,7 +45,7 @@
             <bpmn:incoming>Flow_0o64wqz</bpmn:incoming>
           </bpmn:endEvent>
           <bpmn:sequenceFlow id="Flow_0o64wqz" sourceRef="Activity_039nlhb" targetRef="Event_1agvzo2" />
-          <bpmn:subProcess id="Activity_039nlhb" name="Sub Process Level 4">
+          <bpmn:subProcess id="Activity_039nlhb" name="Sub Process Level 4" rootElements="[object Object]">
             <bpmn:incoming>Flow_1nkxw3o</bpmn:incoming>
             <bpmn:outgoing>Flow_0o64wqz</bpmn:outgoing>
             <bpmn:startEvent id="Event_1rrnkh0">
@@ -64,7 +64,7 @@
               </bpmn:startEvent>
               <bpmn:sequenceFlow id="Flow_1yozbuq" sourceRef="Event_09t2x34" targetRef="Activity_1klgono" />
               <bpmn:endEvent id="Event_1dhuvej">
-                <bpmn:incoming>Flow_0bqakqx</bpmn:incoming>
+                <bpmn:incoming>Flow_1nweqz6</bpmn:incoming>
               </bpmn:endEvent>
               <bpmn:sequenceFlow id="Flow_1cnsa77" sourceRef="Activity_1klgono" targetRef="Activity_1ji0uee" />
               <bpmn:manualTask id="Activity_1klgono" name="Manual Task 1 in Sub process Level 5">
@@ -74,32 +74,47 @@
                 <bpmn:incoming>Flow_1yozbuq</bpmn:incoming>
                 <bpmn:outgoing>Flow_1cnsa77</bpmn:outgoing>
               </bpmn:manualTask>
-              <bpmn:sequenceFlow id="Flow_01w7ny2" sourceRef="Activity_1ji0uee" targetRef="Activity_0wvkd2t" />
+              <bpmn:sequenceFlow id="Flow_01w7ny2" sourceRef="Activity_1ji0uee" targetRef="Gateway_1wxsjxc" />
               <bpmn:manualTask id="Activity_1ji0uee" name="Manual Task 2 in Sub process Level 5">
+                <bpmn:extensionElements>
+                  <spiffworkflow:preScript>z = 30</spiffworkflow:preScript>
+                </bpmn:extensionElements>
                 <bpmn:incoming>Flow_1cnsa77</bpmn:incoming>
                 <bpmn:outgoing>Flow_01w7ny2</bpmn:outgoing>
               </bpmn:manualTask>
-              <bpmn:sequenceFlow id="Flow_0dmb9us" sourceRef="Activity_0wvkd2t" targetRef="Activity_1g4etk1" />
-              <bpmn:manualTask id="Activity_0wvkd2t" name="Manual Task 3 in Sub process Level 5">
-                <bpmn:incoming>Flow_01w7ny2</bpmn:incoming>
-                <bpmn:outgoing>Flow_0dmb9us</bpmn:outgoing>
-              </bpmn:manualTask>
-              <bpmn:sequenceFlow id="Flow_1945p81" sourceRef="Activity_1g4etk1" targetRef="Activity_1n64eex" />
-              <bpmn:scriptTask id="Activity_1g4etk1" name="Script Task 1 in Sub process Level 5">
-                <bpmn:incoming>Flow_0dmb9us</bpmn:incoming>
-                <bpmn:outgoing>Flow_1945p81</bpmn:outgoing>
-              </bpmn:scriptTask>
-              <bpmn:sequenceFlow id="Flow_18ndv1c" sourceRef="Activity_1n64eex" targetRef="Activity_00xbh31" />
-              <bpmn:sendTask id="Activity_1n64eex" name="Send Task in Sub process Level 5" messageRef="TestMsg1">
-                <bpmn:extensionElements />
-                <bpmn:incoming>Flow_1945p81</bpmn:incoming>
-                <bpmn:outgoing>Flow_18ndv1c</bpmn:outgoing>
-              </bpmn:sendTask>
-              <bpmn:sequenceFlow id="Flow_0bqakqx" sourceRef="Activity_00xbh31" targetRef="Event_1dhuvej" />
-              <bpmn:manualTask id="Activity_00xbh31" name="Manual Task 4 in Sub process Level 5">
-                <bpmn:incoming>Flow_18ndv1c</bpmn:incoming>
+              <bpmn:sequenceFlow id="Flow_0bqakqx" sourceRef="Activity_00xbh31" targetRef="Gateway_180i5c6" />
+              <bpmn:manualTask id="Activity_00xbh31" name="Manual Task 3 in Sub process Level 5">
+                <bpmn:incoming>Flow_0xcxd02</bpmn:incoming>
                 <bpmn:outgoing>Flow_0bqakqx</bpmn:outgoing>
               </bpmn:manualTask>
+              <bpmn:exclusiveGateway id="Gateway_1wxsjxc" default="Flow_1lry0gt">
+                <bpmn:incoming>Flow_01w7ny2</bpmn:incoming>
+                <bpmn:outgoing>Flow_0xcxd02</bpmn:outgoing>
+                <bpmn:outgoing>Flow_0776xvf</bpmn:outgoing>
+                <bpmn:outgoing>Flow_1lry0gt</bpmn:outgoing>
+              </bpmn:exclusiveGateway>
+              <bpmn:sequenceFlow id="Flow_0xcxd02" sourceRef="Gateway_1wxsjxc" targetRef="Activity_00xbh31" />
+              <bpmn:task id="Activity_0hoqpsm" name="Manual Task 4 in Sub process Level 5">
+                <bpmn:incoming>Flow_0776xvf</bpmn:incoming>
+                <bpmn:outgoing>Flow_0h4x82r</bpmn:outgoing>
+              </bpmn:task>
+              <bpmn:sequenceFlow id="Flow_0776xvf" sourceRef="Gateway_1wxsjxc" targetRef="Activity_0hoqpsm">
+                <bpmn:conditionExpression>z == 30</bpmn:conditionExpression>
+              </bpmn:sequenceFlow>
+              <bpmn:task id="Activity_0r44e57" name="Manual Task 5 in Sub process Level 5">
+                <bpmn:incoming>Flow_1lry0gt</bpmn:incoming>
+                <bpmn:outgoing>Flow_1vg9dw9</bpmn:outgoing>
+              </bpmn:task>
+              <bpmn:sequenceFlow id="Flow_1lry0gt" sourceRef="Gateway_1wxsjxc" targetRef="Activity_0r44e57" />
+              <bpmn:exclusiveGateway id="Gateway_180i5c6">
+                <bpmn:incoming>Flow_0bqakqx</bpmn:incoming>
+                <bpmn:incoming>Flow_0h4x82r</bpmn:incoming>
+                <bpmn:incoming>Flow_1vg9dw9</bpmn:incoming>
+                <bpmn:outgoing>Flow_1nweqz6</bpmn:outgoing>
+              </bpmn:exclusiveGateway>
+              <bpmn:sequenceFlow id="Flow_1nweqz6" sourceRef="Gateway_180i5c6" targetRef="Event_1dhuvej" />
+              <bpmn:sequenceFlow id="Flow_0h4x82r" sourceRef="Activity_0hoqpsm" targetRef="Gateway_180i5c6" />
+              <bpmn:sequenceFlow id="Flow_1vg9dw9" sourceRef="Activity_0r44e57" targetRef="Gateway_180i5c6" />
             </bpmn:subProcess>
             <bpmn:sequenceFlow id="Flow_1gqv859" sourceRef="Activity_1ra2vbx" targetRef="Event_19dyfr5" />
             <bpmn:manualTask id="Activity_1ra2vbx" name="Manual Task 1 inside Sub process Level 4">
@@ -268,19 +283,23 @@
         <dc:Bounds x="540" y="260" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0w5utgg_di" bpmnElement="Activity_0wvkd2t">
-        <dc:Bounds x="690" y="260" width="100" height="80" />
+      <bpmndi:BPMNShape id="Gateway_1wxsjxc_di" bpmnElement="Gateway_1wxsjxc" isMarkerVisible="true">
+        <dc:Bounds x="705" y="275" width="50" height="50" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1s1v9rj_di" bpmnElement="Activity_1g4etk1">
-        <dc:Bounds x="850" y="260" width="100" height="80" />
+      <bpmndi:BPMNShape id="Activity_0r44e57_di" bpmnElement="Activity_0r44e57">
+        <dc:Bounds x="820" y="370" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0xkl218_di" bpmnElement="Activity_1n64eex">
-        <dc:Bounds x="1000" y="260" width="100" height="80" />
+      <bpmndi:BPMNShape id="Activity_0hoqpsm_di" bpmnElement="Activity_0hoqpsm">
+        <dc:Bounds x="830" y="110" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0x3tsh5_di" bpmnElement="Activity_00xbh31">
-        <dc:Bounds x="1160" y="260" width="100" height="80" />
+        <dc:Bounds x="820" y="260" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_180i5c6_di" bpmnElement="Gateway_180i5c6" isMarkerVisible="true">
+        <dc:Bounds x="1045" y="275" width="50" height="50" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_1yozbuq_di" bpmnElement="Flow_1yozbuq">
         <di:waypoint x="338" y="300" />
@@ -292,23 +311,39 @@
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_01w7ny2_di" bpmnElement="Flow_01w7ny2">
         <di:waypoint x="640" y="300" />
-        <di:waypoint x="690" y="300" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0dmb9us_di" bpmnElement="Flow_0dmb9us">
-        <di:waypoint x="790" y="300" />
-        <di:waypoint x="850" y="300" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_1945p81_di" bpmnElement="Flow_1945p81">
-        <di:waypoint x="950" y="300" />
-        <di:waypoint x="1000" y="300" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_18ndv1c_di" bpmnElement="Flow_18ndv1c">
-        <di:waypoint x="1100" y="300" />
-        <di:waypoint x="1160" y="300" />
+        <di:waypoint x="705" y="300" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0bqakqx_di" bpmnElement="Flow_0bqakqx">
-        <di:waypoint x="1260" y="300" />
+        <di:waypoint x="920" y="300" />
+        <di:waypoint x="1045" y="300" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0xcxd02_di" bpmnElement="Flow_0xcxd02">
+        <di:waypoint x="755" y="300" />
+        <di:waypoint x="820" y="300" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0776xvf_di" bpmnElement="Flow_0776xvf">
+        <di:waypoint x="730" y="275" />
+        <di:waypoint x="730" y="150" />
+        <di:waypoint x="830" y="150" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1lry0gt_di" bpmnElement="Flow_1lry0gt">
+        <di:waypoint x="730" y="325" />
+        <di:waypoint x="730" y="410" />
+        <di:waypoint x="820" y="410" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1nweqz6_di" bpmnElement="Flow_1nweqz6">
+        <di:waypoint x="1095" y="300" />
         <di:waypoint x="1302" y="300" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0h4x82r_di" bpmnElement="Flow_0h4x82r">
+        <di:waypoint x="930" y="150" />
+        <di:waypoint x="1070" y="150" />
+        <di:waypoint x="1070" y="275" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1vg9dw9_di" bpmnElement="Flow_1vg9dw9">
+        <di:waypoint x="920" y="410" />
+        <di:waypoint x="1070" y="410" />
+        <di:waypoint x="1070" y="325" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
