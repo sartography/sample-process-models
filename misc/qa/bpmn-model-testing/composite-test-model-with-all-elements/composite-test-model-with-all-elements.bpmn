@@ -35,9 +35,6 @@
         <bpmn:flowNodeRef>Activity_0lcjnrs</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_03qzbkj</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Gateway_09b4yam</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Event_0jqx6cq</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Activity_03hrd27</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Activity_0illo4l</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_1ocfzii</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_1b5ca7e</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_15ii4tg</bpmn:flowNodeRef>
@@ -50,6 +47,9 @@
         <bpmn:flowNodeRef>Event_1rurpr7</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_1yfuk8w</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_1g4r4uk</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_0illo4l</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_03hrd27</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Event_0jqx6cq</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_Reviewer" name="Reviewer">
         <bpmn:flowNodeRef>Activity_GetMoreData</bpmn:flowNodeRef>
@@ -687,14 +687,6 @@ Data outa = {{DataOuta}}</spiffworkflow:instructionsForEndUser>
       <bpmn:outgoing>Flow_1cg4pxd</bpmn:outgoing>
       <bpmn:outgoing>Flow_186u7qc</bpmn:outgoing>
     </bpmn:inclusiveGateway>
-    <bpmn:endEvent id="Event_0jqx6cq">
-      <bpmn:incoming>Flow_09cmb0k</bpmn:incoming>
-    </bpmn:endEvent>
-    <bpmn:receiveTask id="Activity_03hrd27" name="Receive Task" messageRef="ModelWithAllElements_Message1">
-      <bpmn:extensionElements />
-      <bpmn:incoming>Flow_0vsn07x</bpmn:incoming>
-      <bpmn:outgoing>Flow_09cmb0k</bpmn:outgoing>
-    </bpmn:receiveTask>
     <bpmn:scriptTask id="Activity_GetReviewers" name="Get Reviewers">
       <bpmn:incoming>Flow_1msk5h9</bpmn:incoming>
       <bpmn:outgoing>Flow_1loqmjv</bpmn:outgoing>
@@ -706,10 +698,6 @@ Data outa = {{DataOuta}}</spiffworkflow:instructionsForEndUser>
       <bpmn:incoming>Flow_042vla2</bpmn:incoming>
       <bpmn:outgoing>Flow_055r1a4</bpmn:outgoing>
     </bpmn:exclusiveGateway>
-    <bpmn:callActivity id="Activity_0illo4l" name="Add Call PrePost Script Call Activity" calledElement="Process_unit_test_pre_scripts_post_scripts_for_tasks_mg2fcs0">
-      <bpmn:incoming>Flow_15rbuvl</bpmn:incoming>
-      <bpmn:outgoing>Flow_0vsn07x</bpmn:outgoing>
-    </bpmn:callActivity>
     <bpmn:endEvent id="Event_1ul45i9" name="Cancelled&#10;">
       <bpmn:incoming>Flow_07dk6k2</bpmn:incoming>
     </bpmn:endEvent>
@@ -870,6 +858,18 @@ Data outa = {{DataOuta}}</spiffworkflow:instructionsForEndUser>
       <bpmn:outgoing>Flow_11c4e8y</bpmn:outgoing>
       <bpmn:standardLoopCharacteristics loopMaximum="3" />
     </bpmn:manualTask>
+    <bpmn:callActivity id="Activity_0illo4l" name="Add Call PrePost Script Call Activity" calledElement="Test_pre_scripts_post_scripts_for_tasks_mg2fcs0">
+      <bpmn:incoming>Flow_15rbuvl</bpmn:incoming>
+      <bpmn:outgoing>Flow_0vsn07x</bpmn:outgoing>
+    </bpmn:callActivity>
+    <bpmn:receiveTask id="Activity_03hrd27" name="Receive Task" messageRef="ModelWithAllElements_Message1">
+      <bpmn:extensionElements />
+      <bpmn:incoming>Flow_0vsn07x</bpmn:incoming>
+      <bpmn:outgoing>Flow_09cmb0k</bpmn:outgoing>
+    </bpmn:receiveTask>
+    <bpmn:endEvent id="Event_0jqx6cq">
+      <bpmn:incoming>Flow_09cmb0k</bpmn:incoming>
+    </bpmn:endEvent>
   </bpmn:process>
   <bpmn:signal id="check_balance" name="check_balance">
     <bpmn:extensionElements>
@@ -985,6 +985,16 @@ Data outa = {{DataOuta}}</spiffworkflow:instructionsForEndUser>
       <bpmndi:BPMNShape id="Activity_14vd6wj_di" bpmnElement="Activity_0r04mc3">
         <dc:Bounds x="10" y="-104" width="100" height="80" />
         <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1oke3oj_di" bpmnElement="Activity_0illo4l">
+        <dc:Bounds x="650" y="795" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0p26ptv_di" bpmnElement="Activity_03hrd27">
+        <dc:Bounds x="810" y="795" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0jqx6cq_di" bpmnElement="Event_0jqx6cq">
+        <dc:Bounds x="972" y="817" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1p6wtv8_di" bpmnElement="Activity_12t2hwu" isExpanded="true">
         <dc:Bounds x="1130" y="-164" width="710" height="279" />
@@ -1341,22 +1351,12 @@ Data outa = {{DataOuta}}</spiffworkflow:instructionsForEndUser>
       <bpmndi:BPMNShape id="Gateway_0bns4d5_di" bpmnElement="Gateway_09b4yam">
         <dc:Bounds x="1565" y="900" width="50" height="50" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_0jqx6cq_di" bpmnElement="Event_0jqx6cq">
-        <dc:Bounds x="1272" y="817" width="36" height="36" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0p26ptv_di" bpmnElement="Activity_03hrd27">
-        <dc:Bounds x="1130" y="795" width="100" height="80" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_07hx4o8_di" bpmnElement="Activity_GetReviewers">
         <dc:Bounds x="-700" y="-360" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Gateway_1px4jo5_di" bpmnElement="Gateway_1px4jo5" isMarkerVisible="true">
         <dc:Bounds x="-535" y="-345" width="50" height="50" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1oke3oj_di" bpmnElement="Activity_0illo4l">
-        <dc:Bounds x="780" y="795" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_1ul45i9_di" bpmnElement="Event_1ul45i9">
         <dc:Bounds x="-479" y="79" width="36" height="36" />
@@ -1709,7 +1709,7 @@ Data outa = {{DataOuta}}</spiffworkflow:instructionsForEndUser>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_15rbuvl_di" bpmnElement="Flow_15rbuvl">
         <di:waypoint x="580" y="835" />
-        <di:waypoint x="780" y="835" />
+        <di:waypoint x="650" y="835" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1520go3_di" bpmnElement="Flow_1520go3">
         <di:waypoint x="1420" y="935" />
@@ -1744,12 +1744,12 @@ Data outa = {{DataOuta}}</spiffworkflow:instructionsForEndUser>
         <di:waypoint x="1530" y="1055" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_09cmb0k_di" bpmnElement="Flow_09cmb0k">
-        <di:waypoint x="1230" y="835" />
-        <di:waypoint x="1272" y="835" />
+        <di:waypoint x="910" y="835" />
+        <di:waypoint x="972" y="835" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0vsn07x_di" bpmnElement="Flow_0vsn07x">
-        <di:waypoint x="880" y="835" />
-        <di:waypoint x="1130" y="835" />
+        <di:waypoint x="750" y="835" />
+        <di:waypoint x="810" y="835" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1loqmjv_di" bpmnElement="Flow_1loqmjv">
         <di:waypoint x="-600" y="-320" />
