@@ -21,14 +21,20 @@
         <spiffworkflow:instructionsForEndUser>End User Task Unit Test.
 Your name is {{name}}</spiffworkflow:instructionsForEndUser>
       </bpmn:extensionElements>
-      <bpmn:incoming>Flow_0649xxr</bpmn:incoming>
+      <bpmn:incoming>Flow_0elewf3</bpmn:incoming>
     </bpmn:endEvent>
     <bpmn:sequenceFlow id="Flow_1sw001j" sourceRef="User_Task" targetRef="Activity_1kqxh4c" />
-    <bpmn:sequenceFlow id="Flow_0649xxr" sourceRef="Activity_1kqxh4c" targetRef="Event_1bgornj" />
+    <bpmn:sequenceFlow id="Flow_0649xxr" sourceRef="Activity_1kqxh4c" targetRef="Activity_1jmebif" />
     <bpmn:manualTask id="Activity_1kqxh4c" name="Temp Task 1">
       <bpmn:incoming>Flow_1sw001j</bpmn:incoming>
       <bpmn:outgoing>Flow_0649xxr</bpmn:outgoing>
     </bpmn:manualTask>
+    <bpmn:sequenceFlow id="Flow_0elewf3" sourceRef="Activity_1jmebif" targetRef="Event_1bgornj" />
+    <bpmn:scriptTask id="Activity_1jmebif" name="Temp Task 2">
+      <bpmn:incoming>Flow_0649xxr</bpmn:incoming>
+      <bpmn:outgoing>Flow_0elewf3</bpmn:outgoing>
+      <bpmn:script>aaa = 123</bpmn:script>
+    </bpmn:scriptTask>
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Unit_Test_User_Task">
@@ -46,6 +52,10 @@ Your name is {{name}}</spiffworkflow:instructionsForEndUser>
         <dc:Bounds x="410" y="137" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1ywjadc_di" bpmnElement="Activity_1jmebif">
+        <dc:Bounds x="600" y="137" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_0a751jt_di" bpmnElement="Flow_0a751jt">
         <di:waypoint x="215" y="177" />
         <di:waypoint x="250" y="177" />
@@ -56,6 +66,10 @@ Your name is {{name}}</spiffworkflow:instructionsForEndUser>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0649xxr_di" bpmnElement="Flow_0649xxr">
         <di:waypoint x="510" y="177" />
+        <di:waypoint x="600" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0elewf3_di" bpmnElement="Flow_0elewf3">
+        <di:waypoint x="700" y="177" />
         <di:waypoint x="842" y="177" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
