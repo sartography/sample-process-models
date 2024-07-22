@@ -21,9 +21,20 @@
         <spiffworkflow:instructionsForEndUser>End User Task Unit Test.
 Your name is {{name}}</spiffworkflow:instructionsForEndUser>
       </bpmn:extensionElements>
-      <bpmn:incoming>Flow_1sw001j</bpmn:incoming>
+      <bpmn:incoming>Flow_0rag2fi</bpmn:incoming>
     </bpmn:endEvent>
-    <bpmn:sequenceFlow id="Flow_1sw001j" sourceRef="User_Task" targetRef="Event_1bgornj" />
+    <bpmn:sequenceFlow id="Flow_1sw001j" sourceRef="User_Task" targetRef="Activity_0fw00nq" />
+    <bpmn:sequenceFlow id="Flow_1wn4gy0" sourceRef="Activity_0fw00nq" targetRef="Activity_0wla6gn" />
+    <bpmn:manualTask id="Activity_0fw00nq" name="Temp Task 1">
+      <bpmn:incoming>Flow_1sw001j</bpmn:incoming>
+      <bpmn:outgoing>Flow_1wn4gy0</bpmn:outgoing>
+    </bpmn:manualTask>
+    <bpmn:sequenceFlow id="Flow_0rag2fi" sourceRef="Activity_0wla6gn" targetRef="Event_1bgornj" />
+    <bpmn:scriptTask id="Activity_0wla6gn" name="Temp Task 2">
+      <bpmn:incoming>Flow_1wn4gy0</bpmn:incoming>
+      <bpmn:outgoing>Flow_0rag2fi</bpmn:outgoing>
+      <bpmn:script>aa = 34</bpmn:script>
+    </bpmn:scriptTask>
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Unit_Test_User_Task">
@@ -35,7 +46,15 @@ Your name is {{name}}</spiffworkflow:instructionsForEndUser>
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_1bgornj_di" bpmnElement="Event_1bgornj">
-        <dc:Bounds x="382" y="159" width="36" height="36" />
+        <dc:Bounds x="772" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0n4z8rf_di" bpmnElement="Activity_0fw00nq">
+        <dc:Bounds x="390" y="137" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_07szfr4_di" bpmnElement="Activity_0wla6gn">
+        <dc:Bounds x="540" y="137" width="100" height="80" />
+        <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_0a751jt_di" bpmnElement="Flow_0a751jt">
         <di:waypoint x="215" y="177" />
@@ -43,7 +62,15 @@ Your name is {{name}}</spiffworkflow:instructionsForEndUser>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1sw001j_di" bpmnElement="Flow_1sw001j">
         <di:waypoint x="350" y="177" />
-        <di:waypoint x="382" y="177" />
+        <di:waypoint x="390" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1wn4gy0_di" bpmnElement="Flow_1wn4gy0">
+        <di:waypoint x="490" y="177" />
+        <di:waypoint x="540" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0rag2fi_di" bpmnElement="Flow_0rag2fi">
+        <di:waypoint x="640" y="177" />
+        <di:waypoint x="772" y="177" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
