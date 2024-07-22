@@ -79,7 +79,6 @@
         <bpmn:flowNodeRef>Activity_049sh8c</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_1r30e70</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_1ul45i9</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Activity_103elga</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_12t2hwu</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_0456jk8</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_0a7j0za</bpmn:flowNodeRef>
@@ -130,7 +129,7 @@
           <spiffworkflow:property name="formUiSchemaFilename" value="review-form-uischema.json" />
         </spiffworkflow:properties>
       </bpmn:extensionElements>
-      <bpmn:incoming>Flow_1wpttrv</bpmn:incoming>
+      <bpmn:incoming>Flow_1xtmg0t</bpmn:incoming>
       <bpmn:outgoing>Flow_10rvmdc</bpmn:outgoing>
     </bpmn:userTask>
     <bpmn:intermediateThrowEvent id="Event_0er19np" name="Reject">
@@ -714,10 +713,6 @@ Data outa = {{DataOuta}}</spiffworkflow:instructionsForEndUser>
     <bpmn:endEvent id="Event_1ul45i9" name="Cancelled&#10;">
       <bpmn:incoming>Flow_07dk6k2</bpmn:incoming>
     </bpmn:endEvent>
-    <bpmn:manualTask id="Activity_103elga" name="New Task 1">
-      <bpmn:incoming>Flow_1xtmg0t</bpmn:incoming>
-      <bpmn:outgoing>Flow_1wpttrv</bpmn:outgoing>
-    </bpmn:manualTask>
     <bpmn:boundaryEvent id="Event_12g2sx5" attachedToRef="Activity_15ii4tg">
       <bpmn:outgoing>Flow_11hebhm</bpmn:outgoing>
       <bpmn:messageEventDefinition id="MessageEventDefinition_1kb0pnx" messageRef="MessageAgeAbove60">
@@ -757,7 +752,7 @@ Data outa = {{DataOuta}}</spiffworkflow:instructionsForEndUser>
     </bpmn:boundaryEvent>
     <bpmn:sequenceFlow id="Flow_1msk5h9" sourceRef="StartEvent_1" targetRef="Activity_GetReviewers" />
     <bpmn:sequenceFlow id="Flow_0c8hg1n" sourceRef="Activity_GetData" targetRef="Activity_GetMoreData" />
-    <bpmn:sequenceFlow id="Flow_1xtmg0t" sourceRef="Activity_GetMoreData" targetRef="Activity_103elga" />
+    <bpmn:sequenceFlow id="Flow_1xtmg0t" sourceRef="Activity_GetMoreData" targetRef="Activity_Review" />
     <bpmn:sequenceFlow id="Flow_10rvmdc" sourceRef="Activity_Review" targetRef="Gateway_1chm5qn" />
     <bpmn:sequenceFlow id="Flow_1efovhl" sourceRef="Gateway_1chm5qn" targetRef="Event_0t6257a">
       <bpmn:conditionExpression>approval == "Approve"</bpmn:conditionExpression>
@@ -770,7 +765,6 @@ Data outa = {{DataOuta}}</spiffworkflow:instructionsForEndUser>
     </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="Flow_07dk6k2" sourceRef="Gateway_1chm5qn" targetRef="Event_1ul45i9" />
     <bpmn:sequenceFlow id="Flow_05xruvm" sourceRef="Event_0t6257a" targetRef="Gateway_1y0gjbb" />
-    <bpmn:sequenceFlow id="Flow_1wpttrv" sourceRef="Activity_103elga" targetRef="Activity_Review" />
     <bpmn:sequenceFlow id="Flow_0zg89xt" sourceRef="Event_0er19np" targetRef="Gateway_1y0gjbb" />
     <bpmn:sequenceFlow id="Flow_12ty548" sourceRef="Event_12mvls1" targetRef="Gateway_1y0gjbb" />
     <bpmn:sequenceFlow id="Flow_1ohb8ht" sourceRef="Gateway_1y0gjbb" targetRef="Gateway_1v7vc1z" />
@@ -1370,10 +1364,6 @@ Data outa = {{DataOuta}}</spiffworkflow:instructionsForEndUser>
           <dc:Bounds x="-485" y="122" width="49" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0lu7ggc_di" bpmnElement="Activity_103elga">
-        <dc:Bounds x="-680" y="25" width="100" height="80" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0sh54qz_di" bpmnElement="Activity_1w17168">
         <dc:Bounds x="1600" y="645" width="100" height="80" />
         <bpmndi:BPMNLabel />
@@ -1432,7 +1422,10 @@ Data outa = {{DataOuta}}</spiffworkflow:instructionsForEndUser>
       <bpmndi:BPMNEdge id="Flow_1xtmg0t_di" bpmnElement="Flow_1xtmg0t">
         <di:waypoint x="-719" y="-24" />
         <di:waypoint x="-719" y="65" />
-        <di:waypoint x="-680" y="65" />
+        <di:waypoint x="-630" y="65" />
+        <di:waypoint x="-630" y="1" />
+        <di:waypoint x="-569" y="1" />
+        <di:waypoint x="-569" y="-24" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_10rvmdc_di" bpmnElement="Flow_10rvmdc">
         <di:waypoint x="-519" y="-64" />
@@ -1461,12 +1454,6 @@ Data outa = {{DataOuta}}</spiffworkflow:instructionsForEndUser>
         <di:waypoint x="-351" y="-125" />
         <di:waypoint x="-299" y="-125" />
         <di:waypoint x="-299" y="-89" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_1wpttrv_di" bpmnElement="Flow_1wpttrv">
-        <di:waypoint x="-630" y="25" />
-        <di:waypoint x="-630" y="1" />
-        <di:waypoint x="-569" y="1" />
-        <di:waypoint x="-569" y="-24" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0zg89xt_di" bpmnElement="Flow_0zg89xt">
         <di:waypoint x="-351" y="-64" />
