@@ -64,12 +64,20 @@
               </bpmn:startEvent>
               <bpmn:sequenceFlow id="Flow_1yozbuq" sourceRef="Event_09t2x34" targetRef="Activity_1klgono" />
               <bpmn:endEvent id="Event_1dhuvej">
-                <bpmn:incoming>Flow_1cnsa77</bpmn:incoming>
+                <bpmn:incoming>Flow_01w7ny2</bpmn:incoming>
               </bpmn:endEvent>
-              <bpmn:sequenceFlow id="Flow_1cnsa77" sourceRef="Activity_1klgono" targetRef="Event_1dhuvej" />
+              <bpmn:sequenceFlow id="Flow_1cnsa77" sourceRef="Activity_1klgono" targetRef="Activity_1ji0uee" />
               <bpmn:manualTask id="Activity_1klgono" name="Manual Task 1 in Sub process Level 5">
+                <bpmn:extensionElements>
+                  <spiffworkflow:instructionsForEndUser>Manual Task 1 in Sub process Level 5</spiffworkflow:instructionsForEndUser>
+                </bpmn:extensionElements>
                 <bpmn:incoming>Flow_1yozbuq</bpmn:incoming>
                 <bpmn:outgoing>Flow_1cnsa77</bpmn:outgoing>
+              </bpmn:manualTask>
+              <bpmn:sequenceFlow id="Flow_01w7ny2" sourceRef="Activity_1ji0uee" targetRef="Event_1dhuvej" />
+              <bpmn:manualTask id="Activity_1ji0uee" name="Manual Task 2 in Sub process Level 5">
+                <bpmn:incoming>Flow_1cnsa77</bpmn:incoming>
+                <bpmn:outgoing>Flow_01w7ny2</bpmn:outgoing>
               </bpmn:manualTask>
             </bpmn:subProcess>
           </bpmn:subProcess>
@@ -188,11 +196,15 @@
       <bpmndi:BPMNShape id="Event_09t2x34_di" bpmnElement="Event_09t2x34">
         <dc:Bounds x="572" y="282" width="36" height="36" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_1dhuvej_di" bpmnElement="Event_1dhuvej">
-        <dc:Bounds x="812" y="282" width="36" height="36" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_05b2lie_di" bpmnElement="Activity_1klgono">
         <dc:Bounds x="660" y="260" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1dhuvej_di" bpmnElement="Event_1dhuvej">
+        <dc:Bounds x="1042" y="282" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0uqlxvz_di" bpmnElement="Activity_1ji0uee">
+        <dc:Bounds x="850" y="260" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_1yozbuq_di" bpmnElement="Flow_1yozbuq">
@@ -201,7 +213,11 @@
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1cnsa77_di" bpmnElement="Flow_1cnsa77">
         <di:waypoint x="760" y="300" />
-        <di:waypoint x="812" y="300" />
+        <di:waypoint x="850" y="300" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_01w7ny2_di" bpmnElement="Flow_01w7ny2">
+        <di:waypoint x="950" y="300" />
+        <di:waypoint x="1042" y="300" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
