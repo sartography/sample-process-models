@@ -15,7 +15,7 @@
     <bpmn:manualTask id="Guest_manual_task" name="Guest manual task">
       <bpmn:extensionElements>
         <spiffworkflow:instructionsForEndUser>This is an example **Manual Task** for a Guest user.</spiffworkflow:instructionsForEndUser>
-        <spiffworkflow:allowGuest>false</spiffworkflow:allowGuest>
+        <spiffworkflow:allowGuest>true</spiffworkflow:allowGuest>
         <spiffworkflow:preScript># Get Process Instance
 process_info = get_toplevel_process_info()
 process_instance_id = process_info["process_instance_id"]
@@ -31,6 +31,7 @@ task_guid = task_info['id']
 # Generate guest user task URL
 guest_link = get_url_for_task_with_bpmn_identifier("Guest_manual_task")</spiffworkflow:preScript>
         <spiffworkflow:postScript />
+        <spiffworkflow:guestConfirmation></spiffworkflow:guestConfirmation>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_17db3yp</bpmn:incoming>
       <bpmn:outgoing>Flow_12pkbxb</bpmn:outgoing>
@@ -38,7 +39,7 @@ guest_link = get_url_for_task_with_bpmn_identifier("Guest_manual_task")</spiffwo
     <bpmn:sequenceFlow id="Flow_0xhhjj7" sourceRef="Activity_1mqivbd" targetRef="Activity_1na4982" />
     <bpmn:userTask id="Activity_1mqivbd" name="User Task1">
       <bpmn:extensionElements>
-        <spiffworkflow:allowGuest>false</spiffworkflow:allowGuest>
+        <spiffworkflow:allowGuest>true</spiffworkflow:allowGuest>
         <spiffworkflow:guestConfirmation />
         <spiffworkflow:properties>
           <spiffworkflow:property name="formJsonSchemaFilename" value="guest-form1-schema.json" />
