@@ -52,14 +52,14 @@ Manual_task_3 = {{manual_task_3}}</spiffworkflow:instructionsForEndUser>
       <bpmn:incoming>Flow_0t5wjjo</bpmn:incoming>
       <bpmn:outgoing>Flow_0kty908</bpmn:outgoing>
     </bpmn:manualTask>
-    <bpmn:sequenceFlow id="Flow_0kty908" sourceRef="Activity_1nk76nr" targetRef="Gateway_0na3rng" />
+    <bpmn:sequenceFlow id="Flow_0kty908" sourceRef="Activity_1nk76nr" targetRef="Activity_1724gg7" />
     <bpmn:manualTask id="Activity_1724gg7" name="Show Manual Task Data 1">
       <bpmn:extensionElements>
         <spiffworkflow:instructionsForEndUser>Manual Task var 1 = {{manual_task_1}},
 Manual Task var 2 = {{manual_task_2}},
 Manual Task var 3 = {{manual_task_3}}</spiffworkflow:instructionsForEndUser>
       </bpmn:extensionElements>
-      <bpmn:incoming>Flow_1nvwm8y</bpmn:incoming>
+      <bpmn:incoming>Flow_0kty908</bpmn:incoming>
       <bpmn:outgoing>Flow_0is9d8n</bpmn:outgoing>
     </bpmn:manualTask>
     <bpmn:sequenceFlow id="Flow_0is9d8n" sourceRef="Activity_1724gg7" targetRef="Activity_1cmc6ij" />
@@ -128,14 +128,14 @@ User Role = {{test_role}}</spiffworkflow:instructionsForEndUser>
       <bpmn:outgoing>Flow_0lv8c94</bpmn:outgoing>
     </bpmn:manualTask>
     <bpmn:sequenceFlow id="Flow_0lv8c94" sourceRef="Activity_1abcuai" targetRef="Activity_0uw8p7i" />
-    <bpmn:sequenceFlow id="Flow_0c3kbws" sourceRef="Activity_0uw8p7i" targetRef="Gateway_1ruim58" />
+    <bpmn:sequenceFlow id="Flow_0c3kbws" sourceRef="Activity_0uw8p7i" targetRef="Activity_1xl1vnt" />
     <bpmn:manualTask id="Activity_1xl1vnt" name="Show Send Task Data 1">
       <bpmn:extensionElements>
         <spiffworkflow:instructionsForEndUser>Send Task var 1 = {{send_task_1}},
 Send Task var 2 = {{send_task_2}},
 payload = {{payload}}</spiffworkflow:instructionsForEndUser>
       </bpmn:extensionElements>
-      <bpmn:incoming>Flow_1u38qtm</bpmn:incoming>
+      <bpmn:incoming>Flow_0c3kbws</bpmn:incoming>
       <bpmn:outgoing>Flow_0zbzkxg</bpmn:outgoing>
     </bpmn:manualTask>
     <bpmn:sequenceFlow id="Flow_0zbzkxg" sourceRef="Activity_1xl1vnt" targetRef="Activity_0y4kkn9" />
@@ -373,21 +373,6 @@ z = {{z}}</spiffworkflow:instructionsForEndUser>
       <bpmn:incoming>Flow_15q2px7</bpmn:incoming>
       <bpmn:outgoing>Flow_093yt3c</bpmn:outgoing>
     </bpmn:manualTask>
-    <bpmn:exclusiveGateway id="Gateway_0na3rng">
-      <bpmn:incoming>Flow_0kty908</bpmn:incoming>
-      <bpmn:incoming>Flow_1k8c7o7</bpmn:incoming>
-      <bpmn:outgoing>Flow_1nvwm8y</bpmn:outgoing>
-    </bpmn:exclusiveGateway>
-    <bpmn:sequenceFlow id="Flow_1nvwm8y" sourceRef="Gateway_0na3rng" targetRef="Activity_1724gg7" />
-    <bpmn:exclusiveGateway id="Gateway_1ruim58" default="Flow_1k8c7o7">
-      <bpmn:incoming>Flow_0c3kbws</bpmn:incoming>
-      <bpmn:outgoing>Flow_1u38qtm</bpmn:outgoing>
-      <bpmn:outgoing>Flow_1k8c7o7</bpmn:outgoing>
-    </bpmn:exclusiveGateway>
-    <bpmn:sequenceFlow id="Flow_1u38qtm" sourceRef="Gateway_1ruim58" targetRef="Activity_1xl1vnt">
-      <bpmn:conditionExpression>x&gt;10</bpmn:conditionExpression>
-    </bpmn:sequenceFlow>
-    <bpmn:sequenceFlow id="Flow_1k8c7o7" sourceRef="Gateway_1ruim58" targetRef="Gateway_0na3rng" />
   </bpmn:process>
   <bpmn:message id="PrePostScriptMsg" name="PrePostScriptMsg" />
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
@@ -443,15 +428,9 @@ z = {{z}}</spiffworkflow:instructionsForEndUser>
         <dc:Bounds x="820" y="330" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Gateway_1ruim58_di" bpmnElement="Gateway_1ruim58" isMarkerVisible="true">
-        <dc:Bounds x="735" y="345" width="50" height="50" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0mm8knu_di" bpmnElement="Activity_1xl1vnt">
         <dc:Bounds x="610" y="330" width="100" height="80" />
         <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Gateway_0na3rng_di" bpmnElement="Gateway_0na3rng" isMarkerVisible="true">
-        <dc:Bounds x="705" y="152" width="50" height="50" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0q35qe1_di" bpmnElement="Activity_0tw18gv">
         <dc:Bounds x="330" y="500" width="100" height="80" />
@@ -532,7 +511,7 @@ z = {{z}}</spiffworkflow:instructionsForEndUser>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0kty908_di" bpmnElement="Flow_0kty908">
         <di:waypoint x="670" y="177" />
-        <di:waypoint x="705" y="177" />
+        <di:waypoint x="780" y="177" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0is9d8n_di" bpmnElement="Flow_0is9d8n">
         <di:waypoint x="880" y="177" />
@@ -556,7 +535,7 @@ z = {{z}}</spiffworkflow:instructionsForEndUser>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0c3kbws_di" bpmnElement="Flow_0c3kbws">
         <di:waypoint x="820" y="370" />
-        <di:waypoint x="785" y="370" />
+        <di:waypoint x="710" y="370" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0zbzkxg_di" bpmnElement="Flow_0zbzkxg">
         <di:waypoint x="610" y="370" />
@@ -620,20 +599,6 @@ z = {{z}}</spiffworkflow:instructionsForEndUser>
         <di:waypoint x="320" y="760" />
         <di:waypoint x="320" y="890" />
         <di:waypoint x="822" y="890" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_1nvwm8y_di" bpmnElement="Flow_1nvwm8y">
-        <di:waypoint x="755" y="177" />
-        <di:waypoint x="780" y="177" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_1u38qtm_di" bpmnElement="Flow_1u38qtm">
-        <di:waypoint x="735" y="370" />
-        <di:waypoint x="710" y="370" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_1k8c7o7_di" bpmnElement="Flow_1k8c7o7">
-        <di:waypoint x="760" y="345" />
-        <di:waypoint x="760" y="274" />
-        <di:waypoint x="730" y="274" />
-        <di:waypoint x="730" y="202" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
