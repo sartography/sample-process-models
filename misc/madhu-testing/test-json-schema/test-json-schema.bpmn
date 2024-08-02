@@ -6,7 +6,7 @@
     </bpmn:startEvent>
     <bpmn:sequenceFlow id="Flow_17db3yp" sourceRef="StartEvent_1" targetRef="Activity_0qpzdpu" />
     <bpmn:endEvent id="EndEvent_1">
-      <bpmn:incoming>Flow_10rzzfb</bpmn:incoming>
+      <bpmn:incoming>Flow_0enjrqk</bpmn:incoming>
     </bpmn:endEvent>
     <bpmn:sequenceFlow id="Flow_12pkbxb" sourceRef="Activity_0qpzdpu" targetRef="Activity_0eo6zvx" />
     <bpmn:manualTask id="Activity_0qpzdpu" name="Example manual task">
@@ -22,7 +22,7 @@ You can also change the text you are reading here by updating the *Instructions*
       <bpmn:incoming>Flow_17db3yp</bpmn:incoming>
       <bpmn:outgoing>Flow_12pkbxb</bpmn:outgoing>
     </bpmn:manualTask>
-    <bpmn:sequenceFlow id="Flow_10rzzfb" sourceRef="Activity_0eo6zvx" targetRef="EndEvent_1" />
+    <bpmn:sequenceFlow id="Flow_10rzzfb" sourceRef="Activity_0eo6zvx" targetRef="Activity_1qd1tut" />
     <bpmn:userTask id="Activity_0eo6zvx">
       <bpmn:extensionElements>
         <spiffworkflow:properties>
@@ -33,7 +33,25 @@ You can also change the text you are reading here by updating the *Instructions*
       <bpmn:incoming>Flow_12pkbxb</bpmn:incoming>
       <bpmn:outgoing>Flow_10rzzfb</bpmn:outgoing>
     </bpmn:userTask>
+    <bpmn:sequenceFlow id="Flow_07kx6tn" sourceRef="Activity_1qd1tut" targetRef="Activity_1a07e5g" />
+    <bpmn:sendTask id="Activity_1qd1tut" messageRef="TestMsg1">
+      <bpmn:extensionElements>
+        <spiffworkflow:messagePayload>{"name":"Joe", "age":35}</spiffworkflow:messagePayload>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_10rzzfb</bpmn:incoming>
+      <bpmn:outgoing>Flow_07kx6tn</bpmn:outgoing>
+    </bpmn:sendTask>
+    <bpmn:sequenceFlow id="Flow_0enjrqk" sourceRef="Activity_1a07e5g" targetRef="EndEvent_1" />
+    <bpmn:receiveTask id="Activity_1a07e5g" messageRef="TestMsg1">
+      <bpmn:extensionElements>
+        <spiffworkflow:messageVariable>payloadResp</spiffworkflow:messageVariable>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_07kx6tn</bpmn:incoming>
+      <bpmn:outgoing>Flow_0enjrqk</bpmn:outgoing>
+    </bpmn:receiveTask>
   </bpmn:process>
+  <bpmn:message id="TestMsg1" name="TestMsg1" />
+  <bpmn:correlationKey id="CorrelationKey_1a0712w" name="MainCorrelationKey" />
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_test_json_schema_oistggn">
       <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
@@ -43,11 +61,17 @@ You can also change the text you are reading here by updating the *Instructions*
         <dc:Bounds x="270" y="137" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_14za570_di" bpmnElement="EndEvent_1">
-        <dc:Bounds x="642" y="159" width="36" height="36" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1feotqb_di" bpmnElement="Activity_0eo6zvx">
         <dc:Bounds x="440" y="137" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_039cxl4_di" bpmnElement="Activity_1qd1tut">
+        <dc:Bounds x="600" y="137" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_14za570_di" bpmnElement="EndEvent_1">
+        <dc:Bounds x="972" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1stn3y9_di" bpmnElement="Activity_1a07e5g">
+        <dc:Bounds x="770" y="137" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_17db3yp_di" bpmnElement="Flow_17db3yp">
         <di:waypoint x="215" y="177" />
@@ -59,7 +83,15 @@ You can also change the text you are reading here by updating the *Instructions*
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_10rzzfb_di" bpmnElement="Flow_10rzzfb">
         <di:waypoint x="540" y="177" />
-        <di:waypoint x="642" y="177" />
+        <di:waypoint x="600" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_07kx6tn_di" bpmnElement="Flow_07kx6tn">
+        <di:waypoint x="700" y="177" />
+        <di:waypoint x="770" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0enjrqk_di" bpmnElement="Flow_0enjrqk">
+        <di:waypoint x="870" y="177" />
+        <di:waypoint x="972" y="177" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
