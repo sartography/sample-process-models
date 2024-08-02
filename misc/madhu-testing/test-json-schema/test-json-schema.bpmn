@@ -64,7 +64,14 @@ You can also change the text you are reading here by updating the *Instructions*
     </bpmn:manualTask>
   </bpmn:process>
   <bpmn:message id="MyMsg1" name="MyMsg1" />
-  <bpmn:correlationKey id="CorrelationKey_0ont1bg" name="MainCorrelationKey" />
+  <bpmn:correlationProperty id="table_number" name="table_number">
+    <bpmn:correlationPropertyRetrievalExpression messageRef="MyMsg1">
+      <bpmn:formalExpression>table_number</bpmn:formalExpression>
+    </bpmn:correlationPropertyRetrievalExpression>
+  </bpmn:correlationProperty>
+  <bpmn:correlationKey id="CorrelationKey_1h582c0" name="MainCorrelationKey">
+    <bpmn:correlationPropertyRef>table_number</bpmn:correlationPropertyRef>
+  </bpmn:correlationKey>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_test_json_schema_oistggn">
       <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
