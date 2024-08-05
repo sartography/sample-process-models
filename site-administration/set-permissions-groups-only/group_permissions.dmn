@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/" xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/" xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/" xmlns:biodi="http://bpmn.io/schema/dmn/biodi/2.0" id="Definitions_76910d7" name="DRD" namespace="http://camunda.org/schema/1.0/dmn">
+  <decision id="groups_to_permissions_table" name="Groups to Permissions">
+    <decisionTable id="decisionTable_1" hitPolicy="COLLECT">
+      <input id="input_1" biodi:width="150">
+        <inputExpression id="inputExpression_1" typeRef="string">
+          <text>"*"</text>
+        </inputExpression>
+      </input>
+      <output id="OutputClause_14rq1xp" name="permission_groups" typeRef="string" />
+      <output id="output_1" name="permissions" typeRef="string" biodi:width="279" />
+      <output id="OutputClause_1d0f70s" name="permission_uris" typeRef="string" biodi:width="254" />
+      <rule id="DecisionRule_13uhk78">
+        <description>admin group has access to everything. The permissions create, read, update, and delete are the full set that is available, and "all" is a shortcut to include all permissions.</description>
+        <inputEntry id="UnaryTests_1yb5tu4">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_00aw971">
+          <text>"admin"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1drtsn8">
+          <text>["all"]</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_13n9min">
+          <text>"ALL"
+</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0vxd5xq">
+        <description>everybody group has basic access to the system.</description>
+        <inputEntry id="UnaryTests_18ra8iv">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_09upqcm">
+          <text>"everybody"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_0qu6sf0">
+          <text>["all"]</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_0mnqz8y">
+          <text>"BASIC"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0y6tpc1">
+        <description>everybody group can read all process groups and process models.</description>
+        <inputEntry id="UnaryTests_0idup89">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0jn02bx">
+          <text>"everybody"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_0qw2qs5">
+          <text>["read"]</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1671tcs">
+          <text>"PG:example"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0f5ftp1">
+        <description>everybody can start all models</description>
+        <inputEntry id="UnaryTests_1sp1vyo">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0vn0yc2">
+          <text>"everybody"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_0c8pfgp">
+          <text>["start"]</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1remk04">
+          <text>"PG:example"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1gyeeqf">
+        <inputEntry id="UnaryTests_0ukzok5">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_17073jb">
+          <text>"everybody"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_03fwnc7">
+          <text>["read"]</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1yzhy15">
+          <text>"/process-groups"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1rw1zzd">
+        <inputEntry id="UnaryTests_1dckj62">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0nlxwjt">
+          <text>"everybody"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1px2fpo">
+          <text>["read"]</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_0fqfv5k">
+          <text>"/process-models"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_02yj6ya">
+        <inputEntry id="UnaryTests_0r2bvwg">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0s7tkzb">
+          <text>"everybody"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1m9rt0d">
+          <text>["read"]</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1qld1ls">
+          <text>"/task-data/example:*"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0rxew2m">
+        <inputEntry id="UnaryTests_0rcu2x4">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0i5jmbm">
+          <text>"everybody"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1ubcf59">
+          <text>["create"]</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1p2iwma">
+          <text>"/extensions/aggregate-metadata"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0swu709">
+        <inputEntry id="UnaryTests_0i3obt6">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0ehef6e">
+          <text>"spiff_public"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_0almr65">
+          <text>["all"]</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_0tglhoy">
+          <text>"/public/*"</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <dmndi:DMNDI>
+    <dmndi:DMNDiagram id="DMNDiagram_1cykosu">
+      <dmndi:DMNShape id="DMNShape_1dhfq2s" dmnElementRef="groups_to_permissions_table">
+        <dc:Bounds height="80" width="180" x="157" y="151" />
+      </dmndi:DMNShape>
+    </dmndi:DMNDiagram>
+  </dmndi:DMNDI>
+</definitions>
