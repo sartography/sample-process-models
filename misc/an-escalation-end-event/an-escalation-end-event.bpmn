@@ -9,7 +9,7 @@
       <bpmn:incoming>Flow_12pkbxb</bpmn:incoming>
     </bpmn:endEvent>
     <bpmn:sequenceFlow id="Flow_12pkbxb" sourceRef="Activity_0qpzdpu" targetRef="EndEvent_1" />
-    <bpmn:manualTask id="Activity_0qpzdpu" name="Example manual task">
+    <bpmn:subProcess id="Activity_0qpzdpu" name="subprocess1">
       <bpmn:extensionElements>
         <spiffworkflow:instructionsForEndUser>This is an example **Manual Task**. A **Manual Task** is designed to allow someone to complete a task outside of the system and then report back that it is complete. You can click the *Continue* button to proceed. When you are done running this process, you can edit the **Process Model** to include a:
 
@@ -21,7 +21,19 @@ You can also change the text you are reading here by updating the *Instructions*
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_17db3yp</bpmn:incoming>
       <bpmn:outgoing>Flow_12pkbxb</bpmn:outgoing>
-    </bpmn:manualTask>
+      <bpmn:startEvent id="Event_0alfvj7">
+        <bpmn:outgoing>Flow_1c2te1e</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:sequenceFlow id="Flow_1c2te1e" sourceRef="Event_0alfvj7" targetRef="Activity_1jxp2l7" />
+      <bpmn:endEvent id="Event_00ch8tw">
+        <bpmn:incoming>Flow_15roxcb</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:sequenceFlow id="Flow_15roxcb" sourceRef="Activity_1jxp2l7" targetRef="Event_00ch8tw" />
+      <bpmn:subProcess id="Activity_1jxp2l7" name="level 2">
+        <bpmn:incoming>Flow_1c2te1e</bpmn:incoming>
+        <bpmn:outgoing>Flow_15roxcb</bpmn:outgoing>
+      </bpmn:subProcess>
+    </bpmn:subProcess>
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_an_escalation_end_event_hs6bb0w">
@@ -31,7 +43,7 @@ You can also change the text you are reading here by updating the *Instructions*
       <bpmndi:BPMNShape id="Event_14za570_di" bpmnElement="EndEvent_1">
         <dc:Bounds x="432" y="159" width="36" height="36" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0zqotmb_di" bpmnElement="Activity_0qpzdpu">
+      <bpmndi:BPMNShape id="Activity_00xutgl_di" bpmnElement="Activity_0qpzdpu">
         <dc:Bounds x="270" y="137" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
@@ -44,5 +56,30 @@ You can also change the text you are reading here by updating the *Instructions*
         <di:waypoint x="432" y="177" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_15cmina">
+    <bpmndi:BPMNPlane id="BPMNPlane_11okmxd" bpmnElement="Activity_0qpzdpu">
+      <bpmndi:BPMNShape id="Event_0alfvj7_di" bpmnElement="Event_0alfvj7">
+        <dc:Bounds x="562" y="192" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_00ch8tw_di" bpmnElement="Event_00ch8tw">
+        <dc:Bounds x="802" y="192" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_14y3n6i_di" bpmnElement="Activity_1jxp2l7">
+        <dc:Bounds x="650" y="170" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_1c2te1e_di" bpmnElement="Flow_1c2te1e">
+        <di:waypoint x="598" y="210" />
+        <di:waypoint x="650" y="210" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_15roxcb_di" bpmnElement="Flow_15roxcb">
+        <di:waypoint x="750" y="210" />
+        <di:waypoint x="802" y="210" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1l1rvon">
+    <bpmndi:BPMNPlane id="BPMNPlane_131g1fi" bpmnElement="Activity_1jxp2l7" />
   </bpmndi:BPMNDiagram>
 </bpmn:definitions>
