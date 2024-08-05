@@ -32,6 +32,19 @@ You can also change the text you are reading here by updating the *Instructions*
       <bpmn:subProcess id="Activity_1jxp2l7" name="level 2">
         <bpmn:incoming>Flow_1c2te1e</bpmn:incoming>
         <bpmn:outgoing>Flow_15roxcb</bpmn:outgoing>
+        <bpmn:startEvent id="Event_12docsc">
+          <bpmn:outgoing>Flow_09mp93w</bpmn:outgoing>
+        </bpmn:startEvent>
+        <bpmn:sequenceFlow id="Flow_09mp93w" sourceRef="Event_12docsc" targetRef="Activity_14hismi" />
+        <bpmn:sequenceFlow id="Flow_07maw2s" sourceRef="Activity_14hismi" targetRef="Event_1xawde7" />
+        <bpmn:manualTask id="Activity_14hismi" name="level 3">
+          <bpmn:incoming>Flow_09mp93w</bpmn:incoming>
+          <bpmn:outgoing>Flow_07maw2s</bpmn:outgoing>
+        </bpmn:manualTask>
+        <bpmn:endEvent id="Event_1xawde7">
+          <bpmn:incoming>Flow_07maw2s</bpmn:incoming>
+          <bpmn:escalationEventDefinition id="EscalationEventDefinition_1j6foe1" />
+        </bpmn:endEvent>
       </bpmn:subProcess>
     </bpmn:subProcess>
   </bpmn:process>
@@ -80,6 +93,24 @@ You can also change the text you are reading here by updating the *Instructions*
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1l1rvon">
-    <bpmndi:BPMNPlane id="BPMNPlane_131g1fi" bpmnElement="Activity_1jxp2l7" />
+    <bpmndi:BPMNPlane id="BPMNPlane_131g1fi" bpmnElement="Activity_1jxp2l7">
+      <bpmndi:BPMNShape id="Event_12docsc_di" bpmnElement="Event_12docsc">
+        <dc:Bounds x="552" y="232" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_034xngq_di" bpmnElement="Activity_14hismi">
+        <dc:Bounds x="640" y="210" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1b5nyui_di" bpmnElement="Event_1xawde7">
+        <dc:Bounds x="792" y="232" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_09mp93w_di" bpmnElement="Flow_09mp93w">
+        <di:waypoint x="588" y="250" />
+        <di:waypoint x="640" y="250" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_07maw2s_di" bpmnElement="Flow_07maw2s">
+        <di:waypoint x="740" y="250" />
+        <di:waypoint x="792" y="250" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
 </bpmn:definitions>
