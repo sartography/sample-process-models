@@ -5,9 +5,6 @@
       <bpmn:outgoing>Flow_17db3yp</bpmn:outgoing>
     </bpmn:startEvent>
     <bpmn:sequenceFlow id="Flow_17db3yp" sourceRef="StartEvent_1" targetRef="Activity_0qpzdpu" />
-    <bpmn:endEvent id="EndEvent_1">
-      <bpmn:incoming>Flow_12pkbxb</bpmn:incoming>
-    </bpmn:endEvent>
     <bpmn:sequenceFlow id="Flow_12pkbxb" sourceRef="Activity_0qpzdpu" targetRef="EndEvent_1" />
     <bpmn:manualTask id="Activity_0qpzdpu" name="Example manual task">
       <bpmn:extensionElements>
@@ -22,19 +19,27 @@ You can also change the text you are reading here by updating the *Instructions*
       <bpmn:incoming>Flow_17db3yp</bpmn:incoming>
       <bpmn:outgoing>Flow_12pkbxb</bpmn:outgoing>
     </bpmn:manualTask>
+    <bpmn:endEvent id="EndEvent_1">
+      <bpmn:incoming>Flow_12pkbxb</bpmn:incoming>
+      <bpmn:errorEventDefinition id="ErrorEventDefinition_0olzb2x" errorRef="error1" />
+    </bpmn:endEvent>
   </bpmn:process>
-  <bpmn:error id="error1" name="error1" />
+  <bpmn:error id="error1" name="error1">
+    <bpmn:extensionElements>
+      <spiffworkflow:payloadExpression>{"error_code": "code1", "message": "hi"}</spiffworkflow:payloadExpression>
+    </bpmn:extensionElements>
+  </bpmn:error>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_call_activity_error_level_3">
       <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
         <dc:Bounds x="179" y="159" width="36" height="36" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_14za570_di" bpmnElement="EndEvent_1">
-        <dc:Bounds x="432" y="159" width="36" height="36" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0zqotmb_di" bpmnElement="Activity_0qpzdpu">
         <dc:Bounds x="270" y="137" width="100" height="80" />
         <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_15y809m_di" bpmnElement="EndEvent_1">
+        <dc:Bounds x="432" y="159" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_17db3yp_di" bpmnElement="Flow_17db3yp">
         <di:waypoint x="215" y="177" />
