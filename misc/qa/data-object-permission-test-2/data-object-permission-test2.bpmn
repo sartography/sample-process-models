@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:spiffworkflow="http://spiffworkflow.org/bpmn/schema/1.0/core" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_96f6665" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.0.0-dev">
+  <bpmn:process id="Process_m3iulir" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>Flow_0u8tvq5</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_0u8tvq5" sourceRef="StartEvent_1" targetRef="Activity_0c198sv" />
+    <bpmn:scriptTask id="Activity_0c198sv" name="Set up data">
+      <bpmn:incoming>Flow_0u8tvq5</bpmn:incoming>
+      <bpmn:outgoing>Flow_1va685u</bpmn:outgoing>
+      <bpmn:dataOutputAssociation id="DataOutputAssociation_1bek7hi">
+        <bpmn:targetRef>DataObjectReference_1snecau</bpmn:targetRef>
+      </bpmn:dataOutputAssociation>
+      <bpmn:script>data_object_a = 1
+data_object_b = 2</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:dataObject id="data_object_b">
+      <bpmn:extensionElements>
+        <spiffworkflow:category>restricted</spiffworkflow:category>
+      </bpmn:extensionElements>
+    </bpmn:dataObject>
+    <bpmn:sequenceFlow id="Flow_1va685u" sourceRef="Activity_0c198sv" targetRef="Activity_0s0fca8" />
+    <bpmn:dataObjectReference id="DataObjectReference_1snecau" name="Data Object B" dataObjectRef="data_object_b" />
+    <bpmn:manualTask id="Activity_0s0fca8" name="Check B removed">
+      <bpmn:extensionElements>
+        <spiffworkflow:instructionsForEndUser>Data Object A: {{data_object_a}}  
+Data Object B: {{data_object_b}}</spiffworkflow:instructionsForEndUser>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1va685u</bpmn:incoming>
+      <bpmn:outgoing>Flow_01v6phc</bpmn:outgoing>
+    </bpmn:manualTask>
+    <bpmn:sequenceFlow id="Flow_01v6phc" sourceRef="Activity_0s0fca8" targetRef="Activity_1q6z5y3" />
+    <bpmn:subProcess id="Activity_1q6z5y3" name="Sub Process">
+      <bpmn:incoming>Flow_01v6phc</bpmn:incoming>
+      <bpmn:outgoing>Flow_0js3xlv</bpmn:outgoing>
+      <bpmn:startEvent id="Event_1esavrp">
+        <bpmn:outgoing>Flow_13xpvuq</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:sequenceFlow id="Flow_13xpvuq" sourceRef="Event_1esavrp" targetRef="Activity_18ljf8w" />
+      <bpmn:endEvent id="Event_1vd7oo5">
+        <bpmn:incoming>Flow_1o225qa</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:sequenceFlow id="Flow_1o225qa" sourceRef="Activity_18ljf8w" targetRef="Event_1vd7oo5" />
+      <bpmn:manualTask id="Activity_18ljf8w" name="Check A &#38; B">
+        <bpmn:extensionElements>
+          <spiffworkflow:instructionsForEndUser>Data Object A: {{data_object_a}}  
+Data Object B:{{data_object_b}}</spiffworkflow:instructionsForEndUser>
+        </bpmn:extensionElements>
+        <bpmn:incoming>Flow_13xpvuq</bpmn:incoming>
+        <bpmn:outgoing>Flow_1o225qa</bpmn:outgoing>
+        <bpmn:property id="Property_1jnnfid" name="__targetRef_placeholder" />
+        <bpmn:dataInputAssociation id="DataInputAssociation_1ek52up">
+          <bpmn:sourceRef>DataObjectReference_02rp4mt</bpmn:sourceRef>
+          <bpmn:targetRef>Property_1jnnfid</bpmn:targetRef>
+        </bpmn:dataInputAssociation>
+        <bpmn:dataOutputAssociation id="DataOutputAssociation_1yhny15">
+          <bpmn:targetRef>DataObjectReference_1neqg57</bpmn:targetRef>
+        </bpmn:dataOutputAssociation>
+      </bpmn:manualTask>
+      <bpmn:dataObjectReference id="DataObjectReference_02rp4mt" name="Data Object B" dataObjectRef="data_object_b" />
+      <bpmn:dataObjectReference id="DataObjectReference_1neqg57" name="Data Object A" dataObjectRef="data_object_a" />
+      <bpmn:dataObject id="data_object_a">
+        <bpmn:extensionElements>
+          <spiffworkflow:category>sensitive</spiffworkflow:category>
+        </bpmn:extensionElements>
+      </bpmn:dataObject>
+      <bpmn:textAnnotation id="TextAnnotation_1wmnmyx">
+        <bpmn:text>Only A is available at the beginning.</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="Association_09mckpj" sourceRef="Event_1esavrp" targetRef="TextAnnotation_1wmnmyx" />
+      <bpmn:textAnnotation id="TextAnnotation_1bi1c5a">
+        <bpmn:text>Neither A or B are available on exit. When a Data Object inserts data, it also automatically removes it on completion of the Task.</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="Association_0apacpf" sourceRef="Event_1vd7oo5" targetRef="TextAnnotation_1bi1c5a" />
+    </bpmn:subProcess>
+    <bpmn:sequenceFlow id="Flow_0js3xlv" sourceRef="Activity_1q6z5y3" targetRef="Activity_11lec3r" />
+    <bpmn:sequenceFlow id="Flow_0h8wqxa" sourceRef="Activity_11lec3r" targetRef="Activity_1eyk5na" />
+    <bpmn:endEvent id="Event_14xo0bj">
+      <bpmn:incoming>Flow_1yziz83</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_1yziz83" sourceRef="Activity_1eyk5na" targetRef="Event_14xo0bj" />
+    <bpmn:manualTask id="Activity_11lec3r" name="Check B available">
+      <bpmn:extensionElements>
+        <spiffworkflow:instructionsForEndUser>Data Object A: {{data_object_a}}  
+Data Object B: {{data_object_b}}</spiffworkflow:instructionsForEndUser>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0js3xlv</bpmn:incoming>
+      <bpmn:outgoing>Flow_0h8wqxa</bpmn:outgoing>
+      <bpmn:property id="Property_15c1tlq" name="__targetRef_placeholder" />
+      <bpmn:dataInputAssociation id="DataInputAssociation_0yjqmg6">
+        <bpmn:sourceRef>DataObjectReference_101zo09</bpmn:sourceRef>
+        <bpmn:targetRef>Property_15c1tlq</bpmn:targetRef>
+      </bpmn:dataInputAssociation>
+    </bpmn:manualTask>
+    <bpmn:manualTask id="Activity_1eyk5na" name="Check Empty">
+      <bpmn:extensionElements>
+        <spiffworkflow:instructionsForEndUser>Data Object A: {{data_object_a}}  
+Data Object B: {{data_object_b}}</spiffworkflow:instructionsForEndUser>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0h8wqxa</bpmn:incoming>
+      <bpmn:outgoing>Flow_1yziz83</bpmn:outgoing>
+    </bpmn:manualTask>
+    <bpmn:dataObjectReference id="DataObjectReference_101zo09" name="Data Object B" dataObjectRef="data_object_b" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_m3iulir">
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="179" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1rm2bo7_di" bpmnElement="Activity_0c198sv">
+        <dc:Bounds x="270" y="137" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DataObjectReference_1snecau_di" bpmnElement="DataObjectReference_1snecau">
+        <dc:Bounds x="302" y="285" width="36" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="285" y="342" width="70" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1bi0q85_di" bpmnElement="Activity_0s0fca8">
+        <dc:Bounds x="430" y="137" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1pva34a_di" bpmnElement="Activity_1q6z5y3">
+        <dc:Bounds x="590" y="137" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_14xo0bj_di" bpmnElement="Event_14xo0bj">
+        <dc:Bounds x="1072" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_02ijzfq_di" bpmnElement="Activity_11lec3r">
+        <dc:Bounds x="750" y="137" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1yags04_di" bpmnElement="Activity_1eyk5na">
+        <dc:Bounds x="910" y="137" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DataObjectReference_101zo09_di" bpmnElement="DataObjectReference_101zo09">
+        <dc:Bounds x="782" y="285" width="36" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="765" y="342" width="70" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_0u8tvq5_di" bpmnElement="Flow_0u8tvq5">
+        <di:waypoint x="215" y="177" />
+        <di:waypoint x="270" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DataOutputAssociation_1bek7hi_di" bpmnElement="DataOutputAssociation_1bek7hi">
+        <di:waypoint x="321" y="217" />
+        <di:waypoint x="322" y="285" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1va685u_di" bpmnElement="Flow_1va685u">
+        <di:waypoint x="370" y="177" />
+        <di:waypoint x="430" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_01v6phc_di" bpmnElement="Flow_01v6phc">
+        <di:waypoint x="530" y="177" />
+        <di:waypoint x="590" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0js3xlv_di" bpmnElement="Flow_0js3xlv">
+        <di:waypoint x="690" y="177" />
+        <di:waypoint x="750" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0h8wqxa_di" bpmnElement="Flow_0h8wqxa">
+        <di:waypoint x="850" y="177" />
+        <di:waypoint x="910" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1yziz83_di" bpmnElement="Flow_1yziz83">
+        <di:waypoint x="1010" y="177" />
+        <di:waypoint x="1072" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DataInputAssociation_0yjqmg6_di" bpmnElement="DataInputAssociation_0yjqmg6">
+        <di:waypoint x="800" y="285" />
+        <di:waypoint x="800" y="217" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1yzjsnf">
+    <bpmndi:BPMNPlane id="BPMNPlane_1amp4cf" bpmnElement="Activity_1q6z5y3">
+      <bpmndi:BPMNShape id="Event_1esavrp_di" bpmnElement="Event_1esavrp">
+        <dc:Bounds x="282" y="272" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1vd7oo5_di" bpmnElement="Event_1vd7oo5">
+        <dc:Bounds x="522" y="272" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0bi7euc_di" bpmnElement="Activity_18ljf8w">
+        <dc:Bounds x="370" y="250" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DataObjectReference_02rp4mt_di" bpmnElement="DataObjectReference_02rp4mt">
+        <dc:Bounds x="362" y="415" width="36" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="345" y="472" width="70" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DataObjectReference_1neqg57_di" bpmnElement="DataObjectReference_1neqg57">
+        <dc:Bounds x="482" y="415" width="36" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="467" y="472" width="69" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="TextAnnotation_1wmnmyx_di" bpmnElement="TextAnnotation_1wmnmyx">
+        <dc:Bounds x="240" y="130" width="100" height="55" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="TextAnnotation_1bi1c5a_di" bpmnElement="TextAnnotation_1bi1c5a">
+        <dc:Bounds x="620" y="170" width="100" height="156" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_13xpvuq_di" bpmnElement="Flow_13xpvuq">
+        <di:waypoint x="318" y="290" />
+        <di:waypoint x="370" y="290" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1o225qa_di" bpmnElement="Flow_1o225qa">
+        <di:waypoint x="470" y="290" />
+        <di:waypoint x="522" y="290" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DataInputAssociation_1ek52up_di" bpmnElement="DataInputAssociation_1ek52up">
+        <di:waypoint x="389" y="415" />
+        <di:waypoint x="420" y="330" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DataOutputAssociation_1yhny15_di" bpmnElement="DataOutputAssociation_1yhny15">
+        <di:waypoint x="443" y="330" />
+        <di:waypoint x="491" y="415" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Association_09mckpj_di" bpmnElement="Association_09mckpj">
+        <di:waypoint x="299" y="272" />
+        <di:waypoint x="293" y="185" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Association_0apacpf_di" bpmnElement="Association_0apacpf">
+        <di:waypoint x="554" y="279" />
+        <di:waypoint x="620" y="225" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

@@ -1,0 +1,182 @@
+{
+  "definitions": {
+    "job_titleEnum": {
+      "title": "Job Title",
+      "type": "string",
+      "anyOf": [
+        "options_from_task_data_var:job_titles_enum_list"
+      ]
+    },
+    "job_titlennEnum": {
+      "title": "Job Title",
+      "type": "string",
+      "anyOf": [
+        "options_from_task_data_var:job_titles_enum_list_nn"
+      ]
+    },
+    "pro_levelEnum": {
+      "title": "Level",
+      "type": "string",
+      "anyOf": [
+        "options_from_task_data_var:pro_levels_enum_list"
+      ]
+    },
+    "projectEnum": {
+      "title": "Project",
+      "type": "string",
+      "anyOf": [
+        "options_from_task_data_var:dept_enum_list"
+      ]
+    },
+    "projectnnEnum": {
+      "title": "Project",
+      "type": "string",
+      "anyOf": [
+        "options_from_task_data_var:dept_enum_list_nn"
+      ]
+    },
+    "programEnum": {
+      "title": "Program",
+      "type": "string",
+      "anyOf": [
+        "options_from_task_data_var:div_enum_list"
+      ]
+    },
+    "programnnEnum": {
+      "title": "Program",
+      "type": "string",
+      "anyOf": [
+        "options_from_task_data_var:div_enum_list_nn"
+      ]
+    }
+  },
+  "properties": {
+    "nrr_details": {
+      "type": "object",
+      "required": [
+        "project",
+        "program",
+        "job_title",
+        "number_openings",
+        "hiring_manager",
+        "justification",
+        "start_date",
+        "criticality",
+        "type_engagement",
+        "compensation",
+        "pro_level"
+      ],
+      "title":"Role Request",
+      "description": "Please provide the role/request details",
+      "properties": {
+        "program": {
+          "$ref": "#/definitions/programEnum",
+          "title": "Program"
+        },
+        "project": {
+          "$ref": "#/definitions/projectEnum",
+          "title": "Project"
+        },
+        "job_title": {
+          "$ref": "#/definitions/job_titleEnum",
+          "title": "Job Title"
+        },
+        "number_openings": {
+          "type": "number",
+          "title": "Number of openings",
+          "minimum": 1,
+          "default": 1
+        },
+        "hiring_manager": {
+          "type": "string",
+          "title": "Hiring manager",
+          "validationErrorMessage": "Please select a contributor from the dropdown"
+        },
+        "justification": {
+          "type": "string",
+          "title": "Justification",
+          "maxLength": 1000,
+          "description": "Why the project needs this role"
+        },
+        "start_date": {
+          "type": "string",
+          "format": "date",
+          "title": "Preferred Start Date",
+          "minimumDate":"today",
+          "validationErrorMessage": "Date must be today's date or later"
+        },
+        "criticality": {
+          "title": "Criticality",
+          "type": "string",
+          "enum": [
+            "High",
+            "Medium",
+            "Low"
+          ]
+        },
+        "type_engagement": {
+          "title": "Engagement type",
+          "type": "string",
+          "enum": [
+            "Full time",
+            "Part-time",
+            "Short-term",
+            "Intern"
+          ]
+        },
+        "pro_level": {
+          "$ref": "#/definitions/pro_levelEnum",
+          "title": "Level"
+        },
+        "compensation": {
+          "title": "Compensation (yearly), USD",
+          "type": "object",
+          "minimum" : 1,
+          "properties": {
+            "min": {
+              "type": "number",
+              "title": "Minimum value"
+            },
+            "max": {
+              "type": "number",
+              "title": "Maximum value"
+            }
+          }
+        },
+        "supporting_information": {
+          "type": "string",
+          "title": "More details",
+          "description": "Additional info",
+          "maxLength": 1000
+        },
+        "URLs": {
+          "type": "array",
+          "title": "URLs to supporting documents (optional)",
+          "description": "Feel free to add links to external sources here",
+          "minItems": 0,
+          "items": {
+            "type": "object",
+						"title": "Supporting document",
+						"required":[
+              "url",
+              "url_name"
+            ],
+            "properties":{
+              "url_name":{
+                "type": "string",
+                "title": "Document name",
+                "maxLength": 100
+              },
+              "url":{
+                "type": "string",
+                "title": "URL",
+                "format": "url",
+                "validationErrorMessage": "URL must match format https://www.example.url/"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

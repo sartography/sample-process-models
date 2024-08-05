@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:spiffworkflow="http://spiffworkflow.org/bpmn/schema/1.0/core" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_96f6665" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.0.0-dev">
+  <bpmn:process id="Process_test_text_typing_slowness_with_more_dropdowns_and_actual_data_11nf6qz" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>Flow_17db3yp</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_17db3yp" sourceRef="StartEvent_1" targetRef="Activity_19dfnxz" />
+    <bpmn:endEvent id="EndEvent_1">
+      <bpmn:incoming>Flow_12pkbxb</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_12pkbxb" sourceRef="Activity_0qpzdpu" targetRef="EndEvent_1" />
+    <bpmn:sequenceFlow id="Flow_1mwdejb" sourceRef="Activity_19dfnxz" targetRef="Activity_0sc10xc" />
+    <bpmn:scriptTask id="Activity_19dfnxz" name="Initialize">
+      <bpmn:incoming>Flow_17db3yp</bpmn:incoming>
+      <bpmn:outgoing>Flow_1mwdejb</bpmn:outgoing>
+      <bpmn:script>job_titles_enum_list = [
+    {
+      "label": "None from the listed options - add option",
+      "value": "none"
+    }
+  ];
+job_titles_enum_list_nn = [
+    {
+      "label": "Accounting Consultant",
+      "value": "product_designer"
+    }
+  ];
+pro_levels_enum_list = [
+    {
+      "label": "",
+      "value": ""
+    }
+  ]; 
+dept_enum_list = [
+    {
+      "label": "Codex",
+      "value": "18575"
+    }
+  ];
+dept_enum_list_nn = [
+    {
+      "label": "Codex",
+      "value": "18575"
+    }
+  ];
+div_enum_list = [
+    {
+      "label": "New program",
+      "value": "99999"
+    }
+  ]; 
+div_enum_list_nn =[
+    {
+      "label": "New program",
+      "value": "99999"
+    }
+  ]; </bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:userTask id="Activity_0qpzdpu" name="Example manual task">
+      <bpmn:extensionElements>
+        <spiffworkflow:instructionsForEndUser />
+        <spiffworkflow:properties>
+          <spiffworkflow:property name="formJsonSchemaFilename" value="data-schema.json" />
+          <spiffworkflow:property name="formUiSchemaFilename" value="data-uischema.json" />
+        </spiffworkflow:properties>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1rwucjn</bpmn:incoming>
+      <bpmn:outgoing>Flow_12pkbxb</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:sequenceFlow id="Flow_1rwucjn" sourceRef="Activity_0sc10xc" targetRef="Activity_0qpzdpu" />
+    <bpmn:subProcess id="Activity_0sc10xc" name="Get BBHR Project/Program Enum List">
+      <bpmn:incoming>Flow_1mwdejb</bpmn:incoming>
+      <bpmn:outgoing>Flow_1rwucjn</bpmn:outgoing>
+      <bpmn:startEvent id="Event_12jx3f4">
+        <bpmn:outgoing>Flow_0sixc6l</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:sequenceFlow id="Flow_0sixc6l" sourceRef="Event_12jx3f4" targetRef="Gateway_1gn8mp1" />
+      <bpmn:sequenceFlow id="Flow_0ab7ec8" sourceRef="Gateway_1gn8mp1" targetRef="Activity_0fb1aso" />
+      <bpmn:exclusiveGateway id="Gateway_155nzbj">
+        <bpmn:incoming>Flow_007xkbg</bpmn:incoming>
+        <bpmn:incoming>Flow_02a4oo5</bpmn:incoming>
+        <bpmn:outgoing>Flow_1rs8oji</bpmn:outgoing>
+      </bpmn:exclusiveGateway>
+      <bpmn:sequenceFlow id="Flow_007xkbg" sourceRef="Activity_0fb1aso" targetRef="Gateway_155nzbj" />
+      <bpmn:sequenceFlow id="Flow_1rs8oji" sourceRef="Gateway_155nzbj" targetRef="Activity_1xerteh" />
+      <bpmn:endEvent id="Event_1nxs1ih">
+        <bpmn:incoming>Flow_03s01hq</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:sequenceFlow id="Flow_03s01hq" sourceRef="Activity_1xerteh" targetRef="Event_1nxs1ih" />
+      <bpmn:parallelGateway id="Gateway_1gn8mp1">
+        <bpmn:incoming>Flow_0sixc6l</bpmn:incoming>
+        <bpmn:outgoing>Flow_0ab7ec8</bpmn:outgoing>
+        <bpmn:outgoing>Flow_0tm01zi</bpmn:outgoing>
+      </bpmn:parallelGateway>
+      <bpmn:scriptTask id="Activity_0fb1aso" name="Get Job Title Enum list">
+        <bpmn:incoming>Flow_0ab7ec8</bpmn:incoming>
+        <bpmn:outgoing>Flow_007xkbg</bpmn:outgoing>
+      </bpmn:scriptTask>
+      <bpmn:sequenceFlow id="Flow_0tm01zi" sourceRef="Gateway_1gn8mp1" targetRef="Activity_0yu0shl" />
+      <bpmn:callActivity id="Activity_0yu0shl" name="Get BBHR Project/Program Enum List" calledElement="Which_Bamboo_Depart_Div_Data">
+        <bpmn:extensionElements>
+          <spiffworkflow:preScript># Set Task Name
+which_bamboo_depart_div_data_rule = "Division &amp; Department Enum Lists"
+
+# Set Exclude Departments with No Employees Flag
+is_exclude_departments_with_no_employees = True</spiffworkflow:preScript>
+          <spiffworkflow:postScript># Exclude non-Project departments 
+## 19125 - Co-founders, 19004 - Program Leads
+dept_enum_list = [x for x in dept_enum_list if x["value"] not in ["18589", "19125", "19004"]]
+
+# Add "new project" value to the dept enum
+new_department = {"label": "New project", "value": "99999"}
+dept_enum_list.insert(0, new_department)
+
+# Create Department/Project list with no new project
+dept_enum_list_nn = [x for x in dept_enum_list if x["value"] != "99999"]
+
+# Add "new program" value to the div enum
+new_division = {"label": "New program", "value": "99999"}
+div_enum_list.insert(0, new_division)
+
+# Create Division/Program list with no new program
+div_enum_list_nn = [x for x in div_enum_list if x["value"] != "99999"]
+
+del(which_bamboo_depart_div_data_rule)
+del(employee_divisions)
+del(new_division)
+del(new_department)</spiffworkflow:postScript>
+        </bpmn:extensionElements>
+        <bpmn:incoming>Flow_0tm01zi</bpmn:incoming>
+        <bpmn:outgoing>Flow_02a4oo5</bpmn:outgoing>
+      </bpmn:callActivity>
+      <bpmn:sequenceFlow id="Flow_02a4oo5" sourceRef="Activity_0yu0shl" targetRef="Gateway_155nzbj" />
+      <bpmn:scriptTask id="Activity_1xerteh" name="Set Currency Type Enum List">
+        <bpmn:incoming>Flow_1rs8oji</bpmn:incoming>
+        <bpmn:outgoing>Flow_03s01hq</bpmn:outgoing>
+        <bpmn:script># Set Default Currency Type
+# nrr_details["currency_type"] = "fiat"
+
+# Set Default Currency
+# nrr_details["currency"] = "USD"</bpmn:script>
+      </bpmn:scriptTask>
+    </bpmn:subProcess>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_test_text_typing_slowness_with_more_dropdowns_and_actual_data_11nf6qz">
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="-238" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_14za570_di" bpmnElement="EndEvent_1">
+        <dc:Bounds x="432" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_07i7aax_di" bpmnElement="Activity_19dfnxz">
+        <dc:Bounds x="-140" y="137" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0srpjxs_di" bpmnElement="Activity_0qpzdpu">
+        <dc:Bounds x="270" y="137" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0dsepi9_di" bpmnElement="Activity_0sc10xc">
+        <dc:Bounds x="50" y="137" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_17db3yp_di" bpmnElement="Flow_17db3yp">
+        <di:waypoint x="-202" y="177" />
+        <di:waypoint x="-140" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_12pkbxb_di" bpmnElement="Flow_12pkbxb">
+        <di:waypoint x="370" y="177" />
+        <di:waypoint x="432" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1mwdejb_di" bpmnElement="Flow_1mwdejb">
+        <di:waypoint x="-40" y="177" />
+        <di:waypoint x="50" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1rwucjn_di" bpmnElement="Flow_1rwucjn">
+        <di:waypoint x="150" y="177" />
+        <di:waypoint x="270" y="177" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_08jj7oa">
+    <bpmndi:BPMNPlane id="BPMNPlane_09pcuxx" bpmnElement="Activity_0sc10xc">
+      <bpmndi:BPMNShape id="Event_12jx3f4_di" bpmnElement="Event_12jx3f4">
+        <dc:Bounds x="372" y="222" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_155nzbj_di" bpmnElement="Gateway_155nzbj" isMarkerVisible="true">
+        <dc:Bounds x="745" y="215" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1nxs1ih_di" bpmnElement="Event_1nxs1ih">
+        <dc:Bounds x="1032" y="222" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_0hj4uda_di" bpmnElement="Gateway_1gn8mp1">
+        <dc:Bounds x="465" y="215" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_06obb8n_di" bpmnElement="Activity_0fb1aso">
+        <dc:Bounds x="580" y="200" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1dmctws_di" bpmnElement="Activity_0yu0shl">
+        <dc:Bounds x="580" y="40" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1v7i8bn_di" bpmnElement="Activity_1xerteh">
+        <dc:Bounds x="860" y="200" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_0sixc6l_di" bpmnElement="Flow_0sixc6l">
+        <di:waypoint x="408" y="240" />
+        <di:waypoint x="465" y="240" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0ab7ec8_di" bpmnElement="Flow_0ab7ec8">
+        <di:waypoint x="515" y="240" />
+        <di:waypoint x="580" y="240" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_007xkbg_di" bpmnElement="Flow_007xkbg">
+        <di:waypoint x="680" y="240" />
+        <di:waypoint x="745" y="240" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1rs8oji_di" bpmnElement="Flow_1rs8oji">
+        <di:waypoint x="795" y="240" />
+        <di:waypoint x="860" y="240" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_03s01hq_di" bpmnElement="Flow_03s01hq">
+        <di:waypoint x="960" y="240" />
+        <di:waypoint x="1032" y="240" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0tm01zi_di" bpmnElement="Flow_0tm01zi">
+        <di:waypoint x="490" y="215" />
+        <di:waypoint x="490" y="80" />
+        <di:waypoint x="580" y="80" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_02a4oo5_di" bpmnElement="Flow_02a4oo5">
+        <di:waypoint x="680" y="80" />
+        <di:waypoint x="770" y="80" />
+        <di:waypoint x="770" y="215" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

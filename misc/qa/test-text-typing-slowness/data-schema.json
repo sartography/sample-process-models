@@ -1,0 +1,48 @@
+{
+  "definitions": {
+    "job_titleEnum": {
+      "title": "Job Title",
+      "type": "string",
+      "anyOf": [
+        "options_from_task_data_var:job_titles_enum_list"
+      ]
+    },
+    "projectEnum": {
+      "title": "Project",
+      "type": "string",
+      "anyOf": [
+        "options_from_task_data_var:dept_enum_list"
+      ]
+    }
+  },
+  "properties": {
+    "nrr_details": {
+      "type": "object",
+      "required": [
+        "project",
+        "job_title",
+        "justification"
+      ],
+      "title":"Role Request",
+      "description": "Please provide the role/request details",
+      "properties": {
+        
+        "project": {
+          "$ref": "#/definitions/projectEnum",
+          "title": "Project"
+        },
+        "job_title": {
+          "$ref": "#/definitions/job_titleEnum",
+          "title": "Job Title"
+        },
+        
+        "justification": {
+          "type": "string",
+          "title": "Justification",
+          "maxLength": 1000,
+          "description": "Why the project needs this role"
+        }
+      }
+    }
+  }
+}

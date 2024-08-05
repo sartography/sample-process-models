@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:spiffworkflow="http://spiffworkflow.org/bpmn/schema/1.0/core" id="Definitions_96f6665" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.0.0-dev">
+  <bpmn:collaboration id="Test_lane">
+    <bpmn:participant id="Participant_1df0bwy" name="Item" processRef="Process_io425991" />
+  </bpmn:collaboration>
+  <bpmn:process id="Process_io425991" isExecutable="true">
+    <bpmn:laneSet id="LaneSet_06wu5sq">
+      <bpmn:lane id="Lane_Reviewer" name="Reviewer">
+        <bpmn:flowNodeRef>Activity_GetMoreData</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_GatherData</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_Initiator">
+        <bpmn:flowNodeRef>StartEvent_1</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Event_09rkmlh</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_GetData</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_Approve</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_GetReviewers</bpmn:flowNodeRef>
+      </bpmn:lane>
+    </bpmn:laneSet>
+    <bpmn:sequenceFlow id="Flow_0c8hg1n" sourceRef="Activity_GetData" targetRef="Activity_GetMoreData" />
+    <bpmn:sequenceFlow id="Flow_05yh1lx" sourceRef="Activity_GatherData" targetRef="Activity_Approve" />
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>Flow_1msk5h9</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:endEvent id="Event_09rkmlh">
+      <bpmn:incoming>Flow_0u3xyg5</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:userTask id="Activity_GetData" name="Get Data">
+      <bpmn:extensionElements>
+        <spiffworkflow:properties>
+          <spiffworkflow:property name="formJsonSchemaFilename" value="getdata-schema.json" />
+          <spiffworkflow:property name="formUiSchemaFilename" value="getdata-uischema.json" />
+        </spiffworkflow:properties>
+        <spiffworkflow:preScript>current_user = get_current_user()['username']</spiffworkflow:preScript>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1loqmjv</bpmn:incoming>
+      <bpmn:outgoing>Flow_0c8hg1n</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:manualTask id="Activity_Approve" name="Approve">
+      <bpmn:extensionElements>
+        <spiffworkflow:instructionsForEndUser>## Approve
+### Data
+{{ data }}</spiffworkflow:instructionsForEndUser>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_05yh1lx</bpmn:incoming>
+      <bpmn:outgoing>Flow_0u3xyg5</bpmn:outgoing>
+    </bpmn:manualTask>
+    <bpmn:scriptTask id="Activity_GetReviewers" name="Get Reviewers">
+      <bpmn:incoming>Flow_1msk5h9</bpmn:incoming>
+      <bpmn:outgoing>Flow_1loqmjv</bpmn:outgoing>
+      <bpmn:script>lane_owners = {"Reviewer": ["security.project-lead@status.im", "fin@status.im"]}</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:sequenceFlow id="Flow_1msk5h9" sourceRef="StartEvent_1" targetRef="Activity_GetReviewers" />
+    <bpmn:sequenceFlow id="Flow_0u3xyg5" sourceRef="Activity_Approve" targetRef="Event_09rkmlh" />
+    <bpmn:sequenceFlow id="Flow_1loqmjv" sourceRef="Activity_GetReviewers" targetRef="Activity_GetData" />
+    <bpmn:userTask id="Activity_GetMoreData" name="Get More Data">
+      <bpmn:extensionElements>
+        <spiffworkflow:properties>
+          <spiffworkflow:property name="formJsonSchemaFilename" value="getmoredata-schema.json" />
+          <spiffworkflow:property name="formUiSchemaFilename" value="getmoredata-uischema.json" />
+        </spiffworkflow:properties>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0c8hg1n</bpmn:incoming>
+      <bpmn:outgoing>Flow_1xtmg0t</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:scriptTask id="Activity_GatherData" name="Gather Data">
+      <bpmn:incoming>Flow_1xtmg0t</bpmn:incoming>
+      <bpmn:outgoing>Flow_05yh1lx</bpmn:outgoing>
+      <bpmn:script>data = {"firstName": firstName, "bio": bio}</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:sequenceFlow id="Flow_1xtmg0t" sourceRef="Activity_GetMoreData" targetRef="Activity_GatherData" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Test_lane">
+      <bpmndi:BPMNShape id="Participant_1df0bwy_di" bpmnElement="Participant_1df0bwy" isHorizontal="true">
+        <dc:Bounds x="139" y="66" width="691" height="370" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_1vcali6_di" bpmnElement="Lane_Initiator" isHorizontal="true">
+        <dc:Bounds x="169" y="66" width="661" height="188" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_10r7fce_di" bpmnElement="Lane_Reviewer" isHorizontal="true">
+        <dc:Bounds x="169" y="254" width="661" height="182" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="189" y="142" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_09rkmlh_di" bpmnElement="Event_09rkmlh">
+        <dc:Bounds x="742" y="142" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1r64ucz_di" bpmnElement="Activity_GetData">
+        <dc:Bounds x="440" y="120" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_04nyb5w_di" bpmnElement="Activity_Approve">
+        <dc:Bounds x="590" y="120" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_07hx4o8_di" bpmnElement="Activity_GetReviewers">
+        <dc:Bounds x="280" y="120" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1ty3tz9_di" bpmnElement="Activity_GetMoreData">
+        <dc:Bounds x="440" y="300" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0i8w9yk_di" bpmnElement="Activity_GatherData">
+        <dc:Bounds x="590" y="300" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_0c8hg1n_di" bpmnElement="Flow_0c8hg1n">
+        <di:waypoint x="490" y="200" />
+        <di:waypoint x="490" y="300" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_05yh1lx_di" bpmnElement="Flow_05yh1lx">
+        <di:waypoint x="640" y="300" />
+        <di:waypoint x="640" y="200" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1msk5h9_di" bpmnElement="Flow_1msk5h9">
+        <di:waypoint x="225" y="160" />
+        <di:waypoint x="280" y="160" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0u3xyg5_di" bpmnElement="Flow_0u3xyg5">
+        <di:waypoint x="690" y="160" />
+        <di:waypoint x="742" y="160" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1loqmjv_di" bpmnElement="Flow_1loqmjv">
+        <di:waypoint x="380" y="160" />
+        <di:waypoint x="440" y="160" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1xtmg0t_di" bpmnElement="Flow_1xtmg0t">
+        <di:waypoint x="540" y="340" />
+        <di:waypoint x="590" y="340" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

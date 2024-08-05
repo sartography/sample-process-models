@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:spiffworkflow="http://spiffworkflow.org/bpmn/schema/1.0/core" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_96f6665" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.0.0-dev">
+  <bpmn:process id="Process_8tic49q" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>Flow_1ln4owj</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_1ln4owj" sourceRef="StartEvent_1" targetRef="Activity_0be5n6k" />
+    <bpmn:endEvent id="Event_11bshrz">
+      <bpmn:incoming>Flow_03vwrsg</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_03vwrsg" sourceRef="Activity_0be5n6k" targetRef="Event_11bshrz" />
+    <bpmn:subProcess id="Activity_0be5n6k" name="Sub Process">
+      <bpmn:incoming>Flow_1ln4owj</bpmn:incoming>
+      <bpmn:outgoing>Flow_03vwrsg</bpmn:outgoing>
+      <bpmn:startEvent id="Event_1bhnkgk">
+        <bpmn:outgoing>Flow_123espz</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:sequenceFlow id="Flow_123espz" sourceRef="Event_1bhnkgk" targetRef="Activity_0umvg90" />
+      <bpmn:sequenceFlow id="Flow_0bxqt48" sourceRef="Activity_0umvg90" targetRef="Enter_OTP" />
+      <bpmn:endEvent id="Event_0cedhiv">
+        <bpmn:incoming>Flow_07sempk</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:sequenceFlow id="Flow_07sempk" sourceRef="Enter_OTP" targetRef="Event_0cedhiv" />
+      <bpmn:scriptTask id="Activity_0umvg90" name="Generate Link">
+        <bpmn:incoming>Flow_123espz</bpmn:incoming>
+        <bpmn:outgoing>Flow_0bxqt48</bpmn:outgoing>
+        <bpmn:script># Generate guest user task URL
+guest_task_url = get_url_for_task_with_bpmn_identifier("Enter_OTP")</bpmn:script>
+      </bpmn:scriptTask>
+      <bpmn:userTask id="Enter_OTP" name="Enter OTP">
+        <bpmn:extensionElements>
+          <spiffworkflow:properties>
+            <spiffworkflow:property name="formJsonSchemaFilename" value="enter-otp-schema.json" />
+          </spiffworkflow:properties>
+          <spiffworkflow:allowGuest>true</spiffworkflow:allowGuest>
+        </bpmn:extensionElements>
+        <bpmn:incoming>Flow_0bxqt48</bpmn:incoming>
+        <bpmn:outgoing>Flow_07sempk</bpmn:outgoing>
+      </bpmn:userTask>
+    </bpmn:subProcess>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_8tic49q">
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="-68" y="102" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_11bshrz_di" bpmnElement="Event_11bshrz">
+        <dc:Bounds x="172" y="102" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1gr2c9b_di" bpmnElement="Activity_0be5n6k">
+        <dc:Bounds x="20" y="80" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_1ln4owj_di" bpmnElement="Flow_1ln4owj">
+        <di:waypoint x="-32" y="120" />
+        <di:waypoint x="20" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_03vwrsg_di" bpmnElement="Flow_03vwrsg">
+        <di:waypoint x="120" y="120" />
+        <di:waypoint x="172" y="120" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_07m9hgd">
+    <bpmndi:BPMNPlane id="BPMNPlane_084iqa0" bpmnElement="Activity_0be5n6k">
+      <bpmndi:BPMNShape id="Event_1bhnkgk_di" bpmnElement="Event_1bhnkgk">
+        <dc:Bounds x="382" y="232" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0cedhiv_di" bpmnElement="Event_0cedhiv">
+        <dc:Bounds x="792" y="232" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0z30cp7_di" bpmnElement="Activity_0umvg90">
+        <dc:Bounds x="470" y="210" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1b6hbjn_di" bpmnElement="Enter_OTP">
+        <dc:Bounds x="630" y="210" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_123espz_di" bpmnElement="Flow_123espz">
+        <di:waypoint x="418" y="250" />
+        <di:waypoint x="470" y="250" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0bxqt48_di" bpmnElement="Flow_0bxqt48">
+        <di:waypoint x="570" y="250" />
+        <di:waypoint x="630" y="250" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_07sempk_di" bpmnElement="Flow_07sempk">
+        <di:waypoint x="730" y="250" />
+        <di:waypoint x="792" y="250" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

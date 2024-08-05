@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:spiffworkflow="http://spiffworkflow.org/bpmn/schema/1.0/core" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_96f6665" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.0.0-dev">
+  <bpmn:collaboration id="Collaboration_1qi2kee">
+    <bpmn:participant id="Participant_024yz9g" name="Waiter" processRef="Process_k6u417e" />
+    <bpmn:correlationKey id="CorrelationKey_1vervit" name="MainCorrelationKey">
+      <bpmn:correlationPropertyRef>table_number</bpmn:correlationPropertyRef>
+    </bpmn:correlationKey>
+  </bpmn:collaboration>
+  <bpmn:process id="Process_k6u417e" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>Flow_0qx81w8</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_0qx81w8" sourceRef="StartEvent_1" targetRef="Activity_17rir8y" />
+    <bpmn:scriptTask id="Activity_17rir8y" name="Setup">
+      <bpmn:incoming>Flow_0qx81w8</bpmn:incoming>
+      <bpmn:outgoing>Flow_19o26uy</bpmn:outgoing>
+      <bpmn:script>order = {
+    'table_number': 42,
+    'drink': 'Diet Coke',
+    'meal': 'pizza'
+}</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:sequenceFlow id="Flow_19o26uy" sourceRef="Activity_17rir8y" targetRef="Activity_0nhnoxc" />
+    <bpmn:sendTask id="Activity_0nhnoxc" name="Notify Chef" messageRef="order_accept">
+      <bpmn:extensionElements>
+        <spiffworkflow:messagePayload>order</spiffworkflow:messagePayload>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_19o26uy</bpmn:incoming>
+      <bpmn:outgoing>Flow_1b9ja2a</bpmn:outgoing>
+    </bpmn:sendTask>
+    <bpmn:sequenceFlow id="Flow_1b9ja2a" sourceRef="Activity_0nhnoxc" targetRef="Event_1bs40kd" />
+    <bpmn:intermediateCatchEvent id="Event_1bs40kd">
+      <bpmn:incoming>Flow_1b9ja2a</bpmn:incoming>
+      <bpmn:messageEventDefinition id="MessageEventDefinition_047bix5" messageRef="Message_1ms62u1" />
+    </bpmn:intermediateCatchEvent>
+  </bpmn:process>
+  <bpmn:correlationProperty id="table_number" name="table_number">
+    <bpmn:correlationPropertyRetrievalExpression messageRef="order_accept">
+      <bpmn:formalExpression>table_number</bpmn:formalExpression>
+    </bpmn:correlationPropertyRetrievalExpression>
+  </bpmn:correlationProperty>
+  <bpmn:message id="order_accept" name="order_accept">
+    <bpmn:extensionElements>
+      <spiffworkflow:messagePayload>order</spiffworkflow:messagePayload>
+    </bpmn:extensionElements>
+  </bpmn:message>
+  <bpmn:message id="Message_1ms62u1" name="order_dispatch">
+    <bpmn:extensionElements>
+      <spiffworkflow:messageVariable>order</spiffworkflow:messageVariable>
+    </bpmn:extensionElements>
+  </bpmn:message>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_1qi2kee">
+      <bpmndi:BPMNShape id="Participant_024yz9g_di" bpmnElement="Participant_024yz9g" isHorizontal="true">
+        <dc:Bounds x="129" y="139" width="541" height="250" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="192" y="252" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_07fmvby_di" bpmnElement="Activity_17rir8y">
+        <dc:Bounds x="280" y="230" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1eoq05w_di" bpmnElement="Activity_0nhnoxc">
+        <dc:Bounds x="440" y="230" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1ukk3op_di" bpmnElement="Event_1bs40kd">
+        <dc:Bounds x="602" y="252" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_0qx81w8_di" bpmnElement="Flow_0qx81w8">
+        <di:waypoint x="228" y="270" />
+        <di:waypoint x="280" y="270" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_19o26uy_di" bpmnElement="Flow_19o26uy">
+        <di:waypoint x="380" y="270" />
+        <di:waypoint x="440" y="270" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1b9ja2a_di" bpmnElement="Flow_1b9ja2a">
+        <di:waypoint x="540" y="270" />
+        <di:waypoint x="602" y="270" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

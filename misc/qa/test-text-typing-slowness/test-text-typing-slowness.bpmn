@@ -1,0 +1,575 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:spiffworkflow="http://spiffworkflow.org/bpmn/schema/1.0/core" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_96f6665" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.0.0-dev">
+  <bpmn:process id="Process_test_text_typing_slowness_7urd8ja" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>Flow_17db3yp</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_17db3yp" sourceRef="StartEvent_1" targetRef="Activity_007efk4" />
+    <bpmn:endEvent id="EndEvent_1">
+      <bpmn:incoming>Flow_12pkbxb</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_12pkbxb" sourceRef="Activity_0qpzdpu" targetRef="EndEvent_1" />
+    <bpmn:userTask id="Activity_0qpzdpu" name="User Task">
+      <bpmn:extensionElements>
+        <spiffworkflow:instructionsForEndUser />
+        <spiffworkflow:properties>
+          <spiffworkflow:property name="formJsonSchemaFilename" value="data-schema.json" />
+          <spiffworkflow:property name="formUiSchemaFilename" value="data-uischema.json" />
+        </spiffworkflow:properties>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0o8bg7r</bpmn:incoming>
+      <bpmn:outgoing>Flow_12pkbxb</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:sequenceFlow id="Flow_0o8bg7r" sourceRef="Activity_007efk4" targetRef="Activity_0qpzdpu" />
+    <bpmn:scriptTask id="Activity_007efk4" name="Initialize">
+      <bpmn:incoming>Flow_17db3yp</bpmn:incoming>
+      <bpmn:outgoing>Flow_0o8bg7r</bpmn:outgoing>
+      <bpmn:script>dept_enum_list = [
+    {
+      "label": "New project",
+      "value": "99999"
+    },
+    {
+      "label": "Codex",
+      "value": "18575"
+    },
+    {
+      "label": "DAO",
+      "value": "18572"
+    },
+    {
+      "label": "Desktop",
+      "value": "18578"
+    },
+    {
+      "label": "Finance",
+      "value": "18568"
+    },
+    {
+      "label": "Fluffy",
+      "value": "18606"
+    },
+    {
+      "label": "Infrastructure Ops",
+      "value": "18564"
+    },
+    {
+      "label": "Insights",
+      "value": "18627"
+    },
+    {
+      "label": "KeyCard",
+      "value": "18597"
+    },
+    {
+      "label": "Legal",
+      "value": "18558"
+    },
+    {
+      "label": "Logos team",
+      "value": "18613"
+    },
+    {
+      "label": "Mobile",
+      "value": "18577"
+    },
+    {
+      "label": "Nimbus team",
+      "value": "18614"
+    },
+    {
+      "label": "Nomos",
+      "value": "18600"
+    },
+    {
+      "label": "People Ops",
+      "value": "18579"
+    },
+    {
+      "label": "Program Lead",
+      "value": "18585"
+    },
+    {
+      "label": "Security",
+      "value": "18581"
+    },
+    {
+      "label": "Vac team",
+      "value": "18615"
+    },
+    {
+      "label": "Waku Research",
+      "value": "18609"
+    },
+    {
+      "label": "Web",
+      "value": "18599"
+    }
+  ]
+job_titles_enum_list = [
+    {
+      "label": "None from the listed options - add option",
+      "value": "none"
+    },
+    {
+      "label": "Product Designer",
+      "value": "product_designer"
+    },
+    {
+      "label": "SEZ Project Consultant",
+      "value": "sez_project_consultant"
+    },
+    {
+      "label": "Business Intelligence Analyst",
+      "value": "business_intelligence_analyst"
+    },
+    {
+      "label": "Technical Writer",
+      "value": "technical_writer"
+    },
+    {
+      "label": "Software Engineer",
+      "value": "software_engineer"
+    },
+    {
+      "label": "Distributed Systems Data Scientist",
+      "value": "distributed_systems_data_scientist"
+    },
+    {
+      "label": "Sys Admin / Dev Ops",
+      "value": "sys_admin_/_dev_ops"
+    },
+    {
+      "label": "Security Engineer",
+      "value": "security_engineer"
+    },
+    {
+      "label": "Javacard applet",
+      "value": "javacard_applet"
+    },
+    {
+      "label": "Testing Engineer",
+      "value": "testing_engineer"
+    },
+    {
+      "label": "Head of People Operations",
+      "value": "head_of_people_operations"
+    },
+    {
+      "label": "Senior React Native UI Developer",
+      "value": "senior_react_native_ui_developer"
+    },
+    {
+      "label": "Senior Research Engineer",
+      "value": "senior_research_engineer"
+    },
+    {
+      "label": "Distributed Networking Engineer",
+      "value": "distributed_networking_engineer"
+    },
+    {
+      "label": "QT/QML UI Developer",
+      "value": "qt/qml_ui_developer"
+    },
+    {
+      "label": "Program Manager",
+      "value": "program_manager"
+    },
+    {
+      "label": "Co-Founder",
+      "value": "co-founder"
+    },
+    {
+      "label": "Research Engineer",
+      "value": "research_engineer"
+    },
+    {
+      "label": "Senior Data Scientist",
+      "value": "senior_data_scientist"
+    },
+    {
+      "label": "QA Engineer",
+      "value": "qa_engineer"
+    },
+    {
+      "label": "Test Automation and Distributed Systems Testing",
+      "value": "test_automation_and_distributed_systems_testing"
+    },
+    {
+      "label": "Senior Clojure UI Developer",
+      "value": "senior_clojure_ui_developer"
+    },
+    {
+      "label": "Head of Copy",
+      "value": "head_of_copy"
+    },
+    {
+      "label": "Head Campaign Manager",
+      "value": "head_campaign_manager"
+    },
+    {
+      "label": "Engineering Lead Blockchain Infrastructure",
+      "value": "engineering_lead_blockchain_infrastructure"
+    },
+    {
+      "label": "Protocol Engineer",
+      "value": "protocol_engineer"
+    },
+    {
+      "label": "Networking Engineer",
+      "value": "networking_engineer"
+    },
+    {
+      "label": "Mobile QA Lead",
+      "value": "mobile_qa_lead"
+    },
+    {
+      "label": "Snr C++ Qt/QML UI Developer",
+      "value": "snr_c++_qt/qml_ui_developer"
+    },
+    {
+      "label": "Research Lead",
+      "value": "research_lead"
+    },
+    {
+      "label": "Clojure UI Developer",
+      "value": "clojure_ui_developer"
+    },
+    {
+      "label": "People Ops Partner",
+      "value": "people_ops_partner"
+    },
+    {
+      "label": "Studio Manager",
+      "value": "studio_manager"
+    },
+    {
+      "label": "Business Strategist",
+      "value": "business_strategist"
+    },
+    {
+      "label": "Nim Developer",
+      "value": "nim_developer"
+    },
+    {
+      "label": "Activist Copywriter &amp; Social Media Manager",
+      "value": "activist_copywriter_&amp;_social_media_manager"
+    },
+    {
+      "label": "Business Analyst",
+      "value": "business_analyst"
+    },
+    {
+      "label": "DevOps",
+      "value": "devops"
+    },
+    {
+      "label": "Chief Legal Officer",
+      "value": "chief_legal_officer"
+    },
+    {
+      "label": "Finance",
+      "value": "finance"
+    },
+    {
+      "label": "Web3 developer",
+      "value": "web3_developer"
+    },
+    {
+      "label": "Visual Designer",
+      "value": "visual_designer"
+    },
+    {
+      "label": "Communications &amp; Activism Director",
+      "value": "communications_&amp;_activism_director"
+    },
+    {
+      "label": "React Native UI Developer",
+      "value": "react_native_ui_developer"
+    },
+    {
+      "label": "Motion Designer",
+      "value": "motion_designer"
+    },
+    {
+      "label": "Web Developer",
+      "value": "web_developer"
+    },
+    {
+      "label": "Product Manager (Keycard)",
+      "value": "product_manager_(keycard)"
+    },
+    {
+      "label": "Technical Recruiter",
+      "value": "technical_recruiter"
+    },
+    {
+      "label": "Events Manager",
+      "value": "events_manager"
+    },
+    {
+      "label": "Software Developer",
+      "value": "software_developer"
+    },
+    {
+      "label": "Creative Technologist",
+      "value": "creative_technologist"
+    },
+    {
+      "label": "Designer",
+      "value": "designer"
+    },
+    {
+      "label": "Dev Ops Engineer",
+      "value": "dev_ops_engineer"
+    },
+    {
+      "label": "Marketing and Communications Strategist",
+      "value": "marketing_and_communications_strategist"
+    },
+    {
+      "label": "Distributed Network Researcher",
+      "value": "distributed_network_researcher"
+    },
+    {
+      "label": "Vac Lead",
+      "value": "vac_lead"
+    },
+    {
+      "label": "Nim Development Lead",
+      "value": "nim_development_lead"
+    },
+    {
+      "label": "Creative Director",
+      "value": "creative_director"
+    },
+    {
+      "label": "Lead Designer",
+      "value": "lead_designer"
+    },
+    {
+      "label": "Chief Financial Officer",
+      "value": "chief_financial_officer"
+    },
+    {
+      "label": "Cryptographic Researcher",
+      "value": "cryptographic_researcher"
+    },
+    {
+      "label": "Frontend Developer",
+      "value": "frontend_developer"
+    },
+    {
+      "label": "Mobile UI Engineer",
+      "value": "mobile_ui_engineer"
+    },
+    {
+      "label": "Product Strategy",
+      "value": "product_strategy"
+    },
+    {
+      "label": "Project Support",
+      "value": "project_support"
+    },
+    {
+      "label": "Recruiter",
+      "value": "recruiter"
+    },
+    {
+      "label": "Rust Developer",
+      "value": "rust_developer"
+    },
+    {
+      "label": "Smart Contract Developers",
+      "value": "smart_contract_developers"
+    },
+    {
+      "label": "Activist Copywriter",
+      "value": "activist_copywriter"
+    },
+    {
+      "label": "Director of Finance",
+      "value": "director_of_finance"
+    },
+    {
+      "label": "Desktop Lead",
+      "value": "desktop_lead"
+    },
+    {
+      "label": "Senior Qt/QML UI Developer",
+      "value": "senior_qt/qml_ui_developer"
+    },
+    {
+      "label": "Project Lead",
+      "value": "project_lead"
+    },
+    {
+      "label": "Math Researcher",
+      "value": "math_researcher"
+    },
+    {
+      "label": "Distributed Systems Engineer",
+      "value": "distributed_systems_engineer"
+    },
+    {
+      "label": "Head of Investor relations",
+      "value": "head_of_investor_relations"
+    },
+    {
+      "label": "Android Mobile UI Developer",
+      "value": "android_mobile_ui_developer"
+    },
+    {
+      "label": "Legal Associate",
+      "value": "legal_associate"
+    },
+    {
+      "label": "Multimedia Producer",
+      "value": "multimedia_producer"
+    },
+    {
+      "label": "Grassroots Community Organiser",
+      "value": "grassroots_community_organiser"
+    },
+    {
+      "label": "DevOps Engineer",
+      "value": "devops_engineer"
+    },
+    {
+      "label": "Security Lead",
+      "value": "security_lead"
+    },
+    {
+      "label": "Infrastructure Services",
+      "value": "infrastructure_services"
+    },
+    {
+      "label": "Mobile Lead",
+      "value": "mobile_lead"
+    },
+    {
+      "label": "Engineer",
+      "value": "engineer"
+    },
+    {
+      "label": "Web Lead",
+      "value": "web_lead"
+    },
+    {
+      "label": "Finance and Accounting Assistant",
+      "value": "finance_and_accounting_assistant"
+    },
+    {
+      "label": "Protocol Researcher",
+      "value": "protocol_researcher"
+    },
+    {
+      "label": "Digital Communications Lead",
+      "value": "digital_communications_lead"
+    },
+    {
+      "label": "Waku Lead",
+      "value": "waku_lead"
+    },
+    {
+      "label": "Codex Lead",
+      "value": "codex_lead"
+    },
+    {
+      "label": "Analyst",
+      "value": "analyst"
+    },
+    {
+      "label": "Clojure Programmer",
+      "value": "clojure_programmer"
+    },
+    {
+      "label": "Chief Research Officer",
+      "value": "chief_research_officer"
+    },
+    {
+      "label": "Head of Infrastructure",
+      "value": "head_of_infrastructure"
+    },
+    {
+      "label": "Distributed Systems Tester",
+      "value": "distributed_systems_tester"
+    },
+    {
+      "label": "Token Economics Specialist",
+      "value": "token_economics_specialist"
+    },
+    {
+      "label": "Core UI Mobile Engineer",
+      "value": "core_ui_mobile_engineer"
+    },
+    {
+      "label": "Developer relations engineer",
+      "value": "developer_relations_engineer"
+    },
+    {
+      "label": "Mobile engineer",
+      "value": "mobile_engineer"
+    },
+    {
+      "label": "Product design lead",
+      "value": "product_design_lead"
+    },
+    {
+      "label": "Token Economics Lead",
+      "value": "token_economics_lead"
+    },
+    {
+      "label": "Rust Engineer",
+      "value": "rust_engineer"
+    },
+    {
+      "label": "Senior Business Development and IT Consultant",
+      "value": "senior_business_development_and_it_consultant"
+    },
+    {
+      "label": "Finance Manager",
+      "value": "finance_manager"
+    },
+    {
+      "label": "Accounting Consultant",
+      "value": "accounting_consultant"
+    },
+    {
+      "label": "Nim Tooling Developer",
+      "value": "nim_tooling_developer"
+    }
+  ]</bpmn:script>
+    </bpmn:scriptTask>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_test_text_typing_slowness_7urd8ja">
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="2" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_14za570_di" bpmnElement="EndEvent_1">
+        <dc:Bounds x="432" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1mh9wso_di" bpmnElement="Activity_0qpzdpu">
+        <dc:Bounds x="270" y="137" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_17xhth1_di" bpmnElement="Activity_007efk4">
+        <dc:Bounds x="110" y="137" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_17db3yp_di" bpmnElement="Flow_17db3yp">
+        <di:waypoint x="38" y="177" />
+        <di:waypoint x="110" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_12pkbxb_di" bpmnElement="Flow_12pkbxb">
+        <di:waypoint x="370" y="177" />
+        <di:waypoint x="432" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0o8bg7r_di" bpmnElement="Flow_0o8bg7r">
+        <di:waypoint x="210" y="177" />
+        <di:waypoint x="270" y="177" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

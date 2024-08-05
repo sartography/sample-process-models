@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:spiffworkflow="http://spiffworkflow.org/bpmn/schema/1.0/core" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_96f6665" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.0.0-dev">
+  <bpmn:process id="Process_iplicit_api_session_test_v5l22pn" name="Create Session" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>Flow_17db3yp</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_17db3yp" sourceRef="StartEvent_1" targetRef="Activity_1bun2pl" />
+    <bpmn:endEvent id="EndEvent_1">
+      <bpmn:extensionElements>
+        <spiffworkflow:instructionsForEndUser>The process instance completed successfully.</spiffworkflow:instructionsForEndUser>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_19nboee</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_163jqf2" sourceRef="Activity_070lydz" targetRef="Activity_15jdyld" />
+    <bpmn:serviceTask id="Activity_070lydz" name="Get session info">
+      <bpmn:extensionElements>
+        <spiffworkflow:serviceTaskOperator id="http/PostRequestV2" resultVariable="session_info">
+          <spiffworkflow:parameters>
+            <spiffworkflow:parameter id="url" type="str" value="&#34;https://api.iplicit.com/api/session/create/api&#34;" />
+            <spiffworkflow:parameter id="headers" type="any" value="header" />
+            <spiffworkflow:parameter id="data" type="any" value="request_body" />
+            <spiffworkflow:parameter id="basic_auth_username" type="str" />
+            <spiffworkflow:parameter id="basic_auth_password" type="str" />
+          </spiffworkflow:parameters>
+        </spiffworkflow:serviceTaskOperator>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_00g8eoo</bpmn:incoming>
+      <bpmn:outgoing>Flow_163jqf2</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="Flow_00g8eoo" sourceRef="Activity_1bun2pl" targetRef="Activity_070lydz" />
+    <bpmn:scriptTask id="Activity_1bun2pl" name="Set params">
+      <bpmn:incoming>Flow_17db3yp</bpmn:incoming>
+      <bpmn:outgoing>Flow_00g8eoo</bpmn:outgoing>
+      <bpmn:script>
+request_body = {
+  "username": "non-prod-spiff",
+  "userApiKey": "SPIFF_SECRET:IPLICIT_API_KEY"
+}
+
+header = {
+  "Content-Type": "application/json",
+  "Domain": "sandbox.free.technology"
+}</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:sequenceFlow id="Flow_19nboee" sourceRef="Activity_15jdyld" targetRef="EndEvent_1" />
+    <bpmn:manualTask id="Activity_15jdyld" name="Show Session info">
+      <bpmn:extensionElements>
+        <spiffworkflow:instructionsForEndUser>This is the session data: {{session_info.body.sessionToken}}</spiffworkflow:instructionsForEndUser>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_163jqf2</bpmn:incoming>
+      <bpmn:outgoing>Flow_19nboee</bpmn:outgoing>
+    </bpmn:manualTask>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_iplicit_api_session_test_v5l22pn">
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="-338" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_14za570_di" bpmnElement="EndEvent_1">
+        <dc:Bounds x="222" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0sgkoe6_di" bpmnElement="Activity_070lydz">
+        <dc:Bounds x="-90" y="137" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0cpav2s_di" bpmnElement="Activity_1bun2pl">
+        <dc:Bounds x="-250" y="137" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0r3yzdy_di" bpmnElement="Activity_15jdyld">
+        <dc:Bounds x="50" y="137" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_17db3yp_di" bpmnElement="Flow_17db3yp">
+        <di:waypoint x="-302" y="177" />
+        <di:waypoint x="-250" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_163jqf2_di" bpmnElement="Flow_163jqf2">
+        <di:waypoint x="10" y="177" />
+        <di:waypoint x="50" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_00g8eoo_di" bpmnElement="Flow_00g8eoo">
+        <di:waypoint x="-150" y="177" />
+        <di:waypoint x="-90" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_19nboee_di" bpmnElement="Flow_19nboee">
+        <di:waypoint x="150" y="177" />
+        <di:waypoint x="222" y="177" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

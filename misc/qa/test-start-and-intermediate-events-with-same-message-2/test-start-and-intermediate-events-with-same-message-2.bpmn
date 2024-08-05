@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:spiffworkflow="http://spiffworkflow.org/bpmn/schema/1.0/core" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_96f6665" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.0.0-dev">
+  <bpmn:collaboration id="Collaboration_0l2xx04">
+    <bpmn:participant id="Participant_1jpiv22" processRef="Process_test_start_and_intermediate_events_with_same_message_2_juw9jvz" />
+    <bpmn:correlationKey name="data">
+      <bpmn:correlationPropertyRef>pi_id</bpmn:correlationPropertyRef>
+    </bpmn:correlationKey>
+  </bpmn:collaboration>
+  <bpmn:process id="Process_test_start_and_intermediate_events_with_same_message_2_juw9jvz" isExecutable="true">
+    <bpmn:sequenceFlow id="Flow_0gf7sqg" sourceRef="Event_0ppwr8n" targetRef="Activity_1dkitf7" />
+    <bpmn:sequenceFlow id="Flow_01d6u20" sourceRef="Activity_1dkitf7" targetRef="Event_1f1lvnv" />
+    <bpmn:sequenceFlow id="Flow_0sxjmpu" sourceRef="Event_1f1lvnv" targetRef="Event_0vep7ve" />
+    <bpmn:startEvent id="Event_0ppwr8n" messageRef="[object Object]">
+      <bpmn:outgoing>Flow_0gf7sqg</bpmn:outgoing>
+      <bpmn:messageEventDefinition id="MessageEventDefinition_0iuxllr" messageRef="Message_12fmnz7" />
+    </bpmn:startEvent>
+    <bpmn:intermediateCatchEvent id="Event_1f1lvnv" messageRef="[object Object]">
+      <bpmn:incoming>Flow_01d6u20</bpmn:incoming>
+      <bpmn:outgoing>Flow_0sxjmpu</bpmn:outgoing>
+      <bpmn:messageEventDefinition id="MessageEventDefinition_0qbmlq5" messageRef="Message_12fmnz7" />
+    </bpmn:intermediateCatchEvent>
+    <bpmn:endEvent id="Event_0vep7ve">
+      <bpmn:incoming>Flow_0sxjmpu</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:manualTask id="Activity_1dkitf7" name="Manual Task">
+      <bpmn:incoming>Flow_0gf7sqg</bpmn:incoming>
+      <bpmn:outgoing>Flow_01d6u20</bpmn:outgoing>
+    </bpmn:manualTask>
+  </bpmn:process>
+  <bpmn:message id="Message_12fmnz7" name="calling_msg">
+    <bpmn:extensionElements>
+      <spiffworkflow:messageVariable>msg1</spiffworkflow:messageVariable>
+    </bpmn:extensionElements>
+  </bpmn:message>
+  <bpmn:message id="Message_1nxt1gu" name="output_msg">
+    <bpmn:extensionElements>
+      <spiffworkflow:messagePayload>{"value": "1"}</spiffworkflow:messagePayload>
+    </bpmn:extensionElements>
+  </bpmn:message>
+  <bpmn:correlationProperty id="pi_id" name="pi_id">
+    <bpmn:correlationPropertyRetrievalExpression messageRef="Message_12fmnz7">
+      <bpmn:formalExpression>pi_id</bpmn:formalExpression>
+    </bpmn:correlationPropertyRetrievalExpression>
+  </bpmn:correlationProperty>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_0l2xx04">
+      <bpmndi:BPMNShape id="Participant_1jpiv22_di" bpmnElement="Participant_1jpiv22" isHorizontal="true">
+        <dc:Bounds x="-288" y="10" width="868" height="250" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_11scftd_di" bpmnElement="Event_0ppwr8n">
+        <dc:Bounds x="-58" y="122" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1naaer2_di" bpmnElement="Event_1f1lvnv">
+        <dc:Bounds x="222" y="122" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0vep7ve_di" bpmnElement="Event_0vep7ve">
+        <dc:Bounds x="322" y="122" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1hnk7iu_di" bpmnElement="Activity_1dkitf7">
+        <dc:Bounds x="60" y="100" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_0gf7sqg_di" bpmnElement="Flow_0gf7sqg">
+        <di:waypoint x="-22" y="140" />
+        <di:waypoint x="60" y="140" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_01d6u20_di" bpmnElement="Flow_01d6u20">
+        <di:waypoint x="160" y="140" />
+        <di:waypoint x="222" y="140" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0sxjmpu_di" bpmnElement="Flow_0sxjmpu">
+        <di:waypoint x="258" y="140" />
+        <di:waypoint x="322" y="140" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

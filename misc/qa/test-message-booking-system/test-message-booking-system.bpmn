@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:spiffworkflow="http://spiffworkflow.org/bpmn/schema/1.0/core" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_96f6665" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.0.0-dev">
+  <bpmn:collaboration id="Collaboration_1ltzezn">
+    <bpmn:participant id="Participant_1rn0y8q" processRef="Process_test_message_booking_system_6omxm9h" />
+    <bpmn:correlationKey name="book">
+      <bpmn:correlationPropertyRef>booking_date</bpmn:correlationPropertyRef>
+    </bpmn:correlationKey>
+  </bpmn:collaboration>
+  <bpmn:process id="Process_test_message_booking_system_6omxm9h" isExecutable="true">
+    <bpmn:sequenceFlow id="Flow_0ri8jmc" sourceRef="Event_1dc1b4q" targetRef="Activity_050um2t" />
+    <bpmn:sequenceFlow id="Flow_07u0aql" sourceRef="Activity_050um2t" targetRef="Event_0yhg9ky" />
+    <bpmn:manualTask id="Activity_050um2t" name="Manual Task">
+      <bpmn:incoming>Flow_0ri8jmc</bpmn:incoming>
+      <bpmn:outgoing>Flow_07u0aql</bpmn:outgoing>
+    </bpmn:manualTask>
+    <bpmn:startEvent id="Event_1dc1b4q" messageRef="[object Object]">
+      <bpmn:outgoing>Flow_0ri8jmc</bpmn:outgoing>
+      <bpmn:messageEventDefinition id="MessageEventDefinition_1tylbgj" messageRef="Message_1ktwasc" />
+    </bpmn:startEvent>
+    <bpmn:endEvent id="Event_05g719n">
+      <bpmn:incoming>Flow_1bu2kc6</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_1bu2kc6" sourceRef="Event_0yhg9ky" targetRef="Event_05g719n" />
+    <bpmn:intermediateThrowEvent id="Event_0yhg9ky" messageRef="[object Object]">
+      <bpmn:incoming>Flow_07u0aql</bpmn:incoming>
+      <bpmn:outgoing>Flow_1bu2kc6</bpmn:outgoing>
+      <bpmn:messageEventDefinition id="MessageEventDefinition_0q1u2lu" messageRef="Message_1yiwzed" />
+    </bpmn:intermediateThrowEvent>
+  </bpmn:process>
+  <bpmn:correlationProperty id="booking_date" name="booking_date">
+    <bpmn:correlationPropertyRetrievalExpression messageRef="Message_1ktwasc">
+      <bpmn:formalExpression>booking_date</bpmn:formalExpression>
+    </bpmn:correlationPropertyRetrievalExpression>
+  </bpmn:correlationProperty>
+  <bpmn:message id="Message_1ktwasc" name="book_now">
+    <bpmn:extensionElements>
+      <spiffworkflow:messageVariable>book</spiffworkflow:messageVariable>
+    </bpmn:extensionElements>
+  </bpmn:message>
+  <bpmn:message id="Message_1yiwzed" name="booked">
+    <bpmn:extensionElements>
+      <spiffworkflow:messagePayload>book</spiffworkflow:messagePayload>
+    </bpmn:extensionElements>
+  </bpmn:message>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_1ltzezn">
+      <bpmndi:BPMNShape id="Participant_1rn0y8q_di" bpmnElement="Participant_1rn0y8q" isHorizontal="true">
+        <dc:Bounds x="0" y="40" width="600" height="250" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0acu1ha_di" bpmnElement="Activity_050um2t">
+        <dc:Bounds x="190" y="110" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0yspu8q_di" bpmnElement="Event_1dc1b4q">
+        <dc:Bounds x="102" y="132" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_05g719n_di" bpmnElement="Event_05g719n">
+        <dc:Bounds x="452" y="132" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1y96olj_di" bpmnElement="Event_0yhg9ky">
+        <dc:Bounds x="362" y="132" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_0ri8jmc_di" bpmnElement="Flow_0ri8jmc">
+        <di:waypoint x="138" y="150" />
+        <di:waypoint x="190" y="150" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_07u0aql_di" bpmnElement="Flow_07u0aql">
+        <di:waypoint x="290" y="150" />
+        <di:waypoint x="362" y="150" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1bu2kc6_di" bpmnElement="Flow_1bu2kc6">
+        <di:waypoint x="398" y="150" />
+        <di:waypoint x="452" y="150" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

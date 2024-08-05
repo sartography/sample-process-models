@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:spiffworkflow="http://spiffworkflow.org/bpmn/schema/1.0/core" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_96f6665" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.0.0-dev">
-  <bpmn:process id="Error_Boundary_Event" name="Error Boundary Event" isExecutable="true">
+  <bpmn:process id="UT_Error_Boundary_Event" name="Error Boundary Event" isExecutable="true">
     <bpmn:startEvent id="StartEvent_1">
       <bpmn:outgoing>Flow_18ukgzd</bpmn:outgoing>
     </bpmn:startEvent>
@@ -71,6 +71,19 @@
       <bpmn:incoming>Flow_0bozrpx</bpmn:incoming>
       <bpmn:outgoing>Flow_157odr8</bpmn:outgoing>
     </bpmn:manualTask>
+    <bpmn:boundaryEvent id="Event_0m0bhr8" attachedToRef="Activity_0n4e0tn">
+      <bpmn:outgoing>Flow_0a3q0k8</bpmn:outgoing>
+      <bpmn:errorEventDefinition id="ErrorEventDefinition_1k2v9xy" errorRef="Error2" />
+    </bpmn:boundaryEvent>
+    <bpmn:task id="Activity_0dd6yyt" name="Error 2">
+      <bpmn:incoming>Flow_0a3q0k8</bpmn:incoming>
+      <bpmn:outgoing>Flow_0flm9vl</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:sequenceFlow id="Flow_0a3q0k8" sourceRef="Event_0m0bhr8" targetRef="Activity_0dd6yyt" />
+    <bpmn:endEvent id="Event_1w8012y">
+      <bpmn:incoming>Flow_0flm9vl</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_0flm9vl" sourceRef="Activity_0dd6yyt" targetRef="Event_1w8012y" />
   </bpmn:process>
   <bpmn:error id="Error1" name="Error1" errorCode="Err1">
     <bpmn:extensionElements>
@@ -80,10 +93,22 @@
 }</spiffworkflow:payloadExpression>
     </bpmn:extensionElements>
   </bpmn:error>
+  <bpmn:error id="Error2" name="Error2" errorCode="Errs">
+    <bpmn:extensionElements>
+      <spiffworkflow:variableName>msg2</spiffworkflow:variableName>
+    </bpmn:extensionElements>
+  </bpmn:error>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
-    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Error_Boundary_Event">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="UT_Error_Boundary_Event">
       <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
         <dc:Bounds x="-138" y="122" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0dd6yyt_di" bpmnElement="Activity_0dd6yyt">
+        <dc:Bounds x="510" y="360" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1w8012y_di" bpmnElement="Event_1w8012y">
+        <dc:Bounds x="682" y="382" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0n4e0tn_di" bpmnElement="Activity_0n4e0tn" isExpanded="true">
         <dc:Bounds x="-40" y="40" width="640" height="290" />
@@ -148,6 +173,9 @@
       <bpmndi:BPMNShape id="Event_10oux6f_di" bpmnElement="Event_0c5f8ir">
         <dc:Bounds x="122" y="312" width="36" height="36" />
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0olaedv_di" bpmnElement="Event_0m0bhr8">
+        <dc:Bounds x="402" y="312" width="36" height="36" />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_18ukgzd_di" bpmnElement="Flow_18ukgzd">
         <di:waypoint x="-102" y="140" />
         <di:waypoint x="-40" y="140" />
@@ -164,6 +192,15 @@
       <bpmndi:BPMNEdge id="Flow_157odr8_di" bpmnElement="Flow_157odr8">
         <di:waypoint x="330" y="460" />
         <di:waypoint x="464" y="460" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0a3q0k8_di" bpmnElement="Flow_0a3q0k8">
+        <di:waypoint x="420" y="348" />
+        <di:waypoint x="420" y="400" />
+        <di:waypoint x="510" y="400" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0flm9vl_di" bpmnElement="Flow_0flm9vl">
+        <di:waypoint x="610" y="400" />
+        <di:waypoint x="682" y="400" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>

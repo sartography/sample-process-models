@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:spiffworkflow="http://spiffworkflow.org/bpmn/schema/1.0/core" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_96f6665" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.0.0-dev">
+  <bpmn:process id="Process_bqnzh9z" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>Flow_10juerl</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_10juerl" sourceRef="StartEvent_1" targetRef="Activity_1prt1by" />
+    <bpmn:serviceTask id="Activity_1prt1by" name="Create Table">
+      <bpmn:extensionElements>
+        <spiffworkflow:serviceTaskOperator id="postgresql/CreateTable" resultVariable="resp_CreateTable_temp_employee">
+          <spiffworkflow:parameters>
+            <spiffworkflow:parameter id="database_connection_str" type="str" value="&#34;secret:POSTGRES_CONN&#34;" />
+            <spiffworkflow:parameter id="schema" type="any" value="{&#34;columns&#34;: [&#34;id&#34;, &#34;first_name&#34;, &#34;last_name&#34;]}" />
+            <spiffworkflow:parameter id="table_name" type="str" value="&#39;temp_employee&#39;" />
+          </spiffworkflow:parameters>
+        </spiffworkflow:serviceTaskOperator>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_10juerl</bpmn:incoming>
+      <bpmn:outgoing>Flow_1al5fgj</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="Flow_1al5fgj" sourceRef="Activity_1prt1by" targetRef="Activity_05b2cqz" />
+    <bpmn:endEvent id="Event_0vi2yed">
+      <bpmn:incoming>Flow_1qk252r</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_1qk252r" sourceRef="Activity_05b2cqz" targetRef="Event_0vi2yed" />
+    <bpmn:serviceTask id="Activity_05b2cqz" name="Insert to Table">
+      <bpmn:extensionElements>
+        <spiffworkflow:serviceTaskOperator id="postgresql/InsertValues" resultVariable="resp_InsertValues_employee">
+          <spiffworkflow:parameters>
+            <spiffworkflow:parameter id="database_connection_str" type="str" value="&#34;secret:POSTGRES_CONN&#34;" />
+            <spiffworkflow:parameter id="schema" type="any" value="{&#34;columns&#34;: [&#34;id&#34;, &#34;first_name&#34;, &#34;last_name&#34;], &#34;values&#34;:[&#34;1&#34;, &#34;Core&#34;, &#34;Contributor&#34;]}" />
+            <spiffworkflow:parameter id="table_name" type="str" value="&#39;temp_employee&#39;" />
+          </spiffworkflow:parameters>
+        </spiffworkflow:serviceTaskOperator>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1al5fgj</bpmn:incoming>
+      <bpmn:outgoing>Flow_1qk252r</bpmn:outgoing>
+    </bpmn:serviceTask>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_bqnzh9z">
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="179" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1b7ejg1_di" bpmnElement="Activity_1prt1by">
+        <dc:Bounds x="270" y="137" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0vi2yed_di" bpmnElement="Event_0vi2yed">
+        <dc:Bounds x="592" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0q9wq20_di" bpmnElement="Activity_05b2cqz">
+        <dc:Bounds x="430" y="137" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_10juerl_di" bpmnElement="Flow_10juerl">
+        <di:waypoint x="215" y="177" />
+        <di:waypoint x="270" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1al5fgj_di" bpmnElement="Flow_1al5fgj">
+        <di:waypoint x="370" y="177" />
+        <di:waypoint x="430" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1qk252r_di" bpmnElement="Flow_1qk252r">
+        <di:waypoint x="530" y="177" />
+        <di:waypoint x="592" y="177" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

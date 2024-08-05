@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_96f6665" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.0.0-dev">
+  <bpmn:process id="Process_test_copy_paste_multi_instance_task_f4l3lxp" isExecutable="true">
+    <bpmn:startEvent id="Event_1lgwg1y">
+      <bpmn:outgoing>Flow_0xjn5rk</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_0xjn5rk" sourceRef="Event_1lgwg1y" targetRef="Activity_0jwxndf" />
+    <bpmn:scriptTask id="Activity_0jwxndf" name="Initialize">
+      <bpmn:incoming>Flow_0xjn5rk</bpmn:incoming>
+      <bpmn:outgoing>Flow_1j4i76y</bpmn:outgoing>
+      <bpmn:script>mylist = ["apple","banana","cherry"]</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:sequenceFlow id="Flow_1j4i76y" sourceRef="Activity_0jwxndf" targetRef="Activity_0ksf35c" />
+    <bpmn:manualTask id="Activity_0ksf35c" name="MI Manual Task">
+      <bpmn:incoming>Flow_1j4i76y</bpmn:incoming>
+      <bpmn:multiInstanceLoopCharacteristics>
+        <bpmn:loopDataInputRef>mylist</bpmn:loopDataInputRef>
+        <bpmn:loopDataOutputRef>z</bpmn:loopDataOutputRef>
+      </bpmn:multiInstanceLoopCharacteristics>
+    </bpmn:manualTask>
+    <bpmn:manualTask id="Activity_1pqrvi5" name="MI Manual Task">
+      <bpmn:multiInstanceLoopCharacteristics />
+    </bpmn:manualTask>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_test_copy_paste_multi_instance_task_f4l3lxp">
+      <bpmndi:BPMNShape id="Event_1lgwg1y_di" bpmnElement="Event_1lgwg1y">
+        <dc:Bounds x="1882" y="142" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_19jdiae_di" bpmnElement="Activity_0jwxndf">
+        <dc:Bounds x="1970" y="120" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0nm1974_di" bpmnElement="Activity_0ksf35c">
+        <dc:Bounds x="2130" y="120" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_00zw9ok" bpmnElement="Activity_1pqrvi5">
+        <dc:Bounds x="2290" y="120" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_0xjn5rk_di" bpmnElement="Flow_0xjn5rk">
+        <di:waypoint x="1918" y="160" />
+        <di:waypoint x="1970" y="160" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1j4i76y_di" bpmnElement="Flow_1j4i76y">
+        <di:waypoint x="2070" y="160" />
+        <di:waypoint x="2130" y="160" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

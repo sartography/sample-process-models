@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:spiffworkflow="http://spiffworkflow.org/bpmn/schema/1.0/core" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_96f6665" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.0.0-dev">
+  <bpmn:process id="Process_Call_Activity_with_Inclusive_Gateway" isExecutable="true">
+    <bpmn:startEvent id="Event_0r853vu">
+      <bpmn:outgoing>Flow_05ivp77</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_05ivp77" sourceRef="Event_0r853vu" targetRef="Call_Activity" />
+    <bpmn:endEvent id="Event_1n0olru">
+      <bpmn:extensionElements>
+        <spiffworkflow:instructionsForEndUser>End </spiffworkflow:instructionsForEndUser>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_02xlarv</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_02xlarv" sourceRef="Call_Activity" targetRef="Event_1n0olru" />
+    <bpmn:callActivity id="Call_Activity" name="Call Activity with Inclusive Gateway" calledElement="Inclusive_Gateway">
+      <bpmn:incoming>Flow_05ivp77</bpmn:incoming>
+      <bpmn:outgoing>Flow_02xlarv</bpmn:outgoing>
+    </bpmn:callActivity>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_Call_Activity_with_Inclusive_Gateway">
+      <bpmndi:BPMNShape id="Event_0r853vu_di" bpmnElement="Event_0r853vu">
+        <dc:Bounds x="52" y="182" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1n0olru_di" bpmnElement="Event_1n0olru">
+        <dc:Bounds x="292" y="182" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0tuiyta_di" bpmnElement="Call_Activity">
+        <dc:Bounds x="140" y="160" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_05ivp77_di" bpmnElement="Flow_05ivp77">
+        <di:waypoint x="88" y="200" />
+        <di:waypoint x="140" y="200" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_02xlarv_di" bpmnElement="Flow_02xlarv">
+        <di:waypoint x="240" y="200" />
+        <di:waypoint x="292" y="200" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

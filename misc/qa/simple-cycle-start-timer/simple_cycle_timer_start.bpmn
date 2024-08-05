@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:spiffworkflow="http://spiffworkflow.org/bpmn/schema/1.0/core" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_96f6665" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.0.0-dev">
+  <bpmn:process id="Cyle_Start_Timer" isExecutable="true">
+    <bpmn:sequenceFlow id="Flow_0f3ydff" sourceRef="StartEvent_1" targetRef="Activity_1gnwrul" />
+    <bpmn:sequenceFlow id="Flow_0zkjmir" sourceRef="Activity_1gnwrul" targetRef="Activity_0tlmavu" />
+    <bpmn:endEvent id="Event_1dch5ae">
+      <bpmn:incoming>Flow_1p7pzim</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_1p7pzim" sourceRef="Activity_0tlmavu" targetRef="Event_1dch5ae" />
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>Flow_0f3ydff</bpmn:outgoing>
+      <bpmn:timerEventDefinition id="TimerEventDefinition_0mfbhk4">
+        <bpmn:timeCycle xsi:type="bpmn:tFormalExpression">"R/PT1M"</bpmn:timeCycle>
+      </bpmn:timerEventDefinition>
+    </bpmn:startEvent>
+    <bpmn:scriptTask id="Activity_1gnwrul">
+      <bpmn:incoming>Flow_0f3ydff</bpmn:incoming>
+      <bpmn:outgoing>Flow_0zkjmir</bpmn:outgoing>
+      <bpmn:script>x = 10</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:serviceTask id="Activity_0tlmavu" name="Get User Info">
+      <bpmn:extensionElements>
+        <spiffworkflow:serviceTaskOperator id="http/GetRequest" resultVariable="user_info">
+          <spiffworkflow:parameters>
+            <spiffworkflow:parameter id="basic_auth_password" type="str" value="&#34;x&#34;" />
+            <spiffworkflow:parameter id="basic_auth_username" type="str" value="&#34;secret:BAMBOOHR_API_KEY&#34;" />
+            <spiffworkflow:parameter id="headers" type="any" value="{&#34;Accept&#34;: &#34;application/json&#34;}" />
+            <spiffworkflow:parameter id="params" type="any" value="{&#34;fields&#34;: &#34;firstName,lastName&#34;}" />
+            <spiffworkflow:parameter id="url" type="str" value="f&#34;https://api.bamboohr.com/api/gateway.php/statusresearchdemo/v1/employees/113&#34;" />
+          </spiffworkflow:parameters>
+        </spiffworkflow:serviceTaskOperator>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0zkjmir</bpmn:incoming>
+      <bpmn:outgoing>Flow_1p7pzim</bpmn:outgoing>
+    </bpmn:serviceTask>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Cyle_Start_Timer">
+      <bpmndi:BPMNShape id="Event_1dch5ae_di" bpmnElement="Event_1dch5ae">
+        <dc:Bounds x="592" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0r6qz8m_di" bpmnElement="StartEvent_1">
+        <dc:Bounds x="179" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0raml1h_di" bpmnElement="Activity_1gnwrul">
+        <dc:Bounds x="270" y="137" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_03mrs2y_di" bpmnElement="Activity_0tlmavu">
+        <dc:Bounds x="430" y="137" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_0f3ydff_di" bpmnElement="Flow_0f3ydff">
+        <di:waypoint x="215" y="177" />
+        <di:waypoint x="270" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0zkjmir_di" bpmnElement="Flow_0zkjmir">
+        <di:waypoint x="370" y="177" />
+        <di:waypoint x="430" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1p7pzim_di" bpmnElement="Flow_1p7pzim">
+        <di:waypoint x="530" y="177" />
+        <di:waypoint x="592" y="177" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

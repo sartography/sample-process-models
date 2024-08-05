@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:spiffworkflow="http://spiffworkflow.org/bpmn/schema/1.0/core" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_96f6665" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.0.0-dev">
+  <bpmn:process id="Process_git_auth1" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>Flow_02rd7ug</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_02rd7ug" sourceRef="StartEvent_1" targetRef="setup_basic_variables" />
+    <bpmn:endEvent id="Event_08y26wu">
+      <bpmn:extensionElements>
+        <spiffworkflow:instructionsForEndUser>{{git_resp}}</spiffworkflow:instructionsForEndUser>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0m0w38a</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_10s5z0n" sourceRef="assign_issue" targetRef="Gateway_1bjm965" />
+    <bpmn:serviceTask id="assign_issue" name="Assign Issue">
+      <bpmn:extensionElements>
+        <spiffworkflow:serviceTaskOperator id="http/PostRequestV2" resultVariable="assignment_result">
+          <spiffworkflow:parameters>
+            <spiffworkflow:parameter id="url" type="str" value="assign_url" />
+            <spiffworkflow:parameter id="headers" type="any" value="auth_headers" />
+            <spiffworkflow:parameter id="data" type="any" value="assignees" />
+            <spiffworkflow:parameter id="basic_auth_username" type="str" />
+            <spiffworkflow:parameter id="basic_auth_password" type="str" />
+          </spiffworkflow:parameters>
+        </spiffworkflow:serviceTaskOperator>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1mzj4va</bpmn:incoming>
+      <bpmn:outgoing>Flow_10s5z0n</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:scriptTask id="setup_basic_variables" name="Setup basic variables">
+      <bpmn:incoming>Flow_02rd7ug</bpmn:incoming>
+      <bpmn:outgoing>Flow_1ctwmts</bpmn:outgoing>
+      <bpmn:script>owner = "sartography"
+repo = "spiff-arena"
+issue_number = 936
+auth_headers = { "Authorization": "Bearer SPIFF_SECRET:github_oauth" }
+
+base_issue_url = f"https://api.github.com/repos/{owner}/{repo}/issues/{issue_number}"
+
+assign_url = f"{base_issue_url}/assignees"
+assignees = {"assignees": ['burnettk', 'jasquat']}
+
+add_comment_url = f"{base_issue_url}/comments"
+comments = {"body": "hey comment stuff"}
+
+updated_status = {"state": "open"}
+
+delete_comment_url = f"https://api.github.com/repos/{owner}/{repo}/issues/comments"</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:serviceTask id="add_comment" name="Add comment">
+      <bpmn:extensionElements>
+        <spiffworkflow:serviceTaskOperator id="http/PostRequestV2" resultVariable="add_comment_response">
+          <spiffworkflow:parameters>
+            <spiffworkflow:parameter id="url" type="str" value="add_comment_url" />
+            <spiffworkflow:parameter id="headers" type="any" value="auth_headers" />
+            <spiffworkflow:parameter id="data" type="any" value="comments" />
+            <spiffworkflow:parameter id="basic_auth_username" type="str" />
+            <spiffworkflow:parameter id="basic_auth_password" type="str" />
+          </spiffworkflow:parameters>
+        </spiffworkflow:serviceTaskOperator>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0k5sxmn</bpmn:incoming>
+      <bpmn:outgoing>Flow_0gkm05n</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:exclusiveGateway id="Gateway_1bjm965">
+      <bpmn:incoming>Flow_10s5z0n</bpmn:incoming>
+      <bpmn:incoming>Flow_0gkm05n</bpmn:incoming>
+      <bpmn:incoming>Flow_0hwbhgq</bpmn:incoming>
+      <bpmn:incoming>Flow_18y6574</bpmn:incoming>
+      <bpmn:outgoing>Flow_0m0w38a</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="Flow_0m0w38a" sourceRef="Gateway_1bjm965" targetRef="Event_08y26wu" />
+    <bpmn:sequenceFlow id="Flow_0gkm05n" sourceRef="add_comment" targetRef="Gateway_1bjm965" />
+    <bpmn:sequenceFlow id="Flow_1ctwmts" sourceRef="setup_basic_variables" targetRef="select_action" />
+    <bpmn:sequenceFlow id="Flow_1b9d04e" sourceRef="select_action" targetRef="Gateway_06ykd4n" />
+    <bpmn:userTask id="select_action" name="Select action">
+      <bpmn:extensionElements>
+        <spiffworkflow:properties>
+          <spiffworkflow:property name="formJsonSchemaFilename" value="select-action-schema.json" />
+          <spiffworkflow:property name="formUiSchemaFilename" value="select-action-uischema.json" />
+        </spiffworkflow:properties>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1ctwmts</bpmn:incoming>
+      <bpmn:outgoing>Flow_1b9d04e</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:exclusiveGateway id="Gateway_06ykd4n" default="Flow_1mzj4va">
+      <bpmn:incoming>Flow_1b9d04e</bpmn:incoming>
+      <bpmn:outgoing>Flow_1mzj4va</bpmn:outgoing>
+      <bpmn:outgoing>Flow_0k5sxmn</bpmn:outgoing>
+      <bpmn:outgoing>Flow_1iwh0cx</bpmn:outgoing>
+      <bpmn:outgoing>Flow_1mtdmom</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="Flow_1mzj4va" sourceRef="Gateway_06ykd4n" targetRef="assign_issue" />
+    <bpmn:sequenceFlow id="Flow_0k5sxmn" sourceRef="Gateway_06ykd4n" targetRef="add_comment">
+      <bpmn:conditionExpression>github_api_action == "add_comment"</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:serviceTask id="update_status" name="Update status">
+      <bpmn:extensionElements>
+        <spiffworkflow:serviceTaskOperator id="http/PatchRequestV2" resultVariable="update_status_response">
+          <spiffworkflow:parameters>
+            <spiffworkflow:parameter id="url" type="str" value="base_issue_url" />
+            <spiffworkflow:parameter id="headers" type="any" value="auth_headers" />
+            <spiffworkflow:parameter id="data" type="any" value="updated_status" />
+            <spiffworkflow:parameter id="basic_auth_username" type="str" />
+            <spiffworkflow:parameter id="basic_auth_password" type="str" />
+          </spiffworkflow:parameters>
+        </spiffworkflow:serviceTaskOperator>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1iwh0cx</bpmn:incoming>
+      <bpmn:outgoing>Flow_0hwbhgq</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="Flow_1iwh0cx" sourceRef="Gateway_06ykd4n" targetRef="update_status">
+      <bpmn:conditionExpression>github_api_action == "update_status"</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_0hwbhgq" sourceRef="update_status" targetRef="Gateway_1bjm965" />
+    <bpmn:sequenceFlow id="Flow_1mtdmom" sourceRef="Gateway_06ykd4n" targetRef="delete_comment">
+      <bpmn:conditionExpression>github_api_action == "delete_comment"</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_18y6574" sourceRef="delete_comment" targetRef="Gateway_1bjm965" />
+    <bpmn:serviceTask id="delete_comment" name="Delete comment">
+      <bpmn:extensionElements>
+        <spiffworkflow:serviceTaskOperator id="http/DeleteRequestV2" resultVariable="delete_comment_response">
+          <spiffworkflow:parameters>
+            <spiffworkflow:parameter id="url" type="str" value="f&#34;{delete_comment_url}/{comment_id}&#34;" />
+            <spiffworkflow:parameter id="headers" type="any" value="auth_headers" />
+            <spiffworkflow:parameter id="params" type="any" />
+            <spiffworkflow:parameter id="data" type="any" />
+            <spiffworkflow:parameter id="basic_auth_username" type="str" />
+            <spiffworkflow:parameter id="basic_auth_password" type="str" />
+          </spiffworkflow:parameters>
+        </spiffworkflow:serviceTaskOperator>
+        <spiffworkflow:instructionsForEndUser />
+        <spiffworkflow:preScript />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1mtdmom</bpmn:incoming>
+      <bpmn:outgoing>Flow_18y6574</bpmn:outgoing>
+    </bpmn:serviceTask>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_git_auth1">
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="-578" y="-38" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_08y26wu_di" bpmnElement="Event_08y26wu">
+        <dc:Bounds x="32" y="-38" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0hbjyfx_di" bpmnElement="assign_issue">
+        <dc:Bounds x="-200" y="-60" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_038yvlw_di" bpmnElement="setup_basic_variables">
+        <dc:Bounds x="-520" y="-60" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0kfwhga_di" bpmnElement="add_comment">
+        <dc:Bounds x="-200" y="30" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_1bjm965_di" bpmnElement="Gateway_1bjm965" isMarkerVisible="true">
+        <dc:Bounds x="-75" y="-45" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_11vsk51_di" bpmnElement="select_action">
+        <dc:Bounds x="-400" y="-60" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_06ykd4n_di" bpmnElement="Gateway_06ykd4n" isMarkerVisible="true">
+        <dc:Bounds x="-275" y="-45" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0sb7y6e_di" bpmnElement="update_status">
+        <dc:Bounds x="-200" y="-150" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1mjrafp_di" bpmnElement="delete_comment">
+        <dc:Bounds x="-200" y="-240" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_02rd7ug_di" bpmnElement="Flow_02rd7ug">
+        <di:waypoint x="-542" y="-20" />
+        <di:waypoint x="-520" y="-20" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_10s5z0n_di" bpmnElement="Flow_10s5z0n">
+        <di:waypoint x="-100" y="-20" />
+        <di:waypoint x="-75" y="-20" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0m0w38a_di" bpmnElement="Flow_0m0w38a">
+        <di:waypoint x="-25" y="-20" />
+        <di:waypoint x="32" y="-20" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0gkm05n_di" bpmnElement="Flow_0gkm05n">
+        <di:waypoint x="-100" y="70" />
+        <di:waypoint x="-50" y="70" />
+        <di:waypoint x="-50" y="5" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1ctwmts_di" bpmnElement="Flow_1ctwmts">
+        <di:waypoint x="-420" y="-20" />
+        <di:waypoint x="-400" y="-20" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1b9d04e_di" bpmnElement="Flow_1b9d04e">
+        <di:waypoint x="-300" y="-20" />
+        <di:waypoint x="-275" y="-20" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1mzj4va_di" bpmnElement="Flow_1mzj4va">
+        <di:waypoint x="-225" y="-20" />
+        <di:waypoint x="-200" y="-20" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0k5sxmn_di" bpmnElement="Flow_0k5sxmn">
+        <di:waypoint x="-250" y="5" />
+        <di:waypoint x="-250" y="70" />
+        <di:waypoint x="-200" y="70" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1iwh0cx_di" bpmnElement="Flow_1iwh0cx">
+        <di:waypoint x="-250" y="-45" />
+        <di:waypoint x="-250" y="-110" />
+        <di:waypoint x="-200" y="-110" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0hwbhgq_di" bpmnElement="Flow_0hwbhgq">
+        <di:waypoint x="-100" y="-110" />
+        <di:waypoint x="-50" y="-110" />
+        <di:waypoint x="-50" y="-45" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1mtdmom_di" bpmnElement="Flow_1mtdmom">
+        <di:waypoint x="-250" y="-45" />
+        <di:waypoint x="-250" y="-200" />
+        <di:waypoint x="-200" y="-200" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_18y6574_di" bpmnElement="Flow_18y6574">
+        <di:waypoint x="-100" y="-200" />
+        <di:waypoint x="-50" y="-200" />
+        <di:waypoint x="-50" y="-45" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

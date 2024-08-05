@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:spiffworkflow="http://spiffworkflow.org/bpmn/schema/1.0/core" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_96f6665" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.0.0-dev">
+  <bpmn:process id="Process_test_script_unit_test_kahn93j" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>Flow_17db3yp</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_17db3yp" sourceRef="StartEvent_1" targetRef="Activity_1bkpr08" />
+    <bpmn:endEvent id="EndEvent_1">
+      <bpmn:incoming>Flow_0wc44gm</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_1vdre2v" sourceRef="Activity_1bkpr08" targetRef="Activity_09vnash" />
+    <bpmn:sequenceFlow id="Flow_0fxn6ay" sourceRef="Activity_09vnash" targetRef="Activity_18h3met" />
+    <bpmn:sequenceFlow id="Flow_0wc44gm" sourceRef="Activity_18h3met" targetRef="EndEvent_1" />
+    <bpmn:userTask id="Activity_1bkpr08" name="User Task">
+      <bpmn:extensionElements>
+        <spiffworkflow:properties>
+          <spiffworkflow:property name="formJsonSchemaFilename" value="price-schema.json" />
+          <spiffworkflow:property name="formUiSchemaFilename" value="price-uischema.json" />
+        </spiffworkflow:properties>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_17db3yp</bpmn:incoming>
+      <bpmn:outgoing>Flow_1vdre2v</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:scriptTask id="Activity_09vnash" name="Script Task">
+      <bpmn:extensionElements>
+        <spiffworkflow:unitTests>
+          <spiffworkflow:unitTest id="test_case2">
+            <spiffworkflow:inputJson>{
+  "qty": 2,
+  "item_name": "item2",
+  "item_price": 120,
+  "total_price": 240,
+  "discount_rate": 10,
+  "discounted_amount": 216,
+  "no_of_installments": 6 
+}</spiffworkflow:inputJson>
+            <spiffworkflow:expectedOutputJson>{
+  "qty": 2,
+  "item_name": "item2",
+  "item_price": 120,
+  "total_price": 240,
+  "discount_rate": 10,
+  "discounted_amount": 216,
+  "no_of_installments": 6,
+  "amount_per_installment": 36
+}</spiffworkflow:expectedOutputJson>
+          </spiffworkflow:unitTest>
+          <spiffworkflow:unitTest id="test_case3">
+            <spiffworkflow:inputJson>{
+  "qty": 5,
+  "item_name": "item3",
+  "item_price": 30,
+  "total_price": 150,
+  "discount_rate": 5,
+  "discounted_amount": 142.5,
+  "no_of_installments": 3 
+}</spiffworkflow:inputJson>
+            <spiffworkflow:expectedOutputJson>{
+  "qty": 5,
+  "item_name": "item3",
+  "item_price": 30,
+  "total_price": 150,
+  "discount_rate": 5,
+  "discounted_amount": 142.5,
+  "no_of_installments": 3,
+  "amount_per_installment": 47.5
+}</spiffworkflow:expectedOutputJson>
+          </spiffworkflow:unitTest>
+          <spiffworkflow:unitTest id="test_case1">
+            <spiffworkflow:inputJson>{
+  "qty": 1,
+  "item_name": "item1",
+  "item_price": 50,
+  "total_price": 50,
+  "discount_rate": 12.123,
+  "discounted_amount": 43.9385,
+  "no_of_installments": 6 
+}</spiffworkflow:inputJson>
+            <spiffworkflow:expectedOutputJson>{
+  "qty": 1,
+  "item_name": "item1",
+  "item_price": 50,
+  "total_price": 50,
+  "discount_rate": 12.123,
+  "discounted_amount": 43.9385,
+  "no_of_installments": 6,
+  "amount_per_installment": 7.32
+}</spiffworkflow:expectedOutputJson>
+          </spiffworkflow:unitTest>
+        </spiffworkflow:unitTests>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1vdre2v</bpmn:incoming>
+      <bpmn:outgoing>Flow_0fxn6ay</bpmn:outgoing>
+      <bpmn:script>total_price = item_price * qty
+discounted_amount = total_price - (total_price*(discount_rate/100))
+amount_per_installment =round(discounted_amount/no_of_installments,2)</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:manualTask id="Activity_18h3met" name="Manual Task">
+      <bpmn:extensionElements>
+        <spiffworkflow:instructionsForEndUser>Item: {{item_name}}
+
+Price ($): {{item_price}}
+
+Quantity: {{qty}}
+
+Discount Rate: {{discount_rate}}%
+
+Number of Installments: {{no_of_installments}}
+
+**Amount Per Installment is ${{amount_per_installment}}**</spiffworkflow:instructionsForEndUser>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0fxn6ay</bpmn:incoming>
+      <bpmn:outgoing>Flow_0wc44gm</bpmn:outgoing>
+    </bpmn:manualTask>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_test_script_unit_test_kahn93j">
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="-38" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_14za570_di" bpmnElement="EndEvent_1">
+        <dc:Bounds x="632" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1sbh2up_di" bpmnElement="Activity_1bkpr08">
+        <dc:Bounds x="80" y="137" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0n52mdw_di" bpmnElement="Activity_09vnash">
+        <dc:Bounds x="270" y="137" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_00cx86d_di" bpmnElement="Activity_18h3met">
+        <dc:Bounds x="450" y="137" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_17db3yp_di" bpmnElement="Flow_17db3yp">
+        <di:waypoint x="-2" y="177" />
+        <di:waypoint x="80" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1vdre2v_di" bpmnElement="Flow_1vdre2v">
+        <di:waypoint x="180" y="177" />
+        <di:waypoint x="270" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0fxn6ay_di" bpmnElement="Flow_0fxn6ay">
+        <di:waypoint x="370" y="177" />
+        <di:waypoint x="450" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0wc44gm_di" bpmnElement="Flow_0wc44gm">
+        <di:waypoint x="550" y="177" />
+        <di:waypoint x="632" y="177" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

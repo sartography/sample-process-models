@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:spiffworkflow="http://spiffworkflow.org/bpmn/schema/1.0/core" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_96f6665" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.0.0-dev">
+  <bpmn:collaboration id="Collaboration_0l1xiw5">
+    <bpmn:participant id="Participant_1lfc5lu" processRef="Process_test_execution_mode_sub_model_e053dpk" />
+  </bpmn:collaboration>
+  <bpmn:process id="Process_test_execution_mode_sub_model_e053dpk" isExecutable="true">
+    <bpmn:sequenceFlow id="Flow_0awohtn" sourceRef="Event_0c81uxr" targetRef="Activity_0xx4pfj" />
+    <bpmn:sequenceFlow id="Flow_0u5vs9i" sourceRef="Activity_0xx4pfj" targetRef="Event_04sfqxc" />
+    <bpmn:scriptTask id="Activity_0xx4pfj" name="Script Task">
+      <bpmn:incoming>Flow_0awohtn</bpmn:incoming>
+      <bpmn:outgoing>Flow_0u5vs9i</bpmn:outgoing>
+      <bpmn:script>temp_var = 0</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:startEvent id="Event_0c81uxr" messageRef="[object Object]">
+      <bpmn:outgoing>Flow_0awohtn</bpmn:outgoing>
+      <bpmn:messageEventDefinition id="MessageEventDefinition_0zqpq0r" messageRef="Message_0gh562i" />
+    </bpmn:startEvent>
+    <bpmn:endEvent id="Event_1mmodw8">
+      <bpmn:incoming>Flow_09qbwex</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_09qbwex" sourceRef="Event_04sfqxc" targetRef="Event_1mmodw8" />
+    <bpmn:intermediateThrowEvent id="Event_04sfqxc" messageRef="[object Object]">
+      <bpmn:incoming>Flow_0u5vs9i</bpmn:incoming>
+      <bpmn:outgoing>Flow_09qbwex</bpmn:outgoing>
+      <bpmn:messageEventDefinition id="MessageEventDefinition_1k62rv4" messageRef="Message_1oq1ni9" />
+    </bpmn:intermediateThrowEvent>
+  </bpmn:process>
+  <bpmn:message id="Message_0gh562i" name="call_from_test_execution_mode_model">
+    <bpmn:extensionElements>
+      <spiffworkflow:messageVariable>test</spiffworkflow:messageVariable>
+    </bpmn:extensionElements>
+  </bpmn:message>
+  <bpmn:message id="Message_1oq1ni9" name="response_to_test_execution_mode_model">
+    <bpmn:extensionElements>
+      <spiffworkflow:messagePayload>{}</spiffworkflow:messagePayload>
+    </bpmn:extensionElements>
+  </bpmn:message>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_0l1xiw5">
+      <bpmndi:BPMNShape id="Participant_1lfc5lu_di" bpmnElement="Participant_1lfc5lu" isHorizontal="true">
+        <dc:Bounds x="60" y="0" width="600" height="250" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0aa459q_di" bpmnElement="Activity_0xx4pfj">
+        <dc:Bounds x="250" y="90" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0s9gzkw_di" bpmnElement="Event_0c81uxr">
+        <dc:Bounds x="162" y="112" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1mmodw8_di" bpmnElement="Event_1mmodw8">
+        <dc:Bounds x="512" y="112" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_04sb1qi_di" bpmnElement="Event_04sfqxc">
+        <dc:Bounds x="412" y="112" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_0awohtn_di" bpmnElement="Flow_0awohtn">
+        <di:waypoint x="198" y="130" />
+        <di:waypoint x="250" y="130" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0u5vs9i_di" bpmnElement="Flow_0u5vs9i">
+        <di:waypoint x="350" y="130" />
+        <di:waypoint x="412" y="130" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_09qbwex_di" bpmnElement="Flow_09qbwex">
+        <di:waypoint x="448" y="130" />
+        <di:waypoint x="512" y="130" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

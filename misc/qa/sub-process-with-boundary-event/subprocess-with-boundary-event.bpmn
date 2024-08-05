@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="Definitions_96f6665" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.0.0-dev">
+  <bpmn:process id="Process_subprocess_with_boundary_event_3ue3n2n" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>Flow_17db3yp</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_17db3yp" sourceRef="StartEvent_1" targetRef="top_level_subprocess" />
+    <bpmn:endEvent id="EndEvent_1">
+      <bpmn:incoming>Flow_0oq08gu</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_0oq08gu" sourceRef="top_level_subprocess" targetRef="EndEvent_1" />
+    <bpmn:subProcess id="top_level_subprocess" name="Top Level Subproces">
+      <bpmn:incoming>Flow_17db3yp</bpmn:incoming>
+      <bpmn:outgoing>Flow_0oq08gu</bpmn:outgoing>
+      <bpmn:startEvent id="subprocess_script_task" name="Subprocess Script Task">
+        <bpmn:outgoing>Flow_00ihzh9</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:sequenceFlow id="Flow_00ihzh9" sourceRef="subprocess_script_task" targetRef="subprocess_script_task_for_padding" />
+      <bpmn:sequenceFlow id="Flow_1ngoohx" sourceRef="subprocessS_script_task" targetRef="subprocess_manual_task" />
+      <bpmn:endEvent id="subprocess_end_task" name="Subprocess End Task">
+        <bpmn:incoming>Flow_0s2w0p2</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:sequenceFlow id="Flow_0s2w0p2" sourceRef="subprocess_manual_task" targetRef="subprocess_end_task" />
+      <bpmn:scriptTask id="subprocessS_script_task" name="Subprocess Script Task">
+        <bpmn:incoming>Flow_1dxvkuq</bpmn:incoming>
+        <bpmn:outgoing>Flow_1ngoohx</bpmn:outgoing>
+        <bpmn:script>a = 1</bpmn:script>
+      </bpmn:scriptTask>
+      <bpmn:manualTask id="subprocess_manual_task" name="Subprocess Manual Task">
+        <bpmn:incoming>Flow_1ngoohx</bpmn:incoming>
+        <bpmn:outgoing>Flow_0s2w0p2</bpmn:outgoing>
+      </bpmn:manualTask>
+      <bpmn:sequenceFlow id="Flow_1dxvkuq" sourceRef="subprocess_script_task_for_padding" targetRef="subprocessS_script_task" />
+      <bpmn:scriptTask id="subprocess_script_task_for_padding" name="Subprocess Script Task For Padding">
+        <bpmn:incoming>Flow_00ihzh9</bpmn:incoming>
+        <bpmn:outgoing>Flow_1dxvkuq</bpmn:outgoing>
+        <bpmn:script>b = 1</bpmn:script>
+      </bpmn:scriptTask>
+    </bpmn:subProcess>
+    <bpmn:boundaryEvent id="timer_boundary_event" name="Timer Boundary Event" attachedToRef="top_level_subprocess">
+      <bpmn:outgoing>Flow_0d9cgp6</bpmn:outgoing>
+      <bpmn:timerEventDefinition id="TimerEventDefinition_19adriq">
+        <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">"PT3000H"</bpmn:timeDuration>
+      </bpmn:timerEventDefinition>
+    </bpmn:boundaryEvent>
+    <bpmn:sequenceFlow id="Flow_0d9cgp6" sourceRef="timer_boundary_event" targetRef="event_script_task" />
+    <bpmn:endEvent id="Event_1uc32y9">
+      <bpmn:incoming>Flow_1us6tod</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_1us6tod" sourceRef="event_script_task" targetRef="Event_1uc32y9" />
+    <bpmn:scriptTask id="event_script_task" name="Event Script Task">
+      <bpmn:incoming>Flow_0d9cgp6</bpmn:incoming>
+      <bpmn:outgoing>Flow_1us6tod</bpmn:outgoing>
+    </bpmn:scriptTask>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_subprocess_with_boundary_event_3ue3n2n">
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="179" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_14za570_di" bpmnElement="EndEvent_1">
+        <dc:Bounds x="432" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1uc32y9_di" bpmnElement="Event_1uc32y9">
+        <dc:Bounds x="512" y="282" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_09ow7a8_di" bpmnElement="event_script_task">
+        <dc:Bounds x="360" y="260" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0yqp5f3_di" bpmnElement="top_level_subprocess">
+        <dc:Bounds x="270" y="137" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_11vfdfx_di" bpmnElement="timer_boundary_event">
+        <dc:Bounds x="272" y="199" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="252" y="242" width="79" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_17db3yp_di" bpmnElement="Flow_17db3yp">
+        <di:waypoint x="215" y="177" />
+        <di:waypoint x="270" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0oq08gu_di" bpmnElement="Flow_0oq08gu">
+        <di:waypoint x="370" y="177" />
+        <di:waypoint x="432" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0d9cgp6_di" bpmnElement="Flow_0d9cgp6">
+        <di:waypoint x="290" y="235" />
+        <di:waypoint x="290" y="300" />
+        <di:waypoint x="360" y="300" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1us6tod_di" bpmnElement="Flow_1us6tod">
+        <di:waypoint x="460" y="300" />
+        <di:waypoint x="512" y="300" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_098ygs0">
+    <bpmndi:BPMNPlane id="BPMNPlane_16ga9gu" bpmnElement="top_level_subprocess">
+      <bpmndi:BPMNShape id="Event_0gxfma2_di" bpmnElement="subprocess_end_task">
+        <dc:Bounds x="712" y="212" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="690" y="255" width="81" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1hlsisr_di" bpmnElement="subprocessS_script_task">
+        <dc:Bounds x="390" y="190" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0201izw_di" bpmnElement="subprocess_manual_task">
+        <dc:Bounds x="550" y="190" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1lpxwce_di" bpmnElement="subprocess_script_task">
+        <dc:Bounds x="172" y="212" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="147" y="255" width="90" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0g7qkko_di" bpmnElement="subprocess_script_task_for_padding">
+        <dc:Bounds x="260" y="190" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_00ihzh9_di" bpmnElement="Flow_00ihzh9">
+        <di:waypoint x="208" y="230" />
+        <di:waypoint x="260" y="230" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1ngoohx_di" bpmnElement="Flow_1ngoohx">
+        <di:waypoint x="490" y="230" />
+        <di:waypoint x="550" y="230" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0s2w0p2_di" bpmnElement="Flow_0s2w0p2">
+        <di:waypoint x="650" y="230" />
+        <di:waypoint x="712" y="230" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1dxvkuq_di" bpmnElement="Flow_1dxvkuq">
+        <di:waypoint x="360" y="230" />
+        <di:waypoint x="390" y="230" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

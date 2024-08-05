@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:spiffworkflow="http://spiffworkflow.org/bpmn/schema/1.0/core" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_96f6665" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.0.0-dev">
+  <bpmn:collaboration id="Collaboration_009zpdg">
+    <bpmn:participant id="Participant_0lxt0xq" processRef="Process_test_message_customer_qq5zfie" />
+    <bpmn:correlationKey name="booking_details">
+      <bpmn:correlationPropertyRef>booking_date</bpmn:correlationPropertyRef>
+    </bpmn:correlationKey>
+  </bpmn:collaboration>
+  <bpmn:process id="Process_test_message_customer_qq5zfie" isExecutable="true">
+    <bpmn:intermediateThrowEvent id="Event_1n9mgxx" messageRef="[object Object]">
+      <bpmn:incoming>Flow_0ev95t6</bpmn:incoming>
+      <bpmn:outgoing>Flow_1q0qy8o</bpmn:outgoing>
+      <bpmn:messageEventDefinition id="MessageEventDefinition_0p9c4vh" messageRef="Message_02vj004" />
+    </bpmn:intermediateThrowEvent>
+    <bpmn:intermediateCatchEvent id="Event_1v3i31h" messageRef="[object Object]">
+      <bpmn:incoming>Flow_1q0qy8o</bpmn:incoming>
+      <bpmn:outgoing>Flow_1g78a6u</bpmn:outgoing>
+      <bpmn:messageEventDefinition id="MessageEventDefinition_13r8ki6" messageRef="Message_00u92gq" />
+    </bpmn:intermediateCatchEvent>
+    <bpmn:sequenceFlow id="Flow_12k30wx" sourceRef="Event_1trd2p7" targetRef="Activity_0tqcsgu" />
+    <bpmn:sequenceFlow id="Flow_1q0qy8o" sourceRef="Event_1n9mgxx" targetRef="Event_1v3i31h" />
+    <bpmn:sequenceFlow id="Flow_1g78a6u" sourceRef="Event_1v3i31h" targetRef="Activity_0e8eyy4" />
+    <bpmn:sequenceFlow id="Flow_02muzf9" sourceRef="Activity_0e8eyy4" targetRef="Event_03mrc9p" />
+    <bpmn:manualTask id="Activity_0e8eyy4" name="Manual Task">
+      <bpmn:extensionElements>
+        <spiffworkflow:instructionsForEndUser>Booking date confirmed {{booking_date}}</spiffworkflow:instructionsForEndUser>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1g78a6u</bpmn:incoming>
+      <bpmn:outgoing>Flow_02muzf9</bpmn:outgoing>
+    </bpmn:manualTask>
+    <bpmn:endEvent id="Event_03mrc9p">
+      <bpmn:incoming>Flow_02muzf9</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_0ev95t6" sourceRef="Activity_0tqcsgu" targetRef="Event_1n9mgxx" />
+    <bpmn:scriptTask id="Activity_0tqcsgu" name="User Task">
+      <bpmn:extensionElements>
+        <spiffworkflow:properties>
+          <spiffworkflow:property name="formJsonSchemaFilename" value="booking-schema.json" />
+          <spiffworkflow:property name="formUiSchemaFilename" value="booking-uischema.json" />
+        </spiffworkflow:properties>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_12k30wx</bpmn:incoming>
+      <bpmn:outgoing>Flow_0ev95t6</bpmn:outgoing>
+      <bpmn:script>booking_details = {
+"booking_date" : "2024 Aug 20"
+}</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:startEvent id="Event_1trd2p7">
+      <bpmn:outgoing>Flow_12k30wx</bpmn:outgoing>
+    </bpmn:startEvent>
+  </bpmn:process>
+  <bpmn:correlationProperty id="booking_date" name="booking_date">
+    <bpmn:correlationPropertyRetrievalExpression messageRef="Message_02vj004">
+      <bpmn:formalExpression>booking_date</bpmn:formalExpression>
+    </bpmn:correlationPropertyRetrievalExpression>
+  </bpmn:correlationProperty>
+  <bpmn:message id="Message_02vj004" name="book_now">
+    <bpmn:extensionElements>
+      <spiffworkflow:messagePayload>booking_details</spiffworkflow:messagePayload>
+    </bpmn:extensionElements>
+  </bpmn:message>
+  <bpmn:message id="Message_00u92gq" name="booked">
+    <bpmn:extensionElements>
+      <spiffworkflow:messageVariable>x</spiffworkflow:messageVariable>
+    </bpmn:extensionElements>
+  </bpmn:message>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_009zpdg">
+      <bpmndi:BPMNShape id="Participant_0lxt0xq_di" bpmnElement="Participant_0lxt0xq" isHorizontal="true">
+        <dc:Bounds x="-150" y="0" width="950" height="250" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0abfst8_di" bpmnElement="Event_1n9mgxx">
+        <dc:Bounds x="322" y="102" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0oaqhfq_di" bpmnElement="Event_1v3i31h">
+        <dc:Bounds x="412" y="102" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0bclvv1_di" bpmnElement="Activity_0e8eyy4">
+        <dc:Bounds x="520" y="80" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_03mrc9p_di" bpmnElement="Event_03mrc9p">
+        <dc:Bounds x="692" y="102" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1agoy4r_di" bpmnElement="Activity_0tqcsgu">
+        <dc:Bounds x="150" y="80" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1trd2p7_di" bpmnElement="Event_1trd2p7">
+        <dc:Bounds x="32" y="102" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_12k30wx_di" bpmnElement="Flow_12k30wx">
+        <di:waypoint x="68" y="120" />
+        <di:waypoint x="150" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1q0qy8o_di" bpmnElement="Flow_1q0qy8o">
+        <di:waypoint x="358" y="120" />
+        <di:waypoint x="412" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1g78a6u_di" bpmnElement="Flow_1g78a6u">
+        <di:waypoint x="448" y="120" />
+        <di:waypoint x="520" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_02muzf9_di" bpmnElement="Flow_02muzf9">
+        <di:waypoint x="620" y="120" />
+        <di:waypoint x="692" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0ev95t6_di" bpmnElement="Flow_0ev95t6">
+        <di:waypoint x="250" y="120" />
+        <di:waypoint x="322" y="120" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

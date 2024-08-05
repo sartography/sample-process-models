@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:spiffworkflow="http://spiffworkflow.org/bpmn/schema/1.0/core" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="Definitions_96f6665" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.0.0-dev">
+  <bpmn:process id="Unit_Test_Loop_Condition" name="Unit Test Loop Condition" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>Flow_17db3yp</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_17db3yp" sourceRef="StartEvent_1" targetRef="Activity_0u5pdu6" />
+    <bpmn:endEvent id="EndEvent_1">
+      <bpmn:incoming>Flow_1xp9qhq</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_12pkbxb" sourceRef="Activity_0qpzdpu" targetRef="Activity_0ivzxlt" />
+    <bpmn:manualTask id="Activity_0qpzdpu" name="Manual Loop Task">
+      <bpmn:extensionElements>
+        <spiffworkflow:instructionsForEndUser>y is {{y}}
+z is {{z}}</spiffworkflow:instructionsForEndUser>
+        <spiffworkflow:preScript>y = y+1</spiffworkflow:preScript>
+        <spiffworkflow:postScript>z = z+1</spiffworkflow:postScript>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1sb49m4</bpmn:incoming>
+      <bpmn:outgoing>Flow_12pkbxb</bpmn:outgoing>
+      <bpmn:standardLoopCharacteristics loopMaximum="10" spiffworkflow:scriptsOnInstances="true">
+        <bpmn:loopCondition xsi:type="bpmn:tFormalExpression">z == 4</bpmn:loopCondition>
+      </bpmn:standardLoopCharacteristics>
+    </bpmn:manualTask>
+    <bpmn:sequenceFlow id="Flow_1sb49m4" sourceRef="Activity_0u5pdu6" targetRef="Activity_0qpzdpu" />
+    <bpmn:manualTask id="Activity_0u5pdu6" name="Manual Task">
+      <bpmn:extensionElements>
+        <spiffworkflow:preScript>z = 0
+y = 0
+x = 0
+a = 6</spiffworkflow:preScript>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_17db3yp</bpmn:incoming>
+      <bpmn:outgoing>Flow_1sb49m4</bpmn:outgoing>
+    </bpmn:manualTask>
+    <bpmn:sequenceFlow id="Flow_1xp9qhq" sourceRef="Activity_0ivzxlt" targetRef="EndEvent_1" />
+    <bpmn:scriptTask id="Activity_0ivzxlt" name="Script Loop Task">
+      <bpmn:incoming>Flow_12pkbxb</bpmn:incoming>
+      <bpmn:outgoing>Flow_1xp9qhq</bpmn:outgoing>
+      <bpmn:standardLoopCharacteristics loopMaximum="10">
+        <bpmn:loopCondition xsi:type="bpmn:tFormalExpression">x == 4</bpmn:loopCondition>
+      </bpmn:standardLoopCharacteristics>
+      <bpmn:script>x = x + 1
+a = a + 1</bpmn:script>
+    </bpmn:scriptTask>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Unit_Test_Loop_Condition">
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="2" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_14za570_di" bpmnElement="EndEvent_1">
+        <dc:Bounds x="612" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0zqotmb_di" bpmnElement="Activity_0qpzdpu">
+        <dc:Bounds x="270" y="137" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1w0ougm_di" bpmnElement="Activity_0u5pdu6">
+        <dc:Bounds x="90" y="137" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0lzcy0e_di" bpmnElement="Activity_0ivzxlt">
+        <dc:Bounds x="430" y="137" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_17db3yp_di" bpmnElement="Flow_17db3yp">
+        <di:waypoint x="38" y="177" />
+        <di:waypoint x="90" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_12pkbxb_di" bpmnElement="Flow_12pkbxb">
+        <di:waypoint x="370" y="177" />
+        <di:waypoint x="430" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1sb49m4_di" bpmnElement="Flow_1sb49m4">
+        <di:waypoint x="190" y="177" />
+        <di:waypoint x="270" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1xp9qhq_di" bpmnElement="Flow_1xp9qhq">
+        <di:waypoint x="530" y="177" />
+        <di:waypoint x="612" y="177" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

@@ -1,0 +1,44 @@
+{  
+	"properties": {
+		"ndr_details": {
+			"type": "object",
+			"required": [ 
+				"purpose" ,
+				"item"
+			],
+			"title": "Request Goods/Services",
+			"description": "Submit a new request for the procurement of needed items. Does not include Travel or Compensation.",
+			"properties": { 
+				"purpose": {
+					"maxLength": 250,
+					"type": "string",
+					"title": "Purpose",
+					"description": "Short description"
+				}, 
+				"vendor": {
+					"type": "string",
+					"title": "Vendor"
+				}, 
+				"item": {
+					"type": "array",
+					"title": "Please specify the goods or services you need",
+					"minItems": 1,
+					"items": {
+						"type": "object",
+						"title": "Item information",
+						"required": [ 
+							"item_name" 
+						],
+						"properties": {
+							"item_name": {
+								"type": "string",
+								"title": "Name",
+								"maxLength": 100
+							} 
+						}  
+					}
+				}
+			} 
+		}
+	}
+}

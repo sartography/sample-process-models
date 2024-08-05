@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:spiffworkflow="http://spiffworkflow.org/bpmn/schema/1.0/core" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_96f6665" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.0.0-dev">
+  <bpmn:process id="Test_Discord_message" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>Flow_1svjctq</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_1svjctq" sourceRef="StartEvent_1" targetRef="setup" />
+    <bpmn:endEvent id="Event_1e211br">
+      <bpmn:incoming>Flow_106yfy8</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:serviceTask id="create_discord_channel" name="Create discord channel">
+      <bpmn:extensionElements>
+        <spiffworkflow:serviceTaskOperator id="http/PostRequest" resultVariable="create_discord_channel_result">
+          <spiffworkflow:parameters>
+            <spiffworkflow:parameter id="basic_auth_password" type="str" value="None" />
+            <spiffworkflow:parameter id="basic_auth_username" type="str" value="None" />
+            <spiffworkflow:parameter id="data" type="any" value="create_discord_channel_body" />
+            <spiffworkflow:parameter id="headers" type="any" value="{&#34;Authorization&#34;: &#34;Bot SPIFF_SECRET:DISCORD_BOT_TOKEN&#34;, &#34;Content-type&#34;: &#34;application/json&#34;, &#34;Accept&#34;: &#34;application/json&#34;}" />
+            <spiffworkflow:parameter id="url" type="str" value="create_discord_channel_url" />
+          </spiffworkflow:parameters>
+        </spiffworkflow:serviceTaskOperator>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_054i9fj</bpmn:incoming>
+      <bpmn:outgoing>Flow_1huge1m</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="Flow_054i9fj" sourceRef="filter_search_user_result" targetRef="create_discord_channel" />
+    <bpmn:scriptTask id="filter_search_user_result" name="Filter search user result">
+      <bpmn:incoming>Flow_18vb8ij</bpmn:incoming>
+      <bpmn:outgoing>Flow_054i9fj</bpmn:outgoing>
+      <bpmn:script>recipient_id = None
+for item in search_result:
+    if item["user"]["username"] == discord_recipient_username:
+        recipient_id = item["user"]["id"]
+
+if recipient_id is None:
+    raise Exception(f"Could not find a user matching '{discord_recipient_username}' exactly on a server the bot is associated with.")
+    
+create_discord_channel_body = {
+    "recipient_id": recipient_id
+}
+
+create_discord_channel_url = "https://discord.com/api/users/@me/channels"</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:sequenceFlow id="Flow_1huge1m" sourceRef="create_discord_channel" targetRef="assemble_send_data" />
+    <bpmn:sequenceFlow id="Flow_1hcxmh6" sourceRef="assemble_send_data" targetRef="send_message" />
+    <bpmn:sequenceFlow id="Flow_106yfy8" sourceRef="send_message" targetRef="Event_1e211br" />
+    <bpmn:scriptTask id="assemble_send_data" name="Assemble send data">
+      <bpmn:incoming>Flow_1huge1m</bpmn:incoming>
+      <bpmn:outgoing>Flow_1hcxmh6</bpmn:outgoing>
+      <bpmn:script>send_message_body = {
+    "content": discord_message_to_send
+}
+
+if 'id' not in create_discord_channel_result:
+    raise Exception(f"Could not find id in response from create channel. Response was: {str(post_response)}")
+
+channel_id = create_discord_channel_result['id']
+
+send_message_url = f"https://discord.com/api/channels/{channel_id}/messages"</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:serviceTask id="send_message" name="Send message">
+      <bpmn:extensionElements>
+        <spiffworkflow:serviceTaskOperator id="http/PostRequest" resultVariable="send_message_result">
+          <spiffworkflow:parameters>
+            <spiffworkflow:parameter id="basic_auth_password" type="str" value="None" />
+            <spiffworkflow:parameter id="basic_auth_username" type="str" value="None" />
+            <spiffworkflow:parameter id="data" type="any" value="send_message_body" />
+            <spiffworkflow:parameter id="headers" type="any" value="{&#34;Authorization&#34;: &#34;Bot SPIFF_SECRET:DISCORD_BOT_TOKEN&#34;, &#34;Content-type&#34;: &#34;application/json&#34;, &#34;Accept&#34;: &#34;application/json&#34;}" />
+            <spiffworkflow:parameter id="url" type="str" value="send_message_url" />
+          </spiffworkflow:parameters>
+        </spiffworkflow:serviceTaskOperator>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1hcxmh6</bpmn:incoming>
+      <bpmn:outgoing>Flow_106yfy8</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="Flow_1f4h7yw" sourceRef="setup" targetRef="Gateway_0ursia2" />
+    <bpmn:scriptTask id="setup" name="Setup">
+      <bpmn:incoming>Flow_1svjctq</bpmn:incoming>
+      <bpmn:outgoing>Flow_1f4h7yw</bpmn:outgoing>
+      <bpmn:script>try:
+    discord_server_name
+except Exception:
+    discord_server_name = None
+
+try:
+    discord_recipient_username
+except Exception:
+    discord_recipient_username = None
+
+try:
+    discord_message_to_send
+except Exception:
+    discord_message_to_send = None
+
+have_all_required_info = (
+    discord_server_name is not None and 
+    discord_recipient_username is not None and 
+    discord_message_to_send is not None
+)
+
+get_guild_info_url = "https://discord.com/api/users/@me/guilds"</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:sequenceFlow id="Flow_18vb8ij" sourceRef="search_for_user" targetRef="filter_search_user_result" />
+    <bpmn:serviceTask id="search_for_user" name="Search for user">
+      <bpmn:extensionElements>
+        <spiffworkflow:serviceTaskOperator id="http/GetRequest" resultVariable="search_result">
+          <spiffworkflow:parameters>
+            <spiffworkflow:parameter id="basic_auth_password" type="str" value="None" />
+            <spiffworkflow:parameter id="basic_auth_username" type="str" value="None" />
+            <spiffworkflow:parameter id="headers" type="any" value="{&#34;Authorization&#34;: &#34;Bot SPIFF_SECRET:DISCORD_BOT_TOKEN&#34;, &#34;Content-type&#34;: &#34;application/json&#34;, &#34;Accept&#34;: &#34;application/json&#34;}" />
+            <spiffworkflow:parameter id="params" type="any" value="search_username_params" />
+            <spiffworkflow:parameter id="url" type="str" value="search_username_url" />
+          </spiffworkflow:parameters>
+        </spiffworkflow:serviceTaskOperator>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1x4dckg</bpmn:incoming>
+      <bpmn:outgoing>Flow_18vb8ij</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="Flow_1yqv5ua" sourceRef="get_guild_info" targetRef="filter_guild_id_result" />
+    <bpmn:sequenceFlow id="Flow_1x4dckg" sourceRef="filter_guild_id_result" targetRef="search_for_user" />
+    <bpmn:serviceTask id="get_guild_info" name="Get guild info">
+      <bpmn:extensionElements>
+        <spiffworkflow:serviceTaskOperator id="http/GetRequest" resultVariable="guild_info_result">
+          <spiffworkflow:parameters>
+            <spiffworkflow:parameter id="basic_auth_password" type="str" value="None" />
+            <spiffworkflow:parameter id="basic_auth_username" type="str" value="None" />
+            <spiffworkflow:parameter id="headers" type="any" value="{&#34;Authorization&#34;: &#34;Bot SPIFF_SECRET:DISCORD_BOT_TOKEN&#34;, &#34;Content-type&#34;: &#34;application/json&#34;, &#34;Accept&#34;: &#34;application/json&#34;}" />
+            <spiffworkflow:parameter id="params" type="any" value="None" />
+            <spiffworkflow:parameter id="url" type="str" value="get_guild_info_url" />
+          </spiffworkflow:parameters>
+        </spiffworkflow:serviceTaskOperator>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1udcxx8</bpmn:incoming>
+      <bpmn:incoming>Flow_13skvhf</bpmn:incoming>
+      <bpmn:outgoing>Flow_1yqv5ua</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:scriptTask id="filter_guild_id_result" name="Filter guild id results">
+      <bpmn:incoming>Flow_1yqv5ua</bpmn:incoming>
+      <bpmn:outgoing>Flow_1x4dckg</bpmn:outgoing>
+      <bpmn:script>if guild_info_result is None or len(guild_info_result) &lt; 1:
+    raise Exception("Could not find guild info with given bot token.")
+
+guild_id = None
+for guild_info in guild_info_result:
+    if guild_info['name'] == discord_server_name:
+        guild_id = guild_info['id']
+
+if guild_id is None:
+    raise Exception(f"Could not find guild info for server name '{discord_server_name}'.")
+
+search_username_url = f"https://discord.com/api/guilds/{guild_id}/members/search"
+search_username_params = {"query": discord_recipient_username, "limit": 100}</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:exclusiveGateway id="Gateway_0ursia2" default="Flow_0fus7em">
+      <bpmn:incoming>Flow_1f4h7yw</bpmn:incoming>
+      <bpmn:outgoing>Flow_1udcxx8</bpmn:outgoing>
+      <bpmn:outgoing>Flow_0fus7em</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="Flow_1udcxx8" sourceRef="Gateway_0ursia2" targetRef="get_guild_info">
+      <bpmn:conditionExpression>have_all_required_info == True</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_0fus7em" sourceRef="Gateway_0ursia2" targetRef="get_message_info" />
+    <bpmn:userTask id="get_message_info" name="Get message info">
+      <bpmn:extensionElements>
+        <spiffworkflow:properties>
+          <spiffworkflow:property name="formJsonSchemaFilename" value="get-message-info-schema.json" />
+          <spiffworkflow:property name="formUiSchemaFilename" value="get-message-info-uischema.json" />
+        </spiffworkflow:properties>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0fus7em</bpmn:incoming>
+      <bpmn:outgoing>Flow_13skvhf</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:sequenceFlow id="Flow_13skvhf" sourceRef="get_message_info" targetRef="get_guild_info" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Test_Discord_message">
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="-498" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1e211br_di" bpmnElement="Event_1e211br">
+        <dc:Bounds x="652" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1nbjl2x_di" bpmnElement="create_discord_channel">
+        <dc:Bounds x="260" y="137" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_17e7bvw_di" bpmnElement="filter_search_user_result">
+        <dc:Bounds x="140" y="137" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1dzkboh_di" bpmnElement="assemble_send_data">
+        <dc:Bounds x="390" y="137" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_00vpw6w_di" bpmnElement="send_message">
+        <dc:Bounds x="520" y="137" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0hw5l8o_di" bpmnElement="setup">
+        <dc:Bounds x="-440" y="137" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0n8oedz_di" bpmnElement="search_for_user">
+        <dc:Bounds x="20" y="137" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1ln2ec6_di" bpmnElement="get_guild_info">
+        <dc:Bounds x="-220" y="137" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0ay2tto_di" bpmnElement="filter_guild_id_result">
+        <dc:Bounds x="-100" y="137" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_0ursia2_di" bpmnElement="Gateway_0ursia2" isMarkerVisible="true">
+        <dc:Bounds x="-305" y="152" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_011bick_di" bpmnElement="get_message_info">
+        <dc:Bounds x="-290" y="280" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_1svjctq_di" bpmnElement="Flow_1svjctq">
+        <di:waypoint x="-462" y="177" />
+        <di:waypoint x="-440" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_054i9fj_di" bpmnElement="Flow_054i9fj">
+        <di:waypoint x="240" y="177" />
+        <di:waypoint x="260" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1huge1m_di" bpmnElement="Flow_1huge1m">
+        <di:waypoint x="360" y="177" />
+        <di:waypoint x="390" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1hcxmh6_di" bpmnElement="Flow_1hcxmh6">
+        <di:waypoint x="490" y="177" />
+        <di:waypoint x="520" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_106yfy8_di" bpmnElement="Flow_106yfy8">
+        <di:waypoint x="620" y="177" />
+        <di:waypoint x="652" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1f4h7yw_di" bpmnElement="Flow_1f4h7yw">
+        <di:waypoint x="-340" y="177" />
+        <di:waypoint x="-305" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_18vb8ij_di" bpmnElement="Flow_18vb8ij">
+        <di:waypoint x="120" y="177" />
+        <di:waypoint x="140" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1yqv5ua_di" bpmnElement="Flow_1yqv5ua">
+        <di:waypoint x="-120" y="177" />
+        <di:waypoint x="-100" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1x4dckg_di" bpmnElement="Flow_1x4dckg">
+        <di:waypoint x="0" y="177" />
+        <di:waypoint x="20" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1udcxx8_di" bpmnElement="Flow_1udcxx8">
+        <di:waypoint x="-255" y="177" />
+        <di:waypoint x="-220" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0fus7em_di" bpmnElement="Flow_0fus7em">
+        <di:waypoint x="-280" y="202" />
+        <di:waypoint x="-280" y="280" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_13skvhf_di" bpmnElement="Flow_13skvhf">
+        <di:waypoint x="-190" y="320" />
+        <di:waypoint x="-170" y="320" />
+        <di:waypoint x="-170" y="217" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

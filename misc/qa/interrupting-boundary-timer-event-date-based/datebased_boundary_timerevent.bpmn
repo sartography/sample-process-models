@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:spiffworkflow="http://spiffworkflow.org/bpmn/schema/1.0/core" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_96f6665" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.0.0-dev">
+  <bpmn:process id="Process_hkx92dh" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>Flow_0ql5a4h</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_0ql5a4h" sourceRef="StartEvent_1" targetRef="Activity_1ilm143" />
+    <bpmn:scriptTask id="Activity_1ilm143" name="Script Task">
+      <bpmn:extensionElements>
+        <spiffworkflow:instructionsForEndUser />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0ql5a4h</bpmn:incoming>
+      <bpmn:outgoing>Flow_1tnxo5q</bpmn:outgoing>
+      <bpmn:script>mydate = "2023-07-12T01:32:00Z"</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:serviceTask id="Activity_0b1e4vn" name="Service Task">
+      <bpmn:extensionElements>
+        <spiffworkflow:preScript />
+        <spiffworkflow:instructionsForEndUser>My Date is {{mydate}}</spiffworkflow:instructionsForEndUser>
+        <spiffworkflow:serviceTaskOperator id="http/GetRequest" resultVariable="user_info">
+          <spiffworkflow:parameters>
+            <spiffworkflow:parameter id="basic_auth_password" type="str" value="&#34;x&#34;" />
+            <spiffworkflow:parameter id="basic_auth_username" type="str" value="&#34;secret:BAMBOOHR_API_KEY&#34;" />
+            <spiffworkflow:parameter id="headers" type="any" value="{&#34;Accept&#34;: &#34;application/json&#34;}" />
+            <spiffworkflow:parameter id="params" type="any" value="{&#34;fields&#34;: &#34;firstName,lastName&#34;}" />
+            <spiffworkflow:parameter id="url" type="str" value="f&#34;https://api.bamboohr.com/api/gateway.php/statusresearchdemo/v1/employees/113&#34;" />
+          </spiffworkflow:parameters>
+        </spiffworkflow:serviceTaskOperator>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1s5iqx8</bpmn:incoming>
+      <bpmn:outgoing>Flow_10xxxe6</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:endEvent id="Event_0la3yle">
+      <bpmn:extensionElements>
+        <spiffworkflow:instructionsForEndUser>User Info {{user_info}}</spiffworkflow:instructionsForEndUser>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_10xxxe6</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:manualTask id="Activity_16t48yc" name="Manual Task">
+      <bpmn:extensionElements>
+        <spiffworkflow:instructionsForEndUser />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1tnxo5q</bpmn:incoming>
+      <bpmn:outgoing>Flow_082cjs1</bpmn:outgoing>
+    </bpmn:manualTask>
+    <bpmn:sequenceFlow id="Flow_10xxxe6" sourceRef="Activity_0b1e4vn" targetRef="Event_0la3yle" />
+    <bpmn:sequenceFlow id="Flow_1tnxo5q" sourceRef="Activity_1ilm143" targetRef="Activity_16t48yc" />
+    <bpmn:boundaryEvent id="Event_1584kt5" attachedToRef="Activity_16t48yc">
+      <bpmn:outgoing>Flow_1s5iqx8</bpmn:outgoing>
+      <bpmn:timerEventDefinition id="TimerEventDefinition_0mlf7jm">
+        <bpmn:timeDate xsi:type="bpmn:tFormalExpression">mydate</bpmn:timeDate>
+      </bpmn:timerEventDefinition>
+    </bpmn:boundaryEvent>
+    <bpmn:sequenceFlow id="Flow_1s5iqx8" sourceRef="Event_1584kt5" targetRef="Activity_0b1e4vn" />
+    <bpmn:endEvent id="Event_0hiuxxu">
+      <bpmn:incoming>Flow_082cjs1</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_082cjs1" sourceRef="Activity_16t48yc" targetRef="Event_0hiuxxu" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_hkx92dh">
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="-238" y="82" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0lj2i1u_di" bpmnElement="Activity_1ilm143">
+        <dc:Bounds x="-150" y="60" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1o5szab_di" bpmnElement="Activity_0b1e4vn">
+        <dc:Bounds x="190" y="180" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0la3yle_di" bpmnElement="Event_0la3yle">
+        <dc:Bounds x="392" y="202" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1vh5nab_di" bpmnElement="Activity_16t48yc">
+        <dc:Bounds x="10" y="60" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0hiuxxu_di" bpmnElement="Event_0hiuxxu">
+        <dc:Bounds x="172" y="82" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1icooq0_di" bpmnElement="Event_1584kt5">
+        <dc:Bounds x="72" y="122" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_0ql5a4h_di" bpmnElement="Flow_0ql5a4h">
+        <di:waypoint x="-202" y="100" />
+        <di:waypoint x="-150" y="100" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_10xxxe6_di" bpmnElement="Flow_10xxxe6">
+        <di:waypoint x="290" y="220" />
+        <di:waypoint x="392" y="220" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1tnxo5q_di" bpmnElement="Flow_1tnxo5q">
+        <di:waypoint x="-50" y="100" />
+        <di:waypoint x="10" y="100" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1s5iqx8_di" bpmnElement="Flow_1s5iqx8">
+        <di:waypoint x="90" y="158" />
+        <di:waypoint x="90" y="220" />
+        <di:waypoint x="190" y="220" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_082cjs1_di" bpmnElement="Flow_082cjs1">
+        <di:waypoint x="110" y="100" />
+        <di:waypoint x="172" y="100" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

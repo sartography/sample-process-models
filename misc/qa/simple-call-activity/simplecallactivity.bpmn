@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:spiffworkflow="http://spiffworkflow.org/bpmn/schema/1.0/core" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_96f6665" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.0.0-dev">
+  <bpmn:process id="Process_4a67s8b" name="Simple Call Activity" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>Flow_1twmxe8</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_1twmxe8" sourceRef="StartEvent_1" targetRef="Activity_14i7b7b" />
+    <bpmn:sequenceFlow id="Flow_0xwwevq" sourceRef="Activity_14i7b7b" targetRef="Activity_1np6fa3" />
+    <bpmn:sequenceFlow id="Flow_16n7fr1" sourceRef="Activity_1np6fa3" targetRef="Activity_1psano2" />
+    <bpmn:manualTask id="Activity_14i7b7b" name="Before the Call Activity">
+      <bpmn:extensionElements>
+        <spiffworkflow:instructionsForEndUser>Before the Call Activity</spiffworkflow:instructionsForEndUser>
+        <spiffworkflow:preScript>myVar = "hello"</spiffworkflow:preScript>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1twmxe8</bpmn:incoming>
+      <bpmn:outgoing>Flow_0xwwevq</bpmn:outgoing>
+    </bpmn:manualTask>
+    <bpmn:manualTask id="Activity_1psano2" name="After the Call Activity">
+      <bpmn:extensionElements>
+        <spiffworkflow:instructionsForEndUser>After the Call Activity
+My Var is {{myVar}}</spiffworkflow:instructionsForEndUser>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_16n7fr1</bpmn:incoming>
+      <bpmn:outgoing>Flow_1suifug</bpmn:outgoing>
+    </bpmn:manualTask>
+    <bpmn:callActivity id="Activity_1np6fa3" name="Call Activity" calledElement="Process_ceme9ac">
+      <bpmn:incoming>Flow_0xwwevq</bpmn:incoming>
+      <bpmn:outgoing>Flow_16n7fr1</bpmn:outgoing>
+    </bpmn:callActivity>
+    <bpmn:endEvent id="Event_1yncbo3">
+      <bpmn:incoming>Flow_1suifug</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_1suifug" sourceRef="Activity_1psano2" targetRef="Event_1yncbo3" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_4a67s8b">
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="179" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0op4uyy_di" bpmnElement="Activity_14i7b7b">
+        <dc:Bounds x="270" y="137" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0ts38xf_di" bpmnElement="Activity_1psano2">
+        <dc:Bounds x="590" y="137" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0w2mmvu_di" bpmnElement="Activity_1np6fa3">
+        <dc:Bounds x="430" y="137" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1yncbo3_di" bpmnElement="Event_1yncbo3">
+        <dc:Bounds x="752" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_1twmxe8_di" bpmnElement="Flow_1twmxe8">
+        <di:waypoint x="215" y="177" />
+        <di:waypoint x="270" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0xwwevq_di" bpmnElement="Flow_0xwwevq">
+        <di:waypoint x="370" y="177" />
+        <di:waypoint x="430" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_16n7fr1_di" bpmnElement="Flow_16n7fr1">
+        <di:waypoint x="530" y="177" />
+        <di:waypoint x="590" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1suifug_di" bpmnElement="Flow_1suifug">
+        <di:waypoint x="690" y="177" />
+        <di:waypoint x="752" y="177" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

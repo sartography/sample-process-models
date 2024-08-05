@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:spiffworkflow="http://spiffworkflow.org/bpmn/schema/1.0/core" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_96f6665" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.0.0-dev">
+  <bpmn:process id="Process_iplicit_api_calls_projects_test_v5l22pn" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>Flow_17db3yp</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_17db3yp" sourceRef="StartEvent_1" targetRef="Activity_1bun2pl1" />
+    <bpmn:endEvent id="EndEvent_1">
+      <bpmn:extensionElements>
+        <spiffworkflow:instructionsForEndUser>The process instance completed successfully.</spiffworkflow:instructionsForEndUser>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_07wlz8y</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_163jqf2" sourceRef="Activity_070lydz1" targetRef="Activity_15jdyld1" />
+    <bpmn:serviceTask id="Activity_070lydz1" name="[GET] Get Contact">
+      <bpmn:extensionElements>
+        <spiffworkflow:serviceTaskOperator id="http/GetRequestV2" resultVariable="contact_resp">
+          <spiffworkflow:parameters>
+            <spiffworkflow:parameter id="url" type="str" value="&#34;https://api.iplicit.com/api/Contact/5a75ee7d-2982-4f6e-a9f4-4c88a9216b32&#34;" />
+            <spiffworkflow:parameter id="headers" type="any" value="iplicit_headers" />
+            <spiffworkflow:parameter id="params" type="any" />
+            <spiffworkflow:parameter id="basic_auth_username" type="str" />
+            <spiffworkflow:parameter id="basic_auth_password" type="str" />
+            <spiffworkflow:parameter id="attempts" type="int" />
+          </spiffworkflow:parameters>
+        </spiffworkflow:serviceTaskOperator>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_00g8eoo</bpmn:incoming>
+      <bpmn:outgoing>Flow_163jqf2</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="Flow_00g8eoo" sourceRef="Activity_1bun2pl1" targetRef="Activity_070lydz1" />
+    <bpmn:scriptTask id="Activity_1bun2pl1" name="Set params">
+      <bpmn:incoming>Flow_17db3yp</bpmn:incoming>
+      <bpmn:outgoing>Flow_00g8eoo</bpmn:outgoing>
+      <bpmn:script>request_body = {
+  "firstName": "Madhu",
+  "lastName": "Test1 Updated",
+  "jobTitle": "QA",
+}
+
+token = "E0tv9KBZ8/lQCK+j4j2fN9Zo5nDIzujcvD2PSdGYe+Q5wMurb2Z33o3nmgpVi1YD"
+auth_token = "Bearer " + token
+
+
+iplicit_headers = {
+  "Content-Type": "application/json",
+  "Domain": "sandbox.free.technology",
+  "Authorization": auth_token
+}</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:sequenceFlow id="Flow_19nboee" sourceRef="Activity_15jdyld1" targetRef="Activity_1w6hz0p" />
+    <bpmn:manualTask id="Activity_15jdyld1" name="Show Contact info">
+      <bpmn:extensionElements>
+        <spiffworkflow:instructionsForEndUser>This is the response data: {{contact_resp}}</spiffworkflow:instructionsForEndUser>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_163jqf2</bpmn:incoming>
+      <bpmn:outgoing>Flow_19nboee</bpmn:outgoing>
+    </bpmn:manualTask>
+    <bpmn:sequenceFlow id="Flow_1i47vl5" sourceRef="Activity_1w6hz0p" targetRef="Activity_1mplmxd" />
+    <bpmn:serviceTask id="Activity_1w6hz0p" name="[PATCH] Update Contact">
+      <bpmn:extensionElements>
+        <spiffworkflow:serviceTaskOperator id="http/PatchRequestV2" resultVariable="updatecontact_info">
+          <spiffworkflow:parameters>
+            <spiffworkflow:parameter id="url" type="str" value="&#34;https://api.iplicit.com/api/Contact/4339bf57-3845-4dc3-b066-ef802ef4063a&#34;" />
+            <spiffworkflow:parameter id="headers" type="any" value="iplicit_headers" />
+            <spiffworkflow:parameter id="data" type="any" value="request_body" />
+            <spiffworkflow:parameter id="basic_auth_username" type="str" />
+            <spiffworkflow:parameter id="basic_auth_password" type="str" />
+          </spiffworkflow:parameters>
+        </spiffworkflow:serviceTaskOperator>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_19nboee</bpmn:incoming>
+      <bpmn:outgoing>Flow_1i47vl5</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:manualTask id="Activity_1mplmxd" name="Show Updated Contact info">
+      <bpmn:extensionElements>
+        <spiffworkflow:instructionsForEndUser>This is the response data: {{updatecontact_info}}</spiffworkflow:instructionsForEndUser>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1i47vl5</bpmn:incoming>
+      <bpmn:outgoing>Flow_07wlz8y</bpmn:outgoing>
+    </bpmn:manualTask>
+    <bpmn:sequenceFlow id="Flow_07wlz8y" sourceRef="Activity_1mplmxd" targetRef="EndEvent_1" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_iplicit_api_calls_projects_test_v5l22pn">
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="-338" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_14za570_di" bpmnElement="EndEvent_1">
+        <dc:Bounds x="542" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0sgkoe6_di" bpmnElement="Activity_070lydz1">
+        <dc:Bounds x="-90" y="137" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0cpav2s_di" bpmnElement="Activity_1bun2pl1">
+        <dc:Bounds x="-250" y="137" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0r3yzdy_di" bpmnElement="Activity_15jdyld1">
+        <dc:Bounds x="50" y="137" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_13e3gms_di" bpmnElement="Activity_1w6hz0p">
+        <dc:Bounds x="200" y="137" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_1r2csss" bpmnElement="Activity_1mplmxd">
+        <dc:Bounds x="340" y="137" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_17db3yp_di" bpmnElement="Flow_17db3yp">
+        <di:waypoint x="-302" y="177" />
+        <di:waypoint x="-250" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_163jqf2_di" bpmnElement="Flow_163jqf2">
+        <di:waypoint x="10" y="177" />
+        <di:waypoint x="50" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_00g8eoo_di" bpmnElement="Flow_00g8eoo">
+        <di:waypoint x="-150" y="177" />
+        <di:waypoint x="-90" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_19nboee_di" bpmnElement="Flow_19nboee">
+        <di:waypoint x="150" y="177" />
+        <di:waypoint x="200" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1i47vl5_di" bpmnElement="Flow_1i47vl5">
+        <di:waypoint x="300" y="177" />
+        <di:waypoint x="340" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_07wlz8y_di" bpmnElement="Flow_07wlz8y">
+        <di:waypoint x="440" y="177" />
+        <di:waypoint x="542" y="177" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

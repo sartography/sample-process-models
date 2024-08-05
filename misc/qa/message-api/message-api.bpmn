@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:spiffworkflow="http://spiffworkflow.org/bpmn/schema/1.0/core" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_96f6665" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.0.0-dev">
+  <bpmn:collaboration id="Collaboration_0kktvds">
+    <bpmn:participant id="Participant_1mjd08z" processRef="Process_message_api_3hwsuhk" />
+    <bpmn:textAnnotation id="TextAnnotation_0w29yjh">
+      <bpmn:text>This message start event is set to catch a message called "popcorn". You can call messages by name form the url:
+https://spiffdemo.org/messages/[MESSAGE-NAME]</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:association id="Association_0k4oc3r" sourceRef="StartEvent_1" targetRef="TextAnnotation_0w29yjh" />
+    <bpmn:textAnnotation id="TextAnnotation_1w6eb53">
+      <bpmn:text>This simple business rule will look at the "size" input, and convert it to a "price".</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:association id="Association_18a3uko" sourceRef="Activity_141enme" targetRef="TextAnnotation_1w6eb53" />
+    <bpmn:textAnnotation id="TextAnnotation_1vfrbt8">
+      <bpmn:text>Any data calculated along the way is available in the response.</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:association id="Association_0gspalf" sourceRef="EndEvent_1" targetRef="TextAnnotation_1vfrbt8" />
+  </bpmn:collaboration>
+  <bpmn:process id="Process_message_api_3hwsuhk" isExecutable="true">
+    <bpmn:businessRuleTask id="Activity_141enme" name="Calculate Popcorn price">
+      <bpmn:extensionElements>
+        <spiffworkflow:calledDecisionId>decision_1</spiffworkflow:calledDecisionId>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_17db3yp</bpmn:incoming>
+      <bpmn:outgoing>Flow_1lucqba</bpmn:outgoing>
+    </bpmn:businessRuleTask>
+    <bpmn:sequenceFlow id="Flow_17db3yp" sourceRef="StartEvent_1" targetRef="Activity_141enme" />
+    <bpmn:sequenceFlow id="Flow_1lucqba" sourceRef="Activity_141enme" targetRef="EndEvent_1" />
+    <bpmn:startEvent id="StartEvent_1" messageRef="[object Object]">
+      <bpmn:outgoing>Flow_17db3yp</bpmn:outgoing>
+      <bpmn:messageEventDefinition id="MessageEventDefinition_007o01s" messageRef="Message_0sc39z3" />
+    </bpmn:startEvent>
+    <bpmn:endEvent id="EndEvent_1">
+      <bpmn:extensionElements>
+        <spiffworkflow:instructionsForEndUser>The process instance completed successfully.</spiffworkflow:instructionsForEndUser>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1lucqba</bpmn:incoming>
+    </bpmn:endEvent>
+  </bpmn:process>
+  <bpmn:message id="Message_0sc39z3" name="popcorn">
+    <bpmn:extensionElements>
+      <spiffworkflow:messageVariable>request</spiffworkflow:messageVariable>
+    </bpmn:extensionElements>
+  </bpmn:message>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_0kktvds">
+      <bpmndi:BPMNShape id="Participant_1mjd08z_di" bpmnElement="Participant_1mjd08z" isHorizontal="true">
+        <dc:Bounds x="110" y="110" width="370" height="140" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1oqagc9_di" bpmnElement="Activity_141enme">
+        <dc:Bounds x="260" y="137" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1cf616q_di" bpmnElement="StartEvent_1">
+        <dc:Bounds x="182" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_14za570_di" bpmnElement="EndEvent_1">
+        <dc:Bounds x="412" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_17db3yp_di" bpmnElement="Flow_17db3yp">
+        <di:waypoint x="218" y="177" />
+        <di:waypoint x="260" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1lucqba_di" bpmnElement="Flow_1lucqba">
+        <di:waypoint x="360" y="177" />
+        <di:waypoint x="412" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="TextAnnotation_0w29yjh_di" bpmnElement="TextAnnotation_0w29yjh">
+        <dc:Bounds x="-10" y="-10" width="310" height="98" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="TextAnnotation_1w6eb53_di" bpmnElement="TextAnnotation_1w6eb53">
+        <dc:Bounds x="350" y="9" width="210" height="60" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="TextAnnotation_1vfrbt8_di" bpmnElement="TextAnnotation_1vfrbt8">
+        <dc:Bounds x="530" y="100" width="180" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Association_0k4oc3r_di" bpmnElement="Association_0k4oc3r">
+        <di:waypoint x="188" y="164" />
+        <di:waypoint x="117" y="88" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Association_18a3uko_di" bpmnElement="Association_18a3uko">
+        <di:waypoint x="334" y="137" />
+        <di:waypoint x="374" y="69" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Association_0gspalf_di" bpmnElement="Association_0gspalf">
+        <di:waypoint x="447" y="170" />
+        <di:waypoint x="530" y="136" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

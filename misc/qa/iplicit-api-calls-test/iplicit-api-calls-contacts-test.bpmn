@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:spiffworkflow="http://spiffworkflow.org/bpmn/schema/1.0/core" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_96f6665" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.0.0-dev">
+  <bpmn:process id="Process_iplicit_api_calls_contact_test_v5l22pn" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>Flow_17db3yp</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_17db3yp" sourceRef="StartEvent_1" targetRef="Activity_1bun2pl1" />
+    <bpmn:endEvent id="EndEvent_1">
+      <bpmn:extensionElements>
+        <spiffworkflow:instructionsForEndUser>The process instance completed successfully.</spiffworkflow:instructionsForEndUser>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1ot8vs1</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_163jqf2" sourceRef="Activity_070lydz1" targetRef="Activity_15jdyld1" />
+    <bpmn:serviceTask id="Activity_070lydz1" name="[GET] Get Contact">
+      <bpmn:extensionElements>
+        <spiffworkflow:serviceTaskOperator id="http/GetRequestV2" resultVariable="contact_resp">
+          <spiffworkflow:parameters>
+            <spiffworkflow:parameter id="url" type="str" value="getuserURL" />
+            <spiffworkflow:parameter id="headers" type="any" value="iplicit_headers" />
+            <spiffworkflow:parameter id="params" type="any" />
+            <spiffworkflow:parameter id="basic_auth_username" type="str" />
+            <spiffworkflow:parameter id="basic_auth_password" type="str" />
+            <spiffworkflow:parameter id="attempts" type="int" />
+          </spiffworkflow:parameters>
+        </spiffworkflow:serviceTaskOperator>
+        <spiffworkflow:instructionsForEndUser>User id is {{userid }}</spiffworkflow:instructionsForEndUser>
+        <spiffworkflow:postScript />
+        <spiffworkflow:preScript>getuserURL = "https://api.iplicit.com/api/Contact/" +userid;</spiffworkflow:preScript>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1amw19r</bpmn:incoming>
+      <bpmn:outgoing>Flow_163jqf2</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="Flow_00g8eoo" sourceRef="Activity_1bun2pl1" targetRef="Activity_0og4pa5" />
+    <bpmn:scriptTask id="Activity_1bun2pl1" name="Set params">
+      <bpmn:incoming>Flow_17db3yp</bpmn:incoming>
+      <bpmn:outgoing>Flow_00g8eoo</bpmn:outgoing>
+      <bpmn:script>
+request_body = {
+  "username": "non-prod-spiff",
+  "userApiKey": "SPIFF_SECRET:IPLICIT_API_KEY"
+}
+
+header = {
+  "Content-Type": "application/json",
+  "Domain": "sandbox.free.technology"
+}
+
+user_data = {
+  "firstName": "Madhu",
+  "lastName": "Test1"
+}
+
+user_data2 = {
+  "firstName": "Madhu",
+  "lastName": "Test1Updated"
+}
+</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:sequenceFlow id="Flow_19nboee" sourceRef="Activity_15jdyld1" targetRef="Activity_1w6hz0p" />
+    <bpmn:manualTask id="Activity_15jdyld1" name="Show Contact info">
+      <bpmn:extensionElements>
+        <spiffworkflow:instructionsForEndUser>This is the response data: {{contact_resp}}</spiffworkflow:instructionsForEndUser>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_163jqf2</bpmn:incoming>
+      <bpmn:outgoing>Flow_19nboee</bpmn:outgoing>
+    </bpmn:manualTask>
+    <bpmn:sequenceFlow id="Flow_1i47vl5" sourceRef="Activity_1w6hz0p" targetRef="Activity_1mplmxd" />
+    <bpmn:serviceTask id="Activity_1w6hz0p" name="[PATCH] Update Contact">
+      <bpmn:extensionElements>
+        <spiffworkflow:serviceTaskOperator id="http/PatchRequestV2" resultVariable="updatecontact_info">
+          <spiffworkflow:parameters>
+            <spiffworkflow:parameter id="url" type="str" value="updateuserURL" />
+            <spiffworkflow:parameter id="headers" type="any" value="iplicit_headers" />
+            <spiffworkflow:parameter id="data" type="any" value="user_data2" />
+            <spiffworkflow:parameter id="basic_auth_username" type="str" />
+            <spiffworkflow:parameter id="basic_auth_password" type="str" />
+          </spiffworkflow:parameters>
+        </spiffworkflow:serviceTaskOperator>
+        <spiffworkflow:preScript>updateuserURL = "https://api.iplicit.com/api/Contact/" +userid;</spiffworkflow:preScript>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_19nboee</bpmn:incoming>
+      <bpmn:outgoing>Flow_1i47vl5</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:manualTask id="Activity_1mplmxd" name="Show Updated Contact info">
+      <bpmn:extensionElements>
+        <spiffworkflow:instructionsForEndUser>This is the response data: {{updatecontact_info}}</spiffworkflow:instructionsForEndUser>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1i47vl5</bpmn:incoming>
+      <bpmn:outgoing>Flow_07wlz8y</bpmn:outgoing>
+    </bpmn:manualTask>
+    <bpmn:sequenceFlow id="Flow_07wlz8y" sourceRef="Activity_1mplmxd" targetRef="Activity_0pf9cbo" />
+    <bpmn:sequenceFlow id="Flow_0vz7s9k" sourceRef="Activity_0pf9cbo" targetRef="Activity_1cmkqad" />
+    <bpmn:serviceTask id="Activity_0pf9cbo" name="[DELETE] Delete Contact">
+      <bpmn:extensionElements>
+        <spiffworkflow:serviceTaskOperator id="http/DeleteRequestV2" resultVariable="deletecontact_info">
+          <spiffworkflow:parameters>
+            <spiffworkflow:parameter id="url" type="str" value="deleteuserURL" />
+            <spiffworkflow:parameter id="headers" type="any" value="iplicit_headers" />
+            <spiffworkflow:parameter id="params" type="any" />
+            <spiffworkflow:parameter id="data" type="any" />
+            <spiffworkflow:parameter id="basic_auth_username" type="str" />
+            <spiffworkflow:parameter id="basic_auth_password" type="str" />
+          </spiffworkflow:parameters>
+        </spiffworkflow:serviceTaskOperator>
+        <spiffworkflow:preScript>deleteuserURL = "https://api.iplicit.com/api/Contact/" +userid;</spiffworkflow:preScript>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_07wlz8y</bpmn:incoming>
+      <bpmn:outgoing>Flow_0vz7s9k</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:manualTask id="Activity_1cmkqad" name="Show Deleted Contact info">
+      <bpmn:extensionElements>
+        <spiffworkflow:instructionsForEndUser>This is the response data: {{deletecontact_info}}</spiffworkflow:instructionsForEndUser>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0vz7s9k</bpmn:incoming>
+      <bpmn:outgoing>Flow_15wkymk</bpmn:outgoing>
+    </bpmn:manualTask>
+    <bpmn:sequenceFlow id="Flow_15wkymk" sourceRef="Activity_1cmkqad" targetRef="Activity_0q4bmp1" />
+    <bpmn:sequenceFlow id="Flow_0qisb9z" sourceRef="Activity_0og4pa5" targetRef="Activity_13rz5g1" />
+    <bpmn:serviceTask id="Activity_0og4pa5" name="Create session">
+      <bpmn:extensionElements>
+        <spiffworkflow:serviceTaskOperator id="http/PostRequestV2" resultVariable="session_info">
+          <spiffworkflow:parameters>
+            <spiffworkflow:parameter id="url" type="str" value="&#34;https://api.iplicit.com/api/session/create/api&#34;" />
+            <spiffworkflow:parameter id="headers" type="any" value="header" />
+            <spiffworkflow:parameter id="data" type="any" value="request_body" />
+            <spiffworkflow:parameter id="basic_auth_username" type="str" />
+            <spiffworkflow:parameter id="basic_auth_password" type="str" />
+          </spiffworkflow:parameters>
+        </spiffworkflow:serviceTaskOperator>
+        <spiffworkflow:preScript />
+        <spiffworkflow:postScript>session_token = session_info["body"]["sessionToken"];</spiffworkflow:postScript>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_00g8eoo</bpmn:incoming>
+      <bpmn:outgoing>Flow_0qisb9z</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="Flow_1amw19r" sourceRef="Activity_13rz5g1" targetRef="Activity_070lydz1" />
+    <bpmn:serviceTask id="Activity_13rz5g1" name="Add Contact">
+      <bpmn:extensionElements>
+        <spiffworkflow:serviceTaskOperator id="http/PostRequestV2" resultVariable="contact_info">
+          <spiffworkflow:parameters>
+            <spiffworkflow:parameter id="url" type="str" value="&#34;https://api.iplicit.com/api/Contact&#34;" />
+            <spiffworkflow:parameter id="headers" type="any" value="iplicit_headers" />
+            <spiffworkflow:parameter id="data" type="any" value="user_data" />
+            <spiffworkflow:parameter id="basic_auth_username" type="str" />
+            <spiffworkflow:parameter id="basic_auth_password" type="str" />
+          </spiffworkflow:parameters>
+        </spiffworkflow:serviceTaskOperator>
+        <spiffworkflow:instructionsForEndUser>This is the session token: {{session_token }}</spiffworkflow:instructionsForEndUser>
+        <spiffworkflow:preScript>auth_token = "Bearer " + session_token 
+iplicit_headers = {
+  "Content-Type": "application/json",
+  "Domain": "sandbox.free.technology",
+  "Authorization": auth_token
+}</spiffworkflow:preScript>
+        <spiffworkflow:postScript>userid = contact_info["body"];</spiffworkflow:postScript>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0qisb9z</bpmn:incoming>
+      <bpmn:outgoing>Flow_1amw19r</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="Flow_1ot8vs1" sourceRef="Activity_0q4bmp1" targetRef="EndEvent_1" />
+    <bpmn:serviceTask id="Activity_0q4bmp1" name="Close session">
+      <bpmn:extensionElements>
+        <spiffworkflow:serviceTaskOperator id="http/PostRequestV2" resultVariable="resp">
+          <spiffworkflow:parameters>
+            <spiffworkflow:parameter id="url" type="str" value="&#34;https://api.iplicit.com/api/Session/close&#34;" />
+            <spiffworkflow:parameter id="headers" type="any" value="iplicit_headers" />
+            <spiffworkflow:parameter id="data" type="any" />
+            <spiffworkflow:parameter id="basic_auth_username" type="str" />
+            <spiffworkflow:parameter id="basic_auth_password" type="str" />
+          </spiffworkflow:parameters>
+        </spiffworkflow:serviceTaskOperator>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_15wkymk</bpmn:incoming>
+      <bpmn:outgoing>Flow_1ot8vs1</bpmn:outgoing>
+    </bpmn:serviceTask>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_iplicit_api_calls_contact_test_v5l22pn">
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="-548" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_14za570_di" bpmnElement="EndEvent_1">
+        <dc:Bounds x="672" y="412" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0sgkoe6_di" bpmnElement="Activity_070lydz1">
+        <dc:Bounds x="-80" y="137" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0cpav2s_di" bpmnElement="Activity_1bun2pl1">
+        <dc:Bounds x="-480" y="137" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0r3yzdy_di" bpmnElement="Activity_15jdyld1">
+        <dc:Bounds x="70" y="137" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_13e3gms_di" bpmnElement="Activity_1w6hz0p">
+        <dc:Bounds x="230" y="137" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_1r2csss" bpmnElement="Activity_1mplmxd">
+        <dc:Bounds x="370" y="137" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1rn7eas_di" bpmnElement="Activity_0pf9cbo">
+        <dc:Bounds x="510" y="137" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_1s6yf1h" bpmnElement="Activity_1cmkqad">
+        <dc:Bounds x="640" y="137" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1v6z72l_di" bpmnElement="Activity_0og4pa5">
+        <dc:Bounds x="-350" y="137" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1fh1d7f_di" bpmnElement="Activity_13rz5g1">
+        <dc:Bounds x="-210" y="137" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1bxinlj_di" bpmnElement="Activity_0q4bmp1">
+        <dc:Bounds x="640" y="270" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_17db3yp_di" bpmnElement="Flow_17db3yp">
+        <di:waypoint x="-512" y="177" />
+        <di:waypoint x="-480" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_163jqf2_di" bpmnElement="Flow_163jqf2">
+        <di:waypoint x="20" y="177" />
+        <di:waypoint x="70" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_00g8eoo_di" bpmnElement="Flow_00g8eoo">
+        <di:waypoint x="-380" y="177" />
+        <di:waypoint x="-350" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_19nboee_di" bpmnElement="Flow_19nboee">
+        <di:waypoint x="170" y="177" />
+        <di:waypoint x="230" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1i47vl5_di" bpmnElement="Flow_1i47vl5">
+        <di:waypoint x="330" y="177" />
+        <di:waypoint x="370" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_07wlz8y_di" bpmnElement="Flow_07wlz8y">
+        <di:waypoint x="470" y="177" />
+        <di:waypoint x="510" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0vz7s9k_di" bpmnElement="Flow_0vz7s9k">
+        <di:waypoint x="610" y="177" />
+        <di:waypoint x="640" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_15wkymk_di" bpmnElement="Flow_15wkymk">
+        <di:waypoint x="690" y="217" />
+        <di:waypoint x="690" y="270" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0qisb9z_di" bpmnElement="Flow_0qisb9z">
+        <di:waypoint x="-250" y="177" />
+        <di:waypoint x="-210" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1amw19r_di" bpmnElement="Flow_1amw19r">
+        <di:waypoint x="-110" y="177" />
+        <di:waypoint x="-80" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1ot8vs1_di" bpmnElement="Flow_1ot8vs1">
+        <di:waypoint x="690" y="350" />
+        <di:waypoint x="690" y="412" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

@@ -1,0 +1,38 @@
+{
+  "title": "Select Action",
+  "description": "Select which github action to perform.",
+  "type": "object",
+  "properties": {
+    "github_api_action": {
+      "type": "string",
+      "title": "Github API Actions",
+      "default": "assign_user",
+      "enum": [
+        "assign_user",
+        "add_comment",
+        "update_status",
+        "delete_comment",
+        "get_issue"
+      ],
+      "uniqueItems": true
+    }
+  },
+  "if": {
+    "properties": {
+      "github_api_action": {
+        "const": "delete_comment"
+      }
+    }
+  },
+  "then": {
+    "properties": {
+      "comment_id": {
+        "type": "integer",
+        "title": "Comment ID"
+      }
+    },
+    "required": [
+      "comment_id"
+    ]
+  }
+}
