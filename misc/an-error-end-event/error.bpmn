@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:spiffworkflow="http://spiffworkflow.org/bpmn/schema/1.0/core" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_96f6665" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.0.0-dev">
+  <bpmn:process id="Process_error_top_level" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>Flow_17db3yp</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_17db3yp" sourceRef="StartEvent_1" targetRef="Activity_subprocess_level_1" />
+    <bpmn:endEvent id="EndEvent_1">
+      <bpmn:incoming>Flow_12pkbxb</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_12pkbxb" sourceRef="Activity_subprocess_level_1" targetRef="EndEvent_1" />
+    <bpmn:subProcess id="Activity_subprocess_level_1" name="subprocess 1">
+      <bpmn:extensionElements>
+        <spiffworkflow:instructionsForEndUser>This is an example **Manual Task**. A **Manual Task** is designed to allow someone to complete a task outside of the system and then report back that it is complete. You can click the *Continue* button to proceed. When you are done running this process, you can edit the **Process Model** to include a:
+
+ * **Script Task** - write a short snippet of python code to update some data
+ *  **User Task** - generate a form that collects information from a user
+ * **Service Task** - communicate with an external API to fetch or update some data.
+
+You can also change the text you are reading here by updating the *Instructions* on this example manual task.</spiffworkflow:instructionsForEndUser>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_17db3yp</bpmn:incoming>
+      <bpmn:outgoing>Flow_12pkbxb</bpmn:outgoing>
+      <bpmn:startEvent id="Event_0bek9jp">
+        <bpmn:outgoing>Flow_0e00a7c</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:sequenceFlow id="Flow_0e00a7c" sourceRef="Event_0bek9jp" targetRef="Activity_subprocess_level_2" />
+      <bpmn:endEvent id="Event_1fsmocu">
+        <bpmn:incoming>Flow_0seo500</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:sequenceFlow id="Flow_0seo500" sourceRef="Activity_subprocess_level_2" targetRef="Event_1fsmocu" />
+      <bpmn:subProcess id="Activity_subprocess_level_2" name="level 2">
+        <bpmn:incoming>Flow_0e00a7c</bpmn:incoming>
+        <bpmn:outgoing>Flow_0seo500</bpmn:outgoing>
+        <bpmn:startEvent id="Event_11foc16">
+          <bpmn:outgoing>Flow_1j8v8c4</bpmn:outgoing>
+        </bpmn:startEvent>
+        <bpmn:sequenceFlow id="Flow_1j8v8c4" sourceRef="Event_11foc16" targetRef="Activity_1umex2j" />
+        <bpmn:sequenceFlow id="Flow_15934uz" sourceRef="Activity_1umex2j" targetRef="Event_error_end_1" />
+        <bpmn:manualTask id="Activity_1umex2j" name="manual task 1">
+          <bpmn:incoming>Flow_1j8v8c4</bpmn:incoming>
+          <bpmn:outgoing>Flow_15934uz</bpmn:outgoing>
+        </bpmn:manualTask>
+        <bpmn:endEvent id="Event_error_end_1">
+          <bpmn:incoming>Flow_15934uz</bpmn:incoming>
+          <bpmn:errorEventDefinition id="ErrorEventDefinition_0n2m2z1" errorRef="error_stop_top_level_process_instance" />
+        </bpmn:endEvent>
+      </bpmn:subProcess>
+      <bpmn:boundaryEvent id="Event_10mei26" attachedToRef="Activity_subprocess_level_2">
+        <bpmn:outgoing>Flow_1sfwxxt</bpmn:outgoing>
+        <bpmn:errorEventDefinition id="ErrorEventDefinition_1oly6lh" errorRef="error_stop_top_level_process_instance" />
+      </bpmn:boundaryEvent>
+      <bpmn:endEvent id="Event_05rx7bk">
+        <bpmn:incoming>Flow_1sfwxxt</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:sequenceFlow id="Flow_1sfwxxt" sourceRef="Event_10mei26" targetRef="Event_05rx7bk" />
+    </bpmn:subProcess>
+    <bpmn:endEvent id="Event_1naungq">
+      <bpmn:incoming>Flow_1i5bihc</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_1i5bihc" sourceRef="Event_1gf7vjx" targetRef="Event_1naungq" />
+    <bpmn:boundaryEvent id="Event_1gf7vjx" attachedToRef="Activity_subprocess_level_1">
+      <bpmn:outgoing>Flow_1i5bihc</bpmn:outgoing>
+      <bpmn:errorEventDefinition id="ErrorEventDefinition_05uq2qn" errorRef="error_stop_top_level_process_instance" />
+    </bpmn:boundaryEvent>
+  </bpmn:process>
+  <bpmn:error id="error_stop_top_level_process_instance" name="error_stop_top_level_process_instance" />
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_error_top_level">
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="179" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_14za570_di" bpmnElement="EndEvent_1">
+        <dc:Bounds x="682" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1naungq_di" bpmnElement="Event_1naungq">
+        <dc:Bounds x="442" y="32" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1b8gcgg_di" bpmnElement="Activity_subprocess_level_1">
+        <dc:Bounds x="270" y="137" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0bvc0oi_di" bpmnElement="Event_1gf7vjx">
+        <dc:Bounds x="352" y="119" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_17db3yp_di" bpmnElement="Flow_17db3yp">
+        <di:waypoint x="215" y="177" />
+        <di:waypoint x="270" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_12pkbxb_di" bpmnElement="Flow_12pkbxb">
+        <di:waypoint x="370" y="177" />
+        <di:waypoint x="682" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1i5bihc_di" bpmnElement="Flow_1i5bihc">
+        <di:waypoint x="370" y="119" />
+        <di:waypoint x="370" y="50" />
+        <di:waypoint x="442" y="50" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_0pjf9gx">
+    <bpmndi:BPMNPlane id="BPMNPlane_1pxhlhs" bpmnElement="Activity_subprocess_level_1">
+      <bpmndi:BPMNShape id="Event_0bek9jp_di" bpmnElement="Event_0bek9jp">
+        <dc:Bounds x="482" y="222" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1fsmocu_di" bpmnElement="Event_1fsmocu">
+        <dc:Bounds x="962" y="222" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1m5gnia_di" bpmnElement="Activity_subprocess_level_2">
+        <dc:Bounds x="570" y="200" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_05rx7bk_di" bpmnElement="Event_05rx7bk">
+        <dc:Bounds x="742" y="102" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0a7ahnj_di" bpmnElement="Event_10mei26">
+        <dc:Bounds x="652" y="182" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_0e00a7c_di" bpmnElement="Flow_0e00a7c">
+        <di:waypoint x="518" y="240" />
+        <di:waypoint x="570" y="240" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0seo500_di" bpmnElement="Flow_0seo500">
+        <di:waypoint x="670" y="240" />
+        <di:waypoint x="962" y="240" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1sfwxxt_di" bpmnElement="Flow_1sfwxxt">
+        <di:waypoint x="670" y="182" />
+        <di:waypoint x="670" y="120" />
+        <di:waypoint x="742" y="120" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_0d93jty">
+    <bpmndi:BPMNPlane id="BPMNPlane_186emgd" bpmnElement="Activity_subprocess_level_2">
+      <bpmndi:BPMNShape id="Event_11foc16_di" bpmnElement="Event_11foc16">
+        <dc:Bounds x="432" y="192" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0rclfzd_di" bpmnElement="Activity_1umex2j">
+        <dc:Bounds x="520" y="170" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_16wcotn_di" bpmnElement="Event_error_end_1">
+        <dc:Bounds x="772" y="192" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_1j8v8c4_di" bpmnElement="Flow_1j8v8c4">
+        <di:waypoint x="468" y="210" />
+        <di:waypoint x="520" y="210" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_15934uz_di" bpmnElement="Flow_15934uz">
+        <di:waypoint x="620" y="210" />
+        <di:waypoint x="772" y="210" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
