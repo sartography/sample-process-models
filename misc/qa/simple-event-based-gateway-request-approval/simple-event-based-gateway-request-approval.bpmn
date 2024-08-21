@@ -2,6 +2,7 @@
 <bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:spiffworkflow="http://spiffworkflow.org/bpmn/schema/1.0/core" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_96f6665" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.0.0-dev">
   <bpmn:collaboration id="Collaboration_0ht30jp">
     <bpmn:participant id="Participant_0oo19gg" processRef="Process_simple_event_based_gateway_request_approval_locxra3" />
+    <bpmn:correlationKey id="CorrelationKey_0qhogop" name="MainCorrelationKey" />
   </bpmn:collaboration>
   <bpmn:process id="Process_simple_event_based_gateway_request_approval_locxra3" isExecutable="true">
     <bpmn:sequenceFlow id="Flow_0b3upej" sourceRef="Event_19uiqds" targetRef="Activity_1xydakz" />
@@ -20,7 +21,11 @@
     <bpmn:intermediateThrowEvent id="Event_1b4offl" name="Granted" messageRef="[object Object]">
       <bpmn:incoming>Flow_1ba9sfw</bpmn:incoming>
       <bpmn:outgoing>Flow_1kxyw2b</bpmn:outgoing>
-      <bpmn:messageEventDefinition id="MessageEventDefinition_17zoyp0" messageRef="Message_0yo3thx" />
+      <bpmn:messageEventDefinition id="MessageEventDefinition_17zoyp0" messageRef="Message_0yo3thx">
+        <bpmn:extensionElements>
+          <spiffworkflow:messagePayload>{"name":"Joe", "age":35, "approval":"Approved"}</spiffworkflow:messagePayload>
+        </bpmn:extensionElements>
+      </bpmn:messageEventDefinition>
     </bpmn:intermediateThrowEvent>
     <bpmn:endEvent id="Event_0rlvrq7">
       <bpmn:incoming>Flow_1kxyw2b</bpmn:incoming>
@@ -28,10 +33,14 @@
     <bpmn:sequenceFlow id="Flow_1kxyw2b" sourceRef="Event_1b4offl" targetRef="Event_0rlvrq7" />
     <bpmn:startEvent id="Event_19uiqds" messageRef="[object Object]">
       <bpmn:outgoing>Flow_0b3upej</bpmn:outgoing>
-      <bpmn:messageEventDefinition id="MessageEventDefinition_1osb49e" messageRef="Message_157i9pz" />
+      <bpmn:messageEventDefinition id="MessageEventDefinition_1osb49e" messageRef="request_approval">
+        <bpmn:extensionElements>
+          <spiffworkflow:messageVariable />
+        </bpmn:extensionElements>
+      </bpmn:messageEventDefinition>
     </bpmn:startEvent>
   </bpmn:process>
-  <bpmn:message id="Message_157i9pz" name="request_approval">
+  <bpmn:message id="request_approval" name="request_approval">
     <bpmn:extensionElements>
       <spiffworkflow:messageVariable />
     </bpmn:extensionElements>
@@ -52,7 +61,7 @@
       <bpmndi:BPMNShape id="Event_1e1vwqe_di" bpmnElement="Event_1b4offl">
         <dc:Bounds x="342" y="182" width="36" height="36" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="341" y="225" width="41" height="14" />
+          <dc:Bounds x="342" y="225" width="40" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_0rlvrq7_di" bpmnElement="Event_0rlvrq7">
