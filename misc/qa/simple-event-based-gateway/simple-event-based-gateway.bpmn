@@ -2,12 +2,16 @@
 <bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:spiffworkflow="http://spiffworkflow.org/bpmn/schema/1.0/core" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="Definitions_96f6665" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.0.0-dev">
   <bpmn:collaboration id="Collaboration_1ozfwxg">
     <bpmn:participant id="Participant_0eqaysn" processRef="Process_simple_event_based_gateway_1cvu7el" />
+    <bpmn:correlationKey id="CorrelationKey_1abvtcm" name="MainCorrelationKey" />
   </bpmn:collaboration>
   <bpmn:process id="Process_simple_event_based_gateway_1cvu7el" isExecutable="true">
     <bpmn:startEvent id="Event_0iatoii">
       <bpmn:outgoing>Flow_1vfms5q</bpmn:outgoing>
     </bpmn:startEvent>
-    <bpmn:sendTask id="Activity_0juyvct" name="Request Approval" messageRef="Message_02i1rse">
+    <bpmn:sendTask id="Activity_0juyvct" name="Request Approval" messageRef="request_approval">
+      <bpmn:extensionElements>
+        <spiffworkflow:messagePayload>{}</spiffworkflow:messagePayload>
+      </bpmn:extensionElements>
       <bpmn:incoming>Flow_1vfms5q</bpmn:incoming>
       <bpmn:outgoing>Flow_00gefzq</bpmn:outgoing>
     </bpmn:sendTask>
@@ -26,7 +30,11 @@
     <bpmn:intermediateCatchEvent id="Event_1jbgo2a" messageRef="[object Object]">
       <bpmn:incoming>Flow_1gxawhd</bpmn:incoming>
       <bpmn:outgoing>Flow_0yj661i</bpmn:outgoing>
-      <bpmn:messageEventDefinition id="MessageEventDefinition_1vtz49s" messageRef="Message_1095vmn" />
+      <bpmn:messageEventDefinition id="MessageEventDefinition_1vtz49s" messageRef="is_granted">
+        <bpmn:extensionElements>
+          <spiffworkflow:messageVariable>granted</spiffworkflow:messageVariable>
+        </bpmn:extensionElements>
+      </bpmn:messageEventDefinition>
     </bpmn:intermediateCatchEvent>
     <bpmn:endEvent id="Event_1cxhzws">
       <bpmn:incoming>Flow_1etnuya</bpmn:incoming>
@@ -51,12 +59,12 @@
     <bpmn:sequenceFlow id="Flow_1etnuya" sourceRef="Activity_0ig38s8" targetRef="Event_1cxhzws" />
     <bpmn:sequenceFlow id="Flow_04glimj" sourceRef="Activity_1adx67p" targetRef="Event_1encxv5" />
   </bpmn:process>
-  <bpmn:message id="Message_02i1rse" name="request_approval">
+  <bpmn:message id="request_approval" name="request_approval">
     <bpmn:extensionElements>
       <spiffworkflow:messagePayload>{}</spiffworkflow:messagePayload>
     </bpmn:extensionElements>
   </bpmn:message>
-  <bpmn:message id="Message_1095vmn" name="is_granted">
+  <bpmn:message id="is_granted" name="is_granted">
     <bpmn:extensionElements>
       <spiffworkflow:messageVariable>granted</spiffworkflow:messageVariable>
     </bpmn:extensionElements>
