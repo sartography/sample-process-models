@@ -6,9 +6,9 @@
     </bpmn:startEvent>
     <bpmn:sequenceFlow id="Flow_17db3yp" sourceRef="StartEvent_1" targetRef="Activity_0qpzdpu" />
     <bpmn:endEvent id="EndEvent_1">
-      <bpmn:incoming>Flow_12pkbxb</bpmn:incoming>
+      <bpmn:incoming>Flow_0hvxz01</bpmn:incoming>
     </bpmn:endEvent>
-    <bpmn:sequenceFlow id="Flow_12pkbxb" sourceRef="Activity_0qpzdpu" targetRef="EndEvent_1" />
+    <bpmn:sequenceFlow id="Flow_12pkbxb" sourceRef="Activity_0qpzdpu" targetRef="Activity_0j5hzr0" />
     <bpmn:manualTask id="Activity_0qpzdpu" name="Example manual task">
       <bpmn:extensionElements>
         <spiffworkflow:instructionsForEndUser>This is an example **Manual Task**. A **Manual Task** is designed to allow someone to complete a task outside of the system and then report back that it is complete. You can click the *Continue* button to proceed. When you are done running this process, you can edit the **Process Model** to include a:
@@ -22,18 +22,27 @@ You can also change the text you are reading here by updating the *Instructions*
       <bpmn:incoming>Flow_17db3yp</bpmn:incoming>
       <bpmn:outgoing>Flow_12pkbxb</bpmn:outgoing>
     </bpmn:manualTask>
+    <bpmn:sequenceFlow id="Flow_0hvxz01" sourceRef="Activity_0j5hzr0" targetRef="EndEvent_1" />
+    <bpmn:scriptTask id="Activity_0j5hzr0">
+      <bpmn:incoming>Flow_12pkbxb</bpmn:incoming>
+      <bpmn:outgoing>Flow_0hvxz01</bpmn:outgoing>
+      <bpmn:script>a = 4</bpmn:script>
+    </bpmn:scriptTask>
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_temp_model1_vgvv4gd">
       <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
         <dc:Bounds x="179" y="159" width="36" height="36" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_14za570_di" bpmnElement="EndEvent_1">
-        <dc:Bounds x="432" y="159" width="36" height="36" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0zqotmb_di" bpmnElement="Activity_0qpzdpu">
         <dc:Bounds x="270" y="137" width="100" height="80" />
         <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_14za570_di" bpmnElement="EndEvent_1">
+        <dc:Bounds x="652" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1cxwikb_di" bpmnElement="Activity_0j5hzr0">
+        <dc:Bounds x="470" y="137" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_17db3yp_di" bpmnElement="Flow_17db3yp">
         <di:waypoint x="215" y="177" />
@@ -41,7 +50,11 @@ You can also change the text you are reading here by updating the *Instructions*
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_12pkbxb_di" bpmnElement="Flow_12pkbxb">
         <di:waypoint x="370" y="177" />
-        <di:waypoint x="432" y="177" />
+        <di:waypoint x="470" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0hvxz01_di" bpmnElement="Flow_0hvxz01">
+        <di:waypoint x="570" y="177" />
+        <di:waypoint x="652" y="177" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
