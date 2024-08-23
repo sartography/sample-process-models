@@ -1,23 +1,35 @@
 {
-  "title": "Nested Form / Repeating Section",
-  "description": "Allow the form submitter to add multiple entries for a set of fields.",
   "type": "object",
   "properties": {
-    "item": {
-      "type": "array",
-      "title": "Date Ranges",
-      "items": {
-        "type": "object",
-        "required": [
-          "date_range"
-        ],
-        "properties": {
-          "date_range": {
-            "type": "string",
-            "title": "Date Range"
-          } 
-        }
-      }
+    "repeat": {
+      "title": "Do you expect more expenses to come under the selected Goods/Services request?",
+      "type": "string",
+      "enum": [
+        "yes",
+        "no"
+      ]
     }
+  },
+  "required": ["repeat"],
+  "if": {
+    "properties": {
+      "repeat": {
+        "const": "no"
+      }
+    },
+    "required": ["repeat"]
+  },
+  "then": {
+    "properties": {
+      "confirm": {
+        "title": "Are you sure? No more expenses can be uploaded for this purchase request",
+        "type": "string",
+        "enum": [
+          "yes",
+          "no, changed my mind"
+        ]
+      }
+    },
+    "required": ["confirm"]
   }
 }
