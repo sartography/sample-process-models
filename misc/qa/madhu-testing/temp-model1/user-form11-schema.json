@@ -1,35 +1,49 @@
 {
-  "type": "object",
-  "properties": {
-    "repeat": {
-      "title": "Do you expect more expenses to come under the selected Goods/Services request?",
-      "type": "string",
-      "enum": [
-        "yes",
-        "no"
-      ]
-    }
-  },
-  "required": ["repeat"],
-  "if": {
-    "properties": {
-      "repeat": {
-        "const": "no"
-      }
-    },
-    "required": ["repeat"]
-  },
-  "then": {
-    "properties": {
-      "confirm": {
-        "title": "Are you sure? No more expenses can be uploaded for this purchase request",
-        "type": "string",
-        "enum": [
-          "yes",
-          "no, changed my mind"
-        ]
-      }
-    },
-    "required": ["confirm"]
-  }
+	"definitions": {
+    	"review_outcome": {
+    		"title": "Review Outcome",
+			"type": "string",
+			"anyOf": [
+    			"options_from_task_data_var:review_options"
+    		]
+    	}
+	},
+	"properties": {
+		"review_outcome": {
+			"$ref": "#/definitions/review_outcome",
+			"title": "Review Outcome"
+		},
+		"reviewer_comment": {
+			"type": "string",
+			"title": "Reviewer Comments",
+			"maxLength": 1000
+		}
+	},
+	"required": ["review_outcome"],
+	"dependencies": {
+		"review_outcome": {
+			"oneOf": [
+				{
+					"properties": {
+						"review_outcome": {
+							"enum": [
+								"rej"
+							]
+						}
+					},
+					"required":["reviewer_comment"]
+				},
+				{
+					"properties": {
+						"review_outcome": {
+							"enum": [
+								"nai"
+							]
+						}
+					},
+					"required":["reviewer_comment"]
+				}
+			]
+		}
+	}
 }
