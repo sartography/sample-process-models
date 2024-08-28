@@ -42,11 +42,18 @@
       </bpmn:sequenceFlow>
       <bpmn:endEvent id="Event_07tr7nq">
         <bpmn:incoming>Flow_0mmgmck</bpmn:incoming>
-        <bpmn:errorEventDefinition id="ErrorEventDefinition_0784dmx" />
+        <bpmn:errorEventDefinition id="ErrorEventDefinition_0784dmx" errorRef="Error_1" />
       </bpmn:endEvent>
     </bpmn:subProcess>
     <bpmn:sequenceFlow id="Flow_02iz1x6" sourceRef="Activity_1hquuez" targetRef="EndEvent_1" />
   </bpmn:process>
+  <bpmn:error id="Error_1" name="Error_1" errorCode="Err1">
+    <bpmn:extensionElements>
+      <spiffworkflow:payloadExpression>{
+"err_msg" : "Error Occured : Credit Card Not Valid"
+}</spiffworkflow:payloadExpression>
+    </bpmn:extensionElements>
+  </bpmn:error>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="UT_error_end_event_2">
       <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
