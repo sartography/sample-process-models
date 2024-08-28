@@ -4,44 +4,116 @@
     <bpmn:startEvent id="StartEvent_1">
       <bpmn:outgoing>Flow_17db3yp</bpmn:outgoing>
     </bpmn:startEvent>
-    <bpmn:sequenceFlow id="Flow_17db3yp" sourceRef="StartEvent_1" targetRef="Activity_0qpzdpu" />
+    <bpmn:sequenceFlow id="Flow_17db3yp" sourceRef="StartEvent_1" targetRef="Activity_1bfyule" />
     <bpmn:endEvent id="EndEvent_1">
-      <bpmn:incoming>Flow_12pkbxb</bpmn:incoming>
+      <bpmn:incoming>Flow_14u69le</bpmn:incoming>
     </bpmn:endEvent>
-    <bpmn:sequenceFlow id="Flow_12pkbxb" sourceRef="Activity_0qpzdpu" targetRef="EndEvent_1" />
-    <bpmn:manualTask id="Activity_0qpzdpu" name="Example manual task">
-      <bpmn:extensionElements>
-        <spiffworkflow:instructionsForEndUser>This is an example **Manual Task**. A **Manual Task** is designed to allow someone to complete a task outside of the system and then report back that it is complete. You can click the *Continue* button to proceed. When you are done running this process, you can edit the **Process Model** to include a:
-
- * **Script Task** - write a short snippet of python code to update some data
- *  **User Task** - generate a form that collects information from a user
- * **Service Task** - communicate with an external API to fetch or update some data.
-
-You can also change the text you are reading here by updating the *Instructions* on this example manual task.</spiffworkflow:instructionsForEndUser>
-      </bpmn:extensionElements>
+    <bpmn:subProcess id="Activity_1bfyule">
       <bpmn:incoming>Flow_17db3yp</bpmn:incoming>
-      <bpmn:outgoing>Flow_12pkbxb</bpmn:outgoing>
-    </bpmn:manualTask>
+      <bpmn:outgoing>Flow_14u69le</bpmn:outgoing>
+      <bpmn:startEvent id="Event_1ihn0hl">
+        <bpmn:outgoing>Flow_0m5j4o9</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:sequenceFlow id="Flow_0m5j4o9" sourceRef="Event_1ihn0hl" targetRef="Activity_0sytj6y" />
+      <bpmn:manualTask id="Activity_0sytj6y" name="A">
+        <bpmn:extensionElements>
+          <spiffworkflow:preScript>invalid_cc = True</spiffworkflow:preScript>
+        </bpmn:extensionElements>
+        <bpmn:incoming>Flow_0m5j4o9</bpmn:incoming>
+        <bpmn:outgoing>Flow_1n96j8a</bpmn:outgoing>
+      </bpmn:manualTask>
+      <bpmn:exclusiveGateway id="Gateway_144hih2">
+        <bpmn:incoming>Flow_1n96j8a</bpmn:incoming>
+        <bpmn:outgoing>Flow_0royrms</bpmn:outgoing>
+        <bpmn:outgoing>Flow_1dceg25</bpmn:outgoing>
+      </bpmn:exclusiveGateway>
+      <bpmn:sequenceFlow id="Flow_1n96j8a" sourceRef="Activity_0sytj6y" targetRef="Gateway_144hih2" />
+      <bpmn:sequenceFlow id="Flow_0royrms" sourceRef="Gateway_144hih2" targetRef="Activity_072joc4" />
+      <bpmn:manualTask id="Activity_072joc4" name="B">
+        <bpmn:incoming>Flow_0royrms</bpmn:incoming>
+        <bpmn:outgoing>Flow_00ivqat</bpmn:outgoing>
+      </bpmn:manualTask>
+      <bpmn:endEvent id="Event_1gofkes">
+        <bpmn:incoming>Flow_00ivqat</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:sequenceFlow id="Flow_00ivqat" sourceRef="Activity_072joc4" targetRef="Event_1gofkes" />
+      <bpmn:sequenceFlow id="Flow_1dceg25" sourceRef="Gateway_144hih2" targetRef="Event_0wn6d3n" />
+      <bpmn:endEvent id="Event_0wn6d3n" name="Error_1">
+        <bpmn:incoming>Flow_1dceg25</bpmn:incoming>
+        <bpmn:errorEventDefinition id="ErrorEventDefinition_0dd4fyk" errorRef="Error_1" />
+      </bpmn:endEvent>
+    </bpmn:subProcess>
+    <bpmn:sequenceFlow id="Flow_14u69le" sourceRef="Activity_1bfyule" targetRef="EndEvent_1" />
   </bpmn:process>
+  <bpmn:error id="Error_1" name="Error_1" errorCode="Err1">
+    <bpmn:extensionElements>
+      <spiffworkflow:payloadExpression>{
+"err_msg" : "Error Occured : Credit Card Not Valid"
+}</spiffworkflow:payloadExpression>
+    </bpmn:extensionElements>
+  </bpmn:error>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_unit_test_error_end_event_3_lx0v30a">
       <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
-        <dc:Bounds x="179" y="159" width="36" height="36" />
+        <dc:Bounds x="-158" y="159" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_14za570_di" bpmnElement="EndEvent_1">
-        <dc:Bounds x="432" y="159" width="36" height="36" />
+        <dc:Bounds x="802" y="159" width="36" height="36" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0zqotmb_di" bpmnElement="Activity_0qpzdpu">
-        <dc:Bounds x="270" y="137" width="100" height="80" />
+      <bpmndi:BPMNShape id="Activity_1bfyule_di" bpmnElement="Activity_1bfyule" isExpanded="true">
+        <dc:Bounds x="-30" y="77" width="680" height="300" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1ihn0hl_di" bpmnElement="Event_1ihn0hl">
+        <dc:Bounds x="12" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1sv9spg_di" bpmnElement="Activity_0sytj6y">
+        <dc:Bounds x="100" y="137" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge id="Flow_17db3yp_di" bpmnElement="Flow_17db3yp">
-        <di:waypoint x="215" y="177" />
-        <di:waypoint x="270" y="177" />
+      <bpmndi:BPMNShape id="Gateway_144hih2_di" bpmnElement="Gateway_144hih2" isMarkerVisible="true">
+        <dc:Bounds x="255" y="152" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1sz74oa_di" bpmnElement="Activity_072joc4">
+        <dc:Bounds x="360" y="137" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1gofkes_di" bpmnElement="Event_1gofkes">
+        <dc:Bounds x="522" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0pg9jct_di" bpmnElement="Event_0wn6d3n">
+        <dc:Bounds x="362" y="272" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="363" y="315" width="37" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_0m5j4o9_di" bpmnElement="Flow_0m5j4o9">
+        <di:waypoint x="48" y="177" />
+        <di:waypoint x="100" y="177" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_12pkbxb_di" bpmnElement="Flow_12pkbxb">
-        <di:waypoint x="370" y="177" />
-        <di:waypoint x="432" y="177" />
+      <bpmndi:BPMNEdge id="Flow_1n96j8a_di" bpmnElement="Flow_1n96j8a">
+        <di:waypoint x="200" y="177" />
+        <di:waypoint x="255" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0royrms_di" bpmnElement="Flow_0royrms">
+        <di:waypoint x="305" y="177" />
+        <di:waypoint x="360" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_00ivqat_di" bpmnElement="Flow_00ivqat">
+        <di:waypoint x="460" y="177" />
+        <di:waypoint x="522" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1dceg25_di" bpmnElement="Flow_1dceg25">
+        <di:waypoint x="280" y="202" />
+        <di:waypoint x="280" y="290" />
+        <di:waypoint x="362" y="290" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_17db3yp_di" bpmnElement="Flow_17db3yp">
+        <di:waypoint x="-122" y="177" />
+        <di:waypoint x="-30" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_14u69le_di" bpmnElement="Flow_14u69le">
+        <di:waypoint x="650" y="177" />
+        <di:waypoint x="802" y="177" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
