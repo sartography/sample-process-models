@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_96f6665" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.0.0-dev">
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:spiffworkflow="http://spiffworkflow.org/bpmn/schema/1.0/core" id="Definitions_96f6665" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.0.0-dev">
   <bpmn:process id="UT_call_activity_with_error_end_event" isExecutable="true">
     <bpmn:startEvent id="StartEvent_1">
       <bpmn:outgoing>Flow_17db3yp</bpmn:outgoing>
@@ -13,7 +13,25 @@
       <bpmn:incoming>Flow_17db3yp</bpmn:incoming>
       <bpmn:outgoing>Flow_1eso3az</bpmn:outgoing>
     </bpmn:callActivity>
+    <bpmn:sequenceFlow id="Flow_02kyvno" sourceRef="Event_0cezoax" targetRef="Activity_14t0ju8" />
+    <bpmn:boundaryEvent id="Event_0cezoax" attachedToRef="Activity_0xltjt0">
+      <bpmn:outgoing>Flow_02kyvno</bpmn:outgoing>
+      <bpmn:errorEventDefinition id="ErrorEventDefinition_1ak62j6" errorRef="Error_3" />
+    </bpmn:boundaryEvent>
+    <bpmn:endEvent id="Event_12mzt8f">
+      <bpmn:incoming>Flow_0n60e6r</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_0n60e6r" sourceRef="Activity_14t0ju8" targetRef="Event_12mzt8f" />
+    <bpmn:manualTask id="Activity_14t0ju8" name="Error 3">
+      <bpmn:incoming>Flow_02kyvno</bpmn:incoming>
+      <bpmn:outgoing>Flow_0n60e6r</bpmn:outgoing>
+    </bpmn:manualTask>
   </bpmn:process>
+  <bpmn:error id="Error_3" name="Error_3" errorCode="Err3">
+    <bpmn:extensionElements>
+      <spiffworkflow:variableName>errVar</spiffworkflow:variableName>
+    </bpmn:extensionElements>
+  </bpmn:error>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="UT_call_activity_with_error_end_event">
       <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
@@ -26,6 +44,16 @@
         <dc:Bounds x="270" y="137" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_12mzt8f_di" bpmnElement="Event_12mzt8f">
+        <dc:Bounds x="592" y="282" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_086pi3n_di" bpmnElement="Activity_14t0ju8">
+        <dc:Bounds x="440" y="260" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0s4jq24_di" bpmnElement="Event_0cezoax">
+        <dc:Bounds x="352" y="199" width="36" height="36" />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_17db3yp_di" bpmnElement="Flow_17db3yp">
         <di:waypoint x="215" y="177" />
         <di:waypoint x="270" y="177" />
@@ -33,6 +61,15 @@
       <bpmndi:BPMNEdge id="Flow_1eso3az_di" bpmnElement="Flow_1eso3az">
         <di:waypoint x="370" y="177" />
         <di:waypoint x="432" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_02kyvno_di" bpmnElement="Flow_02kyvno">
+        <di:waypoint x="370" y="235" />
+        <di:waypoint x="370" y="300" />
+        <di:waypoint x="440" y="300" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0n60e6r_di" bpmnElement="Flow_0n60e6r">
+        <di:waypoint x="540" y="300" />
+        <di:waypoint x="592" y="300" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
