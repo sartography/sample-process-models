@@ -5,35 +5,59 @@
       <bpmn:outgoing>Flow_17db3yp</bpmn:outgoing>
     </bpmn:startEvent>
     <bpmn:sequenceFlow id="Flow_17db3yp" sourceRef="StartEvent_1" targetRef="Activity_0qpzdpu" />
-    <bpmn:endEvent id="EndEvent_1">
-      <bpmn:incoming>Flow_12pkbxb</bpmn:incoming>
-    </bpmn:endEvent>
-    <bpmn:sequenceFlow id="Flow_12pkbxb" sourceRef="Activity_0qpzdpu" targetRef="EndEvent_1" />
-    <bpmn:manualTask id="Activity_0qpzdpu" name="Example manual task">
+    <bpmn:sequenceFlow id="Flow_12pkbxb" sourceRef="Activity_0qpzdpu" targetRef="Gateway_1c2ozm3" />
+    <bpmn:manualTask id="Activity_0qpzdpu" name="Check CC">
       <bpmn:extensionElements>
-        <spiffworkflow:instructionsForEndUser>This is an example **Manual Task**. A **Manual Task** is designed to allow someone to complete a task outside of the system and then report back that it is complete. You can click the *Continue* button to proceed. When you are done running this process, you can edit the **Process Model** to include a:
-
- * **Script Task** - write a short snippet of python code to update some data
- *  **User Task** - generate a form that collects information from a user
- * **Service Task** - communicate with an external API to fetch or update some data.
-
-You can also change the text you are reading here by updating the *Instructions* on this example manual task.</spiffworkflow:instructionsForEndUser>
+        <spiffworkflow:instructionsForEndUser>Check CC status</spiffworkflow:instructionsForEndUser>
+        <spiffworkflow:preScript>invalidCC = True</spiffworkflow:preScript>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_17db3yp</bpmn:incoming>
       <bpmn:outgoing>Flow_12pkbxb</bpmn:outgoing>
     </bpmn:manualTask>
+    <bpmn:exclusiveGateway id="Gateway_1c2ozm3" default="Flow_10sjqx1">
+      <bpmn:incoming>Flow_12pkbxb</bpmn:incoming>
+      <bpmn:outgoing>Flow_1eoy3su</bpmn:outgoing>
+      <bpmn:outgoing>Flow_10sjqx1</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="Flow_1eoy3su" sourceRef="Gateway_1c2ozm3" targetRef="EndEvent_1">
+      <bpmn:conditionExpression>invalidCC</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_10sjqx1" sourceRef="Gateway_1c2ozm3" targetRef="Activity_10g991p" />
+    <bpmn:manualTask id="Activity_10g991p" name="Valid CC">
+      <bpmn:incoming>Flow_10sjqx1</bpmn:incoming>
+      <bpmn:outgoing>Flow_1mnd6ty</bpmn:outgoing>
+    </bpmn:manualTask>
+    <bpmn:endEvent id="Event_03rkq24">
+      <bpmn:incoming>Flow_1mnd6ty</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_1mnd6ty" sourceRef="Activity_10g991p" targetRef="Event_03rkq24" />
+    <bpmn:endEvent id="EndEvent_1">
+      <bpmn:incoming>Flow_1eoy3su</bpmn:incoming>
+      <bpmn:errorEventDefinition id="ErrorEventDefinition_0oeygnu" errorRef="Error_CC" />
+    </bpmn:endEvent>
   </bpmn:process>
+  <bpmn:error id="Error_CC" name="Error_CC" errorCode="INVALID_CC" />
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_model_f_cpnld8e">
       <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
         <dc:Bounds x="179" y="159" width="36" height="36" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_14za570_di" bpmnElement="EndEvent_1">
-        <dc:Bounds x="432" y="159" width="36" height="36" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0zqotmb_di" bpmnElement="Activity_0qpzdpu">
         <dc:Bounds x="270" y="137" width="100" height="80" />
         <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_1c2ozm3_di" bpmnElement="Gateway_1c2ozm3" isMarkerVisible="true">
+        <dc:Bounds x="465" y="152" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1ee5qc8_di" bpmnElement="Activity_10g991p">
+        <dc:Bounds x="570" y="250" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_03rkq24_di" bpmnElement="Event_03rkq24">
+        <dc:Bounds x="752" y="272" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0z84ak2_di" bpmnElement="EndEvent_1">
+        <dc:Bounds x="732" y="159" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_17db3yp_di" bpmnElement="Flow_17db3yp">
         <di:waypoint x="215" y="177" />
@@ -41,7 +65,20 @@ You can also change the text you are reading here by updating the *Instructions*
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_12pkbxb_di" bpmnElement="Flow_12pkbxb">
         <di:waypoint x="370" y="177" />
-        <di:waypoint x="432" y="177" />
+        <di:waypoint x="465" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1eoy3su_di" bpmnElement="Flow_1eoy3su">
+        <di:waypoint x="515" y="177" />
+        <di:waypoint x="732" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_10sjqx1_di" bpmnElement="Flow_10sjqx1">
+        <di:waypoint x="490" y="202" />
+        <di:waypoint x="490" y="290" />
+        <di:waypoint x="570" y="290" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1mnd6ty_di" bpmnElement="Flow_1mnd6ty">
+        <di:waypoint x="670" y="290" />
+        <di:waypoint x="752" y="290" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
