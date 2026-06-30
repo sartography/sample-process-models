@@ -2,17 +2,27 @@
 <bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:spiffworkflow="http://spiffworkflow.org/bpmn/schema/1.0/core" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_96f6665" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.0.0-dev">
   <bpmn:process id="Process_test_signal_button_on_guest_form_user_task_yx0f14y" isExecutable="true">
     <bpmn:startEvent id="StartEvent_1">
-      <bpmn:outgoing>Flow_17db3yp</bpmn:outgoing>
+      <bpmn:outgoing>Flow_StartToGetUrl</bpmn:outgoing>
     </bpmn:startEvent>
-    <bpmn:sequenceFlow id="Flow_17db3yp" sourceRef="StartEvent_1" targetRef="Activity_0qpzdpu" />
-    <bpmn:endEvent id="EndEvent_1">
+    <bpmn:scriptTask id="ScriptTask_GetUrl" name="Get Guest URL">
+      <bpmn:incoming>Flow_StartToGetUrl</bpmn:incoming>
+      <bpmn:outgoing>Flow_GetUrlToShowUrl</bpmn:outgoing>
+      <bpmn:script>guest_task_url = get_url_for_task_with_bpmn_identifier("Activity_0qpzdpu")</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:manualTask id="ManualTask_ShowUrl" name="Show URL for upcoming Guest task">
       <bpmn:extensionElements>
-        <spiffworkflow:instructionsForEndUser>End</spiffworkflow:instructionsForEndUser>
+        <spiffworkflow:instructionsForEndUser>## Guest Task URL
+
+After you click Continue, the next task will be a guest task available at:
+
+[{{guest_task_url}}]({{guest_task_url}})
+
+Open it in an incognito or separate browser session once the process reaches that step. You'll need to submit the form there to trigger the signal button.</spiffworkflow:instructionsForEndUser>
       </bpmn:extensionElements>
-      <bpmn:incoming>Flow_12pkbxb</bpmn:incoming>
-    </bpmn:endEvent>
-    <bpmn:sequenceFlow id="Flow_12pkbxb" sourceRef="Activity_0qpzdpu" targetRef="EndEvent_1" />
-    <bpmn:userTask id="Activity_0qpzdpu" name="User Task">
+      <bpmn:incoming>Flow_GetUrlToShowUrl</bpmn:incoming>
+      <bpmn:outgoing>Flow_ShowUrlToGuestTask</bpmn:outgoing>
+    </bpmn:manualTask>
+    <bpmn:userTask id="Activity_0qpzdpu" name="Guest User Task">
       <bpmn:extensionElements>
         <spiffworkflow:instructionsForEndUser />
         <spiffworkflow:properties>
@@ -20,23 +30,33 @@
         </spiffworkflow:properties>
         <spiffworkflow:allowGuest>true</spiffworkflow:allowGuest>
       </bpmn:extensionElements>
-      <bpmn:incoming>Flow_17db3yp</bpmn:incoming>
-      <bpmn:outgoing>Flow_12pkbxb</bpmn:outgoing>
+      <bpmn:incoming>Flow_ShowUrlToGuestTask</bpmn:incoming>
+      <bpmn:outgoing>Flow_GuestTaskToEnd</bpmn:outgoing>
     </bpmn:userTask>
-    <bpmn:endEvent id="Event_1b4r9f6">
-      <bpmn:extensionElements>
-        <spiffworkflow:instructionsForEndUser>Cancelled</spiffworkflow:instructionsForEndUser>
-      </bpmn:extensionElements>
-      <bpmn:incoming>Flow_17sc9r3</bpmn:incoming>
-    </bpmn:endEvent>
-    <bpmn:sequenceFlow id="Flow_17sc9r3" sourceRef="Event_1mg8rob" targetRef="Event_1b4r9f6" />
     <bpmn:boundaryEvent id="Event_1mg8rob" attachedToRef="Activity_0qpzdpu">
       <bpmn:extensionElements>
         <spiffworkflow:signalButtonLabel>Cancel Form</spiffworkflow:signalButtonLabel>
       </bpmn:extensionElements>
-      <bpmn:outgoing>Flow_17sc9r3</bpmn:outgoing>
+      <bpmn:outgoing>Flow_SignalToCancelled</bpmn:outgoing>
       <bpmn:signalEventDefinition id="SignalEventDefinition_1uxvg02" signalRef="cancel" />
     </bpmn:boundaryEvent>
+    <bpmn:endEvent id="EndEvent_1">
+      <bpmn:extensionElements>
+        <spiffworkflow:instructionsForEndUser>End</spiffworkflow:instructionsForEndUser>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_GuestTaskToEnd</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:endEvent id="Event_1b4r9f6">
+      <bpmn:extensionElements>
+        <spiffworkflow:instructionsForEndUser>Cancelled</spiffworkflow:instructionsForEndUser>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_SignalToCancelled</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_StartToGetUrl" sourceRef="StartEvent_1" targetRef="ScriptTask_GetUrl" />
+    <bpmn:sequenceFlow id="Flow_GetUrlToShowUrl" sourceRef="ScriptTask_GetUrl" targetRef="ManualTask_ShowUrl" />
+    <bpmn:sequenceFlow id="Flow_ShowUrlToGuestTask" sourceRef="ManualTask_ShowUrl" targetRef="Activity_0qpzdpu" />
+    <bpmn:sequenceFlow id="Flow_GuestTaskToEnd" sourceRef="Activity_0qpzdpu" targetRef="EndEvent_1" />
+    <bpmn:sequenceFlow id="Flow_SignalToCancelled" sourceRef="Event_1mg8rob" targetRef="Event_1b4r9f6" />
   </bpmn:process>
   <bpmn:signal id="cancel" name="cancel">
     <bpmn:extensionElements>
@@ -45,33 +65,50 @@
   </bpmn:signal>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_test_signal_button_on_guest_form_user_task_yx0f14y">
-      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
-        <dc:Bounds x="179" y="159" width="36" height="36" />
+      <bpmndi:BPMNShape id="StartEvent_1_di" bpmnElement="StartEvent_1">
+        <dc:Bounds x="120" y="159" width="36" height="36" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_14za570_di" bpmnElement="EndEvent_1">
-        <dc:Bounds x="432" y="159" width="36" height="36" />
+      <bpmndi:BPMNShape id="ScriptTask_GetUrl_di" bpmnElement="ScriptTask_GetUrl">
+        <dc:Bounds x="200" y="137" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="ManualTask_ShowUrl_di" bpmnElement="ManualTask_ShowUrl">
+        <dc:Bounds x="350" y="137" width="100" height="80" />
+        <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_02pql7d_di" bpmnElement="Activity_0qpzdpu">
-        <dc:Bounds x="270" y="137" width="100" height="80" />
+        <dc:Bounds x="500" y="137" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="EndEvent_1_di" bpmnElement="EndEvent_1">
+        <dc:Bounds x="660" y="159" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_1b4r9f6_di" bpmnElement="Event_1b4r9f6">
-        <dc:Bounds x="432" y="282" width="36" height="36" />
+        <dc:Bounds x="430" y="282" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_0yabm0w_di" bpmnElement="Event_1mg8rob">
-        <dc:Bounds x="312" y="199" width="36" height="36" />
+        <dc:Bounds x="540" y="199" width="36" height="36" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge id="Flow_17db3yp_di" bpmnElement="Flow_17db3yp">
-        <di:waypoint x="215" y="177" />
-        <di:waypoint x="270" y="177" />
+      <bpmndi:BPMNEdge id="Flow_StartToGetUrl_di" bpmnElement="Flow_StartToGetUrl">
+        <di:waypoint x="156" y="177" />
+        <di:waypoint x="200" y="177" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_12pkbxb_di" bpmnElement="Flow_12pkbxb">
-        <di:waypoint x="370" y="177" />
-        <di:waypoint x="432" y="177" />
+      <bpmndi:BPMNEdge id="Flow_GetUrlToShowUrl_di" bpmnElement="Flow_GetUrlToShowUrl">
+        <di:waypoint x="300" y="177" />
+        <di:waypoint x="350" y="177" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_17sc9r3_di" bpmnElement="Flow_17sc9r3">
-        <di:waypoint x="330" y="235" />
-        <di:waypoint x="330" y="300" />
-        <di:waypoint x="432" y="300" />
+      <bpmndi:BPMNEdge id="Flow_ShowUrlToGuestTask_di" bpmnElement="Flow_ShowUrlToGuestTask">
+        <di:waypoint x="450" y="177" />
+        <di:waypoint x="500" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_GuestTaskToEnd_di" bpmnElement="Flow_GuestTaskToEnd">
+        <di:waypoint x="600" y="177" />
+        <di:waypoint x="660" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_SignalToCancelled_di" bpmnElement="Flow_SignalToCancelled">
+        <di:waypoint x="558" y="235" />
+        <di:waypoint x="558" y="300" />
+        <di:waypoint x="466" y="300" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
